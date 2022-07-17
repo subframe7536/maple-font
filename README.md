@@ -1,47 +1,60 @@
-# subcode
-## only self-use 仅自用
-self-use monospace font with round corner for coding, mixing HarmonyOS Sans SC
-### subcode HarmonyOS
-自制圆角等宽字体，混合了鸿蒙sans，参考了Fira Code、Consolas、Menlo、Roboto等优秀字体，部分字符个性化比较强
-### subcode HarmonyOS hint
-add auto hint
-添加了自动消隐，反走样
-### subcode Maple
-only include base latin, Box Drawing and some other self-created icon in Private Use Area
-编程专用的精简版，只包括基本拉丁字符，制表符和一些自定义的图标
+# Maple Series
 
-| 符号icon | unicode  |
-| ----- | -------- |
-| ᨐ    | `\u1a10` |
-| ⏻     | `\u23fb` |
-| †     | `\u2020` |
-| ♀     | `\u2640` |
-| ♂     | `\u2642` |
-| ☯     | `\u262f` |
-|     | `\ue000` |
-|     | `\ue001` |
-|     | `\ue002` |
-|     | `\ue003` |
-|     | `\ue004` |
-|     | `\ue005` |
-|     | `\ue006` |
-|     | `\ue007` |
-|     | `\ue008` |
-|     | `\ue009` |
-|     | `\ue00a` |
-|     | `\ue00b` |
-|     | `\ue00c` |
-|     | `\ue00d` |
-|     | `\ue00e` |
-|     | `\ue00f` |
+version 2
 
-## sample
-![](/img/sample.png)
-![](/img/2.png)
-![](/img/1.png)
-### notice
-- recommend font-size 15px
-- 中英文并非2:1，因为在idea中间距太大看起来比较累(而且不知道为啥在vscode中2:1，在idea中就不是了)
-- 没有连字，不太习惯
+## Download
+
+release
+
+## only self-use
+
+self-use monospace and sans font with round corner for coding and reading
+
+## Maple Code
+
+simplified programming font, only contains latin. some normal punctuations and arrows and customed icons
+
+- inspired by [Source Code Pro](https://github.com/adobe-fonts/source-code-pro) and [Fira Code](https://github.com/tonsky/FiraCode)
+
+in version 2, I modify some characters' shape and use [Ligaturizer](https://github.com/ToxicFrog/Ligaturizer) to add some font ligature scripts (remake all ligature characters). And now "=>" will be correctly splited by cursor on VS Code when edit the `XML/HTML` tag
+
+如果需要加入中文(Maple UI 的中文)可以下载 `Maple Code CN`，但是不是 1:2
+
+### sample
+
+![](img/characters.jpg)
+![](img/sample.jpg)
+
+### ligatures
+
+![](img/ligature.jpg)
+
+## Maple Code NF
+
+using Nerd Font to fit console characters
+
+### sample
+
+![](img/console.jpg)
+
+## Maple UI
+
+user interface font based on Google Sans and 中兴正圆, round the corner to look more confortable.
+
+I use it as global font for system ([Mactype](https://github.com/snowie2000/mactype)) and browser ([Temper Monkey scripts](https://github.com/subframe7536/UserScript))
+
+### sample
+
+![](img/UI%20sample.jpg)
+![](img/UI%E5%9B%BE.jpg)
+![](img/UI%E7%B3%BB%E7%BB%9F.jpg)
+
+## Maple hand
+
+手写体，クレ pro 英数微调+唐美人汉字部分，目前用在手机端，添加了 I 和 l 的钩笔，增加辨识度
+
+![](img/%E6%89%8B%E6%9C%BA.jpg)
+
 ## License
+
 Apache 2.0
