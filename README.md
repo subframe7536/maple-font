@@ -6,7 +6,7 @@ version 3
 
 release
 
-[国内地址](https://gitee.com/subframe7536/Maple/releases/v2.0)
+[国内地址](https://gitee.com/subframe7536/Maple/releases/v3.0)
 
 ## Only self-use
 
@@ -30,12 +30,18 @@ Use [Ligaturizer](https://github.com/ToxicFrog/Ligaturizer) to add font ligature
 
 install regular,italic,bold,bold italic
 
+### Maple Code Pure
+
+choose minimal character to display
+
+去掉花里胡哨
+
 ### Maple Code CN
 
 添加了中文字符
 
 - 中英字符不是 2：1。原因：改了之后作为浏览器等宽字体太小，拉长高度则会破坏美观，下一版尝试一下
-- 如果有需要的话，可以下载 release 中的 legacy 尝试
+- 如果有需要的话，可以下载 [release](https://gitee.com/subframe7536/Maple/releases/v3.0) 中的 legacy 尝试
 
 #### 使用
 
