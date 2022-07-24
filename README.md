@@ -1,6 +1,6 @@
 # Maple Series
 
-version 2
+version 3
 
 ## Download
 
@@ -8,7 +8,7 @@ release
 
 [国内地址](https://gitee.com/subframe7536/Maple/releases/v2.0)
 
-## only self-use
+## Only self-use
 
 self-use monospace and sans font with round corner for coding and reading
 
@@ -16,21 +16,36 @@ self-use monospace and sans font with round corner for coding and reading
 
 ## Maple Code
 
-simplified programming font, only contains latin. some normal punctuations and arrows and customed icons
+simplified programming font, only contains latin. some normal punctuations, **italic** style and ligatures
 
-精简版的等宽字体，只有英数和一些标点，还有一些自定义的图案
+精简版的等宽字体，只有英数、制表符，有连字，较于上一版加了斜体和粗体
 
-- inspired by [Source Code Pro](https://github.com/adobe-fonts/source-code-pro) and [Fira Code](https://github.com/tonsky/FiraCode)
+- inspired by [Source Code Pro](https://github.com/adobe-fonts/source-code-pro), [Fira Code](https://github.com/tonsky/FiraCode), ubuntu mono, operator mono, [sarasa mono sc nerd](https://github.com/laishulu/Sarasa-Mono-SC-Nerd) and so on
 
-in version 2, I modify some characters' shape and use [Ligaturizer](https://github.com/ToxicFrog/Ligaturizer) to add some font ligature scripts (remake all ligature characters). And now "=>" will be correctly splited by cursor on VS Code when edit the `XML/HTML` tag
+Use [Ligaturizer](https://github.com/ToxicFrog/Ligaturizer) to add font ligature scripts (remake all ligature characters)
 
-用了 Fira Code 的连字脚本，但是具体的字符全都修改过。上一版的问题已经解决。如果需要加入中文(Maple UI 的中文)可以下载 `Maple Code CN`，但是间距不是 1:2
+用了 Fira Code 的连字脚本，但是具体的字符全都修改过
+
+#### usage
+
+install regular,italic,bold,bold italic
+
+### Maple Code CN
+
+添加了中文字符
+
+- 中英字符不是 2：1。原因：改了之后作为浏览器等宽字体太小，拉长高度则会破坏美观，下一版尝试一下
+- 如果有需要的话，可以下载 release 中的 legacy 尝试
+
+#### 使用
+
+字体名称仍为 Maple Code，所以不需要安装 regular，换成安装 CN 即可
 
 ### sample
 
-![](img/characters.jpg)
-![](img/sample.jpg)
-![](img/icons.jpg)
+![](img/sample_code.jpg)
+![](img/code.jpg)
+![](img/italic.jpg)
 
 ### ligatures
 
@@ -40,7 +55,7 @@ in version 2, I modify some characters' shape and use [Ligaturizer](https://gith
 
 using Nerd Font to fit console characters
 
-用于控制台的字体，没有中文和连字
+用于控制台的字体，没有中文（一部分中文字符的 unicode 被 nerd font 占了）
 
 ### sample
 
@@ -48,13 +63,11 @@ using Nerd Font to fit console characters
 
 ## Maple UI
 
-user interface font based on Google Sans and 中兴正圆, round the corner to look more confortable.
+用圆角化的 Google Sans 英数+中兴正圆(汉仪正圆的全字库版)拼起来的字体，字比较粗
 
-用圆角化的 Google Sans 英数+中兴正圆(汉仪正圆的全字库版)拼起来的字体，字比较粗，配合 Mactype，Windows 上看起来舒服一些
+较于上一版，修复了空格宽度过宽的问题，添加了部分 kerning
 
-I use it as global font for system ([Mactype](https://github.com/snowie2000/mactype)) and browser ([Temper Monkey scripts](https://github.com/subframe7536/UserScript))
-
-浏览器全局字体替换脚本，有些不适配的可以手动添加
+Windows 使用 [Mactype](https://github.com/snowie2000/mactype) 进行全局替换，浏览器使用 [Temper Monkey scripts](https://github.com/subframe7536/UserScript) 全局字体替换，有些不适配的可以手动添加 css
 
 ### sample
 
@@ -67,7 +80,3 @@ I use it as global font for system ([Mactype](https://github.com/snowie2000/mact
 手写体，クレ pro 英数微调+唐美人汉字部分，目前用在手机端，相比于上一版添加了 I 和 l 的钩笔，增加辨识度
 
 ![](img/%E6%89%8B%E6%9C%BA.jpg)
-
-## License
-
-Apache 2.0
