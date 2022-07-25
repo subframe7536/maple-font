@@ -73,7 +73,7 @@ using Nerd Font to fit console characters
 
 较于上一版，修复了空格宽度过宽的问题，添加了部分 kerning
 
-Windows 使用 [Mactype](https://github.com/snowie2000/mactype) 进行全局替换，浏览器使用 [Temper Monkey scripts](https://github.com/subframe7536/UserScript) 全局字体替换，有些不适配的可以手动添加 css
+Windows 使用 [Mactype](https://gitee.com/subframe7536/mactype) 进行全局替换，浏览器使用 [Temper Monkey scripts](https://github.com/subframe7536/UserScript) 全局字体替换，有些不适配的可以手动添加 css
 
 ### sample
 
