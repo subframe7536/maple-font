@@ -4,7 +4,7 @@ version 4
 
 ## Download
 
-wait to upload or you can build locally
+wait for release or you can build locally
 
 ## Introduce
 
