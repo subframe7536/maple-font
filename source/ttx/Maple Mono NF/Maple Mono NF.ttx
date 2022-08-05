@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ttFont sfntVersion="\x00\x01\x00\x00" ttLibVersion="4.34">
+  <GlyphOrder src="Maple Mono NF.GlyphOrder.ttx"/>
+  <head src="Maple Mono NF._h_e_a_d.ttx"/>
+  <hhea src="Maple Mono NF._h_h_e_a.ttx"/>
+  <maxp src="Maple Mono NF._m_a_x_p.ttx"/>
+  <OS_2 src="Maple Mono NF.O_S_2f_2.ttx"/>
+  <hmtx src="Maple Mono NF._h_m_t_x.ttx"/>
+  <cmap src="Maple Mono NF._c_m_a_p.ttx"/>
+  <fpgm src="Maple Mono NF._f_p_g_m.ttx"/>
+  <prep src="Maple Mono NF._p_r_e_p.ttx"/>
+  <cvt src="Maple Mono NF._c_v_t.ttx"/>
+  <loca src="Maple Mono NF._l_o_c_a.ttx"/>
+  <glyf src="Maple Mono NF._g_l_y_f.ttx"/>
+  <name src="Maple Mono NF._n_a_m_e.ttx"/>
+  <post src="Maple Mono NF._p_o_s_t.ttx"/>
+  <gasp src="Maple Mono NF._g_a_s_p.ttx"/>
+  <PfEd src="Maple Mono NF.P__fE__d.ttx"/>
+</ttFont>

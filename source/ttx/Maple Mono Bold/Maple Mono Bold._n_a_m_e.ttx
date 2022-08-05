@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <ttFont ttLibVersion="4.34">
+      <name>
+        <namerecord nameID="0" platformID="3" platEncID="1" langID="0x409">
+          Copyright (c) 2022, subframe7536 (https://github.com/subframe7536).
+        </namerecord>
+        <namerecord nameID="1" platformID="3" platEncID="1" langID="0x409">
+          Maple Mono
+        </namerecord>
+        <namerecord nameID="2" platformID="3" platEncID="1" langID="0x409">
+          Bold
+        </namerecord>
+        <namerecord nameID="3" platformID="3" platEncID="1" langID="0x409">
+          Maple Mono:Version 1.00
+        </namerecord>
+        <namerecord nameID="4" platformID="3" platEncID="1" langID="0x409">
+          Maple Mono
+        </namerecord>
+        <namerecord nameID="5" platformID="3" platEncID="1" langID="0x409">
+          Version 1.00;August 4, 2022
+        </namerecord>
+        <namerecord nameID="6" platformID="3" platEncID="1" langID="0x409">
+          MapleMono
+        </namerecord>
+        <namerecord nameID="9" platformID="3" platEncID="1" langID="0x409">
+          subframe7536
+        </namerecord>
+        <namerecord nameID="10" platformID="3" platEncID="1" langID="0x409">
+          Rounded monospace font with ligature, inspired by source code pro, Fira Code, ubuntu mono, operator mono, sarasa mono sc nerd and so on
+        </namerecord>
+        <namerecord nameID="12" platformID="3" platEncID="1" langID="0x409">
+          https://github.com/subframe7536
+        </namerecord>
+        <namerecord nameID="13" platformID="3" platEncID="1" langID="0x409">
+          This Font Software is licensed under the SIL Open Font License, Version 1.1. This license is available with a FAQ at: http://scripts.sil.org/OFL
+        </namerecord>
+        <namerecord nameID="14" platformID="3" platEncID="1" langID="0x409">
+          http://scripts.sil.org/OFL
+        </namerecord>
+      </name>
+    </ttFont>
+    
