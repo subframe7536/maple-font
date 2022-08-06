@@ -120,14 +120,14 @@
     <mtx name="less_slash" width="600" lsb="-428"/>
     <mtx name="less_slash_uni003E" width="600" lsb="-1008"/>
     <mtx name="less_uni003E" width="600" lsb="-438"/>
-    <mtx name="m" width="600" lsb="33"/>
+    <mtx name="m" width="600" lsb="24"/>
     <mtx name="n" width="600" lsb="57"/>
     <mtx name="nine" width="600" lsb="107"/>
     <mtx name="numbersign" width="600" lsb="39"/>
     <mtx name="numbersign_expand" width="600" lsb="34"/>
     <mtx name="o" width="600" lsb="101"/>
     <mtx name="one" width="600" lsb="74"/>
-    <mtx name="p" width="600" lsb="26"/>
+    <mtx name="p" width="600" lsb="31"/>
     <mtx name="parenleft" width="600" lsb="136"/>
     <mtx name="parenright" width="600" lsb="72"/>
     <mtx name="percent" width="600" lsb="18"/>

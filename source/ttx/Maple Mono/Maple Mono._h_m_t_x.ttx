@@ -120,7 +120,7 @@
     <mtx name="less_slash" width="600" lsb="-472"/>
     <mtx name="less_slash_uni003E" width="600" lsb="-1052"/>
     <mtx name="less_uni003E" width="600" lsb="-482"/>
-    <mtx name="m" width="600" lsb="70"/>
+    <mtx name="m" width="600" lsb="66"/>
     <mtx name="n" width="600" lsb="85"/>
     <mtx name="nine" width="600" lsb="75"/>
     <mtx name="numbersign" width="600" lsb="0"/>
@@ -136,7 +136,7 @@
     <mtx name="plus" width="600" lsb="60"/>
     <mtx name="plus_plus" width="600" lsb="-490"/>
     <mtx name="plus_plus_plus" width="600" lsb="-1080"/>
-    <mtx name="q" width="600" lsb="76"/>
+    <mtx name="q" width="600" lsb="79"/>
     <mtx name="question" width="600" lsb="107"/>
     <mtx name="quotedbl" width="600" lsb="165"/>
     <mtx name="quotesingle" width="600" lsb="255"/>

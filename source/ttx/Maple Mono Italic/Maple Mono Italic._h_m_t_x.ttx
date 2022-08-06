@@ -76,7 +76,7 @@
     <mtx name="asciitilde" width="600" lsb="114"/>
     <mtx name="asterisk" width="600" lsb="129"/>
     <mtx name="at" width="600" lsb="62"/>
-    <mtx name="b" width="600" lsb="94"/>
+    <mtx name="b" width="600" lsb="97"/>
     <mtx name="backslash" width="600" lsb="227"/>
     <mtx name="bar" width="600" lsb="238"/>
     <mtx name="bar_bar" width="600" lsb="-212"/>
@@ -120,14 +120,14 @@
     <mtx name="less_slash" width="600" lsb="-411"/>
     <mtx name="less_slash_uni003E" width="600" lsb="-991"/>
     <mtx name="less_uni003E" width="600" lsb="-421"/>
-    <mtx name="m" width="600" lsb="48"/>
+    <mtx name="m" width="600" lsb="39"/>
     <mtx name="n" width="600" lsb="72"/>
     <mtx name="nine" width="600" lsb="122"/>
     <mtx name="numbersign" width="600" lsb="53"/>
     <mtx name="numbersign_expand" width="600" lsb="50"/>
-    <mtx name="o" width="600" lsb="116"/>
+    <mtx name="o" width="600" lsb="106"/>
     <mtx name="one" width="600" lsb="89"/>
-    <mtx name="p" width="600" lsb="42"/>
+    <mtx name="p" width="600" lsb="46"/>
     <mtx name="parenleft" width="600" lsb="152"/>
     <mtx name="parenright" width="600" lsb="88"/>
     <mtx name="percent" width="600" lsb="33"/>
@@ -161,7 +161,7 @@
     <mtx name="tag_todo" width="600" lsb="-2624"/>
     <mtx name="three" width="600" lsb="80"/>
     <mtx name="two" width="600" lsb="81"/>
-    <mtx name="u" width="600" lsb="84"/>
+    <mtx name="u" width="600" lsb="81"/>
     <mtx name="underscore" width="600" lsb="48"/>
     <mtx name="uni00210021" width="600" lsb="-241"/>
     <mtx name="uni00230028" width="600" lsb="-510"/>

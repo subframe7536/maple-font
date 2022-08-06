@@ -2419,7 +2419,7 @@
     <mtx name="loyaltycard" width="600" lsb="0"/>
     <mtx name="lumx" width="600" lsb="0"/>
     <mtx name="lung" width="600" lsb="0"/>
-    <mtx name="m" width="600" lsb="70"/>
+    <mtx name="m" width="600" lsb="66"/>
     <mtx name="mageia" width="600" lsb="0"/>
     <mtx name="magic" width="600" lsb="0"/>
     <mtx name="magnet" width="600" lsb="0"/>
@@ -2760,7 +2760,7 @@
     <mtx name="pushpin" width="600" lsb="0"/>
     <mtx name="puzzle_piece" width="600" lsb="0"/>
     <mtx name="python" width="600" lsb="-9"/>
-    <mtx name="q" width="600" lsb="76"/>
+    <mtx name="q" width="600" lsb="79"/>
     <mtx name="qrcode" width="600" lsb="0"/>
     <mtx name="question" width="600" lsb="107"/>
     <mtx name="question.1" width="600" lsb="0"/>
