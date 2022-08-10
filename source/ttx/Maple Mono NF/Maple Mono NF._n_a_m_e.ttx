@@ -5,7 +5,7 @@
           Copyright (c) 2022, subframe7536 (https://github.com/subframe7536).
         </namerecord>
         <namerecord nameID="1" platformID="3" platEncID="1" langID="0x409">
-          Maple Mono
+          Maple Mono NF
         </namerecord>
         <namerecord nameID="2" platformID="3" platEncID="1" langID="0x409">
           Regular
@@ -14,13 +14,13 @@
           Maple Mono:Version 1.00
         </namerecord>
         <namerecord nameID="4" platformID="3" platEncID="1" langID="0x409">
-          Maple Mono
+          Maple Mono NF Regular
         </namerecord>
         <namerecord nameID="5" platformID="3" platEncID="1" langID="0x409">
           Version 1.00;August 4, 2022
         </namerecord>
         <namerecord nameID="6" platformID="3" platEncID="1" langID="0x409">
-          MapleMono
+          MapleMonoNF-Regular
         </namerecord>
         <namerecord nameID="9" platformID="3" platEncID="1" langID="0x409">
           subframe7536
@@ -39,4 +39,3 @@
         </namerecord>
       </name>
     </ttFont>
-    
