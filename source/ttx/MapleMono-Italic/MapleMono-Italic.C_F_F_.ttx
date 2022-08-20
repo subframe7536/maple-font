@@ -17,7 +17,7 @@
       <PaintType value="0"/>
       <CharstringType value="2"/>
       <FontMatrix value="0.00051282 0.0 0.0 0.00051282 0.0 0.0"/>
-      <FontBBox value="-5450 -1000 1923 2400"/>
+      <FontBBox value="-5456 -1000 1923 2400"/>
       <StrokeWidth value="0"/>
       <!-- charset is dumped separately as the 'GlyphOrder' element -->
       <Encoding name="StandardEncoding"/>
@@ -3427,9 +3427,9 @@
           4 -6 2 -7 -2 -8 -1 -8 -5 -7 -7 -7 rrcurveto
           -108 -88 rlineto
           -8 -6 -8 -3 -8 0 rrcurveto
-          4388 32 rmoveto
+          4393 32 rmoveto
           -5 0 -10 7 -14 15 -15 14 -4 23 7 31 7 31 13 23 21 15 21 14 12 7 5 0 rrcurveto
-          -2900 hlineto
+          -2905 hlineto
           -38 -180 rlineto
           -298 9 rmoveto
           21 0 20 8 20 15 19 15 13 19 6 23 rrcurveto

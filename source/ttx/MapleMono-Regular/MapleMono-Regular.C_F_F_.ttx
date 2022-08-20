@@ -3284,9 +3284,9 @@
           6 -6 3 -7 0 -8 0 -8 -3 -7 -6 -7 rrcurveto
           -89 -88 rlineto
           -7 -6 -7 -3 -8 0 rrcurveto
-          4381 32 rmoveto
+          4386 32 rmoveto
           -5 0 -11 7 -17 15 -18 14 -9 23 0 31 0 31 9 23 18 15 17 14 11 7 5 0 rrcurveto
-          -2900 -180 hlineto
+          -2905 -180 hlineto
           -300 9 rmoveto
           21 0 19 8 16 15 16 15 9 19 1 23 rrcurveto
           25 805 rlineto
