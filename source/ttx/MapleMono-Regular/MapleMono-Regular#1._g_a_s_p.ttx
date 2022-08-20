@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ttFont ttLibVersion="4.34">
+
+  <gasp>
+    <gaspRange rangeMaxPPEM="65535" rangeGaspBehavior="15"/>
+  </gasp>
+
+</ttFont>

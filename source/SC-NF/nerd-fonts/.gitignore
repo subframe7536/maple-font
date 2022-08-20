@@ -1,0 +1,12 @@
+temp-glyph-source-fonts/*
+temp/*
+patched-fonts/Input*
+unpatched-sample-fonts/Input*
+casks/*
+archives/*
+private.cfg
+node_modules
+# Only apps should have lockfiles
+package-lock.json
+# generated *.uuid files
+*.uuid

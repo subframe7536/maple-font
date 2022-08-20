@@ -85,6 +85,10 @@ feature ContextualAlternates calt {
   lookup numbersign_parenleft;
   # [todo) tags
   lookup tag_todo;
+  # ..
+  lookup period_period;
+  # ...
+  lookup period_period_period;
 }
 lookup left_right_arrow_single {
   subtable "ignore1" {
@@ -1137,4 +1141,62 @@ lookup tag_todo_4 {
 }
 lookup tag_todo_5 {
   sub bracketleft -> placeholder;
+}
+
+#------------------------------------------------------
+#..
+lookup period_period {
+  subtable ignore1 {
+    ignore context (period) period (period);
+  }
+  subtable ignore2 {
+    ignore context period (period period);
+  }
+  subtable 111 {
+    context (placeholder) period;
+    sub 0 period_period_1;
+  }
+  subtable 222 {
+    context period (period);
+    sub 0 period_period_2;
+  }
+}
+
+lookup period_period_1 {
+  sub period -> period_period;
+}
+
+lookup period_period_2 {
+  sub period -> placeholder;
+}
+
+#------------------------------------------------------
+#...
+lookup period_period_period {
+  subtable ignore1 {
+    ignore context (period) period (period period);
+  }
+  subtable ignore2 {
+    ignore context period (period period period);
+  }
+  subtable 111 {
+    context (placeholder placeholder) period;
+    sub 0 period_period_period_1;
+  }
+  subtable 222 {
+    context (placeholder) period (period);
+    sub 0 period_period_period_2;
+  }
+  subtable 333 {
+    context period (period period);
+    sub 0 period_period_period_2;
+  }
+}
+
+lookup period_period_period_1 {
+  sub period -> period_period_period;
+}
+
+lookup period_period_period_2 {
+  sub period -> placeholder;
 }
