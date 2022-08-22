@@ -1,14 +1,31 @@
 ![](/img/head.svg)
 
-# Maple Series V4
+# Maple Series V5
 
-## Download
+## 下载
 
-- [国内地址](https://gitee.com/subframe7536/Maple/releases/v4.0)
+Release
+
+[国内地址](https://gitee.com/subframe7536/Maple/releases/v5.0)
+
+### V5 新增
+
+- ✨ 参考`Fira Code Retina`重新设计了字形，将宽度从原来的 600 改成了 1200，应该可以提升低分屏上的渲染效果，下面是在我的屏幕(1080P)下测试的对比
+  - v4: ![](/img/sizechange.gif)
+  - v5: ![](/img/sizechange1.gif)
+- 优化字形，降低大写和数字的高度，提升阅读舒适度
+- 添加`..`,`...`的连字，有其他需要可以提 issue
+
+---
+
+[Maple Mono SC NF](#maple-mono-sc-nf)
+
+- ✨ 合并了 NF 和 SC，现在只需一个字体就可以适用所有场景，并且支持中英文 2:1
+- (半成品)支持使用其他的字体生成中文部分
 
 ## Maple Mono
 
-开源的圆角等宽字体，只有英数、制表符和个别特殊符号
+开源的圆角等宽字体，只有基础拉丁文(英数+符号)、制表符
 
 - 参考了 [Source Code Pro](https://github.com/adobe-fonts/source-code-pro), [Fira Code](https://github.com/tonsky/FiraCode), ubuntu mono, operator mono, [sarasa mono sc nerd](https://github.com/laishulu/Sarasa-Mono-SC-Nerd) 等优秀字体
 - 修改了`@ # $ % &`的形状
@@ -16,44 +33,44 @@
 - 花体的斜体
 - `source/mono.fea`: 有注释的 OpenType 脚本，方便阅读
 
-### Maple Mono NF
-
-控制台字体，Maple Mono 混合了 [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts)
-
 ### 样例
 
 #### 全部字符
 
-![](img/sample.webp)
+![](img/base.png)
+
+#### Ligature
+
+![](img/ligature.png)
 ![](img/ligature.gif)
-
-#### React
-
-![](img/react.webp)
-
-#### Vue
-
-![](img/vue.webp)
-
-#### Java
-
-![](img/java.webp)
-
-#### Go
-
-![](img/go.webp)
-
-#### Python
-
-![](img/python.webp)
-
-#### Rust
-
-![](img/rust.webp)
 
 #### Cli
 
-![](img/cli.webp)
+![](img/code_sample/cli.webp)
+
+#### React
+
+![](img/code_sample/react.webp)
+
+#### Vue
+
+![](img/code_sample/vue.webp)
+
+#### Java
+
+![](img/code_sample/java.webp)
+
+#### Go
+
+![](img/code_sample/go.webp)
+
+#### Python
+
+![](img/code_sample/python.webp)
+
+#### Rust
+
+![](img/code_sample/rust.webp)
 
 ## 开发
 
@@ -69,6 +86,14 @@ cd Maple-font/source
 pip install fonttools
 python build.py
 ```
+
+## Maple Mono SC NF
+
+中英文 2:1 + Nerd Font 控制台字体
+
+- 在 VSCode 和 IDEA 上测试均能正常显示
+
+![](/img/CE21.png)
 
 ## Maple UI
 
@@ -87,34 +112,9 @@ Windows 使用 Mactype + [自用脚本](https://gitee.com/subframe7536/mactype) 
 ![](img/Browser.webp)
 ![](img/Browser2.webp)
 
-## Maple Mono SC
-
-附带 Maple UI 中文部分的 Maple Mono
-
-### 制作原因
-
-本来打算是不打算做 SC 版本，做 Maple UI 的斜体版本的，然后用 callback 替换的，但是我把 Maple UI 当作 Windows 全局的字体，做了斜体、安装之后不知道为啥默认的是斜体了...就很奇怪，无奈之下把它加进 Mono 中做一版 SC
-
-### 已知问题
-
-- 由于是用 fontforge + fonttools 自动生成的，用 Windows 字体查看器打开中文是有错位的，但是正常在 IDE 和浏览器中是可以正常显示的
-
-  - ps: 国内是一点都没有类似的教程，还得是 Google + Github，有空的时候考虑写一篇教程
-
-~~- 中英字符不是 2:1~~
-
-~~- 中文字符宽度为 1000，英文字符宽度为 600，2:1 只能拉长中文字符或者减少英文字符宽度~~
-~~- 减少英文字符宽度之后作为浏览器等宽字体太小，拉长高度则会破坏美观~~
-~~- 增大中文字符间距美观程度个人认为不如不改的...~~
-~~- 暂时没有解决方案，有好的想法欢迎提 issue~~
-
-尝试做了一下 2:1，效果还行，顺便合并了 NF，现在 IDE、终端、浏览器的等宽都用一个了 hhh，[下载地址](https://gitee.com/subframe7536/Maple/releases/tag/v4.3)
-
 ## Maple Hand
 
 手写体，クレ pro 英数微调+唐美人汉字部分，目前用在手机端，配合空字体模块做全局字体模块
-
-- 修复了 …… 的间距问题
 
 ### 样例
 
@@ -123,5 +123,3 @@ Windows 使用 Mactype + [自用脚本](https://gitee.com/subframe7536/mactype) 
 ## 许可证
 
 SIL Open Font License 1.1
-
-- Maple Mono 可商用

@@ -1,12 +1,22 @@
 ![](/img/head.svg)
 
-# Maple Series V4
+# Maple Series V5
 
 [中文版](/README_CN.md)
+
+## What's new compare to V4
+
+- redesigned it according to `Fira Code Retina`'s spacing and glyph and expand the font width from 600 to 1200, which lead to a **better rendering effect** on my screen(1080P)
+  - v4: ![](/img/sizechange.gif)
+  - v5: ![](/img/sizechange1.gif)
+- change glyph shape for **more comfortable reading experience**
+- add `..`,`...` ligature
 
 ## Download
 
 in Release
+
+[国内地址](https://gitee.com/subframe7536/Maple/releases/v5.0)
 
 ## Maple Mono
 
@@ -21,46 +31,53 @@ Open source rounded Monospace font
 
 ### Maple Mono NF
 
-Font for Cli, Maple Mono mixing [Nerd Fonts](https://github.com/ryanoasis/nerd-fonts)
+~~Font for Cli, Maple Mono mixing Nerd Fonts~~
+no longer provide, please read [Nerd Fonts Docs](https://github.com/ryanoasis/nerd-fonts#option-8-patch-your-own-font)
+
+- I use
+
+```shell
+font-patcher -l -s --careful -c -w /path/to/ttf
+```
 
 ### Sample
 
 #### Total
 
-![](/img/sample.webp)
-![](/img/ligature.gif)
+![](img/base.png)
 
-### Command Line
+#### Ligature
 
-![](/img/cli.webp)
-
-#### React
-
-![](/img/react.webp)
-
-#### Vue
-
-![](/img/vue.webp)
-
-#### Java
-
-![](/img/java.webp)
-
-#### Go
-
-![](/img/go.webp)
-
-#### Python
-
-![](/img/python.webp)
-
-#### Rust
-
-![](/img/rust.webp)
+![](img/ligature.png)
+![](img/ligature.gif)
 
 #### Cli
 
-![](img/cli.webp)
+![](img/code_sample/cli.webp)
+
+#### React
+
+![](img/code_sample/react.webp)
+
+#### Vue
+
+![](img/code_sample/vue.webp)
+
+#### Java
+
+![](img/code_sample/java.webp)
+
+#### Go
+
+![](img/code_sample/go.webp)
+
+#### Python
+
+![](img/code_sample/python.webp)
+
+#### Rust
+
+![](img/code_sample/rust.webp)
 
 ## Dev
 

@@ -1,3 +1,7 @@
+script latn {
+  feature ContextualAlternates;
+}
+
 class @hex [A-F zero-nine];
 class @number [zero-nine];
 class @capital [A-Z];
@@ -5,9 +9,7 @@ class @low [a-z];
 class @operator [equal less greater asterisk plus hyphenminus asciitilde asciicircum];
 class @colons [colon colon_center colon_center_left colon_center_right];
 class @var [zero-nine A-Z a-z underscore dollar asterisk];
-script latn {
-  feature ContextualAlternates;
-}
+
 feature ContextualAlternates calt {
   # ->
   lookup right_arrow_single;
@@ -90,1061 +92,995 @@ feature ContextualAlternates calt {
   # ...
   lookup period_period_period;
 }
+
 lookup left_right_arrow_single {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (less) less (hyphenminus greater);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context less (hyphenminus greater greater);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder placeholder) greater;
     sub 0 left_right_arrow_single_1;
   }
-  subtable "222" {
+  subtable 222 {
     context (placeholder) hyphenminus (greater);
     sub 0 left_right_arrow_single_2;
   }
-  subtable "333" {
+  subtable 333 {
     context less (hyphenminus greater);
     sub 0 left_right_arrow_single_3;
   }
 }
+
 lookup left_right_arrow_single_1 {
   sub greater -> left_right_arrow_single;
 }
+
 lookup left_right_arrow_single_2 {
   sub hyphenminus -> placeholder;
 }
+
 lookup left_right_arrow_single_3 {
   sub less -> placeholder;
 }
-#------------------------------------------------------
+
 lookup left_right_arrow_double {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (less) less (equal greater);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context less (equal greater greater);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder placeholder) greater;
     sub 0 left_right_arrow_double_1;
   }
-  subtable "222" {
+  subtable 222 {
     context (placeholder) equal (greater);
     sub 0 left_right_arrow_double_2;
   }
-  subtable "333" {
+  subtable 333 {
     context less (equal greater);
     sub 0 left_right_arrow_double_3;
   }
 }
+
 lookup left_right_arrow_double_1 {
   sub greater -> left_right_arrow_double;
 }
+
 lookup left_right_arrow_double_2 {
   sub equal -> placeholder;
 }
+
 lookup left_right_arrow_double_3 {
   sub less -> placeholder;
 }
-#------------------------------------------------------
+
 lookup right_arrow_single {
-  subtable "ignore1"{
+  subtable ignore1 {
     ignore context (hyphenminus) hyphenminus (greater);
   }
-  subtable "ignore2"{
+  subtable ignore2 {
     ignore context hyphenminus (greater greater);
   }
-  subtable "111"{
+  subtable 111 {
     context (placeholder) greater;
     sub 0 right_arrow_single_1;
   }
-  subtable "222"{
+  subtable 222 {
     context hyphenminus (greater);
     sub 0 right_arrow_single_2;
   }
 }
+
 lookup right_arrow_single_1 {
   sub greater -> right_arrow_single;
 }
+
 lookup right_arrow_single_2 {
   sub hyphenminus -> placeholder;
 }
-#------------------------------------------------------
+
 lookup right_arrow_double {
-  subtable "ignore1"{
+  subtable ignore1 {
     ignore context (equal) equal (greater);
   }
-  subtable "ignore2"{
+  subtable ignore2 {
     ignore context equal (greater greater);
   }
-  subtable "111"{
+  subtable 111 {
     context (placeholder) greater;
     sub 0 right_arrow_double_1;
   }
-  subtable "222"{
+  subtable 222 {
     context equal (greater);
     sub 0 right_arrow_double_2;
   }
 }
+
 lookup right_arrow_double_1 {
   sub greater -> right_arrow_double;
 }
+
 lookup right_arrow_double_2 {
   sub equal -> placeholder;
 }
-#------------------------------------------------------
+
 lookup hex_center_x {
-  subtable "hex" {
+  subtable hex {
     context (zero) x (@hex);
     sub 0 hex_center_x_1;
   }
 }
+
 lookup hex_center_x_1 {
   sub x -> x_center;
 }
-#------------------------------------------------------
+
 lookup colon_center {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context colon (@colons @colons @colons);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context (@colons) colon (@colons @colons);
   }
-  subtable "ignore3" {
+  subtable ignore3 {
     ignore context (@colons @colons) colon (@colons);
   }
-  subtable "ignore4" {
+  subtable ignore4 {
     ignore context (@colons @colons @colons) colon;
   }
-  subtable "111_1" {
+  subtable 111_1 {
     context (@colons) colon (@colons);
     sub 0 operator_center_1;
   }
-  subtable "111_2" {
+  subtable 111_2 {
     context colon (@colons @colons);
     sub 0 operator_center_2;
   }
-  subtable "111_3" {
+  subtable 111_3 {
     context (@colons @colons) colon;
     sub 0 operator_center_3;
   }
-  subtable "111" {
+  subtable 111_4 {
+    context colon (hyphenminus @number);
+    sub 0 operator_center_1;
+  }
+  subtable 111 {
     context (@operator) colon (@operator);
     sub 0 operator_center_1;
   }
-  subtable "666" {
+  subtable 666 {
     context (@colons) colon (@operator);
     sub 0 operator_center_1;
   }
-  subtable "777" {
+  subtable 777 {
     context (@operator) colon (@colons);
     sub 0 operator_center_1;
   }
-  subtable "333" {
+  subtable 333 {
     context colon (@operator @colons);
     sub 0 operator_center_2;
   }
-  subtable "555" {
+  subtable 555 {
     context (@colons @operator) colon;
     sub 0 operator_center_3;
   }
-  subtable "111_4" {
+  subtable 111_4 {
     context (@colons) colon;
     sub 0 operator_center_3;
   }
-  subtable "111_5" {
+  subtable 111_5 {
     context colon (@colons);
     sub 0 operator_center_2;
   }
-  subtable "222" {
+  subtable 222 {
     context colon (@operator);
     sub 0 operator_center_2;
   }
-  subtable "444" {
+  subtable 444 {
     context (@operator) colon;
     sub 0 operator_center_3;
   }
 }
+
 lookup operator_center_1 {
   sub colon -> colon_center;
 }
+
 lookup operator_center_2 {
   sub colon -> colon_center_right;
 }
+
 lookup operator_center_3 {
   sub colon -> colon_center_left;
 }
-#------------------------------------------------------
+
 lookup less_slash {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (less) less (slash);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context less (slash slash);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context less (slash greater);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder) slash;
     sub 0 less_slash_1;
   }
-  subtable "222" {
+  subtable 222 {
     context less (slash);
     sub 0 less_slash_2;
   }
 }
+
 lookup less_slash_1 {
   sub slash -> less_slash;
 }
+
 lookup less_slash_2 {
   sub less -> placeholder;
 }
-#------------------------------------------------------
+
 lookup slash_greater {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (slash less) slash (greater);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context slash (greater greater);
   }
-  subtable "ignore3" {
+  subtable ignore3 {
     ignore context (less) slash (greater);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder) greater;
     sub 0 slash_greater_1;
   }
-  subtable "222" {
+  subtable 222 {
     context slash (greater);
     sub 0 slash_greater_2;
   }
 }
+
 lookup slash_greater_1 {
   sub greater -> slash_greater;
 }
+
 lookup slash_greater_2 {
   sub slash -> placeholder;
 }
-#------------------------------------------------------
+
 lookup less_greater {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (less) less (greater);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context less (greater greater);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder) greater;
     sub 0 less_greater_1;
   }
-  subtable "222" {
+  subtable 222 {
     context less (greater);
     sub 0 less_greater_2;
   }
 }
+
 lookup less_greater_1 {
   sub greater -> less_greater;
 }
+
 lookup less_greater_2 {
   sub less -> placeholder;
 }
-#------------------------------------------------------
+
 lookup less_slash_greater {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (less) less (slash greater);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context less (slash greater greater);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder placeholder) greater;
     sub 0 less_slash_greater_1;
   }
-  subtable "222" {
+  subtable 222 {
     context (placeholder) slash (greater);
     sub 0 less_slash_greater_2;
   }
-  subtable "333" {
+  subtable 333 {
     context less (slash greater);
     sub 0 less_slash_greater_3;
   }
 }
+
 lookup less_slash_greater_1 {
   sub greater -> less_slash_greater;
 }
+
 lookup less_slash_greater_2 {
   sub slash -> placeholder;
 }
+
 lookup less_slash_greater_3 {
   sub less -> placeholder;
 }
-#------------------------------------------------------
+
 lookup left_arrow_single {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (less) less (hyphenminus);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context less (hyphenminus hyphenminus);
   }
-  subtable "ignore3" {
+  subtable ignore3 {
     ignore context less (hyphenminus @number);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder) hyphenminus;
     sub 0 left_arrow_single_1;
   }
-  subtable "222" {
+  subtable 222 {
     context less (hyphenminus);
     sub 0 left_arrow_single_2;
   }
 }
+
 lookup left_arrow_single_1 {
   sub hyphenminus -> left_arrow_single;
 }
+
 lookup left_arrow_single_2 {
   sub less -> placeholder;
 }
-#------------------------------------------------------
+
 lookup left_right_arrow_single_long {
-   subtable "ignore1" {
+  subtable ignore1 {
     ignore context (less) less (hyphenminus hyphenminus greater);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context less (hyphenminus hyphenminus greater greater);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder placeholder placeholder) greater;
     sub 0 left_right_arrow_single_long_1;
   }
-  subtable "222" {
+  subtable 222 {
     context (placeholder placeholder) hyphenminus (greater);
     sub 0 left_right_arrow_single_long_2;
   }
-  subtable "333" {
+  subtable 333 {
     context (placeholder) hyphenminus (hyphenminus greater);
     sub 0 left_right_arrow_single_long_2;
   }
-  subtable "444" {
+  subtable 444 {
     context less (hyphenminus hyphenminus greater);
     sub 0 left_right_arrow_single_long_3;
   }
 }
+
 lookup left_right_arrow_single_long_1 {
   sub greater -> left_right_arrow_single_long;
 }
+
 lookup left_right_arrow_single_long_2 {
   sub hyphenminus -> placeholder;
 }
+
 lookup left_right_arrow_single_long_3 {
   sub less -> placeholder;
 }
-#------------------------------------------------------
+
 lookup left_right_arrow_double_long {
-   subtable "ignore1" {
+  subtable ignore1 {
     ignore context (less) less (equal equal greater);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context less (equal equal greater greater);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder placeholder placeholder) greater;
     sub 0 left_right_arrow_double_long_1;
   }
-  subtable "222" {
+  subtable 222 {
     context (placeholder placeholder) equal (greater);
     sub 0 left_right_arrow_double_long_2;
   }
-  subtable "333" {
+  subtable 333 {
     context (placeholder) equal (equal greater);
     sub 0 left_right_arrow_double_long_2;
   }
-  subtable "444" {
+  subtable 444 {
     context less (equal equal greater);
     sub 0 left_right_arrow_double_long_3;
   }
 }
+
 lookup left_right_arrow_double_long_1 {
   sub greater -> left_right_arrow_double_long;
 }
+
 lookup left_right_arrow_double_long_2 {
   sub equal -> placeholder;
 }
+
 lookup left_right_arrow_double_long_3 {
   sub less -> placeholder;
 }
-#------------------------------------------------------
+
 lookup right_arrow_single_long {
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context hyphenminus (hyphenminus greater greater);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder placeholder) greater;
     sub 0 right_arrow_single_long_1;
   }
-  subtable "222" {
+  subtable 222 {
     context (placeholder) hyphenminus (greater);
     sub 0 right_arrow_single_long_2;
   }
-  subtable "333" {
+  subtable 333 {
     context hyphenminus (hyphenminus greater);
     sub 0 right_arrow_single_long_2;
   }
 }
+
 lookup right_arrow_single_long_1 {
   sub greater -> right_arrow_single_long;
 }
+
 lookup right_arrow_single_long_2 {
   sub hyphenminus -> placeholder;
 }
-#------------------------------------------------------
+
 lookup right_arrow_double_long {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (equal) equal (equal greater);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context equal (equal greater greater);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder placeholder) greater;
     sub 0 right_arrow_double_long_1;
   }
-  subtable "222" {
+  subtable 222 {
     context (placeholder) equal (greater);
     sub 0 right_arrow_double_long_2;
   }
-  subtable "333" {
+  subtable 333 {
     context equal (equal greater);
     sub 0 right_arrow_double_long_2;
   }
 }
+
 lookup right_arrow_double_long_1 {
   sub greater -> right_arrow_double_long;
 }
+
 lookup right_arrow_double_long_2 {
   sub equal -> placeholder;
 }
-#------------------------------------------------------
+
 lookup less_less {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (less) less (less);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context less (less less);
   }
-  subtable "ignore3" {
+  subtable ignore3 {
     ignore context less (less @var);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder) less;
     sub 0 less_less_1;
   }
-  subtable "222" {
+  subtable 222 {
     context less (less);
     sub 0 less_less_2;
   }
 }
+
 lookup less_less_1 {
   sub less -> less_less;
 }
+
 lookup less_less_2 {
   sub less -> placeholder;
 }
-#------------------------------------------------------
+
 lookup less_less_less {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (less) less (less less);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context less (less less less);
   }
-  subtable "ignore3" {
+  subtable ignore3 {
     ignore context less (less less @var);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder placeholder) less;
     sub 0 less_less_less_1;
   }
-  subtable "222" {
+  subtable 222 {
     context (placeholder) less (less);
     sub 0 less_less_less_2;
   }
-  subtable "333" {
+  subtable 333 {
     context less (less less);
     sub 0 less_less_less_2;
   }
 }
+
 lookup less_less_less_1 {
   sub less -> less_less_less;
 }
+
 lookup less_less_less_2 {
   sub less -> placeholder;
 }
-#------------------------------------------------------
+
 lookup greater_greater {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (greater) greater (greater);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context greater (greater greater);
   }
-  subtable "ignore3" {
+  subtable ignore3 {
     ignore context (@var) greater (greater);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder) greater;
     sub 0 greater_greater_1;
   }
-  subtable "222" {
+  subtable 222 {
     context greater (greater);
     sub 0 greater_greater_2;
   }
 }
+
 lookup greater_greater_1 {
   sub greater -> greater_greater;
 }
+
 lookup greater_greater_2 {
   sub greater -> placeholder;
 }
-#------------------------------------------------------
+
 lookup greater_greater_greater {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (greater) greater (greater greater);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context greater (greater greater greater);
   }
-  subtable "ignore3" {
+  subtable ignore3 {
     ignore context (@var) greater (greater greater);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder placeholder) greater;
     sub 0 greater_greater_greater_1;
   }
-  subtable "222" {
+  subtable 222 {
     context (placeholder) greater (greater);
     sub 0 greater_greater_greater_2;
   }
-  subtable "333" {
+  subtable 333 {
     context greater (greater greater);
     sub 0 greater_greater_greater_2;
   }
 }
+
 lookup greater_greater_greater_1 {
   sub greater -> greater_greater_greater;
 }
+
 lookup greater_greater_greater_2 {
   sub greater -> placeholder;
 }
-#------------------------------------------------------
+
 lookup sharps {
-  subtable "111" {
+  subtable 111 {
     context numbersign (numbersign_expand);
     sub 0 sharps_1;
   }
-  subtable "222" {
+  subtable 222 {
     context numbersign (numbersign);
     sub 0 sharps_1;
   }
 }
+
 lookup sharps_1 {
   sub numbersign -> numbersign_expand;
 }
-#------------------------------------------------------
+
 lookup xml_comment {
-  subtable "000" {
-    context (placeholder placeholder placeholder) hyphenminus (hyphenminus);
-    sub 0 xml_comment_0;
-  }
-  subtable "111" {
-    context (placeholder placeholder placeholder) hyphenminus;
+  subtable 000 {
+    context (placeholder placeholder placeholder) hyphenminus (placeholder placeholder right_arrow_single_long);
     sub 0 xml_comment_1;
   }
-  subtable "222" {
+  subtable 111 {
+    context (placeholder placeholder placeholder) hyphenminus;
+    sub 0 xml_comment_0;
+  }
+  subtable 222 {
     context (placeholder placeholder) hyphenminus (hyphenminus);
     sub 0 xml_comment_2;
   }
-  subtable "333" {
+  subtable 333 {
     context (placeholder) exclam (hyphenminus hyphenminus);
     sub 0 xml_comment_3;
   }
-  subtable "444" {
+  subtable 444 {
     context less (exclam hyphenminus hyphenminus);
     sub 0 xml_comment_4;
   }
 }
+
 lookup xml_comment_0 {
   sub hyphenminus -> xml_comment_begin;
 }
+
 lookup xml_comment_1 {
   sub hyphenminus -> xml_comment_empty;
 }
+
 lookup xml_comment_2 {
   sub hyphenminus -> placeholder;
 }
+
 lookup xml_comment_3 {
   sub exclam -> placeholder;
 }
+
 lookup xml_comment_4 {
   sub less -> placeholder;
 }
-#------------------------------------------------------
+
 lookup asciitilde_at {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (asciitilde) asciitilde (at);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context asciitilde (at at);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder) at;
     sub 0 asciitilde_at_1;
   }
-  subtable "222" {
+  subtable 222 {
     context asciitilde (at);
     sub 0 asciitilde_at_2;
   }
 }
+
 lookup asciitilde_at_1 {
   sub at -> asciitilde_at;
 }
+
 lookup asciitilde_at_2 {
   sub asciitilde -> placeholder;
 }
-#------------------------------------------------------
+
 lookup slash_slash {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (slash) slash (slash);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context slash (slash slash);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder) slash;
     sub 0 slash_slash_1;
   }
-  subtable "222" {
+  subtable 222 {
     context slash (slash);
     sub 0 slash_slash_2;
   }
 }
+
 lookup slash_slash_1 {
   sub slash -> slash_slash;
 }
+
 lookup slash_slash_2 {
   sub slash -> placeholder;
 }
-#------------------------------------------------------
+
 lookup slash_slash_slash {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (slash) slash (slash slash);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context slash (slash slash slash);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder placeholder) slash;
     sub 0 slash_slash_slash_1;
   }
-  subtable "222" {
+  subtable 222 {
     context (placeholder) slash (slash);
     sub 0 slash_slash_slash_2;
   }
-  subtable "333" {
+  subtable 333 {
     context slash (slash slash);
     sub 0 slash_slash_slash_2;
   }
 }
+
 lookup slash_slash_slash_1 {
   sub slash -> slash_slash_slash;
 }
+
 lookup slash_slash_slash_2 {
   sub slash -> placeholder;
 }
-#------------------------------------------------------
+
 lookup exclam_exclam {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (exclam) exclam (exclam);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context exclam (exclam exclam);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder) exclam;
     sub 0 exclam_exclam_1;
   }
-  subtable "222" {
+  subtable 222 {
     context exclam (exclam);
     sub 0 exclam_exclam_2;
   }
 }
+
 lookup exclam_exclam_1 {
   sub exclam -> exclam_exclam;
 }
+
 lookup exclam_exclam_2 {
   sub exclam -> placeholder;
 }
-#------------------------------------------------------
+
 lookup bar_bar {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (bar) bar (bar);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context bar (bar bar);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder) bar;
     sub 0 bar_bar_1;
   }
-  subtable "222" {
+  subtable 222 {
     context bar (bar);
     sub 0 bar_bar_2;
   }
 }
+
 lookup bar_bar_1 {
   sub bar -> bar_bar;
 }
+
 lookup bar_bar_2 {
   sub bar -> placeholder;
 }
-#------------------------------------------------------
+
 lookup question_question {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (question) question (question);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context question (question question);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder) question;
     sub 0 question_question_1;
   }
-  subtable "222" {
+  subtable 222 {
     context question (question);
     sub 0 question_question_2;
   }
 }
+
 lookup question_question_1 {
   sub question -> question_question;
 }
+
 lookup question_question_2 {
   sub question -> placeholder;
 }
-#------------------------------------------------------
+
 lookup ampersand_ampersand {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (ampersand) ampersand (ampersand);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context ampersand (ampersand ampersand);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder) ampersand;
     sub 0 ampersand_ampersand_1;
   }
-  subtable "222" {
+  subtable 222 {
     context ampersand (ampersand);
     sub 0 ampersand_ampersand_2;
   }
 }
+
 lookup ampersand_ampersand_1 {
   sub ampersand -> ampersand_ampersand;
 }
+
 lookup ampersand_ampersand_2 {
   sub ampersand -> placeholder;
 }
-#------------------------------------------------------
+
 lookup slash_asterisk {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (slash) slash (asterisk);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context (asterisk) slash (asterisk);
   }
-  subtable "ignore3" {
+  subtable ignore3 {
     ignore context slash (asterisk asterisk);
   }
-  subtable "ignore4" {
+  subtable ignore4 {
     ignore context slash (asterisk slash);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder) asterisk;
     sub 0 slash_asterisk_1;
   }
-  subtable "222" {
+  subtable 222 {
     context slash (asterisk);
     sub 0 slash_asterisk_2;
   }
 }
+
 lookup slash_asterisk_1 {
   sub asterisk -> slash_asterisk;
 }
+
 lookup slash_asterisk_2 {
   sub slash -> placeholder;
 }
-#------------------------------------------------------
+
 lookup slash_asterisk_asterisk {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (slash) slash (asterisk asterisk);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context (asterisk) slash (asterisk asterisk);
   }
-  subtable "ignore3" {
+  subtable ignore3 {
     ignore context slash (asterisk asterisk asterisk);
   }
-  subtable "ignore4" {
+  subtable ignore4 {
     ignore context slash (asterisk asterisk slash);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder placeholder) asterisk;
     sub 0 slash_asterisk_asterisk_1;
   }
-  subtable "222" {
+  subtable 222 {
     context (placeholder) asterisk (asterisk);
     sub 0 slash_asterisk_asterisk_2;
   }
-  subtable "333" {
+  subtable 333 {
     context slash (asterisk asterisk);
     sub 0 slash_asterisk_asterisk_3;
   }
 }
+
 lookup slash_asterisk_asterisk_1 {
   sub asterisk -> slash_asterisk_asterisk;
 }
+
 lookup slash_asterisk_asterisk_2 {
   sub asterisk -> placeholder;
 }
+
 lookup slash_asterisk_asterisk_3 {
   sub slash -> placeholder;
 }
-#------------------------------------------------------
+
 lookup asterisk_slash {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (asterisk) asterisk (slash);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context (slash) asterisk (slash);
   }
-  subtable "ignore3" {
+  subtable ignore3 {
     ignore context asterisk (slash slash);
   }
-  subtable "ignore4" {
+  subtable ignore4 {
     ignore context asterisk (slash asterisk);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder) slash;
     sub 0 asterisk_slash_1;
   }
-  subtable "222" {
+  subtable 222 {
     context asterisk (slash);
     sub 0 asterisk_slash_2;
   }
 }
+
 lookup asterisk_slash_1 {
   sub slash -> asterisk_slash;
 }
+
 lookup asterisk_slash_2 {
   sub asterisk -> placeholder;
 }
-#------------------------------------------------------
+
 lookup plus_plus {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (plus) plus (plus);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context plus (plus plus);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder) plus;
     sub 0 plus_plus_1;
   }
-  subtable "222" {
+  subtable 222 {
     context plus (plus);
     sub 0 plus_plus_2;
   }
 }
+
 lookup plus_plus_1 {
   sub plus -> plus_plus;
 }
+
 lookup plus_plus_2 {
   sub plus -> placeholder;
 }
-#------------------------------------------------------
+
 lookup plus_plus_plus {
-  subtable "ignore1" {
+  subtable ignore1 {
     ignore context (plus) plus (plus plus);
   }
-  subtable "ignore2" {
+  subtable ignore2 {
     ignore context plus (plus plus plus);
   }
-  subtable "111" {
+  subtable 111 {
     context (placeholder placeholder) plus;
     sub 0 plus_plus_plus_1;
   }
-  subtable "222" {
+  subtable 222 {
     context (placeholder) plus (plus);
     sub 0 plus_plus_plus_2;
   }
-  subtable "333" {
+  subtable 333 {
     context plus (plus plus);
     sub 0 plus_plus_plus_2;
   }
 }
+
 lookup plus_plus_plus_1 {
   sub plus -> plus_plus_plus;
 }
+
 lookup plus_plus_plus_2 {
   sub plus -> placeholder;
 }
-#------------------------------------------------------
-# lookup numbersign_braceleft;
-lookup numbersign_braceleft {
-  subtable "ignore1" {
-    ignore context (numbersign) numbersign (braceleft);
-  }
-  subtable "ignore2" {
-    ignore context numbersign (braceleft braceleft);
-  }
-  subtable "111" {
-    context (placeholder) braceleft;
-    sub 0 numbersign_braceleft_1;
-  }
-  subtable "222" {
-    context numbersign (braceleft);
-    sub 0 numbersign_braceleft_2;
-  }
-}
-lookup numbersign_braceleft_1 {
-  sub braceleft -> numbersign_braceleft;
-}
-lookup numbersign_braceleft_2 {
-  sub numbersign -> placeholder;
-}
-#------------------------------------------------------
-# lookup numbersign_bracketleft;
-lookup numbersign_bracketleft {
-  subtable "ignore1" {
-    ignore context (numbersign) numbersign (bracketleft);
-  }
-  subtable "ignore2" {
-    ignore context numbersign (bracketleft bracketleft);
-  }
-  subtable "ignore3" {
-    ignore context numbersign (bracketleft T);
-  }
-  subtable "111" {
-    context (placeholder) bracketleft;
-    sub 0 numbersign_bracketleft_1;
-  }
-  subtable "222" {
-    context numbersign (bracketleft);
-    sub 0 numbersign_bracketleft_2;
-  }
-}
-lookup numbersign_bracketleft_1 {
-  sub bracketleft -> numbersign_bracketleft;
-}
-lookup numbersign_bracketleft_2 {
-  sub numbersign -> placeholder;
-}
-#------------------------------------------------------
-# lookup bracketright_numbersign;
-lookup bracketright_numbersign {
-  subtable "ignore1" {
-    ignore context (bracketright) bracketright (numbersign);
-  }
-  subtable "ignore2" {
-    ignore context bracketright (numbersign numbersign);
-  }
-  subtable "111" {
-    context (placeholder) numbersign;
-    sub 0 bracketright_numbersign_1;
-  }
-  subtable "222" {
-    context bracketright (numbersign);
-    sub 0 bracketright_numbersign_2;
-  }
-}
-lookup bracketright_numbersign_1 {
-  sub numbersign -> bracketright_numbersign;
-}
-lookup bracketright_numbersign_2 {
-  sub bracketright -> placeholder;
-}
-#------------------------------------------------------
-# lookup numbersign_parenleft;
-lookup numbersign_parenleft {
-  subtable "ignore1" {
-    ignore context (numbersign) numbersign (parenleft);
-  }
-  subtable "ignore2" {
-    ignore context numbersign (parenleft parenleft);
-  }
-  subtable "111" {
-    context (placeholder) parenleft;
-    sub 0 numbersign_parenleft_1;
-  }
-  subtable "222" {
-    context numbersign (parenleft);
-    sub 0 numbersign_parenleft_2;
-  }
-}
-lookup numbersign_parenleft_1 {
-  sub parenleft -> numbersign_parenleft;
-}
-lookup numbersign_parenleft_2 {
-  sub numbersign -> placeholder;
-}
-#------------------------------------------------------
-#[TODO)
-lookup tag_todo {
-  subtable "111" {
-    context (placeholder placeholder placeholder placeholder placeholder) parenright;
-    sub 0 tag_todo_1;
-  }
-  subtable "222" {
-    context (placeholder placeholder placeholder placeholder) O (parenright);
-    sub 0 tag_todo_2;
-  }
-  subtable "333" {
-    context (placeholder placeholder placeholder) D (O parenright);
-    sub 0 tag_todo_3;
-  }
-  subtable "444" {
-    context (placeholder placeholder) O (D O parenright);
-    sub 0 tag_todo_2;
-  }
-  subtable "555" {
-    context (placeholder) T (O D O parenright);
-    sub 0 tag_todo_4;
-  }
-  subtable "666" {
-    context bracketleft (T O D O parenright);
-    sub 0 tag_todo_5;
-  }
-}
-lookup tag_todo_1 {
-  sub parenright -> tag_todo;
-}
-lookup tag_todo_2 {
-  sub O -> placeholder;
-}
-lookup tag_todo_3 {
-  sub D -> placeholder;
-}
-lookup tag_todo_4 {
-  sub T -> placeholder;
-}
-lookup tag_todo_5 {
-  sub bracketleft -> placeholder;
-}
-
-#------------------------------------------------------
-#..
 lookup period_period {
   subtable ignore1 {
     ignore context (period) period (period);
@@ -1170,8 +1106,6 @@ lookup period_period_2 {
   sub period -> placeholder;
 }
 
-#------------------------------------------------------
-#...
 lookup period_period_period {
   subtable ignore1 {
     ignore context (period) period (period period);
@@ -1199,4 +1133,154 @@ lookup period_period_period_1 {
 
 lookup period_period_period_2 {
   sub period -> placeholder;
+}
+
+lookup numbersign_braceleft {
+  subtable ignore1 {
+    ignore context (numbersign) numbersign (braceleft);
+  }
+  subtable ignore2 {
+    ignore context numbersign (braceleft braceleft);
+  }
+  subtable 111 {
+    context (placeholder) braceleft;
+    sub 0 numbersign_braceleft_1;
+  }
+  subtable 222 {
+    context numbersign (braceleft);
+    sub 0 numbersign_braceleft_2;
+  }
+}
+
+lookup numbersign_braceleft_1 {
+  sub braceleft -> numbersign_braceleft;
+}
+
+lookup numbersign_braceleft_2 {
+  sub numbersign -> placeholder;
+}
+
+lookup numbersign_bracketleft {
+  subtable ignore1 {
+    ignore context (numbersign) numbersign (bracketleft);
+  }
+  subtable ignore2 {
+    ignore context numbersign (bracketleft bracketleft);
+  }
+  subtable ignore3 {
+    ignore context numbersign (bracketleft T);
+  }
+  subtable 111 {
+    context (placeholder) bracketleft;
+    sub 0 numbersign_bracketleft_1;
+  }
+  subtable 222 {
+    context numbersign (bracketleft);
+    sub 0 numbersign_bracketleft_2;
+  }
+}
+
+lookup numbersign_bracketleft_1 {
+  sub bracketleft -> numbersign_bracketleft;
+}
+
+lookup numbersign_bracketleft_2 {
+  sub numbersign -> placeholder;
+}
+
+lookup bracketright_numbersign {
+  subtable ignore1 {
+    ignore context (bracketright) bracketright (numbersign);
+  }
+  subtable ignore2 {
+    ignore context bracketright (numbersign numbersign);
+  }
+  subtable 111 {
+    context (placeholder) numbersign;
+    sub 0 bracketright_numbersign_1;
+  }
+  subtable 222 {
+    context bracketright (numbersign);
+    sub 0 bracketright_numbersign_2;
+  }
+}
+
+lookup bracketright_numbersign_1 {
+  sub numbersign -> bracketright_numbersign;
+}
+
+lookup bracketright_numbersign_2 {
+  sub bracketright -> placeholder;
+}
+
+lookup numbersign_parenleft {
+  subtable ignore1 {
+    ignore context (numbersign) numbersign (parenleft);
+  }
+  subtable ignore2 {
+    ignore context numbersign (parenleft parenleft);
+  }
+  subtable 111 {
+    context (placeholder) parenleft;
+    sub 0 numbersign_parenleft_1;
+  }
+  subtable 222 {
+    context numbersign (parenleft);
+    sub 0 numbersign_parenleft_2;
+  }
+}
+
+lookup numbersign_parenleft_1 {
+  sub parenleft -> numbersign_parenleft;
+}
+
+lookup numbersign_parenleft_2 {
+  sub numbersign -> placeholder;
+}
+
+lookup tag_todo {
+  subtable 111 {
+    context (placeholder placeholder placeholder placeholder placeholder) parenright;
+    sub 0 tag_todo_1;
+  }
+  subtable 222 {
+    context (placeholder placeholder placeholder placeholder) O (parenright);
+    sub 0 tag_todo_2;
+  }
+  subtable 333 {
+    context (placeholder placeholder placeholder) D (O parenright);
+    sub 0 tag_todo_3;
+  }
+  subtable 444 {
+    context (placeholder placeholder) O (D O parenright);
+    sub 0 tag_todo_2;
+  }
+  subtable 555 {
+    context (placeholder) T (O D O parenright);
+    sub 0 tag_todo_4;
+  }
+  subtable 666 {
+    context bracketleft (T O D O parenright);
+    sub 0 tag_todo_5;
+  }
+}
+
+lookup tag_todo_1 {
+  sub parenright -> tag_todo;
+}
+
+lookup tag_todo_2 {
+  sub O -> placeholder;
+}
+
+lookup tag_todo_3 {
+  sub D -> placeholder;
+}
+
+lookup tag_todo_4 {
+  sub T -> placeholder;
+}
+
+lookup tag_todo_5 {
+  sub bracketleft -> placeholder;
 }
