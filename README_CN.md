@@ -41,6 +41,8 @@ Release
 
 #### Ligature
 
+没有`==` `===` `>=` `<=`等带着`=`的连字，当初想做这个字体就是因为 Fira Code 用起来`==`老是分辨不清
+
 ![](img/ligature.png)
 ![](img/ligature.gif)
 

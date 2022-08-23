@@ -48,6 +48,8 @@ font-patcher -l -s --careful -c -w /path/to/ttf
 
 #### Ligature
 
+no `==` `===` `>=` `<=` and more ligatures with `=` for recognition
+
 ![](img/ligature.png)
 ![](img/ligature.gif)
 
