@@ -101,7 +101,7 @@ python build.py
 
 自用在 浏览器 和 Window 全局字体
 
-Windows 使用 [noMeiryoUI](https://github.com/Tatsu-syo/noMeiryoUI)全局替换windows字体 + [Mactype](https://github.com/snowie2000/mactype) + [自用脚本](https://gitee.com/subframe7536/mactype) 进行全局替换，网页使用 油猴/暴力猴插件 + [自用脚本](https://github.com/subframe7536/UserScript) 全局字体替换，有些不适配的可以手动添加 css
+Windows 使用 [noMeiryoUI](https://github.com/Tatsu-syo/noMeiryoUI) + [Mactype](https://github.com/snowie2000/mactype) + [自用脚本](https://gitee.com/subframe7536/mactype) 进行全局替换并优化渲染效果，网页使用 油猴/暴力猴插件 + [自用脚本](https://github.com/subframe7536/UserScript) 全局字体替换，有些不适配的可以手动添加 css
 
 - 较上一版粗暴的减小了粗细，有可能有些字形粗细不正常或错位，欢迎提 issue
 - 扩大了中文引号的宽度
