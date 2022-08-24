@@ -21,9 +21,18 @@ Changes will publish in pre-release
 - [x] adjust kerning
 - [ ] modify glyphs
 
-## Download
+## Download / Install
 
-in Release
+### macOS
+
+```
+brew tap homebrew/cask-fonts
+brew install font-maple
+```
+
+### Other OS
+
+Download in [releases](https://github.com/subframe7536/Maple-font/releases)
 
 [国内地址](https://gitee.com/subframe7536/Maple/releases/v5.0)
 
