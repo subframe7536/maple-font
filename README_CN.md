@@ -145,3 +145,7 @@ Windows 使用 [noMeiryoUI](https://github.com/Tatsu-syo/noMeiryoUI) + [Mactype]
 ## 许可证
 
 SIL Open Font License 1.1
+
+## 免责声明
+
+本项目中`Maple Mono SC NF`中的汉仪正圆仅供学习与交流，本人不对使用、传播本程序及附属产物造成的任何后果承担任何责任
