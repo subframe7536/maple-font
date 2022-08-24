@@ -2,9 +2,18 @@
 
 # Maple Series V5
 
-## 下载
+## 下载 / 安装
 
-Release
+### macOS
+
+```
+brew tap homebrew/cask-fonts
+brew install font-maple
+```
+
+### 其他系统
+
+从 [releases](https://github.com/subframe7536/Maple-font/releases) 下载安装
 
 [国内地址](https://gitee.com/subframe7536/Maple/releases/v5.0)
 
