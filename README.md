@@ -12,6 +12,15 @@
 - change glyph shape for **more comfortable reading experience**
 - add `..`,`...` ligature
 
+## What's next
+
+Changes will publish in pre-release
+
+- [x] add **Light** and **LightItalic** weight
+- [x] thick **Bold** and **BoldItalic** weight
+- [x] adjust kerning
+- [ ] modify glyphs
+
 ## Download
 
 in Release

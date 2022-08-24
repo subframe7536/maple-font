@@ -8,7 +8,7 @@ Release
 
 [国内地址](https://gitee.com/subframe7536/Maple/releases/v5.0)
 
-### V5 新增
+## V5 新增
 
 - ✨ 参考`Fira Code Retina`重新设计了字形，将宽度从原来的 600 改成了 1200，应该可以提升低分屏上的渲染效果，下面是在我的屏幕(1080P)下测试的对比
   - v4: ![](/img/sizechange.gif)
@@ -22,6 +22,15 @@ Release
 
 - ✨ 合并了 NF 和 SC，现在只需一个字体就可以适用所有场景，并且支持中英文 2:1
 - (半成品)支持使用其他的字体生成中文部分
+
+## V6 的更改
+
+已完成的更改会发布在 Pre-Release 中，欢迎反馈
+
+- [x] 添加 **细体** 和 **细斜体**
+- [x] 加粗 **Bold** 和 **BoldItalic**
+- [x] 调整字间距
+- [ ] 优化字形
 
 ## Maple Mono
 
