@@ -940,6 +940,9 @@ lookup slash_asterisk {
   subtable ignore4 {
     ignore context slash (asterisk slash);
   }
+  subtable ignore5 {
+    ignore context slash (asterisk period);
+  }
   subtable 111 {
     context (placeholder) asterisk;
     sub 0 slash_asterisk_1;

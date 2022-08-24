@@ -29,7 +29,8 @@ brew install font-maple
 
 [Maple Mono SC NF](#maple-mono-sc-nf)
 
-- ✨ 合并了 NF 和 SC，现在只需一个字体就可以适用所有场景，并且支持中英文 2:1
+- ✨ 合并了 NF 和 SC，现在只需一个字体就可以适用所有**编码**场景，并且支持中英文 2:1
+- 需要当作阅读字体请使用 Maple UI
 - (半成品)支持使用其他的字体生成中文部分
 
 ## V6 的更改
