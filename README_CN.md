@@ -31,6 +31,8 @@ Release
 - [x] 加粗 **Bold** 和 **BoldItalic**
 - [x] 调整字间距
 - [ ] 优化字形
+- [ ] 添加 v4 版的新版字形
+- [ ] 任意中文字体自动生成 SC NF 的脚本
 
 ## Maple Mono
 
