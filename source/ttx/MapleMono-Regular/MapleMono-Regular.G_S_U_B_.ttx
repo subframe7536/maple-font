@@ -528,7 +528,7 @@
       <Lookup index="16">
         <LookupType value="6"/>
         <LookupFlag value="0"/>
-        <!-- SubTableCount=15 -->
+        <!-- SubTableCount=17 -->
         <ChainContextSubst index="0" Format="3">
           <!-- BacktrackGlyphCount=0 -->
           <!-- InputGlyphCount=1 -->
@@ -774,6 +774,64 @@
           </SubstLookupRecord>
         </ChainContextSubst>
         <ChainContextSubst index="9" Format="3">
+          <!-- BacktrackGlyphCount=1 -->
+          <BacktrackCoverage index="0">
+            <Glyph value="colon"/>
+            <Glyph value="colon_center_left"/>
+            <Glyph value="colon_center_right"/>
+            <Glyph value="colon_center"/>
+          </BacktrackCoverage>
+          <!-- InputGlyphCount=1 -->
+          <InputCoverage index="0">
+            <Glyph value="colon"/>
+          </InputCoverage>
+          <!-- LookAheadGlyphCount=1 -->
+          <LookAheadCoverage index="0">
+            <Glyph value="asterisk"/>
+            <Glyph value="plus"/>
+            <Glyph value="hyphenminus"/>
+            <Glyph value="less"/>
+            <Glyph value="equal"/>
+            <Glyph value="greater"/>
+            <Glyph value="asciicircum"/>
+            <Glyph value="asciitilde"/>
+          </LookAheadCoverage>
+          <!-- SubstCount=1 -->
+          <SubstLookupRecord index="0">
+            <SequenceIndex value="0"/>
+            <LookupListIndex value="17"/>
+          </SubstLookupRecord>
+        </ChainContextSubst>
+        <ChainContextSubst index="10" Format="3">
+          <!-- BacktrackGlyphCount=1 -->
+          <BacktrackCoverage index="0">
+            <Glyph value="asterisk"/>
+            <Glyph value="plus"/>
+            <Glyph value="hyphenminus"/>
+            <Glyph value="less"/>
+            <Glyph value="equal"/>
+            <Glyph value="greater"/>
+            <Glyph value="asciicircum"/>
+            <Glyph value="asciitilde"/>
+          </BacktrackCoverage>
+          <!-- InputGlyphCount=1 -->
+          <InputCoverage index="0">
+            <Glyph value="colon"/>
+          </InputCoverage>
+          <!-- LookAheadGlyphCount=1 -->
+          <LookAheadCoverage index="0">
+            <Glyph value="colon"/>
+            <Glyph value="colon_center_left"/>
+            <Glyph value="colon_center_right"/>
+            <Glyph value="colon_center"/>
+          </LookAheadCoverage>
+          <!-- SubstCount=1 -->
+          <SubstLookupRecord index="0">
+            <SequenceIndex value="0"/>
+            <LookupListIndex value="17"/>
+          </SubstLookupRecord>
+        </ChainContextSubst>
+        <ChainContextSubst index="11" Format="3">
           <!-- BacktrackGlyphCount=0 -->
           <!-- InputGlyphCount=1 -->
           <InputCoverage index="0">
@@ -802,7 +860,7 @@
             <LookupListIndex value="18"/>
           </SubstLookupRecord>
         </ChainContextSubst>
-        <ChainContextSubst index="10" Format="3">
+        <ChainContextSubst index="12" Format="3">
           <!-- BacktrackGlyphCount=2 -->
           <BacktrackCoverage index="0">
             <Glyph value="asterisk"/>
@@ -831,7 +889,7 @@
             <LookupListIndex value="19"/>
           </SubstLookupRecord>
         </ChainContextSubst>
-        <ChainContextSubst index="11" Format="3">
+        <ChainContextSubst index="13" Format="3">
           <!-- BacktrackGlyphCount=1 -->
           <BacktrackCoverage index="0">
             <Glyph value="colon"/>
@@ -850,7 +908,7 @@
             <LookupListIndex value="19"/>
           </SubstLookupRecord>
         </ChainContextSubst>
-        <ChainContextSubst index="12" Format="3">
+        <ChainContextSubst index="14" Format="3">
           <!-- BacktrackGlyphCount=0 -->
           <!-- InputGlyphCount=1 -->
           <InputCoverage index="0">
@@ -869,7 +927,7 @@
             <LookupListIndex value="18"/>
           </SubstLookupRecord>
         </ChainContextSubst>
-        <ChainContextSubst index="13" Format="3">
+        <ChainContextSubst index="15" Format="3">
           <!-- BacktrackGlyphCount=0 -->
           <!-- InputGlyphCount=1 -->
           <InputCoverage index="0">
@@ -892,7 +950,7 @@
             <LookupListIndex value="18"/>
           </SubstLookupRecord>
         </ChainContextSubst>
-        <ChainContextSubst index="14" Format="3">
+        <ChainContextSubst index="16" Format="3">
           <!-- BacktrackGlyphCount=1 -->
           <BacktrackCoverage index="0">
             <Glyph value="asterisk"/>
@@ -3519,7 +3577,7 @@
       <Lookup index="91">
         <LookupType value="6"/>
         <LookupFlag value="0"/>
-        <!-- SubTableCount=6 -->
+        <!-- SubTableCount=7 -->
         <ChainContextSubst index="0" Format="3">
           <!-- BacktrackGlyphCount=1 -->
           <BacktrackCoverage index="0">
@@ -3581,6 +3639,21 @@
           <!-- SubstCount=0 -->
         </ChainContextSubst>
         <ChainContextSubst index="4" Format="3">
+          <!-- BacktrackGlyphCount=0 -->
+          <!-- InputGlyphCount=1 -->
+          <InputCoverage index="0">
+            <Glyph value="slash"/>
+          </InputCoverage>
+          <!-- LookAheadGlyphCount=2 -->
+          <LookAheadCoverage index="0">
+            <Glyph value="asterisk"/>
+          </LookAheadCoverage>
+          <LookAheadCoverage index="1">
+            <Glyph value="period"/>
+          </LookAheadCoverage>
+          <!-- SubstCount=0 -->
+        </ChainContextSubst>
+        <ChainContextSubst index="5" Format="3">
           <!-- BacktrackGlyphCount=1 -->
           <BacktrackCoverage index="0">
             <Glyph value="placeholder"/>
@@ -3596,7 +3669,7 @@
             <LookupListIndex value="92"/>
           </SubstLookupRecord>
         </ChainContextSubst>
-        <ChainContextSubst index="5" Format="3">
+        <ChainContextSubst index="6" Format="3">
           <!-- BacktrackGlyphCount=0 -->
           <!-- InputGlyphCount=1 -->
           <InputCoverage index="0">
@@ -3632,7 +3705,7 @@
       <Lookup index="94">
         <LookupType value="6"/>
         <LookupFlag value="0"/>
-        <!-- SubTableCount=7 -->
+        <!-- SubTableCount=8 -->
         <ChainContextSubst index="0" Format="3">
           <!-- BacktrackGlyphCount=1 -->
           <BacktrackCoverage index="0">
@@ -3706,6 +3779,24 @@
           <!-- SubstCount=0 -->
         </ChainContextSubst>
         <ChainContextSubst index="4" Format="3">
+          <!-- BacktrackGlyphCount=0 -->
+          <!-- InputGlyphCount=1 -->
+          <InputCoverage index="0">
+            <Glyph value="slash"/>
+          </InputCoverage>
+          <!-- LookAheadGlyphCount=3 -->
+          <LookAheadCoverage index="0">
+            <Glyph value="asterisk"/>
+          </LookAheadCoverage>
+          <LookAheadCoverage index="1">
+            <Glyph value="asterisk"/>
+          </LookAheadCoverage>
+          <LookAheadCoverage index="2">
+            <Glyph value="period"/>
+          </LookAheadCoverage>
+          <!-- SubstCount=0 -->
+        </ChainContextSubst>
+        <ChainContextSubst index="5" Format="3">
           <!-- BacktrackGlyphCount=2 -->
           <BacktrackCoverage index="0">
             <Glyph value="placeholder"/>
@@ -3724,7 +3815,7 @@
             <LookupListIndex value="95"/>
           </SubstLookupRecord>
         </ChainContextSubst>
-        <ChainContextSubst index="5" Format="3">
+        <ChainContextSubst index="6" Format="3">
           <!-- BacktrackGlyphCount=1 -->
           <BacktrackCoverage index="0">
             <Glyph value="placeholder"/>
@@ -3743,7 +3834,7 @@
             <LookupListIndex value="96"/>
           </SubstLookupRecord>
         </ChainContextSubst>
-        <ChainContextSubst index="6" Format="3">
+        <ChainContextSubst index="7" Format="3">
           <!-- BacktrackGlyphCount=0 -->
           <!-- InputGlyphCount=1 -->
           <InputCoverage index="0">

@@ -8,6 +8,8 @@
 
 Because I don't have a Mac OS machine, this is the greatest adaption I can do with Mac OS currently, but I can't test whether it works. My ability is not enough to solve other problems on Mac OS. I will record the problem and try to solve it. Feel sorry
 
+`Maple Mono NF` now maybe can't be recognized as **Mono**, and I try my best but it doesn't work orz
+
 ## What's new compare to V4
 
 - redesigned it according to `Fira Code Retina`'s spacing and glyph and expand the font width from 600 to 1200, which lead to a **better rendering effect** on my screen(1080P)
@@ -15,15 +17,18 @@ Because I don't have a Mac OS machine, this is the greatest adaption I can do wi
   - v5: ![](/img/sizechange1.gif)
 - change glyph shape for **more comfortable reading experience**
 - add `..`,`...` ligature
+- (v5.5) center operators `+ - * = ^ ~ < >`
+- (v5.5) reduce or modify kerning, which is similar to `Jetbrains Mono`
+- (v5.5) add liga exception for `/*. /**.`
+- (v5.5) modify shape of italic style
+- (v5.5) Thick the Bold style, add Light style
+- (v5.5) resume provide `Maple Mono NF`
 
 ## What's next
 
-Changes will publish in pre-release
+in [Project](https://github.com/users/subframe7536/projects/1)
 
-- [x] add **Light** and **LightItalic** weight
-- [x] thick **Bold** and **BoldItalic** weight
-- [x] adjust kerning
-- [ ] modify glyphs
+- Changes will publish in pre-release
 
 ## Download / Install
 

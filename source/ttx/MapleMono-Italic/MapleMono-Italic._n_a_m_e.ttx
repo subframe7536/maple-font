@@ -12,13 +12,13 @@
       Italic
     </namerecord>
     <namerecord nameID="3" platformID="3" platEncID="1" langID="0x409">
-      Maple Mono Italic:Version 2.00
+      Maple Mono Italic:Version 3.0
     </namerecord>
     <namerecord nameID="4" platformID="3" platEncID="1" langID="0x409">
       Maple Mono Italic
     </namerecord>
     <namerecord nameID="5" platformID="3" platEncID="1" langID="0x409">
-      Version 2.00
+      Version 3.0
     </namerecord>
     <namerecord nameID="6" platformID="3" platEncID="1" langID="0x409">
       MapleMono-Italic
@@ -37,12 +37,6 @@
     </namerecord>
     <namerecord nameID="14" platformID="3" platEncID="1" langID="0x409">
       http://scripts.sil.org/OFL
-    </namerecord>
-    <namerecord nameID="16" platformID="3" platEncID="1" langID="0x409">
-      Maple Mono
-    </namerecord>
-    <namerecord nameID="17" platformID="3" platEncID="1" langID="0x409">
-      Italic
     </namerecord>
   </name>
 
