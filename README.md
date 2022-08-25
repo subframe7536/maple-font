@@ -4,6 +4,10 @@
 
 [中文版](/README_CN.md)
 
+## ATTENTION
+
+Because I don't have a Mac OS machine, this is the greatest adaption I can do with Mac OS currently, but I can't test whether it works. My ability is not enough to solve other problems on Mac OS. I will record the problem and try to solve it. Feel sorry
+
 ## What's new compare to V4
 
 - redesigned it according to `Fira Code Retina`'s spacing and glyph and expand the font width from 600 to 1200, which lead to a **better rendering effect** on my screen(1080P)
