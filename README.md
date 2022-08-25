@@ -43,7 +43,7 @@ brew install font-maple
 
 Download in [releases](https://github.com/subframe7536/Maple-font/releases)
 
-[国内地址](https://gitee.com/subframe7536/Maple/releases/v5.0)
+[国内地址](https://gitee.com/subframe7536/Maple/releases)
 
 ## Maple Mono
 

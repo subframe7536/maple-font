@@ -25,7 +25,7 @@ brew install font-maple
 
 从 [releases](https://github.com/subframe7536/Maple-font/releases) 下载安装
 
-[国内地址](https://gitee.com/subframe7536/Maple/releases/v5.0)
+[国内地址](https://gitee.com/subframe7536/Maple/releases)
 
 ## V5 新增
 
