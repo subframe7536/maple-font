@@ -21,6 +21,14 @@ brew tap homebrew/cask-fonts
 brew install font-maple
 ```
 
+### Arch Linux
+
+https://aur.archlinux.org/packages/ttf-maple
+
+```
+sudo pacman -S ttf-maple
+```
+
 ### 其他系统
 
 从 [releases](https://github.com/subframe7536/Maple-font/releases) 下载安装
@@ -50,16 +58,18 @@ brew install font-maple
 - (半成品)支持使用其他的字体生成中文部分
 - (v5.5)中文的间距也减小了，高度进行了调整
 
-## V6 的更改
+## V6 或之后版本的更改
 
 已完成的更改会发布在 Pre-Release 中，欢迎反馈
 
-- [x] 添加 **细体** 和 **细斜体**
-- [x] 加粗 **Bold** 和 **BoldItalic**
-- [x] 调整字间距
+详见[Project](https://github.com/users/subframe7536/projects/1)
+
 - [ ] 优化字形
-- [ ] 添加 v4 版的新版字形
+- [ ] 考虑到低分屏的问题，重新发布修改字形的 v4 版
 - [ ] 任意中文字体自动生成 SC NF 的脚本
+- [ ] 自动 hint 的脚本
+- [ ] 可变字体
+- [ ] 纯净版：将`@ # $ % & Q`的样式改为一般的样式
 
 ## Maple Mono
 

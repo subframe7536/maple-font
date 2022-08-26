@@ -39,6 +39,14 @@ brew tap homebrew/cask-fonts
 brew install font-maple
 ```
 
+### Arch Linux
+
+https://aur.archlinux.org/packages/ttf-maple
+
+```
+sudo pacman -S ttf-maple
+```
+
 ### Other OS
 
 Download in [releases](https://github.com/subframe7536/Maple-font/releases)
