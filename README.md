@@ -66,8 +66,10 @@ Open source rounded Monospace font
 
 ### Maple Mono NF
 
-~~Font for Cli, Maple Mono mixing Nerd Fonts~~
-no longer provide, please read [Nerd Fonts Docs](https://github.com/ryanoasis/nerd-fonts#option-8-patch-your-own-font)
+Font for Cli, Maple Mono mixing Nerd Fonts
+~~no longer provide, please read [Nerd Fonts Docs](https://github.com/ryanoasis/nerd-fonts#option-8-patch-your-own-font)~~
+
+restore to provide in v5.5
 
 - I use
 
