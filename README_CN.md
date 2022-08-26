@@ -10,7 +10,7 @@
 
 `Maple Mono NF` `Maple Mono SC NF`可能没法被识别为等宽字体，我尽力了，来个大佬吧 qwq
 
-如果觉得字太宽，可以使用[更傻黑体 SC Nerd](https://github.com/laishulu/Sarasa-Mono-SC-Nerd)
+如果觉得字太宽，可以使用[更纱黑体 SC Nerd](https://github.com/laishulu/Sarasa-Mono-SC-Nerd)
 
 ## 下载 / 安装
 
