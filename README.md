@@ -1,130 +1,153 @@
-![](/img/head.svg)
+<p align="center">
+  <img src="./img/head.svg" height="200" alt="logo">
+</p>
 
-# Maple Series V5
+<h1 align="center"> Maple Font </h1>
 
-[中文版](/README_CN.md)
+<p align="center">
+Open source monospace & nerd font with round corner and ligatures.
+</p>
 
-## ATTENTION
+<p align="center">
+  <a>
+    <img src="https://img.shields.io/github/v/release/subframe7536/Maple-font?display_name=tag" alt="release version">
+  </a>
+</p>
 
-Because I don't have a Mac OS machine, this is the greatest adaption I can do with Mac OS currently, but I can't test whether it works. My ability is not enough to solve other problems on Mac OS. I will record the problem and try to solve it. Feel sorry
+<p align="center">
+  <a href="#install">install</a> | 
+  <a href="https://github.com/users/subframe7536/projects/1">what's next</a> |
+  <a href="./README_CN.md">中文</a>
+</p>
 
-`Maple Mono NF` now maybe can't be recognized as **Mono**, and I try my best but it doesn't work orz
 
-## What's new compare to V4
 
-- redesigned it according to `Fira Code Retina`'s spacing and glyph and expand the font width from 600 to 1200, which lead to a **better rendering effect** on my screen(1080P)
-  - v4: ![](/img/sizechange.gif)
-  - v5: ![](/img/sizechange1.gif)
-- change glyph shape for **more comfortable reading experience**
-- add `..`,`...` ligature
-- (v5.5) center operators `+ - * = ^ ~ < >`
-- (v5.5) reduce or modify kerning, which is similar to `Jetbrains Mono`
-- (v5.5) add liga exception for `/*. /**.`
-- (v5.5) modify shape of italic style
-- (v5.5) Thick the Bold style, add Light style
-- (v5.5) resume provide `Maple Mono NF`
+## Features
 
-## What's next
+Inspired by [Source Code Pro](https://github.com/adobe-fonts/source-code-pro), [Fira Code Retina](https://github.com/tonsky/FiraCode), [Sarasa Mono SC Nerd](https://github.com/laishulu/Sarasa-Mono-SC-Nerd) and so on, but:
 
-in [Project](https://github.com/users/subframe7536/projects/1)
+- **New shape** -  such as `@ # $ % & ...`, and modify shape of italic style
+- **More ligatures** - such as `.., ..., /*, /**` 
+- **Small size** - leave only contains latin, table control characters and few symbols
+- **Better rendering effect** - redesigned it according to Fira Code Retina's spacing and glyph
 
-- Changes will publish in pre-release
+  |v4 | v5  |
+  | :--------------- | :------ |
+  | <img src="./img/sizechange.gif" height="200" alt="v4"> | <img src="./img/sizechange1.gif" height="200" alt="v5"> |
 
-## Download / Install
+- **More readable** - cursive style, better glyph shape, reduce or modify kerning, which is similar to `Jetbrains Mono`, center operators `+ - * = ^ ~ < >` 
+- See it in [screenshots](#screenshots) ✨
 
-### macOS
 
-```
-brew tap homebrew/cask-fonts
-brew install font-maple
-```
 
-### Arch Linux
+## Install
 
-https://aur.archlinux.org/packages/ttf-maple
 
-```
-sudo pacman -S ttf-maple
-```
+| Platform         | Command |
+| :--------------- | :------ |
+| macOS | ` brew tap homebrew/cask-fonts && brew install font-maple` |
+|Arch Linux| `sudo pacman -S ttf-maple` |
+| Others | Download in [releases](https://github.com/subframe7536/Maple-font/releases)           |
 
-### Other OS
 
-Download in [releases](https://github.com/subframe7536/Maple-font/releases)
 
-[国内地址](https://gitee.com/subframe7536/Maple/releases)
 
-## Maple Mono
 
-Open source rounded Monospace font
 
-- inspired by [Source Code Pro](https://github.com/adobe-fonts/source-code-pro), [Fira Code Retina](https://github.com/tonsky/FiraCode), ubuntu mono, operator mono, [sarasa mono sc nerd](https://github.com/laishulu/Sarasa-Mono-SC-Nerd) and so on
-- modify `@ # $ % &` shape
-- only contains latin, table control characters and few symbols
-- with **ligatures**
-- **cursive** style
-- `source/mono.fea`: more readable OpenType Script
 
-### Maple Mono NF
 
-Font for Cli, Maple Mono mixing Nerd Fonts
-~~no longer provide, please read [Nerd Fonts Docs](https://github.com/ryanoasis/nerd-fonts#option-8-patch-your-own-font)~~
+## Notice
 
-restore to provide in v5.5
 
-- I use
+Because I don't have a Mac OS machine, this is the greatest adaption I can do with Mac OS currently, but I can't test whether it works. 
 
-```shell
-font-patcher -l -s --careful -c -w /path/to/ttf
-```
+My ability is not enough to solve other problems on Mac OS. I will record the problem and try to solve it, **PR welcome!**
 
-### Sample
+`Maple Mono NF` now maybe can't be recognized as Mono, and I try my best but it doesn't work orz
 
-#### Total
+
+## Screenshots
+
+
+<details>
+<summary><b>Total (click to expand!)</b></summary>
 
 ![](img/base.png)
 
-#### Ligature
+</details>
 
-no `==` `===` `>=` `<=` and more ligatures with `=` for recognition
+
+
+<details>
+<summary><b>Ligature</b></summary>
 
 ![](img/ligature.png)
 ![](img/ligature.gif)
 
-#### Cli
+</details>
+
+
+
+<details>
+<summary><b>Cli</b></summary>
 
 ![](img/code_sample/cli.webp)
 
-#### React
+</details>
+
+
+
+<details>
+<summary><b>React</b></summary>
 
 ![](img/code_sample/react.webp)
 
-#### Vue
+</details>
+
+
+
+<details>
+<summary><b>Vue</b></summary>
 
 ![](img/code_sample/vue.webp)
 
-#### Java
+</details>
+
+
+<details>
+<summary><b>Java</b></summary>
 
 ![](img/code_sample/java.webp)
 
-#### Go
+</details>
+
+
+<details>
+<summary><b>Go</b></summary>
 
 ![](img/code_sample/go.webp)
 
-#### Python
+</details>
+
+
+<details>
+<summary><b>Python</b></summary>
 
 ![](img/code_sample/python.webp)
 
-#### Rust
+</details>
+
+
+<details>
+<summary><b>Rust</b></summary>
 
 ![](img/code_sample/rust.webp)
 
-## Dev
 
-### usage
+</details>
 
-python fonttools
 
-### build
+## Build
 
 ```
 git clone https://github.com/subframe7536/Maple-font
