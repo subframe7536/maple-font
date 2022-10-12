@@ -223,14 +223,8 @@ lookup hex_center_x_1 {
 lookup colon_center {
   subtable ignore1 {
     ignore context colon (@colons @colons @colons);
-  }
-  subtable ignore2 {
     ignore context (@colons) colon (@colons @colons);
-  }
-  subtable ignore3 {
     ignore context (@colons @colons) colon (@colons);
-  }
-  subtable ignore4 {
     ignore context (@colons @colons @colons) colon;
   }
   subtable 111_1 {
@@ -245,45 +239,45 @@ lookup colon_center {
     context (@colons @colons) colon;
     sub 0 operator_center_3;
   }
-  subtable 111_4 {
-    context colon (hyphenminus @number);
-    sub 0 operator_center_1;
-  }
-  subtable 111 {
+  subtable 222 {
     context (@operator) colon (@operator);
     sub 0 operator_center_1;
   }
-  subtable 666 {
-    context (@colons) colon (@operator);
-    sub 0 operator_center_1;
-  }
-  subtable 777 {
-    context (@operator) colon (@colons);
-    sub 0 operator_center_1;
-  }
-  subtable 333 {
-    context colon (@operator @colons);
+  subtable 333_1 {
+    context colon (@colons equal);
     sub 0 operator_center_2;
   }
-  subtable 555 {
-    context (@colons @operator) colon;
+  subtable 333_2 {
+    context (@colons) colon (equal);
+    sub 0 operator_center_1;
+  }
+  subtable 333_3 {
+    context colon (equal);
+    sub 0 operator_center_2;
+  }
+  subtable 444_1 {
+    context (@operator) colon (@colons);
+    sub 0 operator_center_2;
+  }
+  subtable 444_2 {
+    context colon (@operator colon_center_left);
+    sub 0 operator_center_2;
+  }
+  subtable 444_3 {
+    context (colon_center_right @operator) colon;
     sub 0 operator_center_3;
   }
-  subtable 111_4 {
+  subtable 555 {
     context (@colons) colon;
     sub 0 operator_center_3;
   }
-  subtable 111_5 {
+  subtable 666 {
     context colon (@colons);
     sub 0 operator_center_2;
   }
-  subtable 222 {
-    context colon (@operator);
-    sub 0 operator_center_2;
-  }
-  subtable 444 {
-    context (@operator) colon;
-    sub 0 operator_center_3;
+  subtable 666 {
+    context (@number) colon (@number);
+    sub 0 operator_center_1;
   }
 }
 
@@ -1243,7 +1237,7 @@ lookup numbersign_parenleft_1 {
 lookup numbersign_parenleft_2 {
   sub numbersign -> placeholder;
 }
-
+# [BUG]
 lookup tag_todo {
   subtable 111 {
     context (placeholder placeholder placeholder placeholder placeholder) parenright;

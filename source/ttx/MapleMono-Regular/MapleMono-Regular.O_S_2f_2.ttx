@@ -33,20 +33,20 @@
       <bXHeight value="0"/>
     </panose>
     <ulUnicodeRange1 value="00000000 00000000 00000000 00000001"/>
-    <ulUnicodeRange2 value="00000000 00000000 00001000 00000000"/>
+    <ulUnicodeRange2 value="00000000 00000000 00011000 00000000"/>
     <ulUnicodeRange3 value="00000000 00000000 00000000 00000000"/>
     <ulUnicodeRange4 value="00000000 00000000 00000000 00000000"/>
     <achVendID value="    "/>
     <fsSelection value="00000001 11000000"/>
     <usFirstCharIndex value="32"/>
-    <usLastCharIndex value="9599"/>
+    <usLastCharIndex value="9631"/>
     <sTypoAscender value="2000"/>
     <sTypoDescender value="-600"/>
     <sTypoLineGap value="0"/>
     <usWinAscent value="2000"/>
     <usWinDescent value="600"/>
     <ulCodePageRange1 value="00000000 00000000 00000000 00000001"/>
-    <ulCodePageRange2 value="00000000 00000000 00000000 00000000"/>
+    <ulCodePageRange2 value="01000000 00000000 00000000 00000000"/>
     <sxHeight value="1050"/>
     <sCapHeight value="1400"/>
     <usDefaultChar value="0"/>

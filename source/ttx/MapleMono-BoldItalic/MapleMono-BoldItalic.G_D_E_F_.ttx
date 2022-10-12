@@ -185,21 +185,27 @@
       <ClassDef glyph="comma" class="1"/>
       <ClassDef glyph="d" class="1"/>
       <ClassDef glyph="dagger" class="1"/>
+      <ClassDef glyph="darkshade" class="1"/>
+      <ClassDef glyph="divide" class="1"/>
       <ClassDef glyph="dollar" class="1"/>
+      <ClassDef glyph="downwardsarrow" class="1"/>
       <ClassDef glyph="e" class="1"/>
       <ClassDef glyph="eight" class="1"/>
+      <ClassDef glyph="emdash" class="1"/>
       <ClassDef glyph="equal" class="1"/>
       <ClassDef glyph="exclam" class="1"/>
       <ClassDef glyph="exclam_exclam" class="1"/>
       <ClassDef glyph="f" class="1"/>
       <ClassDef glyph="five" class="1"/>
       <ClassDef glyph="four" class="1"/>
+      <ClassDef glyph="fullblock" class="1"/>
       <ClassDef glyph="g" class="1"/>
       <ClassDef glyph="grave" class="1"/>
       <ClassDef glyph="greater" class="1"/>
       <ClassDef glyph="greater_greater" class="1"/>
       <ClassDef glyph="greater_greater_greater" class="1"/>
       <ClassDef glyph="h" class="1"/>
+      <ClassDef glyph="hyphen" class="1"/>
       <ClassDef glyph="hyphenminus" class="1"/>
       <ClassDef glyph="i" class="1"/>
       <ClassDef glyph="j" class="1"/>
@@ -210,15 +216,35 @@
       <ClassDef glyph="left_right_arrow_double_long" class="1"/>
       <ClassDef glyph="left_right_arrow_single" class="1"/>
       <ClassDef glyph="left_right_arrow_single_long" class="1"/>
+      <ClassDef glyph="leftfiveeighthsblock" class="1"/>
+      <ClassDef glyph="lefthalfblock" class="1"/>
+      <ClassDef glyph="leftoneeighthblock" class="1"/>
+      <ClassDef glyph="leftonequarterblock" class="1"/>
+      <ClassDef glyph="leftrightarrow" class="1"/>
+      <ClassDef glyph="leftseveneighthsblock" class="1"/>
+      <ClassDef glyph="leftthreeeighthsblock" class="1"/>
+      <ClassDef glyph="leftthreequartersblock" class="1"/>
+      <ClassDef glyph="leftwardsarrow" class="1"/>
       <ClassDef glyph="less" class="1"/>
       <ClassDef glyph="less_greater" class="1"/>
       <ClassDef glyph="less_less" class="1"/>
       <ClassDef glyph="less_less_less" class="1"/>
       <ClassDef glyph="less_slash" class="1"/>
       <ClassDef glyph="less_slash_greater" class="1"/>
+      <ClassDef glyph="lightshade" class="1"/>
+      <ClassDef glyph="lowerfiveeighthsblock" class="1"/>
+      <ClassDef glyph="lowerhalfblock" class="1"/>
+      <ClassDef glyph="loweroneeighthblock" class="1"/>
+      <ClassDef glyph="loweronequarterblock" class="1"/>
+      <ClassDef glyph="lowerseveneighthsblock" class="1"/>
+      <ClassDef glyph="lowerthreeeighthsblock" class="1"/>
+      <ClassDef glyph="lowerthreequartersblock" class="1"/>
       <ClassDef glyph="m" class="1"/>
+      <ClassDef glyph="mediumshade" class="1"/>
       <ClassDef glyph="n" class="1"/>
       <ClassDef glyph="nine" class="1"/>
+      <ClassDef glyph="northeastarrow" class="1"/>
+      <ClassDef glyph="northwestarrow" class="1"/>
       <ClassDef glyph="numbersign" class="1"/>
       <ClassDef glyph="numbersign_braceleft" class="1"/>
       <ClassDef glyph="numbersign_bracketleft" class="1"/>
@@ -238,6 +264,16 @@
       <ClassDef glyph="plus_plus" class="1"/>
       <ClassDef glyph="plus_plus_plus" class="1"/>
       <ClassDef glyph="q" class="1"/>
+      <ClassDef glyph="quadrantlowerleft" class="1"/>
+      <ClassDef glyph="quadrantlowerright" class="1"/>
+      <ClassDef glyph="quadrantupperleft" class="1"/>
+      <ClassDef glyph="quadrantupperleftandlowerleftandlowerright" class="1"/>
+      <ClassDef glyph="quadrantupperleftandlowerright" class="1"/>
+      <ClassDef glyph="quadrantupperleftandupperrightandlowerleft" class="1"/>
+      <ClassDef glyph="quadrantupperleftandupperrightandlowerright" class="1"/>
+      <ClassDef glyph="quadrantupperright" class="1"/>
+      <ClassDef glyph="quadrantupperrightandlowerleft" class="1"/>
+      <ClassDef glyph="quadrantupperrightandlowerleftandlowerright" class="1"/>
       <ClassDef glyph="question" class="1"/>
       <ClassDef glyph="question_question" class="1"/>
       <ClassDef glyph="quotedbl" class="1"/>
@@ -248,6 +284,9 @@
       <ClassDef glyph="right_arrow_double_long" class="1"/>
       <ClassDef glyph="right_arrow_single" class="1"/>
       <ClassDef glyph="right_arrow_single_long" class="1"/>
+      <ClassDef glyph="righthalfblock" class="1"/>
+      <ClassDef glyph="rightoneeighthblock" class="1"/>
+      <ClassDef glyph="rightwardsarrow" class="1"/>
       <ClassDef glyph="s" class="1"/>
       <ClassDef glyph="section" class="1"/>
       <ClassDef glyph="semicolon" class="1"/>
@@ -259,6 +298,8 @@
       <ClassDef glyph="slash_greater" class="1"/>
       <ClassDef glyph="slash_slash" class="1"/>
       <ClassDef glyph="slash_slash_slash" class="1"/>
+      <ClassDef glyph="southeastarrow" class="1"/>
+      <ClassDef glyph="southwestarrow" class="1"/>
       <ClassDef glyph="space" class="1"/>
       <ClassDef glyph="t" class="1"/>
       <ClassDef glyph="tag_todo" class="1"/>
@@ -266,6 +307,10 @@
       <ClassDef glyph="two" class="1"/>
       <ClassDef glyph="u" class="1"/>
       <ClassDef glyph="underscore" class="1"/>
+      <ClassDef glyph="updownarrow" class="1"/>
+      <ClassDef glyph="upperhalfblock" class="1"/>
+      <ClassDef glyph="upperoneeighthblock" class="1"/>
+      <ClassDef glyph="upwardsarrow" class="1"/>
       <ClassDef glyph="v" class="1"/>
       <ClassDef glyph="w" class="1"/>
       <ClassDef glyph="x" class="1"/>

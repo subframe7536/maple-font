@@ -100,8 +100,21 @@
       <map code="0x7d" name="braceright"/><!-- RIGHT CURLY BRACKET -->
       <map code="0x7e" name="asciitilde"/><!-- TILDE -->
       <map code="0xa7" name="section"/><!-- SECTION SIGN -->
+      <map code="0xf7" name="divide"/><!-- DIVISION SIGN -->
+      <map code="0x2010" name="hyphen"/><!-- HYPHEN -->
+      <map code="0x2014" name="emdash"/><!-- EM DASH -->
       <map code="0x2020" name="dagger"/><!-- DAGGER -->
       <map code="0x203b" name="referencemark"/><!-- REFERENCE MARK -->
+      <map code="0x2190" name="leftwardsarrow"/><!-- LEFTWARDS ARROW -->
+      <map code="0x2191" name="upwardsarrow"/><!-- UPWARDS ARROW -->
+      <map code="0x2192" name="rightwardsarrow"/><!-- RIGHTWARDS ARROW -->
+      <map code="0x2193" name="downwardsarrow"/><!-- DOWNWARDS ARROW -->
+      <map code="0x2194" name="leftrightarrow"/><!-- LEFT RIGHT ARROW -->
+      <map code="0x2195" name="updownarrow"/><!-- UP DOWN ARROW -->
+      <map code="0x2196" name="northwestarrow"/><!-- NORTH WEST ARROW -->
+      <map code="0x2197" name="northeastarrow"/><!-- NORTH EAST ARROW -->
+      <map code="0x2198" name="southeastarrow"/><!-- SOUTH EAST ARROW -->
+      <map code="0x2199" name="southwestarrow"/><!-- SOUTH WEST ARROW -->
       <map code="0x2500" name="boxdrawingslighthorizontal"/><!-- BOX DRAWINGS LIGHT HORIZONTAL -->
       <map code="0x2501" name="boxdrawingsheavyhorizontal"/><!-- BOX DRAWINGS HEAVY HORIZONTAL -->
       <map code="0x2502" name="boxdrawingslightvertical"/><!-- BOX DRAWINGS LIGHT VERTICAL -->
@@ -230,6 +243,38 @@
       <map code="0x257d" name="boxdrawingslightupandheavydown"/><!-- BOX DRAWINGS LIGHT UP AND HEAVY DOWN -->
       <map code="0x257e" name="boxdrawingsheavyleftandlightright"/><!-- BOX DRAWINGS HEAVY LEFT AND LIGHT RIGHT -->
       <map code="0x257f" name="boxdrawingsheavyupandlightdown"/><!-- BOX DRAWINGS HEAVY UP AND LIGHT DOWN -->
+      <map code="0x2580" name="upperhalfblock"/><!-- UPPER HALF BLOCK -->
+      <map code="0x2581" name="loweroneeighthblock"/><!-- LOWER ONE EIGHTH BLOCK -->
+      <map code="0x2582" name="loweronequarterblock"/><!-- LOWER ONE QUARTER BLOCK -->
+      <map code="0x2583" name="lowerthreeeighthsblock"/><!-- LOWER THREE EIGHTHS BLOCK -->
+      <map code="0x2584" name="lowerhalfblock"/><!-- LOWER HALF BLOCK -->
+      <map code="0x2585" name="lowerfiveeighthsblock"/><!-- LOWER FIVE EIGHTHS BLOCK -->
+      <map code="0x2586" name="lowerthreequartersblock"/><!-- LOWER THREE QUARTERS BLOCK -->
+      <map code="0x2587" name="lowerseveneighthsblock"/><!-- LOWER SEVEN EIGHTHS BLOCK -->
+      <map code="0x2588" name="fullblock"/><!-- FULL BLOCK -->
+      <map code="0x2589" name="leftseveneighthsblock"/><!-- LEFT SEVEN EIGHTHS BLOCK -->
+      <map code="0x258a" name="leftthreequartersblock"/><!-- LEFT THREE QUARTERS BLOCK -->
+      <map code="0x258b" name="leftfiveeighthsblock"/><!-- LEFT FIVE EIGHTHS BLOCK -->
+      <map code="0x258c" name="lefthalfblock"/><!-- LEFT HALF BLOCK -->
+      <map code="0x258d" name="leftthreeeighthsblock"/><!-- LEFT THREE EIGHTHS BLOCK -->
+      <map code="0x258e" name="leftonequarterblock"/><!-- LEFT ONE QUARTER BLOCK -->
+      <map code="0x258f" name="leftoneeighthblock"/><!-- LEFT ONE EIGHTH BLOCK -->
+      <map code="0x2590" name="righthalfblock"/><!-- RIGHT HALF BLOCK -->
+      <map code="0x2591" name="lightshade"/><!-- LIGHT SHADE -->
+      <map code="0x2592" name="mediumshade"/><!-- MEDIUM SHADE -->
+      <map code="0x2593" name="darkshade"/><!-- DARK SHADE -->
+      <map code="0x2594" name="upperoneeighthblock"/><!-- UPPER ONE EIGHTH BLOCK -->
+      <map code="0x2595" name="rightoneeighthblock"/><!-- RIGHT ONE EIGHTH BLOCK -->
+      <map code="0x2596" name="quadrantlowerleft"/><!-- QUADRANT LOWER LEFT -->
+      <map code="0x2597" name="quadrantlowerright"/><!-- QUADRANT LOWER RIGHT -->
+      <map code="0x2598" name="quadrantupperleft"/><!-- QUADRANT UPPER LEFT -->
+      <map code="0x2599" name="quadrantupperleftandlowerleftandlowerright"/><!-- QUADRANT UPPER LEFT AND LOWER LEFT AND LOWER RIGHT -->
+      <map code="0x259a" name="quadrantupperleftandlowerright"/><!-- QUADRANT UPPER LEFT AND LOWER RIGHT -->
+      <map code="0x259b" name="quadrantupperleftandupperrightandlowerleft"/><!-- QUADRANT UPPER LEFT AND UPPER RIGHT AND LOWER LEFT -->
+      <map code="0x259c" name="quadrantupperleftandupperrightandlowerright"/><!-- QUADRANT UPPER LEFT AND UPPER RIGHT AND LOWER RIGHT -->
+      <map code="0x259d" name="quadrantupperright"/><!-- QUADRANT UPPER RIGHT -->
+      <map code="0x259e" name="quadrantupperrightandlowerleft"/><!-- QUADRANT UPPER RIGHT AND LOWER LEFT -->
+      <map code="0x259f" name="quadrantupperrightandlowerleftandlowerright"/><!-- QUADRANT UPPER RIGHT AND LOWER LEFT AND LOWER RIGHT -->
     </cmap_format_4>
     <cmap_format_0 platformID="1" platEncID="0" language="0">
       <map code="0x20" name="space"/>
@@ -329,6 +374,8 @@
       <map code="0x7e" name="asciitilde"/>
       <map code="0xa0" name="dagger"/>
       <map code="0xa4" name="section"/>
+      <map code="0xd1" name="emdash"/>
+      <map code="0xd6" name="divide"/>
     </cmap_format_0>
     <cmap_format_4 platformID="3" platEncID="1" language="0">
       <map code="0x20" name="space"/><!-- SPACE -->
@@ -427,8 +474,21 @@
       <map code="0x7d" name="braceright"/><!-- RIGHT CURLY BRACKET -->
       <map code="0x7e" name="asciitilde"/><!-- TILDE -->
       <map code="0xa7" name="section"/><!-- SECTION SIGN -->
+      <map code="0xf7" name="divide"/><!-- DIVISION SIGN -->
+      <map code="0x2010" name="hyphen"/><!-- HYPHEN -->
+      <map code="0x2014" name="emdash"/><!-- EM DASH -->
       <map code="0x2020" name="dagger"/><!-- DAGGER -->
       <map code="0x203b" name="referencemark"/><!-- REFERENCE MARK -->
+      <map code="0x2190" name="leftwardsarrow"/><!-- LEFTWARDS ARROW -->
+      <map code="0x2191" name="upwardsarrow"/><!-- UPWARDS ARROW -->
+      <map code="0x2192" name="rightwardsarrow"/><!-- RIGHTWARDS ARROW -->
+      <map code="0x2193" name="downwardsarrow"/><!-- DOWNWARDS ARROW -->
+      <map code="0x2194" name="leftrightarrow"/><!-- LEFT RIGHT ARROW -->
+      <map code="0x2195" name="updownarrow"/><!-- UP DOWN ARROW -->
+      <map code="0x2196" name="northwestarrow"/><!-- NORTH WEST ARROW -->
+      <map code="0x2197" name="northeastarrow"/><!-- NORTH EAST ARROW -->
+      <map code="0x2198" name="southeastarrow"/><!-- SOUTH EAST ARROW -->
+      <map code="0x2199" name="southwestarrow"/><!-- SOUTH WEST ARROW -->
       <map code="0x2500" name="boxdrawingslighthorizontal"/><!-- BOX DRAWINGS LIGHT HORIZONTAL -->
       <map code="0x2501" name="boxdrawingsheavyhorizontal"/><!-- BOX DRAWINGS HEAVY HORIZONTAL -->
       <map code="0x2502" name="boxdrawingslightvertical"/><!-- BOX DRAWINGS LIGHT VERTICAL -->
@@ -557,6 +617,38 @@
       <map code="0x257d" name="boxdrawingslightupandheavydown"/><!-- BOX DRAWINGS LIGHT UP AND HEAVY DOWN -->
       <map code="0x257e" name="boxdrawingsheavyleftandlightright"/><!-- BOX DRAWINGS HEAVY LEFT AND LIGHT RIGHT -->
       <map code="0x257f" name="boxdrawingsheavyupandlightdown"/><!-- BOX DRAWINGS HEAVY UP AND LIGHT DOWN -->
+      <map code="0x2580" name="upperhalfblock"/><!-- UPPER HALF BLOCK -->
+      <map code="0x2581" name="loweroneeighthblock"/><!-- LOWER ONE EIGHTH BLOCK -->
+      <map code="0x2582" name="loweronequarterblock"/><!-- LOWER ONE QUARTER BLOCK -->
+      <map code="0x2583" name="lowerthreeeighthsblock"/><!-- LOWER THREE EIGHTHS BLOCK -->
+      <map code="0x2584" name="lowerhalfblock"/><!-- LOWER HALF BLOCK -->
+      <map code="0x2585" name="lowerfiveeighthsblock"/><!-- LOWER FIVE EIGHTHS BLOCK -->
+      <map code="0x2586" name="lowerthreequartersblock"/><!-- LOWER THREE QUARTERS BLOCK -->
+      <map code="0x2587" name="lowerseveneighthsblock"/><!-- LOWER SEVEN EIGHTHS BLOCK -->
+      <map code="0x2588" name="fullblock"/><!-- FULL BLOCK -->
+      <map code="0x2589" name="leftseveneighthsblock"/><!-- LEFT SEVEN EIGHTHS BLOCK -->
+      <map code="0x258a" name="leftthreequartersblock"/><!-- LEFT THREE QUARTERS BLOCK -->
+      <map code="0x258b" name="leftfiveeighthsblock"/><!-- LEFT FIVE EIGHTHS BLOCK -->
+      <map code="0x258c" name="lefthalfblock"/><!-- LEFT HALF BLOCK -->
+      <map code="0x258d" name="leftthreeeighthsblock"/><!-- LEFT THREE EIGHTHS BLOCK -->
+      <map code="0x258e" name="leftonequarterblock"/><!-- LEFT ONE QUARTER BLOCK -->
+      <map code="0x258f" name="leftoneeighthblock"/><!-- LEFT ONE EIGHTH BLOCK -->
+      <map code="0x2590" name="righthalfblock"/><!-- RIGHT HALF BLOCK -->
+      <map code="0x2591" name="lightshade"/><!-- LIGHT SHADE -->
+      <map code="0x2592" name="mediumshade"/><!-- MEDIUM SHADE -->
+      <map code="0x2593" name="darkshade"/><!-- DARK SHADE -->
+      <map code="0x2594" name="upperoneeighthblock"/><!-- UPPER ONE EIGHTH BLOCK -->
+      <map code="0x2595" name="rightoneeighthblock"/><!-- RIGHT ONE EIGHTH BLOCK -->
+      <map code="0x2596" name="quadrantlowerleft"/><!-- QUADRANT LOWER LEFT -->
+      <map code="0x2597" name="quadrantlowerright"/><!-- QUADRANT LOWER RIGHT -->
+      <map code="0x2598" name="quadrantupperleft"/><!-- QUADRANT UPPER LEFT -->
+      <map code="0x2599" name="quadrantupperleftandlowerleftandlowerright"/><!-- QUADRANT UPPER LEFT AND LOWER LEFT AND LOWER RIGHT -->
+      <map code="0x259a" name="quadrantupperleftandlowerright"/><!-- QUADRANT UPPER LEFT AND LOWER RIGHT -->
+      <map code="0x259b" name="quadrantupperleftandupperrightandlowerleft"/><!-- QUADRANT UPPER LEFT AND UPPER RIGHT AND LOWER LEFT -->
+      <map code="0x259c" name="quadrantupperleftandupperrightandlowerright"/><!-- QUADRANT UPPER LEFT AND UPPER RIGHT AND LOWER RIGHT -->
+      <map code="0x259d" name="quadrantupperright"/><!-- QUADRANT UPPER RIGHT -->
+      <map code="0x259e" name="quadrantupperrightandlowerleft"/><!-- QUADRANT UPPER RIGHT AND LOWER LEFT -->
+      <map code="0x259f" name="quadrantupperrightandlowerleftandlowerright"/><!-- QUADRANT UPPER RIGHT AND LOWER LEFT AND LOWER RIGHT -->
     </cmap_format_4>
   </cmap>
 
