@@ -1,5 +1,7 @@
+<br>
+
 <p align="center">
-  <img src="./img/head.svg" height="200" alt="logo">
+  <img src="./img/head.svg" height="230" alt="logo">
 </p>
 
 <h1 align="center"> Maple Font </h1>
@@ -26,17 +28,17 @@ Open source monospace & nerd font with round corner and ligatures.
 
 Inspired by [Source Code Pro](https://github.com/adobe-fonts/source-code-pro), [Fira Code Retina](https://github.com/tonsky/FiraCode), [Sarasa Mono SC Nerd](https://github.com/laishulu/Sarasa-Mono-SC-Nerd) and so on, but:
 
-- **New shape** -  such as `@ # $ % & ...`, and modify shape of italic style
-- **More ligatures** - such as `.., ..., /*, /**` 
-- **Small size** - leave only contains latin, table control characters and few symbols
-- **Better rendering effect** - redesigned it according to Fira Code Retina's spacing and glyph
+- 🎨 **New shape** -  such as `@ # $ % &` and new shape of italic style
+- 🤙🏻 **More ligatures** - such as `.., ..., /*, /**` 
+- 📦 **Small size** - leave only contains latin, table control characters and few symbols
+- 🦾 **Better rendering effect** - redesigned it according to Fira Code Retina's spacing and glyph
 
   |v4 | v5  |
   | :--------------- | :------ |
   | <img src="./img/sizechange.gif" height="200" alt="v4"> | <img src="./img/sizechange1.gif" height="200" alt="v5"> |
 
-- **More readable** - cursive style, better glyph shape, reduce or modify kerning, which is similar to `Jetbrains Mono`, center operators `+ - * = ^ ~ < >` 
-- See it in [screenshots](#screenshots) ✨
+- 🗒 **More readable** - cursive style, better glyph shape, reduce or modify kerning, which is similar to `Jetbrains Mono`, center operators `+ - * = ^ ~ < >` 
+- ✨ See it in [screenshots](#screenshots) 
 
 
 
@@ -53,15 +55,12 @@ Inspired by [Source Code Pro](https://github.com/adobe-fonts/source-code-pro), [
 
 
 
-
-
-
 ## Notice
 
 
 Because I don't have a Mac OS machine, this is the greatest adaption I can do with Mac OS currently, but I can't test whether it works. 
 
-My ability is not enough to solve other problems on Mac OS. I will record the problem and try to solve it, **PR welcome!**
+My ability is not enough to solve other problems on Mac OS. I will record the problem and try to solve it, and **PR welcome!**
 
 `Maple Mono NF` now maybe can't be recognized as Mono, and I try my best but it doesn't work orz
 
