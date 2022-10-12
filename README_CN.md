@@ -27,16 +27,16 @@
 
 参考了 [Source Code Pro](https://github.com/adobe-fonts/source-code-pro)、[Fira Code Retina](https://github.com/tonsky/FiraCode)、[Sarasa Mono SC Nerd](https://github.com/laishulu/Sarasa-Mono-SC-Nerd) 等优秀字体, 但是：
 
-- 🎨 **新的形状** -  比如 `@ # $ % &` 和新的斜体样式
+- 🎨 **新的形状** - 比如 `@ # $ % &` 和新的斜体样式
 - 🤙🏻 **更多连字** - 比如 `.., ..., /*, /**` 
 - 📦 **更小的体积** - 只留下了基础拉丁文（英数 + 符号）、制表符
-- 🦾 **更好的渲染效果** - 参考`Fira Code Retina`重新设计了字形，将宽度从原来的 600 改成了 1200，以下是在 1080p 屏幕上的对比
+- 🦾 **更好的渲染效果** - 参考 `Fira Code Retina` 重新设计了字形，将宽度从原来的 600 改成了 1200，以下是在 1080p 屏幕上的对比
 
   | v4                                                     | v5                                                      |
   | :----------------------------------------------------- | :------------------------------------------------------ |
   | <img src="./img/sizechange.gif" height="200" alt="v4"> | <img src="./img/sizechange1.gif" height="200" alt="v5"> |
 
-- 🗒 **更易于阅读** - 花体斜体；优化字形，降低大写和数字的高度；减少间距，现在和 `Jetbrains Mono`间距类似，居中显示 `+ - * = ^ ~ < >` 
+- 🗒 **更易于阅读** - 花体斜体、优化字形，降低大写字母和数字的高度、减少字体间距、居中显示 `+ - * = ^ ~ < >` 
 - ✨ 点击查看 [屏幕截图](#屏幕截图) 
 
 
@@ -54,10 +54,9 @@
 ## 注意事项
 
 因为我没有 mac 的机子，所以目前能做的适配我都做了，但是出了问题没法测试...所以可能需要研究研究
-目前有好几个问题重启解决了...
-有问题欢迎提 issue
+目前有好几个问题重启解决了...有问题欢迎提 issue
 
-`Maple Mono NF` `Maple Mono SC NF`可能没法被识别为等宽字体，我尽力了，来个大佬吧 qwq
+`Maple Mono NF, Maple Mono SC NF`可能没法被识别为等宽字体，我尽力了，来个大佬吧 qwq
 
 如果觉得字太宽，可以使用 [更纱黑体 SC Nerd](https://github.com/laishulu/Sarasa-Mono-SC-Nerd)
 
@@ -67,7 +66,7 @@
 
 
 <details>
-<summary><b>Total (click to expand!)</b></summary>
+<summary><b>字体总览（点击展开！）</b></summary>
 
 ![](img/base.png)
 
@@ -76,7 +75,7 @@
 
 
 <details>
-<summary><b>Ligature</b></summary>
+<summary><b>连字</b></summary>
 
 ![](img/ligature.png)
 ![](img/ligature.gif)
@@ -152,14 +151,14 @@ pip install fonttools
 python build.py
 ```
 
-## [Maple Mono SC NF](#maple-mono-sc-nf)
+## Maple Mono SC NF
 
-- ✨ 合并了 NF 和 SC，现在只需一个字体就可以适用所有**编码**场景，并且支持中英文 2:1
-- 需要当作阅读字体请使用 Maple UI
-- (半成品)支持使用其他的字体生成中文部分
-- (v5.5)中文的间距也减小了，高度进行了调整
+- ✨ 合并了 NF 和 SC，现在只需一个字体就可以适用所有**编码**场景
 - 中英文 2:1 + Nerd Font 控制台字体
 - 在 VSCode 和 IDEA 上测试均能正常显示
+- 支持使用其他的字体生成中文部分
+- 中文的间距也减小了，高度进行了调整
+- 需要当作阅读字体请使用 Maple UI
 
 <p align="center">
   <img src="./img/CE21.png" alt="logo">
@@ -176,9 +175,7 @@ python build.py
 - 扩大了中文引号的宽度
 
 <p align="center">
-  <img src="./img/UI.webp">
-  <img src="./img/Browser.webp">
-  <img src="./img/Browser2.webp">
+  <img src="./img/UI.webp" width="200"><img src="./img/Browser.webp" width="200"><img src="./img/Browser2.webp" width="200">
 </p>
 
 
@@ -186,10 +183,8 @@ python build.py
 
 手写体，クレ pro 英数微调+唐美人汉字部分，目前用在手机端，配合空字体模块做全局字体模块
 
-### 样例
-
 <p align="center">
-  <img src="./img/%E6%89%8B%E6%9C%BA.jpg">
+  <img src="./img/%E6%89%8B%E6%9C%BA.jpg" width="200">
 </p>
 
 

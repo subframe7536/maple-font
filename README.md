@@ -28,7 +28,7 @@ Open source monospace & nerd font with round corner and ligatures.
 
 Inspired by [Source Code Pro](https://github.com/adobe-fonts/source-code-pro), [Fira Code Retina](https://github.com/tonsky/FiraCode), [Sarasa Mono SC Nerd](https://github.com/laishulu/Sarasa-Mono-SC-Nerd) and so on, but:
 
-- 🎨 **New shape** -  such as `@ # $ % &` and new shape of italic style
+- 🎨 **New shape** - such as `@ # $ % &` and new shape of italic style
 - 🤙🏻 **More ligatures** - such as `.., ..., /*, /**` 
 - 📦 **Small size** - leave only contains latin, table control characters and few symbols
 - 🦾 **Better rendering effect** - redesigned it according to Fira Code Retina's spacing and glyph
@@ -37,7 +37,7 @@ Inspired by [Source Code Pro](https://github.com/adobe-fonts/source-code-pro), [
   | :--------------- | :------ |
   | <img src="./img/sizechange.gif" height="200" alt="v4"> | <img src="./img/sizechange1.gif" height="200" alt="v5"> |
 
-- 🗒 **More readable** - cursive style, better glyph shape, reduce or modify kerning, which is similar to `Jetbrains Mono`, center operators `+ - * = ^ ~ < >` 
+- 🗒 **More readable** - cursive style, better glyph shape, reduce or modify kerning, center operators `+ - * = ^ ~ < >` 
 - ✨ See it in [screenshots](#screenshots) 
 
 
@@ -63,6 +63,7 @@ Because I don't have a Mac OS machine, this is the greatest adaption I can do wi
 My ability is not enough to solve other problems on Mac OS. I will record the problem and try to solve it, and **PR welcome!**
 
 `Maple Mono NF` now maybe can't be recognized as Mono, and I try my best but it doesn't work orz
+
 
 
 ## Screenshots
