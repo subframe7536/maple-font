@@ -175,7 +175,7 @@ python build.py
 - 扩大了中文引号的宽度
 
 <p align="center">
-  <img src="./img/UI.webp" width="200"><img src="./img/Browser.webp" width="200"><img src="./img/Browser2.webp" width="200">
+  <img src="./img/UI.webp" width="300"><img src="./img/Browser.webp" width="250"><img src="./img/Browser2.webp" width="300">
 </p>
 
 
@@ -184,7 +184,7 @@ python build.py
 手写体，クレ pro 英数微调+唐美人汉字部分，目前用在手机端，配合空字体模块做全局字体模块
 
 <p align="center">
-  <img src="./img/%E6%89%8B%E6%9C%BA.jpg" width="200">
+  <img src="./img/%E6%89%8B%E6%9C%BA.jpg" width="300">
 </p>
 
 
@@ -194,4 +194,4 @@ SIL Open Font License 1.1
 
 ## 免责声明
 
-本项目中`Maple Mono SC NF`中的汉仪正圆仅供学习与交流，本人不对使用、传播本程序及附属产物造成的任何后果承担任何责任
+本项目中 `Maple Mono SC NF` 中的汉仪正圆仅供学习与交流，本人不对使用、传播本程序及附属产物造成的任何后果承担任何责任
