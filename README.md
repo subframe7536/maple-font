@@ -11,7 +11,7 @@ Open source monospace & nerd font with round corner and ligatures.
 </p>
 
 <p align="center">
-  <a>
+  <a href="https://github.com/subframe7536/Maple-font/releases">
     <img src="https://img.shields.io/github/v/release/subframe7536/Maple-font?display_name=tag" alt="release version">
   </a>
 </p>
@@ -19,6 +19,7 @@ Open source monospace & nerd font with round corner and ligatures.
 <p align="center">
   <a href="#install">install</a> | 
   <a href="https://github.com/users/subframe7536/projects/1">what's next</a> |
+  English |
   <a href="./README_CN.md">中文</a>
 </p>
 
@@ -37,7 +38,7 @@ Inspired by [Source Code Pro](https://github.com/adobe-fonts/source-code-pro), [
   | :--------------- | :------ |
   | <img src="./img/sizechange.gif" height="200" alt="v4"> | <img src="./img/sizechange1.gif" height="200" alt="v5"> |
 
-- 🗒 **More readable** - cursive style, better glyph shape, reduce or modify kerning, center operators `+ - * = ^ ~ < >` 
+- 🗒 **More readable** - cursive style, better glyph shape, lower the height of capital letters and numbers, reduce or modify kerning and center operators `+ - * = ^ ~ < >` 
 - ✨ See it in [screenshots](#screenshots) 
 
 
@@ -47,9 +48,9 @@ Inspired by [Source Code Pro](https://github.com/adobe-fonts/source-code-pro), [
 
 | Platform         | Command |
 | :--------------- | :------ |
-| macOS | ` brew tap homebrew/cask-fonts && brew install font-maple` |
+| macOS | `brew tap homebrew/cask-fonts && brew install font-maple` |
 |Arch Linux| `sudo pacman -S ttf-maple` |
-| Others | Download in [releases](https://github.com/subframe7536/Maple-font/releases)           |
+| Others | Download in [releases](https://github.com/subframe7536/Maple-font/releases)    |
 
 
 

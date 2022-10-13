@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-  <a>
+  <a href="https://github.com/subframe7536/Maple-font/releases">
     <img src="https://img.shields.io/github/v/release/subframe7536/Maple-font?display_name=tag" alt="release version">
   </a>
 </p>
@@ -19,7 +19,8 @@
 <p align="center">
   <a href="#安装">安装</a> | 
   <a href="https://github.com/users/subframe7536/projects/1">下一步计划</a> |
-  <a href="./README.md">English</a>
+  <a href="./README.md">English</a> |
+  中文
 </p>
 
 
@@ -36,13 +37,13 @@
   | :----------------------------------------------------- | :------------------------------------------------------ |
   | <img src="./img/sizechange.gif" height="200" alt="v4"> | <img src="./img/sizechange1.gif" height="200" alt="v5"> |
 
-- 🗒 **更易于阅读** - 花体斜体、优化字形，降低大写字母和数字的高度、减少字体间距、居中显示 `+ - * = ^ ~ < >` 
-- ✨ 点击查看 [屏幕截图](#屏幕截图) 
+- 🗒 **更易于阅读** - 花体斜体、优化字形、降低大写字母和数字的高度、减少字体间距、居中显示 `+ - * = ^ ~ < >` 
+- ✨ [点击查看屏幕截图](#屏幕截图) 
 
 
 ## 安装
 
-| Platform   | Command                                                                                                                                  |
+| 平台       | 命令                                                                                                                                  |
 | :--------- | :--------------------------------------------------------------------------------------------------------------------------------------- |
 | macOS      | ` brew tap homebrew/cask-fonts && brew install font-maple`                                                                               |
 | Arch Linux | `sudo pacman -S ttf-maple`                                                                                                               |
@@ -53,10 +54,10 @@
 
 ## 注意事项
 
-因为我没有 mac 的机子，所以目前能做的适配我都做了，但是出了问题没法测试...所以可能需要研究研究
-目前有好几个问题重启解决了...有问题欢迎提 issue
+因为我没有 mac 的机子，所以目前能做的适配我都做了，但是出了问题没法测试... 所以可能需要研究研究
+目前有好几个问题重启解决了... 有问题欢迎提 issue
 
-`Maple Mono NF, Maple Mono SC NF`可能没法被识别为等宽字体，我尽力了，来个大佬吧 qwq
+`Maple Mono NF, Maple Mono SC NF` 可能没法被识别为等宽字体，我尽力了，来个大佬吧 qwq
 
 如果觉得字太宽，可以使用 [更纱黑体 SC Nerd](https://github.com/laishulu/Sarasa-Mono-SC-Nerd)
 
