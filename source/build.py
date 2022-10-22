@@ -6,9 +6,9 @@ root=os.getcwd()
 source=path.join(root,"ttx")
 output=path.join(root,"output")
 if not path.exists(path.join(output,"otf")):
-  os.mkdir(path.join(output,"otf"))
+  os.makedirs(path.join(output,"otf"))
 if not path.exists(path.join(output,"ttf")):
-  os.mkdir(path.join(output,"ttf"))
+  os.makedirs(path.join(output,"ttf"))
 print("=== build start ===")
 for f in os.listdir(source):
   print(f)
