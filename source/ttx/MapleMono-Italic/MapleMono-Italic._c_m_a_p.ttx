@@ -101,6 +101,7 @@
       <map code="0x7e" name="asciitilde"/><!-- TILDE -->
       <map code="0xa7" name="section"/><!-- SECTION SIGN -->
       <map code="0xf7" name="divide"/><!-- DIVISION SIGN -->
+      <map code="0x3bb" name="lamda-grek"/><!-- GREEK SMALL LETTER LAMDA -->
       <map code="0x2010" name="hyphen"/><!-- HYPHEN -->
       <map code="0x2014" name="emdash"/><!-- EM DASH -->
       <map code="0x2020" name="dagger"/><!-- DAGGER -->
@@ -475,6 +476,7 @@
       <map code="0x7e" name="asciitilde"/><!-- TILDE -->
       <map code="0xa7" name="section"/><!-- SECTION SIGN -->
       <map code="0xf7" name="divide"/><!-- DIVISION SIGN -->
+      <map code="0x3bb" name="lamda-grek"/><!-- GREEK SMALL LETTER LAMDA -->
       <map code="0x2010" name="hyphen"/><!-- HYPHEN -->
       <map code="0x2014" name="emdash"/><!-- EM DASH -->
       <map code="0x2020" name="dagger"/><!-- DAGGER -->
