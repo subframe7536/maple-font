@@ -211,6 +211,7 @@
       <ClassDef glyph="j" class="1"/>
       <ClassDef glyph="k" class="1"/>
       <ClassDef glyph="l" class="1"/>
+      <ClassDef glyph="lamda-grek" class="1"/>
       <ClassDef glyph="left_arrow_single" class="1"/>
       <ClassDef glyph="left_right_arrow_double" class="1"/>
       <ClassDef glyph="left_right_arrow_double_long" class="1"/>

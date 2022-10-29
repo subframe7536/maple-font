@@ -5,12 +5,12 @@
     <!-- Most of this table will be recalculated by the compiler -->
     <tableVersion value="1.0"/>
     <fontRevision value="3.1"/>
-    <checkSumAdjustment value="0xca3d2b1a"/>
+    <checkSumAdjustment value="0xd2b8a5b3"/>
     <magicNumber value="0x5f0f3cf5"/>
     <flags value="00000000 00001011"/>
     <unitsPerEm value="2000"/>
     <created value="Fri Aug 19 07:52:03 2022"/>
-    <modified value="Wed Oct 12 06:22:23 2022"/>
+    <modified value="Sat Oct 29 03:50:48 2022"/>
     <xMin value="-5410"/>
     <yMin value="-1000"/>
     <xMax value="1850"/>

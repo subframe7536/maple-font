@@ -2,7 +2,7 @@
 <ttFont ttLibVersion="4.34">
 
   <hmtx>
-    <mtx name=".notdef" width="0" lsb="-448"/>
+    <mtx name=".notdef" width="1200" lsb="141"/>
     <mtx name="A" width="1200" lsb="80"/>
     <mtx name="B" width="1200" lsb="214"/>
     <mtx name="C" width="1200" lsb="274"/>
@@ -37,7 +37,7 @@
     <mtx name="asciitilde_at" width="1200" lsb="-937"/>
     <mtx name="asterisk" width="1200" lsb="282"/>
     <mtx name="asterisk_slash" width="1200" lsb="-974"/>
-    <mtx name="at" width="1200" lsb="149"/>
+    <mtx name="at" width="1200" lsb="119"/>
     <mtx name="b" width="1200" lsb="215"/>
     <mtx name="backslash" width="1200" lsb="484"/>
     <mtx name="bar" width="1200" lsb="493"/>
@@ -209,6 +209,7 @@
     <mtx name="j" width="1200" lsb="153"/>
     <mtx name="k" width="1200" lsb="218"/>
     <mtx name="l" width="1200" lsb="194"/>
+    <mtx name="lamda-grek" width="1200" lsb="165"/>
     <mtx name="left_arrow_single" width="1200" lsb="-790"/>
     <mtx name="left_right_arrow_double" width="1200" lsb="-1990"/>
     <mtx name="left_right_arrow_double_long" width="1200" lsb="-3190"/>
@@ -278,7 +279,7 @@
     <mtx name="quotesingle" width="1200" lsb="760"/>
     <mtx name="r" width="1200" lsb="225"/>
     <mtx name="referencemark" width="1200" lsb="125"/>
-    <mtx name="right_arrow_double" width="1200" lsb="-937"/>
+    <mtx name="right_arrow_double" width="1200" lsb="-940"/>
     <mtx name="right_arrow_double_long" width="1200" lsb="-2132"/>
     <mtx name="right_arrow_single" width="1200" lsb="-889"/>
     <mtx name="right_arrow_single_long" width="1200" lsb="-2089"/>
