@@ -1,5 +1,10 @@
 script latn {
   feature ContextualAlternates;
+  feature CharacterVariants01_1;
+  feature SlashedZero1;
+  feature CharacterVariants02_1;
+  feature CharacterVariants03_1;
+  feature CharacterVariants04_1;
 }
 
 class @hex [A-F zero-nine];
@@ -10,14 +15,52 @@ class @operator [equal less greater asterisk plus hyphenminus asciitilde asciici
 class @colons [colon colon_center colon_center_left colon_center_right];
 class @var [zero-nine A-Z a-z underscore dollar asterisk];
 
+# warn trace debug warn error fatal vite todo
+class @a [A a];
+class @b [B b];
+class @c [C c];
+class @d [D d];
+class @e [E e];
+class @f [F f];
+class @g [G g];
+class @i [I i];
+class @l [L l];
+class @n [N n];
+class @o [O o];
+class @r [R r];
+class @t [T t];
+class @u [U u];
+class @w [W w];
+class @v [V v];
+
+feature CharacterVariants01_1 cv01 {
+  lookup pure_style;
+}
+
+feature CharacterVariants02_1 cv02 {
+  lookup equal_equal;
+  lookup equal_equal_equal;
+  lookup not_equal;
+  lookup not_equal_equal;
+}
+feature CharacterVariants03_1 cv03 {
+  lookup not_equal_equal_equal;
+}
+feature CharacterVariants04_1 cv04 {
+  lookup tag_vite;
+}
+
 feature ContextualAlternates calt {
-  # ->
+  # <->
+  lookup left_right_arrow_single;
+  # <=>
+  lookup left_right_arrow_double;
   lookup right_arrow_single;
   # =>
   lookup right_arrow_double;
   # 0x12
   lookup hex_center_x;
-  # </
+  lookup colon_center;
   lookup less_slash;
   # />
   lookup slash_greater;
@@ -25,36 +68,31 @@ feature ContextualAlternates calt {
   lookup less_greater;
   # </>
   lookup less_slash_greater;
-  # :: ::: :> :=:
-  lookup colon_center;
-  # <- ignore when suffix is number
+  # <-
   lookup left_arrow_single;
-  # <->
-  lookup left_right_arrow_single;
-  # <=>
-  lookup left_right_arrow_double;
-  # -->
-  lookup right_arrow_single_long;
-  # ==>
-  lookup right_arrow_double_long;
   # <-->
   lookup left_right_arrow_single_long;
   # <==>
   lookup left_right_arrow_double_long;
-  # << ignore when suffix is @var
+  # -->
+  lookup right_arrow_single_long;
+  # ==>
+  lookup right_arrow_double_long;
+  # <<
   lookup less_less;
-  # <<< ignore when suffix is @var
+  # <<<
   lookup less_less_less;
-  # >> ignore when preffix is @var
+  # >>
   lookup greater_greater;
-  # >>> ignore when preffix is @var
+  # >>>
   lookup greater_greater_greater;
-  # ###
+  # multiple #
   lookup sharps;
+  # <!--  -->
+  # <!---->
+  lookup xml_comment;
   # ~@
   lookup asciitilde_at;
-  # <!-- <!---->
-  lookup xml_comment;
   # //
   lookup slash_slash;
   # ///
@@ -77,7 +115,8 @@ feature ContextualAlternates calt {
   lookup plus_plus;
   # +++
   lookup plus_plus_plus;
-  # #{
+  lookup period_period;
+  lookup period_period_period;
   lookup numbersign_braceleft;
   # #[
   lookup numbersign_bracketleft;
@@ -87,10 +126,19 @@ feature ContextualAlternates calt {
   lookup numbersign_parenleft;
   # [todo) tags
   lookup tag_todo;
-  # ..
-  lookup period_period;
-  # ...
-  lookup period_period_period;
+  # todo)) tags for jetbrains' IDE
+  lookup tag_todo_alt;
+  # tags
+  lookup tag_info;
+  lookup tag_trace;
+  lookup tag_debug;
+  lookup tag_warn;
+  lookup tag_error;
+  lookup tag_fatal;
+}
+
+feature SlashedZero1 zero {
+  lookup slash_zero;
 }
 
 lookup left_right_arrow_single {
@@ -223,8 +271,14 @@ lookup hex_center_x_1 {
 lookup colon_center {
   subtable ignore1 {
     ignore context colon (@colons @colons @colons);
+  }
+  subtable ignore2 {
     ignore context (@colons) colon (@colons @colons);
+  }
+  subtable ignore3 {
     ignore context (@colons @colons) colon (@colons);
+  }
+  subtable ignore4 {
     ignore context (@colons @colons @colons) colon;
   }
   subtable 111_1 {
@@ -239,45 +293,37 @@ lookup colon_center {
     context (@colons @colons) colon;
     sub 0 operator_center_3;
   }
-  subtable 222 {
+  subtable 111_4 {
+    context colon (hyphenminus @number);
+    sub 0 operator_center_1;
+  }
+  subtable 111 {
     context (@operator) colon (@operator);
     sub 0 operator_center_1;
   }
-  subtable 333_1 {
-    context colon (@colons equal);
+  subtable 333 {
+    context colon (@operator @colons);
     sub 0 operator_center_2;
-  }
-  subtable 333_2 {
-    context (@colons) colon (equal);
-    sub 0 operator_center_1;
-  }
-  subtable 333_3 {
-    context colon (equal);
-    sub 0 operator_center_2;
-  }
-  subtable 444_1 {
-    context (@operator) colon (@colons);
-    sub 0 operator_center_2;
-  }
-  subtable 444_2 {
-    context colon (@operator colon_center_left);
-    sub 0 operator_center_2;
-  }
-  subtable 444_3 {
-    context (colon_center_right @operator) colon;
-    sub 0 operator_center_3;
   }
   subtable 555 {
+    context (@colons @operator) colon;
+    sub 0 operator_center_3;
+  }
+  subtable 111_4 {
     context (@colons) colon;
     sub 0 operator_center_3;
   }
-  subtable 666 {
+  subtable 111_5 {
     context colon (@colons);
     sub 0 operator_center_2;
   }
-  subtable 666 {
-    context (@number) colon (@number);
-    sub 0 operator_center_1;
+  subtable 222 {
+    context colon (@operator);
+    sub 0 operator_center_2;
+  }
+  subtable 444 {
+    context (@operator) colon;
+    sub 0 operator_center_3;
   }
 }
 
@@ -1081,6 +1127,7 @@ lookup plus_plus_plus_1 {
 lookup plus_plus_plus_2 {
   sub plus -> placeholder;
 }
+
 lookup period_period {
   subtable ignore1 {
     ignore context (period) period (period);
@@ -1237,50 +1284,573 @@ lookup numbersign_parenleft_1 {
 lookup numbersign_parenleft_2 {
   sub numbersign -> placeholder;
 }
-# [BUG]
+
 lookup tag_todo {
   subtable 111 {
     context (placeholder placeholder placeholder placeholder placeholder) parenright;
     sub 0 tag_todo_1;
   }
   subtable 222 {
-    context (placeholder placeholder placeholder placeholder) O (parenright);
+    context (placeholder placeholder placeholder placeholder) @o (parenright);
     sub 0 tag_todo_2;
   }
   subtable 333 {
-    context (placeholder placeholder placeholder) D (O parenright);
+    context (placeholder placeholder placeholder) @d (@o parenright);
     sub 0 tag_todo_3;
   }
   subtable 444 {
-    context (placeholder placeholder) O (D O parenright);
+    context (placeholder placeholder) @o (@d @o parenright);
     sub 0 tag_todo_2;
   }
   subtable 555 {
-    context (placeholder) T (O D O parenright);
+    context (placeholder) @t (@o @d @o parenright);
     sub 0 tag_todo_4;
   }
   subtable 666 {
-    context bracketleft (T O D O parenright);
+    context bracketleft (@t @o @d @o parenright);
     sub 0 tag_todo_5;
+  }
+}
+lookup tag_todo_alt {
+  subtable 111 {
+    context (placeholder placeholder placeholder placeholder placeholder) parenright;
+    sub 0 tag_todo_1;
+  }
+  subtable 222 {
+    context (placeholder placeholder placeholder placeholder) parenright (parenright);
+    sub 0 tag_todo_6;
+  }
+  subtable 333 {
+    context (placeholder placeholder placeholder) @o (parenright parenright);
+    sub 0 tag_todo_2;
+  }
+  subtable 444 {
+    context (placeholder placeholder) @d (@o parenright parenright);
+    sub 0 tag_todo_3;
+  }
+  subtable 555 {
+    context (placeholder) @o (@d @o parenright parenright);
+    sub 0 tag_todo_2;
+  }
+  subtable 666 {
+    context @t (@o @d @o parenright parenright);
+    sub 0 tag_todo_4;
   }
 }
 
 lookup tag_todo_1 {
   sub parenright -> tag_todo;
 }
-
 lookup tag_todo_2 {
-  sub O -> placeholder;
+  sub @o -> placeholder;
 }
-
 lookup tag_todo_3 {
-  sub D -> placeholder;
+  sub @d -> placeholder;
 }
-
 lookup tag_todo_4 {
-  sub T -> placeholder;
+  sub @t -> placeholder;
+}
+lookup tag_todo_5 {
+  sub bracketleft -> placeholder;
+}
+lookup tag_todo_6 {
+  sub parenright -> placeholder;
 }
 
-lookup tag_todo_5 {
+lookup pure_style {
+  sub numbersign -> numbersign_alt;
+  sub dollar -> dollar_alt;
+  sub percent -> percent_alt;
+  sub ampersand -> ampersand_alt;
+  sub at -> at_alt;
+  sub Q -> q_alt;
+  sub numbersign_expand -> numbersign_expand_alt;
+  sub ampersand_ampersand -> ampersand_ampersand_alt;
+  sub asciitilde_at -> asciitilde_at_alt;
+  sub numbersign_braceleft -> numbersign_braceleft_alt;
+  sub numbersign_bracketleft -> numbersign_bracketleft_alt;
+  sub bracketright_numbersign -> bracketright_numbersign_alt;
+  sub numbersign_parenleft -> numbersign_parenleft_alt;
+}
+
+lookup slash_zero {
+  sub zero -> zero_dot;
+}
+
+lookup equal_equal {
+  subtable ignore1 {
+    ignore context (equal) equal (equal);
+  }
+  subtable ignore3 {
+    ignore context (exclam) equal (equal);
+  }
+  subtable ignore2 {
+    ignore context equal (equal equal);
+  }
+  subtable 111 {
+    context (placeholder) equal;
+    sub 0 equal_equal_1;
+  }
+  subtable 222 {
+    context equal (equal);
+    sub 0 equal_equal_2;
+  }
+}
+
+lookup equal_equal_1 {
+  sub equal -> equal_equal;
+}
+
+lookup equal_equal_2 {
+  sub equal -> placeholder;
+}
+
+lookup equal_equal_equal {
+  subtable ignore1 {
+    ignore context (equal) equal (equal equal);
+  }
+  subtable ignore1 {
+    ignore context (exclam) equal (equal equal);
+  }
+  subtable ignore2 {
+    ignore context equal (equal equal equal);
+  }
+  subtable 111 {
+    context (placeholder placeholder) equal;
+    sub 0 equal_equal_equal_1;
+  }
+  subtable 222 {
+    context (placeholder) equal (equal);
+    sub 0 equal_equal_equal_2;
+  }
+  subtable 333 {
+    context equal (equal equal);
+    sub 0 equal_equal_equal_2;
+  }
+}
+
+lookup equal_equal_equal_1 {
+  sub equal -> equal_equal_equal;
+}
+
+lookup equal_equal_equal_2 {
+  sub equal -> placeholder;
+}
+
+lookup not_equal {
+  subtable ignore1 {
+    ignore context (exclam) equal (equal);
+  }
+  subtable ignore2 {
+    ignore context exclam (equal equal);
+  }
+  subtable 111 {
+    context (placeholder) equal;
+    sub 0 not_equal_1;
+  }
+  subtable 222 {
+    context exclam (equal);
+    sub 0 not_equal_2;
+  }
+}
+
+lookup not_equal_1 {
+  sub equal -> not_equal;
+}
+lookup not_equal_2 {
+  sub exclam -> placeholder;
+}
+
+lookup not_equal_equal {
+  subtable ignore1 {
+    ignore context (exclam) equal (equal equal);
+  }
+  subtable ignore2 {
+    ignore context exclam (equal equal equal);
+  }
+  subtable 111 {
+    context (placeholder placeholder) equal;
+    sub 0 not_equal_equal_1;
+  }
+  subtable 222 {
+    context (placeholder) equal (equal);
+    sub 0 not_equal_equal_2;
+  }
+  subtable 333 {
+    context exclam (equal equal);
+    sub 0 not_equal_equal_3;
+  }
+}
+
+lookup not_equal_equal_1 {
+  sub equal -> not_equal_equal;
+}
+
+lookup not_equal_equal_2 {
+  sub equal -> placeholder;
+}
+lookup not_equal_equal_3 {
+  sub exclam -> placeholder;
+}
+lookup not_equal_equal_equal {
+  subtable ignore1 {
+    ignore context (exclam) equal (equal equal equal);
+  }
+  subtable ignore2 {
+    ignore context exclam (equal equal equal equal);
+  }
+  subtable 111 {
+    context (placeholder placeholder placeholder) equal;
+    sub 0 not_equal_equal_equal_1;
+  }
+  subtable 222 {
+    context (placeholder placeholder) equal (equal);
+    sub 0 not_equal_equal_equal_2;
+  }
+  subtable 333 {
+    context (placeholder) equal (equal equal);
+    sub 0 not_equal_equal_equal_2;
+  }
+  subtable 444 {
+    context exclam (equal equal equal);
+    sub 0 not_equal_equal_equal_3;
+  }
+}
+
+lookup not_equal_equal_equal_1 {
+  sub equal -> not_equal_equal_equal;
+}
+lookup not_equal_equal_equal_2 {
+  sub equal -> placeholder;
+}
+lookup not_equal_equal_equal_3 {
+  sub exclam -> placeholder;
+}
+
+lookup tag_info {
+  subtable 111 {
+    context (placeholder placeholder placeholder placeholder placeholder) bracketright;
+    sub 0 tag_info_1;
+  }
+  subtable 222 {
+    context (placeholder placeholder placeholder placeholder) @o (bracketright);
+    sub 0 tag_info_2;
+  }
+  subtable 333 {
+    context (placeholder placeholder placeholder) @f (@o bracketright);
+    sub 0 tag_info_3;
+  }
+  subtable 444 {
+    context (placeholder placeholder) @n (@f @o bracketright);
+    sub 0 tag_info_4;
+  }
+  subtable 555 {
+    context (placeholder) @i (@n @f @o bracketright);
+    sub 0 tag_info_5;
+  }
+  subtable 666 {
+    context bracketleft (@i @n @f @o bracketright);
+    sub 0 tag_info_6;
+  }
+}
+lookup tag_info_1 {
+  sub bracketright -> tag_info;
+}
+lookup tag_info_2 {
+  sub @o -> placeholder;
+}
+lookup tag_info_3 {
+  sub @f -> placeholder;
+}
+lookup tag_info_4 {
+  sub @n -> placeholder;
+}
+lookup tag_info_5 {
+  sub @i -> placeholder;
+}
+lookup tag_info_6 {
+  sub bracketleft -> placeholder;
+}
+lookup tag_trace {
+  subtable 111 {
+    context (placeholder placeholder placeholder placeholder placeholder placeholder) bracketright;
+    sub 0 tag_trace_1;
+  }
+  subtable 222 {
+    context (placeholder placeholder placeholder placeholder placeholder) @e (bracketright);
+    sub 0 tag_trace_2;
+  }
+  subtable 333 {
+    context (placeholder placeholder placeholder placeholder) @c (@e bracketright);
+    sub 0 tag_trace_3;
+  }
+  subtable 444 {
+    context (placeholder placeholder placeholder) @a (@c @e bracketright);
+    sub 0 tag_trace_4;
+  }
+  subtable 555 {
+    context (placeholder placeholder) @r (@a @c @e bracketright);
+    sub 0 tag_trace_5;
+  }
+  subtable 666 {
+    context (placeholder) @t (@r @a @c @e bracketright);
+    sub 0 tag_trace_6;
+  }
+  subtable 777 {
+    context bracketleft (@t @r @a @c @e bracketright);
+    sub 0 tag_trace_7;
+  }
+}
+lookup tag_trace_1 {
+  sub bracketright -> tag_trace;
+}
+lookup tag_trace_2 {
+  sub @e -> placeholder;
+}
+lookup tag_trace_3 {
+  sub @c -> placeholder;
+}
+lookup tag_trace_4 {
+  sub @a -> placeholder;
+}
+lookup tag_trace_5 {
+  sub @r -> placeholder;
+}
+lookup tag_trace_6 {
+  sub @t -> placeholder;
+}
+lookup tag_trace_7 {
+  sub bracketleft -> placeholder;
+}
+lookup tag_debug {
+  subtable 111 {
+    context (placeholder placeholder placeholder placeholder placeholder placeholder) bracketright;
+    sub 0 tag_debug_1;
+  }
+  subtable 222 {
+    context (placeholder placeholder placeholder placeholder placeholder) @g (bracketright);
+    sub 0 tag_debug_2;
+  }
+  subtable 333 {
+    context (placeholder placeholder placeholder placeholder) @u (@g bracketright);
+    sub 0 tag_debug_3;
+  }
+  subtable 444 {
+    context (placeholder placeholder placeholder) @b (@u @g bracketright);
+    sub 0 tag_debug_4;
+  }
+  subtable 555 {
+    context (placeholder placeholder) @e (@b @u @g bracketright);
+    sub 0 tag_debug_5;
+  }
+  subtable 666 {
+    context (placeholder) @d (@e @b @u @g bracketright);
+    sub 0 tag_debug_6;
+  }
+  subtable 777 {
+    context bracketleft (@d @e @b @u @g bracketright);
+    sub 0 tag_debug_7;
+  }
+}
+lookup tag_debug_1 {
+  sub bracketright -> tag_debug;
+}
+lookup tag_debug_2 {
+  sub @g -> placeholder;
+}
+lookup tag_debug_3 {
+  sub @u -> placeholder;
+}
+lookup tag_debug_4 {
+  sub @b -> placeholder;
+}
+lookup tag_debug_5 {
+  sub @e -> placeholder;
+}
+lookup tag_debug_6 {
+  sub @d -> placeholder;
+}
+lookup tag_debug_7 {
+  sub bracketleft -> placeholder;
+}
+lookup tag_warn {
+  subtable 111 {
+    context (placeholder placeholder placeholder placeholder placeholder) bracketright;
+    sub 0 tag_warn_1;
+  }
+  subtable 222 {
+    context (placeholder placeholder placeholder placeholder) @n (bracketright);
+    sub 0 tag_warn_2;
+  }
+  subtable 333 {
+    context (placeholder placeholder placeholder) @r (@n bracketright);
+    sub 0 tag_warn_3;
+  }
+  subtable 444 {
+    context (placeholder placeholder) @a (@r @n bracketright);
+    sub 0 tag_warn_4;
+  }
+  subtable 555 {
+    context (placeholder) @w (@a @r @n bracketright);
+    sub 0 tag_warn_5;
+  }
+  subtable 666 {
+    context bracketleft (@w @a @r @n bracketright);
+    sub 0 tag_warn_6;
+  }
+}
+lookup tag_warn_1 {
+  sub bracketright -> tag_warn;
+}
+lookup tag_warn_2 {
+  sub @n -> placeholder;
+}
+lookup tag_warn_3 {
+  sub @r -> placeholder;
+}
+lookup tag_warn_4 {
+  sub @a -> placeholder;
+}
+lookup tag_warn_5 {
+  sub @w -> placeholder;
+}
+lookup tag_warn_6 {
+  sub bracketleft -> placeholder;
+}
+lookup tag_error {
+  subtable 111 {
+    context (placeholder placeholder placeholder placeholder placeholder placeholder) bracketright;
+    sub 0 tag_error_1;
+  }
+  subtable 222 {
+    context (placeholder placeholder placeholder placeholder placeholder) @r (bracketright);
+    sub 0 tag_error_2;
+  }
+  subtable 333 {
+    context (placeholder placeholder placeholder placeholder) @o (@r bracketright);
+    sub 0 tag_error_3;
+  }
+  subtable 444 {
+    context (placeholder placeholder placeholder) @r (@o @r bracketright);
+    sub 0 tag_error_2;
+  }
+  subtable 555 {
+    context (placeholder placeholder) @r (@r @o @r bracketright);
+    sub 0 tag_error_2;
+  }
+  subtable 666 {
+    context (placeholder) @e (@r @r @o @r bracketright);
+    sub 0 tag_error_4;
+  }
+  subtable 777 {
+    context bracketleft (@e @r @r @o @r bracketright);
+    sub 0 tag_error_5;
+  }
+}
+lookup tag_error_1 {
+  sub bracketright -> tag_error;
+}
+lookup tag_error_2 {
+  sub @r -> placeholder;
+}
+lookup tag_error_3 {
+  sub @o -> placeholder;
+}
+lookup tag_error_4 {
+  sub @e -> placeholder;
+}
+lookup tag_error_5 {
+  sub bracketleft -> placeholder;
+}
+lookup tag_fatal {
+  subtable 111 {
+    context (placeholder placeholder placeholder placeholder placeholder placeholder) bracketright;
+    sub 0 tag_fatal_1;
+  }
+  subtable 222 {
+    context (placeholder placeholder placeholder placeholder placeholder) @l (bracketright);
+    sub 0 tag_fatal_2;
+  }
+  subtable 333 {
+    context (placeholder placeholder placeholder placeholder) @a (@l bracketright);
+    sub 0 tag_fatal_3;
+  }
+  subtable 444 {
+    context (placeholder placeholder placeholder) @t (@a @l bracketright);
+    sub 0 tag_fatal_4;
+  }
+  subtable 555 {
+    context (placeholder placeholder) @a (@t @a @l bracketright);
+    sub 0 tag_fatal_3;
+  }
+  subtable 666 {
+    context (placeholder) @f (@a @t @a @l bracketright);
+    sub 0 tag_fatal_5;
+  }
+  subtable 777 {
+    context bracketleft (@f @a @t @a @l bracketright);
+    sub 0 tag_fatal_6;
+  }
+}
+lookup tag_fatal_1 {
+  sub bracketright -> tag_fatal;
+}
+lookup tag_fatal_2 {
+  sub @l -> placeholder;
+}
+lookup tag_fatal_3 {
+  sub @a -> placeholder;
+}
+lookup tag_fatal_4 {
+  sub @t -> placeholder;
+}
+lookup tag_fatal_5 {
+  sub @f -> placeholder;
+}
+lookup tag_fatal_6 {
+  sub bracketleft -> placeholder;
+}
+lookup tag_vite {
+  subtable 111 {
+    context (placeholder placeholder placeholder placeholder placeholder) bracketright;
+    sub 0 tag_vite_1;
+  }
+  subtable 222 {
+    context (placeholder placeholder placeholder placeholder) @e (bracketright);
+    sub 0 tag_vite_2;
+  }
+  subtable 333 {
+    context (placeholder placeholder placeholder) @t (@e bracketright);
+    sub 0 tag_vite_3;
+  }
+  subtable 444 {
+    context (placeholder placeholder) @i (@t @e bracketright);
+    sub 0 tag_vite_4;
+  }
+  subtable 555 {
+    context (placeholder) @v (@i @t @e bracketright);
+    sub 0 tag_vite_5;
+  }
+  subtable 666 {
+    context bracketleft (@v @i @t @e bracketright);
+    sub 0 tag_vite_6;
+  }
+}
+lookup tag_vite_1 {
+  sub bracketright -> tag_vite;
+}
+lookup tag_vite_2 {
+  sub @e -> placeholder;
+}
+lookup tag_vite_3 {
+  sub @t -> placeholder;
+}
+lookup tag_vite_4 {
+  sub @i -> placeholder;
+}
+lookup tag_vite_5 {
+  sub @v -> placeholder;
+}
+lookup tag_vite_6 {
   sub bracketleft -> placeholder;
 }

@@ -18,7 +18,7 @@ for f in os.listdir(cn_path):
     print(f)
     subset.main([
       path.join(cn_path,f),
-      "--unicodes=%s" % "U+2014,u+2018,u+2019,u+201C,u+201D,u+2022,u+2026,u+2030,u+3001,u+3002,u+3008-3011,u+3014-3017,u+201C,U+3400-9FA5,u+FF01,u+FF09,u+FF08,u+FF0C,u+FF1A,u+FF1B,u+FF01,u+FF0C,u+FF1A,u+FF1B,u+FF1F",
+      "--unicodes=%s" % "3001,3002,3007-3011,3400-9fff,ff5e,ff01,ff08,ff09,ff0c,ff1a,ff1b,ff1f",
       "--glyph-names",
       # "--no-notdef-glyph",
       # "--hinting-tables='*'",

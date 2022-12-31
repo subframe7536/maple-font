@@ -6,40 +6,82 @@
     <GlyphClassDef>
       <ClassDef glyph=".notdef" class="1"/>
       <ClassDef glyph="A" class="1"/>
+      <ClassDef glyph="AE" class="1"/>
+      <ClassDef glyph="Aacute" class="1"/>
+      <ClassDef glyph="Acircumflex" class="1"/>
+      <ClassDef glyph="Adieresis" class="1"/>
+      <ClassDef glyph="Agrave" class="1"/>
+      <ClassDef glyph="Aring" class="1"/>
+      <ClassDef glyph="Atilde" class="1"/>
       <ClassDef glyph="B" class="1"/>
       <ClassDef glyph="C" class="1"/>
+      <ClassDef glyph="Ccedilla" class="1"/>
       <ClassDef glyph="D" class="1"/>
       <ClassDef glyph="E" class="1"/>
+      <ClassDef glyph="Eacute" class="1"/>
+      <ClassDef glyph="Ecircumflex" class="1"/>
+      <ClassDef glyph="Edieresis" class="1"/>
+      <ClassDef glyph="Egrave" class="1"/>
+      <ClassDef glyph="Eth" class="1"/>
       <ClassDef glyph="F" class="1"/>
       <ClassDef glyph="G" class="1"/>
       <ClassDef glyph="H" class="1"/>
       <ClassDef glyph="I" class="1"/>
+      <ClassDef glyph="Iacute" class="1"/>
+      <ClassDef glyph="Icircumflex" class="1"/>
+      <ClassDef glyph="Idieresis" class="1"/>
+      <ClassDef glyph="Igrave" class="1"/>
       <ClassDef glyph="J" class="1"/>
       <ClassDef glyph="K" class="1"/>
       <ClassDef glyph="L" class="1"/>
       <ClassDef glyph="M" class="1"/>
       <ClassDef glyph="N" class="1"/>
+      <ClassDef glyph="Ntilde" class="1"/>
       <ClassDef glyph="O" class="1"/>
+      <ClassDef glyph="Oacute" class="1"/>
+      <ClassDef glyph="Ocircumflex" class="1"/>
+      <ClassDef glyph="Odieresis" class="1"/>
+      <ClassDef glyph="Ograve" class="1"/>
+      <ClassDef glyph="Oslash" class="1"/>
+      <ClassDef glyph="Otilde" class="1"/>
       <ClassDef glyph="P" class="1"/>
       <ClassDef glyph="Q" class="1"/>
       <ClassDef glyph="R" class="1"/>
       <ClassDef glyph="S" class="1"/>
       <ClassDef glyph="T" class="1"/>
+      <ClassDef glyph="Thorn" class="1"/>
       <ClassDef glyph="U" class="1"/>
+      <ClassDef glyph="Uacute" class="1"/>
+      <ClassDef glyph="Ucircumflex" class="1"/>
+      <ClassDef glyph="Udieresis" class="1"/>
+      <ClassDef glyph="Ugrave" class="1"/>
       <ClassDef glyph="V" class="1"/>
       <ClassDef glyph="W" class="1"/>
       <ClassDef glyph="X" class="1"/>
       <ClassDef glyph="Y" class="1"/>
+      <ClassDef glyph="Yacute" class="1"/>
       <ClassDef glyph="Z" class="1"/>
       <ClassDef glyph="a" class="1"/>
+      <ClassDef glyph="aacute" class="1"/>
+      <ClassDef glyph="acircumflex" class="1"/>
+      <ClassDef glyph="acute.case" class="1"/>
+      <ClassDef glyph="adieresis" class="1"/>
+      <ClassDef glyph="ae" class="1"/>
+      <ClassDef glyph="agrave" class="1"/>
       <ClassDef glyph="ampersand" class="1"/>
+      <ClassDef glyph="ampersand_alt" class="1"/>
       <ClassDef glyph="ampersand_ampersand" class="1"/>
+      <ClassDef glyph="ampersand_ampersand_alt" class="1"/>
+      <ClassDef glyph="aring" class="1"/>
       <ClassDef glyph="asciicircum" class="1"/>
       <ClassDef glyph="asciitilde" class="1"/>
       <ClassDef glyph="asciitilde_at" class="1"/>
+      <ClassDef glyph="asciitilde_at_alt" class="1"/>
       <ClassDef glyph="asterisk" class="1"/>
       <ClassDef glyph="asterisk_slash" class="1"/>
       <ClassDef glyph="at" class="1"/>
+      <ClassDef glyph="at_alt" class="1"/>
+      <ClassDef glyph="atilde" class="1"/>
       <ClassDef glyph="b" class="1"/>
       <ClassDef glyph="backslash" class="1"/>
       <ClassDef glyph="bar" class="1"/>
@@ -177,7 +219,11 @@
       <ClassDef glyph="bracketleft" class="1"/>
       <ClassDef glyph="bracketright" class="1"/>
       <ClassDef glyph="bracketright_numbersign" class="1"/>
+      <ClassDef glyph="bracketright_numbersign_alt" class="1"/>
       <ClassDef glyph="c" class="1"/>
+      <ClassDef glyph="ccedilla" class="1"/>
+      <ClassDef glyph="cedilla.case" class="1"/>
+      <ClassDef glyph="circumflexmod.case" class="1"/>
       <ClassDef glyph="colon" class="1"/>
       <ClassDef glyph="colon_center" class="1"/>
       <ClassDef glyph="colon_center_left" class="1"/>
@@ -186,13 +232,23 @@
       <ClassDef glyph="d" class="1"/>
       <ClassDef glyph="dagger" class="1"/>
       <ClassDef glyph="darkshade" class="1"/>
+      <ClassDef glyph="dieresis.case" class="1"/>
       <ClassDef glyph="divide" class="1"/>
       <ClassDef glyph="dollar" class="1"/>
+      <ClassDef glyph="dollar_alt" class="1"/>
       <ClassDef glyph="downwardsarrow" class="1"/>
       <ClassDef glyph="e" class="1"/>
+      <ClassDef glyph="eacute" class="1"/>
+      <ClassDef glyph="ecircumflex" class="1"/>
+      <ClassDef glyph="edieresis" class="1"/>
+      <ClassDef glyph="egrave" class="1"/>
       <ClassDef glyph="eight" class="1"/>
+      <ClassDef glyph="ellipsis" class="1"/>
       <ClassDef glyph="emdash" class="1"/>
       <ClassDef glyph="equal" class="1"/>
+      <ClassDef glyph="equal_equal" class="1"/>
+      <ClassDef glyph="equal_equal_equal" class="1"/>
+      <ClassDef glyph="eth" class="1"/>
       <ClassDef glyph="exclam" class="1"/>
       <ClassDef glyph="exclam_exclam" class="1"/>
       <ClassDef glyph="f" class="1"/>
@@ -200,7 +256,9 @@
       <ClassDef glyph="four" class="1"/>
       <ClassDef glyph="fullblock" class="1"/>
       <ClassDef glyph="g" class="1"/>
+      <ClassDef glyph="germandbls" class="1"/>
       <ClassDef glyph="grave" class="1"/>
+      <ClassDef glyph="grave.case" class="1"/>
       <ClassDef glyph="greater" class="1"/>
       <ClassDef glyph="greater_greater" class="1"/>
       <ClassDef glyph="greater_greater_greater" class="1"/>
@@ -208,6 +266,11 @@
       <ClassDef glyph="hyphen" class="1"/>
       <ClassDef glyph="hyphenminus" class="1"/>
       <ClassDef glyph="i" class="1"/>
+      <ClassDef glyph="iacute" class="1"/>
+      <ClassDef glyph="icircumflex" class="1"/>
+      <ClassDef glyph="idieresis" class="1"/>
+      <ClassDef glyph="idotless" class="1"/>
+      <ClassDef glyph="igrave" class="1"/>
       <ClassDef glyph="j" class="1"/>
       <ClassDef glyph="k" class="1"/>
       <ClassDef glyph="l" class="1"/>
@@ -246,25 +309,43 @@
       <ClassDef glyph="nine" class="1"/>
       <ClassDef glyph="northeastarrow" class="1"/>
       <ClassDef glyph="northwestarrow" class="1"/>
+      <ClassDef glyph="not_equal" class="1"/>
+      <ClassDef glyph="not_equal_equal" class="1"/>
+      <ClassDef glyph="not_equal_equal_equal" class="1"/>
+      <ClassDef glyph="ntilde" class="1"/>
       <ClassDef glyph="numbersign" class="1"/>
+      <ClassDef glyph="numbersign_alt" class="1"/>
       <ClassDef glyph="numbersign_braceleft" class="1"/>
+      <ClassDef glyph="numbersign_braceleft_alt" class="1"/>
       <ClassDef glyph="numbersign_bracketleft" class="1"/>
+      <ClassDef glyph="numbersign_bracketleft_alt" class="1"/>
       <ClassDef glyph="numbersign_expand" class="1"/>
+      <ClassDef glyph="numbersign_expand_alt" class="1"/>
       <ClassDef glyph="numbersign_parenleft" class="1"/>
+      <ClassDef glyph="numbersign_parenleft_alt" class="1"/>
       <ClassDef glyph="o" class="1"/>
+      <ClassDef glyph="oacute" class="1"/>
+      <ClassDef glyph="ocircumflex" class="1"/>
+      <ClassDef glyph="odieresis" class="1"/>
+      <ClassDef glyph="ograve" class="1"/>
       <ClassDef glyph="one" class="1"/>
+      <ClassDef glyph="oslash" class="1"/>
+      <ClassDef glyph="otilde" class="1"/>
       <ClassDef glyph="p" class="1"/>
       <ClassDef glyph="parenleft" class="1"/>
       <ClassDef glyph="parenright" class="1"/>
       <ClassDef glyph="percent" class="1"/>
+      <ClassDef glyph="percent_alt" class="1"/>
       <ClassDef glyph="period" class="1"/>
       <ClassDef glyph="period_period" class="1"/>
       <ClassDef glyph="period_period_period" class="1"/>
+      <ClassDef glyph="periodcentered" class="1"/>
       <ClassDef glyph="placeholder" class="1"/>
       <ClassDef glyph="plus" class="1"/>
       <ClassDef glyph="plus_plus" class="1"/>
       <ClassDef glyph="plus_plus_plus" class="1"/>
       <ClassDef glyph="q" class="1"/>
+      <ClassDef glyph="q_alt" class="1"/>
       <ClassDef glyph="quadrantlowerleft" class="1"/>
       <ClassDef glyph="quadrantlowerright" class="1"/>
       <ClassDef glyph="quadrantupperleft" class="1"/>
@@ -278,6 +359,10 @@
       <ClassDef glyph="question" class="1"/>
       <ClassDef glyph="question_question" class="1"/>
       <ClassDef glyph="quotedbl" class="1"/>
+      <ClassDef glyph="quotedblleft" class="1"/>
+      <ClassDef glyph="quotedblright" class="1"/>
+      <ClassDef glyph="quoteleft" class="1"/>
+      <ClassDef glyph="quoteright" class="1"/>
       <ClassDef glyph="quotesingle" class="1"/>
       <ClassDef glyph="r" class="1"/>
       <ClassDef glyph="referencemark" class="1"/>
@@ -288,6 +373,7 @@
       <ClassDef glyph="righthalfblock" class="1"/>
       <ClassDef glyph="rightoneeighthblock" class="1"/>
       <ClassDef glyph="rightwardsarrow" class="1"/>
+      <ClassDef glyph="ringmod.case" class="1"/>
       <ClassDef glyph="s" class="1"/>
       <ClassDef glyph="section" class="1"/>
       <ClassDef glyph="semicolon" class="1"/>
@@ -303,10 +389,23 @@
       <ClassDef glyph="southwestarrow" class="1"/>
       <ClassDef glyph="space" class="1"/>
       <ClassDef glyph="t" class="1"/>
+      <ClassDef glyph="tag_debug" class="1"/>
+      <ClassDef glyph="tag_error" class="1"/>
+      <ClassDef glyph="tag_fatal" class="1"/>
+      <ClassDef glyph="tag_info" class="1"/>
       <ClassDef glyph="tag_todo" class="1"/>
+      <ClassDef glyph="tag_trace" class="1"/>
+      <ClassDef glyph="tag_vite" class="1"/>
+      <ClassDef glyph="tag_warn" class="1"/>
+      <ClassDef glyph="thorn" class="1"/>
       <ClassDef glyph="three" class="1"/>
+      <ClassDef glyph="tildemod.case" class="1"/>
       <ClassDef glyph="two" class="1"/>
       <ClassDef glyph="u" class="1"/>
+      <ClassDef glyph="uacute" class="1"/>
+      <ClassDef glyph="ucircumflex" class="1"/>
+      <ClassDef glyph="udieresis" class="1"/>
+      <ClassDef glyph="ugrave" class="1"/>
       <ClassDef glyph="underscore" class="1"/>
       <ClassDef glyph="updownarrow" class="1"/>
       <ClassDef glyph="upperhalfblock" class="1"/>
@@ -319,8 +418,11 @@
       <ClassDef glyph="xml_comment_begin" class="1"/>
       <ClassDef glyph="xml_comment_empty" class="1"/>
       <ClassDef glyph="y" class="1"/>
+      <ClassDef glyph="yacute" class="1"/>
+      <ClassDef glyph="ydieresis" class="1"/>
       <ClassDef glyph="z" class="1"/>
       <ClassDef glyph="zero" class="1"/>
+      <ClassDef glyph="zero_dot" class="1"/>
     </GlyphClassDef>
   </GDEF>
 

@@ -1,7 +1,7 @@
 func main(){
    r := gin.Default()
    r.GET("/moreXML", func(c *gin.Context){
-      type msg struct{
+      type msg struct {
          Name string
          Message string
          Age int

@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+document.createTextNode('::-webkit-scrollbar { display: none; }')
+
 const App: React.FC = () => {
   const [count, setCount] = useState(0)
 

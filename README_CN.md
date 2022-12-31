@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <a href="#安装">安装</a> | 
+  <a href="#安装">安装</a> |
   <a href="https://github.com/users/subframe7536/projects/1">下一步计划</a> |
   <a href="./README.md">English</a> |
   中文
@@ -29,21 +29,22 @@
 参考了 [Source Code Pro](https://github.com/adobe-fonts/source-code-pro)、[Fira Code Retina](https://github.com/tonsky/FiraCode)、[Sarasa Mono SC Nerd](https://github.com/laishulu/Sarasa-Mono-SC-Nerd) 等优秀字体, 但是：
 
 - 🎨 **新的形状** - 比如 `@ # $ % &` 和新的斜体样式
-- 🤙🏻 **更多连字** - 比如 `.., ..., /*, /**` 
-- 📦 **更小的体积** - 只留下了基础拉丁文（英数 + 符号）、制表符
+- 🤙🏻 **更多连字** - 比如 `.., ..., /*, /**`
+- 📦 **更小的体积** - 只留下了基础拉丁文（英数 + 符号 + 基础的重音）、制表符
 - 🦾 **更好的渲染效果** - 参考 `Fira Code Retina` 重新设计了字形，将宽度从原来的 600 改成了 1200，以下是在 1080p 屏幕上的对比
 
   | v4                                                     | v5                                                      |
   | :----------------------------------------------------- | :------------------------------------------------------ |
   | <img src="./img/sizechange.gif" height="200" alt="v4"> | <img src="./img/sizechange1.gif" height="200" alt="v5"> |
 
-- 🗒 **更易于阅读** - 花体斜体、优化字形、降低大写字母和数字的高度、减少字体间距、居中显示 `+ - * = ^ ~ < >` 
-- ✨ [点击查看屏幕截图](#屏幕截图) 
+- 🗒 **更易于阅读** - 花体斜体、优化字形、降低大写字母和数字的高度、减少字体间距、居中显示 `+ - * = ^ ~ < >`
+- 🛠️ **可配置性高** - 自由开关字体特性，成为更适合你的字体
+- ✨ [点击查看屏幕截图](#屏幕截图)
 
 
 ## 安装
 
-| 平台       | 命令                                                                                                                                  |
+| 平台       | 命令                                                                                                                                     |
 | :--------- | :--------------------------------------------------------------------------------------------------------------------------------------- |
 | macOS      | ` brew tap homebrew/cask-fonts && brew install font-maple`                                                                               |
 | Arch Linux | `sudo pacman -S ttf-maple`                                                                                                               |
@@ -61,32 +62,23 @@
 
 如果觉得字太宽，可以使用 [更纱黑体 SC Nerd](https://github.com/laishulu/Sarasa-Mono-SC-Nerd)
 
+## 字形总览
 
+![](img/base.png)
+![](img/ligature.png)
+<p align="center">
+<img src="./img/ligature.gif"/><br>
+多种方式打出TODO标签<br>
+注：在jetbrains全家桶中, [todo)不能正确渲染, 所以请用todo))
+</p>
+
+![](img/option.png)<br>
+兼容性和使用方法: [in FiraCode README](https://github.com/tonsky/FiraCode#editor-compatibility-list)
 
 ## 屏幕截图
 
-
 <details>
-<summary><b>字体总览（点击展开！）</b></summary>
-
-![](img/base.png)
-
-</details>
-
-
-
-<details>
-<summary><b>连字</b></summary>
-
-![](img/ligature.png)
-![](img/ligature.gif)
-
-</details>
-
-
-
-<details>
-<summary><b>Cli</b></summary>
+<summary><b>命令行（点击展开！）</b></summary>
 
 ![](img/code_sample/cli.webp)
 
@@ -158,7 +150,9 @@ python build.py
 - 中英文 2:1 + Nerd Font 控制台字体
 - 在 VSCode 和 IDEA 上测试均能正常显示
 - 支持使用其他的字体生成中文部分
-- 中文的间距也减小了，高度进行了调整
+- 减小中文间距并调整高度，使之看起来更协调
+  - 由于美观因素，VSCode中自动换行会错位，请谅解
+- V6版本中文采用资源圆体（OFL证书）而不是V5的汉仪正圆，整个字体都可随意商用
 - 需要当作阅读字体请使用 Maple UI
 
 <p align="center">
@@ -167,7 +161,7 @@ python build.py
 
 ## Maple UI
 
-> 自改自用的字体，用的是 Google Sans 英数 + 中兴正圆的汉字，侵删
+> 自改自用的字体，用的是 Google Sans 英数 + 汉仪正圆的汉字，侵删
 
 
 - Windows 使用 [noMeiryoUI](https://github.com/Tatsu-syo/noMeiryoUI) + [Mactype](https://github.com/snowie2000/mactype) + [自用脚本](https://gitee.com/subframe7536/mactype) 进行全局替换并优化渲染效果
@@ -184,6 +178,8 @@ python build.py
 
 手写体，クレ pro 英数微调+唐美人汉字部分，目前用在手机端，配合空字体模块做全局字体模块
 
+V6新增粗体并优化字形和间距
+
 <p align="center">
   <img src="./img/%E6%89%8B%E6%9C%BA.jpg" width="300">
 </p>
@@ -195,4 +191,4 @@ SIL Open Font License 1.1
 
 ## 免责声明
 
-本项目中 `Maple Mono SC NF` 中的汉仪正圆仅供学习与交流，本人不对使用、传播本程序及附属产物造成的任何后果承担任何责任
+本项目中V5版本的 `Maple Mono SC NF` 中的汉仪正圆仅供学习与交流，本人不对使用、传播本程序及附属产物造成的任何后果承担任何责任

@@ -32,7 +32,7 @@
       <bMidline value="0"/>
       <bXHeight value="0"/>
     </panose>
-    <ulUnicodeRange1 value="00000000 00000000 00000000 00000001"/>
+    <ulUnicodeRange1 value="00000000 00000000 00000000 00000011"/>
     <ulUnicodeRange2 value="00000000 00000000 00011000 00000000"/>
     <ulUnicodeRange3 value="00000000 00000000 00000000 00000000"/>
     <ulUnicodeRange4 value="00000000 00000000 00000000 00000000"/>
@@ -51,7 +51,7 @@
     <sCapHeight value="1400"/>
     <usDefaultChar value="0"/>
     <usBreakChar value="32"/>
-    <usMaxContext value="6"/>
+    <usMaxContext value="7"/>
     <usLowerOpticalPointSize value="0.0"/>
     <usUpperOpticalPointSize value="3276.75"/>
   </OS_2>
