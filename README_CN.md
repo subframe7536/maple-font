@@ -64,16 +64,18 @@
 
 ## 字形总览
 
-![](img/base.png)
-![](img/ligature.png)
 <p align="center">
+<img src="./img/base.png" /><br>
+<img src="./img/ligature.png" /><br>
 <img src="./img/ligature.gif"/><br>
 多种方式打出TODO标签<br>
 注：在jetbrains全家桶中, [todo)不能正确渲染, 所以请用todo))
 </p>
 
-![](img/option.png)<br>
+<p align="center">
+<img src="./img/option.png"/><br>
 兼容性和使用方法: [in FiraCode README](https://github.com/tonsky/FiraCode#editor-compatibility-list)
+</p>
 
 ## 屏幕截图
 
