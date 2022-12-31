@@ -17,7 +17,7 @@ Open source monospace & nerd font with round corner and ligatures.
 </p>
 
 <p align="center">
-  <a href="#install">install</a> | 
+  <a href="#install">install</a> |
   <a href="https://github.com/users/subframe7536/projects/1">what's next</a> |
   English |
   <a href="./README_CN.md">中文</a>
@@ -30,27 +30,28 @@ Open source monospace & nerd font with round corner and ligatures.
 Inspired by [Source Code Pro](https://github.com/adobe-fonts/source-code-pro), [Fira Code Retina](https://github.com/tonsky/FiraCode), [Sarasa Mono SC Nerd](https://github.com/laishulu/Sarasa-Mono-SC-Nerd) and so on, but:
 
 - 🎨 **New shape** - such as `@ # $ % &` and new shape of italic style
-- 🤙🏻 **More ligatures** - such as `.., ..., /*, /**` 
-- 📦 **Small size** - leave only contains latin, table control characters and few symbols
+- 🤙🏻 **More ligatures** - such as `.., ..., /*, /**`
+- 📦 **Small size** - leave only contains latin, standard set of accents, table control characters and few symbols
 - 🦾 **Better rendering effect** - redesigned it according to Fira Code Retina's spacing and glyph
 
-  |v4 | v5  |
-  | :--------------- | :------ |
+  | v4                                                     | v5                                                      |
+  | :----------------------------------------------------- | :------------------------------------------------------ |
   | <img src="./img/sizechange.gif" height="200" alt="v4"> | <img src="./img/sizechange1.gif" height="200" alt="v5"> |
 
-- 🗒 **More readable** - cursive style, better glyph shape, lower the height of capital letters and numbers, reduce or modify kerning and center operators `+ - * = ^ ~ < >` 
-- ✨ See it in [screenshots](#screenshots) 
+- 🗒 **More readable** - cursive style, better glyph shape, lower the height of capital letters and numbers, reduce or modify kerning and center operators `+ - * = ^ ~ < >`
+- 🛠️ **More configable** - enable or disable font features as you want, just make your own font
+- ✨ See it in [screenshots](#screenshots)
 
 
 
 ## Install
 
 
-| Platform         | Command |
-| :--------------- | :------ |
-| macOS | `brew tap homebrew/cask-fonts && brew install font-maple` |
-|Arch Linux| `sudo pacman -S ttf-maple` |
-| Others | Download in [releases](https://github.com/subframe7536/Maple-font/releases)    |
+| Platform   | Command                                                                     |
+| :--------- | :-------------------------------------------------------------------------- |
+| macOS      | `brew tap homebrew/cask-fonts && brew install font-maple`                   |
+| Arch Linux | `sudo pacman -S ttf-maple`                                                  |
+| Others     | Download in [releases](https://github.com/subframe7536/Maple-font/releases) |
 
 
 
@@ -59,38 +60,30 @@ Inspired by [Source Code Pro](https://github.com/adobe-fonts/source-code-pro), [
 ## Notice
 
 
-Because I don't have a Mac OS machine, this is the greatest adaption I can do with Mac OS currently, but I can't test whether it works. 
+Because I don't have a Mac OS machine, this is the greatest adaption I can do with Mac OS currently, but I can't test whether it works.
 
 My ability is not enough to solve other problems on Mac OS. I will record the problem and try to solve it, and **PR welcome!**
 
 `Maple Mono NF` now maybe can't be recognized as Mono, and I try my best but it doesn't work orz
 
 
+## basic
+
+![](img/base.png)
+![](img/ligature.png)
+<p align="center">
+<img src="./img/ligature.gif"/><br>
+multiply ways to get TODO tag<br>
+ps: in Jetbrains' product, [todo) can't be properly rendered, so please use todo))
+</p>
+
+![](img/option.png)<br>
+compatibility & usage: [in FiraCode README](https://github.com/tonsky/FiraCode#editor-compatibility-list)
 
 ## Screenshots
 
-
 <details>
-<summary><b>Total (click to expand!)</b></summary>
-
-![](img/base.png)
-
-</details>
-
-
-
-<details>
-<summary><b>Ligature</b></summary>
-
-![](img/ligature.png)
-![](img/ligature.gif)
-
-</details>
-
-
-
-<details>
-<summary><b>Cli</b></summary>
+<summary><b>Cli (click to expand!)</b></summary>
 
 ![](img/code_sample/cli.webp)
 
