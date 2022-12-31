@@ -67,18 +67,19 @@ My ability is not enough to solve other problems on Mac OS. I will record the pr
 `Maple Mono NF` now maybe can't be recognized as Mono, and I try my best but it doesn't work orz
 
 
-## basic
+## Overview
 
-![](img/base.png)
-![](img/ligature.png)
 <p align="center">
+<img src="./img/base.png" /><br>
+<img src="./img/ligature.png" /><br>
 <img src="./img/ligature.gif"/><br>
 multiply ways to get TODO tag<br>
-ps: in Jetbrains' product, [todo) can't be properly rendered, so please use todo))
+ps: in Jetbrains' product, [todo) can't be properly rendered, so please use todo))<br>
 </p>
-
-![](img/option.png)<br>
+<p align="center">
+<img src="./img/option.png"/><br>
 compatibility & usage: [in FiraCode README](https://github.com/tonsky/FiraCode#editor-compatibility-list)
+</p>
 
 ## Screenshots
 
