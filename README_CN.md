@@ -154,7 +154,7 @@ python build.py
 - 支持使用其他的字体生成中文部分
 - 减小中文间距并调整高度，使之看起来更协调
   - 由于美观因素，VSCode中自动换行会错位，请谅解
-- V6版本中文采用资源圆体（OFL证书）而不是V5的汉仪正圆，整个字体都可随意商用
+- V6版本中文采用[资源圆体](https://github.com/CyanoHao/Resource-Han-Rounded)（OFL证书）而不是V5的汉仪正圆，整个字体都可随意商用
 - 需要当作阅读字体请使用 Maple UI
 
 <p align="center">
