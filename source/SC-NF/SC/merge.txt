@@ -1,5 +1,13 @@
-Open($1)
-MergeFonts($2)
-Generate($3)
+name="Maple Mono NF"
+style=$1
+
+outname="MapleMono-SC-NF-"+style+".ttf"
+
+Open(style+".ttf")
+MergeFonts(name+" "+style+".ttf")
+#SetFontNames(fontname,familyname,fullname)
+AutoHint()
+SelectChanged()
+Generate(outname)
 Close()
 

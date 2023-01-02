@@ -224,8 +224,8 @@
     <mtx name="circumflexmod.case" width="1200" lsb="286"/>
     <mtx name="colon" width="1200" lsb="440"/>
     <mtx name="colon_center" width="1200" lsb="440"/>
-    <mtx name="colon_center_left" width="1200" lsb="140"/>
-    <mtx name="colon_center_right" width="1200" lsb="740"/>
+    <mtx name="colon_center_left" width="1200" lsb="220"/>
+    <mtx name="colon_center_right" width="1200" lsb="660"/>
     <mtx name="comma" width="1200" lsb="278"/>
     <mtx name="d" width="1200" lsb="143"/>
     <mtx name="dagger" width="1200" lsb="170"/>

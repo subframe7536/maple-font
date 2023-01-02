@@ -220,9 +220,9 @@
     <mtx name="c" width="1200" lsb="264"/>
     <mtx name="ccedilla" width="1200" lsb="292"/>
     <mtx name="colon" width="1200" lsb="484"/>
-    <mtx name="colon_center" width="1200" lsb="521"/>
-    <mtx name="colon_center_left" width="1200" lsb="221"/>
-    <mtx name="colon_center_right" width="1200" lsb="821"/>
+    <mtx name="colon_center" width="1200" lsb="501"/>
+    <mtx name="colon_center_left" width="1200" lsb="281"/>
+    <mtx name="colon_center_right" width="1200" lsb="721"/>
     <mtx name="comma" width="1200" lsb="226"/>
     <mtx name="d" width="1200" lsb="205"/>
     <mtx name="dagger" width="1200" lsb="392"/>
@@ -384,7 +384,7 @@
     <mtx name="tag_error" width="1200" lsb="-6882"/>
     <mtx name="tag_fatal" width="1200" lsb="-6882"/>
     <mtx name="tag_info" width="1200" lsb="-5682"/>
-    <mtx name="tag_todo" width="1200" lsb="-5450"/>
+    <mtx name="tag_todo" width="1200" lsb="-5456"/>
     <mtx name="tag_trace" width="1200" lsb="-6882"/>
     <mtx name="tag_vite" width="1200" lsb="-5682"/>
     <mtx name="tag_warn" width="1200" lsb="-5682"/>
