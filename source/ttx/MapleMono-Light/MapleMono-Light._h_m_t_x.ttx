@@ -221,8 +221,8 @@
     <mtx name="ccedilla" width="1200" lsb="200"/>
     <mtx name="colon" width="1200" lsb="460"/>
     <mtx name="colon_center" width="1200" lsb="460"/>
-    <mtx name="colon_center_left" width="1200" lsb="160"/>
-    <mtx name="colon_center_right" width="1200" lsb="760"/>
+    <mtx name="colon_center_left" width="1200" lsb="240"/>
+    <mtx name="colon_center_right" width="1200" lsb="680"/>
     <mtx name="comma" width="1200" lsb="298"/>
     <mtx name="d" width="1200" lsb="163"/>
     <mtx name="dagger" width="1200" lsb="190"/>
