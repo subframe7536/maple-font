@@ -99,8 +99,32 @@
       <map code="0x7c" name="bar"/><!-- VERTICAL LINE -->
       <map code="0x7d" name="braceright"/><!-- RIGHT CURLY BRACKET -->
       <map code="0x7e" name="asciitilde"/><!-- TILDE -->
+      <map code="0xa0" name="nbspace"/><!-- NO-BREAK SPACE -->
+      <map code="0xa1" name="exclamdown"/><!-- INVERTED EXCLAMATION MARK -->
+      <map code="0xa2" name="cent"/><!-- CENT SIGN -->
+      <map code="0xa3" name="sterling"/><!-- POUND SIGN -->
+      <map code="0xa4" name="currency"/><!-- CURRENCY SIGN -->
+      <map code="0xa5" name="yen"/><!-- YEN SIGN -->
+      <map code="0xa6" name="brokenbar"/><!-- BROKEN BAR -->
       <map code="0xa7" name="section"/><!-- SECTION SIGN -->
+      <map code="0xa8" name="dieresis"/><!-- DIAERESIS -->
+      <map code="0xa9" name="copyright"/><!-- COPYRIGHT SIGN -->
+      <map code="0xaa" name="ordfeminine"/><!-- FEMININE ORDINAL INDICATOR -->
+      <map code="0xab" name="guillemotleft"/><!-- LEFT-POINTING DOUBLE ANGLE QUOTATION MARK -->
+      <map code="0xac" name="logicalnot"/><!-- NOT SIGN -->
+      <map code="0xad" name="softhyphen"/><!-- SOFT HYPHEN -->
+      <map code="0xae" name="registered"/><!-- REGISTERED SIGN -->
+      <map code="0xaf" name="macron"/><!-- MACRON -->
+      <map code="0xb0" name="degree"/><!-- DEGREE SIGN -->
+      <map code="0xb1" name="plusminus"/><!-- PLUS-MINUS SIGN -->
+      <map code="0xb4" name="acute"/><!-- ACUTE ACCENT -->
+      <map code="0xb5" name="mu"/><!-- MICRO SIGN -->
+      <map code="0xb6" name="paragraph"/><!-- PILCROW SIGN -->
       <map code="0xb7" name="periodcentered"/><!-- MIDDLE DOT -->
+      <map code="0xb8" name="cedilla"/><!-- CEDILLA -->
+      <map code="0xba" name="ordmasculine"/><!-- MASCULINE ORDINAL INDICATOR -->
+      <map code="0xbb" name="guillemotright"/><!-- RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK -->
+      <map code="0xbf" name="questiondown"/><!-- INVERTED QUESTION MARK -->
       <map code="0xc0" name="Agrave"/><!-- LATIN CAPITAL LETTER A WITH GRAVE -->
       <map code="0xc1" name="Aacute"/><!-- LATIN CAPITAL LETTER A WITH ACUTE -->
       <map code="0xc2" name="Acircumflex"/><!-- LATIN CAPITAL LETTER A WITH CIRCUMFLEX -->
@@ -124,6 +148,7 @@
       <map code="0xd4" name="Ocircumflex"/><!-- LATIN CAPITAL LETTER O WITH CIRCUMFLEX -->
       <map code="0xd5" name="Otilde"/><!-- LATIN CAPITAL LETTER O WITH TILDE -->
       <map code="0xd6" name="Odieresis"/><!-- LATIN CAPITAL LETTER O WITH DIAERESIS -->
+      <map code="0xd7" name="multiply"/><!-- MULTIPLICATION SIGN -->
       <map code="0xd8" name="Oslash"/><!-- LATIN CAPITAL LETTER O WITH STROKE -->
       <map code="0xd9" name="Ugrave"/><!-- LATIN CAPITAL LETTER U WITH GRAVE -->
       <map code="0xda" name="Uacute"/><!-- LATIN CAPITAL LETTER U WITH ACUTE -->
@@ -172,7 +197,7 @@
       <map code="0x201c" name="quotedblleft"/><!-- LEFT DOUBLE QUOTATION MARK -->
       <map code="0x201d" name="quotedblright"/><!-- RIGHT DOUBLE QUOTATION MARK -->
       <map code="0x2020" name="dagger"/><!-- DAGGER -->
-      <map code="0x2022" name="periodcentered"/><!-- BULLET -->
+      <map code="0x2022" name="periodcentered#1"/><!-- BULLET -->
       <map code="0x2026" name="ellipsis"/><!-- HORIZONTAL ELLIPSIS -->
       <map code="0x203b" name="referencemark"/><!-- REFERENCE MARK -->
       <map code="0x2190" name="leftwardsarrow"/><!-- LEFTWARDS ARROW -->
@@ -475,14 +500,33 @@
       <map code="0x9e" name="ucircumflex"/>
       <map code="0x9f" name="udieresis"/>
       <map code="0xa0" name="dagger"/>
+      <map code="0xa1" name="degree"/>
+      <map code="0xa2" name="cent"/>
+      <map code="0xa3" name="sterling"/>
       <map code="0xa4" name="section"/>
-      <map code="0xa5" name="periodcentered"/>
+      <map code="0xa5" name="periodcentered#1"/>
+      <map code="0xa6" name="paragraph"/>
       <map code="0xa7" name="germandbls"/>
+      <map code="0xa8" name="registered"/>
+      <map code="0xa9" name="copyright"/>
+      <map code="0xab" name="acute"/>
+      <map code="0xac" name="dieresis"/>
       <map code="0xae" name="AE"/>
       <map code="0xaf" name="Oslash"/>
+      <map code="0xb1" name="plusminus"/>
+      <map code="0xb4" name="yen"/>
+      <map code="0xb5" name="mu"/>
+      <map code="0xbb" name="ordfeminine"/>
+      <map code="0xbc" name="ordmasculine"/>
       <map code="0xbe" name="ae"/>
       <map code="0xbf" name="oslash"/>
+      <map code="0xc0" name="questiondown"/>
+      <map code="0xc1" name="exclamdown"/>
+      <map code="0xc2" name="logicalnot"/>
+      <map code="0xc7" name="guillemotleft"/>
+      <map code="0xc8" name="guillemotright"/>
       <map code="0xc9" name="ellipsis"/>
+      <map code="0xca" name="nbspace"/>
       <map code="0xcb" name="Agrave"/>
       <map code="0xcc" name="Atilde"/>
       <map code="0xcd" name="Otilde"/>
@@ -493,6 +537,7 @@
       <map code="0xd5" name="quoteright"/>
       <map code="0xd6" name="divide"/>
       <map code="0xd8" name="ydieresis"/>
+      <map code="0xdb" name="currency"/>
       <map code="0xe5" name="Acircumflex"/>
       <map code="0xe6" name="Ecircumflex"/>
       <map code="0xe7" name="Aacute"/>
@@ -508,6 +553,8 @@
       <map code="0xf2" name="Uacute"/>
       <map code="0xf3" name="Ucircumflex"/>
       <map code="0xf4" name="Ugrave"/>
+      <map code="0xf8" name="macron"/>
+      <map code="0xfc" name="cedilla"/>
     </cmap_format_0>
     <cmap_format_4 platformID="3" platEncID="1" language="0">
       <map code="0x20" name="space"/><!-- SPACE -->
@@ -605,8 +652,32 @@
       <map code="0x7c" name="bar"/><!-- VERTICAL LINE -->
       <map code="0x7d" name="braceright"/><!-- RIGHT CURLY BRACKET -->
       <map code="0x7e" name="asciitilde"/><!-- TILDE -->
+      <map code="0xa0" name="nbspace"/><!-- NO-BREAK SPACE -->
+      <map code="0xa1" name="exclamdown"/><!-- INVERTED EXCLAMATION MARK -->
+      <map code="0xa2" name="cent"/><!-- CENT SIGN -->
+      <map code="0xa3" name="sterling"/><!-- POUND SIGN -->
+      <map code="0xa4" name="currency"/><!-- CURRENCY SIGN -->
+      <map code="0xa5" name="yen"/><!-- YEN SIGN -->
+      <map code="0xa6" name="brokenbar"/><!-- BROKEN BAR -->
       <map code="0xa7" name="section"/><!-- SECTION SIGN -->
+      <map code="0xa8" name="dieresis"/><!-- DIAERESIS -->
+      <map code="0xa9" name="copyright"/><!-- COPYRIGHT SIGN -->
+      <map code="0xaa" name="ordfeminine"/><!-- FEMININE ORDINAL INDICATOR -->
+      <map code="0xab" name="guillemotleft"/><!-- LEFT-POINTING DOUBLE ANGLE QUOTATION MARK -->
+      <map code="0xac" name="logicalnot"/><!-- NOT SIGN -->
+      <map code="0xad" name="softhyphen"/><!-- SOFT HYPHEN -->
+      <map code="0xae" name="registered"/><!-- REGISTERED SIGN -->
+      <map code="0xaf" name="macron"/><!-- MACRON -->
+      <map code="0xb0" name="degree"/><!-- DEGREE SIGN -->
+      <map code="0xb1" name="plusminus"/><!-- PLUS-MINUS SIGN -->
+      <map code="0xb4" name="acute"/><!-- ACUTE ACCENT -->
+      <map code="0xb5" name="mu"/><!-- MICRO SIGN -->
+      <map code="0xb6" name="paragraph"/><!-- PILCROW SIGN -->
       <map code="0xb7" name="periodcentered"/><!-- MIDDLE DOT -->
+      <map code="0xb8" name="cedilla"/><!-- CEDILLA -->
+      <map code="0xba" name="ordmasculine"/><!-- MASCULINE ORDINAL INDICATOR -->
+      <map code="0xbb" name="guillemotright"/><!-- RIGHT-POINTING DOUBLE ANGLE QUOTATION MARK -->
+      <map code="0xbf" name="questiondown"/><!-- INVERTED QUESTION MARK -->
       <map code="0xc0" name="Agrave"/><!-- LATIN CAPITAL LETTER A WITH GRAVE -->
       <map code="0xc1" name="Aacute"/><!-- LATIN CAPITAL LETTER A WITH ACUTE -->
       <map code="0xc2" name="Acircumflex"/><!-- LATIN CAPITAL LETTER A WITH CIRCUMFLEX -->
@@ -630,6 +701,7 @@
       <map code="0xd4" name="Ocircumflex"/><!-- LATIN CAPITAL LETTER O WITH CIRCUMFLEX -->
       <map code="0xd5" name="Otilde"/><!-- LATIN CAPITAL LETTER O WITH TILDE -->
       <map code="0xd6" name="Odieresis"/><!-- LATIN CAPITAL LETTER O WITH DIAERESIS -->
+      <map code="0xd7" name="multiply"/><!-- MULTIPLICATION SIGN -->
       <map code="0xd8" name="Oslash"/><!-- LATIN CAPITAL LETTER O WITH STROKE -->
       <map code="0xd9" name="Ugrave"/><!-- LATIN CAPITAL LETTER U WITH GRAVE -->
       <map code="0xda" name="Uacute"/><!-- LATIN CAPITAL LETTER U WITH ACUTE -->
@@ -678,7 +750,7 @@
       <map code="0x201c" name="quotedblleft"/><!-- LEFT DOUBLE QUOTATION MARK -->
       <map code="0x201d" name="quotedblright"/><!-- RIGHT DOUBLE QUOTATION MARK -->
       <map code="0x2020" name="dagger"/><!-- DAGGER -->
-      <map code="0x2022" name="periodcentered"/><!-- BULLET -->
+      <map code="0x2022" name="periodcentered#1"/><!-- BULLET -->
       <map code="0x2026" name="ellipsis"/><!-- HORIZONTAL ELLIPSIS -->
       <map code="0x203b" name="referencemark"/><!-- REFERENCE MARK -->
       <map code="0x2190" name="leftwardsarrow"/><!-- LEFTWARDS ARROW -->
