@@ -60,16 +60,23 @@
     <mtx name="Yacute" width="1200" lsb="451"/>
     <mtx name="Z" width="1200" lsb="185"/>
     <mtx name="a" width="1200" lsb="169"/>
+    <mtx name="a_alt" width="1200" lsb="214"/>
     <mtx name="aacute" width="1200" lsb="169"/>
+    <mtx name="aacute_alt" width="1200" lsb="214"/>
     <mtx name="acircumflex" width="1200" lsb="169"/>
+    <mtx name="acircumflex_alt" width="1200" lsb="214"/>
+    <mtx name="acute" width="1200" lsb="659"/>
     <mtx name="adieresis" width="1200" lsb="169"/>
+    <mtx name="adieresis_alt" width="1200" lsb="214"/>
     <mtx name="ae" width="1200" lsb="59"/>
     <mtx name="agrave" width="1200" lsb="169"/>
+    <mtx name="agrave_alt" width="1200" lsb="214"/>
     <mtx name="ampersand" width="1200" lsb="205"/>
     <mtx name="ampersand_alt" width="1200" lsb="181"/>
     <mtx name="ampersand_ampersand" width="1200" lsb="-935"/>
     <mtx name="ampersand_ampersand_alt" width="1200" lsb="-959"/>
     <mtx name="aring" width="1200" lsb="169"/>
+    <mtx name="aring_alt" width="1200" lsb="214"/>
     <mtx name="asciicircum" width="1200" lsb="308"/>
     <mtx name="asciitilde" width="1200" lsb="283"/>
     <mtx name="asciitilde_at" width="1200" lsb="-953"/>
@@ -79,6 +86,7 @@
     <mtx name="at" width="1200" lsb="71"/>
     <mtx name="at_alt" width="1200" lsb="92"/>
     <mtx name="atilde" width="1200" lsb="169"/>
+    <mtx name="atilde_alt" width="1200" lsb="214"/>
     <mtx name="b" width="1200" lsb="208"/>
     <mtx name="backslash" width="1200" lsb="469"/>
     <mtx name="bar" width="1200" lsb="478"/>
@@ -217,16 +225,23 @@
     <mtx name="bracketright" width="1200" lsb="230"/>
     <mtx name="bracketright_numbersign" width="1200" lsb="-970"/>
     <mtx name="bracketright_numbersign_alt" width="1200" lsb="-976"/>
+    <mtx name="brokenbar" width="1200" lsb="466"/>
     <mtx name="c" width="1200" lsb="244"/>
     <mtx name="ccedilla" width="1200" lsb="272"/>
+    <mtx name="cedilla" width="1200" lsb="291"/>
+    <mtx name="cent" width="1200" lsb="253"/>
     <mtx name="colon" width="1200" lsb="464"/>
     <mtx name="colon_center" width="1200" lsb="480"/>
     <mtx name="colon_center_left" width="1200" lsb="260"/>
     <mtx name="colon_center_right" width="1200" lsb="700"/>
     <mtx name="comma" width="1200" lsb="206"/>
+    <mtx name="copyright" width="1200" lsb="189"/>
+    <mtx name="currency" width="1200" lsb="140"/>
     <mtx name="d" width="1200" lsb="185"/>
     <mtx name="dagger" width="1200" lsb="372"/>
     <mtx name="darkshade" width="1200" lsb="0"/>
+    <mtx name="degree" width="1200" lsb="358"/>
+    <mtx name="dieresis" width="1200" lsb="558"/>
     <mtx name="divide" width="1200" lsb="290"/>
     <mtx name="dollar" width="1200" lsb="216"/>
     <mtx name="dollar_alt" width="1200" lsb="214"/>
@@ -245,6 +260,7 @@
     <mtx name="eth" width="1200" lsb="247"/>
     <mtx name="exclam" width="1200" lsb="464"/>
     <mtx name="exclam_exclam" width="1200" lsb="-536"/>
+    <mtx name="exclamdown" width="1200" lsb="403"/>
     <mtx name="f" width="1200" lsb="49"/>
     <mtx name="five" width="1200" lsb="164"/>
     <mtx name="four" width="1200" lsb="158"/>
@@ -255,6 +271,8 @@
     <mtx name="greater" width="1200" lsb="212"/>
     <mtx name="greater_greater" width="1200" lsb="-838"/>
     <mtx name="greater_greater_greater" width="1200" lsb="-1888"/>
+    <mtx name="guillemotleft" width="1200" lsb="263"/>
+    <mtx name="guillemotright" width="1200" lsb="212"/>
     <mtx name="h" width="1200" lsb="186"/>
     <mtx name="hyphen" width="1200" lsb="390"/>
     <mtx name="hyphenminus" width="1200" lsb="296"/>
@@ -267,11 +285,18 @@
     <mtx name="k" width="1200" lsb="203"/>
     <mtx name="l" width="1200" lsb="179"/>
     <mtx name="lamda-grek" width="1200" lsb="149"/>
+    <mtx name="left_arrow_double_long" width="1200" lsb="-2110"/>
+    <mtx name="left_arrow_double_long_alt" width="1200" lsb="-2110"/>
     <mtx name="left_arrow_single" width="1200" lsb="-805"/>
+    <mtx name="left_arrow_single_alt" width="1200" lsb="-908"/>
     <mtx name="left_right_arrow_double" width="1200" lsb="-2005"/>
+    <mtx name="left_right_arrow_double_alt" width="1200" lsb="-2010"/>
     <mtx name="left_right_arrow_double_long" width="1200" lsb="-3205"/>
+    <mtx name="left_right_arrow_double_long_alt" width="1200" lsb="-3210"/>
     <mtx name="left_right_arrow_single" width="1200" lsb="-2005"/>
+    <mtx name="left_right_arrow_single_alt" width="1200" lsb="-2010"/>
     <mtx name="left_right_arrow_single_long" width="1200" lsb="-3205"/>
+    <mtx name="left_right_arrow_single_long_alt" width="1200" lsb="-3210"/>
     <mtx name="leftfiveeighthsblock" width="1200" lsb="0"/>
     <mtx name="lefthalfblock" width="1200" lsb="0"/>
     <mtx name="leftoneeighthblock" width="1200" lsb="0"/>
@@ -288,6 +313,7 @@
     <mtx name="less_slash" width="1200" lsb="-911"/>
     <mtx name="less_slash_greater" width="1200" lsb="-1841"/>
     <mtx name="lightshade" width="1200" lsb="120"/>
+    <mtx name="logicalnot" width="1200" lsb="338"/>
     <mtx name="lowerfiveeighthsblock" width="1200" lsb="0"/>
     <mtx name="lowerhalfblock" width="1200" lsb="0"/>
     <mtx name="loweroneeighthblock" width="1200" lsb="0"/>
@@ -296,14 +322,17 @@
     <mtx name="lowerthreeeighthsblock" width="1200" lsb="0"/>
     <mtx name="lowerthreequartersblock" width="1200" lsb="0"/>
     <mtx name="m" width="1200" lsb="120"/>
+    <mtx name="macron" width="1200" lsb="518"/>
     <mtx name="mediumshade" width="1200" lsb="0"/>
+    <mtx name="mu" width="1200" lsb="100"/>
+    <mtx name="multiply" width="1200" lsb="274"/>
     <mtx name="n" width="1200" lsb="156"/>
+    <mtx name="nbspace" width="1200" lsb="0"/>
     <mtx name="nine" width="1200" lsb="189"/>
     <mtx name="northeastarrow" width="1200" lsb="20"/>
     <mtx name="northwestarrow" width="1200" lsb="90"/>
     <mtx name="not_equal" width="1200" lsb="-953"/>
     <mtx name="not_equal_equal" width="1200" lsb="-2175"/>
-    <mtx name="not_equal_equal_equal" width="1200" lsb="-3375"/>
     <mtx name="ntilde" width="1200" lsb="156"/>
     <mtx name="numbersign" width="1200" lsb="131"/>
     <mtx name="numbersign_alt" width="1200" lsb="125"/>
@@ -321,9 +350,12 @@
     <mtx name="odieresis" width="1200" lsb="246"/>
     <mtx name="ograve" width="1200" lsb="246"/>
     <mtx name="one" width="1200" lsb="201"/>
+    <mtx name="ordfeminine" width="1200" lsb="258"/>
+    <mtx name="ordmasculine" width="1200" lsb="181"/>
     <mtx name="oslash" width="1200" lsb="176"/>
     <mtx name="otilde" width="1200" lsb="246"/>
     <mtx name="p" width="1200" lsb="109"/>
+    <mtx name="paragraph" width="1200" lsb="259"/>
     <mtx name="parenleft" width="1200" lsb="367"/>
     <mtx name="parenright" width="1200" lsb="196"/>
     <mtx name="percent" width="1200" lsb="122"/>
@@ -332,10 +364,12 @@
     <mtx name="period_period" width="1200" lsb="-566"/>
     <mtx name="period_period_period" width="1200" lsb="-1496"/>
     <mtx name="periodcentered" width="1200" lsb="510"/>
+    <mtx name="periodcentered#1" width="1200" lsb="544"/>
     <mtx name="placeholder" width="1200" lsb="0"/>
     <mtx name="plus" width="1200" lsb="296"/>
     <mtx name="plus_plus" width="1200" lsb="-784"/>
     <mtx name="plus_plus_plus" width="1200" lsb="-1864"/>
+    <mtx name="plusminus" width="1200" lsb="218"/>
     <mtx name="q" width="1200" lsb="236"/>
     <mtx name="q_alt" width="1200" lsb="175"/>
     <mtx name="quadrantlowerleft" width="1200" lsb="0"/>
@@ -350,6 +384,7 @@
     <mtx name="quadrantupperrightandlowerleftandlowerright" width="1200" lsb="0"/>
     <mtx name="question" width="1200" lsb="464"/>
     <mtx name="question_question" width="1200" lsb="-596"/>
+    <mtx name="questiondown" width="1200" lsb="185"/>
     <mtx name="quotedbl" width="1200" lsb="585"/>
     <mtx name="quotedblleft" width="1200" lsb="500"/>
     <mtx name="quotedblright" width="1200" lsb="500"/>
@@ -358,10 +393,15 @@
     <mtx name="quotesingle" width="1200" lsb="745"/>
     <mtx name="r" width="1200" lsb="220"/>
     <mtx name="referencemark" width="1200" lsb="110"/>
+    <mtx name="registered" width="1200" lsb="256"/>
     <mtx name="right_arrow_double" width="1200" lsb="-947"/>
+    <mtx name="right_arrow_double_alt" width="1200" lsb="-953"/>
     <mtx name="right_arrow_double_long" width="1200" lsb="-2147"/>
+    <mtx name="right_arrow_double_long_alt" width="1200" lsb="-2153"/>
     <mtx name="right_arrow_single" width="1200" lsb="-904"/>
+    <mtx name="right_arrow_single_alt" width="1200" lsb="-908"/>
     <mtx name="right_arrow_single_long" width="1200" lsb="-2104"/>
+    <mtx name="right_arrow_single_long_alt" width="1200" lsb="-2110"/>
     <mtx name="righthalfblock" width="1200" lsb="600"/>
     <mtx name="rightoneeighthblock" width="1200" lsb="1050"/>
     <mtx name="rightwardsarrow" width="1200" lsb="80"/>
@@ -373,12 +413,15 @@
     <mtx name="slash" width="1200" lsb="125"/>
     <mtx name="slash_asterisk" width="1200" lsb="-875"/>
     <mtx name="slash_asterisk_asterisk" width="1200" lsb="-2075"/>
+    <mtx name="slash_equal" width="1200" lsb="-1108"/>
     <mtx name="slash_greater" width="1200" lsb="-891"/>
     <mtx name="slash_slash" width="1200" lsb="-925"/>
     <mtx name="slash_slash_slash" width="1200" lsb="-2005"/>
+    <mtx name="softhyphen" width="1200" lsb="376"/>
     <mtx name="southeastarrow" width="1200" lsb="20"/>
     <mtx name="southwestarrow" width="1200" lsb="90"/>
     <mtx name="space" width="1200" lsb="0"/>
+    <mtx name="sterling" width="1200" lsb="135"/>
     <mtx name="t" width="1200" lsb="292"/>
     <mtx name="tag_debug" width="1200" lsb="-6882"/>
     <mtx name="tag_error" width="1200" lsb="-6882"/>
@@ -410,6 +453,7 @@
     <mtx name="y" width="1200" lsb="84"/>
     <mtx name="yacute" width="1200" lsb="84"/>
     <mtx name="ydieresis" width="1200" lsb="84"/>
+    <mtx name="yen" width="1200" lsb="281"/>
     <mtx name="z" width="1200" lsb="167"/>
     <mtx name="zero" width="1200" lsb="261"/>
     <mtx name="zero_dot" width="1200" lsb="175"/>
