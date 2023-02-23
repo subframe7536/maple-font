@@ -441,24 +441,31 @@
     <GlyphID id="435" name="tag_fatal"/>
     <GlyphID id="436" name="tag_vite"/>
     <GlyphID id="437" name="i_alt"/>
-    <GlyphID id="438" name="a_alt"/>
-    <GlyphID id="439" name="aacute_alt"/>
-    <GlyphID id="440" name="acircumflex_alt"/>
-    <GlyphID id="441" name="adieresis_alt"/>
-    <GlyphID id="442" name="agrave_alt"/>
-    <GlyphID id="443" name="aring_alt"/>
-    <GlyphID id="444" name="atilde_alt"/>
-    <GlyphID id="445" name="right_arrow_double_alt"/>
-    <GlyphID id="446" name="right_arrow_single_alt"/>
-    <GlyphID id="447" name="left_arrow_single_alt"/>
-    <GlyphID id="448" name="left_right_arrow_single_alt"/>
-    <GlyphID id="449" name="left_right_arrow_double_alt"/>
-    <GlyphID id="450" name="right_arrow_single_long_alt"/>
-    <GlyphID id="451" name="right_arrow_double_long_alt"/>
-    <GlyphID id="452" name="left_arrow_double_long_alt"/>
-    <GlyphID id="453" name="left_right_arrow_single_long_alt"/>
-    <GlyphID id="454" name="left_right_arrow_double_long_alt"/>
-    <GlyphID id="455" name="slash_equal"/>
+    <GlyphID id="438" name="igrave_alt"/>
+    <GlyphID id="439" name="iacute_alt"/>
+    <GlyphID id="440" name="icircumflex_alt"/>
+    <GlyphID id="441" name="idieresis_alt"/>
+    <GlyphID id="442" name="a_alt"/>
+    <GlyphID id="443" name="aacute_alt"/>
+    <GlyphID id="444" name="acircumflex_alt"/>
+    <GlyphID id="445" name="adieresis_alt"/>
+    <GlyphID id="446" name="agrave_alt"/>
+    <GlyphID id="447" name="aring_alt"/>
+    <GlyphID id="448" name="atilde_alt"/>
+    <GlyphID id="449" name="right_arrow_double_alt"/>
+    <GlyphID id="450" name="right_arrow_single_alt"/>
+    <GlyphID id="451" name="left_arrow_single_alt"/>
+    <GlyphID id="452" name="left_right_arrow_single_alt"/>
+    <GlyphID id="453" name="left_right_arrow_double_alt"/>
+    <GlyphID id="454" name="right_arrow_single_long_alt"/>
+    <GlyphID id="455" name="right_arrow_double_long_alt"/>
+    <GlyphID id="456" name="left_arrow_double_long_alt"/>
+    <GlyphID id="457" name="left_right_arrow_single_long_alt"/>
+    <GlyphID id="458" name="left_right_arrow_double_long_alt"/>
+    <GlyphID id="459" name="slash_equal"/>
+    <GlyphID id="460" name="bar_equal"/>
+    <GlyphID id="461" name="at_alt_1"/>
+    <GlyphID id="462" name="asciitilde_at_alt_1"/>
   </GlyphOrder>
 
 </ttFont>

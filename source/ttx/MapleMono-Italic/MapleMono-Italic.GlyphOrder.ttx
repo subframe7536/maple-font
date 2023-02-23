@@ -458,6 +458,9 @@
     <GlyphID id="452" name="left_right_arrow_single_long_alt"/>
     <GlyphID id="453" name="left_right_arrow_double_long_alt"/>
     <GlyphID id="454" name="slash_equal"/>
+    <GlyphID id="455" name="bar_equal"/>
+    <GlyphID id="456" name="at_alt_1"/>
+    <GlyphID id="457" name="asciitilde_at_alt_1"/>
   </GlyphOrder>
 
 </ttFont>

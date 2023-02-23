@@ -83,16 +83,19 @@
       <ClassDef glyph="asciitilde" class="1"/>
       <ClassDef glyph="asciitilde_at" class="1"/>
       <ClassDef glyph="asciitilde_at_alt" class="1"/>
+      <ClassDef glyph="asciitilde_at_alt_1" class="1"/>
       <ClassDef glyph="asterisk" class="1"/>
       <ClassDef glyph="asterisk_slash" class="1"/>
       <ClassDef glyph="at" class="1"/>
       <ClassDef glyph="at_alt" class="1"/>
+      <ClassDef glyph="at_alt_1" class="1"/>
       <ClassDef glyph="atilde" class="1"/>
       <ClassDef glyph="atilde_alt" class="1"/>
       <ClassDef glyph="b" class="1"/>
       <ClassDef glyph="backslash" class="1"/>
       <ClassDef glyph="bar" class="1"/>
       <ClassDef glyph="bar_bar" class="1"/>
+      <ClassDef glyph="bar_equal" class="1"/>
       <ClassDef glyph="boxdrawingsdoubledownandhorizontal" class="1"/>
       <ClassDef glyph="boxdrawingsdoubledownandleft" class="1"/>
       <ClassDef glyph="boxdrawingsdoubledownandright" class="1"/>

@@ -81,16 +81,19 @@
     <mtx name="asciitilde" width="1200" lsb="283"/>
     <mtx name="asciitilde_at" width="1200" lsb="-953"/>
     <mtx name="asciitilde_at_alt" width="1200" lsb="-953"/>
+    <mtx name="asciitilde_at_alt_1" width="1200" lsb="-953"/>
     <mtx name="asterisk" width="1200" lsb="239"/>
     <mtx name="asterisk_slash" width="1200" lsb="-989"/>
     <mtx name="at" width="1200" lsb="71"/>
     <mtx name="at_alt" width="1200" lsb="92"/>
+    <mtx name="at_alt_1" width="1200" lsb="133"/>
     <mtx name="atilde" width="1200" lsb="169"/>
     <mtx name="atilde_alt" width="1200" lsb="214"/>
     <mtx name="b" width="1200" lsb="208"/>
     <mtx name="backslash" width="1200" lsb="469"/>
     <mtx name="bar" width="1200" lsb="478"/>
     <mtx name="bar_bar" width="1200" lsb="-522"/>
+    <mtx name="bar_equal" width="1200" lsb="-727"/>
     <mtx name="boxdrawingsdoubledownandhorizontal" width="1200" lsb="-10"/>
     <mtx name="boxdrawingsdoubledownandleft" width="1200" lsb="-10"/>
     <mtx name="boxdrawingsdoubledownandright" width="1200" lsb="360"/>

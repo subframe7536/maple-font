@@ -81,16 +81,19 @@
     <mtx name="asciitilde" width="1200" lsb="151"/>
     <mtx name="asciitilde_at" width="1200" lsb="-1049"/>
     <mtx name="asciitilde_at_alt" width="1200" lsb="-1049"/>
+    <mtx name="asciitilde_at_alt_1" width="1200" lsb="-1049"/>
     <mtx name="asterisk" width="1200" lsb="156"/>
     <mtx name="asterisk_slash" width="1200" lsb="-1044"/>
     <mtx name="at" width="1200" lsb="46"/>
     <mtx name="at_alt" width="1200" lsb="46"/>
+    <mtx name="at_alt_1" width="1200" lsb="89"/>
     <mtx name="atilde" width="1200" lsb="135"/>
     <mtx name="atilde_alt" width="1200" lsb="133"/>
     <mtx name="b" width="1200" lsb="190"/>
     <mtx name="backslash" width="1200" lsb="150"/>
     <mtx name="bar" width="1200" lsb="510"/>
     <mtx name="bar_bar" width="1200" lsb="-490"/>
+    <mtx name="bar_equal" width="1200" lsb="-690"/>
     <mtx name="boxdrawingsdoubledownandhorizontal" width="1200" lsb="-10"/>
     <mtx name="boxdrawingsdoubledownandleft" width="1200" lsb="-10"/>
     <mtx name="boxdrawingsdoubledownandright" width="1200" lsb="360"/>
@@ -279,9 +282,13 @@
     <mtx name="i" width="1200" lsb="177"/>
     <mtx name="i_alt" width="1200" lsb="141"/>
     <mtx name="iacute" width="1200" lsb="177"/>
+    <mtx name="iacute_alt" width="1200" lsb="141"/>
     <mtx name="icircumflex" width="1200" lsb="177"/>
+    <mtx name="icircumflex_alt" width="1200" lsb="141"/>
     <mtx name="idieresis" width="1200" lsb="177"/>
+    <mtx name="idieresis_alt" width="1200" lsb="141"/>
     <mtx name="igrave" width="1200" lsb="177"/>
+    <mtx name="igrave_alt" width="1200" lsb="141"/>
     <mtx name="j" width="1200" lsb="101"/>
     <mtx name="k" width="1200" lsb="202"/>
     <mtx name="l" width="1200" lsb="131"/>
@@ -364,8 +371,8 @@
     <mtx name="period" width="1200" lsb="440"/>
     <mtx name="period_period" width="1200" lsb="-590"/>
     <mtx name="period_period_period" width="1200" lsb="-1520"/>
-    <mtx name="periodcentered" width="1200" lsb="400"/>
-    <mtx name="periodcentered#1" width="1200" lsb="412"/>
+    <mtx name="periodcentered" width="1200" lsb="412"/>
+    <mtx name="periodcentered#1" width="1200" lsb="400"/>
     <mtx name="placeholder" width="1200" lsb="0"/>
     <mtx name="plus" width="1200" lsb="170"/>
     <mtx name="plus_plus" width="1200" lsb="-910"/>
