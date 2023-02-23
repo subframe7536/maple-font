@@ -1,11 +1,12 @@
 script latn {
   feature ContextualAlternates;
-  feature CharacterVariants01;
   feature SlashedZero;
   feature StyleSets01;
   feature StyleSets02;
+  feature CharacterVariants01;
   feature CharacterVariants02;
   feature CharacterVariants03;
+  feature CharacterVariants04;
 }
 
 class @hex [A-F zero-nine];
@@ -14,7 +15,7 @@ class @capital [A-Z];
 class @low [a-z];
 class @operator [equal less greater asterisk plus hyphenminus asciitilde asciicircum];
 class @colons [colon colon_center colon_center_left colon_center_right];
-class @var [zero-nine A-Z a-z underscore dollar asterisk];
+class @var [@number @capital @low underscore dollar asterisk];
 class @a [A a];
 class @b [B b];
 class @c [C c];
@@ -61,9 +62,14 @@ feature ContextualAlternates calt {
   lookup left_right_arrow_double_long;
   # -->
   lookup right_arrow_single_long;
+  # ==>
   lookup right_arrow_double_long;
+  # <==
+  lookup left_arrow_double_long;
   # /=
   lookup slash_equal;
+  # |=
+  lookup bar_equal;
   # <<
   lookup less_less;
   # <<<
@@ -128,20 +134,30 @@ feature SlashedZero zero {
 }
 
 feature StyleSets01 ss01 {
+  # ==
   lookup equal_equal;
+  # ===
   lookup equal_equal_equal;
+  # !=
   lookup not_equal;
+  # !==
   lookup not_equal_equal;
 }
 
 feature StyleSets02 ss02 {
-  # tags
+  # [info]
   lookup tag_info;
+  # [trace]
   lookup tag_trace;
+  # [debug]
   lookup tag_debug;
+  # [warn]
   lookup tag_warn;
+  # [error]
   lookup tag_error;
+  # [fatal]
   lookup tag_fatal;
+  # [vite]
   lookup tag_vite;
 }
 
@@ -151,6 +167,10 @@ feature CharacterVariants02 cv02 {
 
 feature CharacterVariants03 cv03 {
   lookup alt_a;
+}
+
+feature CharacterVariants04 cv04 {
+  lookup at_alt;
 }
 
 lookup left_right_arrow_single {
@@ -680,6 +700,31 @@ lookup slash_equal_2 {
   sub slash -> placeholder;
 }
 
+lookup bar_equal {
+  subtable ignore1 {
+    ignore context (bar) bar (equal);
+  }
+  subtable ignore2 {
+    ignore context bar (equal equal);
+  }
+  subtable 111 {
+    context (placeholder) equal;
+    sub 0 bar_equal_1;
+  }
+  subtable 222 {
+    context bar (equal);
+    sub 0 bar_equal_2;
+  }
+}
+
+lookup bar_equal_1 {
+  sub equal -> bar_equal;
+}
+
+lookup bar_equal_2 {
+  sub bar -> placeholder;
+}
+
 lookup less_less {
   subtable ignore1 {
     ignore context (less) less (less);
@@ -689,6 +734,9 @@ lookup less_less {
   }
   subtable ignore3 {
     ignore context less (less @var);
+  }
+  subtable ignore4 {
+    ignore context (@var) less (less);
   }
   subtable 111 {
     context (placeholder) less;
@@ -717,6 +765,9 @@ lookup less_less_less {
   }
   subtable ignore3 {
     ignore context less (less less @var);
+  }
+  subtable ignore3 {
+    ignore context (@var) less (less less);
   }
   subtable 111 {
     context (placeholder placeholder) less;
@@ -748,6 +799,9 @@ lookup greater_greater {
     ignore context greater (greater greater);
   }
   subtable ignore3 {
+    ignore context greater (greater @var);
+  }
+  subtable ignore4 {
     ignore context (@var) greater (greater);
   }
   subtable 111 {
@@ -777,6 +831,9 @@ lookup greater_greater_greater {
   }
   subtable ignore3 {
     ignore context (@var) greater (greater greater);
+  }
+  subtable ignore3 {
+    ignore context greater (greater greater @var);
   }
   subtable 111 {
     context (placeholder placeholder) greater;
@@ -1960,6 +2017,10 @@ lookup tag_vite_6 {
 
 lookup alt_i {
   sub i -> i_alt;
+  sub igrave -> igrave_alt;
+  sub iacute -> iacute_alt;
+  sub icircumflex -> icircumflex_alt;
+  sub idieresis -> idieresis_alt;
 }
 
 lookup alt_a {
@@ -1970,4 +2031,11 @@ lookup alt_a {
   sub agrave -> agrave_alt;
   sub aring -> aring_alt;
   sub atilde -> atilde_alt;
+}
+
+lookup at_alt {
+  sub at -> at_alt_1;
+  sub at_alt -> at_alt_1;
+  sub asciitilde_at -> asciitilde_at_alt_1;
+  sub asciitilde_at_alt -> asciitilde_at_alt_1;
 }
