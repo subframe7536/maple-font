@@ -42,19 +42,25 @@ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
 
 [TODO) todo)) .. ...
 
-[info] [trace] [debug]
-
-[warn] [error] [fatal]
 
 ----------------Options----------------
 ON OFF
+
 cv01: @ # $ % & Q
+      -> =>
 
-cv02: == === != !==
+cv02: i
 
-cv03: !===
+cv03: a
 
-cv04: [vite]
+cv03: @
+
+ss01: == === != !==
+
+ss02: [info] [trace]
+      [debug] [warn]
+      [error] [fatal]
+      [vite]
 
 ---------------中英文2:1----------------
 |ab|cd|ef|gh|ij|kl|mn|op|qr|st|uv|wx|yz|
