@@ -3,6 +3,9 @@ script latn {
   feature SlashedZero;
   feature StyleSets01;
   feature StyleSets02;
+  feature StyleSets03;
+  feature StyleSets04;
+  feature StyleSets05;
   feature CharacterVariants01;
   feature CharacterVariants02;
   feature CharacterVariants03;
@@ -123,6 +126,8 @@ feature ContextualAlternates calt {
   lookup tag_todo;
   # todo)) tags for jetbrains' IDE
   lookup tag_todo_alt;
+  # ~~
+  lookup wave;
 }
 
 feature CharacterVariants01 cv01 {
@@ -159,6 +164,20 @@ feature StyleSets02 ss02 {
   lookup tag_fatal;
   # [vite]
   lookup tag_vite;
+}
+
+feature StyleSets03 ss03 {
+  lookup underscore_underscore;
+}
+
+feature StyleSets04 ss04 {
+  lookup greater_equal;
+  lookup less_equal;
+}
+
+feature StyleSets05 ss05 {
+  lookup braceleft_double;
+  lookup braceright_double;
 }
 
 feature CharacterVariants02 cv02 {
@@ -336,6 +355,14 @@ lookup colon_center {
   subtable 333 {
     context colon (@operator @colons);
     sub 0 operator_center_2;
+  }
+  subtable 444 {
+    context (@colons) colon (@operator);
+    sub 0 operator_center_1;
+  }
+  subtable 444_1 {
+    context (@operator) colon (@colons);
+    sub 0 operator_center_1;
   }
   subtable 555 {
     context (@colons @operator) colon;
@@ -2038,4 +2065,153 @@ lookup at_alt {
   sub at_alt -> at_alt_1;
   sub asciitilde_at -> asciitilde_at_alt_1;
   sub asciitilde_at_alt -> asciitilde_at_alt_1;
+}
+
+lookup underscore_underscore {
+  subtable ignore1 {
+    ignore context (underscore) underscore (underscore);
+  }
+  subtable ignore2 {
+    ignore context underscore (underscore underscore);
+  }
+  subtable 111 {
+    context (placeholder) underscore;
+    sub 0 underscore_underscore_1;
+  }
+  subtable 222 {
+    context underscore (underscore);
+    sub 0 underscore_underscore_2;
+  }
+}
+
+lookup underscore_underscore_1 {
+  sub underscore -> underscore_underscore;
+}
+
+lookup underscore_underscore_2 {
+  sub underscore -> placeholder;
+}
+
+lookup greater_equal {
+  subtable ignore1 {
+    ignore context (greater) greater (equal);
+  }
+  subtable ignore2 {
+    ignore context (greater) equal (equal);
+  }
+  subtable 111 {
+    context (placeholder) equal;
+    sub 0 greater_equal_1;
+  }
+  subtable 222 {
+    context greater (equal);
+    sub 0 greater_equal_2;
+  }
+}
+
+lookup greater_equal_1 {
+  sub equal -> greater_equal;
+}
+
+lookup greater_equal_2 {
+  sub greater -> placeholder;
+}
+lookup less_equal {
+  subtable ignore1 {
+    ignore context (less) greater (equal);
+  }
+  subtable ignore2 {
+    ignore context (less) equal (equal);
+  }
+  subtable 111 {
+    context (placeholder) equal;
+    sub 0 less_equal_1;
+  }
+  subtable 222 {
+    context less (equal);
+    sub 0 less_equal_2;
+  }
+}
+
+lookup less_equal_1 {
+  sub equal -> less_equal;
+}
+
+lookup less_equal_2 {
+  sub less -> placeholder;
+}
+
+lookup wave {
+  subtable ignore1 {
+    ignore context (asciitilde) asciitilde (asciitilde);
+  }
+  subtable ignore2 {
+    ignore context asciitilde (asciitilde asciitilde);
+  }
+  subtable 111 {
+    context (placeholder) asciitilde;
+    sub 0 wave_1;
+  }
+  subtable 222 {
+    context asciitilde (asciitilde);
+    sub 0 wave_2;
+  }
+}
+
+lookup wave_1 {
+  sub asciitilde -> wave;
+}
+
+lookup wave_2 {
+  sub asciitilde -> placeholder;
+}
+
+lookup braceleft_double {
+  subtable ignore1 {
+    ignore context (braceleft) braceleft (braceleft);
+  }
+  subtable ignore2 {
+    ignore context braceleft (braceleft braceleft);
+  }
+  subtable 111 {
+    context (placeholder) braceleft;
+    sub 0 braceleft_double_1;
+  }
+  subtable 222 {
+    context braceleft (braceleft);
+    sub 0 braceleft_double_2;
+  }
+}
+
+lookup braceleft_double_1 {
+  sub braceleft -> braceleft_double;
+}
+
+lookup braceleft_double_2 {
+  sub braceleft -> placeholder;
+}
+
+lookup braceright_double {
+  subtable ignore1 {
+    ignore context (braceright) braceright (braceright);
+  }
+  subtable ignore2 {
+    ignore context braceright (braceright braceright);
+  }
+  subtable 111 {
+    context (placeholder) braceright;
+    sub 0 braceright_double_1;
+  }
+  subtable 222 {
+    context braceright (braceright);
+    sub 0 braceright_double_2;
+  }
+}
+
+lookup braceright_double_1 {
+  sub braceright -> braceright_double;
+}
+
+lookup braceright_double_2 {
+  sub braceright -> placeholder;
 }

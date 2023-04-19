@@ -1,5 +1,21 @@
 # changelog
 
+## unreleased
+
+### feature
+
+- liga: add `~~` in `calt`
+- liga: add `__` in `ss03`
+- liga: add `>=` `<=` in `ss04`
+- liga: add `{{` `}}` in `ss05`
+
+### fix & optimze
+
+- fix: make second character center in `::<`/`>::` etc
+- fix: italic $D0 `Đ`
+- opt: italic $79 `y`
+- opt: italic kerning
+
 ## v6.2
 
 ### change
