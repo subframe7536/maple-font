@@ -18,11 +18,11 @@ A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
 
 -------------------Ligatures-----------------------
 
-0x12 ~@
+0x12 ~@ ~~
 
 </ /> <> </>
 
-:: ::: := ::=
+:: ::: := ::>
 
 :*:+:^:-:~:
 
@@ -61,6 +61,12 @@ ss02: [info] [trace]
       [debug] [warn]
       [error] [fatal]
       [vite]
+
+ss03: __
+
+ss04: >= <=
+
+ss05: {{ }}
 
 ---------------中英文2:1----------------
 |ab|cd|ef|gh|ij|kl|mn|op|qr|st|uv|wx|yz|

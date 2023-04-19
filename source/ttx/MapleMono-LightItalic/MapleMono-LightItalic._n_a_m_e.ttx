@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ttFont ttLibVersion="4.34">
+<ttFont ttLibVersion="4.39">
 
   <name>
     <namerecord nameID="0" platformID="3" platEncID="1" langID="0x409">
@@ -12,13 +12,13 @@
       Light Italic
     </namerecord>
     <namerecord nameID="3" platformID="3" platEncID="1" langID="0x409">
-      Maple Mono Light Italic:Version 4.1
+      Maple Mono Light Italic:Version 4.2
     </namerecord>
     <namerecord nameID="4" platformID="3" platEncID="1" langID="0x409">
       Maple Mono Light Italic
     </namerecord>
     <namerecord nameID="5" platformID="3" platEncID="1" langID="0x409">
-      Version 4.1
+      Version 4.2
     </namerecord>
     <namerecord nameID="6" platformID="3" platEncID="1" langID="0x409">
       MapleMono-LightItalic

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ttFont ttLibVersion="4.34">
+<ttFont ttLibVersion="4.39">
 
   <hmtx>
     <mtx name=".notdef" width="1200" lsb="136"/>
@@ -223,7 +223,9 @@
     <mtx name="boxdrawingsverticalsingleandleftdouble" width="1200" lsb="-10"/>
     <mtx name="boxdrawingsverticalsingleandrightdouble" width="1200" lsb="520"/>
     <mtx name="braceleft" width="1200" lsb="210"/>
+    <mtx name="braceleft_double" width="1200" lsb="-790"/>
     <mtx name="braceright" width="1200" lsb="210"/>
+    <mtx name="braceright_double" width="1200" lsb="-790"/>
     <mtx name="bracketleft" width="1200" lsb="310"/>
     <mtx name="bracketright" width="1200" lsb="310"/>
     <mtx name="bracketright_numbersign" width="1200" lsb="-910"/>
@@ -272,6 +274,7 @@
     <mtx name="germandbls" width="1200" lsb="165"/>
     <mtx name="grave" width="1200" lsb="375"/>
     <mtx name="greater" width="1200" lsb="184"/>
+    <mtx name="greater_equal" width="1200" lsb="-530"/>
     <mtx name="greater_greater" width="1200" lsb="-866"/>
     <mtx name="greater_greater_greater" width="1200" lsb="-1916"/>
     <mtx name="guillemotleft" width="1200" lsb="165"/>
@@ -315,6 +318,7 @@
     <mtx name="leftthreequartersblock" width="1200" lsb="0"/>
     <mtx name="leftwardsarrow" width="1200" lsb="99"/>
     <mtx name="less" width="1200" lsb="184"/>
+    <mtx name="less_equal" width="1200" lsb="-630"/>
     <mtx name="less_greater" width="1200" lsb="-1016"/>
     <mtx name="less_less" width="1200" lsb="-866"/>
     <mtx name="less_less_less" width="1200" lsb="-1916"/>
@@ -448,12 +452,14 @@
     <mtx name="udieresis" width="1200" lsb="194"/>
     <mtx name="ugrave" width="1200" lsb="194"/>
     <mtx name="underscore" width="1200" lsb="210"/>
+    <mtx name="underscore_underscore" width="1200" lsb="-890"/>
     <mtx name="updownarrow" width="1200" lsb="35"/>
     <mtx name="upperhalfblock" width="1200" lsb="0"/>
     <mtx name="upperoneeighthblock" width="1200" lsb="0"/>
     <mtx name="upwardsarrow" width="1200" lsb="35"/>
     <mtx name="v" width="1200" lsb="158"/>
     <mtx name="w" width="1200" lsb="152"/>
+    <mtx name="wave" width="1200" lsb="-840"/>
     <mtx name="x" width="1200" lsb="183"/>
     <mtx name="x_center" width="1200" lsb="219"/>
     <mtx name="xml_comment_begin" width="1200" lsb="-3310"/>
