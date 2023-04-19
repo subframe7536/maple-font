@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ttFont ttLibVersion="4.34">
+<ttFont ttLibVersion="4.39">
 
   <GlyphOrder>
     <!-- The 'id' attribute is only for humans; it is ignored when parsed. -->
@@ -466,6 +466,12 @@
     <GlyphID id="460" name="bar_equal"/>
     <GlyphID id="461" name="at_alt_1"/>
     <GlyphID id="462" name="asciitilde_at_alt_1"/>
+    <GlyphID id="463" name="greater_equal"/>
+    <GlyphID id="464" name="less_equal"/>
+    <GlyphID id="465" name="wave"/>
+    <GlyphID id="466" name="underscore_underscore"/>
+    <GlyphID id="467" name="braceleft_double"/>
+    <GlyphID id="468" name="braceright_double"/>
   </GlyphOrder>
 
 </ttFont>

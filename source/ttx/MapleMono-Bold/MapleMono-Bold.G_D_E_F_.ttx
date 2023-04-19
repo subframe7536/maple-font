@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ttFont ttLibVersion="4.34">
+<ttFont ttLibVersion="4.39">
 
   <GDEF>
     <Version value="0x00010000"/>
@@ -225,7 +225,9 @@
       <ClassDef glyph="boxdrawingsverticalsingleandleftdouble" class="1"/>
       <ClassDef glyph="boxdrawingsverticalsingleandrightdouble" class="1"/>
       <ClassDef glyph="braceleft" class="1"/>
+      <ClassDef glyph="braceleft_double" class="1"/>
       <ClassDef glyph="braceright" class="1"/>
+      <ClassDef glyph="braceright_double" class="1"/>
       <ClassDef glyph="bracketleft" class="1"/>
       <ClassDef glyph="bracketright" class="1"/>
       <ClassDef glyph="bracketright_numbersign" class="1"/>
@@ -274,6 +276,7 @@
       <ClassDef glyph="germandbls" class="1"/>
       <ClassDef glyph="grave" class="1"/>
       <ClassDef glyph="greater" class="1"/>
+      <ClassDef glyph="greater_equal" class="1"/>
       <ClassDef glyph="greater_greater" class="1"/>
       <ClassDef glyph="greater_greater_greater" class="1"/>
       <ClassDef glyph="guillemotleft" class="1"/>
@@ -317,6 +320,7 @@
       <ClassDef glyph="leftthreequartersblock" class="1"/>
       <ClassDef glyph="leftwardsarrow" class="1"/>
       <ClassDef glyph="less" class="1"/>
+      <ClassDef glyph="less_equal" class="1"/>
       <ClassDef glyph="less_greater" class="1"/>
       <ClassDef glyph="less_less" class="1"/>
       <ClassDef glyph="less_less_less" class="1"/>
@@ -450,12 +454,14 @@
       <ClassDef glyph="udieresis" class="1"/>
       <ClassDef glyph="ugrave" class="1"/>
       <ClassDef glyph="underscore" class="1"/>
+      <ClassDef glyph="underscore_underscore" class="1"/>
       <ClassDef glyph="updownarrow" class="1"/>
       <ClassDef glyph="upperhalfblock" class="1"/>
       <ClassDef glyph="upperoneeighthblock" class="1"/>
       <ClassDef glyph="upwardsarrow" class="1"/>
       <ClassDef glyph="v" class="1"/>
       <ClassDef glyph="w" class="1"/>
+      <ClassDef glyph="wave" class="1"/>
       <ClassDef glyph="x" class="1"/>
       <ClassDef glyph="x_center" class="1"/>
       <ClassDef glyph="xml_comment_begin" class="1"/>
