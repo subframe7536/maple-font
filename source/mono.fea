@@ -131,10 +131,12 @@ feature ContextualAlternates calt {
 }
 
 feature CharacterVariants01 cv01 {
+  # @ # $ % & Q -> =>
   lookup pure_style;
 }
 
 feature SlashedZero zero {
+  # 0
   lookup slash_zero;
 }
 
@@ -167,28 +169,36 @@ feature StyleSets02 ss02 {
 }
 
 feature StyleSets03 ss03 {
+  # __
   lookup underscore_underscore;
 }
 
 feature StyleSets04 ss04 {
+  # >=
   lookup greater_equal;
+  # <=
   lookup less_equal;
 }
 
 feature StyleSets05 ss05 {
+  # {{
   lookup braceleft_double;
+  # }}
   lookup braceright_double;
 }
 
 feature CharacterVariants02 cv02 {
+  # i
   lookup alt_i;
 }
 
 feature CharacterVariants03 cv03 {
+  # a
   lookup alt_a;
 }
 
 feature CharacterVariants04 cv04 {
+  # @
   lookup at_alt;
 }
 
