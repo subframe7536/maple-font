@@ -35,8 +35,9 @@ Inspired by [Source Code Pro](https://github.com/adobe-fonts/source-code-pro), [
 - 🦾 **Better rendering effect** - redesigned it according to Fira Code Retina's spacing and glyph
 
   | v4                                                     | v5                                                      |
-  | :----------------------------------------------------- | :------------------------------------------------------ |
+  | :----------------------------------------------------: | :-----------------------------------------------------: |
   | <img src="./img/sizechange.gif" height="200" alt="v4"> | <img src="./img/sizechange1.gif" height="200" alt="v5"> |
+  | `+` and `=` are not centered at some font-size         | `+` and `=` are always centered                         |
 
 - 🗒 **More readable** - cursive style, better glyph shape, lower the height of capital letters and numbers, reduce or modify kerning and center operators `+ - * = ^ ~ < >`
 - 🛠️ **More configable** - enable or disable font features as you want, just make your own font
