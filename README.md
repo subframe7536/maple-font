@@ -78,7 +78,7 @@ ps: in Jetbrains' product, [todo) can't be properly rendered, so please use todo
 </p>
 <p align="center">
 <img src="./img/option.png"/><br>
-compatibility & usage: [in FiraCode README](https://github.com/tonsky/FiraCode#editor-compatibility-list)
+compatibility & usage: in <a href="https://github.com/tonsky/FiraCode#editor-compatibility-list" target="_blank">FiraCode README</a>
 </p>
 
 ## Screenshots
