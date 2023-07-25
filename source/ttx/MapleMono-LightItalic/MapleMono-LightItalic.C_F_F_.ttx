@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ttFont ttLibVersion="4.39">
+<ttFont ttLibVersion="4.40">
 
   <CFF>
     <major value="1"/>
@@ -3699,34 +3699,55 @@
           endchar
         </CharString>
         <CharString name="left_right_arrow_single">
-          0 -1683 458 rmoveto
-          -14 0 -11 5 -8 10 rrcurveto
-          -71 89 rlineto
-          -5 8 -3 8 0 9 0 17 7 15 16 14 rrcurveto
+          0 -1679 458 rmoveto
+          -14 0 -12 5 -9 11 rrcurveto
+          -72 89 rlineto
+          -6 8 -3 9 0 10 0 18 7 14 14 12 rrcurveto
           109 89 rlineto
-          11 9 13 5 13 0 13 0 12 -5 9 -10 rrcurveto
-          69 -89 rlineto
-          7 -7 3 -9 0 -10 0 -17 -8 -15 -16 -14 rrcurveto
-          -108 -88 rlineto
-          -12 -9 -13 -5 -13 0 rrcurveto
-          114 -387 rmoveto
-          20 0 18 7 17 13 22 18 11 22 0 24 0 12 -4 12 -8 12 rrcurveto
-          -89 113 rlineto
-          -5 8 -3 8 0 9 0 17 7 15 16 14 rrcurveto
-          138 118 rlineto
-          14 10 16 9 19 7 20 7 16 4 15 0 rrcurveto
-          2381 hlineto
-          19 0 19 7 16 14 22 18 12 22 0 25 0 13 -4 11 -8 10 -11 13 -15 7 -19 0 rrcurveto
-          -2380 hlineto
-          -15 0 -16 4 -16 7 -15 7 -13 9 -9 11 rrcurveto
-          -90 115 rlineto
-          -6 8 -3 9 0 10 0 15 8 15 15 13 rrcurveto
+          11 9 13 4 12 0 14 0 12 -5 9 -11 rrcurveto
+          70 -89 rlineto
+          7 -9 3 -9 0 -11 0 -15 -7 -15 -15 -12 rrcurveto
+          -107 -89 rlineto
+          -11 -9 -13 -4 -12 0 rrcurveto
+          2362 hmoveto
+          -14 0 -12 5 -9 11 rrcurveto
+          -72 89 rlineto
+          -6 8 -3 9 0 10 0 18 7 14 14 12 rrcurveto
+          109 89 rlineto
+          11 9 13 4 12 0 14 0 12 -5 9 -11 rrcurveto
+          70 -89 rlineto
+          7 -9 3 -9 0 -11 0 -15 -7 -15 -15 -12 rrcurveto
+          -107 -89 rlineto
+          -11 -9 -13 -4 -12 0 rrcurveto
+          -2016 72 rmoveto
+          1681 hlineto
+          16 0 16 -4 16 -7 16 -8 13 -9 10 -11 rrcurveto
+          90 -118 rlineto
+          6 -8 3 -9 0 -10 0 -18 -7 -15 -15 -12 rrcurveto
+          -137 -112 rlineto
+          -23 -22 -11 -22 0 -24 0 -12 4 -11 7 -9 9 -12 14 -6 19 0 18 0 18 7 20 14 rrcurveto
+          553 456 rlineto
+          24 22 12 23 0 24 0 12 -4 11 -7 10 rrcurveto
+          -359 458 rlineto
+          -12 13 -14 6 -16 0 -19 0 -18 -7 -19 -14 -24 -19 -12 -22 0 -26 0 -13 4 -11 7 -11 rrcurveto
+          89 -113 rlineto
+          6 -8 3 -9 0 -9 0 -16 -7 -15 -14 -13 rrcurveto
+          -139 -114 rlineto
+          -13 -11 -15 -8 -19 -7 -18 -7 -17 -4 -15 0 rrcurveto
+          -1680 hlineto
+          -16 0 -16 4 -16 7 -16 8 -13 9 -10 11 rrcurveto
+          -90 116 rlineto
+          -6 9 -3 9 0 10 0 14 7 14 14 13 rrcurveto
           137 113 rlineto
-          22 20 11 23 0 25 0 13 -4 11 -8 10 -11 13 -14 6 -18 0 -17 0 -18 -7 -20 -14 rrcurveto
+          23 22 12 23 0 26 0 12 -4 11 -7 8 -11 12 -14 6 -17 0 -18 0 -19 -7 -20 -15 rrcurveto
           -553 -458 rlineto
-          -23 -19 -12 -22 0 -24 0 -12 4 -13 8 -12 rrcurveto
+          -24 -20 -12 -22 0 -24 0 -13 4 -12 7 -11 rrcurveto
           359 -456 rlineto
-          13 -13 15 -6 17 0 rrcurveto
+          12 -12 15 -6 16 0 21 0 19 7 17 14 23 19 11 22 0 25 0 12 -4 11 -7 11 rrcurveto
+          -90 114 rlineto
+          -5 10 -2 9 0 8 0 16 7 14 14 13 rrcurveto
+          138 117 rlineto
+          13 10 15 9 19 7 19 7 17 4 14 0 rrcurveto
           endchar
         </CharString>
         <CharString name="left_right_arrow_single_alt">

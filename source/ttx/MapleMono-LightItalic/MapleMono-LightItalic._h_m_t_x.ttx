@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ttFont ttLibVersion="4.39">
+<ttFont ttLibVersion="4.40">
 
   <hmtx>
     <mtx name=".notdef" width="1200" lsb="152"/>
@@ -401,7 +401,7 @@
     <mtx name="r" width="1200" lsb="240"/>
     <mtx name="referencemark" width="1200" lsb="130"/>
     <mtx name="registered" width="1200" lsb="266"/>
-    <mtx name="right_arrow_double" width="1200" lsb="-963"/>
+    <mtx name="right_arrow_double" width="1200" lsb="-965"/>
     <mtx name="right_arrow_double_alt" width="1200" lsb="-927"/>
     <mtx name="right_arrow_double_long" width="1200" lsb="-2128"/>
     <mtx name="right_arrow_double_long_alt" width="1200" lsb="-2127"/>
