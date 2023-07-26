@@ -27,12 +27,14 @@ for f in listdir(ttx_path):
 
     # correct names
     set_name(f"{family_name} SC NF", 1)
+    set_name(sub, 2)
     set_name(f"{family_name} SC NF {sub}; {get_name(5)}", 3)
     set_name(f"{family_name} SC NF {sub}", 4)
     set_name(f"{family_name_trim}SCNF-{sub}", 6)
 
     font.importXML(path.join(ttx_path, f, f + ".O_S_2f_2.ttx"))
 
+    # add code page, Latin / Japanese / Simplify Chinese / Traditional Chinese
     font["OS/2"].ulCodePageRange1 = 1 << 0 | 1 << 17 | 1 << 18 | 1 << 20
 
     font.save(target)
