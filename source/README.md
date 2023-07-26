@@ -1,0 +1,1 @@
+Download [Font Patcher](https://github.com/ryanoasis/nerd-fonts/releases/download/latest/FontPatcher.zip) and extract it to current directory

@@ -1,20 +1,23 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
-document.createTextNode('::-webkit-scrollbar { display: none; }')
-
-const App: React.FC = () => {
-  const [count, setCount] = useState(0)
-
+export default function Form({ name }) {
+  const [isSent, setIsSent] = useState(false);
+  const [message, setMessage] = useState(`Hi, ${name}`);
+  if (isSent) {
+    return <h1>Your message is on its way!</h1>
+  }
   return (
-    <div className={styles.app}>
-      <img
-        src={electron}
-        style={{ height: '24vw' }}
-        className={styles.appLogo}
-        alt='electron'
+    <form onSubmit={(e) => {
+      e.preventDefault();
+      setIsSent(true);
+      sendMessage(message);
+    }}>
+      <textarea
+        placeholder="Message"
+        value={message}
+        onChange={e => setMessage(e.target.value)}
       />
-    </div>
-  )
+      <button type="submit">Send</button>
+    </form>
+  );
 }
-
-export default App
