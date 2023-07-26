@@ -10,7 +10,7 @@ from ttfautohint import ttfautohint
 
 config = {
     "nerd_font": True,  # whether to use nerd font
-    "mono": False,  # whether to use half width icon
+    "mono": True,  # whether to use half width icon
     "family_name": "Maple Mono",  # font family name
     "nf_use_hinted_ttf": True,  # whether to use hinted ttf to generate Nerd Font
 }
@@ -97,6 +97,7 @@ def generate_nerd_font(f: str):
 
     # correct names
     set_name(f"{family_name} NF", 1)
+    set_name(sub, 2)
     set_name(f"{family_name} NF {sub}; {get_name(5)}", 3)
     set_name(f"{family_name} NF {sub}", 4)
     set_name(f"{family_name_trim}NF-{sub}", 6)
@@ -117,7 +118,7 @@ def generate_nerd_font(f: str):
 
 print("=== build start ===")
 for f in listdir(ttx_path):
-    print(f)
+    print("generate:", f)
 
     font = TTFont()
     font.importXML(fileOrPath=path.join(root, "ttx", f, f + ".ttx"))
