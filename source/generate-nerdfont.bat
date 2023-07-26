@@ -3,7 +3,7 @@
 set python_exe="C:\Program Files (x86)\FontForgeBuilds\bin\ffpython.exe"
 set font_dir=..\output\ttf
 set output_dir=..\output\NF
-set args=-l -c --careful --debug 1
+set args=-l -c --careful
 
 if not exist %font_dir% (
     echo Font directory does not exist: %font_dir%
@@ -28,5 +28,3 @@ if not exist %font_path% (
 )
 
 %python_exe% %cd%\FontPatcher\font-patcher %args% --outputdir %output_dir% %font_path%
-
-echo Font patched successfully!

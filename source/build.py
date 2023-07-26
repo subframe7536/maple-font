@@ -5,8 +5,11 @@ from os import path, getcwd, makedirs, listdir, remove, write
 from subprocess import run
 from zipfile import ZipFile
 from urllib.request import urlopen
+import platform
+from ttfautohint import ttfautohint
 
 config = {
+    "nerd_font": False,  # whether to use nerd font
     "mono": False,  # whether to use half width icon
     "family_name": "Maple Mono",  # font family name
     "nf_use_hinted_ttf": True,  # whether to use hinted ttf to generate Nerd Font
@@ -48,18 +51,10 @@ mkdirs(path.join(output_path, "ttf-autohint"))
 mkdirs(path.join(output_path, "woff2"))
 
 
-print("=== build start ===")
-
-
 def auto_hint(f: str, ttf_path: str):
-    run(
-        [
-            "python",
-            "-m",
-            "ttfautohint",
-            ttf_path,
-            path.join(output_path, "ttf-autohint", f + ".ttf"),
-        ]
+    ttfautohint(
+        in_file=ttf_path,
+        out_file=path.join(output_path, "ttf-autohint", f + ".ttf"),
     )
 
 
@@ -69,7 +64,10 @@ def generate_nerd_font(f: str):
 
     run(
         [
-            path.join(root, "generate-nerdfont.bat"),
+            path.join(
+                root,
+                f"generate-nerdfont.{'bat' if platform.system() == 'Windows' else 'sh'}",
+            ),
             f,
             get_arg("mono"),
             get_arg("nf_use_hinted_ttf"),
@@ -117,6 +115,7 @@ def generate_nerd_font(f: str):
     remove(nf_path)
 
 
+print("=== build start ===")
 for f in listdir(ttx_path):
     print(f)
 
@@ -148,7 +147,8 @@ for f in listdir(ttx_path):
 
     font.close()
 
-    generate_nerd_font(f)
+    if config["nerd_font"]:
+        generate_nerd_font(f)
 
     woff2.compress(otf_path, path.join(output_path, "woff2", f + ".woff2"))
 
