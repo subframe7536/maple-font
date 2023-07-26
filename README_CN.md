@@ -139,10 +139,16 @@
 
 ## 构建
 
-```
-git clone https://github.com/subframe7536/Maple-font
-cd Maple-font/source
-pip install fonttools
+如果你需要使用 Nerd Font，请确保你已经安装了 fontforge
+
+你可以在 `source/build.py` 调整部分设置
+
+更细致的设置请等待 V7
+
+```shell
+git clone https://github.com/subframe7536/Maple-font --depth 1
+cd ./Maple-font/source
+pip install -r requirements.txt
 python build.py
 ```
 
@@ -160,6 +166,15 @@ python build.py
 <p align="center">
   <img src="./img/CE21.png" alt="logo">
 </p>
+
+### 构建
+
+```shell
+git clone https://github.com/subframe7536/Maple-font --depth 1 -b chinese
+cd ./Maple-font/source
+pip install -r requirements.txt
+./generate-sc.bat
+```
 
 ## Maple UI
 
