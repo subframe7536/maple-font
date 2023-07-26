@@ -9,7 +9,7 @@ import platform
 from ttfautohint import ttfautohint
 
 config = {
-    "nerd_font": False,  # whether to use nerd font
+    "nerd_font": True,  # whether to use nerd font
     "mono": False,  # whether to use half width icon
     "family_name": "Maple Mono",  # font family name
     "nf_use_hinted_ttf": True,  # whether to use hinted ttf to generate Nerd Font
