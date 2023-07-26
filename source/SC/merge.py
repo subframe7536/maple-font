@@ -1,4 +1,4 @@
-from os import getcwd, path, listdir, removedirs, makedirs
+from os import getcwd, path, listdir, makedirs
 import sys
 
 try:
@@ -49,4 +49,5 @@ def generate(f: str):
 
 for f in listdir(path.join(output_path, "NF")):
     if f.endswith(".ttf"):
+        print("generate:", f)
         generate(f)

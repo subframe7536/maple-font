@@ -5,12 +5,14 @@ root = getcwd()
 ttx_path = path.join(root, "ttx")
 sc_nf_path = path.join(path.dirname(root), "output", "SC-NF")
 
+family_name = "Maple Mono"
+family_name_trim = family_name.replace(" ", "")
 
 for f in listdir(ttx_path):
-    family_name, sub = f.split("-")
-    family_name_trim = family_name.replace(" ", "")
+    _, sub = f.split("-")
+    print("fix", f"{family_name} SC NF {sub}")
 
-    target = path.join(sc_nf_path, f"{family_name}-SC-NF-{sub}.ttf")
+    target = path.join(sc_nf_path, f"{family_name_trim}-SC-NF-{sub}.ttf")
     font = TTFont(target)
 
     def set_name(name: str, id: int):
