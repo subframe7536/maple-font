@@ -1,18 +1,48 @@
 from fontTools.ttLib import TTFont, woff2
-import shutil
 from afdko.otf2ttf import otf_to_ttf
-from os import path, getcwd, makedirs, listdir, remove, write
+from os import path, getcwd, makedirs, listdir, remove
 from subprocess import run
 from zipfile import ZipFile
 from urllib.request import urlopen
-import platform
 from ttfautohint import ttfautohint
+from enum import Enum, unique
+import shutil
+import platform
+import json
+
+
+@unique
+class Status(Enum):
+    DISABLE = "0"
+    ENABLE = "1"
+    IGNORE = "2"
+
 
 config = {
-    "nerd_font": True,  # whether to use nerd font
-    "mono": True,  # whether to use half width icon
-    "family_name": "Maple Mono",  # font family name
-    "nf_use_hinted_ttf": True,  # whether to use hinted ttf to generate Nerd Font
+    # font family name
+    "family_name": "Maple Mono",
+    # whether to move font features to default ligature
+    # Status.IGNORE: do nothing
+    # Status.ENABLE: move font features to default ligature
+    # Status.DISABLE: remove font features
+    "freeze_feature_list": {
+        "ss01": Status.IGNORE,  # == === != !==
+        "ss02": Status.IGNORE,  # [info] [trace] [debug] [warn] [error] [fatal] [vite]
+        "ss03": Status.IGNORE,  # __
+        "ss04": Status.IGNORE,  # >= <=
+        "ss05": Status.IGNORE,  # {{ }}
+        "cv01": Status.IGNORE,  # @ # $ % & Q -> =>
+        "cv02": Status.IGNORE,  # alt i
+        "cv03": Status.IGNORE,  # alt a
+        "cv04": Status.IGNORE,  # alt @
+        "zero": Status.IGNORE,  # alt 0
+    },
+    # config for nerd font
+    "nerd_font": {
+        "enable": Status.ENABLE,  # whether to use nerd font
+        "mono": Status.ENABLE,  # whether to use half width icon
+        "use_hinted": Status.ENABLE,  # whether to use hinted ttf to generate Nerd Font
+    },
 }
 
 root = getcwd()
@@ -24,7 +54,7 @@ family_name_trim = family_name.replace(" ", "")
 
 if not path.exists(path.join(root, "FontPatcher")):
     url = "https://github.com/ryanoasis/nerd-fonts/releases/download/latest/FontPatcher.zip"
-    print(f"download Font Patcher from {url}")
+    print(f"Font Patcher does not exist, download from {url}")
     try:
         zip_path = path.join(root, "FontPatcher.zip")
         if not path.exists(zip_path):
@@ -35,7 +65,7 @@ if not path.exists(path.join(root, "FontPatcher")):
         remove(zip_path)
     except Exception as e:
         print(
-            "fail to download Font Patcher, please consider to manually download it and put downloaded 'FontPatcher.zip' in the 'source' folder."
+            "fail to download Font Patcher, please consider to download it manually, put downloaded 'FontPatcher.zip' in the 'source' folder and run this script again."
         )
         exit(1)
 
@@ -59,8 +89,8 @@ def auto_hint(f: str, ttf_path: str):
 
 
 def generate_nerd_font(f: str):
-    def get_arg(key: str):
-        return "1" if config[key] else "0"
+    if config["nerd_font"]["enable"] != Status.ENABLE:
+        return
 
     run(
         [
@@ -69,18 +99,19 @@ def generate_nerd_font(f: str):
                 f"generate-nerdfont.{'bat' if platform.system() == 'Windows' else 'sh'}",
             ),
             f,
-            get_arg("mono"),
-            get_arg("nf_use_hinted_ttf"),
+            config["nerd_font"]["mono"].value,
+            config["nerd_font"]["use_hinted"].value,
         ]
     )
     _, sub = f.split("-")
-    mono = "Mono" if config["mono"] else ""
+
+    mono = "Mono" if config["nerd_font"]["mono"] == Status.ENABLE else ""
     nf_path = path.join(
         output_path,
         "NF",
         f"{family_name_trim}NerdFont{mono}-{sub}.ttf",
     )
-
+    # load font
     nf_font = TTFont(nf_path)
 
     def set_name(name: str, id: int):
@@ -110,19 +141,53 @@ def generate_nerd_font(f: str):
 
     nf_font.importXML(path.join(ttx_path, f, f + ".O_S_2f_2.ttx"))
 
+    # save font
     nf_font.save(path.join(output_path, "NF", f"{family_name_trim}-NF-{sub}.ttf"))
     nf_font.close()
 
+    # remove original font
     remove(nf_path)
 
 
 print("=== build start ===")
+
+conf = json.dumps(
+    config,
+    default=lambda x: x.name if isinstance(x, Status) else None,
+    indent=4,
+)
+
+print(conf)
+
+# write config
+with open(path.join(output_path, "config.json"), "w") as file:
+    file.write(conf)
+
 for f in listdir(ttx_path):
     print("generate:", f)
 
+    # load font
     font = TTFont()
     font.importXML(fileOrPath=path.join(root, "ttx", f, f + ".ttx"))
 
+    # check feature list
+    feature_dict = {
+        feature.FeatureTag: feature.Feature
+        for feature in font["GSUB"].table.FeatureList.FeatureRecord
+    }
+
+    calt_lookup_list = feature_dict.get("calt").LookupListIndex
+
+    for key, features in feature_dict.items():
+        if key == "calt":
+            continue
+
+        if config["freeze_feature_list"][key] == Status.ENABLE:
+            calt_lookup_list.extend(features.LookupListIndex)
+        elif config["freeze_feature_list"][key] == Status.DISABLE:
+            features.LookupListIndex = []
+
+    # correct names
     _, sub = f.split("-")
 
     def set_name(name: str, id: int):
@@ -139,29 +204,30 @@ for f in listdir(ttx_path):
     otf_path = path.join(output_path, "otf", f + ".otf")
     ttf_path = path.join(output_path, "ttf", f + ".ttf")
 
+    # save otf font
     font.save(otf_path)
 
+    # save ttf font
     otf_to_ttf(font)
     font.save(ttf_path)
 
+    # auto hint
     auto_hint(f, ttf_path)
 
     font.close()
 
-    if config["nerd_font"]:
-        generate_nerd_font(f)
+    # generate nerd font
+    generate_nerd_font(f)
 
+    # generate woff2
     woff2.compress(otf_path, path.join(output_path, "woff2", f + ".woff2"))
 
 
 print("=== build end ===")
 
+
+# copy woff
 woff2_path = path.join(path.dirname(output_path), "woff2")
-
-with open(path.join(output_path, "NF", "config.txt"), "w") as file:
-    file.write(f"use_hinted_ttf = {config['nf_use_hinted_ttf']}\n")
-    file.write(f"mono = {config['mono']}\n")
-
 if path.exists(woff2_path):
     shutil.rmtree(woff2_path)
 shutil.copytree(path.join(output_path, "woff2"), woff2_path)
