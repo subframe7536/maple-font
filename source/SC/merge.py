@@ -1,3 +1,5 @@
+from enum import Enum, unique
+import json
 from os import getcwd, path, listdir, makedirs
 import sys
 
@@ -9,14 +11,23 @@ except ImportError:
     )
     sys.exit(1)
 
+config = sys.argv[1]
+
+if config not in ["ttf", "ttf-autohint", "nf"] or config == "":
+    print("config is incorrect or not set, switch to default 'nf'")
+    config = "nf"
+
+suffix = "SC-NF" if config == "nf" else "SC"
+suffix_alt = suffix.replace("-", " ")
 
 root = getcwd()
 sc_path = path.join(root, "SC")
 output_path = path.join(path.dirname(root), "output")
-sc_nf_path = path.join(output_path, "SC-NF")
+sc_nf_path = path.join(output_path, suffix)
+base_font_path = path.join(output_path, config)
 
-family_name = "Maple Mono SC NF"
-file_name = "MapleMono-SC-NF"
+family_name = f"Maple Mono {suffix_alt}"
+file_name = f"MapleMono-{suffix}"
 
 if not path.exists(sc_nf_path):
     makedirs(sc_nf_path)
@@ -28,7 +39,7 @@ def get_subfamily_name(f: str):
 
 def generate(f: str):
     sub = get_subfamily_name(f)
-    nf = fontforge.open(path.join(output_path, "NF", f))
+    nf = fontforge.open(path.join(base_font_path, f))
     sc = fontforge.open(path.join(root, "SC", f"{sub}.ttf"))
 
     for item in sc.glyphs():
@@ -40,14 +51,22 @@ def generate(f: str):
     sc.copy()
     nf.paste()
 
-    target = path.join(output_path, "SC-NF", f"{file_name}-{sub}.ttf")
-    print(f"{target}")
-    nf.generate(target)
+    nf.generate(path.join(output_path, suffix, f"{file_name}-{sub}.ttf"))
     sc.close()
     nf.close()
 
 
-for f in listdir(path.join(output_path, "NF")):
+with open(path.join(sc_nf_path, "sc-config.json"), "w") as f:
+    c = {"base": ""}
+    if config == "nf":
+        c["base"] = "nerd font"
+    elif config == "ttf-autohint":
+        c["base"] = "autohint ttf"
+    else:
+        c["base"] = "ttf"
+    f.write(json.dumps(c, indent=4))
+
+for f in listdir(base_font_path):
     if f.endswith(".ttf"):
         print("generate:", f)
         generate(f)
