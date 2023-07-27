@@ -19,7 +19,12 @@ class Status(Enum):
 
 
 config = {
-    "family_name": "Maple Mono",  # font family name
+    # font family name
+    "family_name": "Maple Mono",
+    # whether to move font features to default ligature
+    # Status.IGNORE: do nothing
+    # Status.ENABLE: move font features to default ligature
+    # Status.DISABLE: remove font features
     "freeze_feature_list": {
         "ss01": Status.IGNORE,  # == === != !==
         "ss02": Status.IGNORE,  # [info] [trace] [debug] [warn] [error] [fatal] [vite]
@@ -32,6 +37,7 @@ config = {
         "cv04": Status.IGNORE,  # alt @
         "zero": Status.IGNORE,  # alt 0
     },
+    # config for nerd font
     "nerd_font": {
         "enable": Status.ENABLE,  # whether to use nerd font
         "mono": Status.ENABLE,  # whether to use half width icon
@@ -99,10 +105,11 @@ def generate_nerd_font(f: str):
     )
     _, sub = f.split("-")
 
+    mono = "Mono" if config["nerd_font"]["mono"] == Status.ENABLE else ""
     nf_path = path.join(
         output_path,
         "NF",
-        f"{family_name_trim}NerdFont-{sub}.ttf",
+        f"{family_name_trim}NerdFont{mono}-{sub}.ttf",
     )
     # load font
     nf_font = TTFont(nf_path)
