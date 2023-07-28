@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class test {
+public class java {
   private static final int RED = 0;
 
   class Widget {

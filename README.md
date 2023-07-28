@@ -84,6 +84,10 @@ compatibility & usage: in <a href="https://github.com/tonsky/FiraCode#editor-com
 
 ## Screenshots
 
+code theme: [vscode-theme-maple](https://github.com/subframe7536/vscode-theme-maple)
+
+generate by: [VSCodeSnap](https://github.com/luisllamasbinaburo/VSCodeSnap)
+
 <details>
 <summary><b>Cli (click to expand!)</b></summary>
 
@@ -121,7 +125,9 @@ compatibility & usage: in <a href="https://github.com/tonsky/FiraCode#editor-com
 <details>
 <summary><b>Go</b></summary>
 
-![](img/code_sample/go.webp)
+<p align="center">
+  <img src="img/code_sample/go.webp" width="320"/>
+</p>
 
 </details>
 
@@ -153,6 +159,7 @@ Currently, the build script is only available on Windows. PRs for other platform
 
 more fine-grained options can be set at the comming V7
 
+
 ### Normal Build
 
 ```shell
@@ -168,7 +175,7 @@ python build.py
 git clone https://github.com/subframe7536/Maple-font --depth 1 -b chinese
 cd ./Maple-font/source
 pip install -r requirements.txt
-./generate-sc.bat
+python build.py
 ```
 
 ## Donate

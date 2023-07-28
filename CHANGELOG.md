@@ -1,5 +1,18 @@
 # changelog
 
+## v6.4 (UnReleased)
+
+### feature
+
+- enable to custom build for font features and Nerd Font! setup config and see details in [source/build.py](source/build.py)
+  - currently, build script is only available on Windows. **PR welcome!**
+- add ttfautohint version (friendly for low resolution devices)
+- 现在可以生成不包含 Nerd Font 的中文字体了，详见 chinese 分支 generate-sc.bat 中
+
+### fix
+
+- fix: italic `<->`
+
 ## v6.3
 
 ### feature
