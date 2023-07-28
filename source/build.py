@@ -46,7 +46,7 @@ config = {
     },
     # config for nerd font
     "nerd_font": {
-        "enable": Status.DISABLE,  # whether to build nerd font
+        "enable": Status.ENABLE,  # whether to build nerd font
         "mono": Status.ENABLE,  # whether to use half width icon
         "use_hinted": Status.ENABLE,  # whether to use hinted ttf to generate Nerd Font patch
     },
