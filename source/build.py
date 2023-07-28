@@ -316,7 +316,7 @@ if release_mode:
             config_file.write(conf)
         print("archieve:", f)
 
-    with open(path.join(output_path, "sha1.json"), "w") as hash_file:
+    with open(path.join(output_path, "release", "sha1.json"), "w") as hash_file:
         hash_file.write(json.dumps(hash_map, indent=4))
 
     # copy woff
