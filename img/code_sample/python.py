@@ -1,5 +1,7 @@
 class BasicBlock(nn.Module):
     expansion = 1
+    print(f"BasicBlock: {expansion}")
+
     def __init__(self, inplanes, planes, stride=1, downsample=None):
         super(BasicBlock, self).__init__()
 

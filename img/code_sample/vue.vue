@@ -1,16 +1,23 @@
-<template>
-  <span @click="click">info:{{ props.foo }}</span>
-</template>
-
 <script lang="ts" setup>
-import { defineEmits, defineProps } from 'vue'
-
-const emit = defineEmits(['change'])
-const props = defineProps({ foo: String })
+const emit = defineEmits<{
+  change: [foo: string]
+}>()
+const props = defineProps<{ foo: string }>()
 console.log(props)
 
-const click = () => {
-  emit('change', props.foo)
-}
+const clickBtn = () => emit('change', props.foo)
 </script>
-<style />
+
+<template>
+  <Transition>
+    <span class="text-blue" @click="clickBtn()">
+      info:{{ props.foo }}
+    </span>
+  </Transition>
+</template>
+
+<style>
+.text-blue {
+  color: blue;
+}
+</style>

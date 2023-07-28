@@ -10,7 +10,7 @@ export default function Form({ name }) {
     <form onSubmit={(e) => {
       e.preventDefault();
       setIsSent(true);
-      sendMessage(message);
+      postMessage(message);
     }}>
       <textarea
         placeholder="Message"

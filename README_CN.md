@@ -79,6 +79,10 @@
 
 ## 屏幕截图
 
+代码主题: [vscode-theme-maple](https://github.com/subframe7536/vscode-theme-maple)
+
+由 [VSCodeSnap](https://github.com/luisllamasbinaburo/VSCodeSnap) 生成
+
 <details>
 <summary><b>命令行（点击展开！）</b></summary>
 
@@ -116,7 +120,9 @@
 <details>
 <summary><b>Go</b></summary>
 
-![](img/code_sample/go.webp)
+<p align="center">
+  <img src="img/code_sample/go.webp" width="320"/>
+</p>
 
 </details>
 
