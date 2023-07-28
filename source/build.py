@@ -1,13 +1,14 @@
 from fontTools.ttLib import TTFont, woff2
 from afdko.otf2ttf import otf_to_ttf
-from os import path, getcwd, makedirs, listdir, remove
+from os import path, getcwd, makedirs, listdir, remove, walk
 from subprocess import run
-from zipfile import ZipFile
+from zipfile import ZipFile, ZIP_BZIP2
 from urllib.request import urlopen
 from ttfautohint import ttfautohint
 from enum import Enum, unique
 import shutil
 import json
+import hashlib
 
 
 @unique
@@ -17,7 +18,14 @@ class Status(Enum):
     IGNORE = "2"
 
 
-config = {
+# whether to archieve fonts
+release_mode = True
+# whether to build nerd font
+build_nerd_font = True
+# whether to clear old build before build new
+clear_old_build = True
+
+build_config = {
     # font family name
     "family_name": "Maple Mono",
     # whether to enable font features by default
@@ -46,7 +54,6 @@ config = {
     },
     # config for nerd font
     "nerd_font": {
-        "enable": Status.ENABLE,  # whether to build nerd font
         "mono": Status.ENABLE,  # whether to use half width icon
         "use_hinted": Status.ENABLE,  # whether to use hinted ttf to generate Nerd Font patch
     },
@@ -56,7 +63,7 @@ root = getcwd()
 ttx_path = path.join(root, "ttx")
 output_path = path.join(path.dirname(root), "output")
 
-family_name = config["family_name"]
+family_name = build_config["family_name"]
 family_name_trim = family_name.replace(" ", "")
 
 if not path.exists(path.join(root, "FontPatcher")):
@@ -82,6 +89,9 @@ def mkdirs(dir):
         makedirs(dir)
 
 
+if clear_old_build:
+    shutil.rmtree(output_path)
+
 mkdirs(path.join(output_path, "otf"))
 mkdirs(path.join(output_path, "ttf"))
 mkdirs(path.join(output_path, "ttf-autohint"))
@@ -96,7 +106,7 @@ def auto_hint(f: str, ttf_path: str):
 
 
 def generate_nerd_font(f: str):
-    if config["nerd_font"]["enable"] != Status.ENABLE:
+    if not build_nerd_font:
         return
 
     run(
@@ -106,13 +116,13 @@ def generate_nerd_font(f: str):
                 f"generate-nerdfont.bat",
             ),
             f,
-            config["nerd_font"]["mono"].value,
-            config["nerd_font"]["use_hinted"].value,
+            build_config["nerd_font"]["mono"].value,
+            build_config["nerd_font"]["use_hinted"].value,
         ]
     )
     _, sub = f.split("-")
 
-    mono = "Mono" if config["nerd_font"]["mono"] == Status.ENABLE else ""
+    mono = "Mono" if build_config["nerd_font"]["mono"] == Status.ENABLE else ""
     nf_path = path.join(
         output_path,
         "NF",
@@ -156,23 +166,18 @@ def generate_nerd_font(f: str):
     remove(nf_path)
 
 
-print("=== build start ===")
+print("=== [build start] ===")
 
 conf = json.dumps(
-    config,
+    build_config,
     default=lambda x: x.name if isinstance(x, Status) else None,
     indent=4,
 )
 
 print(conf)
 
-# write config
-with open(path.join(output_path, "config.json"), "w") as file:
-    file.write(conf)
 
 for f in listdir(ttx_path):
-    print("generate:", f)
-
     # load font
     font = TTFont()
     font.importXML(fileOrPath=path.join(root, "ttx", f, f + ".ttx"))
@@ -202,7 +207,7 @@ for f in listdir(ttx_path):
         if key == "calt":
             continue
 
-        status = config["freeze_feature_list"][key]
+        status = build_config["freeze_feature_list"][key]
         if status == Status.IGNORE:
             continue
 
@@ -256,13 +261,68 @@ for f in listdir(ttx_path):
     # generate woff2
     woff2.compress(otf_path, path.join(output_path, "woff2", f + ".woff2"))
 
+    print("generated:", f)
 
-print("=== build end ===")
+# check whether have script to generate sc
+sc_path = path.join(
+    root,
+    f"generate-sc.bat",
+)
+if path.exists(sc_path):
+    run([sc_path])
 
 
-# copy woff
-woff2_path = path.join(path.dirname(output_path), "woff2")
-if path.exists(woff2_path):
-    shutil.rmtree(woff2_path)
-shutil.copytree(path.join(output_path, "woff2"), woff2_path)
-print("=== copy woff to root ===")
+# compress folder and return sha1
+def compress_folder(source_folder_path, target_path):
+    # 获取被压缩文件夹的名称
+    source_folder_name = path.basename(source_folder_path)
+
+    # 创建zip文件
+    zip_path = path.join(target_path, f"{source_folder_name}.zip")
+    with ZipFile(zip_path, "w", compression=ZIP_BZIP2) as zip_file:
+        # 遍历文件夹中的所有文件和子文件夹，并逐一添加到zip文件中
+        for root, dirs, files in walk(source_folder_path):
+            for file in files:
+                file_path = path.join(root, file)
+                zip_file.write(file_path, path.relpath(file_path, source_folder_path))
+    zip_file.close()
+    sha1 = hashlib.sha1()
+    with open(zip_path, "rb") as zip_file:
+        while True:
+            data = zip_file.read(1024)
+            if not data:
+                break
+            sha1.update(data)
+
+    return sha1.hexdigest()
+
+
+if release_mode:
+    print("=== [Release Mode] ===")
+
+    # archieve fonts
+    mkdirs(path.join(output_path, "release"))
+
+    hash_map = {}
+
+    for f in listdir(output_path):
+        if f == "release" or f.endswith(".json"):
+            continue
+        zip_path = path.join(output_path, "release")
+        target_path = path.join(output_path, f)
+        hash_map[f] = compress_folder(target_path, zip_path)
+        # write config
+        with open(path.join(target_path, "build-config.json"), "w") as config_file:
+            config_file.write(conf)
+        print("archieve:", f)
+
+    with open(path.join(output_path, "sha1.json"), "w") as hash_file:
+        hash_file.write(json.dumps(hash_map, indent=4))
+
+    # copy woff
+    woff2_path = path.join(path.dirname(output_path), "woff2")
+    if path.exists(woff2_path):
+        shutil.rmtree(woff2_path)
+    shutil.copytree(path.join(output_path, "woff2"), woff2_path)
+    remove(path.join(woff2_path, "build-config.json"))
+    print("copy woff to root")

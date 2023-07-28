@@ -181,7 +181,7 @@ python build.py
 git clone https://github.com/subframe7536/Maple-font --depth 1 -b chinese
 cd ./Maple-font/source
 pip install -r requirements.txt
-./generate-sc.bat
+python build.py
 ```
 
 ## Maple UI
