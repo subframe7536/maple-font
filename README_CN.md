@@ -74,7 +74,7 @@
 
 <p align="center">
 <img src="./img/option.png"/><br>
-兼容性和使用方法: [in FiraCode README](https://github.com/tonsky/FiraCode#editor-compatibility-list)
+兼容性和使用方法 <a href="https://github.com/tonsky/FiraCode#editor-compatibility-list" target="_blank">FiraCode README</a>
 </p>
 
 ## 屏幕截图
@@ -142,6 +142,8 @@
 如果你需要使用 Nerd Font，请确保你已经安装了 fontforge
 
 你可以在 `source/build.py` 调整部分设置
+
+目前只有 Windows 平台的构建脚本，欢迎 PR！
 
 更细致的设置请等待 V7
 
