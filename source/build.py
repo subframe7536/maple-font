@@ -7,7 +7,6 @@ from urllib.request import urlopen
 from ttfautohint import ttfautohint
 from enum import Enum, unique
 import shutil
-import platform
 import json
 
 
@@ -96,7 +95,7 @@ def generate_nerd_font(f: str):
         [
             path.join(
                 root,
-                f"generate-nerdfont.{'bat' if platform.system() == 'Windows' else 'sh'}",
+                f"generate-nerdfont.bat",
             ),
             f,
             config["nerd_font"]["mono"].value,

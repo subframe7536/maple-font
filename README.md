@@ -145,9 +145,11 @@ compatibility & usage: in <a href="https://github.com/tonsky/FiraCode#editor-com
 
 ## Build
 
-to patch Nerd Font, make sure `fontforge` and its Python module is installed
+to patch Nerd Font, make sure `fontforge` is installed
 
 you can adjust some config in `source/build.py`
+
+Currently, the build script is only available on Windows. PRs for other platform are welcome!
 
 more fine-grained options can be set at the comming V7
 
