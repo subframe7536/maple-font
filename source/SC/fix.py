@@ -1,5 +1,5 @@
 import sys
-from fontTools.ttLib import TTFont
+from fontTools.ttLib import TTFont, newTable
 from os import getcwd, path, listdir
 
 config = sys.argv[1]
@@ -46,6 +46,14 @@ for f in listdir(ttx_path):
 
     # add code page, Latin / Japanese / Simplify Chinese / Traditional Chinese
     font["OS/2"].ulCodePageRange1 = 1 << 0 | 1 << 17 | 1 << 18 | 1 << 20
+
+    # fix meta table, https://learn.microsoft.com/en-us/typography/opentype/spec/meta
+    meta = newTable("meta")
+    meta.data = {
+        "dlng": "Latn, Hans, Hant, Jpan",
+        "slng": "Latn, Hans, Hant, Jpan",
+    }
+    font["meta"] = meta
 
     font.save(target)
     font.close()
