@@ -68,5 +68,5 @@ with open(path.join(sc_nf_path, "build-config-sc.json"), "w") as f:
 
 for f in listdir(base_font_path):
     if f.endswith(".ttf"):
-        print("generate:", f)
         generate(f)
+        print("generated:", f)

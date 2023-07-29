@@ -20,7 +20,6 @@ family_name_trim = family_name.replace(" ", "")
 
 for f in listdir(ttx_path):
     _, sub = f.split("-")
-    print("fix:", f"{family_name} {suffix_alt} {sub}")
 
     target = path.join(sc_nf_path, f"{family_name_trim}-{suffix}-{sub}.ttf")
     font = TTFont(target)
@@ -57,3 +56,4 @@ for f in listdir(ttx_path):
 
     font.save(target)
     font.close()
+    print("fix:", f"{family_name} {suffix_alt} {sub}")
