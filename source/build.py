@@ -79,7 +79,7 @@ if not path.exists(path.join(root, "FontPatcher")):
         remove(zip_path)
     except Exception as e:
         print(
-            "fail to download Font Patcher, please consider to download it manually, put downloaded 'FontPatcher.zip' in the 'source' folder and run this script again."
+            f"fail to download Font Patcher, please consider to download it manually, put downloaded 'FontPatcher.zip' in the 'source' folder and run this script again. Error: {e}"
         )
         exit(1)
 
