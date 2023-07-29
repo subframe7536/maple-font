@@ -297,6 +297,10 @@ def compress_folder(source_folder_path, target_path):
     return sha1.hexdigest()
 
 
+# write config to output path
+with open(path.join(output_path, "build-config.json"), "w") as config_file:
+    config_file.write(conf)
+
 if release_mode:
     print("=== [Release Mode] ===")
 
@@ -312,10 +316,9 @@ if release_mode:
         target_path = path.join(output_path, f)
         hash_map[f] = compress_folder(target_path, zip_path)
         # write config
-        with open(path.join(target_path, "build-config.json"), "w") as config_file:
-            config_file.write(conf)
         print("archieve:", f)
 
+    # write sha1
     with open(path.join(output_path, "release", "sha1.json"), "w") as hash_file:
         hash_file.write(json.dumps(hash_map, indent=4))
 
@@ -324,5 +327,4 @@ if release_mode:
     if path.exists(woff2_path):
         shutil.rmtree(woff2_path)
     shutil.copytree(path.join(output_path, "woff2"), woff2_path)
-    remove(path.join(woff2_path, "build-config.json"))
     print("copy woff to root")
