@@ -278,7 +278,7 @@ def compress_folder(source_folder_path, target_path):
     source_folder_name = path.basename(source_folder_path)
 
     # 创建zip文件
-    zip_path = path.join(target_path, f"{source_folder_name}.zip")
+    zip_path = path.join(target_path, f"MapleMono-{source_folder_name}.zip")
     with ZipFile(zip_path, "w", compression=ZIP_BZIP2) as zip_file:
         # 遍历文件夹中的所有文件和子文件夹，并逐一添加到zip文件中
         for root, dirs, files in walk(source_folder_path):
