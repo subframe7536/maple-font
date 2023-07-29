@@ -56,7 +56,7 @@ def generate(f: str):
     nf.close()
 
 
-with open(path.join(sc_nf_path, "build-config-sc.json"), "w") as f:
+with open(path.join(output_path, "build-config-sc.json"), "w") as f:
     c = {"base": ""}
     if config == "nf":
         c["base"] = "nerd font"
