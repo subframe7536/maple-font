@@ -67,7 +67,7 @@ family_name = build_config["family_name"]
 family_name_trim = family_name.replace(" ", "")
 
 if not path.exists(path.join(root, "FontPatcher")):
-    url = "https://github.com/ryanoasis/nerd-fonts/releases/download/latest/FontPatcher.zip"
+    url = "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FontPatcher.zip"
     print(f"Font Patcher does not exist, download from {url}")
     try:
         zip_path = path.join(root, "FontPatcher.zip")
@@ -89,7 +89,7 @@ def mkdirs(dir):
         makedirs(dir)
 
 
-if clear_old_build:
+if clear_old_build and path.exists(output_path):
     shutil.rmtree(output_path)
 
 mkdirs(path.join(output_path, "otf"))
