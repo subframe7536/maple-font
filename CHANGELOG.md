@@ -12,6 +12,7 @@
 ### fix
 
 - fix: italic `<->`
+- fix: fix meta table for SC-NF
 
 ## v6.3
 
