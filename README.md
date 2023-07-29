@@ -126,7 +126,7 @@ generate by: [VSCodeSnap](https://github.com/luisllamasbinaburo/VSCodeSnap)
 <summary><b>Go</b></summary>
 
 <p align="center">
-  <img src="img/code_sample/go.webp" width="320"/>
+  <img src="img/code_sample/go.webp" width="540px"/>
 </p>
 
 </details>
