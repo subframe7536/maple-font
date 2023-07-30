@@ -2,11 +2,12 @@ import sys
 from fontTools.ttLib import TTFont, newTable
 from os import getcwd, path, listdir
 
-config = sys.argv[1]
 
-if config not in ["ttf", "ttf-autohint", "nf"] or config == "":
+if len(sys.argv) < 2:
     print("config is incorrect or not set, switch to default 'nf'")
     config = "nf"
+else:
+    config = sys.argv[1]
 
 suffix = "SC-NF" if config == "nf" else "SC"
 suffix_alt = suffix.replace("-", " ")
