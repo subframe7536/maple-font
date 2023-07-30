@@ -5,11 +5,11 @@ from os import getcwd, path, listdir
 
 if len(sys.argv) < 2:
     print("config is incorrect or not set, switch to default 'nf'")
-    config = "nf"
+    base_font = "nf"
 else:
-    config = sys.argv[1]
+    base_font = sys.argv[1]
 
-suffix = "SC-NF" if config == "nf" else "SC"
+suffix = "SC-NF" if base_font == "nf" else "SC"
 suffix_alt = suffix.replace("-", " ")
 
 root = getcwd()
