@@ -9,6 +9,7 @@ from enum import Enum, unique
 import shutil
 import json
 import hashlib
+import platform
 
 
 @unique
@@ -109,11 +110,16 @@ def generate_nerd_font(f: str):
     if not build_nerd_font:
         return
 
+    system = platform.uname()[0]
+    script = f"generate-nerdfont.bat"
+    if "windows" not in system:
+        script = f"generate-nerdfont.sh"
+
     run(
         [
             path.join(
                 root,
-                f"generate-nerdfont.bat",
+                script,
             ),
             f,
             build_config["nerd_font"]["mono"].value,
