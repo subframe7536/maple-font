@@ -149,34 +149,9 @@ generate by: [VSCodeSnap](https://github.com/luisllamasbinaburo/VSCodeSnap)
 </details>
 
 
-## Build
+## Build your own font
 
-to patch Nerd Font, make sure `fontforge` is installed
-
-you can adjust some config in `source/build.py`
-
-Currently, the build script is only available on Windows. PRs for other platform are welcome!
-
-more fine-grained options can be set at the comming V7
-
-
-### Normal Build
-
-```shell
-git clone https://github.com/subframe7536/Maple-font --depth 1
-cd ./Maple-font/source
-pip install -r requirements.txt
-python build.py
-```
-
-### Build font with Chinese characters
-
-```shell
-git clone https://github.com/subframe7536/Maple-font --depth 1 -b chinese
-cd ./Maple-font/source
-pip install -r requirements.txt
-python build.py
-```
+see [doc](./source/README.md)
 
 ## Donate
 
