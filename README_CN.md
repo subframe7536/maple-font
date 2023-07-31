@@ -145,30 +145,17 @@
 
 ## 构建
 
-如果你需要使用 Nerd Font，请确保你已经安装了 fontforge
-
-你可以在 `source/build.py` 调整部分设置
-
-目前只有 Windows 平台的构建脚本，欢迎 PR！
-
-更细致的设置请等待 V7
-
-```shell
-git clone https://github.com/subframe7536/Maple-font --depth 1
-cd ./Maple-font/source
-pip install -r requirements.txt
-python build.py
-```
+见 [文档（英文）](./source/README.md)
 
 ## Maple Mono SC NF
 
-- ✨ 合并了 NF 和 SC，现在只需一个字体就可以适用所有**编码**场景
-- 中英文 2:1 + Nerd Font 控制台字体
+- ✨ 合并了 Nerd Font 和 中文字体，现在只需一个字体就可以适用所有**编码**场景
+- ✨ 中英文 2:1
 - 在 VSCode 和 IDEA 上测试均能正常显示
 - 支持使用其他的字体生成中文部分
 - 减小中文间距并调整高度，使之看起来更协调
   - 由于美观因素，VSCode中自动换行会错位，请谅解
-- V6版本中文采用[资源圆体](https://github.com/CyanoHao/Resource-Han-Rounded)（OFL证书）而不是V5的汉仪正圆，整个字体都可随意商用
+- V6版本中文采用[资源圆体](https://github.com/CyanoHao/Resource-Han-Rounded)（OFL证书）而不是V5的汉仪正圆，整个字体都可任意修改、商用
 - 需要当作阅读字体请使用 Maple UI
 
 <p align="center">
@@ -177,16 +164,11 @@ python build.py
 
 ### 构建
 
-```shell
-git clone https://github.com/subframe7536/Maple-font --depth 1 -b chinese
-cd ./Maple-font/source
-pip install -r requirements.txt
-python build.py
-```
+见 [文档（中文）](https://github.com/subframe7536/maple-font/blob/chinese/source/README_CN.md)
 
 ## Maple UI
 
-> 自改自用的字体，用的是 Google Sans 英数 + 汉仪正圆的汉字，侵删
+> 自改自用的字体，用的是 Google Sans 英数改圆角 + 汉仪正圆的汉字，侵删
 
 
 - Windows 使用 [noMeiryoUI](https://github.com/Tatsu-syo/noMeiryoUI) + [Mactype](https://github.com/snowie2000/mactype) + [自用脚本](https://gitee.com/subframe7536/mactype) 进行全局替换并优化渲染效果

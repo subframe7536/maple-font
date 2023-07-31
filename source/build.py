@@ -9,6 +9,7 @@ from enum import Enum, unique
 import shutil
 import json
 import hashlib
+import platform
 
 
 @unique
@@ -53,6 +54,7 @@ build_config = {
         # ======
     },
     # config for nerd font
+    # total config: generate-nerdfont.{bat/sh}:17
     "nerd_font": {
         "mono": Status.ENABLE,  # whether to use half width icon
         "use_hinted": Status.ENABLE,  # whether to use hinted ttf to generate Nerd Font patch
@@ -109,11 +111,16 @@ def generate_nerd_font(f: str):
     if not build_nerd_font:
         return
 
+    system = platform.uname()[0]
+    script = f"generate-nerdfont.bat"
+    if "windows" not in system:
+        script = f"generate-nerdfont.sh"
+
     run(
         [
             path.join(
                 root,
-                f"generate-nerdfont.bat",
+                script,
             ),
             f,
             build_config["nerd_font"]["mono"].value,
@@ -274,13 +281,10 @@ if path.exists(sc_path):
 
 # compress folder and return sha1
 def compress_folder(source_folder_path, target_path):
-    # 获取被压缩文件夹的名称
     source_folder_name = path.basename(source_folder_path)
 
-    # 创建zip文件
     zip_path = path.join(target_path, f"MapleMono-{source_folder_name}.zip")
     with ZipFile(zip_path, "w", compression=ZIP_BZIP2) as zip_file:
-        # 遍历文件夹中的所有文件和子文件夹，并逐一添加到zip文件中
         for root, dirs, files in walk(source_folder_path):
             for file in files:
                 file_path = path.join(root, file)
