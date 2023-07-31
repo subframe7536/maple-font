@@ -19,7 +19,7 @@ to patch Nerd Font, please make sure [FontForge](https://fontforge.org/) and its
 
 ### 3. Modify build config (optional)
 
-if you want to custom build the font, like freeze some font features or , you can modify the config option in [build.py](./build.py)
+if you want to custom build the font, like freeze some font features, you can modify the config option in [build.py](./build.py)
 
 ### 4. Run Build Script
 
