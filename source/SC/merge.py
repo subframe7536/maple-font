@@ -11,23 +11,25 @@ except ImportError:
     )
     sys.exit(1)
 
-if len(sys.argv) < 2:
-    print("config is incorrect or not set, switch to default 'nf'")
-    config = "nf"
+if len(sys.argv) < 3:
+    print("config is incorrect or not set, switch to default 'nf' and 'Maple Mono'")
+    base_font = "nf"
+    family = "Maple Mono"
 else:
-    config = sys.argv[1]
+    base_font = sys.argv[1]
+    family = sys.argv[2]
 
-suffix = "SC-NF" if config == "nf" else "SC"
+suffix = "SC-NF" if base_font == "nf" else "SC"
 suffix_alt = suffix.replace("-", " ")
 
 root = getcwd()
 sc_path = path.join(root, "SC")
 output_path = path.join(path.dirname(root), "output")
 sc_nf_path = path.join(output_path, suffix)
-base_font_path = path.join(output_path, config)
+base_font_path = path.join(output_path, base_font)
 
-family_name = f"Maple Mono {suffix_alt}"
-file_name = f"MapleMono-{suffix}"
+family_name = f"{family} {suffix_alt}"
+file_name = f"{family.replace(' ', '')}-{suffix}"
 
 if not path.exists(sc_nf_path):
     makedirs(sc_nf_path)
@@ -58,9 +60,9 @@ def generate(f: str):
 
 with open(path.join(output_path, "build-config-sc.json"), "w") as f:
     c = {"base": ""}
-    if config == "nf":
+    if base_font == "nf":
         c["base"] = "nerd font"
-    elif config == "ttf-autohint":
+    elif base_font == "ttf-autohint":
         c["base"] = "autohint ttf"
     else:
         c["base"] = "ttf"

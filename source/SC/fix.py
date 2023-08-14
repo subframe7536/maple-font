@@ -3,11 +3,13 @@ from fontTools.ttLib import TTFont, newTable
 from os import getcwd, path, listdir
 
 
-if len(sys.argv) < 2:
-    print("config is incorrect or not set, switch to default 'nf'")
+if len(sys.argv) < 3:
+    print("config is incorrect or not set, switch to default 'nf' and 'Maple Mono'")
     base_font = "nf"
+    family_name = "Maple Mono"
 else:
     base_font = sys.argv[1]
+    family_name = sys.argv[2]
 
 suffix = "SC-NF" if base_font == "nf" else "SC"
 suffix_alt = suffix.replace("-", " ")
@@ -16,7 +18,6 @@ root = getcwd()
 ttx_path = path.join(root, "ttx")
 sc_nf_path = path.join(path.dirname(root), "output", suffix)
 
-family_name = "Maple Mono"
 family_name_trim = family_name.replace(" ", "")
 
 for f in listdir(ttx_path):
