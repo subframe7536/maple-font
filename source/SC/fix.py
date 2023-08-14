@@ -4,7 +4,7 @@ from os import getcwd, path, listdir
 
 
 if len(sys.argv) < 3:
-    print("config is incorrect or not set, switch to default 'nf' and 'Maple Mono'")
+    print("配置不正确，将使用默认的 'nf' 和 'Maple Mono'")
     base_font = "nf"
     family_name = "Maple Mono"
 else:

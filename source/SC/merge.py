@@ -6,13 +6,11 @@ import sys
 try:
     import fontforge
 except ImportError:
-    print(
-        "fail to load fontforge module. On Windows, you can execute `fontforge-console.bat` first and then call this script"
-    )
+    print("未能加载 fontforge 模块，请先安装 fontforge")
     sys.exit(1)
 
 if len(sys.argv) < 3:
-    print("config is incorrect or not set, switch to default 'nf' and 'Maple Mono'")
+    print("配置不正确，将使用默认的 'nf' 和 'Maple Mono'")
     base_font = "nf"
     family = "Maple Mono"
 else:
@@ -30,6 +28,10 @@ base_font_path = path.join(output_path, base_font)
 
 family_name = f"{family} {suffix_alt}"
 file_name = f"{family.replace(' ', '')}-{suffix}"
+
+if not path.exists(base_font_path):
+    print(f"错误: {base_font_path} 不存在，请修改 generate-sc.bat 中 base_font 的值")
+    exit(1)
 
 if not path.exists(sc_nf_path):
     makedirs(sc_nf_path)
