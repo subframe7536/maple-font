@@ -113,7 +113,7 @@ def generate_nerd_font(f: str):
 
     system = platform.uname()[0]
     script = f"generate-nerdfont.bat"
-    if "windows" not in system:
+    if "Windows" not in system:
         script = f"generate-nerdfont.sh"
 
     run(
@@ -234,6 +234,8 @@ for f in listdir(ttx_path):
     # correct names
     _, sub = f.split("-")
 
+    current_family = f"{family_name_trim}-{sub}"
+
     # correct names
     def set_name(name: str, id: int):
         font["name"].setName(name, nameID=id, platformID=3, platEncID=1, langID=0x409)
@@ -245,10 +247,10 @@ for f in listdir(ttx_path):
     set_name(sub, 2)
     set_name(f"{family_name} {sub}; {get_name(5)}", 3)
     set_name(f"{family_name} {sub}", 4)
-    set_name(f"{family_name_trim}-{sub}", 6)
+    set_name(current_family, 6)
 
-    otf_path = path.join(output_path, "otf", f + ".otf")
-    ttf_path = path.join(output_path, "ttf", f + ".ttf")
+    otf_path = path.join(output_path, "otf", f"{current_family}.otf")
+    ttf_path = path.join(output_path, "ttf", f"{current_family}.ttf")
 
     # save otf font
     font.save(otf_path)
@@ -258,7 +260,7 @@ for f in listdir(ttx_path):
     font.save(ttf_path)
 
     # auto hint
-    auto_hint(f, ttf_path)
+    auto_hint(current_family, ttf_path)
 
     font.close()
 
@@ -266,9 +268,9 @@ for f in listdir(ttx_path):
     generate_nerd_font(f)
 
     # generate woff2
-    woff2.compress(otf_path, path.join(output_path, "woff2", f + ".woff2"))
+    woff2.compress(otf_path, path.join(output_path, "woff2", f"{current_family}.woff2"))
 
-    print("generated:", f)
+    print("generated:", current_family)
 
 # check whether have script to generate sc
 sc_path = path.join(
@@ -283,7 +285,7 @@ if path.exists(sc_path):
 def compress_folder(source_folder_path, target_path):
     source_folder_name = path.basename(source_folder_path)
 
-    zip_path = path.join(target_path, f"MapleMono-{source_folder_name}.zip")
+    zip_path = path.join(target_path, f"{family_name_trim}-{source_folder_name}.zip")
     with ZipFile(zip_path, "w", compression=ZIP_BZIP2) as zip_file:
         for root, dirs, files in walk(source_folder_path):
             for file in files:
