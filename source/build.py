@@ -278,7 +278,7 @@ sc_path = path.join(
     f"generate-sc.bat",
 )
 if path.exists(sc_path):
-    run([sc_path])
+    run([sc_path, family_name])
 
 
 # compress folder and return sha1
