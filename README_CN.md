@@ -181,6 +181,9 @@
   <img src="./img/UI.webp" width="300"><img src="./img/Browser.webp" width="250"><img src="./img/Browser2.webp" width="300">
 </p>
 
+### 下载地址
+
+[gitee](https://gitee.com/subframe7536/Maple/releases/tag/v5.1)
 
 ## Maple Hand
 
@@ -191,6 +194,10 @@ V6新增粗体并优化字形和间距
 <p align="center">
   <img src="./img/%E6%89%8B%E6%9C%BA.jpg" width="300">
 </p>
+
+### 下载地址
+
+[gitee](https://gitee.com/subframe7536/Maple/releases/tag/v6.0)
 
 ## 捐赠
 
