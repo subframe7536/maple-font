@@ -2,7 +2,7 @@ from fontTools.ttLib import TTFont, woff2
 from afdko.otf2ttf import otf_to_ttf
 from os import path, getcwd, makedirs, listdir, remove, walk
 from subprocess import run
-from zipfile import ZipFile, ZIP_BZIP2
+from zipfile import ZipFile, ZIP_DEFLATED
 from urllib.request import urlopen
 from ttfautohint import ttfautohint
 from enum import Enum, unique
@@ -286,7 +286,7 @@ def compress_folder(source_folder_path, target_path):
     source_folder_name = path.basename(source_folder_path)
 
     zip_path = path.join(target_path, f"{family_name_trim}-{source_folder_name}.zip")
-    with ZipFile(zip_path, "w", compression=ZIP_BZIP2) as zip_file:
+    with ZipFile(zip_path, "w", compression=ZIP_DEFLATED, compresslevel=5) as zip_file:
         for root, dirs, files in walk(source_folder_path):
             for file in files:
                 file_path = path.join(root, file)
