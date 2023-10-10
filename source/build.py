@@ -109,7 +109,7 @@ def auto_hint(f: str, ttf_path: str):
 
 def make_sure_eol(file_path: str):
     if path.exists(file_path) and file_path.endswith("bat"):
-        with open(file_path, "r+") as f:
+        with open(file_path, "r+", encoding="utf-8") as f:
             content = f.read()
             f.seek(0)
             f.write(content.replace(r"(?<!\r)\n", "\r\n"))
