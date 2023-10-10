@@ -14,7 +14,7 @@ if [ ! -d "${font_dir}" ]; then
     exit 1
 fi
 
-#full args: https://github.com/ryanoasis/nerd-fonts#font-patcher
+# full args: https://github.com/ryanoasis/nerd-fonts#font-patcher
 args="-l -c --careful"
 if [ "$2" = "1" ]; then
     args="${args} -s"
