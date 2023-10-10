@@ -2,7 +2,7 @@ from fontTools.ttLib import TTFont, woff2
 from afdko.otf2ttf import otf_to_ttf
 from os import path, getcwd, makedirs, listdir, remove, walk
 from subprocess import run
-from zipfile import ZipFile, ZIP_BZIP2
+from zipfile import ZipFile, ZIP_DEFLATED
 from urllib.request import urlopen
 from ttfautohint import ttfautohint
 from enum import Enum, unique
@@ -107,21 +107,29 @@ def auto_hint(f: str, ttf_path: str):
     )
 
 
+def make_sure_eol(file_path: str):
+    if path.exists(file_path) and file_path.endswith("bat"):
+        with open(file_path, "r+") as f:
+            content = f.read()
+            f.seek(0)
+            f.write(content.replace(r"(?<!\r)\n", "\r\n"))
+            f.truncate()
+
+
 def generate_nerd_font(f: str):
     if not build_nerd_font:
         return
 
     system = platform.uname()[0]
-    script = f"generate-nerdfont.bat"
-    if "Windows" not in system:
-        script = f"generate-nerdfont.sh"
+    script = path.join(
+        root, f"generate-nerdfont.{'bat' if 'Windows' in system else 'sh'}"
+    )
+
+    make_sure_eol(script)
 
     run(
         [
-            path.join(
-                root,
-                script,
-            ),
+            script,
             f,
             build_config["nerd_font"]["mono"].value,
             build_config["nerd_font"]["use_hinted"].value,
@@ -278,6 +286,7 @@ sc_path = path.join(
     f"generate-sc.bat",
 )
 if path.exists(sc_path):
+    make_sure_eol(sc_path)
     run([sc_path, family_name])
 
 
@@ -286,7 +295,7 @@ def compress_folder(source_folder_path, target_path):
     source_folder_name = path.basename(source_folder_path)
 
     zip_path = path.join(target_path, f"{family_name_trim}-{source_folder_name}.zip")
-    with ZipFile(zip_path, "w", compression=ZIP_BZIP2) as zip_file:
+    with ZipFile(zip_path, "w", compression=ZIP_DEFLATED, compresslevel=5) as zip_file:
         for root, dirs, files in walk(source_folder_path):
             for file in files:
                 file_path = path.join(root, file)
