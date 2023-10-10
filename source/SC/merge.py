@@ -10,7 +10,7 @@ except ImportError:
     sys.exit(1)
 
 if len(sys.argv) < 3:
-    print("配置不正确，将使用默认的 'nf' 和 'Maple Mono'")
+    print("配置不正确，将使用默认配置")
     base_font = "nf"
     family = "Maple Mono"
 else:
