@@ -122,7 +122,7 @@ def generate_nerd_font(f: str):
 
     system = platform.uname()[0]
     script = path.join(
-        root, f"generate-nerdfont.{'bat' if 'Windows' in system else 'sh'}"
+        root, f"generate-nerdfont{'-mac' if 'Darwin' in system else ''}.{'bat' if 'Windows' in system else 'sh'}"
     )
 
     make_sure_eol(script)
