@@ -171,8 +171,7 @@
 
 > 自改自用的字体，用的是 Google Sans 英数改圆角 + 汉仪正圆的汉字，侵删
 
-
-- Windows 使用 [noMeiryoUI](https://github.com/Tatsu-syo/noMeiryoUI) + [Mactype](https://github.com/snowie2000/mactype) + [自用脚本](https://gitee.com/subframe7536/mactype) 进行全局替换并优化渲染效果
+- Windows 使用 [noMeiryoUI](https://github.com/Tatsu-syo/noMeiryoUI) + [MacType](https://github.com/snowie2000/mactype) + [自用脚本](https://github.com/subframe7536/maple-font/tree/other-resources/cn-resource/mactype) 进行全局替换并优化渲染效果
 - 网页使用 油猴/暴力猴插件 + [自用脚本](https://github.com/subframe7536/UserScript) 全局字体替换，有些不适配的可以手动添加 css
 - 较上一版粗暴的减小了粗细，有可能有些字形粗细不正常或错位，欢迎提 issue
 - 扩大了中文引号的宽度
@@ -183,13 +182,11 @@
 
 ### 下载地址
 
-[gitee](https://gitee.com/subframe7536/Maple/releases/tag/v5.1)
+[Maple UI](https://github.com/subframe7536/maple-font/tree/other-resources/cn-resource/maple-ui)
 
 ## Maple Hand
 
-手写体，クレ pro 英数微调+唐美人汉字部分，目前用在手机端，配合空字体模块做全局字体模块
-
-V6新增粗体并优化字形和间距
+手写体，クレ pro 英数微调 + 汉仪唐美人 + 方正大签字笔体，目前用在手机端，做全局字体模块
 
 <p align="center">
   <img src="./img/%E6%89%8B%E6%9C%BA.jpg" width="300">
@@ -197,7 +194,7 @@ V6新增粗体并优化字形和间距
 
 ### 下载地址
 
-[gitee](https://gitee.com/subframe7536/Maple/releases/tag/v6.0)
+[Maple Hand](https://github.com/subframe7536/maple-font/tree/other-resources/cn-resource/maple-hand)
 
 ## 捐赠
 
