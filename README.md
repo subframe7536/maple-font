@@ -2,6 +2,10 @@
 
 Open source monospace & nerd font with round corner and ligatures.
 
+## Features
+
+- New shape like `@ $ % & Q`
+
 ## credit
 
 - [Jetbrains Mono](https://github.com/JetBrains/JetBrainsMono)
