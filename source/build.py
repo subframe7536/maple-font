@@ -116,7 +116,7 @@ def make_sure_eol(file_path: str):
             f.truncate()
 
 
-def generate_nerd_font(f: str):
+def generate_nerd_font(f: str, f_ttx: str):
     if not build_nerd_font:
         return
 
@@ -171,7 +171,7 @@ def generate_nerd_font(f: str):
     del_name(18)
     del_name(20)
 
-    nf_font.importXML(path.join(ttx_path, f, f + ".O_S_2f_2.ttx"))
+    nf_font.importXML(path.join(ttx_path, f_ttx, f_ttx + ".O_S_2f_2.ttx"))
 
     # save font
     nf_font.save(path.join(output_path, "NF", f"{family_name_trim}-NF-{sub}.ttf"))
@@ -273,7 +273,7 @@ for f in listdir(ttx_path):
     font.close()
 
     # generate nerd font
-    generate_nerd_font(f)
+    generate_nerd_font(current_family, f)
 
     # generate woff2
     woff2.compress(otf_path, path.join(output_path, "woff2", f"{current_family}.woff2"))
