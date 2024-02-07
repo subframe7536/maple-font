@@ -2,6 +2,8 @@
 
 Open source monospace & nerd font with round corner and ligatures.
 
+Base on `Jetbrains Mono`, and **much "Opinioned"**
+
 ## Features
 
 - New shape like `@ $ % & Q`
