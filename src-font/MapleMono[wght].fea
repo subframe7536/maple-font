@@ -90,30 +90,6 @@ feature calt {
     sub equal' colon by SPC;
   } equal_colon.liga;
 
-  lookup numbersign_numbersign.liga {
-    ignore sub numbersign numbersign' numbersign;
-    ignore sub numbersign' numbersign numbersign;
-    sub SPC numbersign' by numbersign_numbersign.liga;
-    sub numbersign' numbersign by SPC;
-  } numbersign_numbersign.liga;
-
-  lookup numbersign_numbersign_numbersign.liga {
-    ignore sub numbersign numbersign' numbersign numbersign;
-    ignore sub numbersign' numbersign numbersign numbersign;
-    sub SPC SPC numbersign' by numbersign_numbersign_numbersign.liga;
-    sub SPC numbersign' numbersign by SPC;
-    sub numbersign' numbersign numbersign by SPC;
-  } numbersign_numbersign_numbersign.liga;
-
-  lookup numbersign_numbersign_numbersign_numbersign.liga {
-    ignore sub numbersign numbersign' numbersign numbersign numbersign;
-    ignore sub numbersign' numbersign numbersign numbersign numbersign;
-    sub SPC SPC SPC numbersign' by numbersign_numbersign_numbersign_numbersign.liga;
-    sub SPC SPC numbersign' numbersign by SPC;
-    sub SPC numbersign' numbersign numbersign by SPC;
-    sub numbersign' numbersign numbersign numbersign by SPC;
-  } numbersign_numbersign_numbersign_numbersign.liga;
-
   lookup bar_braceright.liga {
     ignore sub bar bar' braceright;
     ignore sub bar' bar braceright;
@@ -1298,6 +1274,14 @@ feature calt {
     sub @f' @i @x @m @e parenright parenright by SPC;
   } badge_fixme_alt.liga;
 
+  lookup numbersigns {
+    # beginnings
+    sub numbersign' numbersign by numbersign_start.decorator;
+    # middle parts
+    sub [numbersign_start.decorator numbersign_middle.decorator] numbersign' numbersign by numbersign_middle.decorator;
+    # ends
+    sub [numbersign_start.decorator numbersign_middle.decorator] numbersign' by numbersign_end.decorator;
+  } numbersigns;
 } calt;
 feature ccmp {
   lookup ccmp_Other_1 {
