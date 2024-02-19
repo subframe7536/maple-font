@@ -1399,11 +1399,11 @@ feature calt {
   # [TODO]
   lookup badge_todo.liga {
     sub SPC SPC SPC SPC SPC bracketright' by badge_todo.liga;
-    sub SPC SPC SPC SPC @o' bracketright by SPC;
-    sub SPC SPC SPC @d' @o bracketright by SPC;
-    sub SPC SPC @o' @d @o bracketright by SPC;
-    sub SPC @t' @o @d @o bracketright by SPC;
-    sub bracketleft' @t @o @d @o bracketright by SPC;
+    sub SPC SPC SPC SPC O' bracketright by SPC;
+    sub SPC SPC SPC D' O bracketright by SPC;
+    sub SPC SPC O' D O bracketright by SPC;
+    sub SPC T' O D O bracketright by SPC;
+    sub bracketleft' T O D O bracketright by SPC;
   } badge_todo.liga;
 
   # todo))
@@ -1420,12 +1420,12 @@ feature calt {
   # [FIXME]
   lookup badge_fixme.liga {
     sub SPC SPC SPC SPC SPC SPC bracketright' by badge_fixme.liga;
-    sub SPC SPC SPC SPC SPC @e' bracketright by SPC;
-    sub SPC SPC SPC SPC @m' @e bracketright by SPC;
-    sub SPC SPC SPC @x' @m @e bracketright by SPC;
-    sub SPC SPC @i' @x @m @e bracketright by SPC;
-    sub SPC @f' @i @x @m @e bracketright by SPC;
-    sub bracketleft' @f @i @x @m @e bracketright by SPC;
+    sub SPC SPC SPC SPC SPC E' bracketright by SPC;
+    sub SPC SPC SPC SPC M' E bracketright by SPC;
+    sub SPC SPC SPC X' M E bracketright by SPC;
+    sub SPC SPC I' X M E bracketright by SPC;
+    sub SPC F' I X M E bracketright by SPC;
+    sub bracketleft' F I X M E bracketright by SPC;
   } badge_fixme.liga;
 
   # fixme))
@@ -1456,8 +1456,8 @@ feature ccmp {
     @CombiningNonTopAccents = [cedillacomb dotbelowcomb ogonekcomb ringbelowcomb horncomb slashlongcomb slashshortcomb strokelongcomb];
     sub [i i-cy iogonek idotbelow j je-cy]' @CombiningTopAccents by [idotless idotless iogonekdotless idotbelowdotless jdotless jdotless];
     sub [i i-cy iogonek idotbelow j je-cy]' @CombiningNonTopAccents @CombiningTopAccents by [idotless idotless iogonekdotless idotbelowdotless jdotless jdotless];
-    @Markscomb = [dieresiscomb dotaccentcomb gravecomb acutecomb hungarumlautcomb circumflexcomb caroncomb brevecomb ringcomb tildecomb macroncomb hookabovecomb dblgravecomb commaturnedabovecomb horncomb dotbelowcomb commaaccentcomb cedillacomb ogonekcomb dieresis dotaccent grave acute hungarumlaut circumflex caron breve ring tilde macron tonos brevecomb_acutecomb brevecomb_gravecomb brevecomb_hookabovecomb brevecomb_tildecomb circumflexcomb_acutecomb circumflexcomb_gravecomb circumflexcomb_hookabovecomb circumflexcomb_tildecomb];
-    @MarkscombCase = [dieresiscomb.case dotaccentcomb.case gravecomb.case acutecomb.case hungarumlautcomb.case circumflexcomb.case caroncomb.case brevecomb.case ringcomb.case tildecomb.case macroncomb.case hookabovecomb.case dblgravecomb.case commaturnedabovecomb.case horncomb.case dotbelowcomb.case commaaccentcomb.case cedillacomb.case ogonekcomb.case dieresis.case dotaccent.case grave.case acute.case hungarumlaut.case circumflex.case caron.case breve.case ring.case tilde.case macron.case tonos.case brevecomb_acutecomb.case brevecomb_gravecomb.case brevecomb_hookabovecomb.case brevecomb_tildecomb.case circumflexcomb_acutecomb.case circumflexcomb_gravecomb.case circumflexcomb_hookabovecomb.case circumflexcomb_tildecomb.case];
+    @Markscomb = [dieresiscomb dotaccentcomb gravecomb acutecomb hungarumlautcomb circumflexcomb caroncomb brevecomb ringcomb tildecomb macroncomb hookabovecomb dblgravecomb commaturnedabovecomb horncomb dotbelowcomb commaaccentcomb cedillacomb ogonekcomb dieresis dotaccent acute hungarumlaut circumflex caron breve ring tilde macron tonos brevecomb_acutecomb brevecomb_gravecomb brevecomb_hookabovecomb brevecomb_tildecomb circumflexcomb_acutecomb circumflexcomb_gravecomb circumflexcomb_hookabovecomb circumflexcomb_tildecomb];
+    @MarkscombCase = [dieresiscomb.case dotaccentcomb.case gravecomb.case acutecomb.case hungarumlautcomb.case circumflexcomb.case caroncomb.case brevecomb.case ringcomb.case tildecomb.case macroncomb.case hookabovecomb.case dblgravecomb.case commaturnedabovecomb.case horncomb.case dotbelowcomb.case commaaccentcomb.case cedillacomb.case ogonekcomb.case dieresis.case dotaccent.case acute.case hungarumlaut.case circumflex.case caron.case breve.case ring.case tilde.case macron.case tonos.case brevecomb_acutecomb.case brevecomb_gravecomb.case brevecomb_hookabovecomb.case brevecomb_tildecomb.case circumflexcomb_acutecomb.case circumflexcomb_gravecomb.case circumflexcomb_hookabovecomb.case circumflexcomb_tildecomb.case];
     sub @Markscomb @Markscomb' by @MarkscombCase;
     sub @Uppercase @Markscomb' by @MarkscombCase;
   } ccmp_Other_1;

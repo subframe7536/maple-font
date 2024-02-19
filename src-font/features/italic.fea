@@ -1,0 +1,7 @@
+feature ss01 {
+  sub c' l by c_l.ss01;
+  sub e' l by e_l.ss01;
+  sub i' l by i_l.ss01;
+  sub l' [l l_l.ss01] by l_l.ss01;
+  sub t' l by t_l.ss01;
+} ss01;
