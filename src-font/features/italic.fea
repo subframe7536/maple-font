@@ -1,7 +1,9 @@
-feature ss01 {
-  sub c' l by c_l.ss01;
-  sub e' l by e_l.ss01;
-  sub i' l by i_l.ss01;
-  sub l' [l l_l.ss01] by l_l.ss01;
-  sub t' l by t_l.ss01;
-} ss01;
+# cl el il ll tl xl
+lookup smooth_l {
+  sub c' l by c_l.liga;
+  sub e' l by e_l.liga;
+  sub i' l by i_l.liga;
+  sub l' [l l_l.liga] by l_l.liga;
+  sub t' l by t_l.liga;
+  sub x' l by x_l.liga;
+} smooth_l;
