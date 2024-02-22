@@ -1442,12 +1442,12 @@ feature calt {
 
   # ###
   lookup numbersigns {
-    # beginnings
-    sub numbersign' numbersign by numbersign_start.decorator;
     # middle parts
-    sub [numbersign_start.decorator numbersign_middle.decorator] numbersign' numbersign by numbersign_middle.decorator;
+    sub [numbersign_start.liga numbersign_middle.liga] numbersign' numbersign by numbersign_middle.liga;
     # ends
-    sub [numbersign_start.decorator numbersign_middle.decorator] numbersign' by numbersign_end.decorator;
+    sub [numbersign_start.liga numbersign_middle.liga] numbersign' by numbersign_end.liga;
+    # beginnings
+    sub numbersign' numbersign by numbersign_start.liga;
   } numbersigns;
 } calt;
 feature ccmp {
