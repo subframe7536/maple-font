@@ -1724,12 +1724,6 @@ feature cv03 {
   sub imacron by imacron.cv03;
   sub iogonek by iogonek.cv03;
   sub itilde by itilde.cv03;
-
-# ================[III]================
-
-  sub i_l.liga by i.cv03;
-
-# =====================================
 } cv03;
 feature cv04 {
   sub l by l.cv04;
@@ -1740,6 +1734,7 @@ feature cv04 {
   sub lslash by lslash.cv04;
 # ================[III]================
 
+  sub i_l.liga by i;
   sub l_start.liga by l.cv04;
   sub l_middle.liga by l.cv04;
   sub l_end.liga by l.cv04;
