@@ -24,7 +24,7 @@ root = getcwd()
 sc_path = path.join(root, "SC")
 output_path = path.join(path.dirname(root), "output")
 sc_nf_path = path.join(output_path, suffix)
-base_font_path = path.join(output_path, base_font)
+base_font_path = path.join(output_path, base_font.upper())
 
 family_name = f"{family} {suffix_alt}"
 file_name = f"{family.replace(' ', '')}-{suffix}"
@@ -44,7 +44,8 @@ def get_subfamily_name(f: str):
 def generate(f: str):
     sub = get_subfamily_name(f)
     nf = fontforge.open(path.join(base_font_path, f))
-    sc = fontforge.open(path.join(root, "SC", f"{sub}.ttf"))
+    sub_lower = sub.lower()
+    sc = fontforge.open(path.join(root, "SC", f"{sub_lower}.ttf"))
 
     for item in sc.glyphs():
         if item.unicode == -1:

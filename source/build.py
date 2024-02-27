@@ -68,6 +68,8 @@ output_path = path.join(path.dirname(root), "output")
 family_name = build_config["family_name"]
 family_name_trim = family_name.replace(" ", "")
 
+system = platform.uname()[0]
+
 if not path.exists(path.join(root, "FontPatcher")):
     url = "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/FontPatcher.zip"
     print(f"Font Patcher does not exist, download from {url}")
@@ -115,12 +117,10 @@ def make_sure_eol(file_path: str):
             f.write(content.replace(r"(?<!\r)\n", "\r\n"))
             f.truncate()
 
-
-def generate_nerd_font(f: str):
+def generate_nerd_font(f: str, f_ttx: str):
     if not build_nerd_font:
         return
 
-    system = platform.uname()[0]
     script = path.join(
         root, f"generate-nerdfont{'-mac' if 'Darwin' in system else ''}.{'bat' if 'Windows' in system else 'sh'}"
     )
@@ -171,7 +171,7 @@ def generate_nerd_font(f: str):
     del_name(18)
     del_name(20)
 
-    nf_font.importXML(path.join(ttx_path, f, f + ".O_S_2f_2.ttx"))
+    nf_font.importXML(path.join(ttx_path, f_ttx, f_ttx + ".O_S_2f_2.ttx"))
 
     # save font
     nf_font.save(path.join(output_path, "NF", f"{family_name_trim}-NF-{sub}.ttf"))
@@ -273,7 +273,7 @@ for f in listdir(ttx_path):
     font.close()
 
     # generate nerd font
-    generate_nerd_font(f)
+    generate_nerd_font(current_family, f)
 
     # generate woff2
     woff2.compress(otf_path, path.join(output_path, "woff2", f"{current_family}.woff2"))
@@ -282,9 +282,9 @@ for f in listdir(ttx_path):
 
 # check whether have script to generate sc
 sc_path = path.join(
-    root,
-    f"generate-sc.bat",
+        root, f"generate-sc.{'bat' if 'Windows' in system else 'sh'}"
 )
+
 if path.exists(sc_path):
     make_sure_eol(sc_path)
     run([sc_path, family_name])
