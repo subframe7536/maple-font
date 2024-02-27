@@ -25,8 +25,6 @@ pip install -r requirements.txt
 
 ### 4. 运行构建脚本
 
-当前只支持 Windows 构建，欢迎 **PR**
-
 ```shell
 python build.py
 ```
