@@ -910,6 +910,7 @@ feature calt {
   # __
   lookup underscore_underscore.liga {
     ignore sub underscore underscore' underscore;
+    ignore sub numbersign underscore' underscore;
     ignore sub underscore' underscore underscore;
     sub SPC underscore' by underscore_underscore.liga;
     sub underscore' underscore by SPC;
@@ -1285,6 +1286,15 @@ feature calt {
     sub numbersign' underscore by SPC;
   } numbersign_underscore.liga;
 
+  # #__
+  lookup numbersign_underscore_underscore.liga {
+    ignore sub numbersign numbersign' underscore underscore;
+    ignore sub numbersign' underscore underscore underscore;
+    sub SPC SPC underscore' by numbersign_underscore_underscore.liga;
+    sub SPC underscore' underscore by SPC;
+    sub numbersign' underscore underscore by SPC;
+  } numbersign_underscore_underscore.liga;
+
   # #!
   lookup numbersign_exclam.liga {
     ignore sub numbersign numbersign' exclam;
@@ -1311,7 +1321,7 @@ feature calt {
 
   # #_(
   lookup numbersign_underscore_parenleft.liga {
-    ignore sub numbersign numbersign' underscore parenleft ;
+    ignore sub numbersign numbersign' underscore parenleft;
     ignore sub numbersign' underscore parenleft parenleft;
     sub SPC SPC parenleft' by numbersign_underscore_parenleft.liga;
     sub SPC underscore' parenleft by SPC;
