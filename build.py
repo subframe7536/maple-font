@@ -1,44 +1,41 @@
-from fontTools.varLib import TTFont, mutator
+import importlib.util
 from os import mkdir, path
 import shutil
+import subprocess
 
-input_dir = "src-font"
+package_name = "foundryToolsCLI"
+package_installed = importlib.util.find_spec(package_name) is not None
+
+if not package_installed:
+    print(
+        f"{package_name} is not found. Please install it using `pip install foundryToolsCLI`"
+    )
+    exit(1)
+
+
+def run(cli: str):
+    subprocess.run(cli.split(" "), shell=True)
+
+
+input_files = [
+    "src-font/MapleMono[wght]-VF.ttf",
+    "src-font/MapleMono-Italic[wght]-VF.ttf",
+]
 output_dir = "fonts"
+output_otf = path.join(output_dir, "otf")
+output_ttf = path.join(output_dir, "ttf")
+output_ttf_autohint = path.join(output_dir, "ttf-autohint")
+output_variable = path.join(output_dir, "variable")
+output_woff2 = "woff2"
 
-input_files = ["MapleMono[wght]-VF.ttf", "MapleMono-italic[wght]-VF.ttf"]
-
-
-if path.exists(output_dir):
-    shutil.rmtree(output_dir)
-
+shutil.rmtree(output_dir, ignore_errors=True)
+shutil.rmtree("woff2", ignore_errors=True)
 mkdir(output_dir)
-mkdir(path.join(output_dir, "variable"))
-mkdir(path.join(output_dir, "ttf"))
-mkdir(path.join(output_dir, "otf"))
-# mkdir(path.join(output_dir, "woff2"))
+mkdir(output_variable)
 
-# fixes varaible fonts
-# for input_file in input_files:
-#     font = TTFont(path.join(input_dir, input_file))
-
-#     font["post"].__dict__["isFixedPitch"] = 1
-#     font["OS/2"].xAvgCharWidth = 600
-
-#     font.save(path.join(input_dir, input_file))
-
-# instantiate fonts
-instance_weight = {
-    "Thin": 100,
-    "ExtraLight": 220,
-    "Light": 310,
-    "Regular": 400,
-    "Medium": 460,
-    "SemiBold": 520,
-    "Bold": 680,
-    "ExtraBold": 800,
-}
 for input_file in input_files:
-    font = TTFont(path.join(input_dir, input_file))
-    for styleName, weight in instance_weight.items():
-        newFont = mutator.instantiateVariableFont(font, {"wght": weight})
-        newFont.saveXML(path.join(output_dir, "ttf", f"{weight}-{styleName}.ttx"))
+    run(f"ftcli converter vf2i {input_file} -out {output_ttf}")
+    run(f"ftcli converter ttf2otf {output_ttf} -out {output_otf}")
+    run(f"ftcli converter ft2wf {output_ttf} -out {output_woff2} -f woff2")
+    run(f"ftcli ttf autohint {output_ttf} -out {output_ttf_autohint}")
+    shutil.copy(input_file, output_variable)
