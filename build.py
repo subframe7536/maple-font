@@ -47,6 +47,7 @@ for input_file in input_files:
     shutil.copy(input_file, output_variable)
     run(f"ftcli converter vf2i {input_file} -out {output_ttf}")
 
+# fix font name
 for f in listdir(output_ttf):
     _path = path.join(output_ttf, f)
     font = TTFont(_path)
@@ -104,6 +105,8 @@ script_path = path.abspath(
 for f in listdir(output_ttf):
     print(f"generate NerdFont for {f}")
     run([script_path, f[:-4], "0", "1"])
+
+    # fix font name
     _path = path.join(output_nf, f.replace("-", "NerdFont-"))
     nf_font = TTFont(_path)
 
@@ -116,10 +119,11 @@ for f in listdir(output_ttf):
     def del_nf_name(id: int):
         nf_font["name"].removeNames(nameID=id)
 
-    set_nf_name(f"{family_name} NF", 1)
     style_name = f[10:-4]
     if style_name.endswith("Italic") and style_name[0] != "I":
         style_name = style_name[:-6] + " Italic"
+
+    set_nf_name(f"{family_name} NF", 1)
     set_nf_name(style_name, 2)
     set_nf_name(f"{family_name} NF {style_name}", 4)
     set_nf_name(f"{family_name_compact}-NF-{f[10:-4]}", 6)
@@ -127,4 +131,6 @@ for f in listdir(output_ttf):
     del_nf_name(17)
     nf_font.save(_path)
     nf_font.close()
+
+    # rename file name
     shutil.move(_path, path.join(output_nf, f.replace("-", "-NF-")))
