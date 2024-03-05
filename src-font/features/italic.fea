@@ -1461,42 +1461,56 @@ feature calt {
   } numbersigns;
 
 # ================[III]================
-
   # cl
   lookup c_l.liga {
-    sub c_l.liga l' l by l_middle.liga;
-    sub c_l.liga l' by l_end.liga;
-    sub c' l by c_l.liga;
+    sub SPC l' by c_l.liga;
+    sub c' l by SPC;
   } c_l.liga;
   # el
   lookup e_l.liga {
-    sub e_l.liga l' l by l_middle.liga;
-    sub e_l.liga l' by l_end.liga;
-    sub e' l by e_l.liga;
+    ignore sub e' l l;
+    sub SPC l' by e_l.liga;
+    sub e' l by SPC;
   } e_l.liga;
   # il
   lookup i_l.liga {
-    sub i_l.liga l' l by l_middle.liga;
-    sub i_l.liga l' by l_end.liga;
-    sub i' l by i_l.liga;
-    sub i.cv03' l by i_l.liga;
+    ignore sub [i i.cv03]' l l;
+    sub SPC l' by i_l.liga;
+    sub [i i.cv03]' l by SPC;
   } i_l.liga;
   # tl
   lookup t_l.liga {
-    sub t_l.liga l' l by l_middle.liga;
-    sub t_l.liga l' by l_end.liga;
-    sub t' l by t_l.liga;
+    sub SPC l' by t_l.liga;
+    sub t' l by SPC;
   } t_l.liga;
   # ll
-  lookup l_l {
-    # middle parts
-    sub [l_start.liga l_middle.liga] l' l by l_middle.liga;
-    # ends
-    sub [l_start.liga l_middle.liga] l' by l_end.liga;
-    # beginnings
-    sub l' l by l_start.liga;
-  } l_l;
-
+  lookup l_l.liga {
+    ignore sub [e i] l' l;
+    sub SPC l' by l_l.liga;
+    sub l' l by SPC;
+  } l_l.liga;
+  # ff
+  lookup f_f.liga {
+    sub SPC f' by f_f.liga;
+    sub f' f by SPC;
+  } f_f.liga;
+  # tt
+  lookup t_t.liga {
+    sub SPC t' by t_t.liga;
+    sub t' t by SPC;
+  } t_t.liga;
+  # ill
+  lookup i_l_l.liga {
+    sub SPC SPC l' by i_l_l.liga;
+    sub SPC l' l by SPC;
+    sub i' l l by SPC;
+  } i_l_l.liga;
+  # ell
+  lookup e_l_l.liga {
+    sub SPC SPC l' by e_l_l.liga;
+    sub SPC l' l by SPC;
+    sub e' l l by SPC;
+  } e_l_l.liga;
 # ===================================
 } calt;
 feature ccmp {
@@ -1744,10 +1758,13 @@ feature cv04 {
   sub lslash by lslash.cv04;
 # ================[III]================
 
-  sub i_l.liga by i;
-  sub l_start.liga by l.cv04;
-  sub l_middle.liga by l.cv04;
-  sub l_end.liga by l.cv04;
+  sub c_l.liga by c_l.liga.cv04;
+  sub e_l.liga by e_l.liga.cv04;
+  sub i_l.liga by i_l.liga.cv04;
+  sub l_l.liga by l_l.liga.cv04;
+  sub t_l.liga by t_l.liga.cv04;
+  sub e_l_l.liga by e_l_l.liga.cv04;
+  sub i_l_l.liga by i_l_l.liga.cv04;
 
 # =====================================
 } cv04;
@@ -1790,14 +1807,18 @@ feature ss01 {
   sub ymacron by ymacron.ss01;
   sub ytilde by ytilde.ss01;
 
-  sub c_l.liga by c;
-  sub e_l.liga by e;
-  sub i_l.liga by i.ss01;
-  sub t_l.liga by t;
+  sub c_l.liga by c_l.liga.ss01;
+  sub e_l.liga by e_l.liga.ss01;
+  sub i_l.liga by i_l.liga.ss01;
+  sub i_l.liga.cv04 by i_l.liga.ss01.cv04;
+  sub l_l.liga by l_l.liga.ss01;
+  sub t_l.liga by t_l.liga.ss01;
+  sub f_f.liga by f_f.liga.ss01;
+  sub t_t.liga by t_t.liga.ss01;
+  sub e_l_l.liga by e_l_l.liga.ss01;
+  sub i_l_l.liga by i_l_l.liga.ss01;
+  sub i_l_l.liga.cv04 by i_l_l.liga.ss01.cv04;
 
-  sub l_start.liga by l.ss01;
-  sub l_middle.liga by l.ss01;
-  sub l_end.liga by l.ss01;
 } ss01;
 
 # =====================================
