@@ -214,7 +214,7 @@ if release_mode:
     for f in listdir(output_dir):
         if f == "release" or f.endswith(".json"):
             continue
-        hash_map[f] = compress_folder(path.join(release_dir, f), release_dir)
+        hash_map[f] = compress_folder(path.join(output_dir, f), release_dir)
         print(f"archieve: {f}")
 
     # write sha1
