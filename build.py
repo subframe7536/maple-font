@@ -1,30 +1,75 @@
+from enum import Enum, unique
+import hashlib
 import importlib.util
+import json
 import platform
 import shutil
 import subprocess
-from os import listdir, mkdir, path, remove
+from os import listdir, makedirs, path, remove, walk
 from urllib.request import urlopen
-from zipfile import ZipFile
+from zipfile import ZIP_DEFLATED, ZipFile
 from fontTools.ttLib import TTFont
+
+
+@unique
+class Status(Enum):
+    DISABLE = "0"
+    ENABLE = "1"
+    IGNORE = "2"
+
+# whether to archieve fonts
+release_mode = True
+# whether to build nerd font
+build_nerd_font = True
+
+build_config = {
+    "family_name": "Maple Mono",
+    "nerd_font": {
+        # whether to make icon width fixed
+        "mono": Status.DISABLE,
+        # whether to generate Nerd Font patch based on hinted ttf
+        "use_hinted": Status.ENABLE,
+    },
+}
+
 
 package_name = "foundryToolsCLI"
 package_installed = importlib.util.find_spec(package_name) is not None
+family_name = build_config["family_name"]
+family_name_compact = family_name.replace(" ", "")
 
 if not package_installed:
-    print(
-        f"{package_name} is not found. Please install it using `pip install foundryToolsCLI`"
-    )
+    print(f"{package_name} is not found. Please run `pip install foundryToolsCLI`")
     exit(1)
 
-
+# run command
 def run(cli: str | list[str], extra_args: list[str] = []) -> None:
     subprocess.run(
         (cli.split(" ") if isinstance(cli, str) else cli) + extra_args, shell=True
     )
 
 
-family_name = "Maple Mono"
-family_name_compact = family_name.replace(" ", "")
+# compress folder and return sha1
+def compress_folder(source_file_or_dir_path: str, target_parent_dir_path: str) -> str:
+    source_folder_name = path.basename(source_file_or_dir_path)
+
+    zip_path = path.join(target_parent_dir_path, f"{family_name_compact}-{source_folder_name}.zip")
+    with ZipFile(zip_path, "w", compression=ZIP_DEFLATED, compresslevel=5) as zip_file:
+        for root, dirs, files in walk(source_file_or_dir_path):
+            for file in files:
+                file_path = path.join(root, file)
+                zip_file.write(file_path, path.relpath(file_path, source_file_or_dir_path))
+    zip_file.close()
+    sha1 = hashlib.sha1()
+    with open(zip_path, "rb") as zip_file:
+        while True:
+            data = zip_file.read(1024)
+            if not data:
+                break
+            sha1.update(data)
+
+    return sha1.hexdigest()
+
 
 input_files = [
     "src-font/MapleMono[wght]-VF.ttf",
@@ -35,13 +80,23 @@ output_otf = path.join(output_dir, "otf")
 output_ttf = path.join(output_dir, "ttf")
 output_ttf_autohint = path.join(output_dir, "ttf-autohint")
 output_variable = path.join(output_dir, "variable")
-output_woff2 = "woff2"
+output_woff2 = path.join(output_dir, "woff2")
 output_nf = path.join(output_dir, "nf")
 
 shutil.rmtree(output_dir, ignore_errors=True)
 shutil.rmtree("woff2", ignore_errors=True)
-mkdir(output_dir)
-mkdir(output_variable)
+makedirs(output_dir)
+makedirs(output_variable)
+
+print("=== [build start] ===")
+
+conf = json.dumps(
+    build_config,
+    default=lambda x: x.name if isinstance(x, Status) else None,
+    indent=4,
+)
+
+print(conf)
 
 for input_file in input_files:
     shutil.copy(input_file, output_variable)
@@ -102,35 +157,70 @@ script_path = path.abspath(
     )
 )
 
-for f in listdir(output_ttf):
-    print(f"generate NerdFont for {f}")
-    run([script_path, f[:-4], "0", "1"])
+if build_nerd_font:
+  for f in listdir(output_ttf):
+      print(f"generate NerdFont for {f}")
+      run(
+          [
+              script_path,
+              f[:-4],
+              build_config["nerd_font"]["mono"].value,
+              build_config["nerd_font"]["use_hinted"].value,
+          ]
+      )
 
-    # fix font name
-    _path = path.join(output_nf, f.replace("-", "NerdFont-"))
-    nf_font = TTFont(_path)
+      # fix font name
+      _path = path.join(output_nf, f.replace("-", "NerdFont-"))
+      nf_font = TTFont(_path)
 
-    def set_nf_name(name: str, id: int):
-        nf_font["name"].setName(
-            name, nameID=id, platformID=3, platEncID=1, langID=0x409
-        )
-        nf_font["name"].setName(name, nameID=id, platformID=1, platEncID=0, langID=0x0)
+      def set_nf_name(name: str, id: int):
+          nf_font["name"].setName(
+              name, nameID=id, platformID=3, platEncID=1, langID=0x409
+          )
+          nf_font["name"].setName(name, nameID=id, platformID=1, platEncID=0, langID=0x0)
 
-    def del_nf_name(id: int):
-        nf_font["name"].removeNames(nameID=id)
+      def del_nf_name(id: int):
+          nf_font["name"].removeNames(nameID=id)
 
-    style_name = f[10:-4]
-    if style_name.endswith("Italic") and style_name[0] != "I":
-        style_name = style_name[:-6] + " Italic"
+      style_name = f[10:-4]
+      if style_name.endswith("Italic") and style_name[0] != "I":
+          style_name = style_name[:-6] + " Italic"
 
-    set_nf_name(f"{family_name} NF", 1)
-    set_nf_name(style_name, 2)
-    set_nf_name(f"{family_name} NF {style_name}", 4)
-    set_nf_name(f"{family_name_compact}-NF-{f[10:-4]}", 6)
-    del_nf_name(16)
-    del_nf_name(17)
-    nf_font.save(_path)
-    nf_font.close()
+      set_nf_name(f"{family_name} NF", 1)
+      set_nf_name(style_name, 2)
+      set_nf_name(f"{family_name} NF {style_name}", 4)
+      set_nf_name(f"{family_name_compact}-NF-{f[10:-4]}", 6)
+      del_nf_name(16)
+      del_nf_name(17)
+      nf_font.save(_path)
+      nf_font.close()
 
-    # rename file name
-    shutil.move(_path, path.join(output_nf, f.replace("-", "-NF-")))
+      # rename file name
+      shutil.move(_path, path.join(output_nf, f.replace("-", "-NF-")))
+
+# write config to output path
+with open(path.join(output_dir, "build-config.json"), "w") as config_file:
+    config_file.write(conf)
+
+if release_mode:
+    print("=== [Release Mode] ===")
+
+    # archieve fonts
+    release_dir = path.join(output_dir, "release")
+    makedirs(release_dir)
+
+    hash_map = {}
+
+    for f in listdir(output_dir):
+        if f == "release" or f.endswith(".json"):
+            continue
+        hash_map[f] = compress_folder(path.join(release_dir, f), release_dir)
+        print(f"archieve: {f}")
+
+    # write sha1
+    with open(path.join(release_dir, "sha1.json"), "w") as hash_file:
+        hash_file.write(json.dumps(hash_map, indent=4))
+
+    shutil.rmtree("woff2", ignore_errors=True)
+    shutil.copytree(output_woff2, "woff2")
+    print("copy woff2 to root")
