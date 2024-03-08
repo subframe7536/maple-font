@@ -5,7 +5,8 @@ import json
 import platform
 import shutil
 import subprocess
-from os import listdir, makedirs, path, remove, walk
+from os import environ, listdir, makedirs, path, remove, walk
+import sys
 from urllib.request import urlopen
 from zipfile import ZIP_DEFLATED, ZipFile
 from fontTools.ttLib import TTFont
@@ -16,6 +17,7 @@ class Status(Enum):
     DISABLE = "0"
     ENABLE = "1"
     IGNORE = "2"
+
 
 # whether to archieve fonts
 release_mode = True
@@ -42,6 +44,7 @@ if not package_installed:
     print(f"{package_name} is not found. Please run `pip install foundryToolsCLI`")
     exit(1)
 
+
 # run command
 def run(cli: str | list[str], extra_args: list[str] = []) -> None:
     subprocess.run(
@@ -53,12 +56,16 @@ def run(cli: str | list[str], extra_args: list[str] = []) -> None:
 def compress_folder(source_file_or_dir_path: str, target_parent_dir_path: str) -> str:
     source_folder_name = path.basename(source_file_or_dir_path)
 
-    zip_path = path.join(target_parent_dir_path, f"{family_name_compact}-{source_folder_name}.zip")
+    zip_path = path.join(
+        target_parent_dir_path, f"{family_name_compact}-{source_folder_name}.zip"
+    )
     with ZipFile(zip_path, "w", compression=ZIP_DEFLATED, compresslevel=5) as zip_file:
-        for root, dirs, files in walk(source_file_or_dir_path):
+        for root, _, files in walk(source_file_or_dir_path):
             for file in files:
                 file_path = path.join(root, file)
-                zip_file.write(file_path, path.relpath(file_path, source_file_or_dir_path))
+                zip_file.write(
+                    file_path, path.relpath(file_path, source_file_or_dir_path)
+                )
     zip_file.close()
     sha1 = hashlib.sha1()
     with open(zip_path, "rb") as zip_file:
@@ -69,6 +76,28 @@ def compress_folder(source_file_or_dir_path: str, target_parent_dir_path: str) -
             sha1.update(data)
 
     return sha1.hexdigest()
+
+
+def check_font_patcher():
+    if path.exists("FontPatcher"):
+        return
+
+    version = "3.1.1"
+    url = f"https://github.com/ryanoasis/nerd-fonts/releases/download/v{version}/FontPatcher.zip"
+    try:
+        zip_path = "FontPatcher.zip"
+        if not path.exists(zip_path):
+            print(f"NerdFont Patcher does not exist, download from {url}")
+            with urlopen(url) as response, open(zip_path, "wb") as out_file:
+                shutil.copyfileobj(response, out_file)
+        with ZipFile(zip_path, "r") as zip_ref:
+            zip_ref.extractall("FontPatcher")
+        remove(zip_path)
+    except Exception as e:
+        print(
+            f"\nFail to get NerdFont Patcher. Please download it manually from {url}, then put downloaded 'FontPatcher.zip' into project's root and run this script again. \n\tError: {e}"
+        )
+        exit(1)
 
 
 input_files = [
@@ -131,72 +160,79 @@ run(f"ftcli converter ttf2otf {output_ttf} -out {output_otf}")
 run(f"ftcli converter ft2wf {output_ttf} -out {output_woff2} -f woff2")
 run(f"ftcli ttf autohint {output_ttf} -out {output_ttf_autohint}")
 
-if not path.exists("FontPatcher"):
-    version = "3.1.1"
-    url = f"https://github.com/ryanoasis/nerd-fonts/releases/download/v{version}/FontPatcher.zip"
-    try:
-        zip_path = "FontPatcher.zip"
-        if not path.exists(zip_path):
-            print(f"NerdFont Patcher does not exist, download from {url}")
-            with urlopen(url) as response, open(zip_path, "wb") as out_file:
-                shutil.copyfileobj(response, out_file)
-        with ZipFile(zip_path, "r") as zip_ref:
-            zip_ref.extractall("FontPatcher")
-        remove(zip_path)
-    except Exception as e:
-        print(
-            f"\nFail to get NerdFont Patcher. Please download it manually from {url}, then put downloaded 'FontPatcher.zip' into project's root and run this script again. \n\tError: {e}"
-        )
-        exit(1)
-
-system = platform.uname()[0]
-script_path = path.abspath(
-    path.join(
-        "scripts",
-        f"generate-nerdfont{'-mac' if 'Darwin' in system else ''}.{'bat' if 'Windows' in system else 'sh'}",
-    )
-)
 
 if build_nerd_font:
-  for f in listdir(output_ttf):
-      print(f"generate NerdFont for {f}")
-      run(
-          [
-              script_path,
-              f[:-4],
-              build_config["nerd_font"]["mono"].value,
-              build_config["nerd_font"]["use_hinted"].value,
-          ]
-      )
+    system = platform.uname()[0]
+    check_font_patcher()
 
-      # fix font name
-      _path = path.join(output_nf, f.replace("-", "NerdFont-"))
-      nf_font = TTFont(_path)
+    # get fontforge python executable path
+    if "Windows" in system:
+        ffpy = path.join(
+            environ.get("ProgramFiles(x86)"), "FontForgeBuilds\\bin\\ffpython.exe"
+        )
+    elif "Darwin" in system:
+        ffpy = "/Applications/FontForge.app/Contents/MacOS/FFPython"
+    if not path.exists(ffpy):
+        ffpy = sys.executable
 
-      def set_nf_name(name: str, id: int):
-          nf_font["name"].setName(
-              name, nameID=id, platformID=3, platEncID=1, langID=0x409
-          )
-          nf_font["name"].setName(name, nameID=id, platformID=1, platEncID=0, langID=0x0)
+    font_dir = (
+        output_ttf_autohint
+        if build_config["nerd_font"]["use_hinted"] == Status.ENABLE
+        else output_ttf
+    )
 
-      def del_nf_name(id: int):
-          nf_font["name"].removeNames(nameID=id)
+    # full args: https://github.com/ryanoasis/nerd-fonts#font-patcher
+    nf_args = [
+        ffpy,
+        "FontPatcher/font-patcher",
+        "-l",
+        "-c",
+        "--careful",
+        "--outputdir",
+        output_nf,
+    ]
+    if build_config["nerd_font"]["mono"] == Status.ENABLE:
+        nf_args += ["--mono"]
 
-      style_name = f[10:-4]
-      if style_name.endswith("Italic") and style_name[0] != "I":
-          style_name = style_name[:-6] + " Italic"
+    print(f"FontPatcher args: {nf_args}")
 
-      set_nf_name(f"{family_name} NF", 1)
-      set_nf_name(style_name, 2)
-      set_nf_name(f"{family_name} NF {style_name}", 4)
-      set_nf_name(f"{family_name_compact}-NF-{f[10:-4]}", 6)
-      del_nf_name(16)
-      del_nf_name(17)
-      nf_font.save(_path)
-      nf_font.close()
+    for f in listdir(output_ttf):
+        print(f"generate NerdFont for {f}")
+        run(nf_args + [path.join(font_dir, f)])
 
-      # rename file name
-      shutil.move(_path, path.join(output_nf, f.replace("-", "-NF-")))
+        # format font name
+        nf_file_name = "NerdFont"
+        if build_config["nerd_font"]["mono"] == Status.ENABLE:
+            nf_file_name += "Mono"
+        _path = path.join(output_nf, f.replace("-", f"{nf_file_name}-"))
+        nf_font = TTFont(_path)
+
+        def set_nf_name(name: str, id: int):
+            nf_font["name"].setName(
+                name, nameID=id, platformID=1, platEncID=0, langID=0x0
+            )
+            nf_font["name"].setName(
+                name, nameID=id, platformID=3, platEncID=1, langID=0x409
+            )
+
+        def del_nf_name(id: int):
+            nf_font["name"].removeNames(nameID=id)
+
+        style_name = f[10:-4]
+        if style_name.endswith("Italic") and style_name[0] != "I":
+            style_name = style_name[:-6] + " Italic"
+
+        set_nf_name(f"{family_name} NF", 1)
+        set_nf_name(style_name, 2)
+        set_nf_name(f"{family_name} NF {style_name}", 4)
+        set_nf_name(f"{family_name_compact}-NF-{f[10:-4]}", 6)
+        del_nf_name(16)
+        del_nf_name(17)
+        nf_font.save(_path)
+        nf_font.close()
+
+        # rename file name
+        shutil.move(_path, path.join(output_nf, f.replace("-", "-NF-")))
 
 # write config to output path
 with open(path.join(output_dir, "build-config.json"), "w") as config_file:
