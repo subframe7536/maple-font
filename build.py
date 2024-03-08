@@ -164,13 +164,14 @@ if build_nerd_font:
     check_font_patcher()
 
     # get fontforge python executable path
+    ffpy = ""
     if "Windows" in system:
         ffpy = path.join(
             environ.get("ProgramFiles(x86)"), "FontForgeBuilds\\bin\\ffpython.exe"
         )
     elif "Darwin" in system:
         ffpy = "/Applications/FontForge.app/Contents/MacOS/FFPython"
-    if not path.exists(ffpy):
+    if ffpy == "" or not path.exists(ffpy):
         ffpy = sys.executable
 
     font_dir = (
