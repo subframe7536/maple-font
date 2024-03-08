@@ -163,26 +163,22 @@ if build_nerd_font:
     system = platform.uname()[0]
     check_font_patcher()
 
-    # get fontforge python executable path
-    ffpy = ""
-    if "Windows" in system:
-        ffpy = path.join(
-            environ.get("ProgramFiles(x86)"), "FontForgeBuilds\\bin\\ffpython.exe"
-        )
-    elif "Darwin" in system:
-        ffpy = "/Applications/FontForge.app/Contents/MacOS/FFPython"
-    if ffpy == "" or not path.exists(ffpy):
-        ffpy = sys.executable
-
     font_dir = (
         output_ttf_autohint
         if build_config["nerd_font"]["use_hinted"] == Status.ENABLE
         else output_ttf
     )
 
+    ffpy = ["fontforge", "-script"]
+    if "Windows" in system:
+        ffpy = [
+            path.join(
+                environ.get("ProgramFiles(x86)"), "FontForgeBuilds\\bin\\ffpython.exe"
+            )
+        ]
+
     # full args: https://github.com/ryanoasis/nerd-fonts#font-patcher
-    nf_args = [
-        ffpy,
+    nf_args = ffpy + [
         "FontPatcher/font-patcher",
         "-l",
         "-c",
