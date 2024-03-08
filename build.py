@@ -41,15 +41,13 @@ family_name = build_config["family_name"]
 family_name_compact = family_name.replace(" ", "")
 
 if not package_installed:
-    print(f"{package_name} is not found. Please run `pip install foundryToolsCLI`")
+    print(f"{package_name} is not found. Please run `pip install foundrytools-cli`")
     exit(1)
 
 
 # run command
 def run(cli: str | list[str], extra_args: list[str] = []) -> None:
-    subprocess.run(
-        (cli.split(" ") if isinstance(cli, str) else cli) + extra_args, shell=True
-    )
+    subprocess.run((cli.split(" ") if isinstance(cli, str) else cli) + extra_args)
 
 
 # compress folder and return sha1
@@ -137,8 +135,8 @@ for f in listdir(output_ttf):
     font = TTFont(_path)
 
     def set_name(name: str, id: int):
-        font["name"].setName(name, nameID=id, platformID=3, platEncID=1, langID=0x409)
         font["name"].setName(name, nameID=id, platformID=1, platEncID=0, langID=0x0)
+        font["name"].setName(name, nameID=id, platformID=3, platEncID=1, langID=0x409)
 
     def del_name(id: int):
         font["name"].removeNames(nameID=id)
