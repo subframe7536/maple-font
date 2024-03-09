@@ -18,6 +18,10 @@ class Status(Enum):
     ENABLE = "1"
     IGNORE = "2"
 
+# ffpython.exe path, be used on Windows
+WINDOWS_FFPYTHON_PATH = "C:\\Program Files (x86)\\FontForgeBuilds\\bin\\ffpython.exe"
+# fontforge path, be used on MacOS and Linux
+OSX_FONTFORGE_PATH = "fontforge"
 
 # whether to archieve fonts
 release_mode = True
@@ -160,7 +164,6 @@ run(f"ftcli ttf autohint {output_ttf} -out {output_ttf_autohint}")
 
 
 if build_nerd_font:
-    system = platform.uname()[0]
     check_font_patcher()
 
     font_dir = (
@@ -169,15 +172,11 @@ if build_nerd_font:
         else output_ttf
     )
 
-    ffpy = ["fontforge", "-script"]
-    if "Windows" in system:
-        ffpy = [
-            path.join(
-                environ.get("ProgramFiles(x86)"), "FontForgeBuilds\\bin\\ffpython.exe"
-            )
-        ]
+    ffpy = [OSX_FONTFORGE_PATH, "-script"]
+    if "Windows" in platform.uname()[0]:
+        ffpy = [WINDOWS_FFPYTHON_PATH]
 
-    # full args: https://github.com/ryanoasis/nerd-fonts#font-patcher
+    # full args: https://github.com/ryanoasis/nerd-fonts?tab=readme-ov-file#font-patcher
     nf_args = ffpy + [
         "FontPatcher/font-patcher",
         "-l",
