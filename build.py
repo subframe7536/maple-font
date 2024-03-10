@@ -102,10 +102,6 @@ def check_font_patcher():
         exit(1)
 
 
-input_files = [
-    "src-font/MapleMono[wght]-VF.ttf",
-    "src-font/MapleMono-Italic[wght]-VF.ttf",
-]
 output_dir = "fonts"
 output_otf = path.join(output_dir, "otf")
 output_ttf = path.join(output_dir, "ttf")
@@ -129,9 +125,17 @@ conf = json.dumps(
 
 print(conf)
 
+input_files = [
+    "src-font/MapleMono-Italic[wght]-VF.ttf",
+    "src-font/MapleMono[wght]-VF.ttf",
+]
 for input_file in input_files:
     shutil.copy(input_file, output_variable)
     run(f"ftcli converter vf2i {input_file} -out {output_ttf}")
+    if 'Italic' in input_file:
+        # when input file is italic, set italics
+        # currently all the fonts in {output_ttf} is italic, so there is no need to filter here
+        run(f"ftcli os2 set-flags --italic {output_ttf}")
 
 # fix font name
 for f in listdir(output_ttf):
