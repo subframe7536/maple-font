@@ -5,7 +5,7 @@ import json
 import platform
 import shutil
 import subprocess
-from os import environ, listdir, makedirs, path, remove, walk
+from os import listdir, makedirs, path, remove, walk
 import sys
 from urllib.request import urlopen
 from zipfile import ZIP_DEFLATED, ZipFile
@@ -18,10 +18,13 @@ class Status(Enum):
     ENABLE = "1"
     IGNORE = "2"
 
-# ffpython.exe path, be used on Windows
-WINDOWS_FFPYTHON_PATH = "C:\\Program Files (x86)\\FontForgeBuilds\\bin\\ffpython.exe"
-# fontforge path, be used on MacOS and Linux
-OSX_FONTFORGE_PATH = "fontforge"
+
+# fontforge.exe path, use on Windows
+WIN_FONTFORGE_PATH = "C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe"
+# fontforge path, use on MacOS
+MAC_FONTFORGE_PATH = "/Applications/FontForge.app/Contents/Resources/opt/local/bin/fontforge"
+# fontforge path, use on Linux
+LINUX_FONTFORGE_PATH = "fontforge"
 
 # whether to archieve fonts
 release_mode = True
@@ -132,7 +135,7 @@ input_files = [
 for input_file in input_files:
     shutil.copy(input_file, output_variable)
     run(f"ftcli converter vf2i {input_file} -out {output_ttf}")
-    if 'Italic' in input_file:
+    if "Italic" in input_file:
         # when input file is italic, set italics
         # currently all the fonts in {output_ttf} is italic, so there is no need to filter here
         run(f"ftcli os2 set-flags --italic {output_ttf}")
@@ -176,12 +179,18 @@ if build_nerd_font:
         else output_ttf
     )
 
-    ffpy = [OSX_FONTFORGE_PATH, "-script"]
-    if "Windows" in platform.uname()[0]:
-        ffpy = [WINDOWS_FFPYTHON_PATH]
+    system_name = platform.uname()[0]
+
+    font_forge_bin = LINUX_FONTFORGE_PATH
+    if "Darwin" in system_name:
+        font_forge_bin = MAC_FONTFORGE_PATH
+    elif "Windows" in system_name:
+        font_forge_bin = WIN_FONTFORGE_PATH
 
     # full args: https://github.com/ryanoasis/nerd-fonts?tab=readme-ov-file#font-patcher
-    nf_args = ffpy + [
+    nf_args = [
+        font_forge_bin,
+        "-script",
         "FontPatcher/font-patcher",
         "-l",
         "-c",
