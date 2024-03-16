@@ -1,3 +1,4 @@
-output
+node_modules
 FontPatcher
 fonts
+src-font/cn/static

@@ -1,4 +1,3 @@
-from enum import Enum, unique
 import hashlib
 import importlib.util
 import json
@@ -12,27 +11,28 @@ from fontTools.ttLib import TTFont
 from fontTools.merge import Merger
 
 
-@unique
-class Status(Enum):
-    DISABLE = "0"
-    ENABLE = "1"
-    IGNORE = "2"
-
-
 # whether to archieve fonts
 release_mode = True
-# whether to build nerd font
-build_nerd_font = True
+clean_cache = True
 
 build_config = {
     "family_name": "Maple Mono",
+    # whether to use hinted ttf as base font
+    "use_hinted": True,
     "nerd_font": {
+        "enable": True,
+        # prefer to use Font Patcher instead of using prebuild NerdFont base font
+        "prefer_font_patcher": False,
         # whether to make icon width fixed
-        "mono": Status.DISABLE,
-        # whether to generate Nerd Font patch based on hinted ttf
-        "use_hinted": Status.ENABLE,
-        # whether to use Nerd Font Patcher (auto enable when no fontforge bin is found)
-        "use_font_patcher": Status.DISABLE,
+        # ONLY works when set prefer_font_patcher to True
+        "mono": False,
+    },
+    "cn": {
+        "enable": True,
+        # whether to patch Nerd Font
+        "with_nerd_font": True,
+        # whether to ignore instantiated CN fonts
+        "clean_cache": False,
     },
 }
 
@@ -51,12 +51,24 @@ LINUX_FONTFORGE_PATH = "/usr/local/bin/fontforge"
 
 package_name = "foundryToolsCLI"
 package_installed = importlib.util.find_spec(package_name) is not None
-family_name = build_config["family_name"]
-family_name_compact = family_name.replace(" ", "")
 
 if not package_installed:
     print(f"{package_name} is not found. Please run `pip install foundrytools-cli`")
     exit(1)
+
+family_name = build_config["family_name"]
+family_name_compact = family_name.replace(" ", "")
+
+# paths
+output_dir = "fonts"
+output_otf = path.join(output_dir, "otf")
+output_ttf = path.join(output_dir, "ttf")
+output_ttf_autohint = path.join(output_dir, "ttf-autohint")
+output_variable = path.join(output_dir, "variable")
+output_woff2 = path.join(output_dir, "woff2")
+output_nf = path.join(output_dir, "nf")
+
+ttf_dir_path = output_ttf_autohint if build_config["use_hinted"] else output_ttf
 
 
 # run command
@@ -122,11 +134,6 @@ def check_font_patcher():
 
 
 def get_build_nerd_font_fn():
-    font_dir = (
-        output_ttf_autohint
-        if build_config["nerd_font"]["use_hinted"] == Status.ENABLE
-        else output_ttf
-    )
 
     system_name = platform.uname()[0]
 
@@ -147,22 +154,22 @@ def get_build_nerd_font_fn():
         "--outputdir",
         output_nf,
     ]
-    if build_config["nerd_font"]["mono"] == Status.ENABLE:
+    if build_config["nerd_font"]["mono"]:
         nf_args += ["--mono"]
 
     nf_file_name = "NerdFont"
-    if build_config["nerd_font"]["mono"] == Status.ENABLE:
+    if build_config["nerd_font"]["mono"]:
         nf_file_name += "Mono"
 
     def build_using_prebuild_nerd_font(font_basename: str) -> TTFont:
         merger = Merger()
         font = merger.merge(
-            [path.join(font_dir, font_basename), "src-font/NerdFontBase.ttf"]
+            [path.join(ttf_dir_path, font_basename), "src-font/NerdFontBase.ttf"]
         )
         return font
 
     def build_using_font_patcher(font_basename: str) -> TTFont:
-        run(nf_args + [path.join(font_dir, font_basename)])
+        run(nf_args + [path.join(ttf_dir_path, font_basename)])
         _path = path.join(output_nf, font_basename.replace("-", f"{nf_file_name}-"))
         font = TTFont(_path)
         remove(_path)
@@ -170,7 +177,7 @@ def get_build_nerd_font_fn():
 
     if (
         not path.exists(font_forge_bin)
-        or build_config["nerd_font"]["use_font_patcher"] == Status.DISABLE
+        or build_config["nerd_font"]["prefer_font_patcher"] == False
     ):
         build_fn = build_using_prebuild_nerd_font
         makedirs(output_nf, exist_ok=True)
@@ -182,66 +189,65 @@ def get_build_nerd_font_fn():
     return build_fn
 
 
-output_dir = "fonts"
-output_otf = path.join(output_dir, "otf")
-output_ttf = path.join(output_dir, "ttf")
-output_ttf_autohint = path.join(output_dir, "ttf-autohint")
-output_variable = path.join(output_dir, "variable")
-output_woff2 = path.join(output_dir, "woff2")
-output_nf = path.join(output_dir, "nf")
-
-shutil.rmtree(output_dir, ignore_errors=True)
-shutil.rmtree("woff2", ignore_errors=True)
-makedirs(output_dir)
-makedirs(output_variable)
+if clean_cache:
+    shutil.rmtree(output_dir, ignore_errors=True)
+    shutil.rmtree("woff2", ignore_errors=True)
+    makedirs(output_dir)
+    makedirs(output_variable)
 
 print("=== [build start] ===")
 
 conf = json.dumps(
     build_config,
-    default=lambda x: x.name if isinstance(x, Status) else None,
     indent=4,
 )
 
 print(conf)
 
-input_files = [
-    "src-font/MapleMono-Italic[wght]-VF.ttf",
-    "src-font/MapleMono[wght]-VF.ttf",
-]
-for input_file in input_files:
-    shutil.copy(input_file, output_variable)
-    run(f"ftcli converter vf2i {input_file} -out {output_ttf}")
-    if "Italic" in input_file:
-        # when input file is italic, set italics
-        # currently all the fonts in {output_ttf} is italic, so there is no need to filter here
-        run(f"ftcli os2 set-flags --italic {output_ttf}")
+if clean_cache or not path.exists(output_ttf):
+    input_files = [
+        "src-font/MapleMono-Italic[wght]-VF.ttf",
+        "src-font/MapleMono[wght]-VF.ttf",
+    ]
+    for input_file in input_files:
+        shutil.copy(input_file, output_variable)
+        run(f"ftcli converter vf2i {input_file} -out {output_ttf}")
+        if "Italic" in input_file:
+            # when input file is italic, set italics
+            # currently all the fonts in {output_ttf} is italic, so there is no need to filter here
+            run(f"ftcli os2 set-flags --italic {output_ttf}")
 
-# fix font name
-for f in listdir(output_ttf):
-    _path = path.join(output_ttf, f)
-    font = TTFont(_path)
+    # fix font name
+    for f in listdir(output_ttf):
+        _path = path.join(output_ttf, f)
+        font = TTFont(_path)
 
-    style_name = f[10:-4]
-    if style_name.endswith("Italic") and style_name[0] != "I":
-        style_name = style_name[:-6] + " Italic"
+        style_name_compact_nf = f[10:-4]
 
-    set_font_name(font, family_name, 1)
-    set_font_name(font, style_name, 2)
-    set_font_name(font, f"{family_name} {style_name}", 4)
-    set_font_name(font, f"{family_name_compact}-{style_name}", 6)
-    del_font_name(font, 16)
-    del_font_name(font, 17)
+        style_name_nf = style_name_compact_nf
+        if style_name_nf.endswith("Italic") and style_name_nf[0] != "I":
+            style_name_nf = style_name_nf[:-6] + " Italic"
 
-    font.save(_path)
-    font.close()
+        set_font_name(font, family_name, 1)
+        set_font_name(font, style_name_nf, 2)
+        set_font_name(font, f"{family_name} {style_name_nf}", 4)
+        set_font_name(font, f"{family_name_compact}-{style_name_compact_nf}", 6)
+        del_font_name(font, 16)
+        del_font_name(font, 17)
 
-run(f"ftcli converter ttf2otf {output_ttf} -out {output_otf}")
-run(f"ftcli converter ft2wf {output_ttf} -out {output_woff2} -f woff2")
-run(f"ftcli ttf autohint {output_ttf} -out {output_ttf_autohint}")
+        font.save(_path)
+        font.close()
+
+    run(f"ftcli converter ttf2otf {output_ttf} -out {output_otf}")
+    run(f"ftcli converter ft2wf {output_ttf} -out {output_woff2} -f woff2")
+    run(f"ftcli ttf autohint {output_ttf} -out {output_ttf_autohint}")
 
 
-if build_nerd_font:
+if (
+    clean_cache
+    or not path.exists(output_nf)
+    or build_config["nerd_font"]["enable"]
+):
 
     build_fn = get_build_nerd_font_fn()
 
@@ -251,20 +257,74 @@ if build_nerd_font:
         nf_font = build_fn(f)
 
         # format font name
+        style_name_compact_nf = f[10:-4]
 
-        style_name = f[10:-4]
-        if style_name.endswith("Italic") and style_name[0] != "I":
-            style_name = style_name[:-6] + " Italic"
+        style_name_nf = style_name_compact_nf
+        if style_name_nf.endswith("Italic") and style_name_nf[0] != "I":
+            style_name_nf = style_name_nf[:-6] + " Italic"
 
         set_font_name(nf_font, f"{family_name} NF", 1)
-        set_font_name(nf_font, style_name, 2)
-        set_font_name(nf_font, f"{family_name} NF {style_name}", 4)
-        set_font_name(nf_font, f"{family_name_compact}-NF-{f[10:-4]}", 6)
+        set_font_name(nf_font, style_name_nf, 2)
+        set_font_name(nf_font, f"{family_name} NF {style_name_nf}", 4)
+        set_font_name(nf_font, f"{family_name_compact}-NF-{style_name_compact_nf}", 6)
         del_font_name(nf_font, 16)
         del_font_name(nf_font, 17)
 
-        nf_font.save(path.join(output_nf, f.replace("-", "-NF-")))
+        nf_font.save(
+            path.join(
+                output_nf, f"{family_name_compact}-NF-{style_name_compact_nf}.ttf"
+            )
+        )
         nf_font.close()
+
+
+if build_config["cn"]["enable"] and path.exists("src-font/cn"):
+    print("process CN font, be patient...")
+
+    static_path = "src-font/cn/static"
+    if not path.exists(static_path) or build_config["cn"]["clean_cache"]:
+        run(f"ftcli converter vf2i src-font/cn -out {static_path}")
+
+    base_font_dir = (
+        output_nf if build_config["cn"]["with_nerd_font"] else ttf_dir_path
+    )
+
+    makedirs("fonts/cn", exist_ok=True)
+
+    for f in listdir(base_font_dir):
+
+        style_name_compact_cn = f.split("-")[-1].split(".")[0]
+
+        print(f"generate CN font for {f}")
+
+        merger = Merger()
+        font = merger.merge(
+            [
+                path.join(base_font_dir, f),
+                path.join(static_path, f"MapleMonoCN-{style_name_compact_cn}.ttf"),
+            ]
+        )
+
+        style_name_cn = style_name_compact_cn
+        if style_name_cn.endswith("Italic") and style_name_cn[0] != "I":
+            style_name_cn = style_name_cn[:-6] + " Italic"
+
+        set_font_name(font, f"{family_name} NF CN", 1)
+        set_font_name(font, style_name_cn, 2)
+        set_font_name(font, f"{family_name} NF CN {style_name_cn}", 4)
+        set_font_name(font, f"{family_name_compact}-NF-CN-{style_name_compact_cn}", 6)
+
+        font["OS/2"].xAvgCharWidth = 600
+
+        font.save(
+            path.join(
+                output_dir,
+                "cn",
+                f"{family_name_compact}-NF-CN-{style_name_compact_cn}.ttf",
+            )
+        )
+        font.close()
+
 
 # write config to output path
 with open(path.join(output_dir, "build-config.json"), "w") as config_file:
