@@ -1,12 +1,23 @@
 # Maple Font VF
 
+*Maple Mono*
+
 Open source monospace & nerd font with round corner and ligatures.
 
 Base on `Jetbrains Mono`, and **much "Opinioned"**
 
 ## Features
 
-- New shape like `@ $ % & Q`
+- Round corner
+- New shape of `@ $ % & Q a` and italic `f l i j x y`
+- Large amount of ligatures
+- Write tag in plain text `[TODO]` / `todo))`
+- Font features
+  - cv01: normal `@ $ & Q`
+  - cv02: normal `a`
+  - cv03: normal `i`
+  - cv04: normal `l`
+  - ss01: normal italic `f l i j x y`
 
 ## credit
 
@@ -15,6 +26,7 @@ Base on `Jetbrains Mono`, and **much "Opinioned"**
 - [Fira Code](https://github.com/tonsky/FiraCode)
 - [Commit Mono](https://github.com/eigilnikolajsen/commit-mono)
 - [Code Sample](https://github.com/TheRenegadeCoder/sample-programs-website)
+- [Nerd Font](https://github.com/ryanoasis/nerd-fonts)
 
 ## License
 

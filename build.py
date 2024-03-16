@@ -319,7 +319,7 @@ if build_config["cn"]["enable"] and path.exists("src-font/cn"):
         font.save(
             path.join(
                 output_dir,
-                "cn",
+                "nf-cn",
                 f"{family_name_compact}-NF-CN-{style_name_compact_cn}.ttf",
             )
         )
