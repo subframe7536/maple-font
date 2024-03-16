@@ -6,10 +6,10 @@ import platform
 import shutil
 import subprocess
 from os import listdir, makedirs, path, remove, walk
-import sys
 from urllib.request import urlopen
 from zipfile import ZIP_DEFLATED, ZipFile
 from fontTools.ttLib import TTFont
+from fontTools.merge import Merger
 
 
 @unique
@@ -18,13 +18,6 @@ class Status(Enum):
     ENABLE = "1"
     IGNORE = "2"
 
-
-# fontforge.exe path, use on Windows
-WIN_FONTFORGE_PATH = "C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe"
-# fontforge path, use on MacOS
-MAC_FONTFORGE_PATH = "/Applications/FontForge.app/Contents/Resources/opt/local/bin/fontforge"
-# fontforge path, use on Linux
-LINUX_FONTFORGE_PATH = "fontforge"
 
 # whether to archieve fonts
 release_mode = True
@@ -38,9 +31,23 @@ build_config = {
         "mono": Status.DISABLE,
         # whether to generate Nerd Font patch based on hinted ttf
         "use_hinted": Status.ENABLE,
+        # whether to use Nerd Font Patcher (auto enable when no fontforge bin is found)
+        "use_font_patcher": Status.DISABLE,
     },
 }
 
+# =========================================================================================
+
+# fontforge.exe path, use on Windows
+WIN_FONTFORGE_PATH = "C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe"
+# fontforge path, use on MacOS
+MAC_FONTFORGE_PATH = (
+    "/Applications/FontForge.app/Contents/Resources/opt/local/bin/fontforge"
+)
+# fontforge path, use on Linux
+LINUX_FONTFORGE_PATH = "/usr/local/bin/fontforge"
+
+# =========================================================================================
 
 package_name = "foundryToolsCLI"
 package_installed = importlib.util.find_spec(package_name) is not None
@@ -55,6 +62,15 @@ if not package_installed:
 # run command
 def run(cli: str | list[str], extra_args: list[str] = []) -> None:
     subprocess.run((cli.split(" ") if isinstance(cli, str) else cli) + extra_args)
+
+
+def set_font_name(font: TTFont, name: str, id: int):
+    font["name"].setName(name, nameID=id, platformID=1, platEncID=0, langID=0x0)
+    font["name"].setName(name, nameID=id, platformID=3, platEncID=1, langID=0x409)
+
+
+def del_font_name(font: TTFont, id: int):
+    font["name"].removeNames(nameID=id)
 
 
 # compress folder and return sha1
@@ -105,6 +121,67 @@ def check_font_patcher():
         exit(1)
 
 
+def get_build_nerd_font_fn():
+    font_dir = (
+        output_ttf_autohint
+        if build_config["nerd_font"]["use_hinted"] == Status.ENABLE
+        else output_ttf
+    )
+
+    system_name = platform.uname()[0]
+
+    font_forge_bin = LINUX_FONTFORGE_PATH
+    if "Darwin" in system_name:
+        font_forge_bin = MAC_FONTFORGE_PATH
+    elif "Windows" in system_name:
+        font_forge_bin = WIN_FONTFORGE_PATH
+
+    # full args: https://github.com/ryanoasis/nerd-fonts?tab=readme-ov-file#font-patcher
+    nf_args = [
+        font_forge_bin,
+        "-script",
+        "FontPatcher/font-patcher",
+        "-l",
+        "-c",
+        "--careful",
+        "--outputdir",
+        output_nf,
+    ]
+    if build_config["nerd_font"]["mono"] == Status.ENABLE:
+        nf_args += ["--mono"]
+
+    nf_file_name = "NerdFont"
+    if build_config["nerd_font"]["mono"] == Status.ENABLE:
+        nf_file_name += "Mono"
+
+    def build_using_prebuild_nerd_font(font_basename: str) -> TTFont:
+        merger = Merger()
+        font = merger.merge(
+            [path.join(font_dir, font_basename), "src-font/NerdFontBase.ttf"]
+        )
+        return font
+
+    def build_using_font_patcher(font_basename: str) -> TTFont:
+        run(nf_args + [path.join(font_dir, font_basename)])
+        _path = path.join(output_nf, font_basename.replace("-", f"{nf_file_name}-"))
+        font = TTFont(_path)
+        remove(_path)
+        return font
+
+    if (
+        not path.exists(font_forge_bin)
+        or build_config["nerd_font"]["use_font_patcher"] == Status.DISABLE
+    ):
+        build_fn = build_using_prebuild_nerd_font
+        makedirs(output_nf, exist_ok=True)
+        print("patch NerdFont using prebuild base font")
+    else:
+        build_fn = build_using_font_patcher
+        check_font_patcher()
+        print("patch NerdFont using font-patcher")
+    return build_fn
+
+
 output_dir = "fonts"
 output_otf = path.join(output_dir, "otf")
 output_ttf = path.join(output_dir, "ttf")
@@ -145,23 +222,17 @@ for f in listdir(output_ttf):
     _path = path.join(output_ttf, f)
     font = TTFont(_path)
 
-    def set_name(name: str, id: int):
-        font["name"].setName(name, nameID=id, platformID=1, platEncID=0, langID=0x0)
-        font["name"].setName(name, nameID=id, platformID=3, platEncID=1, langID=0x409)
-
-    def del_name(id: int):
-        font["name"].removeNames(nameID=id)
-
     style_name = f[10:-4]
     if style_name.endswith("Italic") and style_name[0] != "I":
         style_name = style_name[:-6] + " Italic"
 
-    set_name(family_name, 1)
-    set_name(style_name, 2)
-    set_name(f"{family_name} {style_name}", 4)
-    set_name(f"{family_name_compact}-{f[10:-4]}", 6)
-    del_name(16)
-    del_name(17)
+    set_font_name(font, family_name, 1)
+    set_font_name(font, style_name, 2)
+    set_font_name(font, f"{family_name} {style_name}", 4)
+    set_font_name(font, f"{family_name_compact}-{style_name}", 6)
+    del_font_name(font, 16)
+    del_font_name(font, 17)
+
     font.save(_path)
     font.close()
 
@@ -171,75 +242,29 @@ run(f"ftcli ttf autohint {output_ttf} -out {output_ttf_autohint}")
 
 
 if build_nerd_font:
-    check_font_patcher()
 
-    font_dir = (
-        output_ttf_autohint
-        if build_config["nerd_font"]["use_hinted"] == Status.ENABLE
-        else output_ttf
-    )
-
-    system_name = platform.uname()[0]
-
-    font_forge_bin = LINUX_FONTFORGE_PATH
-    if "Darwin" in system_name:
-        font_forge_bin = MAC_FONTFORGE_PATH
-    elif "Windows" in system_name:
-        font_forge_bin = WIN_FONTFORGE_PATH
-
-    # full args: https://github.com/ryanoasis/nerd-fonts?tab=readme-ov-file#font-patcher
-    nf_args = [
-        font_forge_bin,
-        "-script",
-        "FontPatcher/font-patcher",
-        "-l",
-        "-c",
-        "--careful",
-        "--outputdir",
-        output_nf,
-    ]
-    if build_config["nerd_font"]["mono"] == Status.ENABLE:
-        nf_args += ["--mono"]
-
-    print(f"FontPatcher args: {nf_args}")
+    build_fn = get_build_nerd_font_fn()
 
     for f in listdir(output_ttf):
+
         print(f"generate NerdFont for {f}")
-        run(nf_args + [path.join(font_dir, f)])
+        nf_font = build_fn(f)
 
         # format font name
-        nf_file_name = "NerdFont"
-        if build_config["nerd_font"]["mono"] == Status.ENABLE:
-            nf_file_name += "Mono"
-        _path = path.join(output_nf, f.replace("-", f"{nf_file_name}-"))
-        nf_font = TTFont(_path)
-
-        def set_nf_name(name: str, id: int):
-            nf_font["name"].setName(
-                name, nameID=id, platformID=1, platEncID=0, langID=0x0
-            )
-            nf_font["name"].setName(
-                name, nameID=id, platformID=3, platEncID=1, langID=0x409
-            )
-
-        def del_nf_name(id: int):
-            nf_font["name"].removeNames(nameID=id)
 
         style_name = f[10:-4]
         if style_name.endswith("Italic") and style_name[0] != "I":
             style_name = style_name[:-6] + " Italic"
 
-        set_nf_name(f"{family_name} NF", 1)
-        set_nf_name(style_name, 2)
-        set_nf_name(f"{family_name} NF {style_name}", 4)
-        set_nf_name(f"{family_name_compact}-NF-{f[10:-4]}", 6)
-        del_nf_name(16)
-        del_nf_name(17)
-        nf_font.save(_path)
-        nf_font.close()
+        set_font_name(nf_font, f"{family_name} NF", 1)
+        set_font_name(nf_font, style_name, 2)
+        set_font_name(nf_font, f"{family_name} NF {style_name}", 4)
+        set_font_name(nf_font, f"{family_name_compact}-NF-{f[10:-4]}", 6)
+        del_font_name(nf_font, 16)
+        del_font_name(nf_font, 17)
 
-        # rename file name
-        shutil.move(_path, path.join(output_nf, f.replace("-", "-NF-")))
+        nf_font.save(path.join(output_nf, f.replace("-", "-NF-")))
+        nf_font.close()
 
 # write config to output path
 with open(path.join(output_dir, "build-config.json"), "w") as config_file:

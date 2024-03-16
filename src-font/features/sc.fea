@@ -1,0 +1,70 @@
+languagesystem DFLT dflt; # Default default
+languagesystem latn dflt; # Latin default
+languagesystem cyrl dflt; # Cyrillic default
+languagesystem grek dflt; # Greek default
+languagesystem hani dflt; # CJK Ideographic default
+languagesystem kana dflt; # Hiragana default
+
+#
+# Lookup definitions
+#
+lookup CN2TW {
+  sub uni3001 by uni3001.tw;
+  sub uni3002 by uni3002.tw;
+  sub uniFF01 by uniFF01.tw;
+  sub uniFF0C by uniFF0C.tw;
+  sub uniFF1A by uniFF1A.tw;
+  sub uniFF1B by uniFF1B.tw;
+  sub uniFF1F by uniFF1F.tw;
+} CN2TW;
+
+
+feature ccmp {
+# GSUB feature: Glyph Composition / Decomposition
+# Lookups: 1
+
+  sub uni3042 uni3099 by uni30423099;
+  sub uni3044 uni3099 by uni30443099;
+  sub uni3048 uni3099 by uni30483099;
+  sub uni304A uni3099 by uni304A3099;
+  sub uni304B uni309A by uni304B309A;
+  sub uni304D uni309A by uni304D309A;
+  sub uni304F uni309A by uni304F309A;
+  sub uni3051 uni309A by uni3051309A;
+  sub uni3053 uni309A by uni3053309A;
+  sub uni3093 uni3099 by uni30933099;
+  sub uni30A2 uni3099 by uni30A23099;
+  sub uni30A4 uni3099 by uni30A43099;
+  sub uni30A8 uni3099 by uni30A83099;
+  sub uni30AA uni3099 by uni30AA3099;
+  sub uni30AB uni309A by uni30AB309A;
+  sub uni30AD uni309A by uni30AD309A;
+  sub uni30AF uni309A by uni30AF309A;
+  sub uni30B1 uni309A by uni30B1309A;
+  sub uni30B3 uni309A by uni30B3309A;
+  sub uni30BB uni309A by uni30BB309A;
+  sub uni30C4 uni309A by uni30C4309A;
+  sub uni30C8 uni309A by uni30C8309A;
+  sub uni30F3 uni3099 by uni30F33099;
+
+} ccmp;
+
+feature locl {
+  script latn; # Latin
+  language ZHH; # Chinese, Traditional, Hong Kong SAR
+  lookup CN2TW;
+  language ZHT; # Chinese, Traditional
+  lookup CN2TW;
+
+  script hang; # Hangul
+  language ZHH; # Chinese, Traditional, Hong Kong SAR
+  lookup CN2TW;
+  language ZHT; # Chinese, Traditional
+  lookup CN2TW;
+
+  script hani; # CJK Ideographic
+  language ZHH; # Chinese, Traditional, Hong Kong SAR
+  lookup CN2TW;
+  language ZHT; # Chinese, Traditional
+  lookup CN2TW;
+} locl;
