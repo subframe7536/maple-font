@@ -13,6 +13,7 @@ from fontTools.merge import Merger
 
 # whether to archieve fonts
 release_mode = True
+# whether to clean built fonts
 clean_cache = True
 
 build_config = {
@@ -243,11 +244,7 @@ if clean_cache or not path.exists(output_ttf):
     run(f"ftcli ttf autohint {output_ttf} -out {output_ttf_autohint}")
 
 
-if (
-    clean_cache
-    or not path.exists(output_nf)
-    or build_config["nerd_font"]["enable"]
-):
+if clean_cache or not path.exists(output_nf) or build_config["nerd_font"]["enable"]:
 
     build_fn = get_build_nerd_font_fn()
 
@@ -285,11 +282,16 @@ if build_config["cn"]["enable"] and path.exists("src-font/cn"):
     if not path.exists(static_path) or build_config["cn"]["clean_cache"]:
         run(f"ftcli converter vf2i src-font/cn -out {static_path}")
 
-    base_font_dir = (
-        output_nf if build_config["cn"]["with_nerd_font"] else ttf_dir_path
-    )
+    if build_config["cn"]["with_nerd_font"]:
+        base_font_dir = output_nf
+        suffix = "NF CN"
+    else:
+        base_font_dir = ttf_dir_path
+        suffix = "CN"
 
-    makedirs("fonts/cn", exist_ok=True)
+    cn_dir_path = path.join(output_dir, suffix.replace(" ", "-").lower())
+
+    makedirs(cn_dir_path, exist_ok=True)
 
     for f in listdir(base_font_dir):
 
@@ -309,17 +311,16 @@ if build_config["cn"]["enable"] and path.exists("src-font/cn"):
         if style_name_cn.endswith("Italic") and style_name_cn[0] != "I":
             style_name_cn = style_name_cn[:-6] + " Italic"
 
-        set_font_name(font, f"{family_name} NF CN", 1)
+        set_font_name(font, f"{family_name} {suffix}", 1)
         set_font_name(font, style_name_cn, 2)
-        set_font_name(font, f"{family_name} NF CN {style_name_cn}", 4)
-        set_font_name(font, f"{family_name_compact}-NF-CN-{style_name_compact_cn}", 6)
+        set_font_name(font, f"{family_name} {suffix} {style_name_cn}", 4)
+        set_font_name(font, f"{family_name_compact}-{suffix.replace(' ', '-')}-{style_name_compact_cn}", 6)
 
         font["OS/2"].xAvgCharWidth = 600
 
         font.save(
             path.join(
-                output_dir,
-                "nf-cn",
+                cn_dir_path,
                 f"{family_name_compact}-NF-CN-{style_name_compact_cn}.ttf",
             )
         )
