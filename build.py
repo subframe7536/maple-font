@@ -25,7 +25,7 @@ build_config = {
         # prefer to use Font Patcher instead of using prebuild NerdFont base font
         "prefer_font_patcher": False,
         # whether to make icon width fixed
-        # ONLY works when set prefer_font_patcher to True
+        # Auto use fontforge to patch Nerd Font
         "mono": False,
     },
     "cn": {
@@ -178,7 +178,8 @@ def get_build_nerd_font_fn():
 
     if (
         not path.exists(font_forge_bin)
-        or build_config["nerd_font"]["prefer_font_patcher"] == False
+        or not build_config["nerd_font"]["mono"]
+        or not build_config["nerd_font"]["prefer_font_patcher"]
     ):
         build_fn = build_using_prebuild_nerd_font
         makedirs(output_nf, exist_ok=True)
@@ -326,6 +327,8 @@ if (clean_cache or not path.exists(output_nf)) and build_config["cn"]["enable"] 
         )
         font.close()
 
+    if release_mode:
+        run(f"ftcli converter ft2wf -f woff2 {cn_dir_path} -out {output_woff2}")
 
 # write config to output path
 with open(path.join(output_dir, "build-config.json"), "w") as config_file:
