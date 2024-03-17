@@ -1,8 +1,5 @@
 from fontTools.varLib import TTFont
 from fontTools.subset import Subsetter
-import os
-
-os.makedirs("subset", exist_ok=True)
 
 file = "fonts/nf/MapleMono-NF-Regular.ttf"
 
