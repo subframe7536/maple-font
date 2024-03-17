@@ -14,7 +14,7 @@ from fontTools.merge import Merger
 # whether to archieve fonts
 release_mode = True
 # whether to clean built fonts
-clean_cache = True
+clean_cache = False
 
 build_config = {
     "family_name": "Maple Mono",
@@ -244,7 +244,7 @@ if clean_cache or not path.exists(output_ttf):
     run(f"ftcli ttf autohint {output_ttf} -out {output_ttf_autohint}")
 
 
-if clean_cache or not path.exists(output_nf) or build_config["nerd_font"]["enable"]:
+if (clean_cache or not path.exists(output_nf) and build_config["nerd_font"]["enable"]):
 
     build_fn = get_build_nerd_font_fn()
 
@@ -275,7 +275,7 @@ if clean_cache or not path.exists(output_nf) or build_config["nerd_font"]["enabl
         nf_font.close()
 
 
-if build_config["cn"]["enable"] and path.exists("src-font/cn"):
+if (clean_cache or not path.exists(output_nf)) and build_config["cn"]["enable"] and path.exists("src-font/cn"):
     print("process CN font, be patient...")
 
     static_path = "src-font/cn/static"
@@ -336,7 +336,7 @@ if release_mode:
 
     # archieve fonts
     release_dir = path.join(output_dir, "release")
-    makedirs(release_dir)
+    makedirs(release_dir, exist_ok=True)
 
     hash_map = {}
 
