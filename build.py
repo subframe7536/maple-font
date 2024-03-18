@@ -35,7 +35,7 @@ build_config = {
         "enable": True,
         # whether to patch Nerd Font
         "with_nerd_font": True,
-        # whether to clean instantiated CN fonts
+        # whether to clean instantiated base CN fonts
         "clean_cache": False,
     },
 }
@@ -324,8 +324,6 @@ def main():
             p.map(build_mono, listdir(output_ttf))
 
     # =========================================================================================
-
-    # =========================================================================================
     # ====================================   build NF   =======================================
     # =========================================================================================
 
@@ -338,8 +336,6 @@ def main():
             p.map(build_nf, listdir(output_ttf))
 
     # =========================================================================================
-
-    # =========================================================================================
     # ====================================   build CN   =======================================
     # =========================================================================================
 
@@ -350,7 +346,9 @@ def main():
     ):
 
         if not path.exists(cn_static_path) or build_config["cn"]["clean_cache"]:
+            print("====================================")
             print("instantiating CN font, be patient...")
+            print("====================================")
             run(f"ftcli converter vf2i src-font/cn -out {cn_static_path}")
 
         makedirs(output_cn, exist_ok=True)
@@ -358,6 +356,8 @@ def main():
         with Pool(pool_size) as p:
             p.map(build_cn, listdir(base_font_dir))
 
+    # =========================================================================================
+    # ====================================   release   ========================================
     # =========================================================================================
 
     # write config to output path
@@ -373,6 +373,7 @@ def main():
 
         hash_map = {}
 
+        # archieve fonts
         for f in listdir(output_dir):
             if f == "release" or f.endswith(".json"):
                 continue
@@ -383,6 +384,7 @@ def main():
         with open(path.join(release_dir, "sha1.json"), "w") as hash_file:
             hash_file.write(json.dumps(hash_map, indent=4))
 
+        # copy woff2 to root
         shutil.rmtree("woff2", ignore_errors=True)
         shutil.copytree(output_woff2, "woff2")
         print("copy woff2 to root")
