@@ -17,6 +17,7 @@ Base on `Jetbrains Mono`, and **much "Opinioned"**
   - cv02: normal `a`
   - cv03: normal `i`
   - cv04: normal `l`
+  - cv99: manually set TW punctuations for Maple Mono NF CN
   - ss01: normal italic `f l i j x y`
 
 ## credit

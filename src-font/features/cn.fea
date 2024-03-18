@@ -68,3 +68,7 @@ feature locl {
   language ZHT; # Chinese, Traditional
   lookup CN2TW;
 } locl;
+
+feature cv99 {
+	lookup CN2TW;
+} cv99;
