@@ -23,7 +23,7 @@ Open source monospace & nerd font with round corner and ligatures.
   <a href="./README_CN.md">中文</a>
 </p>
 
-
+## Preparing for [V7](https://github.com/subframe7536/maple-font/tree/variable), try the new variable font at [latest release](https://github.com/subframe7536/maple-font/releases)
 
 ## Features
 
