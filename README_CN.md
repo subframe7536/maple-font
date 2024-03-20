@@ -23,6 +23,7 @@
   中文
 </p>
 
+## 正在测试[V7版本](https://github.com/subframe7536/maple-font/tree/variable)，下载最新版本的可变字体：[链接](https://github.com/subframe7536/maple-font/releases)
 
 ## 特性
 
