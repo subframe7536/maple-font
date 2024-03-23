@@ -25,6 +25,8 @@ build_config = {
     "use_hinted": True,
     "nerd_font": {
         "enable": True,
+        # target version of Nerd Font if font-patcher not exists
+        "version": "3.1.1",
         # prefer to use Font Patcher instead of using prebuild NerdFont base font
         "use_font_patcher": False,
         # whether to make icon width fixed
@@ -132,8 +134,7 @@ def check_font_patcher():
     if path.exists("FontPatcher"):
         return
 
-    version = "3.1.1"
-    url = f"https://github.com/ryanoasis/nerd-fonts/releases/download/v{version}/FontPatcher.zip"
+    url = f"https://github.com/ryanoasis/nerd-fonts/releases/download/v{build_config['nerd_font']['version']}/FontPatcher.zip"
     try:
         zip_path = "FontPatcher.zip"
         if not path.exists(zip_path):
