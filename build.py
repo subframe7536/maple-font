@@ -8,7 +8,7 @@ from multiprocessing import Pool
 from os import listdir, makedirs, path, remove, walk
 from urllib.request import urlopen
 from zipfile import ZIP_DEFLATED, ZipFile
-from fontTools.ttLib import TTFont
+from fontTools.ttLib import TTFont, newTable
 from fontTools.merge import Merger
 
 
@@ -35,6 +35,8 @@ build_config = {
         "enable": True,
         # whether to patch Nerd Font
         "with_nerd_font": True,
+        # fix design language and supported languages
+        "fix_meta_table": True,
         # whether to clean instantiated base CN fonts
         "clean_cache": False,
     },
@@ -277,6 +279,18 @@ def build_cn(f: str):
     )
 
     font["OS/2"].xAvgCharWidth = 600
+
+    if build_config["cn"]["fix_meta_table"]:
+        # add code page, Latin / Japanese / Simplify Chinese / Traditional Chinese
+        font["OS/2"].ulCodePageRange1 = 1 << 0 | 1 << 17 | 1 << 18 | 1 << 20
+
+        # fix meta table, https://learn.microsoft.com/en-us/typography/opentype/spec/meta
+        meta = newTable("meta")
+        meta.data = {
+            "dlng": "Latn, Hans, Hant, Jpan",
+            "slng": "Latn, Hans, Hant, Jpan",
+        }
+        font["meta"] = meta
 
     _path = path.join(
         output_cn,
