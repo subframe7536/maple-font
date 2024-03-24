@@ -443,7 +443,7 @@ feature calt {
     sub hyphen' greater greater by SPC;
   } hyphen_greater_greater.liga;
 
-  # ==>
+  # -->
   lookup hyphen_hyphen_greater.liga {
     ignore sub bracketleft hyphen' hyphen greater;
     ignore sub hyphen hyphen' hyphen greater;
@@ -453,7 +453,7 @@ feature calt {
     sub hyphen' hyphen greater by SPC;
   } hyphen_hyphen_greater.liga;
 
-  # =>
+  # ->
   lookup hyphen_greater.liga {
     ignore sub bracketleft hyphen' greater;
     ignore sub hyphen hyphen' greater;
@@ -1459,6 +1459,18 @@ feature calt {
     # beginnings
     sub numbersign' numbersign by numbersign_start.liga;
   } numbersigns;
+
+
+  # <!---->
+  lookup xml_empty_comment.liga {
+    sub SPC SPC SPC SPC SPC SPC greater' by xml_empty_comment.liga;
+    sub SPC SPC SPC SPC SPC hyphen' greater by SPC;
+    sub SPC SPC SPC SPC hyphen' hyphen greater by SPC;
+    sub SPC SPC SPC hyphen' hyphen hyphen greater by SPC;
+    sub SPC SPC hyphen' hyphen hyphen hyphen greater by SPC;
+    sub SPC exclam' hyphen hyphen hyphen hyphen greater by SPC;
+    sub less' exclam hyphen hyphen hyphen hyphen greater by SPC;
+  } xml_empty_comment.liga;
 
 # ================[III]================
   # cl

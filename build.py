@@ -28,6 +28,7 @@ build_config = {
         # target version of Nerd Font if font-patcher not exists
         "version": "3.1.1",
         # prefer to use Font Patcher instead of using prebuild NerdFont base font
+        # if you change the args of font-patcher, you need to set this to True
         "use_font_patcher": False,
         # whether to make icon width fixed
         # Auto use fontforge to patch Nerd Font
