@@ -70,12 +70,12 @@ family_name_compact = family_name.replace(" ", "")
 
 # paths
 output_dir = "fonts"
-output_otf = path.join(output_dir, "otf")
-output_ttf = path.join(output_dir, "ttf")
-output_ttf_autohint = path.join(output_dir, "ttf-autohint")
-output_variable = path.join(output_dir, "variable")
-output_woff2 = path.join(output_dir, "woff2")
-output_nf = path.join(output_dir, "nf")
+output_otf = path.join(output_dir, "OTF")
+output_ttf = path.join(output_dir, "TTF")
+output_ttf_autohint = path.join(output_dir, "TTF-AutoHint")
+output_variable = path.join(output_dir, "Variable")
+output_woff2 = path.join(output_dir, "Woff2")
+output_nf = path.join(output_dir, "NF")
 
 ttf_dir_path = output_ttf_autohint if build_config["use_hinted"] else output_ttf
 
@@ -88,7 +88,7 @@ else:
 
 suffix_compact = suffix.replace(" ", "-")
 cn_static_path = "src-font/cn/static"
-output_cn = path.join(output_dir, suffix_compact.lower())
+output_cn = path.join(output_dir, suffix_compact)
 
 
 # run command
