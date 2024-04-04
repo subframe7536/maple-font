@@ -17,6 +17,7 @@ Base on `Jetbrains Mono`, and **much "Opinioned"**
   - plain text tag: `[TODO]` / `todo))` / `[FIXME]` / `fixme))`
     - for logger: `[TRACE]` / `[DEBUG]` / `[INFO]` / `[WARN]` / `[ERROR]` / `[FATAL]`
 - Font features
+  - zero: dot style `0`
   - cv01: normal `@ $ & Q`
   - cv02: normal `a`
   - cv03: normal `i`
