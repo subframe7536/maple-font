@@ -22,7 +22,7 @@ pool_size = 4
 build_config = {
     "family_name": "Maple Mono",
     # whether to use hinted ttf as base font
-    "use_hinted": True,
+    "use_hinted": False,
     "nerd_font": {
         "enable": True,
         # target version of Nerd Font if font-patcher not exists
@@ -80,10 +80,10 @@ output_nf = path.join(output_dir, "NF")
 ttf_dir_path = output_ttf_autohint if build_config["use_hinted"] else output_ttf
 
 if build_config["cn"]["with_nerd_font"]:
-    base_font_dir = output_nf
+    cn_base_font_dir = output_nf
     suffix = "NF CN"
 else:
-    base_font_dir = ttf_dir_path
+    cn_base_font_dir = ttf_dir_path
     suffix = "CN"
 
 suffix_compact = suffix.replace(" ", "-")
@@ -264,7 +264,7 @@ def build_cn(f: str):
     merger = Merger()
     font = merger.merge(
         [
-            path.join(base_font_dir, f),
+            path.join(cn_base_font_dir, f),
             path.join(cn_static_path, f"MapleMonoCN-{style_name_compact_cn}.ttf"),
         ]
     )
@@ -370,7 +370,7 @@ def main():
         makedirs(output_cn, exist_ok=True)
 
         with Pool(pool_size) as p:
-            p.map(build_cn, listdir(base_font_dir))
+            p.map(build_cn, listdir(cn_base_font_dir))
 
     # =========================================================================================
     # ====================================   release   ========================================
