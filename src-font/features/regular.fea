@@ -1470,6 +1470,11 @@ feature calt {
     sub SPC exclam' hyphen hyphen hyphen hyphen greater by SPC;
     sub less' exclam hyphen hyphen hyphen hyphen greater by SPC;
   } xml_empty_comment.liga;
+
+  lookup escape {
+    sub backslash' [backslash n r t quotesingle quotedbl] by backslash.liga;
+  } escape;
+
 } calt;
 feature ccmp {
   lookup ccmp_Other_1 {

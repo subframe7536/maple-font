@@ -1472,6 +1472,10 @@ feature calt {
     sub less' exclam hyphen hyphen hyphen hyphen greater by SPC;
   } xml_empty_comment.liga;
 
+  lookup escape {
+    sub backslash' [backslash n r t quotesingle quotedbl] by backslash.liga;
+  } escape;
+
 # ================[III]================
   # cl
   lookup c_l.liga {
