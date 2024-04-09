@@ -76,6 +76,7 @@ output_ttf_autohint = path.join(output_dir, "TTF-AutoHint")
 output_variable = path.join(output_dir, "Variable")
 output_woff2 = path.join(output_dir, "Woff2")
 output_nf = path.join(output_dir, "NF")
+output_cn = path.join(output_dir, "CN")
 
 ttf_dir_path = output_ttf_autohint if build_config["use_hinted"] else output_ttf
 
@@ -88,7 +89,7 @@ else:
 
 suffix_compact = suffix.replace(" ", "-")
 cn_static_path = "src-font/cn/static"
-output_cn = path.join(output_dir, suffix_compact)
+output_nf_cn = path.join(output_dir, suffix_compact)
 
 
 # run command
@@ -295,7 +296,7 @@ def build_cn(f: str):
         font["meta"] = meta
 
     _path = path.join(
-        output_cn,
+        output_nf_cn,
         f"{family_name_compact}-{suffix_compact}-{style_name_compact_cn}.ttf",
     )
 
@@ -356,7 +357,7 @@ def main():
     # =========================================================================================
 
     if (
-        (clean_cache or not path.exists(output_cn))
+        (clean_cache or not path.exists(output_nf_cn))
         and build_config["cn"]["enable"]
         and path.exists("src-font/cn")
     ):
@@ -367,7 +368,10 @@ def main():
             print("====================================")
             run(f"ftcli converter vf2i src-font/cn -out {cn_static_path}")
 
+        makedirs(output_nf_cn, exist_ok=True)
+
         makedirs(output_cn, exist_ok=True)
+        shutil.copytree(cn_static_path, output_cn)
 
         with Pool(pool_size) as p:
             p.map(build_cn, listdir(cn_base_font_dir))
