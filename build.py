@@ -22,7 +22,7 @@ pool_size = 4
 build_config = {
     "family_name": "Maple Mono",
     # whether to use hinted ttf as base font
-    "use_hinted": False,
+    "use_hinted": True,
     "nerd_font": {
         "enable": True,
         # target version of Nerd Font if font-patcher not exists
@@ -370,7 +370,7 @@ def main():
 
         makedirs(output_nf_cn, exist_ok=True)
 
-        makedirs(output_cn, exist_ok=True)
+        shutil.rmtree(output_cn, ignore_errors=True)
         shutil.copytree(cn_static_path, output_cn)
 
         with Pool(pool_size) as p:
