@@ -370,9 +370,6 @@ def main():
 
         makedirs(output_nf_cn, exist_ok=True)
 
-        shutil.rmtree(output_cn, ignore_errors=True)
-        shutil.copytree(cn_static_path, output_cn)
-
         with Pool(pool_size) as p:
             p.map(build_cn, listdir(cn_base_font_dir))
 
