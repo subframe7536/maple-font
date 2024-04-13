@@ -69,6 +69,7 @@ family_name = build_config["family_name"]
 family_name_compact = family_name.replace(" ", "")
 
 # paths
+src_dir = "source"
 output_dir = "fonts"
 output_otf = path.join(output_dir, "OTF")
 output_ttf = path.join(output_dir, "TTF")
@@ -88,7 +89,7 @@ else:
     suffix = "CN"
 
 suffix_compact = suffix.replace(" ", "-")
-cn_static_path = "src-font/cn/static"
+cn_static_path = f"{src_dir}/cn/static"
 output_nf_cn = path.join(output_dir, suffix_compact)
 
 
@@ -184,7 +185,7 @@ def get_build_nerd_font_fn():
     def build_using_prebuild_nerd_font(font_basename: str) -> TTFont:
         merger = Merger()
         font = merger.merge(
-            [path.join(ttf_dir_path, font_basename), "src-font/NerdFontBase.ttf"]
+            [path.join(ttf_dir_path, font_basename), f"{src_dir}/NerdFontBase.ttf"]
         )
         return font
 
@@ -326,15 +327,15 @@ def main():
 
     if clean_cache or not path.exists(output_ttf):
         input_files = [
-            "src-font/MapleMono-Italic[wght]-VF.ttf",
-            "src-font/MapleMono[wght]-VF.ttf",
+            f"{src_dir}/MapleMono-Italic[wght]-VF.ttf",
+            f"{src_dir}/MapleMono[wght]-VF.ttf",
         ]
         for input_file in input_files:
             shutil.copy(input_file, output_variable)
             run(f"ftcli converter vf2i {input_file} -out {output_ttf}")
             if "Italic" in input_file:
                 # when input file is italic, set italics
-                # currently all the fonts in {output_ttf} is italic, so there is no need to filter here
+                # at that time, all the fonts in {output_ttf} is italic, so there is no need to filter here
                 run(f"ftcli os2 set-flags --italic {output_ttf}")
 
         with Pool(pool_size) as p:
@@ -359,14 +360,14 @@ def main():
     if (
         (clean_cache or not path.exists(output_nf_cn))
         and build_config["cn"]["enable"]
-        and path.exists("src-font/cn")
+        and path.exists(f"{src_dir}/cn")
     ):
 
         if not path.exists(cn_static_path) or build_config["cn"]["clean_cache"]:
             print("====================================")
             print("instantiating CN font, be patient...")
             print("====================================")
-            run(f"ftcli converter vf2i src-font/cn -out {cn_static_path}")
+            run(f"ftcli converter vf2i {src_dir}/cn -out {cn_static_path}")
 
         makedirs(output_nf_cn, exist_ok=True)
 
