@@ -27,12 +27,16 @@ build_config = {
         "enable": True,
         # target version of Nerd Font if font-patcher not exists
         "version": "3.1.1",
-        # prefer to use Font Patcher instead of using prebuild NerdFont base font
-        # if you change the args of font-patcher, you need to set this to True
-        "use_font_patcher": False,
         # whether to make icon width fixed
-        # Auto use fontforge to patch Nerd Font
         "mono": False,
+        # prefer to use Font Patcher instead of using prebuild NerdFont base font
+        # if you want to custom build nerd font using font-patcher, you need to set this to True
+        "use_font_patcher": False,
+        # extra args for font-patcher, only effect when use_font_patcher is set to True
+        # default args: ["-l", "-c", "--careful", "--outputdir", output_nf]
+        # if "mono" is set to True, "--mono" will be added
+        # full args: https://github.com/ryanoasis/nerd-fonts?tab=readme-ov-file#font-patcher
+        "extra_args": [],
     },
     "cn": {
         "enable": True,
@@ -44,19 +48,6 @@ build_config = {
         "clean_cache": False,
     },
 }
-
-# =========================================================================================
-
-# fontforge.exe path, use on Windows
-WIN_FONTFORGE_PATH = "C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe"
-# fontforge path, use on MacOS
-MAC_FONTFORGE_PATH = (
-    "/Applications/FontForge.app/Contents/Resources/opt/local/bin/fontforge"
-)
-# fontforge path, use on Linux
-LINUX_FONTFORGE_PATH = "/usr/local/bin/fontforge"
-
-# =========================================================================================
 
 package_name = "foundryToolsCLI"
 package_installed = importlib.util.find_spec(package_name) is not None
@@ -154,20 +145,30 @@ def check_font_patcher():
         exit(1)
 
 
-def get_build_nerd_font_fn():
+def get_nerd_font_patcher_args():
+    # =========================================================================================
+
+    # fontforge.exe path, use on Windows
+    WIN_FONTFORGE_PATH = "C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe"
+    # fontforge path, use on MacOS
+    MAC_FONTFORGE_PATH = (
+        "/Applications/FontForge.app/Contents/Resources/opt/local/bin/fontforge"
+    )
+    # fontforge path, use on Linux
+    LINUX_FONTFORGE_PATH = "/usr/local/bin/fontforge"
+
+    # =========================================================================================
 
     system_name = platform.uname()[0]
-
-    font_forge_bin = LINUX_FONTFORGE_PATH
+    _font_forge_bin = LINUX_FONTFORGE_PATH
     if "Darwin" in system_name:
-        font_forge_bin = MAC_FONTFORGE_PATH
+        _font_forge_bin = MAC_FONTFORGE_PATH
     elif "Windows" in system_name:
-        font_forge_bin = WIN_FONTFORGE_PATH
+        _font_forge_bin = WIN_FONTFORGE_PATH
 
     # full args: https://github.com/ryanoasis/nerd-fonts?tab=readme-ov-file#font-patcher
-    nf_args = [
-        font_forge_bin,
-        "-script",
+    _nf_args = [
+        _font_forge_bin,
         "FontPatcher/font-patcher",
         "-l",
         "-c",
@@ -176,7 +177,15 @@ def get_build_nerd_font_fn():
         output_nf,
     ]
     if build_config["nerd_font"]["mono"]:
-        nf_args += ["--mono"]
+        _nf_args += ["--mono"]
+
+    _nf_args += build_config["nerd_font"]["extra_args"]
+
+    return _font_forge_bin, _nf_args
+
+
+def get_build_nerd_font_fn():
+    font_forge_bin, nf_args = get_nerd_font_patcher_args()
 
     nf_file_name = "NerdFont"
     if build_config["nerd_font"]["mono"]:
@@ -185,7 +194,10 @@ def get_build_nerd_font_fn():
     def build_using_prebuild_nerd_font(font_basename: str) -> TTFont:
         merger = Merger()
         font = merger.merge(
-            [path.join(ttf_dir_path, font_basename), f"{src_dir}/NerdFontBase.ttf"]
+            [
+                path.join(ttf_dir_path, font_basename),
+                f"{src_dir}/NerdFontBase{'Mono' if build_config['nerd_font']['mono'] else ''}.ttf",
+            ]
         )
         return font
 
@@ -196,9 +208,9 @@ def get_build_nerd_font_fn():
         remove(_path)
         return font
 
-    if (
-        not path.exists(font_forge_bin)
-        or (not build_config["nerd_font"]["mono"] and not build_config["nerd_font"]["use_font_patcher"])
+    if not path.exists(font_forge_bin) or (
+        not build_config["nerd_font"]["mono"]
+        and not build_config["nerd_font"]["use_font_patcher"]
     ):
         build_fn = build_using_prebuild_nerd_font
         makedirs(output_nf, exist_ok=True)

@@ -10,5 +10,6 @@ subsetter.populate(
 )
 subsetter.subset(font)
 
-font.save("src-fonts/NerdFontBase.ttf")
+# font.save("source/NerdFontBase.ttf")
+font.save("source/NerdFontBaseMono.ttf")
 font.close()
