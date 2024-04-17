@@ -25,11 +25,27 @@ Base on `Jetbrains Mono`, and **much "Opinioned"**
   - cv99: manually set TW punctuations for Maple Mono NF CN
   - ss01: normal italic `f l i j x y`
 
+## Build
+
+### Browser
+
+WIP
+
+### Local
+
+```shell
+pip install foundrytools-cli
+python build.py
+```
+
+change config in `build.py`
+
 ## credit
 
 - [Jetbrains Mono](https://github.com/JetBrains/JetBrainsMono)
 - [Roboto Mono](https://github.com/googlefonts/RobotoMono)
 - [Fira Code](https://github.com/tonsky/FiraCode)
+- [Victor Mono](https://github.com/rubjo/victor-mono)
 - [Commit Mono](https://github.com/eigilnikolajsen/commit-mono)
 - [Code Sample](https://github.com/TheRenegadeCoder/sample-programs-website)
 - [Nerd Font](https://github.com/ryanoasis/nerd-fonts)
