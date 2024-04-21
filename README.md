@@ -33,16 +33,21 @@ WIP
 
 ### Local
 
-run it in your local machine. Make sure you have `python` and `pip` installed
+run it in your local machine.
+
+You can change config in `build.py`
+
+Make sure you have `python3` and `pip` installed
+
+- for custom `font-patcher` args, `font-forge` (and maybe `python3-fontforge` as well) is needed
+- for `Ubuntu` or `Debian`, maybe `python-is-python3` is needed as well
 
 ```shell
 pip install foundrytools-cli
 python build.py
 ```
 
-if you have trouble to install the dependencies, please create a new Github codespace on variable branch and run it there
-
-change config in `build.py`
+If you have trouble to install the dependencies, just create a new Github codespace on `variable` branch and run the commands there
 
 ## credit
 
