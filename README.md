@@ -33,10 +33,14 @@ WIP
 
 ### Local
 
+run it in your local machine. Make sure you have `python` and `pip` installed
+
 ```shell
 pip install foundrytools-cli
 python build.py
 ```
+
+if you have trouble to install the dependencies, please create a new Github codespace on variable branch and run it there
 
 change config in `build.py`
 

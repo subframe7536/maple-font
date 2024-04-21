@@ -5,7 +5,7 @@ import platform
 import shutil
 import subprocess
 from multiprocessing import Pool
-from os import listdir, makedirs, path, remove, walk
+from os import listdir, makedirs, path, remove, walk, getenv
 from urllib.request import urlopen
 from zipfile import ZIP_DEFLATED, ZipFile
 from fontTools.ttLib import TTFont, newTable
@@ -17,7 +17,7 @@ release_mode = True
 # whether to clean built fonts
 clean_cache = True
 # build process pool size
-pool_size = 4
+pool_size = 4 if not getenv("CODESPACE_NAME") else 2
 
 build_config = {
     "family_name": "Maple Mono",
