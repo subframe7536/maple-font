@@ -1473,7 +1473,7 @@ feature calt {
   } xml_empty_comment.liga;
 
   lookup escape {
-    sub backslash' [backslash n r t quotesingle quotedbl] by backslash.liga;
+    sub backslash' [backslash n r t quotesingle quotedbl bracketleft bracketright parenleft parenright braceleft braceright] by backslash.liga;
   } escape;
 
 # ================[III]================
