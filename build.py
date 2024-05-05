@@ -1,3 +1,4 @@
+from functools import partial
 import hashlib
 import importlib.util
 import json
@@ -26,13 +27,13 @@ build_config = {
     "nerd_font": {
         "enable": True,
         # target version of Nerd Font if font-patcher not exists
-        "version": "3.1.1",
+        "version": "3.2.1",
         # whether to make icon width fixed
         "mono": False,
         # prefer to use Font Patcher instead of using prebuild NerdFont base font
         # if you want to custom build nerd font using font-patcher, you need to set this to True
         "use_font_patcher": False,
-        # extra args for font-patcher, only effect when use_font_patcher is set to True
+        # extra args for font-patcher
         # default args: ["-l", "-c", "--careful", "--outputdir", output_nf]
         # if "mono" is set to True, "--mono" will be added
         # full args: https://github.com/ryanoasis/nerd-fonts?tab=readme-ov-file#font-patcher
@@ -71,6 +72,24 @@ output_nf = path.join(output_dir, "NF")
 output_cn = path.join(output_dir, "CN")
 
 ttf_dir_path = output_ttf_autohint if build_config["use_hinted"] else output_ttf
+
+# =========================================================================================
+
+WIN_FONTFORGE_PATH = "C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe"
+MAC_FONTFORGE_PATH = (
+    "/Applications/FontForge.app/Contents/Resources/opt/local/bin/fontforge"
+)
+LINUX_FONTFORGE_PATH = "/usr/local/bin/fontforge"
+
+system_name = platform.uname()[0]
+
+font_forge_bin = LINUX_FONTFORGE_PATH
+if "Darwin" in system_name:
+    font_forge_bin = MAC_FONTFORGE_PATH
+elif "Windows" in system_name:
+    font_forge_bin = WIN_FONTFORGE_PATH
+
+# =========================================================================================
 
 if build_config["cn"]["with_nerd_font"]:
     cn_base_font_dir = output_nf
@@ -124,9 +143,17 @@ def compress_folder(source_file_or_dir_path: str, target_parent_dir_path: str) -
     return sha1.hexdigest()
 
 
-def check_font_patcher():
+def check_font_patcher() -> bool:
     if path.exists("FontPatcher"):
-        return
+        with open("FontPatcher/font-patcher", "r", encoding="utf-8") as f:
+            if (
+                f"# Nerd Fonts Version: {build_config['nerd_font']['version']}"
+                in f.read()
+            ):
+                return True
+            else:
+                print("FontPatcher version not match, delete it")
+                shutil.rmtree("FontPatcher", ignore_errors=True)
 
     url = f"https://github.com/ryanoasis/nerd-fonts/releases/download/v{build_config['nerd_font']['version']}/FontPatcher.zip"
     try:
@@ -138,37 +165,19 @@ def check_font_patcher():
         with ZipFile(zip_path, "r") as zip_ref:
             zip_ref.extractall("FontPatcher")
         remove(zip_path)
+        return True
     except Exception as e:
         print(
-            f"\nFail to get NerdFont Patcher. Please download it manually from {url}, then put downloaded 'FontPatcher.zip' into project's root and run this script again. \n\tError: {e}"
+            f"\nFail to fetch NerdFont Patcher. Please download it manually from {url}, then put downloaded 'FontPatcher.zip' into project's root and run this script again. \n\tError: {e}"
         )
-        exit(1)
+        print("use prebuilt Nerd Font instead")
+        return False
 
 
 def get_nerd_font_patcher_args():
-    # =========================================================================================
-
-    # fontforge.exe path, use on Windows
-    WIN_FONTFORGE_PATH = "C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe"
-    # fontforge path, use on MacOS
-    MAC_FONTFORGE_PATH = (
-        "/Applications/FontForge.app/Contents/Resources/opt/local/bin/fontforge"
-    )
-    # fontforge path, use on Linux
-    LINUX_FONTFORGE_PATH = "/usr/local/bin/fontforge"
-
-    # =========================================================================================
-
-    system_name = platform.uname()[0]
-    _font_forge_bin = LINUX_FONTFORGE_PATH
-    if "Darwin" in system_name:
-        _font_forge_bin = MAC_FONTFORGE_PATH
-    elif "Windows" in system_name:
-        _font_forge_bin = WIN_FONTFORGE_PATH
-
     # full args: https://github.com/ryanoasis/nerd-fonts?tab=readme-ov-file#font-patcher
     _nf_args = [
-        _font_forge_bin,
+        font_forge_bin,
         "FontPatcher/font-patcher",
         "-l",
         "-c",
@@ -181,45 +190,7 @@ def get_nerd_font_patcher_args():
 
     _nf_args += build_config["nerd_font"]["extra_args"]
 
-    return _font_forge_bin, _nf_args
-
-
-def get_build_nerd_font_fn():
-    font_forge_bin, nf_args = get_nerd_font_patcher_args()
-
-    nf_file_name = "NerdFont"
-    if build_config["nerd_font"]["mono"]:
-        nf_file_name += "Mono"
-
-    def build_using_prebuild_nerd_font(font_basename: str) -> TTFont:
-        merger = Merger()
-        font = merger.merge(
-            [
-                path.join(ttf_dir_path, font_basename),
-                f"{src_dir}/NerdFontBase{'Mono' if build_config['nerd_font']['mono'] else ''}.ttf",
-            ]
-        )
-        return font
-
-    def build_using_font_patcher(font_basename: str) -> TTFont:
-        run(nf_args + [path.join(ttf_dir_path, font_basename)])
-        _path = path.join(output_nf, font_basename.replace("-", f"{nf_file_name}-"))
-        font = TTFont(_path)
-        remove(_path)
-        return font
-
-    if not path.exists(font_forge_bin) or (
-        not build_config["nerd_font"]["mono"]
-        and not build_config["nerd_font"]["use_font_patcher"]
-    ):
-        build_fn = build_using_prebuild_nerd_font
-        makedirs(output_nf, exist_ok=True)
-        print("patch NerdFont using prebuild base font")
-    else:
-        build_fn = build_using_font_patcher
-        check_font_patcher()
-        print("patch NerdFont using font-patcher")
-    return build_fn
+    return _nf_args
 
 
 def build_mono(f: str):
@@ -246,9 +217,39 @@ def build_mono(f: str):
     run(f"ftcli ttf autohint {_path} -out {output_ttf_autohint}")
 
 
-def build_nf(f: str):
+def build_nf(f: str, use_font_patcher: bool):
     print(f"generate NerdFont for {f}")
-    nf_font = get_build_nerd_font_fn()(f)
+
+    nf_args = get_nerd_font_patcher_args()
+
+    nf_file_name = "NerdFont"
+    if build_config["nerd_font"]["mono"]:
+        nf_file_name += "Mono"
+
+    def build_using_prebuild_nerd_font(font_basename: str) -> TTFont:
+        merger = Merger()
+        font = merger.merge(
+            [
+                path.join(ttf_dir_path, font_basename),
+                f"{src_dir}/NerdFontBase{'Mono' if build_config['nerd_font']['mono'] else ''}.ttf",
+            ]
+        )
+        return font
+
+    def build_using_font_patcher(font_basename: str) -> TTFont:
+        run(nf_args + [path.join(ttf_dir_path, font_basename)])
+        _path = path.join(output_nf, font_basename.replace("-", f"{nf_file_name}-"))
+        font = TTFont(_path)
+        remove(_path)
+        return font
+
+    makedirs(output_nf, exist_ok=True)
+
+    nf_font = (
+        build_using_font_patcher(f)
+        if use_font_patcher
+        else build_using_prebuild_nerd_font(f)
+    )
 
     # format font name
     style_name_compact_nf = f[10:-4]
@@ -337,7 +338,7 @@ def main():
     # ===================================   build basic   =====================================
     # =========================================================================================
 
-    if clean_cache or not path.exists(output_ttf):
+    if (clean_cache and path.exists(output_ttf)) or not path.exists(output_ttf):
         input_files = [
             f"{src_dir}/MapleMono-Italic[wght]-VF.ttf",
             f"{src_dir}/MapleMono[wght]-VF.ttf",
@@ -358,19 +359,33 @@ def main():
     # =========================================================================================
 
     if (
-        clean_cache
-        or not path.exists(output_nf)
-        and build_config["nerd_font"]["enable"]
-    ):
+        (clean_cache and path.exists(output_nf)) or not path.exists(output_nf)
+    ) and build_config["nerd_font"]["enable"]:
+
+        use_font_patcher = (
+            len(build_config["nerd_font"]["extra_args"]) > 0
+            or build_config["nerd_font"]["use_font_patcher"]
+        ) and check_font_patcher()
+
+        if use_font_patcher and not path.exists(font_forge_bin):
+            print(
+                f"FontForge bin({font_forge_bin}) not found. Use prebuild Nerd Font instead."
+            )
+            use_font_patcher = False
+
         with Pool(pool_size) as p:
-            p.map(build_nf, listdir(output_ttf))
+            _build_fn = partial(build_nf, use_font_patcher=use_font_patcher)
+            print(
+                f"patch Nerd Font using {'FontPatcher' if use_font_patcher else 'prebuild Nerd Font'}"
+            )
+            p.map(_build_fn, listdir(output_ttf))
 
     # =========================================================================================
     # ====================================   build CN   =======================================
     # =========================================================================================
 
     if (
-        (clean_cache or not path.exists(output_nf_cn))
+        ((clean_cache and path.exists(output_cn)) or not path.exists(output_nf_cn))
         and build_config["cn"]["enable"]
         and path.exists(f"{src_dir}/cn")
     ):
