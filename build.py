@@ -344,9 +344,8 @@ def main():
             f"{src_dir}/MapleMono[wght]-VF.ttf",
         ]
         for input_file in input_files:
-            font = TTFont(input_file)
-            font.save(input_file.replace(src_dir, output_variable))
-            run(f"ftcli converter vf2i {output_variable} -out {output_ttf}")
+            shutil.copy(input_file, output_variable)
+            run(f"ftcli converter vf2i {input_file} -out {output_ttf}")
             if "Italic" in input_file:
                 # when input file is italic, set italics
                 # at that time, all the fonts in {output_ttf} is italic, so there is no need to filter here
