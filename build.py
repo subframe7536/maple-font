@@ -344,12 +344,17 @@ def main():
             f"{src_dir}/MapleMono[wght]-VF.ttf",
         ]
         for input_file in input_files:
-            shutil.copy(input_file, output_variable)
-            run(f"ftcli converter vf2i {input_file} -out {output_ttf}")
+            font = TTFont(input_file)
+            font.save(input_file.replace(src_dir, output_variable))
+            run(f"ftcli converter vf2i {output_variable} -out {output_ttf}")
             if "Italic" in input_file:
                 # when input file is italic, set italics
                 # at that time, all the fonts in {output_ttf} is italic, so there is no need to filter here
                 run(f"ftcli os2 set-flags --italic {output_ttf}")
+
+        run(f"ftcli assistant init {output_ttf}")
+        run(f"ftcli assistant commit {output_ttf} -ls 400 700")
+        shutil.rmtree(path.join(output_ttf, "ftCLI_files"))
 
         with Pool(pool_size) as p:
             p.map(build_mono, listdir(output_ttf))
