@@ -102,6 +102,17 @@ suffix_compact = suffix.replace(" ", "-")
 cn_static_path = f"{src_dir}/cn/static"
 output_nf_cn = path.join(output_dir, suffix_compact)
 
+# In these subfamily:
+#   - NameID1 should be the family name
+#   - NameID2 should be the subfamily name
+#   - NameID16 and NameID17 should be removed
+# Other subfamily:
+#   - NameID1 should be the family name, append with subfamily name without "Italic"
+#   - NameID2 should be the "Regular" or "Italic"
+#   - NameID16 should be the family name
+#   - NameID17 should be the subfamily name
+# https://github.com/subframe7536/maple-font/issues/182
+# https://github.com/subframe7536/maple-font/issues/183
 skip_subfamily_list = ["Regular", "Bold", "Italic", "BoldItalic"]
 
 
