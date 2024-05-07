@@ -193,22 +193,51 @@ def get_nerd_font_patcher_args():
     return _nf_args
 
 
+def get_font_name(compact_style_name: str):
+    is_italic = compact_style_name.endswith("Italic")
+
+    _style_name = compact_style_name
+    if is_italic and compact_style_name[0] != "I":
+        _style_name = compact_style_name[:-6] + " Italic"
+
+    if compact_style_name in ["Regular", "Bold", "Italic", "BoldItalic"]:
+        return "", _style_name, _style_name
+    else:
+        return (
+            " " + compact_style_name.replace("Italic", ""),
+            "Italic" if is_italic else "Regular",
+            _style_name,
+        )
+
+
 def build_mono(f: str):
     _path = path.join(output_ttf, f)
     font = TTFont(_path)
 
     style_name_compact_nf = f[10:-4]
 
-    style_name_nf = style_name_compact_nf
-    if style_name_nf.endswith("Italic") and style_name_nf[0] != "I":
-        style_name_nf = style_name_nf[:-6] + " Italic"
+    style_name1, style_name2, style_name = get_font_name(style_name_compact_nf)
 
-    set_font_name(font, family_name, 1)
-    set_font_name(font, style_name_nf, 2)
-    set_font_name(font, f"{family_name} {style_name_nf}", 4)
+    set_font_name(
+        font,
+        family_name + style_name1,
+        1,
+    )
+    set_font_name(font, style_name2, 2)
+    set_font_name(
+        font,
+        f"{family_name} {style_name}",
+        4,
+    )
     set_font_name(font, f"{family_name_compact}-{style_name_compact_nf}", 6)
-    del_font_name(font, 16)
-    del_font_name(font, 17)
+    set_font_name(font, family_name, 16)
+    set_font_name(font, style_name, 17)
+
+    # https://github.com/ftCLI/FoundryTools-CLI/issues/166
+    if style_name1 == " Thin":
+        font["OS/2"].usWeightClass = 250
+    elif style_name1 == " ExtraLight":
+        font["OS/2"].usWeightClass = 275
 
     font.save(_path)
     font.close()
@@ -254,20 +283,27 @@ def build_nf(f: str, use_font_patcher: bool):
     # format font name
     style_name_compact_nf = f[10:-4]
 
-    style_name_nf = style_name_compact_nf
-    if style_name_nf.endswith("Italic") and style_name_nf[0] != "I":
-        style_name_nf = style_name_nf[:-6] + " Italic"
+    style_name1, style_name2, style_name_nf = get_font_name(style_name_compact_nf)
 
-    set_font_name(nf_font, f"{family_name} NF", 1)
-    set_font_name(nf_font, style_name_nf, 2)
-    set_font_name(nf_font, f"{family_name} NF {style_name_nf}", 4)
-    set_font_name(nf_font, f"{family_name_compact}-NF-{style_name_compact_nf}", 6)
-    del_font_name(nf_font, 16)
-    del_font_name(nf_font, 17)
-
-    nf_font.save(
-        path.join(output_nf, f"{family_name_compact}-NF-{style_name_compact_nf}.ttf")
+    set_font_name(
+        nf_font,
+        f"{family_name} NF{style_name1}",
+        1,
     )
+    set_font_name(nf_font, style_name2, 2)
+    set_font_name(
+        nf_font,
+        f"{family_name} NF {style_name_nf}",
+        4,
+    )
+    set_font_name(nf_font, f"{family_name_compact}-NF-{style_name_compact_nf}", 6)
+    set_font_name(nf_font, f"{family_name} NF", 16)
+    set_font_name(nf_font, style_name_nf, 17)
+
+    _path = path.join(
+        output_nf, f"{family_name_compact}-NF-{style_name_compact_nf}.ttf"
+    )
+    nf_font.save(_path)
     nf_font.close()
 
 
@@ -284,16 +320,24 @@ def build_cn(f: str):
         ]
     )
 
-    style_name_cn = style_name_compact_cn
-    if style_name_cn.endswith("Italic") and style_name_cn[0] != "I":
-        style_name_cn = style_name_cn[:-6] + " Italic"
+    style_name1, style_name2, style_name_cn = get_font_name(style_name_compact_cn)
 
-    set_font_name(font, f"{family_name} {suffix}", 1)
-    set_font_name(font, style_name_cn, 2)
-    set_font_name(font, f"{family_name} {suffix} {style_name_cn}", 4)
+    set_font_name(
+        font,
+        f"{family_name} {suffix}{style_name1}",
+        1,
+    )
+    set_font_name(font, style_name2, 2)
+    set_font_name(
+        font,
+        f"{family_name} {suffix} {style_name_cn}",
+        4,
+    )
     set_font_name(
         font, f"{family_name_compact}-{suffix_compact}-{style_name_compact_cn}", 6
     )
+    set_font_name(font, f"{family_name} {suffix}", 16)
+    set_font_name(font, style_name_cn, 17)
 
     font["OS/2"].xAvgCharWidth = 600
 
@@ -322,8 +366,8 @@ def main():
     if clean_cache:
         shutil.rmtree(output_dir, ignore_errors=True)
         shutil.rmtree(output_woff2, ignore_errors=True)
-        makedirs(output_dir)
-        makedirs(output_variable)
+        makedirs(output_dir, exist_ok=True)
+        makedirs(output_variable, exist_ok=True)
 
     print("=== [build start] ===")
 
@@ -347,11 +391,8 @@ def main():
             font = TTFont(input_file)
             font.save(input_file.replace(src_dir, output_variable))
             run(f"ftcli converter vf2i {output_variable} -out {output_ttf}")
-            if "Italic" in input_file:
-                # when input file is italic, set italics
-                # at that time, all the fonts in {output_ttf} is italic, so there is no need to filter here
-                run(f"ftcli os2 set-flags --italic {output_ttf}")
 
+        run(f"ftcli fix italic-angle {output_ttf}")
         run(f"ftcli assistant init {output_ttf}")
         run(f"ftcli assistant commit {output_ttf} -ls 400 700")
         shutil.rmtree(path.join(output_ttf, "ftCLI_files"))
@@ -409,6 +450,8 @@ def main():
     # =========================================================================================
     # ====================================   release   ========================================
     # =========================================================================================
+
+    run(f"ftcli name del-mac-names -r {output_dir}")
 
     # write config to output path
     with open(path.join(output_dir, "build-config.json"), "w") as config_file:
