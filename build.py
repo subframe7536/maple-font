@@ -102,6 +102,8 @@ suffix_compact = suffix.replace(" ", "-")
 cn_static_path = f"{src_dir}/cn/static"
 output_nf_cn = path.join(output_dir, suffix_compact)
 
+skip_subfamily_list = ["Regular", "Bold", "Italic", "BoldItalic"]
+
 
 # run command
 def run(cli: str | list[str], extra_args: list[str] = []) -> None:
@@ -193,18 +195,18 @@ def get_nerd_font_patcher_args():
     return _nf_args
 
 
-def get_font_name(compact_style_name: str):
-    is_italic = compact_style_name.endswith("Italic")
+def get_font_name(style_name_compact: str):
+    is_italic = style_name_compact.endswith("Italic")
 
-    _style_name = compact_style_name
-    if is_italic and compact_style_name[0] != "I":
-        _style_name = compact_style_name[:-6] + " Italic"
+    _style_name = style_name_compact
+    if is_italic and style_name_compact[0] != "I":
+        _style_name = style_name_compact[:-6] + " Italic"
 
-    if compact_style_name in ["Regular", "Bold", "Italic", "BoldItalic"]:
+    if style_name_compact in skip_subfamily_list:
         return "", _style_name, _style_name
     else:
         return (
-            " " + compact_style_name.replace("Italic", ""),
+            " " + style_name_compact.replace("Italic", ""),
             "Italic" if is_italic else "Regular",
             _style_name,
         )
@@ -214,9 +216,9 @@ def build_mono(f: str):
     _path = path.join(output_ttf, f)
     font = TTFont(_path)
 
-    style_name_compact_nf = f[10:-4]
+    style_name_compact = f[10:-4]
 
-    style_name1, style_name2, style_name = get_font_name(style_name_compact_nf)
+    style_name1, style_name2, style_name = get_font_name(style_name_compact)
 
     set_font_name(
         font,
@@ -229,9 +231,11 @@ def build_mono(f: str):
         f"{family_name} {style_name}",
         4,
     )
-    set_font_name(font, f"{family_name_compact}-{style_name_compact_nf}", 6)
-    set_font_name(font, family_name, 16)
-    set_font_name(font, style_name, 17)
+    set_font_name(font, f"{family_name_compact}-{style_name_compact}", 6)
+
+    if style_name_compact not in skip_subfamily_list:
+        set_font_name(font, family_name, 16)
+        set_font_name(font, style_name, 17)
 
     # https://github.com/ftCLI/FoundryTools-CLI/issues/166#issuecomment-2095433585
     if style_name1 == " Thin":
@@ -297,8 +301,10 @@ def build_nf(f: str, use_font_patcher: bool):
         4,
     )
     set_font_name(nf_font, f"{family_name_compact}-NF-{style_name_compact_nf}", 6)
-    set_font_name(nf_font, f"{family_name} NF", 16)
-    set_font_name(nf_font, style_name_nf, 17)
+
+    if style_name_compact_nf not in skip_subfamily_list:
+        set_font_name(nf_font, f"{family_name} NF", 16)
+        set_font_name(nf_font, style_name_nf, 17)
 
     _path = path.join(
         output_nf, f"{family_name_compact}-NF-{style_name_compact_nf}.ttf"
@@ -336,8 +342,10 @@ def build_cn(f: str):
     set_font_name(
         font, f"{family_name_compact}-{suffix_compact}-{style_name_compact_cn}", 6
     )
-    set_font_name(font, f"{family_name} {suffix}", 16)
-    set_font_name(font, style_name_cn, 17)
+
+    if style_name_compact_cn not in skip_subfamily_list:
+        set_font_name(font, f"{family_name} {suffix}", 16)
+        set_font_name(font, style_name_cn, 17)
 
     font["OS/2"].xAvgCharWidth = 600
 
