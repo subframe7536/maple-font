@@ -233,7 +233,7 @@ def build_mono(f: str):
     set_font_name(font, family_name, 16)
     set_font_name(font, style_name, 17)
 
-    # https://github.com/ftCLI/FoundryTools-CLI/issues/166
+    # https://github.com/ftCLI/FoundryTools-CLI/issues/166#issuecomment-2095433585
     if style_name1 == " Thin":
         font["OS/2"].usWeightClass = 250
     elif style_name1 == " ExtraLight":
@@ -392,6 +392,7 @@ def main():
             font.save(input_file.replace(src_dir, output_variable))
             run(f"ftcli converter vf2i {output_variable} -out {output_ttf}")
 
+        # https://github.com/ftCLI/FoundryTools-CLI/issues/166#issuecomment-2095756721
         run(f"ftcli fix italic-angle {output_ttf}")
         run(f"ftcli assistant init {output_ttf}")
         run(f"ftcli assistant commit {output_ttf} -ls 400 700")
