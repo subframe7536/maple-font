@@ -113,6 +113,9 @@ output_nf_cn = path.join(output_dir, suffix_compact)
 #   - NameID17 should be the subfamily name
 # https://github.com/subframe7536/maple-font/issues/182
 # https://github.com/subframe7536/maple-font/issues/183
+#
+# same as `ftcli assistant commit . --ls 400 700`
+# https://github.com/ftCLI/FoundryTools-CLI/issues/166#issuecomment-2095756721
 skip_subfamily_list = ["Regular", "Bold", "Italic", "BoldItalic"]
 
 
@@ -411,11 +414,7 @@ def main():
             font.save(input_file.replace(src_dir, output_variable))
             run(f"ftcli converter vf2i {output_variable} -out {output_ttf}")
 
-        # https://github.com/ftCLI/FoundryTools-CLI/issues/166#issuecomment-2095756721
         run(f"ftcli fix italic-angle {output_ttf}")
-        run(f"ftcli assistant init {output_ttf}")
-        run(f"ftcli assistant commit {output_ttf} -ls 400 700")
-        shutil.rmtree(path.join(output_ttf, "ftCLI_files"))
 
         with Pool(pool_size) as p:
             p.map(build_mono, listdir(output_ttf))
