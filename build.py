@@ -412,9 +412,10 @@ def main():
         for input_file in input_files:
             font = TTFont(input_file)
             font.save(input_file.replace(src_dir, output_variable))
-            run(f"ftcli converter vf2i {output_variable} -out {output_ttf}")
 
+        run(f"ftcli converter vf2i {output_variable} -out {output_ttf}")
         run(f"ftcli fix italic-angle {output_ttf}")
+        run(f"ftcli ttf fix-contours {output_ttf}")
 
         with Pool(pool_size) as p:
             p.map(build_mono, listdir(output_ttf))
