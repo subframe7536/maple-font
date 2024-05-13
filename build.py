@@ -1,10 +1,10 @@
-from functools import partial
 import hashlib
 import importlib.util
 import json
 import platform
 import shutil
 import subprocess
+from functools import partial
 from multiprocessing import Pool
 from os import listdir, makedirs, path, remove, walk, getenv
 from urllib.request import urlopen
@@ -301,14 +301,14 @@ def build_nf(f: str, use_font_patcher: bool):
     # format font name
     style_name_compact_nf = f[10:-4]
 
-    style_name1, style_name2, style_name_nf = get_font_name(style_name_compact_nf)
+    style_name_nf1, style_name_nf2, style_name_nf = get_font_name(style_name_compact_nf)
 
     set_font_name(
         nf_font,
-        f"{family_name} NF{style_name1}",
+        f"{family_name} NF{style_name_nf1}",
         1,
     )
-    set_font_name(nf_font, style_name2, 2)
+    set_font_name(nf_font, style_name_nf2, 2)
     set_font_name(
         nf_font,
         f"{family_name} NF {style_name_nf}",
@@ -340,14 +340,14 @@ def build_cn(f: str):
         ]
     )
 
-    style_name1, style_name2, style_name_cn = get_font_name(style_name_compact_cn)
+    style_name_cn1, style_name_cn2, style_name_cn = get_font_name(style_name_compact_cn)
 
     set_font_name(
         font,
-        f"{family_name} {suffix}{style_name1}",
+        f"{family_name} {suffix}{style_name_cn1}",
         1,
     )
-    set_font_name(font, style_name2, 2)
+    set_font_name(font, style_name_cn2, 2)
     set_font_name(
         font,
         f"{family_name} {suffix} {style_name_cn}",
