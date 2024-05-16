@@ -415,6 +415,8 @@ def main():
 
         run(f"ftcli converter vf2i {output_variable} -out {output_ttf}")
         run(f"ftcli fix italic-angle {output_ttf}")
+        run(f"ftcli fix monospace {output_ttf}")
+        run(f"ftcli fix strip-names {output_ttf}")
         run(f"ftcli ttf dehint {output_ttf}")
         run(f"ftcli ttf fix-contours {output_ttf}")
 
