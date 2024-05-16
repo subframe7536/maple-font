@@ -1669,6 +1669,29 @@ feature cv01 {
   sub asciitilde_at.liga by asciitilde_at.liga.cv01;
   sub at by at.cv01;
   sub dollar by dollar.cv01;
+
+  sub equal_greater.liga by equal_greater.liga.cv01;
+  sub less_equal_equal.liga by less_equal_equal.liga.cv01;
+  sub equal_equal_greater.liga by equal_equal_greater.liga.cv01;
+  sub less_equal_equal_greater.liga by less_equal_equal_greater.liga.cv01;
+  sub less_equal_greater.liga by less_equal_greater.liga.cv01;
+  sub less_less_equal.liga by less_less_equal.liga.cv01;
+  sub equal_greater_greater.liga by equal_greater_greater.liga.cv01;
+  sub less_equal_less.liga by less_equal_less.liga.cv01;
+  sub greater_equal_greater.liga by greater_equal_greater.liga.cv01;
+  sub less_equal_bar.liga by less_equal_bar.liga.cv01;
+  sub bar_equal_greater.liga by bar_equal_greater.liga.cv01;
+  sub less_hyphen_bar.liga by less_hyphen_bar.liga.cv01;
+  sub bar_hyphen_greater.liga by bar_hyphen_greater.liga.cv01;
+  sub less_hyphen.liga by less_hyphen.liga.cv01;
+  sub hyphen_greater.liga by hyphen_greater.liga.cv01;
+  sub less_hyphen_hyphen.liga by less_hyphen_hyphen.liga.cv01;
+  sub hyphen_hyphen_greater.liga by hyphen_hyphen_greater.liga.cv01;
+  sub less_hyphen_less.liga by less_hyphen_less.liga.cv01;
+  sub greater_hyphen_greater.liga by greater_hyphen_greater.liga.cv01;
+  sub less_hyphen_greater.liga by less_hyphen_greater.liga.cv01;
+  sub less_less_hyphen.liga by less_less_hyphen.liga.cv01;
+  sub hyphen_greater_greater.liga by hyphen_greater_greater.liga.cv01;
 } cv01;
 feature cv02 {
   sub a by a.cv02;
