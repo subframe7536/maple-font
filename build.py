@@ -11,7 +11,7 @@ from urllib.request import urlopen
 from zipfile import ZIP_DEFLATED, ZipFile
 from fontTools.ttLib import TTFont, newTable
 from fontTools.merge import Merger
-
+from fontTools.ttLib.tables import otTables
 
 # whether to archieve fonts
 release_mode = True
@@ -102,11 +102,11 @@ suffix_compact = suffix.replace(" ", "-")
 cn_static_path = f"{src_dir}/cn/static"
 output_nf_cn = path.join(output_dir, suffix_compact)
 
-# In these subfamily:
+# In these subfamilies:
 #   - NameID1 should be the family name
 #   - NameID2 should be the subfamily name
 #   - NameID16 and NameID17 should be removed
-# Other subfamily:
+# Other subfamilies:
 #   - NameID1 should be the family name, append with subfamily name without "Italic"
 #   - NameID2 should be the "Regular" or "Italic"
 #   - NameID16 should be the family name
@@ -224,6 +224,40 @@ def get_font_name(style_name_compact: str):
             "Italic" if is_italic else "Regular",
             _style_name,
         )
+
+
+def add_cv98(font):
+    gsub_table = font["GSUB"].table
+    script_list = gsub_table.ScriptList
+    feature_list = gsub_table.FeatureList
+    lookup_list = gsub_table.LookupList
+
+    # Because fonttools will auto genreate `locl` rule when merging fonts, so just reuse it
+    #
+    # lookup = otTables.Lookup()
+    # lookup.LookupType = 1
+    # lookup.LookupFlag = 0
+    # subtable = otTables.SingleSubst()
+    # subtable.mapping = {"emdash": "emdash.cv98", "ellipsis": "ellipsis.cv98"}
+    # lookup.SubTable = [subtable]
+    # lookup_list.Lookup.append(lookup)
+    # lookup_index = lookup_list.LookupCount
+
+    feature_record = otTables.FeatureRecord()
+    feature_record.FeatureTag = "cv98"
+    feature_record.Feature = otTables.Feature()
+    feature_record.Feature.LookupListIndex = [lookup_list.LookupCount - 1]
+    feature_index = len(feature_list.FeatureRecord)
+    feature_list.FeatureRecord.append(feature_record)
+
+    for script_record in script_list.ScriptRecord:
+        lang_sys = script_record.Script.DefaultLangSys
+
+        if lang_sys:
+            lang_sys.FeatureIndex.append(feature_index)
+        else:
+            for lang_sys_rec in script_record.Script.LangSysRecord:
+                lang_sys_rec.LangSys.FeatureIndex.append(feature_index)
 
 
 def build_mono(f: str):
@@ -362,6 +396,9 @@ def build_cn(f: str):
         set_font_name(font, style_name_cn, 17)
 
     font["OS/2"].xAvgCharWidth = 600
+
+    # https://github.com/subframe7536/maple-font/issues/188
+    add_cv98(font)
 
     if build_config["cn"]["fix_meta_table"]:
         # add code page, Latin / Japanese / Simplify Chinese / Traditional Chinese
