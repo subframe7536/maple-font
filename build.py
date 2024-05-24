@@ -4,6 +4,7 @@ import json
 import platform
 import shutil
 import subprocess
+import time
 from functools import partial
 from multiprocessing import Pool
 from os import listdir, makedirs, path, remove, walk, getenv
@@ -33,8 +34,13 @@ build_config = {
         # prefer to use Font Patcher instead of using prebuild NerdFont base font
         # if you want to custom build nerd font using font-patcher, you need to set this to True
         "use_font_patcher": False,
+        # Symbol Fonts settings.
+        # default args: ["--complete"]
+        # if not, will use font-patcher to generate fonts
+        # full args: https://github.com/ryanoasis/nerd-fonts?tab=readme-ov-file#font-patcher
+        "glyphs": ["--complete"],
         # extra args for font-patcher
-        # default args: ["-l", "-c", "--careful", "--outputdir", output_nf]
+        # default args: ["-l", "--careful", "--outputdir", output_nf]
         # if "mono" is set to True, "--mono" will be added
         # full args: https://github.com/ryanoasis/nerd-fonts?tab=readme-ov-file#font-patcher
         "extra_args": [],
@@ -196,11 +202,11 @@ def get_nerd_font_patcher_args():
         font_forge_bin,
         "FontPatcher/font-patcher",
         "-l",
-        "-c",
         "--careful",
         "--outputdir",
         output_nf,
-    ]
+    ] + build_config["nerd_font"]["glyphs"]
+
     if build_config["nerd_font"]["mono"]:
         _nf_args += ["--mono"]
 
@@ -309,13 +315,12 @@ def build_nf(f: str, use_font_patcher: bool):
 
     def build_using_prebuild_nerd_font(font_basename: str) -> TTFont:
         merger = Merger()
-        font = merger.merge(
+        return merger.merge(
             [
                 path.join(ttf_dir_path, font_basename),
                 f"{src_dir}/NerdFontBase{'Mono' if build_config['nerd_font']['mono'] else ''}.ttf",
             ]
         )
-        return font
 
     def build_using_font_patcher(font_basename: str) -> TTFont:
         run(nf_args + [path.join(ttf_dir_path, font_basename)])
@@ -423,12 +428,14 @@ def build_cn(f: str):
 
 def main():
     if clean_cache:
+        print("=== [Clean Cache] ===")
         shutil.rmtree(output_dir, ignore_errors=True)
         shutil.rmtree(output_woff2, ignore_errors=True)
         makedirs(output_dir, exist_ok=True)
         makedirs(output_variable, exist_ok=True)
 
-    print("=== [build start] ===")
+    start_time = time.time()
+    print("=== [Build Start] ===")
 
     conf = json.dumps(
         build_config,
@@ -471,6 +478,7 @@ def main():
         use_font_patcher = (
             len(build_config["nerd_font"]["extra_args"]) > 0
             or build_config["nerd_font"]["use_font_patcher"]
+            or build_config["nerd_font"]["glyphs"] != ["--complete"]
         ) and check_font_patcher()
 
         if use_font_patcher and not path.exists(font_forge_bin):
@@ -481,9 +489,15 @@ def main():
 
         with Pool(pool_size) as p:
             _build_fn = partial(build_nf, use_font_patcher=use_font_patcher)
-            print(
-                f"patch Nerd Font using {'FontPatcher' if use_font_patcher else 'prebuild Nerd Font'}"
+            _version = build_config["nerd_font"]["version"]
+            _name = (
+                f"FontPatcher v{_version}"
+                if use_font_patcher
+                else "prebuild Nerd Font"
             )
+            print("========================================")
+            print(f"patch Nerd Font using {_name}")
+            print("========================================")
             p.map(_build_fn, listdir(output_ttf))
 
     # =========================================================================================
@@ -507,11 +521,11 @@ def main():
         with Pool(pool_size) as p:
             p.map(build_cn, listdir(cn_base_font_dir))
 
+    run(f"ftcli name del-mac-names -r {output_dir}")
+
     # =========================================================================================
     # ====================================   release   ========================================
     # =========================================================================================
-
-    run(f"ftcli name del-mac-names -r {output_dir}")
 
     # write config to output path
     with open(path.join(output_dir, "build-config.json"), "w") as config_file:
@@ -541,6 +555,8 @@ def main():
         shutil.rmtree("woff2", ignore_errors=True)
         shutil.copytree(output_woff2, "woff2")
         print("copy woff2 to root")
+
+    print(f"=== [Build Success ({time.time() - start_time:.2f} s)] ===")
 
 
 if __name__ == "__main__":
