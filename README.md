@@ -7,7 +7,7 @@ Base on `Jetbrains Mono`, and **much "Opinioned"**
 ## Features
 
 - Round corner
-- New shape of `@ $ % & Q a` and italic `f l i j x y`
+- New shape of `@ $ % & Q a` and cursive italic `f i j k l x y`
 - Large amount of ligatures
   - equal variants: `==` / `===` / `!=` / `!==` / `>=` / `<=`...
   - arrow variants: `->` / `=>` / `-->` / `==>` / `<->` / `<=>`...
@@ -22,8 +22,11 @@ Base on `Jetbrains Mono`, and **much "Opinioned"**
   - cv02: normal `a`
   - cv03: normal `i`
   - cv04: normal `l`
+  - cv98: full width `…`(ellipsis) and `—`(emdash) support for Maple Mono NF CN
   - cv99: manually set TW punctuations for Maple Mono NF CN
   - ss01: normal italic `f l i j x y`
+  - ss02: splited `==` / `===` / `!=` / `!==` / `=/=`
+  - ss03: arbitrary plain text tags
 
 ## Build
 

@@ -24,15 +24,32 @@
 @class_fraction = [fraction asterisk_slash.liga slash_slash.liga slash_slash_slash.liga backslash_slash.liga less_slash.liga SPC];
 @class_hyphen_asciitilde.liga = [hyphen_asciitilde.liga less_asciitilde.liga less_asciitilde_asciitilde.liga asciitilde_asciitilde.liga SPC];
 @class_period_question.liga = [period_question.liga colon_question.liga question_question.liga question_question_question.liga numbersign_question.liga SPC];
-@noexport = [arrow_double.decorator arrow_double_rev.decorator arrow_header.decorator arrow_single.decorator arrow_single_rev.decorator];
+@a = [A a];
+@b = [B b];
+@c = [C c];
 @d = [D d];
 @e = [E e];
 @f = [F f];
+@g = [G g];
+@h = [H h];
 @i = [I i];
+@j = [J j];
+@k = [K k];
+@l = [L l];
 @m = [M m];
+@n = [N n];
 @o = [O o];
+@p = [P p];
+@q = [Q q];
+@r = [R r];
+@s = [S s];
 @t = [T t];
+@u = [U u];
+@v = [V v];
+@w = [W w];
 @x = [X x];
+@y = [Y y];
+@z = [Z z];
 @zero = [zero zero.zero];
 #/< otclasses
 #< classes
@@ -1477,6 +1494,13 @@ feature calt {
   } escape;
 
 # ================[III]================
+
+  # Cl
+  lookup C_l.liga {
+    ignore sub C' l l;
+    sub SPC l' by C_l.liga;
+    sub C' l by SPC;
+  } C_l.liga;
   # al
   lookup a_l.liga {
     ignore sub a' l l;
@@ -1551,6 +1575,7 @@ feature calt {
     sub SPC l' by l_l.liga;
     sub l' l by SPC;
   } l_l.liga;
+
 # ===================================
 } calt;
 feature ccmp {
@@ -1795,8 +1820,13 @@ feature cv02 {
   sub aring by aring.cv02;
   sub atilde by atilde.cv02;
   sub ordfeminine by ordfeminine.cv02;
+
+# ================[III]================
+
   sub a_l.liga by a_l.liga.cv02;
   sub a_l_l.liga by a_l_l.liga.cv02;
+
+# =====================================
 } cv02;
 feature cv03 {
   sub i by i.cv03;
@@ -1813,8 +1843,13 @@ feature cv03 {
   sub imacron by imacron.cv03;
   sub iogonek by iogonek.cv03;
   sub itilde by itilde.cv03;
+
+# ================[III]================
+
   sub i_l.liga by i_l.liga.cv03;
   sub i_l_l.liga by i_l_l.liga.cv03;
+
+# =====================================
 } cv03;
 feature cv04 {
   sub l by l.cv04;
@@ -1825,6 +1860,7 @@ feature cv04 {
   sub lslash by lslash.cv04;
 # ================[III]================
 
+  sub C_l.liga by C_l.liga.cv04;
   sub a_l.liga by a_l.liga.cv04;
   sub a_l.liga.cv02 by a_l.liga.cv02.cv04;
   sub c_l.liga by c_l.liga.cv04;
@@ -1865,6 +1901,8 @@ feature ss01 {
   sub j by j.ss01;
   sub jcircumflex by jcircumflex.ss01;
   sub jdotless by jdotless.ss01;
+  sub k by k.ss01;
+  sub kcommaaccent by kcommaaccent.ss01;
   sub l by l.ss01;
   sub lacute by lacute.ss01;
   sub lcaron by lcaron.ss01;
@@ -1882,6 +1920,7 @@ feature ss01 {
   sub ymacron by ymacron.ss01;
   sub ytilde by ytilde.ss01;
 
+  sub C_l.liga by C_l.liga.ss01;
   sub a_l.liga by a_l.liga.ss01;
   sub a_l.liga.cv02 by a_l.liga.cv02.ss01;
   sub c_l.liga by c_l.liga.ss01;
@@ -1905,3 +1944,97 @@ feature ss01 {
 } ss01;
 
 # =====================================
+# split `==`
+feature ss02 {
+  sub equal_equal.liga by equal_equal.liga.ss02;
+  sub equal_equal_equal.liga by equal_equal_equal.liga.ss02;
+  sub exclam_equal.liga by exclam_equal.liga.ss02;
+  sub exclam_equal_equal.liga by exclam_equal_equal.liga.ss02;
+  sub equal_slash_equal.liga by equal_slash_equal.liga.ss02;
+} ss02;
+feature ss03 {
+  # [TRACE]
+  lookup badge_trace.liga.ss03 {
+    sub SPC SPC SPC SPC SPC SPC bracketright' by badge_trace.liga;
+    sub SPC SPC SPC SPC SPC @e' bracketright by SPC;
+    sub SPC SPC SPC SPC @c' @e bracketright by SPC;
+    sub SPC SPC SPC @a' @c @e bracketright by SPC;
+    sub SPC SPC @r' @a @c @e bracketright by SPC;
+    sub SPC @t' @r @a @c @e bracketright by SPC;
+    sub bracketleft' @t @r @a @c @e bracketright by SPC;
+  } badge_trace.liga.ss03;
+
+  # [DEBUG]
+  lookup badge_debug.liga.ss03 {
+    sub SPC SPC SPC SPC SPC SPC bracketright' by badge_debug.liga;
+    sub SPC SPC SPC SPC SPC @g' bracketright by SPC;
+    sub SPC SPC SPC SPC @u' @g bracketright by SPC;
+    sub SPC SPC SPC @b' @u @g bracketright by SPC;
+    sub SPC SPC @e' @b @u @g bracketright by SPC;
+    sub SPC @d' @e @b @u @g bracketright by SPC;
+    sub bracketleft' @d @e @b @u @g bracketright by SPC;
+  } badge_debug.liga.ss03;
+
+  # [INFO]
+  lookup badge_info.liga.ss03 {
+    sub SPC SPC SPC SPC SPC bracketright' by badge_info.liga;
+    sub SPC SPC SPC SPC @o' bracketright by SPC;
+    sub SPC SPC SPC @f' @o bracketright by SPC;
+    sub SPC SPC @n' @f @o bracketright by SPC;
+    sub SPC @i' @n @f @o bracketright by SPC;
+    sub bracketleft' @i @n @f @o bracketright by SPC;
+  } badge_info.liga.ss03;
+
+  # [WARN]
+  lookup badge_warn.liga.ss03 {
+    sub SPC SPC SPC SPC SPC bracketright' by badge_warn.liga;
+    sub SPC SPC SPC SPC @n' bracketright by SPC;
+    sub SPC SPC SPC @r' @n bracketright by SPC;
+    sub SPC SPC @a' @r @n bracketright by SPC;
+    sub SPC @w' @a @r @n bracketright by SPC;
+    sub bracketleft' @w @a @r @n bracketright by SPC;
+  } badge_warn.liga.ss03;
+
+  # [ERROR]
+  lookup badge_error.liga.ss03 {
+    sub SPC SPC SPC SPC SPC SPC bracketright' by badge_error.liga;
+    sub SPC SPC SPC SPC SPC @r' bracketright by SPC;
+    sub SPC SPC SPC SPC @o' @r bracketright by SPC;
+    sub SPC SPC SPC @r' @o @r bracketright by SPC;
+    sub SPC SPC @e' @r @o @r bracketright by SPC;
+    sub SPC @e' @r @r @o @r bracketright by SPC;
+    sub bracketleft' @e @r @r @o @r bracketright by SPC;
+  } badge_error.liga.ss03;
+
+  # [FATAL]
+  lookup badge_fatal.liga.ss03 {
+    sub SPC SPC SPC SPC SPC SPC bracketright' by badge_fatal.liga;
+    sub SPC SPC SPC SPC SPC @l' bracketright by SPC;
+    sub SPC SPC SPC SPC @a' @l bracketright by SPC;
+    sub SPC SPC SPC @t' @a @l bracketright by SPC;
+    sub SPC SPC @a' @t @a @l bracketright by SPC;
+    sub SPC @f' @a @t @a @l bracketright by SPC;
+    sub bracketleft' @f @a @t @a @l bracketright by SPC;
+  } badge_fatal.liga.ss03;
+
+  # [TODO]
+  lookup badge_todo.liga.ss03 {
+    sub SPC SPC SPC SPC SPC bracketright' by badge_todo.liga;
+    sub SPC SPC SPC SPC @o' bracketright by SPC;
+    sub SPC SPC SPC @d' @o bracketright by SPC;
+    sub SPC SPC @o' @d @o bracketright by SPC;
+    sub SPC @t' @o @d @o bracketright by SPC;
+    sub bracketleft' @t @o @d @o bracketright by SPC;
+  } badge_todo.liga.ss03;
+
+  # [FIXME]
+  lookup badge_fixme.liga.ss03 {
+    sub SPC SPC SPC SPC SPC SPC bracketright' by badge_fixme.liga;
+    sub SPC SPC SPC SPC SPC @e' bracketright by SPC;
+    sub SPC SPC SPC SPC @m' @e bracketright by SPC;
+    sub SPC SPC SPC @x' @m @e bracketright by SPC;
+    sub SPC SPC @i' @x @m @e bracketright by SPC;
+    sub SPC @f' @i @x @m @e bracketright by SPC;
+    sub bracketleft' @f @i @x @m @e bracketright by SPC;
+  } badge_fixme.liga.ss03;
+} ss03;
