@@ -23,9 +23,9 @@ Base on `Jetbrains Mono`, and **much "Opinioned"**
   - cv03: normal `i`
   - cv04: normal `l`
   - cv98: full width `…`(ellipsis) and `—`(emdash) support for Maple Mono NF CN
-  - cv99: manually set TW punctuations for Maple Mono NF CN
+  - cv99: TW punctuations support for Maple Mono NF CN
   - ss01: normal italic `f l i j x y`
-  - ss02: splited `==` / `===` / `!=` / `!==` / `=/=`
+  - ss02: split `==` / `===` / `!=` / `!==` / `=/=` / `>=` / `<=`
   - ss03: arbitrary plain text tags
 
 ## Build

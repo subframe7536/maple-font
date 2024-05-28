@@ -25,7 +25,7 @@
 @class_hyphen_asciitilde.liga = [hyphen_asciitilde.liga less_asciitilde.liga less_asciitilde_asciitilde.liga asciitilde_asciitilde.liga SPC];
 @class_period_question.liga = [period_question.liga colon_question.liga question_question.liga question_question_question.liga numbersign_question.liga SPC];
 @noexport = [arrow_double.decorator arrow_double_rev.decorator arrow_header.decorator arrow_single.decorator arrow_single_rev.decorator];
-@a = [A a];
+@a = [A a a.cv02];
 @b = [B b];
 @c = [C c];
 @d = [D d];
@@ -33,10 +33,10 @@
 @f = [F f];
 @g = [G g];
 @h = [H h];
-@i = [I i];
+@i = [I i i.cv03];
 @j = [J j];
 @k = [K k];
-@l = [L l];
+@l = [L l l.cv04];
 @m = [M m];
 @n = [N n];
 @o = [O o];
@@ -1763,6 +1763,8 @@ feature cv04 {
 } cv04;
 # split `==`
 feature ss02 {
+  sub less_equal.liga by less_equal.liga.ss02;
+  sub greater_equal.liga by greater_equal.liga.ss02;
   sub equal_equal.liga by equal_equal.liga.ss02;
   sub equal_equal_equal.liga by equal_equal_equal.liga.ss02;
   sub exclam_equal.liga by exclam_equal.liga.ss02;
@@ -1818,7 +1820,7 @@ feature ss03 {
     sub SPC SPC SPC SPC SPC @r' bracketright by SPC;
     sub SPC SPC SPC SPC @o' @r bracketright by SPC;
     sub SPC SPC SPC @r' @o @r bracketright by SPC;
-    sub SPC SPC @e' @r @o @r bracketright by SPC;
+    sub SPC SPC @r' @r @o @r bracketright by SPC;
     sub SPC @e' @r @r @o @r bracketright by SPC;
     sub bracketleft' @e @r @r @o @r bracketright by SPC;
   } badge_error.liga.ss03;
