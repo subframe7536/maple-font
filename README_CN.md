@@ -48,7 +48,7 @@
 
 | 平台       | 命令                                                                                                                                     |
 | :--------- | :--------------------------------------------------------------------------------------------------------------------------------------- |
-| macOS      | ` brew tap homebrew/cask-fonts && brew install font-maple`                                                                               |
+| macOS      | `brew install --cask font-maple`                                                                                                         |
 | Arch Linux | `paru -S ttf-maple-latest`                                                                                                               |
 | Others     | 从 [releases](https://github.com/subframe7536/Maple-font/releases) 中下载安装，[国内地址](https://gitee.com/subframe7536/Maple/releases) |
 

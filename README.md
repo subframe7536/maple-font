@@ -50,7 +50,7 @@ Inspired by [Source Code Pro](https://github.com/adobe-fonts/source-code-pro), [
 
 | Platform   | Command                                                                     |
 | :--------- | :-------------------------------------------------------------------------- |
-| macOS      | `brew tap homebrew/cask-fonts && brew install font-maple`                   |
+| macOS      | `brew install --cask font-maple`                                            |
 | Arch Linux | `paru -S ttf-maple`                                                         |
 | Others     | Download in [releases](https://github.com/subframe7536/Maple-font/releases) |
 
