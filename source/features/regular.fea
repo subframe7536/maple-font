@@ -1760,6 +1760,7 @@ feature cv04 {
   sub lcommaaccent by lcommaaccent.cv04;
   sub ldot by ldot.cv04;
   sub lslash by lslash.cv04;
+  sub one by one.cv04;
 } cv04;
 # split `==`
 feature ss02 {

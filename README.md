@@ -2,7 +2,7 @@
 
 Open source monospace & nerd font with round corner and ligatures.
 
-Base on `Jetbrains Mono`, and **much "Opinioned"**
+Base on `Jetbrains Mono` and **much "Opinioned"**
 
 ## Features
 
@@ -20,8 +20,8 @@ Base on `Jetbrains Mono`, and **much "Opinioned"**
   - zero: dot style `0`
   - cv01: normal `@ $ & Q`
   - cv02: normal `a`
-  - cv03: normal `i`
-  - cv04: normal `l`
+  - cv03: alternative `i`
+  - cv04: alternative `l` and `1` (for better differentiation)
   - cv98: full width `…`(ellipsis) and `—`(emdash) support for Maple Mono NF CN
   - cv99: TW punctuations support for Maple Mono NF CN
   - ss01: normal italic `f l i j x y`

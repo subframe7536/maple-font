@@ -1859,6 +1859,7 @@ feature cv04 {
   sub lcommaaccent by lcommaaccent.cv04;
   sub ldot by ldot.cv04;
   sub lslash by lslash.cv04;
+  sub one by one.cv04;
 # ================[III]================
 
   sub C_l.liga by C_l.liga.cv04;
