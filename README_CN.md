@@ -76,6 +76,7 @@
 
 <p align="center">
 <img src="./img/option.png"/><br>
+<h3 align="center">在 V7 中，字体特性有一些改变，详见 <a href="https://github.com/subframe7536/maple-font/tree/variable?tab=readme-ov-file#features">文档</h3><br/>
 兼容性和使用方法 <a href="https://github.com/tonsky/FiraCode#editor-compatibility-list" target="_blank">FiraCode README</a>
 </p>
 
