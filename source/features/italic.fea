@@ -51,6 +51,7 @@
 @y = [Y y y.ss01];
 @z = [Z z];
 @zero = [zero zero.zero];
+@escape = [backslash n r t quotesingle quotedbl bracketleft bracketright parenleft parenright braceleft braceright];
 @a_l = [a_l.liga a_l.liga.cv02 a_l.liga.cv04 a_l.liga.cv02.cv04 a_l.liga.ss01 a_l.liga.cv02.ss01];
 #/< otclasses
 #< classes
@@ -1491,7 +1492,8 @@ feature calt {
   } xml_empty_comment.liga;
 
   lookup escape {
-    sub backslash' [backslash n r t quotesingle quotedbl bracketleft bracketright parenleft parenright braceleft braceright] by backslash.liga;
+    ignore sub backslash.liga backslash' @escape;
+    sub backslash' @escape by backslash.liga;
   } escape;
 
 # ================[III]================
@@ -1795,6 +1797,10 @@ feature cv01 {
   sub less_hyphen_greater.liga by less_hyphen_greater.liga.cv01;
   sub less_less_hyphen.liga by less_less_hyphen.liga.cv01;
   sub hyphen_greater_greater.liga by hyphen_greater_greater.liga.cv01;
+
+  sub less_exclam_hyphen_hyphen.liga by less_exclam_hyphen_hyphen.liga.cv01;
+  sub less_numbersign_hyphen_hyphen.liga by less_numbersign_hyphen_hyphen.liga.cv01;
+  sub xml_empty_comment.liga by xml_empty_comment.liga.cv01;
 } cv01;
 feature cv02 {
   sub a by a.cv02;

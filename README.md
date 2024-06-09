@@ -4,6 +4,8 @@ Open source monospace & nerd font with round corner and ligatures.
 
 Base on `Jetbrains Mono` and **much "Opinioned"**
 
+![](https://github.com/subframe7536/maple-font/assets/78338239/303d216b-4893-4a6d-9a49-1a50306e447e)
+
 ## Features
 
 - Round corner
@@ -18,7 +20,7 @@ Base on `Jetbrains Mono` and **much "Opinioned"**
     - for logger: `[TRACE]` / `[DEBUG]` / `[INFO]` / `[WARN]` / `[ERROR]` / `[FATAL]`
 - Font features
   - zero: dot style `0`
-  - cv01: normal `@ $ & Q`
+  - cv01: normal `@ $ & Q => ->`
   - cv02: normal `a`
   - cv03: alternative `i`
   - cv04: alternative `l` and `1` (for better differentiation)
