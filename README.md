@@ -1,3 +1,11 @@
+# When will V7 become stable?
+
+It is almost stable now.
+
+As a side project during my weekends, I will release a new beta version to fix the bugs reported or encountered in my daily coding within 1-2 weeks, and do some work on the new website and build tools.
+
+If everything goes well, the stable version will be released later this year.
+
 # Maple Font (WIP)
 
 Open source monospace & nerd font with round corner and ligatures.
