@@ -313,7 +313,7 @@ def compress_folder(source_folder_path, target_path):
 
 
 # write config to output path
-with open(path.join(output_path, "build-config.json"), "w") as config_file:
+with open(path.join(output_path, "build-config.json"), "w", encoding="utf-8") as config_file:
     config_file.write(conf)
 
 if release_mode:
@@ -334,7 +334,7 @@ if release_mode:
         print("archieve:", f)
 
     # write sha1
-    with open(path.join(output_path, "release", "sha1.json"), "w") as hash_file:
+    with open(path.join(output_path, "release", "sha1.json"), "w", encoding="utf-8") as hash_file:
         hash_file.write(json.dumps(hash_map, indent=4))
 
     # copy woff
