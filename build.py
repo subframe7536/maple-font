@@ -528,7 +528,7 @@ def main():
     # =========================================================================================
 
     # write config to output path
-    with open(path.join(output_dir, "build-config.json"), "w") as config_file:
+    with open(path.join(output_dir, "build-config.json"), "w", encoding="utf-8") as config_file:
         config_file.write(conf)
 
     if release_mode:
@@ -548,7 +548,7 @@ def main():
             print(f"archieve: {f}")
 
         # write sha1
-        with open(path.join(release_dir, "sha1.json"), "w") as hash_file:
+        with open(path.join(release_dir, "sha1.json"), "w", encoding="utf-8") as hash_file:
             hash_file.write(json.dumps(hash_map, indent=4))
 
         # copy woff2 to root
