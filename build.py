@@ -463,6 +463,7 @@ def main():
         run(f"ftcli fix strip-names {output_ttf}")
         run(f"ftcli ttf dehint {output_ttf}")
         run(f"ftcli ttf fix-contours {output_ttf}")
+        run(f"ftcli ttf remove-overlaps {output_ttf}")
 
         with Pool(pool_size) as p:
             p.map(build_mono, listdir(output_ttf))
@@ -515,6 +516,8 @@ def main():
             print("instantiating CN font, be patient...")
             print("====================================")
             run(f"ftcli converter vf2i {src_dir}/cn -out {cn_static_path}")
+            run(f"ftcli ttf fix-contours {cn_static_path}")
+            run(f"ftcli ttf remove-overlaps {cn_static_path}")
 
         makedirs(output_nf_cn, exist_ok=True)
 
