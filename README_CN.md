@@ -48,9 +48,9 @@
 
 | 平台/源           | 安装方法                                                                                                                             |
 | :--------------- | :---------------------------------------------------------------------------------------------------------------------------------- |
-| macOS            | 运行`brew install --cask font-maple`                                                                                                 |
-| Arch Linux AUR   | 运行`paru -S ttf-maple`                                                                                                              |
-| ArchLinuxCN Repo | 以root权限运行`pacman -S ttf-maple`                                                                                                            |
+| macOS            | `brew install --cask font-maple`                                                                                                 |
+| Arch Linux AUR   | `paru -S ttf-maple`                                                                                                              |
+| ArchLinuxCN Repo | `sudo pacman -S ttf-maple`                                                                                                            |
 | Others           | 从 [releases](https://github.com/subframe7536/Maple-font/releases) 中下载安装，[国内地址](https://gitee.com/subframe7536/Maple/releases)|
 
 
