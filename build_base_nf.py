@@ -64,10 +64,10 @@ def build_nf(mono: bool):
     nf_font = TTFont(_path)
     remove(_path)
 
-    set_font_name(nf_font, f"{family_name} NF", 1)
+    set_font_name(nf_font, f"{family_name} NF Base{' Mono' if mono else ''}", 1)
     set_font_name(nf_font, style_name, 2)
-    set_font_name(nf_font, f"{family_name} NF {style_name}", 4)
-    set_font_name(nf_font, f"{family_name.replace(' ', '-')}-NF-{style_name}", 6)
+    set_font_name(nf_font, f"{family_name} NF Base{' Mono' if mono else ''} {style_name}", 4)
+    set_font_name(nf_font, f"{family_name.replace(' ', '-')}-NF-Base{'-Mono' if mono else ''}-{style_name}", 6)
     del_font_name(nf_font, 16)
     del_font_name(nf_font, 17)
 
@@ -83,7 +83,7 @@ def subset(mono: bool):
     subsetter.subset(font)
 
     # font.save("source/NerdFontBase.ttf")
-    font.save(f"source/NerdFontBase{'Mono' if mono else ''}.ttf")
+    font.save(f"source/MapleMono-NF-Base{'-Mono' if mono else ''}.ttf")
     font.close()
 
 

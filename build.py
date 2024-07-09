@@ -318,7 +318,7 @@ def build_nf(f: str, use_font_patcher: bool):
         return merger.merge(
             [
                 path.join(ttf_dir_path, font_basename),
-                f"{src_dir}/NerdFontBase{'Mono' if build_config['nerd_font']['mono'] else ''}.ttf",
+                f"{src_dir}/MapleMono-NF-Base{'-Mono' if build_config['nerd_font']['mono'] else ''}.ttf",
             ]
         )
 
