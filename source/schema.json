@@ -1,0 +1,108 @@
+{
+  "title": "Build Configuration Schema",
+  "description": "Schema for the build configuration of a font project",
+  "type": "object",
+  "properties": {
+    "pool_size": {
+      "type": "number",
+      "description": "The number of parallel tasks. When run in codespace, this will be 1",
+      "default": 4
+    },
+    "family_name": {
+      "type": "string",
+      "description": "The font family name",
+      "default": "Maple Mono"
+    },
+    "use_hinted": {
+      "type": "boolean",
+      "description": "Whether to use hinted TTF as base font",
+      "default": true
+    },
+    "nerd_font": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean",
+          "description": "Whether to enable Nerd Font",
+          "default": true
+        },
+        "version": {
+          "type": "string",
+          "description": "Target version of Nerd Font. If font-patcher not exists when need to use it or there is no prebuild font for current version, will download from Github",
+          "default": "3.2.1"
+        },
+        "mono": {
+          "type": "boolean",
+          "description": "Whether to make icon width fixed",
+          "default": false
+        },
+        "use_font_patcher": {
+          "type": "boolean",
+          "description": "Prefer to use Font Patcher instead of using prebuilt NerdFont base font. If you want to custom build nerd font using font-patcher, you need to set this to True",
+          "default": false
+        },
+        "glyphs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": ["--complete"],
+          "description": "Symbol Fonts settings. if is not [\"--complete\"], will use font-patcher to generate fonts. Full args: https://github.com/ryanoasis/nerd-fonts?tab=readme-ov-file#font-patcher"
+        },
+        "extra_args": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Extra arguments for font-patcher, default args: [\"-l\", \"--careful\", \"--outputdir\", output_nf], if \"mono\" is set to true, \"--mono\" will be added, full args: https://github.com/ryanoasis/nerd-fonts?tab=readme-ov-file#font-patcher"
+        }
+      },
+      "required": [
+        "enable",
+        "version",
+        "mono",
+        "use_font_patcher",
+        "glyphs",
+        "extra_args"
+      ]
+    },
+    "cn": {
+      "type": "object",
+      "properties": {
+        "enable": {
+          "type": "boolean",
+          "description": "Whether to build Chinese fonts. Skip if Chinese base fonts are not founded",
+          "default": true
+        },
+        "with_nerd_font": {
+          "type": "boolean",
+          "description": "Whether to patch Nerd Font",
+          "default": true
+        },
+        "fix_meta_table": {
+          "type": "boolean",
+          "description": "Fix design language and supported languages in META table",
+          "default": true
+        },
+        "clean_cache": {
+          "type": "boolean",
+          "description": "Whether to clean instantiated base CN fonts",
+          "default": false
+        }
+      },
+      "required": [
+        "enable",
+        "with_nerd_font",
+        "fix_meta_table",
+        "clean_cache"
+      ]
+    }
+  },
+  "required": [
+    "family_name",
+    "use_hinted",
+    "nerd_font",
+    "cn"
+  ]
+}

@@ -19,13 +19,18 @@ release_mode = True
 # whether to clean built fonts
 clean_cache = True
 # build process pool size
-pool_size = 4 if not getenv("CODESPACE_NAME") else 2
 
 build_config = {
+    # the number of parallel tasks
+    # when run in codespace, this will be 1
+    "pool_size": 4 if not getenv("CODESPACE_NAME") else 1,
+    # font family name
     "family_name": "Maple Mono",
     # whether to use hinted ttf as base font
     "use_hinted": True,
+    # nerd font settings
     "nerd_font": {
+        # whether to enable Nerd Font
         "enable": True,
         # target version of Nerd Font if font-patcher not exists
         "version": "3.2.1",
@@ -34,7 +39,7 @@ build_config = {
         # prefer to use Font Patcher instead of using prebuild NerdFont base font
         # if you want to custom build nerd font using font-patcher, you need to set this to True
         "use_font_patcher": False,
-        # Symbol Fonts settings.
+        # symbol Fonts settings.
         # default args: ["--complete"]
         # if not, will use font-patcher to generate fonts
         # full args: https://github.com/ryanoasis/nerd-fonts?tab=readme-ov-file#font-patcher
@@ -45,7 +50,10 @@ build_config = {
         # full args: https://github.com/ryanoasis/nerd-fonts?tab=readme-ov-file#font-patcher
         "extra_args": [],
     },
+    # chinese font settings
     "cn": {
+        # whether to build Chinese fonts
+        # skip if Chinese base fonts are not founded
         "enable": True,
         # whether to patch Nerd Font
         "with_nerd_font": True,
@@ -55,6 +63,15 @@ build_config = {
         "clean_cache": False,
     },
 }
+
+try:
+    with open("config.json", "r") as f:
+        data = json.load(f)
+        if "$schema" in data:
+            del data["$schema"]
+        build_config = {**build_config, **data}
+except:
+    print("config.json is not found. Use default config.")
 
 package_name = "foundryToolsCLI"
 package_installed = importlib.util.find_spec(package_name) is not None
@@ -465,7 +482,7 @@ def main():
         run(f"ftcli ttf fix-contours {output_ttf}")
         run(f"ftcli ttf remove-overlaps {output_ttf}")
 
-        with Pool(pool_size) as p:
+        with Pool(build_config["pool_size"]) as p:
             p.map(build_mono, listdir(output_ttf))
 
     # =========================================================================================
@@ -488,13 +505,11 @@ def main():
             )
             use_font_patcher = False
 
-        with Pool(pool_size) as p:
+        with Pool(build_config["pool_size"]) as p:
             _build_fn = partial(build_nf, use_font_patcher=use_font_patcher)
             _version = build_config["nerd_font"]["version"]
             _name = (
-                f"FontPatcher v{_version}"
-                if use_font_patcher
-                else "prebuild Nerd Font"
+                f"FontPatcher v{_version}" if use_font_patcher else "prebuild Nerd Font"
             )
             print("========================================")
             print(f"patch Nerd Font using {_name}")
@@ -521,7 +536,7 @@ def main():
 
         makedirs(output_nf_cn, exist_ok=True)
 
-        with Pool(pool_size) as p:
+        with Pool(build_config["pool_size"]) as p:
             p.map(build_cn, listdir(cn_base_font_dir))
 
     run(f"ftcli name del-mac-names -r {output_dir}")
@@ -531,7 +546,9 @@ def main():
     # =========================================================================================
 
     # write config to output path
-    with open(path.join(output_dir, "build-config.json"), "w", encoding="utf-8") as config_file:
+    with open(
+        path.join(output_dir, "build-config.json"), "w", encoding="utf-8"
+    ) as config_file:
         config_file.write(conf)
 
     if release_mode:
@@ -551,7 +568,9 @@ def main():
             print(f"archieve: {f}")
 
         # write sha1
-        with open(path.join(release_dir, "sha1.json"), "w", encoding="utf-8") as hash_file:
+        with open(
+            path.join(release_dir, "sha1.json"), "w", encoding="utf-8"
+        ) as hash_file:
             hash_file.write(json.dumps(hash_map, indent=4))
 
         # copy woff2 to root
