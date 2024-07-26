@@ -87,7 +87,7 @@ compatibility & usage: in <a href="https://github.com/tonsky/FiraCode#editor-com
 
 code theme: [vscode-theme-maple](https://github.com/subframe7536/vscode-theme-maple)
 
-generate by: [VSCodeSnap](https://github.com/luisllamasbinaburo/VSCodeSnap)
+~~generate by: [VSCodeSnap](https://github.com/luisllamasbinaburo/VSCodeSnap)~~ Seems deprecated, so I made a new one: [CodeImg](https://github.com/subframe7536/vscode-codeimg)
 
 <details>
 <summary><b>Cli (click to expand!)</b></summary>
