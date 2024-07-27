@@ -20,6 +20,7 @@
     },
     "nerd_font": {
       "type": "object",
+      "description": "Config for Nerd Font",
       "properties": {
         "enable": {
           "type": "boolean",
@@ -69,6 +70,7 @@
     },
     "cn": {
       "type": "object",
+      "description": "Config for Chinese font",
       "properties": {
         "enable": {
           "type": "boolean",

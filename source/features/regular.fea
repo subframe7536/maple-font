@@ -90,6 +90,7 @@ feature calt {
   # {{
   lookup braceleft_braceleft.liga {
     ignore sub braceleft braceleft' braceleft;
+    ignore sub braceleft' braceleft braceleft;
     ignore sub braceleft' braceleft hyphen;
     ignore sub braceleft' braceleft exclam;
     sub SPC braceleft' by braceleft_braceleft.liga;
@@ -98,6 +99,7 @@ feature calt {
 
   # }}
   lookup braceright_braceright.liga {
+    ignore sub braceright' braceright braceright;
     ignore sub braceright braceright' braceright;
     ignore sub hyphen braceright' braceright;
     sub SPC braceright' by braceright_braceright.liga;
@@ -137,6 +139,7 @@ feature calt {
   lookup braceleft_bar.liga {
     ignore sub braceleft braceleft' bar;
     ignore sub braceleft' bar bar;
+    ignore sub braceleft' bar braceright;
     sub SPC bar' by braceleft_bar.liga;
     sub braceleft' bar by SPC;
   } braceleft_bar.liga;
@@ -145,6 +148,7 @@ feature calt {
   lookup bar_braceright.liga {
     ignore sub bar bar' braceright;
     ignore sub bar' bar braceright;
+    ignore sub braceleft bar' braceright;
     sub SPC braceright' by bar_braceright.liga;
     sub bar' braceright by SPC;
   } bar_braceright.liga;
@@ -152,13 +156,14 @@ feature calt {
   # [|
   lookup bracketleft_bar.liga {
     ignore sub bracketleft bracketleft' bar;
+    ignore sub bracketleft' bar bracketright;
     sub SPC bar' by bracketleft_bar.liga;
     sub bracketleft' bar by SPC;
   } bracketleft_bar.liga;
 
   # |]
   lookup bar_bracketright.liga {
-    ignore sub braceleft bar' bracketright;
+    ignore sub bracketleft bar' bracketright;
     ignore sub bar' bracketright bracketright;
     sub SPC bracketright' by bar_bracketright.liga;
     sub bar' bracketright by SPC;
@@ -173,6 +178,7 @@ feature calt {
     ignore sub bracketleft' less dollar;
     ignore sub bracketleft' less slash;
     ignore sub bracketleft' less equal;
+    ignore sub bracketleft' less greater;
     sub SPC less' by bracketleft_less.liga;
     sub bracketleft' less by SPC;
   } bracketleft_less.liga;
@@ -543,6 +549,7 @@ feature calt {
     ignore sub dollar greater' bracketright;
     ignore sub slash greater' bracketright;
     ignore sub equal greater' bracketright;
+    ignore sub less greater' bracketright;
     ignore sub greater' bracketright bracketright;
     sub SPC bracketright' by greater_bracketright.liga;
     sub greater' bracketright by SPC;
@@ -1864,3 +1871,9 @@ feature ss03 {
     sub bracketleft' @f @i @x @m @e bracketright by SPC;
   } badge_fixme.liga.ss03;
 } ss03;
+
+feature ss04 {
+  sub underscore_underscore.liga by underscore_underscore.liga.ss04;
+  sub numbersign_underscore_underscore.liga by numbersign_underscore_underscore.liga.ss04;
+  sub asterisk_asterisk_asterisk.liga by asterisk_asterisk_asterisk.liga.ss04;
+} ss04;

@@ -40,6 +40,7 @@ Base on `Jetbrains Mono` and **much "Opinioned"**
   - ss01: normal italic `f l i j x y`
   - ss02: split `==` / `===` / `!=` / `!==` / `=/=` / `>=` / `<=`
   - ss03: arbitrary plain text tags
+  - ss04: normal `__` / `#__` / `***`
 
 ## Build
 
