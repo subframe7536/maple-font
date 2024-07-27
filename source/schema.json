@@ -60,7 +60,7 @@
         },
         "cv98": {
           "type": "string",
-          "description": "full width '…'(ellipsis) and '—'(emdash) support for Maple Mono NF CN",
+          "description": "Full width '…'(ellipsis) and '—'(emdash) support for Maple Mono NF CN",
           "enum": [
             "ignore",
             "disable",

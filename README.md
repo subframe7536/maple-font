@@ -31,16 +31,16 @@ Base on `Jetbrains Mono` and **much "Opinioned"**
     - for logger: `[TRACE]` / `[DEBUG]` / `[INFO]` / `[WARN]` / `[ERROR]` / `[FATAL]`
 - Font features
   - zero: dot style `0`
-  - cv01: normal `@ $ & Q => ->`
-  - cv02: normal `a`
-  - cv03: alternative `i`
-  - cv04: alternative `l` and `1` (for better differentiation)
-  - cv98: full width `…`(ellipsis) and `—`(emdash) support for Maple Mono NF CN
-  - cv99: TW punctuations support for Maple Mono NF CN
-  - ss01: normal italic `f l i j x y`
-  - ss02: split `==` / `===` / `!=` / `!==` / `=/=` / `>=` / `<=`
-  - ss03: arbitrary plain text tags
-  - ss04: normal `__` / `#__` / `***`
+  - cv01: Classic `@` / `$` / `&` / `Q` / `=>` / `->`
+  - cv02: Alternative `a` (with top alarm)
+  - cv03: Alternative `i` (without bottom left bar)
+  - cv04: Alternative `l` (with bottom left bar) and `1` (without bottom bar)
+  - cv98: Full width `…`(ellipsis) and `—`(emdash) support for Maple Mono NF CN
+  - cv99: Traditional punctuations support for Maple Mono NF CN
+  - ss01: Non-cursive italic style `f l i j x y`
+  - ss02: Disable ligautures on equals like `==` / `!=` / `<=`
+  - ss03: Ignore cases on all tags
+  - ss04: Disable ligatures on `__`, `#__`, `***`
 
 ## Build
 
