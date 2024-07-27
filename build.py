@@ -28,6 +28,18 @@ build_config = {
     "family_name": "Maple Mono",
     # whether to use hinted ttf as base font
     "use_hinted": True,
+    "feature_freeze": {
+        "cv01": "ignore",
+        "cv02": "ignore",
+        "cv03": "ignore",
+        "cv04": "ignore",
+        "cv98": "ignore",
+        "cv99": "ignore",
+        "ss01": "ignore",
+        "ss02": "ignore",
+        "ss03": "ignore",
+        "ss04": "ignore",
+    },
     # nerd font settings
     "nerd_font": {
         # whether to enable Nerd Font
@@ -283,6 +295,53 @@ def add_cv98(font):
                 lang_sys_rec.LangSys.FeatureIndex.append(feature_index)
 
 
+def freeze_feature(font: TTFont):
+    # check feature list
+    feature_record = font["GSUB"].table.FeatureList.FeatureRecord
+    feature_dict = {
+        feature.FeatureTag: feature.Feature
+        for feature in feature_record
+        if feature.FeatureTag != "calt"
+    }
+
+    calt_features = [
+        feature.Feature for feature in feature_record if feature.FeatureTag == "calt"
+    ]
+
+    # Process features
+    for feature_tag, status in build_config["feature_freeze"].items():
+        feature = feature_dict.get(feature_tag)
+        if not feature or status == "ignore":
+            continue
+
+        if status == "disable":
+            feature.LookupListIndex = []
+            continue
+
+        if feature_tag in ["ss03"]:
+            # Enable by moving rules into "calt"
+            for calt_feat in calt_features:
+                calt_feat.LookupListIndex.extend(feature.LookupListIndex)
+        else:
+            # Enable by replacing data in glyf and hmtx tables
+            glyph_dict = font["glyf"].glyphs
+            hmtx_dict = font["hmtx"].metrics
+            for index in feature.LookupListIndex:
+                lookup = font["GSUB"].table.LookupList.Lookup[index]
+                for old_key, new_key in lookup.SubTable[0].mapping.items():
+                    if (
+                        old_key in glyph_dict
+                        and old_key in hmtx_dict
+                        and new_key in glyph_dict
+                        and new_key in hmtx_dict
+                    ):
+                        glyph_dict[old_key] = glyph_dict[new_key]
+                        hmtx_dict[old_key] = hmtx_dict[new_key]
+                    else:
+                        print(f"{old_key} or {new_key} does not exist")
+                        return
+
+
 def build_mono(f: str):
     _path = path.join(output_ttf, f)
     font = TTFont(_path)
@@ -313,6 +372,8 @@ def build_mono(f: str):
         font["OS/2"].usWeightClass = 250
     elif style_name1 == " ExtraLight":
         font["OS/2"].usWeightClass = 275
+
+    freeze_feature(font)
 
     font.save(_path)
     font.close()

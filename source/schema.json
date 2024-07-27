@@ -18,6 +18,111 @@
       "description": "Whether to use hinted TTF as base font",
       "default": true
     },
+    "feature_freeze": {
+      "type": "object",
+      "description": "Freeze some font features \n enable: enable font features by default \n disable: remove some font features \n ignore: skip handle target font features",
+      "properties": {
+        "cv01": {
+          "type": "string",
+          "description": "Classic '@', '$', '&', 'Q', '=>', '->'",
+          "enum": [
+            "ignore",
+            "disable",
+            "enable"
+          ]
+        },
+        "cv02": {
+          "type": "string",
+          "description": "Alternative 'a' (with top alarm)",
+          "enum": [
+            "ignore",
+            "disable",
+            "enable"
+          ]
+        },
+        "cv03": {
+          "type": "string",
+          "description": "Alternative 'i' (without bottom left bar)",
+          "enum": [
+            "ignore",
+            "disable",
+            "enable"
+          ]
+        },
+        "cv04": {
+          "type": "string",
+          "description": "Alternative 'l' (with bottom left bar) and '1' (without bottom bar)",
+          "enum": [
+            "ignore",
+            "disable",
+            "enable"
+          ]
+        },
+        "cv98": {
+          "type": "string",
+          "description": "full width '…'(ellipsis) and '—'(emdash) support for Maple Mono NF CN",
+          "enum": [
+            "ignore",
+            "disable",
+            "enable"
+          ]
+        },
+        "cv99": {
+          "type": "string",
+          "description": "Traditional punctuations support for Maple Mono NF CN",
+          "enum": [
+            "ignore",
+            "disable",
+            "enable"
+          ]
+        },
+        "ss01": {
+          "type": "string",
+          "description": "Non-cursive italic style",
+          "enum": [
+            "ignore",
+            "disable",
+            "enable"
+          ]
+        },
+        "ss02": {
+          "type": "string",
+          "description": "Disable ligautures on equals like '==', '!=', '<='",
+          "enum": [
+            "ignore",
+            "disable",
+            "enable"
+          ]
+        },
+        "ss03": {
+          "type": "string",
+          "description": "Ignore cases on all tags",
+          "enum": [
+            "ignore",
+            "disable",
+            "enable"
+          ]
+        },
+        "ss04": {
+          "type": "string",
+          "description": "Disable ligatures on '__', '#__', '***'",
+          "enum": [
+            "ignore",
+            "disable",
+            "enable"
+          ]
+        },
+        "zero": {
+          "type": "string",
+          "description": "Dot style '0'",
+          "enum": [
+            "ignore",
+            "disable",
+            "enable"
+          ]
+        }
+      }
+    },
     "nerd_font": {
       "type": "object",
       "description": "Config for Nerd Font",
@@ -47,7 +152,9 @@
           "items": {
             "type": "string"
           },
-          "default": ["--complete"],
+          "default": [
+            "--complete"
+          ],
           "description": "Symbol Fonts settings. if is not [\"--complete\"], will use font-patcher to generate fonts. Full args: https://github.com/ryanoasis/nerd-fonts?tab=readme-ov-file#font-patcher"
         },
         "extra_args": {
