@@ -50,7 +50,13 @@ WIP
 
 ### Local
 
-run it in your local machine.
+clone the repo and run in your local machine.
+
+```shell
+git clone https://github.com/subframe7536/maple-font --depth 1 -b variable
+pip install foundrytools-cli
+python build.py
+```
 
 You can change config in `config.json`
 

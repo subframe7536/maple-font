@@ -23,7 +23,7 @@ clean_cache = True
 build_config = {
     # the number of parallel tasks
     # when run in codespace, this will be 1
-    "pool_size": 4 if not getenv("CODESPACE_NAME") else 1,
+    "pool_size": 4,
     # font family name
     "family_name": "Maple Mono",
     # whether to use hinted ttf as base font
@@ -39,6 +39,7 @@ build_config = {
         "ss02": "ignore",
         "ss03": "ignore",
         "ss04": "ignore",
+        "zero": "ignore",
     },
     # nerd font settings
     "nerd_font": {
@@ -153,6 +154,9 @@ output_nf_cn = path.join(output_dir, suffix_compact)
 # https://github.com/ftCLI/FoundryTools-CLI/issues/166#issuecomment-2095756721
 skip_subfamily_list = ["Regular", "Bold", "Italic", "BoldItalic"]
 
+
+def pool_size():
+    return build_config["pool_size"] if not getenv("CODESPACE_NAME") else 1
 
 # run command
 def run(cli: str | list[str], extra_args: list[str] = []) -> None:
@@ -309,24 +313,24 @@ def freeze_feature(font: TTFont):
     ]
 
     # Process features
-    for feature_tag, status in build_config["feature_freeze"].items():
-        feature = feature_dict.get(feature_tag)
-        if not feature or status == "ignore":
+    for tag, status in build_config["feature_freeze"].items():
+        target_feature = feature_dict.get(tag)
+        if not target_feature or status == "ignore":
             continue
 
         if status == "disable":
-            feature.LookupListIndex = []
+            target_feature.LookupListIndex = []
             continue
 
-        if feature_tag in ["ss03"]:
+        if tag in ["ss03"]:
             # Enable by moving rules into "calt"
             for calt_feat in calt_features:
-                calt_feat.LookupListIndex.extend(feature.LookupListIndex)
+                calt_feat.LookupListIndex.extend(target_feature.LookupListIndex)
         else:
             # Enable by replacing data in glyf and hmtx tables
             glyph_dict = font["glyf"].glyphs
             hmtx_dict = font["hmtx"].metrics
-            for index in feature.LookupListIndex:
+            for index in target_feature.LookupListIndex:
                 lookup = font["GSUB"].table.LookupList.Lookup[index]
                 for old_key, new_key in lookup.SubTable[0].mapping.items():
                     if (
@@ -483,6 +487,8 @@ def build_cn(f: str):
     # https://github.com/subframe7536/maple-font/issues/188
     add_cv98(font)
 
+    freeze_feature(font)
+
     if build_config["cn"]["fix_meta_table"]:
         # add code page, Latin / Japanese / Simplify Chinese / Traditional Chinese
         font["OS/2"].ulCodePageRange1 = 1 << 0 | 1 << 17 | 1 << 18 | 1 << 20
@@ -543,8 +549,10 @@ def main():
         run(f"ftcli ttf fix-contours {output_ttf}")
         run(f"ftcli ttf remove-overlaps {output_ttf}")
 
-        with Pool(build_config["pool_size"]) as p:
-            p.map(build_mono, listdir(output_ttf))
+        # with Pool(pool_size()) as p:
+        #     p.map(build_mono, listdir(output_ttf))
+        for ttf_path in listdir(output_ttf):
+            build_mono(ttf_path)
 
     # =========================================================================================
     # ====================================   build NF   =======================================
@@ -566,7 +574,7 @@ def main():
             )
             use_font_patcher = False
 
-        with Pool(build_config["pool_size"]) as p:
+        with Pool(pool_size()) as p:
             _build_fn = partial(build_nf, use_font_patcher=use_font_patcher)
             _version = build_config["nerd_font"]["version"]
             _name = (
@@ -597,7 +605,7 @@ def main():
 
         makedirs(output_nf_cn, exist_ok=True)
 
-        with Pool(build_config["pool_size"]) as p:
+        with Pool(pool_size()) as p:
             p.map(build_cn, listdir(cn_base_font_dir))
 
     run(f"ftcli name del-mac-names -r {output_dir}")

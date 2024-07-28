@@ -5,7 +5,7 @@
   "properties": {
     "pool_size": {
       "type": "number",
-      "description": "The number of parallel tasks. When run in codespace, this will be 1",
+      "description": "The number of parallel tasks. Default is 4. When run in codespace, this will be 1",
       "default": 4
     },
     "family_name": {

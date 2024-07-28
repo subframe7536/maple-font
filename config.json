@@ -2,6 +2,7 @@
   "$schema": "./source/schema.json",
   "family_name": "Maple Mono",
   "use_hinted": true,
+  "pool_size": 4,
   "feature_freeze": {
     "cv01": "ignore",
     "cv02": "ignore",
@@ -12,7 +13,8 @@
     "ss01": "ignore",
     "ss02": "ignore",
     "ss03": "ignore",
-    "ss04": "ignore"
+    "ss04": "ignore",
+    "zero": "ignore"
   },
   "nerd_font": {
     "enable": true,
