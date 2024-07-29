@@ -4,6 +4,7 @@ import json
 import platform
 import shutil
 import subprocess
+import sys
 import time
 from functools import partial
 from multiprocessing import Pool
@@ -26,10 +27,10 @@ if not package_installed:
 # =========================================================================================
 
 # whether to archieve fonts
-release_mode = True
+release_mode = '--no-release' not in sys.argv
+
 # whether to clean built fonts
-clean_cache = True
-# build process pool size
+clean_cache = '--no-clean-cache' not in sys.argv
 
 # =========================================================================================
 
