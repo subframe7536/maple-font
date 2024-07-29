@@ -142,6 +142,10 @@
           "description": "Whether to make icon width fixed",
           "default": false
         },
+        "font_forge_bin":{
+          "type": "string",
+          "description": "Font Forge bin path. Default: \n Windows: C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe \n MacOS: /Applications/FontForge.app/Contents/Resources/opt/local/bin/fontforge\" \n Linux: /usr/bin/fontforge"
+        },
         "use_font_patcher": {
           "type": "boolean",
           "description": "Prefer to use Font Patcher instead of using prebuilt NerdFont base font. If you want to custom build nerd font using font-patcher, you need to set this to True",

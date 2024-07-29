@@ -14,11 +14,40 @@ from fontTools.ttLib import TTFont, newTable
 from fontTools.merge import Merger
 from fontTools.ttLib.tables import otTables
 
+# =========================================================================================
+
+package_name = "foundryToolsCLI"
+package_installed = importlib.util.find_spec(package_name) is not None
+
+if not package_installed:
+    print(f"{package_name} is not found. Please run `pip install foundrytools-cli`")
+    exit(1)
+
+# =========================================================================================
+
 # whether to archieve fonts
 release_mode = True
 # whether to clean built fonts
 clean_cache = True
 # build process pool size
+
+# =========================================================================================
+
+WIN_FONTFORGE_PATH = "C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe"
+MAC_FONTFORGE_PATH = (
+    "/Applications/FontForge.app/Contents/Resources/opt/local/bin/fontforge"
+)
+LINUX_FONTFORGE_PATH = "/usr/bin/fontforge"
+
+system_name = platform.uname()[0]
+
+font_forge_bin = LINUX_FONTFORGE_PATH
+if "Darwin" in system_name:
+    font_forge_bin = MAC_FONTFORGE_PATH
+elif "Windows" in system_name:
+    font_forge_bin = WIN_FONTFORGE_PATH
+
+# =========================================================================================
 
 build_config = {
     # the number of parallel tasks
@@ -49,6 +78,8 @@ build_config = {
         "version": "3.2.1",
         # whether to make icon width fixed
         "mono": False,
+        # font forgee bin path
+        "font_forge_bin": font_forge_bin,
         # prefer to use Font Patcher instead of using prebuild NerdFont base font
         # if you want to custom build nerd font using font-patcher, you need to set this to True
         "use_font_patcher": False,
@@ -86,12 +117,6 @@ try:
 except:
     print("config.json is not found. Use default config.")
 
-package_name = "foundryToolsCLI"
-package_installed = importlib.util.find_spec(package_name) is not None
-
-if not package_installed:
-    print(f"{package_name} is not found. Please run `pip install foundrytools-cli`")
-    exit(1)
 
 family_name = build_config["family_name"]
 family_name_compact = family_name.replace(" ", "")
@@ -108,24 +133,6 @@ output_nf = path.join(output_dir, "NF")
 output_cn = path.join(output_dir, "CN")
 
 ttf_dir_path = output_ttf_autohint if build_config["use_hinted"] else output_ttf
-
-# =========================================================================================
-
-WIN_FONTFORGE_PATH = "C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe"
-MAC_FONTFORGE_PATH = (
-    "/Applications/FontForge.app/Contents/Resources/opt/local/bin/fontforge"
-)
-LINUX_FONTFORGE_PATH = "/usr/local/bin/fontforge"
-
-system_name = platform.uname()[0]
-
-font_forge_bin = LINUX_FONTFORGE_PATH
-if "Darwin" in system_name:
-    font_forge_bin = MAC_FONTFORGE_PATH
-elif "Windows" in system_name:
-    font_forge_bin = WIN_FONTFORGE_PATH
-
-# =========================================================================================
 
 if build_config["cn"]["with_nerd_font"]:
     cn_base_font_dir = output_nf
@@ -232,7 +239,7 @@ def check_font_patcher() -> bool:
 def get_nerd_font_patcher_args():
     # full args: https://github.com/ryanoasis/nerd-fonts?tab=readme-ov-file#font-patcher
     _nf_args = [
-        font_forge_bin,
+        build_config["nerd_font"]["font_forge_bin"],
         "FontPatcher/font-patcher",
         "-l",
         "--careful",
