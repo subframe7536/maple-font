@@ -1,4 +1,5 @@
 node_modules
-FontPatcher
-fonts
-source/cn/static
+.astro
+/FontPatcher
+/fonts
+/source/cn/static

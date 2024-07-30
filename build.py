@@ -27,10 +27,10 @@ if not package_installed:
 # =========================================================================================
 
 # whether to archieve fonts
-release_mode = '--no-release' not in sys.argv
+release_mode = '--release' in sys.argv
 
 # whether to clean built fonts
-clean_cache = '--no-clean-cache' not in sys.argv
+clean_cache = '--clean-cache' in sys.argv
 
 # =========================================================================================
 
@@ -42,11 +42,11 @@ LINUX_FONTFORGE_PATH = "/usr/bin/fontforge"
 
 system_name = platform.uname()[0]
 
-font_forge_bin = LINUX_FONTFORGE_PATH
+font_forge_bin_default = LINUX_FONTFORGE_PATH
 if "Darwin" in system_name:
-    font_forge_bin = MAC_FONTFORGE_PATH
+    font_forge_bin_default = MAC_FONTFORGE_PATH
 elif "Windows" in system_name:
-    font_forge_bin = WIN_FONTFORGE_PATH
+    font_forge_bin_default = WIN_FONTFORGE_PATH
 
 # =========================================================================================
 
@@ -79,8 +79,6 @@ build_config = {
         "version": "3.2.1",
         # whether to make icon width fixed
         "mono": False,
-        # font forgee bin path
-        "font_forge_bin": font_forge_bin,
         # prefer to use Font Patcher instead of using prebuild NerdFont base font
         # if you want to custom build nerd font using font-patcher, you need to set this to True
         "use_font_patcher": False,
@@ -114,7 +112,9 @@ try:
         data = json.load(f)
         if "$schema" in data:
             del data["$schema"]
-        build_config = {**build_config, **data}
+        build_config.update(data)
+        if "font_forge_bin" not in build_config["nerd_font"]:
+            build_config["nerd_font"]["font_forge_bin"] = font_forge_bin_default
 except:
     print("config.json is not found. Use default config.")
 
@@ -557,10 +557,8 @@ def main():
         run(f"ftcli ttf fix-contours {output_ttf}")
         run(f"ftcli ttf remove-overlaps {output_ttf}")
 
-        # with Pool(pool_size()) as p:
-        #     p.map(build_mono, listdir(output_ttf))
-        for ttf_path in listdir(output_ttf):
-            build_mono(ttf_path)
+        with Pool(pool_size()) as p:
+            p.map(build_mono, listdir(output_ttf))
 
     # =========================================================================================
     # ====================================   build NF   =======================================
@@ -576,9 +574,11 @@ def main():
             or build_config["nerd_font"]["glyphs"] != ["--complete"]
         ) and check_font_patcher()
 
-        if use_font_patcher and not path.exists(font_forge_bin):
+        if use_font_patcher and not path.exists(
+            build_config["nerd_font"]["font_forge_bin"]
+        ):
             print(
-                f"FontForge bin({font_forge_bin}) not found. Use prebuild Nerd Font instead."
+                f"FontForge bin({build_config['nerd_font']['font_forge_bin']}) not found. Use prebuild Nerd Font instead."
             )
             use_font_patcher = False
 
