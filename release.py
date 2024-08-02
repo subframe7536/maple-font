@@ -1,7 +1,6 @@
-import os
 import subprocess
 
-subprocess.run(["python", "build.py", "--release", "--clean-cache"])
+subprocess.run(["python", "build.py", "--release"])
 subprocess.run(
     [
         "ftcli",

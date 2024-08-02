@@ -27,10 +27,7 @@ if not package_installed:
 # =========================================================================================
 
 # whether to archieve fonts
-release_mode = '--release' in sys.argv
-
-# whether to clean built fonts
-clean_cache = '--clean-cache' in sys.argv
+release_mode = "--release" in sys.argv
 
 # =========================================================================================
 
@@ -166,6 +163,7 @@ skip_subfamily_list = ["Regular", "Bold", "Italic", "BoldItalic"]
 def pool_size():
     return build_config["pool_size"] if not getenv("CODESPACE_NAME") else 1
 
+
 # run command
 def run(cli: str | list[str], extra_args: list[str] = []) -> None:
     subprocess.run((cli.split(" ") if isinstance(cli, str) else cli) + extra_args)
@@ -218,23 +216,24 @@ def check_font_patcher() -> bool:
                 print("FontPatcher version not match, delete it")
                 shutil.rmtree("FontPatcher", ignore_errors=True)
 
-    url = f"https://github.com/ryanoasis/nerd-fonts/releases/download/v{build_config['nerd_font']['version']}/FontPatcher.zip"
-    try:
-        zip_path = "FontPatcher.zip"
-        if not path.exists(zip_path):
+    zip_path = "FontPatcher.zip"
+    if not path.exists(zip_path):
+        url = f"https://github.com/ryanoasis/nerd-fonts/releases/download/v{build_config['nerd_font']['version']}/FontPatcher.zip"
+        try:
             print(f"NerdFont Patcher does not exist, download from {url}")
             with urlopen(url) as response, open(zip_path, "wb") as out_file:
                 shutil.copyfileobj(response, out_file)
-        with ZipFile(zip_path, "r") as zip_ref:
-            zip_ref.extractall("FontPatcher")
-        remove(zip_path)
-        return True
-    except Exception as e:
-        print(
-            f"\nFail to fetch NerdFont Patcher. Please download it manually from {url}, then put downloaded 'FontPatcher.zip' into project's root and run this script again. \n\tError: {e}"
-        )
-        print("use prebuilt Nerd Font instead")
-        return False
+        except Exception as e:
+            print(
+                f"\nFail to fetch NerdFont Patcher. Please download it manually from {url}, then put downloaded 'FontPatcher.zip' into project's root and run this script again. \n\tError: {e}"
+            )
+            print("use prebuilt Nerd Font instead")
+            return False
+
+    with ZipFile(zip_path, "r") as zip_ref:
+        zip_ref.extractall("FontPatcher")
+    remove(zip_path)
+    return True
 
 
 def get_nerd_font_patcher_args():
@@ -512,12 +511,11 @@ def build_cn(f: str):
 
 
 def main():
-    if clean_cache:
-        print("=== [Clean Cache] ===")
-        shutil.rmtree(output_dir, ignore_errors=True)
-        shutil.rmtree(output_woff2, ignore_errors=True)
-        makedirs(output_dir, exist_ok=True)
-        makedirs(output_variable, exist_ok=True)
+    print("=== [Clean Cache] ===")
+    shutil.rmtree(output_dir, ignore_errors=True)
+    shutil.rmtree(output_woff2, ignore_errors=True)
+    makedirs(output_dir, exist_ok=True)
+    makedirs(output_variable, exist_ok=True)
 
     start_time = time.time()
     print("=== [Build Start] ===")
@@ -533,33 +531,30 @@ def main():
     # ===================================   build basic   =====================================
     # =========================================================================================
 
-    if (clean_cache and path.exists(output_ttf)) or not path.exists(output_ttf):
-        input_files = [
-            f"{src_dir}/MapleMono-Italic[wght]-VF.ttf",
-            f"{src_dir}/MapleMono[wght]-VF.ttf",
-        ]
-        for input_file in input_files:
-            font = TTFont(input_file)
-            font.save(input_file.replace(src_dir, output_variable))
+    input_files = [
+        f"{src_dir}/MapleMono-Italic[wght]-VF.ttf",
+        f"{src_dir}/MapleMono[wght]-VF.ttf",
+    ]
+    for input_file in input_files:
+        font = TTFont(input_file)
+        font.save(input_file.replace(src_dir, output_variable))
 
-        run(f"ftcli converter vf2i {output_variable} -out {output_ttf}")
-        run(f"ftcli fix italic-angle {output_ttf}")
-        run(f"ftcli fix monospace {output_ttf}")
-        run(f"ftcli fix strip-names {output_ttf}")
-        run(f"ftcli ttf dehint {output_ttf}")
-        run(f"ftcli ttf fix-contours {output_ttf}")
-        run(f"ftcli ttf remove-overlaps {output_ttf}")
+    run(f"ftcli converter vf2i {output_variable} -out {output_ttf}")
+    run(f"ftcli fix italic-angle {output_ttf}")
+    run(f"ftcli fix monospace {output_ttf}")
+    run(f"ftcli fix strip-names {output_ttf}")
+    run(f"ftcli ttf dehint {output_ttf}")
+    run(f"ftcli ttf fix-contours {output_ttf}")
+    run(f"ftcli ttf remove-overlaps {output_ttf}")
 
-        with Pool(pool_size()) as p:
-            p.map(build_mono, listdir(output_ttf))
+    with Pool(pool_size()) as p:
+        p.map(build_mono, listdir(output_ttf))
 
     # =========================================================================================
     # ====================================   build NF   =======================================
     # =========================================================================================
 
-    if (
-        (clean_cache and path.exists(output_nf)) or not path.exists(output_nf)
-    ) and build_config["nerd_font"]["enable"]:
+    if build_config["nerd_font"]["enable"]:
 
         use_font_patcher = (
             len(build_config["nerd_font"]["extra_args"]) > 0
@@ -590,11 +585,7 @@ def main():
     # ====================================   build CN   =======================================
     # =========================================================================================
 
-    if (
-        ((clean_cache and path.exists(output_cn)) or not path.exists(output_nf_cn))
-        and build_config["cn"]["enable"]
-        and path.exists(f"{src_dir}/cn")
-    ):
+    if build_config["cn"]["enable"] and path.exists(f"{src_dir}/cn"):
 
         if not path.exists(cn_static_path) or build_config["cn"]["clean_cache"]:
             print("====================================")
