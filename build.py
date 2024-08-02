@@ -337,18 +337,11 @@ def freeze_feature(font: TTFont):
         else:
             # Enable by replacing data in glyf and hmtx tables
             glyph_dict = font["glyf"].glyphs
-            hmtx_dict = font["hmtx"].metrics
             for index in target_feature.LookupListIndex:
                 lookup = font["GSUB"].table.LookupList.Lookup[index]
                 for old_key, new_key in lookup.SubTable[0].mapping.items():
-                    if (
-                        old_key in glyph_dict
-                        and old_key in hmtx_dict
-                        and new_key in glyph_dict
-                        and new_key in hmtx_dict
-                    ):
+                    if old_key in glyph_dict and new_key in glyph_dict:
                         glyph_dict[old_key] = glyph_dict[new_key]
-                        hmtx_dict[old_key] = hmtx_dict[new_key]
                     else:
                         print(f"{old_key} or {new_key} does not exist")
                         return
