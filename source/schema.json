@@ -1,6 +1,6 @@
 {
   "title": "Build Configuration Schema",
-  "description": "Schema for the build configuration of a font project",
+  "description": "Schema for the build configuration of Maple Mono in static font format",
   "type": "object",
   "properties": {
     "pool_size": {
@@ -20,7 +20,7 @@
     },
     "feature_freeze": {
       "type": "object",
-      "description": "Freeze some font features \n enable: enable font features by default \n disable: remove some font features \n ignore: skip handle target font features",
+      "description": "Freeze some font features (No effect on Variable font) \n enable: enable font features by default \n disable: remove some font features \n ignore: skip handle target font features",
       "properties": {
         "cv01": {
           "type": "string",
@@ -105,7 +105,7 @@
         },
         "ss04": {
           "type": "string",
-          "description": "Disable ligatures on '__', '#__', '***'",
+          "description": "Disable ligatures on '__', '#__', '***' and escape strings",
           "enum": [
             "ignore",
             "disable",

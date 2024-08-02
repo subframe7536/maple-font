@@ -185,6 +185,7 @@ def compress_folder(source_file_or_dir_path: str, target_parent_dir_path: str) -
     zip_path = path.join(
         target_parent_dir_path, f"{family_name_compact}-{source_folder_name}.zip"
     )
+
     with ZipFile(zip_path, "w", compression=ZIP_DEFLATED, compresslevel=5) as zip_file:
         for root, _, files in walk(source_file_or_dir_path):
             for file in files:
@@ -192,6 +193,10 @@ def compress_folder(source_file_or_dir_path: str, target_parent_dir_path: str) -
                 zip_file.write(
                     file_path, path.relpath(file_path, source_file_or_dir_path)
                 )
+        zip_file.write("OFL.txt", "LICENSE.txt")
+        if not source_file_or_dir_path.endswith("Variable"):
+            zip_file.write(path.join(output_dir, "build-config.json"), "config.json")
+
     zip_file.close()
     sha1 = hashlib.sha1()
     with open(zip_path, "rb") as zip_file:
@@ -519,14 +524,6 @@ def main():
 
     start_time = time.time()
     print("=== [Build Start] ===")
-
-    conf = json.dumps(
-        build_config,
-        indent=4,
-    )
-
-    print(conf)
-
     # =========================================================================================
     # ===================================   build basic   =====================================
     # =========================================================================================
@@ -610,7 +607,14 @@ def main():
     with open(
         path.join(output_dir, "build-config.json"), "w", encoding="utf-8"
     ) as config_file:
-        config_file.write(conf)
+        del build_config["pool_size"]
+        del build_config["nerd_font"]["font_forge_bin"]
+        config_file.write(
+            json.dumps(
+                build_config,
+                indent=4,
+            )
+        )
 
     if release_mode:
         print("=== [Release Mode] ===")
