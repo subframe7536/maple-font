@@ -29,6 +29,9 @@ if not package_installed:
 # whether to archieve fonts
 release_mode = "--release" in sys.argv
 
+# whether to use normal preset
+use_normal = "--normal" in sys.argv
+
 # =========================================================================================
 
 WIN_FONTFORGE_PATH = "C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe"
@@ -56,6 +59,19 @@ build_config = {
     # whether to use hinted ttf as base font
     "use_hinted": True,
     "feature_freeze": {
+        "cv01": "ignore",
+        "cv02": "ignore",
+        "cv03": "ignore",
+        "cv04": "ignore",
+        "cv98": "ignore",
+        "cv99": "ignore",
+        "ss01": "ignore",
+        "ss02": "ignore",
+        "ss03": "ignore",
+        "ss04": "ignore",
+        "zero": "ignore",
+    },
+    "feature_freeze_italic": {
         "cv01": "ignore",
         "cv02": "ignore",
         "cv03": "ignore",
@@ -105,7 +121,7 @@ build_config = {
 }
 
 try:
-    with open("config.json", "r") as f:
+    with open("./source/preset-normal.json" if use_normal else "config.json", "r") as f:
         data = json.load(f)
         if "$schema" in data:
             del data["$schema"]
@@ -268,12 +284,13 @@ def get_font_name(style_name_compact: str):
         _style_name = style_name_compact[:-6] + " Italic"
 
     if style_name_compact in skip_subfamily_list:
-        return "", _style_name, _style_name
+        return "", _style_name, _style_name, is_italic
     else:
         return (
             " " + style_name_compact.replace("Italic", ""),
             "Italic" if is_italic else "Regular",
             _style_name,
+            is_italic,
         )
 
 
@@ -311,7 +328,7 @@ def add_cv98(font):
                 lang_sys_rec.LangSys.FeatureIndex.append(feature_index)
 
 
-def freeze_feature(font: TTFont):
+def freeze_feature(font: TTFont, is_italic: bool):
     # check feature list
     feature_record = font["GSUB"].table.FeatureList.FeatureRecord
     feature_dict = {
@@ -325,7 +342,9 @@ def freeze_feature(font: TTFont):
     ]
 
     # Process features
-    for tag, status in build_config["feature_freeze"].items():
+    for tag, status in build_config[
+        f"feature_freeze{'_italic' if is_italic else ''}"
+    ].items():
         target_feature = feature_dict.get(tag)
         if not target_feature or status == "ignore":
             continue
@@ -364,7 +383,7 @@ def build_mono(f: str):
 
     style_name_compact = f[10:-4]
 
-    style_name1, style_name2, style_name = get_font_name(style_name_compact)
+    style_name1, style_name2, style_name, is_italic = get_font_name(style_name_compact)
 
     set_font_name(
         font,
@@ -389,7 +408,7 @@ def build_mono(f: str):
     elif style_name1 == " ExtraLight":
         font["OS/2"].usWeightClass = 275
 
-    freeze_feature(font)
+    freeze_feature(font, is_italic)
 
     font.save(_path)
     font.close()
@@ -434,7 +453,9 @@ def build_nf(f: str, use_font_patcher: bool):
     # format font name
     style_name_compact_nf = f[10:-4]
 
-    style_name_nf1, style_name_nf2, style_name_nf = get_font_name(style_name_compact_nf)
+    style_name_nf1, style_name_nf2, style_name_nf, _ = get_font_name(
+        style_name_compact_nf
+    )
 
     set_font_name(
         nf_font,
@@ -473,7 +494,9 @@ def build_cn(f: str):
         ]
     )
 
-    style_name_cn1, style_name_cn2, style_name_cn = get_font_name(style_name_compact_cn)
+    style_name_cn1, style_name_cn2, style_name_cn, is_italic = get_font_name(
+        style_name_compact_cn
+    )
 
     set_font_name(
         font,
@@ -499,7 +522,7 @@ def build_cn(f: str):
     # https://github.com/subframe7536/maple-font/issues/188
     add_cv98(font)
 
-    freeze_feature(font)
+    freeze_feature(font, is_italic)
 
     if build_config["cn"]["fix_meta_table"]:
         # add code page, Latin / Japanese / Simplify Chinese / Traditional Chinese
@@ -543,6 +566,8 @@ def main():
         font = TTFont(input_file)
         font.save(input_file.replace(src_dir, output_variable))
 
+    run(f"ftcli fix italic-angle {output_variable}")
+    run(f"ftcli fix monospace {output_variable}")
     run(f"ftcli converter vf2i {output_variable} -out {output_ttf}")
     run(f"ftcli fix italic-angle {output_ttf}")
     run(f"ftcli fix monospace {output_ttf}")

@@ -37,20 +37,14 @@ Base on `Jetbrains Mono` and **much "Opinioned"**
   - cv04: Alternative `l` (with bottom left bar) and `1` (without bottom bar)
   - cv98: Full width `…`(ellipsis) and `—`(emdash) support for Maple Mono NF CN
   - cv99: Traditional punctuations support for Maple Mono NF CN
-  - ss01: Non-cursive italic style `f l i j x y`
+  - ss01: Non-cursive italic style `l i j k x`
   - ss02: Disable ligautures on equals like `==` / `!=` / `<=`
   - ss03: Ignore cases on all tags
-  - ss04: Disable ligatures on `__`, `#__`, `***`
+  - ss04: Disable ligatures on `__`, `#__`, `***`, `\n`
 
 ## Build
 
-### Browser
-
-WIP
-
-### Local
-
-clone the repo and run in your local machine.
+clone the repo and run in your local machine. Make sure you have `python3` and `pip` installed
 
 ```shell
 git clone https://github.com/subframe7536/maple-font --depth 1 -b variable
@@ -58,19 +52,22 @@ pip install foundrytools-cli
 python build.py
 ```
 
-You can change config in `config.json`
-
-Make sure you have `python3` and `pip` installed
-
-- for custom `font-patcher` args, `font-forge` (and maybe `python3-fontforge` as well) is needed
 - for `Ubuntu` or `Debian`, maybe `python-is-python3` is needed as well
 
-```shell
-pip install foundrytools-cli
-python build.py
-```
-
 If you have trouble to install the dependencies, just create a new Github codespace on `variable` branch and run the commands there
+
+### Customize
+
+You can change build config in `config.json`
+
+- There is `--normal` option in `build.py` for common config, just like `Jetbrains Mono` (with slashed zero)
+- For custom `font-patcher` args, `font-forge` (and maybe `python3-fontforge` as well) is needed
+
+### Chinses version
+
+1. Download CN base font at [Gitee release](https://gitee.com/subframe7536/Maple/releases/tag/v7.0-beta22-cn)
+2. put them into `./source/cn`
+3. run `build.py` and **BE PATIENT**, instantiation will take about 15 minutes
 
 ## credit
 
