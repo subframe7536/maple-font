@@ -4,32 +4,12 @@
 @Digit = [zero zero.zero one two three four five six seven eight nine];
 @DigitHex = [a b c d e f A B C D E F];
 @SpaceExlusion = [space bullet periodcentered period];
-@aalt = [colon_colon.liga colon_colon_colon.liga question_colon.liga numbersign_colon.liga equal_colon.liga greater_colon.liga less_colon.liga SPC];
-@aalt2 = [hyphen_hyphen.liga hyphen_hyphen_hyphen.liga bar_hyphen.liga bar_bar_hyphen.liga greater_hyphen.liga greater_greater_hyphen.liga less_hyphen.liga less_hyphen_hyphen.liga less_exclam_hyphen_hyphen.liga less_numbersign_hyphen_hyphen.liga less_less_hyphen.liga asciitilde_hyphen.liga SPC];
-@aalt3 = [hyphen_bar.liga braceleft_bar.liga bracketleft_bar.liga bar_bar.liga less_hyphen_bar.liga less_bar.liga less_bar_bar.liga less_bar_bar_bar.liga less_equal_bar.liga SPC];
-@aalt4 = [period_equal.liga colon_colon_equal.liga colon_equal.liga exclam_equal.liga exclam_equal_equal.liga numbersign_equal.liga bar_bar_equal.liga bar_equal.liga equal_colon_equal.liga equal_exclam_equal.liga equal_equal.liga equal_equal_equal.liga equal_slash_equal.liga greater_equal.liga greater_greater_equal.liga less_equal.liga less_equal_equal.liga less_less_equal.liga SPC];
-@aalt5 = [hyphen_hyphen_greater.liga hyphen_greater.liga hyphen_greater_greater.liga colon_question_greater.liga colon_greater.liga asterisk_greater.liga slash_greater.liga bar_hyphen_greater.liga bar_bar_bar_greater.liga bar_bar_greater.liga bar_equal_greater.liga bar_greater.liga plus_greater.liga equal_equal_greater.liga equal_greater.liga equal_greater_greater.liga greater_hyphen_greater.liga greater_equal_greater.liga greater_greater.liga greater_greater_greater.liga less_hyphen_greater.liga less_asterisk_greater.liga less_bar_greater.liga less_plus_greater.liga less_equal_equal_greater.liga less_equal_greater.liga less_greater.liga less_asciitilde_greater.liga less_slash_greater.liga asciitilde_greater.liga asciitilde_asciitilde_greater.liga SPC];
-@aalt6 = [hyphen_less.liga hyphen_less_less.liga bracketleft_less.liga period_period_less.liga colon_less.liga equal_less_less.liga less_hyphen_less.liga less_colon_less.liga less_equal_less.liga less_less.liga less_less_less.liga SPC];
-@calt = [Lslash Zcaron zero one two three four five six seven eight nine A B C D E F G H I J K L M N O P Q R S T U V W X Y Z Scaron OE Ydieresis Agrave Aacute Acircumflex Atilde Adieresis Aring AE Ccedilla Egrave Eacute Ecircumflex Edieresis Igrave Iacute Icircumflex Idieresis Eth Ntilde Ograve Oacute Ocircumflex Otilde Odieresis Oslash Ugrave Uacute Ucircumflex Udieresis Yacute Thorn Alpha Beta Chi Delta Epsilon Phi Gamma Eta Iota Kappa Lambda Mu Nu Omicron Pi Theta Rho Sigma Tau Upsilon Omega Xi Psi Zeta Amacron Aogonek Ccaron Cacute Zacute Dcaron Emacron Edotaccent Ecaron Eogonek Iogonek Imacron Lcaron Lacute Nacute Ncaron Ohungarumlaut Omacron Racute Rcaron Sacute Tcaron Umacron Uring Uhungarumlaut Uogonek Zdotaccent Dcroat Iotadieresis Upsilondieresis Alphatonos Epsilontonos Etatonos Iotatonos Omicrontonos Upsilontonos Omegatonos Abreve Gbreve Idotaccent Scedilla Ccircumflex Cdotaccent Ebreve Gcircumflex Gdotaccent Hcircumflex Hbar Itilde Ibreve IJ Jcircumflex Ldot Eng Obreve Scircumflex Tbar Utilde Ubreve Wcircumflex Ycircumflex AEacute Oslashacute Wgrave Wacute Wdieresis Ygrave Ohorn Uhorn Gcaron Gcommaaccent Kcommaaccent Lcommaaccent Ncommaaccent Rcommaaccent Scommaaccent Tcedilla Tcommaaccent IJ_acute zero.zero Abreveacute Abrevedotbelow Abrevegrave Abrevehookabove Abrevetilde Acaron Acircumflexacute Acircumflexdotbelow Acircumflexgrave Acircumflexhookabove Acircumflextilde Adotbelow Ahookabove Ecircumflexacute Ecircumflexdotbelow Ecircumflexgrave Ecircumflexhookabove Ecircumflextilde Edotbelow Ehookabove Eopen Etilde Schwa Gacute Idotbelow Ihookabove Ocircumflexacute Ocircumflexdotbelow Ocircumflexgrave Ocircumflexhookabove Ocircumflextilde Odotbelow Ohookabove Ohornacute Ohorndotbelow Ohorngrave Ohornhookabove Ohorntilde Oogonek Germandbls Udotbelow Uhookabove Uhornacute Uhorndotbelow Uhorngrave Uhornhookabove Uhorntilde Ydotbelow Yhookabove Ymacron Ytilde A-cy Be-cy Ve-cy Ge-cy Gje-cy Gheupturn-cy Ghestroke-cy De-cy Ie-cy Io-cy Zhe-cy Ze-cy Ii-cy Iishort-cy Ka-cy Kje-cy El-cy Em-cy En-cy O-cy Pe-cy Er-cy Es-cy Te-cy U-cy Ushort-cy Ef-cy Ha-cy Che-cy Tse-cy Sha-cy Shcha-cy Dzhe-cy Softsign-cy Yeru-cy Hardsign-cy Lje-cy Nje-cy Dze-cy E-cy Ereversed-cy I-cy Yi-cy Je-cy Tshe-cy Iu-cy Ia-cy Dje-cy Kadescender-cy Endescender-cy Ustraight-cy Ustraightstroke-cy Chedescender-cy Shha-cy Schwa-cy Zhedieresis-cy Zedieresis-cy Idieresis-cy Odieresis-cy Obarred-cy Chedieresis-cy KaiSymbol];
-@calt2 = [zero one two three four five six seven eight nine zero.zero];
-@calt_ccmp = [Lslash Zcaron A B C D E F G H I J K L M N O P Q R S T U V W X Y Z Scaron OE Ydieresis Agrave Aacute Acircumflex Atilde Adieresis Aring AE Ccedilla Egrave Eacute Ecircumflex Edieresis Igrave Iacute Icircumflex Idieresis Eth Ntilde Ograve Oacute Ocircumflex Otilde Odieresis Oslash Ugrave Uacute Ucircumflex Udieresis Yacute Thorn Alpha Beta Chi Delta Epsilon Phi Gamma Eta Iota Kappa Lambda Mu Nu Omicron Pi Theta Rho Sigma Tau Upsilon Omega Xi Psi Zeta Amacron Aogonek Ccaron Cacute Zacute Dcaron Emacron Edotaccent Ecaron Eogonek Iogonek Imacron Lcaron Lacute Nacute Ncaron Ohungarumlaut Omacron Racute Rcaron Sacute Tcaron Umacron Uring Uhungarumlaut Uogonek Zdotaccent Dcroat Iotadieresis Upsilondieresis Alphatonos Epsilontonos Etatonos Iotatonos Omicrontonos Upsilontonos Omegatonos Abreve Gbreve Idotaccent Scedilla Ccircumflex Cdotaccent Ebreve Gcircumflex Gdotaccent Hcircumflex Hbar Itilde Ibreve IJ Jcircumflex Ldot Eng Obreve Scircumflex Tbar Utilde Ubreve Wcircumflex Ycircumflex AEacute Oslashacute Wgrave Wacute Wdieresis Ygrave Ohorn Uhorn Gcaron Gcommaaccent Kcommaaccent Lcommaaccent Ncommaaccent Rcommaaccent Scommaaccent Tcedilla Tcommaaccent IJ_acute Abreveacute Abrevedotbelow Abrevegrave Abrevehookabove Abrevetilde Acaron Acircumflexacute Acircumflexdotbelow Acircumflexgrave Acircumflexhookabove Acircumflextilde Adotbelow Ahookabove Ecircumflexacute Ecircumflexdotbelow Ecircumflexgrave Ecircumflexhookabove Ecircumflextilde Edotbelow Ehookabove Eopen Etilde Schwa Gacute Idotbelow Ihookabove Ocircumflexacute Ocircumflexdotbelow Ocircumflexgrave Ocircumflexhookabove Ocircumflextilde Odotbelow Ohookabove Ohornacute Ohorndotbelow Ohorngrave Ohornhookabove Ohorntilde Oogonek Germandbls Udotbelow Uhookabove Uhornacute Uhorndotbelow Uhorngrave Uhornhookabove Uhorntilde Ydotbelow Yhookabove Ymacron Ytilde A-cy Be-cy Ve-cy Ge-cy Gje-cy Gheupturn-cy Ghestroke-cy De-cy Ie-cy Io-cy Zhe-cy Ze-cy Ii-cy Iishort-cy Ka-cy Kje-cy El-cy Em-cy En-cy O-cy Pe-cy Er-cy Es-cy Te-cy U-cy Ushort-cy Ef-cy Ha-cy Che-cy Tse-cy Sha-cy Shcha-cy Dzhe-cy Softsign-cy Yeru-cy Hardsign-cy Lje-cy Nje-cy Dze-cy E-cy Ereversed-cy I-cy Yi-cy Je-cy Tshe-cy Iu-cy Ia-cy Dje-cy Kadescender-cy Endescender-cy Ustraight-cy Ustraightstroke-cy Chedescender-cy Shha-cy Schwa-cy Zhedieresis-cy Zedieresis-cy Idieresis-cy Odieresis-cy Obarred-cy Chedieresis-cy KaiSymbol];
-@ccmp = [brevecomb_acutecomb brevecomb_gravecomb brevecomb_hookabovecomb brevecomb_tildecomb circumflexcomb_acutecomb circumflexcomb_gravecomb circumflexcomb_hookabovecomb circumflexcomb_tildecomb tonos dieresiscomb dotaccentcomb gravecomb acutecomb hungarumlautcomb circumflexcomb caroncomb brevecomb ringcomb tildecomb macroncomb hookabovecomb dblgravecomb commaturnedabovecomb horncomb dotbelowcomb commaaccentcomb cedillacomb ogonekcomb dieresis dotaccent grave acute hungarumlaut circumflex caron breve ring tilde macron];
-@ccmp2 = [gravecomb acutecomb tildecomb hookabovecomb brevecomb caroncomb circumflexcomb dieresiscomb dotaccentcomb hungarumlautcomb macroncomb ringcomb dblgravecomb commaturnedabovecomb];
-@ccmp3 = [grave.case dieresis.case macron.case acute.case circumflex.case caron.case breve.case dotaccent.case ring.case tilde.case hungarumlaut.case dotbelowcomb.case hookabovecomb.case tonos.case gravecomb.case acutecomb.case tildecomb.case dieresiscomb.case dotaccentcomb.case hungarumlautcomb.case circumflexcomb.case circumflexcomb_gravecomb.case circumflexcomb_acutecomb.case circumflexcomb_tildecomb.case circumflexcomb_hookabovecomb.case caroncomb.case brevecomb.case brevecomb_gravecomb.case brevecomb_acutecomb.case brevecomb_tildecomb.case brevecomb_hookabovecomb.case ringcomb.case macroncomb.case dblgravecomb.case commaturnedabovecomb.case horncomb.case commaaccentcomb.case cedillacomb.case ogonekcomb.case];
-@frac = [zero.numr one.numr two.numr three.numr four.numr five.numr six.numr seven.numr eight.numr nine.numr];
-@frac2 = [zero.dnom one.dnom two.dnom three.dnom four.dnom five.dnom six.dnom seven.dnom eight.dnom nine.dnom];
-@ordn = [zero one two three four five six seven eight nine];
-@class_i = [i idotbelow iogonek j i-cy je-cy];
-@class_dotbelowcomb = [dotbelowcomb cedillacomb ogonekcomb ringbelowcomb horncomb strokelongcomb slashshortcomb slashlongcomb];
-@class_fraction = [fraction asterisk_slash.liga slash_slash.liga slash_slash_slash.liga backslash_slash.liga less_slash.liga SPC];
-@class_hyphen_asciitilde.liga = [hyphen_asciitilde.liga less_asciitilde.liga less_asciitilde_asciitilde.liga asciitilde_asciitilde.liga SPC];
-@class_period_question.liga = [period_question.liga colon_question.liga question_question.liga question_question_question.liga numbersign_question.liga SPC];
 @a = [A a a.cv02];
 @b = [B b];
 @c = [C c];
 @d = [D d];
 @e = [E e];
-@f = [F f f.ss01];
+@f = [F f];
 @g = [G g];
 @h = [H h];
 @i = [I i i.ss01];
@@ -48,10 +28,10 @@
 @v = [V v];
 @w = [W w];
 @x = [X x x.ss01];
-@y = [Y y y.ss01];
+@y = [Y y];
 @z = [Z z];
 @zero = [zero zero.zero];
-@escape = [backslash n r t quotesingle quotedbl bracketleft bracketright parenleft parenright braceleft braceright];
+@escape = [backslash slash @Digit b B c d D f k n p P r s S t u w W v x dollar period asterisk asciitilde question bar quotesingle quotedbl bracketleft bracketright parenleft parenright braceleft braceright];
 @a_l = [a_l.liga a_l.liga.cv02 a_l.liga.cv04 a_l.liga.cv02.cv04 a_l.liga.ss01 a_l.liga.cv02.ss01];
 #/< otclasses
 #< classes
@@ -1875,7 +1855,6 @@ feature cv04 {
 
 # non-cursive style
 feature ss01 {
-  sub f by f.ss01;
   sub i by i.ss01;
   sub iacute by iacute.ss01;
   sub ibreve by ibreve.ss01;
@@ -1901,15 +1880,6 @@ feature ss01 {
   sub ldot by ldot.ss01;
   sub lslash by lslash.ss01;
   sub x by x.ss01;
-  sub y by y.ss01;
-  sub yacute by yacute.ss01;
-  sub ycircumflex by ycircumflex.ss01;
-  sub ydieresis by ydieresis.ss01;
-  sub ydotbelow by ydotbelow.ss01;
-  sub ygrave by ygrave.ss01;
-  sub yhookabove by yhookabove.ss01;
-  sub ymacron by ymacron.ss01;
-  sub ytilde by ytilde.ss01;
 
   sub C_l.liga by C_l.liga.ss01;
   sub a_l.liga by a_l.liga.ss01;
@@ -1921,7 +1891,6 @@ feature ss01 {
   sub l_l.liga by l_l.liga.ss01;
   sub t_l.liga by t_l.liga.ss01;
   sub u_l.liga by u_l.liga.ss01;
-  sub f_f.liga by f_f.liga.ss01;
   sub t_t.liga by t_t.liga.ss01;
   sub a_l_l.liga by a_l_l.liga.ss01;
   sub a_l_l.liga.cv02 by a_l_l.liga.cv02.ss01;
@@ -2040,4 +2009,5 @@ feature ss04 {
   sub underscore_underscore.liga by underscore_underscore.liga.ss04;
   sub numbersign_underscore_underscore.liga by numbersign_underscore_underscore.liga.ss04;
   sub asterisk_asterisk_asterisk.liga by asterisk_asterisk_asterisk.liga.ss04;
+  sub backslash.liga by backslash;
 } ss04;
