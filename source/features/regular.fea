@@ -163,18 +163,6 @@ feature calt {
     sub bracketleft' less by SPC;
   } bracketleft_less.liga;
 
-  # \/
-  lookup backslash_slash.liga {
-    sub @SpaceExlusion SPC slash' @SpaceExlusion by backslash_slash.liga;
-    sub @SpaceExlusion backslash' slash @SpaceExlusion by SPC;
-  } backslash_slash.liga;
-
-  # /\
-  lookup slash_backslash.liga {
-    sub @SpaceExlusion SPC backslash' @SpaceExlusion by slash_backslash.liga;
-    sub @SpaceExlusion slash' backslash @SpaceExlusion by SPC;
-  } slash_backslash.liga;
-
   # //
   lookup slash_slash.liga {
     ignore sub slash slash' slash;
