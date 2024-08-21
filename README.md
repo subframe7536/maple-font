@@ -47,6 +47,7 @@ Inspired by [Source Code Pro](https://github.com/adobe-fonts/source-code-pro), [
 
 ## Install
 
+### V6
 
 | Platform   | Command                                                                     |
 | :--------- | :-------------------------------------------------------------------------- |
@@ -54,8 +55,11 @@ Inspired by [Source Code Pro](https://github.com/adobe-fonts/source-code-pro), [
 | Arch Linux | `paru -S ttf-maple`                                                         |
 | Others     | Download in [releases](https://github.com/subframe7536/Maple-font/releases) |
 
+### V7 Beta
 
-
+| Platform   | Command                  |
+| :--------- | :----------------------- |
+| Arch Linux | `paru -S ttf-maple-beta` |
 
 
 ## Notice
