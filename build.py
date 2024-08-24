@@ -675,6 +675,8 @@ def main():
         shutil.copytree(output_woff2, "woff2")
         print("copy woff2 to root")
 
+        run(f"ftcli converter ft2wf -out woff2/var -f woff2 {output_variable}")
+
     print(f"=== [Build Success ({time.time() - start_time:.2f} s)] ===")
 
 

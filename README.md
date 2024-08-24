@@ -70,6 +70,12 @@ You can change build config in `config.json`
 2. put them into `./source/cn`
 3. run `build.py` and **BE PATIENT**, instantiation will take about 30 minutes
 
+### Release Build
+
+```sh
+python build.py --release
+```
+
 ## credit
 
 - [Jetbrains Mono](https://github.com/JetBrains/JetBrainsMono)
