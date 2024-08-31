@@ -190,6 +190,14 @@ def set_font_name(font: TTFont, name: str, id: int):
     font["name"].setName(name, nameID=id, platformID=3, platEncID=1, langID=0x409)
 
 
+def get_font_name(font: TTFont, id: int) -> str:
+    return (
+        font["name"]
+        .getName(nameID=id, platformID=3, platEncID=1, langID=0x409)
+        .__str__()
+    )
+
+
 def del_font_name(font: TTFont, id: int):
     font["name"].removeNames(nameID=id)
 
@@ -276,7 +284,7 @@ def get_nerd_font_patcher_args():
     return _nf_args
 
 
-def get_font_name(style_name_compact: str):
+def parse_font_name(style_name_compact: str):
     is_italic = style_name_compact.endswith("Italic")
 
     _style_name = style_name_compact
@@ -300,7 +308,7 @@ def add_cv98(font):
     feature_list = gsub_table.FeatureList
     lookup_list = gsub_table.LookupList
 
-    # Because fonttools will auto genreate `locl` rule when merging fonts, so just reuse it
+    # Because fonttools will auto generate `locl` rule when merging fonts, so just reuse it
     #
     # lookup = otTables.Lookup()
     # lookup.LookupType = 1
@@ -381,31 +389,33 @@ def build_mono(f: str):
     _path = path.join(output_ttf, f)
     font = TTFont(_path)
 
-    style_name_compact = f[10:-4]
+    style_compact = f.split("-")[-1].split(".")[0]
 
-    style_name1, style_name2, style_name, is_italic = get_font_name(style_name_compact)
+    style_with_prefix_space, style_in_2, style, is_italic = parse_font_name(
+        style_compact
+    )
 
     set_font_name(
         font,
-        family_name + style_name1,
+        family_name + style_with_prefix_space,
         1,
     )
-    set_font_name(font, style_name2, 2)
+    set_font_name(font, style_in_2, 2)
     set_font_name(
         font,
-        f"{family_name} {style_name}",
+        f"{family_name} {style}",
         4,
     )
-    set_font_name(font, f"{family_name_compact}-{style_name_compact}", 6)
+    set_font_name(font, f"{family_name_compact}-{style_compact}", 6)
 
-    if style_name_compact not in skip_subfamily_list:
+    if style_compact not in skip_subfamily_list:
         set_font_name(font, family_name, 16)
-        set_font_name(font, style_name, 17)
+        set_font_name(font, style, 17)
 
     # https://github.com/ftCLI/FoundryTools-CLI/issues/166#issuecomment-2095433585
-    if style_name1 == " Thin":
+    if style_with_prefix_space == " Thin":
         font["OS/2"].usWeightClass = 250
-    elif style_name1 == " ExtraLight":
+    elif style_with_prefix_space == " ExtraLight":
         font["OS/2"].usWeightClass = 275
 
     freeze_feature(font, is_italic)
@@ -451,38 +461,46 @@ def build_nf(f: str, use_font_patcher: bool):
     )
 
     # format font name
-    style_name_compact_nf = f[10:-4]
+    style_compact_nf = f.split("-")[-1].split(".")[0]
 
-    style_name_nf1, style_name_nf2, style_name_nf, _ = get_font_name(
-        style_name_compact_nf
+    style_nf_with_prefix_space, style_nf_in_2, style_nf, _ = (
+        parse_font_name(style_compact_nf)
     )
 
     set_font_name(
         nf_font,
-        f"{family_name} NF{style_name_nf1}",
+        f"{family_name} NF{style_nf_with_prefix_space}",
         1,
     )
-    set_font_name(nf_font, style_name_nf2, 2)
+    set_font_name(nf_font, style_nf_in_2, 2)
     set_font_name(
         nf_font,
-        f"{family_name} NF {style_name_nf}",
+        f"{family_name} NF {style_nf}",
         4,
     )
-    set_font_name(nf_font, f"{family_name_compact}-NF-{style_name_compact_nf}", 6)
+    postscript_name = f"{family_name_compact}-NF-{style_compact_nf}"
+    set_font_name(nf_font, postscript_name, 6)
+    set_font_name(
+        nf_font,
+        get_font_name(nf_font, 3).replace(
+            f"MapleMono-{style_compact_nf}", postscript_name
+        ),
+        3,
+    )
 
-    if style_name_compact_nf not in skip_subfamily_list:
+    if style_compact_nf not in skip_subfamily_list:
         set_font_name(nf_font, f"{family_name} NF", 16)
-        set_font_name(nf_font, style_name_nf, 17)
+        set_font_name(nf_font, style_nf, 17)
 
     _path = path.join(
-        output_nf, f"{family_name_compact}-NF-{style_name_compact_nf}.ttf"
+        output_nf, f"{family_name_compact}-NF-{style_compact_nf}.ttf"
     )
     nf_font.save(_path)
     nf_font.close()
 
 
 def build_cn(f: str):
-    style_name_compact_cn = f.split("-")[-1].split(".")[0]
+    style_compact_cn = f.split("-")[-1].split(".")[0]
 
     print(f"generate CN font for {f}")
 
@@ -490,32 +508,38 @@ def build_cn(f: str):
     font = merger.merge(
         [
             path.join(cn_base_font_dir, f),
-            path.join(cn_static_path, f"MapleMonoCN-{style_name_compact_cn}.ttf"),
+            path.join(cn_static_path, f"MapleMonoCN-{style_compact_cn}.ttf"),
         ]
     )
 
-    style_name_cn1, style_name_cn2, style_name_cn, is_italic = get_font_name(
-        style_name_compact_cn
+    style_cn_with_prefix_space, style_cn_in_2, style_cn, is_italic = (
+        parse_font_name(style_compact_cn)
     )
 
     set_font_name(
         font,
-        f"{family_name} {suffix}{style_name_cn1}",
+        f"{family_name} {suffix}{style_cn_with_prefix_space}",
         1,
     )
-    set_font_name(font, style_name_cn2, 2)
+    set_font_name(font, style_cn_in_2, 2)
     set_font_name(
         font,
-        f"{family_name} {suffix} {style_name_cn}",
+        f"{family_name} {suffix} {style_cn}",
         4,
     )
+    postscript_name = f"{family_name_compact}-{suffix_compact}-{style_compact_cn}"
+    set_font_name(font, postscript_name, 6)
     set_font_name(
-        font, f"{family_name_compact}-{suffix_compact}-{style_name_compact_cn}", 6
+        font,
+        get_font_name(font, 3).replace(
+            f"MapleMono-{style_compact_cn}", postscript_name
+        ),
+        3,
     )
 
-    if style_name_compact_cn not in skip_subfamily_list:
+    if style_compact_cn not in skip_subfamily_list:
         set_font_name(font, f"{family_name} {suffix}", 16)
-        set_font_name(font, style_name_cn, 17)
+        set_font_name(font, style_cn, 17)
 
     font["OS/2"].xAvgCharWidth = 600
 
@@ -537,8 +561,8 @@ def build_cn(f: str):
         font["meta"] = meta
 
     _path = path.join(
-        output_nf_cn,
-        f"{family_name_compact}-{suffix_compact}-{style_name_compact_cn}.ttf",
+        output_cn,
+        f"{family_name_compact}-{suffix_compact}-{style_compact_cn}.ttf",
     )
 
     font.save(_path)
@@ -564,7 +588,24 @@ def main():
     ]
     for input_file in input_files:
         font = TTFont(input_file)
-        font.save(input_file.replace(src_dir, output_variable))
+
+        set_font_name(font, family_name, 1)
+        set_font_name(
+            font, get_font_name(font, 3).replace("MapleMono", family_name_compact), 3
+        )
+        set_font_name(
+            font, get_font_name(font, 4).replace("Maple Mono", family_name), 4
+        )
+        set_font_name(
+            font, get_font_name(font, 6).replace("MapleMono", family_name_compact), 6
+        )
+        set_font_name(font, family_name_compact, 25)
+
+        font.save(
+            input_file.replace(src_dir, output_variable).replace(
+                "MapleMono", family_name_compact
+            )
+        )
 
     run(f"ftcli fix italic-angle {output_variable}")
     run(f"ftcli fix monospace {output_variable}")
