@@ -26,11 +26,32 @@ if not package_installed:
 
 # =========================================================================================
 
-# whether to archieve fonts
-release_mode = "--release" in sys.argv
+release_mode = None
+use_normal = None
+use_cn_both = None
+use_hinted_font = None
+dir_prefix = None
 
-# whether to use normal preset
-use_normal = "--normal" in sys.argv
+for arg in sys.argv:
+    # whether to archieve fonts
+    if arg == "--release":
+        release_mode = True
+
+    # whether to use normal preset
+    elif arg == "--normal":
+        use_normal = True
+
+    # whether to build `Maple Mono CN` and `Maple Mono NF CN`
+    elif arg == "--cn-both":
+        use_cn_both = True
+
+    # whether to use unhint font
+    elif arg.startswith("--hinted="):
+        use_hinted_font = arg.split("=")[1] == "1"
+
+    # directory prefix
+    elif arg.startswith("--prefix="):
+        dir_prefix = arg.split("=")[1]
 
 # =========================================================================================
 
@@ -128,36 +149,49 @@ try:
         build_config.update(data)
         if "font_forge_bin" not in build_config["nerd_font"]:
             build_config["nerd_font"]["font_forge_bin"] = font_forge_bin_default
+
+        if use_hinted_font != None:
+            build_config["use_hinted"] = use_hinted_font
 except:
     print("config.json is not found. Use default config.")
 
 
-family_name = build_config["family_name"]
-family_name_compact = family_name.replace(" ", "")
+family_name: str = build_config["family_name"]
+family_name_compact: str = family_name.replace(" ", "")
 
 # paths
 src_dir = "source"
-output_dir = "fonts"
+output_dir_default = "fonts"
+output_dir = (
+    path.join(output_dir_default, dir_prefix) if dir_prefix else output_dir_default
+)
 output_otf = path.join(output_dir, "OTF")
 output_ttf = path.join(output_dir, "TTF")
-output_ttf_autohint = path.join(output_dir, "TTF-AutoHint")
-output_variable = path.join(output_dir, "Variable")
+output_variable = path.join(output_dir_default, "Variable")
 output_woff2 = path.join(output_dir, "Woff2")
 output_nf = path.join(output_dir, "NF")
-output_cn = path.join(output_dir, "CN")
 
-ttf_dir_path = output_ttf_autohint if build_config["use_hinted"] else output_ttf
-
-if build_config["cn"]["with_nerd_font"]:
-    cn_base_font_dir = output_nf
-    suffix = "NF CN"
-else:
-    cn_base_font_dir = ttf_dir_path
-    suffix = "CN"
-
-suffix_compact = suffix.replace(" ", "-")
 cn_static_path = f"{src_dir}/cn/static"
-output_nf_cn = path.join(output_dir, suffix_compact)
+
+cn_base_font_dir = None
+suffix = None
+suffix_compact = None
+output_cn = None
+
+
+def load_cn_dir_and_suffix(with_nerd_font: bool):
+    global cn_base_font_dir, suffix, suffix_compact, output_cn
+    if with_nerd_font:
+        cn_base_font_dir = output_nf
+        suffix = "NF CN"
+        suffix_compact = "NF-CN"
+    else:
+        cn_base_font_dir = path.join(output_dir, "CN")
+        suffix = suffix_compact = "CN"
+    output_cn = path.join(output_dir, suffix_compact)
+
+
+load_cn_dir_and_suffix(build_config["cn"]["with_nerd_font"])
 
 # In these subfamilies:
 #   - NameID1 should be the family name
@@ -422,9 +456,12 @@ def build_mono(f: str):
 
     font.save(_path)
     font.close()
+
+    if build_config["use_hinted"]:
+        run(f"ftcli ttf autohint {_path} -out {output_ttf}")
+
     run(f"ftcli converter ttf2otf {_path} -out {output_otf}")
     run(f"ftcli converter ft2wf {_path} -out {output_woff2} -f woff2")
-    run(f"ftcli ttf autohint {_path} -out {output_ttf_autohint}")
 
 
 def build_nf(f: str, use_font_patcher: bool):
@@ -440,13 +477,13 @@ def build_nf(f: str, use_font_patcher: bool):
         merger = Merger()
         return merger.merge(
             [
-                path.join(ttf_dir_path, font_basename),
+                path.join(output_ttf, font_basename),
                 f"{src_dir}/MapleMono-NF-Base{'-Mono' if build_config['nerd_font']['mono'] else ''}.ttf",
             ]
         )
 
     def build_using_font_patcher(font_basename: str) -> TTFont:
-        run(nf_args + [path.join(ttf_dir_path, font_basename)])
+        run(nf_args + [path.join(output_ttf, font_basename)])
         _path = path.join(output_nf, font_basename.replace("-", f"{nf_file_name}-"))
         font = TTFont(_path)
         remove(_path)
@@ -665,16 +702,17 @@ def main():
             run(f"ftcli ttf fix-contours {cn_static_path}")
             run(f"ftcli ttf remove-overlaps {cn_static_path}")
 
-        makedirs(output_nf_cn, exist_ok=True)
-
+        makedirs(output_cn, exist_ok=True)
         with Pool(pool_size()) as p:
             p.map(build_cn, listdir(cn_base_font_dir))
 
-    run(f"ftcli name del-mac-names -r {output_dir}")
+        if use_cn_both and release_mode:
+            load_cn_dir_and_suffix(not build_config["cn"]["with_nerd_font"])
+            makedirs(output_cn, exist_ok=True)
+            with Pool(pool_size()) as p:
+                p.map(build_cn, listdir(cn_base_font_dir))
 
-    # =========================================================================================
-    # ====================================   release   ========================================
-    # =========================================================================================
+    run(f"ftcli name del-mac-names -r {output_dir}")
 
     # write config to output path
     with open(
@@ -688,6 +726,10 @@ def main():
                 indent=4,
             )
         )
+
+    # =========================================================================================
+    # ====================================   release   ========================================
+    # =========================================================================================
 
     if release_mode:
         print("=== [Release Mode] ===")
@@ -710,13 +752,6 @@ def main():
             path.join(release_dir, "sha1.json"), "w", encoding="utf-8"
         ) as hash_file:
             hash_file.write(json.dumps(hash_map, indent=4))
-
-        # copy woff2 to root
-        shutil.rmtree("woff2", ignore_errors=True)
-        shutil.copytree(output_woff2, "woff2")
-        print("copy woff2 to root")
-
-        run(f"ftcli converter ft2wf -out woff2/var -f woff2 {output_variable}")
 
     print(f"=== [Build Success ({time.time() - start_time:.2f} s)] ===")
 
