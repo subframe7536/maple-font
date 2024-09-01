@@ -1,9 +1,4 @@
 languagesystem DFLT dflt; # Default default
-languagesystem latn dflt; # Latin default
-languagesystem cyrl dflt; # Cyrillic default
-languagesystem grek dflt; # Greek default
-languagesystem hani dflt; # CJK Ideographic default
-languagesystem kana dflt; # Hiragana default
 
 #
 # Lookup definitions
@@ -18,6 +13,10 @@ lookup CN2TW {
   sub uniFF1F by uniFF1F.tw;
 } CN2TW;
 
+lookup full_width_e {
+  sub emdash by emdash.cv98;
+  sub ellipsis by ellipsis.cv98;
+} full_width_e;
 
 feature ccmp {
 # GSUB feature: Glyph Composition / Decomposition
@@ -49,25 +48,9 @@ feature ccmp {
 
 } ccmp;
 
-feature locl {
-  script latn; # Latin
-  language ZHH; # Chinese, Traditional, Hong Kong SAR
-  lookup CN2TW;
-  language ZHT; # Chinese, Traditional
-  lookup CN2TW;
-
-  script hang; # Hangul
-  language ZHH; # Chinese, Traditional, Hong Kong SAR
-  lookup CN2TW;
-  language ZHT; # Chinese, Traditional
-  lookup CN2TW;
-
-  script hani; # CJK Ideographic
-  language ZHH; # Chinese, Traditional, Hong Kong SAR
-  lookup CN2TW;
-  language ZHT; # Chinese, Traditional
-  lookup CN2TW;
-} locl;
+feature cv98 {
+	lookup full_width_e;
+} cv98;
 
 feature cv99 {
 	lookup CN2TW;
