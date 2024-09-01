@@ -336,38 +336,35 @@ def parse_font_name(style_name_compact: str):
         )
 
 
-def add_cv98(font):
+def fix_cv98(font: TTFont):
     gsub_table = font["GSUB"].table
-    script_list = gsub_table.ScriptList
     feature_list = gsub_table.FeatureList
-    lookup_list = gsub_table.LookupList
 
-    # Because fonttools will auto generate `locl` rule when merging fonts, so just reuse it
-    #
-    # lookup = otTables.Lookup()
-    # lookup.LookupType = 1
-    # lookup.LookupFlag = 0
-    # subtable = otTables.SingleSubst()
-    # subtable.mapping = {"emdash": "emdash.cv98", "ellipsis": "ellipsis.cv98"}
-    # lookup.SubTable = [subtable]
-    # lookup_list.Lookup.append(lookup)
-    # lookup_index = lookup_list.LookupCount
+    for feature_record in feature_list.FeatureRecord:
+        if feature_record.FeatureTag != "cv98":
+            continue
+        sub_table = gsub_table.LookupList.Lookup[
+            feature_record.Feature.LookupListIndex[0]
+        ].SubTable[0]
+        sub_table.mapping = {
+            "emdash": "emdash.cv98",
+            "ellipsis": "ellipsis.cv98",
+        }
+        break
 
-    feature_record = otTables.FeatureRecord()
-    feature_record.FeatureTag = "cv98"
-    feature_record.Feature = otTables.Feature()
-    feature_record.Feature.LookupListIndex = [lookup_list.LookupCount - 1]
-    feature_index = len(feature_list.FeatureRecord)
-    feature_list.FeatureRecord.append(feature_record)
 
-    for script_record in script_list.ScriptRecord:
-        lang_sys = script_record.Script.DefaultLangSys
+def remove_locl(font: TTFont):
+    gsub = font["GSUB"]
+    features_to_remove = []
 
-        if lang_sys:
-            lang_sys.FeatureIndex.append(feature_index)
-        else:
-            for lang_sys_rec in script_record.Script.LangSysRecord:
-                lang_sys_rec.LangSys.FeatureIndex.append(feature_index)
+    for feature in gsub.table.FeatureList.FeatureRecord:
+        feature_tag = feature.FeatureTag
+
+        if feature_tag == "locl":
+            features_to_remove.append(feature)
+
+    for feature in features_to_remove:
+        gsub.table.FeatureList.FeatureRecord.remove(feature)
 
 
 def freeze_feature(font: TTFont, is_italic: bool):
@@ -581,9 +578,12 @@ def build_cn(f: str):
     font["OS/2"].xAvgCharWidth = 600
 
     # https://github.com/subframe7536/maple-font/issues/188
-    add_cv98(font)
+    fix_cv98(font)
 
     freeze_feature(font, is_italic)
+
+    # https://github.com/subframe7536/maple-font/issues/239
+    remove_locl(font)
 
     if build_config["cn"]["fix_meta_table"]:
         # add code page, Latin / Japanese / Simplify Chinese / Traditional Chinese
