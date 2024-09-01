@@ -186,12 +186,14 @@ def load_cn_dir_and_suffix(with_nerd_font: bool):
         suffix = "NF CN"
         suffix_compact = "NF-CN"
     else:
-        cn_base_font_dir = path.join(output_dir, "CN")
+        cn_base_font_dir = path.join(output_dir, "TTF")
         suffix = suffix_compact = "CN"
     output_cn = path.join(output_dir, suffix_compact)
 
 
-load_cn_dir_and_suffix(build_config["cn"]["with_nerd_font"])
+load_cn_dir_and_suffix(
+    build_config["cn"]["with_nerd_font"] and build_config["nerd_font"]["enable"]
+)
 
 # In these subfamilies:
 #   - NameID1 should be the family name
@@ -497,8 +499,8 @@ def build_nf(f: str, use_font_patcher: bool):
     # format font name
     style_compact_nf = f.split("-")[-1].split(".")[0]
 
-    style_nf_with_prefix_space, style_nf_in_2, style_nf, _ = (
-        parse_font_name(style_compact_nf)
+    style_nf_with_prefix_space, style_nf_in_2, style_nf, _ = parse_font_name(
+        style_compact_nf
     )
 
     set_font_name(
@@ -526,9 +528,7 @@ def build_nf(f: str, use_font_patcher: bool):
         set_font_name(nf_font, f"{family_name} NF", 16)
         set_font_name(nf_font, style_nf, 17)
 
-    _path = path.join(
-        output_nf, f"{family_name_compact}-NF-{style_compact_nf}.ttf"
-    )
+    _path = path.join(output_nf, f"{family_name_compact}-NF-{style_compact_nf}.ttf")
     nf_font.save(_path)
     nf_font.close()
 
@@ -546,8 +546,8 @@ def build_cn(f: str):
         ]
     )
 
-    style_cn_with_prefix_space, style_cn_in_2, style_cn, is_italic = (
-        parse_font_name(style_compact_cn)
+    style_cn_with_prefix_space, style_cn_in_2, style_cn, is_italic = parse_font_name(
+        style_compact_cn
     )
 
     set_font_name(
@@ -695,9 +695,9 @@ def main():
     if build_config["cn"]["enable"] and path.exists(f"{src_dir}/cn"):
 
         if not path.exists(cn_static_path) or build_config["cn"]["clean_cache"]:
-            print("====================================")
-            print("instantiating CN font, be patient...")
-            print("====================================")
+            print("=========================================")
+            print("instantiating CN Base font, be patient...")
+            print("=========================================")
             run(f"ftcli converter vf2i {src_dir}/cn -out {cn_static_path}")
             run(f"ftcli ttf fix-contours {cn_static_path}")
             run(f"ftcli ttf remove-overlaps {cn_static_path}")
