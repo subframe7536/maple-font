@@ -701,6 +701,7 @@ def main():
             run(f"ftcli converter vf2i {src_dir}/cn -out {cn_static_path}")
             run(f"ftcli ttf fix-contours {cn_static_path}")
             run(f"ftcli ttf remove-overlaps {cn_static_path}")
+            run(f"ftcli utils del-table -t kern -t GPOS {cn_static_path}")
 
         makedirs(output_cn, exist_ok=True)
         with Pool(pool_size()) as p:
