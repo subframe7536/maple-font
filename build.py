@@ -583,7 +583,7 @@ def build_cn(f: str):
     freeze_feature(font, is_italic)
 
     # https://github.com/subframe7536/maple-font/issues/239
-    remove_locl(font)
+    # remove_locl(font)
 
     if build_config["cn"]["fix_meta_table"]:
         # add code page, Latin / Japanese / Simplify Chinese / Traditional Chinese
