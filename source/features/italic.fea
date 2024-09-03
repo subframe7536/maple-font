@@ -31,7 +31,7 @@
 @y = [Y y];
 @z = [Z z];
 @zero = [zero zero.zero];
-@escape = [backslash slash @Digit b B c d D f k n p P r s S t u w W v x dollar period asterisk asciitilde question bar quotesingle quotedbl bracketleft bracketright parenleft parenright braceleft braceright];
+@escape = [backslash slash @Digit b B c d D f k n p P r s S t u w W v x dollar period asterisk asciitilde question bar quotesingle quotedbl bracketleft bracketright parenleft parenright braceleft braceright grave];
 @a_l = [a_l.liga a_l.liga.cv02 a_l.liga.cv04 a_l.liga.cv02.cv04 a_l.liga.ss01 a_l.liga.cv02.ss01];
 #/< otclasses
 #< classes

@@ -32,7 +32,7 @@
 @x = [X x];
 @y = [Y y];
 @z = [Z z];
-@escape = [backslash slash @Digit b B c d D f k n p P r s S t u w W v x dollar period asterisk asciitilde question bar quotesingle quotedbl bracketleft bracketright parenleft parenright braceleft braceright];
+@escape = [backslash slash @Digit b B c d D f k n p P r s S t u w W v x dollar period asterisk asciitilde question bar quotesingle quotedbl bracketleft bracketright parenleft parenright braceleft braceright grave];
 #/< otclasses
 #< classes
 
