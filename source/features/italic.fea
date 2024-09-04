@@ -1135,6 +1135,7 @@ feature calt {
   lookup asciitilde_asciitilde_greater.liga {
     ignore sub asciitilde asciitilde' asciitilde greater;
     ignore sub asciitilde' asciitilde greater greater;
+    ignore sub less asciitilde' asciitilde greater;
     sub SPC SPC greater' by asciitilde_asciitilde_greater.liga;
     sub SPC asciitilde' greater by SPC;
     sub asciitilde' asciitilde greater by SPC;
