@@ -108,9 +108,8 @@ feature calt {
 
   # =:
   lookup equal_colon.liga {
-    ignore sub equal equal' colon;
-    ignore sub equal' colon colon;
-    ignore sub equal' colon equal;
+    ignore sub [equal colon] equal' colon;
+    ignore sub equal' colon [colon equal];
     sub SPC colon' by equal_colon.liga;
     sub equal' colon by SPC;
   } equal_colon.liga;
@@ -148,20 +147,6 @@ feature calt {
     sub SPC bracketright' by bar_bracketright.liga;
     sub bar' bracketright by SPC;
   } bar_bracketright.liga;
-
-  # [<
-  lookup bracketleft_less.liga {
-    ignore sub bracketleft bracketleft' less;
-    ignore sub bracketleft' less less;
-    ignore sub bracketleft' less plus;
-    ignore sub bracketleft' less asterisk;
-    ignore sub bracketleft' less dollar;
-    ignore sub bracketleft' less slash;
-    ignore sub bracketleft' less equal;
-    ignore sub bracketleft' less greater;
-    sub SPC less' by bracketleft_less.liga;
-    sub bracketleft' less by SPC;
-  } bracketleft_less.liga;
 
   # //
   lookup slash_slash.liga {
@@ -215,15 +200,6 @@ feature calt {
     sub asterisk' slash by SPC;
   } asterisk_slash.liga;
 
-  # ***
-  lookup asterisk_asterisk_asterisk.liga {
-    ignore sub asterisk asterisk' asterisk asterisk;
-    ignore sub asterisk' asterisk asterisk asterisk;
-    sub SPC SPC asterisk' by asterisk_asterisk_asterisk.liga;
-    sub SPC asterisk' asterisk by SPC;
-    sub asterisk' asterisk asterisk by SPC;
-  } asterisk_asterisk_asterisk.liga;
-
   # ++
   lookup plus_plus.liga {
     ignore sub plus plus' plus;
@@ -272,7 +248,7 @@ feature calt {
   # ..<
   lookup period_period_less.liga {
     ignore sub period period' period less;
-    ignore sub period' period less less;
+    ignore sub period' period less [less slash greater];
     sub SPC SPC less' by period_period_less.liga;
     sub SPC period' less by SPC;
     sub period' period less by SPC;
@@ -334,13 +310,12 @@ feature calt {
   # <:
   lookup less_colon.liga {
     ignore sub less less' colon;
-    ignore sub less' colon less;
-    ignore sub less' colon colon;
+    ignore sub less' colon [less greater colon];
     sub SPC colon' by less_colon.liga;
     sub less' colon by SPC;
   } less_colon.liga;
 
-  # <:<
+  # <:< scala / haskell
   lookup less_colon_less.liga {
     ignore sub less less' colon less;
     ignore sub less' colon less less;
@@ -348,6 +323,15 @@ feature calt {
     sub SPC colon' less by SPC;
     sub less' colon less by SPC;
   } less_colon_less.liga;
+
+  # >:> scala / haskell
+  lookup greater_colon_greater.liga {
+    ignore sub greater greater' colon greater;
+    ignore sub greater' colon greater greater;
+    sub SPC SPC greater' by greater_colon_greater.liga;
+    sub SPC colon' greater by SPC;
+    sub greater' colon greater by SPC;
+  } greater_colon_greater.liga;
 
   # <<
   lookup less_less.liga {
@@ -501,28 +485,6 @@ feature calt {
     sub less' equal by SPC;
   } less_equal.liga;
 
-  # >:
-  lookup greater_colon.liga {
-    ignore sub greater greater' colon;
-    ignore sub greater' colon colon;
-    sub SPC colon' by greater_colon.liga;
-    sub greater' colon by SPC;
-  } greater_colon.liga;
-
-  # >]
-  lookup greater_bracketright.liga {
-    ignore sub greater greater' bracketright;
-    ignore sub plus greater' bracketright;
-    ignore sub asterisk greater' bracketright;
-    ignore sub dollar greater' bracketright;
-    ignore sub slash greater' bracketright;
-    ignore sub equal greater' bracketright;
-    ignore sub less greater' bracketright;
-    ignore sub greater' bracketright bracketright;
-    sub SPC bracketright' by greater_bracketright.liga;
-    sub greater' bracketright by SPC;
-  } greater_bracketright.liga;
-
   # <<=
   lookup less_less_equal.liga {
     ignore sub less' less equal equal;
@@ -650,18 +612,27 @@ feature calt {
     sub equal' colon equal by SPC;
   } equal_colon_equal.liga;
 
+  # :=:
+  # |:(?:=:?)?
+  lookup colon_equal_colon.liga {
+    ignore sub [colon equal less greater question] colon' equal colon;
+    ignore sub colon' equal colon [colon equal less greater question];
+    sub SPC SPC colon' by colon_equal_colon.liga;
+    sub SPC equal' colon by SPC;
+    sub colon' equal colon by SPC;
+  } colon_equal_colon.liga;
+
   # :=
   lookup colon_equal.liga {
-    ignore sub equal colon' equal;
-    ignore sub colon colon' equal;
-    ignore sub colon' equal equal;
+    ignore sub [equal colon] colon' equal;
+    ignore sub colon' equal [equal colon];
     sub SPC equal' by colon_equal.liga;
     sub colon' equal by SPC;
   } colon_equal.liga;
 
   # :>
   lookup colon_greater.liga {
-    ignore sub colon colon' greater;
+    ignore sub [colon less greater] colon' greater;
     ignore sub colon' greater greater;
     sub SPC greater' by colon_greater.liga;
     sub colon' greater by SPC;
@@ -669,9 +640,8 @@ feature calt {
 
   # :<
   lookup colon_less.liga {
-    ignore sub colon colon' less;
-    ignore sub less colon' less;
-    ignore sub colon' less less;
+    ignore sub [colon less] colon' less;
+    ignore sub colon' less [less slash greater];
     sub SPC less' by colon_less.liga;
     sub colon' less by SPC;
   } colon_less.liga;
@@ -768,8 +738,8 @@ feature calt {
 
   # ||-
   lookup bar_bar_hyphen.liga {
-    ignore sub bar bar' bar hyphen hyphen;
-    ignore sub bar' bar bar hyphen;
+    ignore sub bar' bar hyphen hyphen;
+    ignore sub bar bar' bar hyphen;
     sub SPC SPC hyphen' by bar_bar_hyphen.liga;
     sub SPC bar' hyphen by SPC;
     sub bar' bar hyphen by SPC;
@@ -1283,12 +1253,17 @@ feature calt {
 
   # #__
   lookup numbersign_underscore_underscore.liga {
-    ignore sub numbersign numbersign' underscore underscore;
     ignore sub numbersign' underscore underscore underscore;
     sub SPC SPC underscore' by numbersign_underscore_underscore.liga;
     sub SPC underscore' underscore by SPC;
     sub numbersign' underscore underscore by SPC;
   } numbersign_underscore_underscore.liga;
+
+  # ##__
+  lookup numbersign_numbersign_underscore_underscore.liga {
+    ignore sub numbersign numbersign' SPC SPC numbersign_underscore_underscore.liga;
+    sub numbersign' SPC SPC numbersign_underscore_underscore.liga by numbersign_left.decorator;
+  } numbersign_numbersign_underscore_underscore.liga;
 
   # #!
   lookup numbersign_exclam.liga {
@@ -1844,6 +1819,5 @@ feature ss03 {
 feature ss04 {
   sub underscore_underscore.liga by underscore_underscore.liga.ss04;
   sub numbersign_underscore_underscore.liga by numbersign_underscore_underscore.liga.ss04;
-  sub asterisk_asterisk_asterisk.liga by asterisk_asterisk_asterisk.liga.ss04;
   sub backslash.liga by backslash;
 } ss04;
