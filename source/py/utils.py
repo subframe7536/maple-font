@@ -2,6 +2,7 @@ import platform
 import subprocess
 from fontTools.ttLib import TTFont
 
+
 # run command
 def run(cli: str | list[str], extra_args: list[str] = []):
     subprocess.run((cli.split(" ") if isinstance(cli, str) else cli) + extra_args)

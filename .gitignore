@@ -4,3 +4,4 @@ dist
 /FontPatcher
 /fonts
 /source/cn/static
+__pycache__
