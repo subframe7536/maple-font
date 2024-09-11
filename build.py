@@ -1,9 +1,7 @@
 import hashlib
 import importlib.util
 import json
-import platform
 import shutil
-import subprocess
 import sys
 import time
 from functools import partial
@@ -13,7 +11,8 @@ from urllib.request import urlopen
 from zipfile import ZIP_DEFLATED, ZipFile
 from fontTools.ttLib import TTFont, newTable
 from fontTools.merge import Merger
-from fontTools.ttLib.tables import otTables
+from source.py.utils import get_font_forge_bin, get_font_name, run, set_font_name
+from source.py.feature import freeze_feature
 
 # =========================================================================================
 
@@ -53,23 +52,7 @@ for arg in sys.argv:
     elif arg.startswith("--prefix="):
         dir_prefix = arg.split("=")[1]
 
-# =========================================================================================
-
-WIN_FONTFORGE_PATH = "C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe"
-MAC_FONTFORGE_PATH = (
-    "/Applications/FontForge.app/Contents/Resources/opt/local/bin/fontforge"
-)
-LINUX_FONTFORGE_PATH = "/usr/bin/fontforge"
-
-system_name = platform.uname()[0]
-
-font_forge_bin_default = LINUX_FONTFORGE_PATH
-if "Darwin" in system_name:
-    font_forge_bin_default = MAC_FONTFORGE_PATH
-elif "Windows" in system_name:
-    font_forge_bin_default = WIN_FONTFORGE_PATH
-
-# =========================================================================================
+font_forge_bin_default = get_font_forge_bin()
 
 build_config = {
     # the number of parallel tasks
@@ -216,28 +199,6 @@ def pool_size():
     return build_config["pool_size"] if not getenv("CODESPACE_NAME") else 1
 
 
-# run command
-def run(cli: str | list[str], extra_args: list[str] = []) -> None:
-    subprocess.run((cli.split(" ") if isinstance(cli, str) else cli) + extra_args)
-
-
-def set_font_name(font: TTFont, name: str, id: int):
-    font["name"].setName(name, nameID=id, platformID=1, platEncID=0, langID=0x0)
-    font["name"].setName(name, nameID=id, platformID=3, platEncID=1, langID=0x409)
-
-
-def get_font_name(font: TTFont, id: int) -> str:
-    return (
-        font["name"]
-        .getName(nameID=id, platformID=3, platEncID=1, langID=0x409)
-        .__str__()
-    )
-
-
-def del_font_name(font: TTFont, id: int):
-    font["name"].removeNames(nameID=id)
-
-
 # compress folder and return sha1
 def compress_folder(source_file_or_dir_path: str, target_parent_dir_path: str) -> str:
     source_folder_name = path.basename(source_file_or_dir_path)
@@ -369,53 +330,17 @@ def remove_locl(font: TTFont):
         gsub.table.FeatureList.FeatureRecord.remove(feature)
 
 
-def freeze_feature(font: TTFont, is_italic: bool):
-    # check feature list
-    feature_record = font["GSUB"].table.FeatureList.FeatureRecord
-    feature_dict = {
-        feature.FeatureTag: feature.Feature
-        for feature in feature_record
-        if feature.FeatureTag != "calt"
-    }
+def get_unique_identifier(is_italic: bool, postscript_name: str) -> str:
+    key = "feature_freeze_italic" if is_italic else "feature_freeze"
 
-    calt_features = [
-        feature.Feature for feature in feature_record if feature.FeatureTag == "calt"
-    ]
+    features = ""
+    for k, v in build_config[key].items():
+        if v == "enable":
+            features += f"+{k};"
+        elif v == "disable":
+            features += f"-{k};"
 
-    # Process features
-    for tag, status in build_config[
-        f"feature_freeze{'_italic' if is_italic else ''}"
-    ].items():
-        target_feature = feature_dict.get(tag)
-        if not target_feature or status == "ignore":
-            continue
-
-        if status == "disable":
-            target_feature.LookupListIndex = []
-            continue
-
-        if tag in ["ss03"]:
-            # Enable by moving rules into "calt"
-            for calt_feat in calt_features:
-                calt_feat.LookupListIndex.extend(target_feature.LookupListIndex)
-        else:
-            # Enable by replacing data in glyf and hmtx tables
-            glyph_dict = font["glyf"].glyphs
-            hmtx_dict = font["hmtx"].metrics
-            for index in target_feature.LookupListIndex:
-                lookup = font["GSUB"].table.LookupList.Lookup[index]
-                for old_key, new_key in lookup.SubTable[0].mapping.items():
-                    if (
-                        old_key in glyph_dict
-                        and old_key in hmtx_dict
-                        and new_key in glyph_dict
-                        and new_key in hmtx_dict
-                    ):
-                        glyph_dict[old_key] = glyph_dict[new_key]
-                        hmtx_dict[old_key] = hmtx_dict[new_key]
-                    else:
-                        print(f"{old_key} or {new_key} does not exist")
-                        return
+    return f"Version 7.000;SUBF;{postscript_name};2024;FL830;{features}"
 
 
 def build_mono(f: str):
@@ -439,7 +364,16 @@ def build_mono(f: str):
         f"{family_name} {style}",
         4,
     )
-    set_font_name(font, f"{family_name_compact}-{style_compact}", 6)
+    postscript_name = f"{family_name_compact}-{style_compact}"
+    set_font_name(font, postscript_name, 6)
+    set_font_name(
+        font,
+        get_unique_identifier(
+            is_italic=is_italic,
+            postscript_name=postscript_name,
+        ),
+        3,
+    )
 
     if style_compact not in skip_subfamily_list:
         set_font_name(font, family_name, 16)
@@ -451,7 +385,9 @@ def build_mono(f: str):
     elif style_with_prefix_space == " ExtraLight":
         font["OS/2"].usWeightClass = 275
 
-    freeze_feature(font, is_italic)
+    freeze_feature(
+        font, build_config[f"feature_freeze{'_italic' if is_italic else ''}"]
+    )
 
     font.save(_path)
     font.close()
@@ -499,7 +435,7 @@ def build_nf(f: str, use_font_patcher: bool):
     # format font name
     style_compact_nf = f.split("-")[-1].split(".")[0]
 
-    style_nf_with_prefix_space, style_nf_in_2, style_nf, _ = parse_font_name(
+    style_nf_with_prefix_space, style_nf_in_2, style_nf, is_italic = parse_font_name(
         style_compact_nf
     )
 
@@ -518,8 +454,9 @@ def build_nf(f: str, use_font_patcher: bool):
     set_font_name(nf_font, postscript_name, 6)
     set_font_name(
         nf_font,
-        get_font_name(nf_font, 3).replace(
-            f"MapleMono-{style_compact_nf}", postscript_name
+        get_unique_identifier(
+            is_italic=is_italic,
+            postscript_name=postscript_name,
         ),
         3,
     )
@@ -565,8 +502,9 @@ def build_cn(f: str):
     set_font_name(font, postscript_name, 6)
     set_font_name(
         font,
-        get_font_name(font, 3).replace(
-            f"MapleMono-{style_compact_cn}", postscript_name
+        get_unique_identifier(
+            is_italic=is_italic,
+            postscript_name=postscript_name,
         ),
         3,
     )
@@ -580,7 +518,9 @@ def build_cn(f: str):
     # https://github.com/subframe7536/maple-font/issues/188
     fix_cv98(font)
 
-    freeze_feature(font, is_italic)
+    freeze_feature(
+        font, build_config[f"feature_freeze{'_italic' if is_italic else ''}"]
+    )
 
     # https://github.com/subframe7536/maple-font/issues/239
     # remove_locl(font)

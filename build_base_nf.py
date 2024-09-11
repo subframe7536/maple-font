@@ -1,38 +1,17 @@
 from os import path, remove
-import platform
-import subprocess
 from fontTools.varLib import TTFont
 from fontTools.subset import Subsetter
+
+from source.py.utils import del_font_name, get_font_forge_bin, set_font_name,run
 
 base_font_path = "fonts/TTF/MapleMono-Regular.ttf"
 family_name = "Maple Mono"
 
-WIN_FONTFORGE_PATH = "C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe"
-MAC_FONTFORGE_PATH = (
-    "/Applications/FontForge.app/Contents/Resources/opt/local/bin/fontforge"
-)
-LINUX_FONTFORGE_PATH = "/usr/local/bin/fontforge"
-
-system_name = platform.uname()[0]
-
-font_forge_bin = LINUX_FONTFORGE_PATH
-if "Darwin" in system_name:
-    font_forge_bin = MAC_FONTFORGE_PATH
-elif "Windows" in system_name:
-    font_forge_bin = WIN_FONTFORGE_PATH
+font_forge_bin = get_font_forge_bin()
 
 if not path.exists(base_font_path):
     print("font not exist, please run `python build.py` first")
     exit(1)
-
-
-def set_font_name(font: TTFont, name: str, id: int):
-    font["name"].setName(name, nameID=id, platformID=1, platEncID=0, langID=0x0)
-    font["name"].setName(name, nameID=id, platformID=3, platEncID=1, langID=0x409)
-
-
-def del_font_name(font: TTFont, id: int):
-    font["name"].removeNames(nameID=id)
 
 
 def get_nerd_font_patcher_args(mono: bool):
@@ -59,7 +38,7 @@ def build_nf(mono: bool):
 
     style_name = "Regular"
 
-    subprocess.run(nf_args + [base_font_path])
+    run(nf_args + [base_font_path])
     _path = f"{family_name.replace(' ', '')}{nf_file_name}-{style_name}.ttf"
     nf_font = TTFont(_path)
     remove(_path)
