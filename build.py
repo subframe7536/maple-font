@@ -133,10 +133,10 @@ try:
         if "font_forge_bin" not in build_config["nerd_font"]:
             build_config["nerd_font"]["font_forge_bin"] = font_forge_bin_default
 
-        if use_hinted_font != None:
+        if use_hinted_font is not None:
             build_config["use_hinted"] = use_hinted_font
-except:
-    print("config.json is not found. Use default config.")
+except ():
+    print("Fail to load config.json. Use default config.")
 
 
 family_name: str = build_config["family_name"]
@@ -330,17 +330,16 @@ def remove_locl(font: TTFont):
         gsub.table.FeatureList.FeatureRecord.remove(feature)
 
 
-def get_unique_identifier(is_italic: bool, postscript_name: str) -> str:
-    key = "feature_freeze_italic" if is_italic else "feature_freeze"
+def get_unique_identifier(is_italic: bool, postscript_name: str, suffix="") -> str:
+    if suffix == "":
+        key = "feature_freeze_italic" if is_italic else "feature_freeze"
+        for k, v in build_config[key].items():
+            if v == "enable":
+                suffix += f"+{k};"
+            elif v == "disable":
+                suffix += f"-{k};"
 
-    features = ""
-    for k, v in build_config[key].items():
-        if v == "enable":
-            features += f"+{k};"
-        elif v == "disable":
-            features += f"-{k};"
-
-    return f"Version 7.000;SUBF;{postscript_name};2024;FL830;{features}"
+    return f"Version 7.000;SUBF;{postscript_name};2024;FL830;{suffix}"
 
 
 def build_mono(f: str):
@@ -568,13 +567,18 @@ def main():
 
         set_font_name(font, family_name, 1)
         set_font_name(
-            font, get_font_name(font, 3).replace("MapleMono", family_name_compact), 3
-        )
-        set_font_name(
             font, get_font_name(font, 4).replace("Maple Mono", family_name), 4
         )
+        var_postscript_name = get_font_name(font, 6).replace(
+            "MapleMono", family_name_compact
+        )
+        set_font_name(font, var_postscript_name, 6)
         set_font_name(
-            font, get_font_name(font, 6).replace("MapleMono", family_name_compact), 6
+            font,
+            get_unique_identifier(
+                is_italic=False, postscript_name=var_postscript_name, suffix="variable"
+            ),
+            3,
         )
         set_font_name(font, family_name_compact, 25)
 
@@ -602,7 +606,6 @@ def main():
     # =========================================================================================
 
     if build_config["nerd_font"]["enable"]:
-
         use_font_patcher = (
             len(build_config["nerd_font"]["extra_args"]) > 0
             or build_config["nerd_font"]["use_font_patcher"]
@@ -633,7 +636,6 @@ def main():
     # =========================================================================================
 
     if build_config["cn"]["enable"] and path.exists(f"{src_dir}/cn"):
-
         if not path.exists(cn_static_path) or build_config["cn"]["clean_cache"]:
             print("=========================================")
             print("instantiating CN Base font, be patient...")
