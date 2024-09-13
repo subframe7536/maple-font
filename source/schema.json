@@ -307,13 +307,19 @@
           "type": "boolean",
           "description": "Whether to clean instantiated base CN fonts",
           "default": false
+        },
+        "narrow": {
+          "type": "boolean",
+          "description": "[Experimental] Whether to use narrow CN characters. THIS WILL BREAK THE 2:1 METRIC",
+          "default": false
         }
       },
       "required": [
         "enable",
         "with_nerd_font",
         "fix_meta_table",
-        "clean_cache"
+        "clean_cache",
+        "narrow"
       ]
     }
   },

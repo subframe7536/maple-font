@@ -28,6 +28,7 @@ if not package_installed:
 release_mode = None
 use_normal = None
 use_cn_both = None
+use_cn_narrow = None
 use_hinted_font = None
 dir_prefix = None
 
@@ -43,6 +44,9 @@ for arg in sys.argv:
     # whether to build `Maple Mono CN` and `Maple Mono NF CN`
     elif arg == "--cn-both":
         use_cn_both = True
+
+    elif arg == "--cn-narrow":
+        use_cn_narrow = True
 
     # whether to use unhint font
     elif arg.startswith("--hinted="):
@@ -121,6 +125,8 @@ build_config = {
         "fix_meta_table": True,
         # whether to clean instantiated base CN fonts
         "clean_cache": False,
+        # whether to use narrow CN glyphs
+        "narrow": False,
     },
 }
 
@@ -135,6 +141,10 @@ try:
 
         if use_hinted_font is not None:
             build_config["use_hinted"] = use_hinted_font
+
+        if use_cn_narrow:
+            build_config["cn"]["narrow"] = use_cn_narrow
+
 except ():
     print("Fail to load config.json. Use default config.")
 
@@ -339,7 +349,27 @@ def get_unique_identifier(is_italic: bool, postscript_name: str, suffix="") -> s
             elif v == "disable":
                 suffix += f"-{k};"
 
+    if "CN" in postscript_name and build_config["cn"]["narrow"]:
+        suffix = "Narrow;" + suffix
+
     return f"Version 7.000;SUBF;{postscript_name};2024;FL830;{suffix}"
+
+
+def change_char_width(font: TTFont, match_width: int, target_width: int):
+    font["hhea"].advanceWidthMax = target_width
+    for name in font.getGlyphOrder():
+        glyph = font["glyf"][name]
+        width, lsb = font["hmtx"][name]
+
+        if width != match_width or glyph.numberOfContours < 1:
+            continue
+
+        delta = round((target_width - width) / 2)
+        glyph.coordinates.translate((delta, 0))
+        glyph.xMin, glyph.yMin, glyph.xMax, glyph.yMax = (
+            glyph.coordinates.calcIntBounds()
+        )
+        font["hmtx"][name] = (target_width, lsb + delta)
 
 
 def build_mono(f: str):
@@ -520,6 +550,9 @@ def build_cn(f: str):
     freeze_feature(
         font, build_config[f"feature_freeze{'_italic' if is_italic else ''}"]
     )
+
+    if build_config["cn"]["narrow"]:
+        change_char_width(font, match_width=1200, target_width=1000)
 
     # https://github.com/subframe7536/maple-font/issues/239
     # remove_locl(font)
