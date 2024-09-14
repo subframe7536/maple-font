@@ -44,6 +44,7 @@
     "with_nerd_font": true,
     "fix_meta_table": true,
     "clean_cache": false,
-    "narrow": true
+    "narrow": false,
+    "use_hinted": false
   }
 }

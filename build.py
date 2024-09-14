@@ -125,8 +125,10 @@ build_config = {
         "fix_meta_table": True,
         # whether to clean instantiated base CN fonts
         "clean_cache": False,
-        # whether to use narrow CN glyphs
+        # whether to narrow CN glyphs
         "narrow": False,
+        # whether to hint CN font (will increase about 33% size)
+        "use_hinted": False
     },
 }
 
@@ -682,11 +684,17 @@ def main():
         with Pool(pool_size()) as p:
             p.map(build_cn, listdir(cn_base_font_dir))
 
+        if build_config["cn"]["use_hinted"]:
+            run(f"ftcli ttf autohint {cn_base_font_dir}")
+
         if use_cn_both and release_mode:
             load_cn_dir_and_suffix(not build_config["cn"]["with_nerd_font"])
             makedirs(output_cn, exist_ok=True)
             with Pool(pool_size()) as p:
                 p.map(build_cn, listdir(cn_base_font_dir))
+
+            if build_config["cn"]["use_hinted"]:
+                run(f"ftcli ttf autohint {cn_base_font_dir}")
 
     run(f"ftcli name del-mac-names -r {output_dir}")
 
