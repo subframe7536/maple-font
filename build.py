@@ -362,8 +362,10 @@ def change_char_width(font: TTFont, match_width: int, target_width: int):
     for name in font.getGlyphOrder():
         glyph = font["glyf"][name]
         width, lsb = font["hmtx"][name]
-
-        if width != match_width or glyph.numberOfContours < 1:
+        if width != match_width:
+            continue
+        if glyph.numberOfContours == 0:
+            font["hmtx"][name] = (target_width, lsb)
             continue
 
         delta = round((target_width - width) / 2)
