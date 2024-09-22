@@ -83,7 +83,7 @@ ps: in Jetbrains' product, [todo) can't be properly rendered, so please use todo
 </p>
 <p align="center">
 <img src="./img/option.png"/><br>
-<h3 align="center">font features are different in font features are different in V7, see in <a href="https://github.com/subframe7536/maple-font/tree/variable?tab=readme-ov-file#features">docs</h3><br/>
+<h3 align="center">font features are different in V7, see in <a href="https://github.com/subframe7536/maple-font/tree/variable?tab=readme-ov-file#features">docs</h3><br/>
 compatibility & usage: in <a href="https://github.com/tonsky/FiraCode#editor-compatibility-list" target="_blank">FiraCode README</a>
 </p>
 
