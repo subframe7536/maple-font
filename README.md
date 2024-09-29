@@ -32,7 +32,7 @@ Base on `Jetbrains Mono` and **much "Opinioned"**
     - for logger: `[TRACE]` / `[DEBUG]` / `[INFO]` / `[WARN]` / `[ERROR]` / `[FATAL]`
 - Font features
   - zero: dot style `0`
-  - cv01: Classic `@` / `$` / `&` / `Q` / `=>` / `->`
+  - cv01: Classic `@` / `$` / `%` / `&` / `Q` / `=>` / `->`
   - cv02: Alternative `a` (with top alarm)
   - cv03: Alternative `i` (without bottom left bar)
   - cv04: Alternative `l` (with bottom left bar) and `1` (without bottom bar)
@@ -41,7 +41,7 @@ Base on `Jetbrains Mono` and **much "Opinioned"**
   - ss01: Non-cursive italic style `l i j k x`
   - ss02: Disable ligautures on equals like `==` / `!=` / `<=`
   - ss03: Ignore cases on all tags
-  - ss04: Disable ligatures on `__`, `#__`, `***`, `\n`
+  - ss04: Disable ligatures on `__`, `#__`, `\n`
 
 ## Build
 
@@ -76,7 +76,7 @@ You can change build config in `config.json`
 python build.py --release
 ```
 
-## credit
+## Credit
 
 - [Jetbrains Mono](https://github.com/JetBrains/JetBrainsMono)
 - [Roboto Mono](https://github.com/googlefonts/RobotoMono)
@@ -85,6 +85,10 @@ python build.py --release
 - [Commit Mono](https://github.com/eigilnikolajsen/commit-mono)
 - [Code Sample](https://github.com/TheRenegadeCoder/sample-programs-website)
 - [Nerd Font](https://github.com/ryanoasis/nerd-fonts)
+- [Font Freeze](https://github.com/MuTsunTsai/fontfreeze/)
+- [Font Viewer](https://tophix.com/font-tools/font-viewer)
+- [Monolisa](https://www.monolisa.dev/) for landing page
+- [Recursive](https://www.recursive.design/)
 
 ## License
 

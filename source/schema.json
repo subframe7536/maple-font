@@ -310,12 +310,12 @@
         },
         "narrow": {
           "type": "boolean",
-          "description": "[Experimental] Whether to narrow CN characters. THIS WILL BREAK THE 2:1 METRIC",
+          "description": "[Experimental] Whether to narrow CN characters. THIS WILL BREAK THE 2:1 METRIC\nOnly supported in VSCode currently",
           "default": false
         },
         "use_hinted": {
           "type": "boolean",
-          "description": "# whether to hint CN font (will increase about 33% size)",
+          "description": "whether to hint CN font (will increase about 33% size)",
           "default": false
         }
       },

@@ -31,7 +31,7 @@
 @y = [Y y];
 @z = [Z z];
 @zero = [zero zero.zero];
-@escape = [backslash slash @Digit b B c d D f k n p P r s S t u w W v x dollar period asterisk asciitilde question bar quotesingle quotedbl bracketleft bracketright parenleft parenright braceleft braceright grave];
+@escape = [backslash slash @Digit b B c d D f k n p P r s S t u w W v x dollar period asterisk asciitilde question bar quotesingle quotedbl bracketleft bracketright parenleft parenright braceleft braceright grave comma];
 @a_l = [a_l.liga a_l.liga.cv02 a_l.liga.cv04 a_l.liga.cv02.cv04 a_l.liga.ss01 a_l.liga.cv02.ss01];
 #/< otclasses
 #< classes
@@ -466,24 +466,38 @@ feature calt {
 
   # >=
   lookup greater_equal.liga {
-    ignore sub greater greater' equal;
-    ignore sub greater' equal equal;
-    ignore sub greater' equal greater;
-    ignore sub greater' equal less;
+    ignore sub [greater equal] greater' equal;
+    ignore sub greater' equal [equal greater less];
     sub SPC equal' by greater_equal.liga;
     sub greater' equal by SPC;
   } greater_equal.liga;
 
   # <=
   lookup less_equal.liga {
-    ignore sub less' equal less;
-    ignore sub less' equal bar;
-    ignore sub less less' equal;
+    ignore sub less' equal [equal less greater bar];
+    ignore sub [less equal] less' equal;
     ignore sub parenleft question less' equal;
-    ignore sub less' equal equal;
     sub SPC equal' by less_equal.liga;
     sub less' equal by SPC;
   } less_equal.liga;
+
+  # =<= <=<=<=
+  lookup equal_less_equal.liga {
+    ignore sub [equal less greater] equal' less equal;
+    ignore sub equal' less equal [equal less greater bar];
+    sub SPC SPC equal' by equal_less_equal.liga;
+    sub SPC less' equal by SPC;
+    sub equal' less equal by SPC;
+  } equal_less_equal.liga;
+
+  # =>= =>=>=>
+  lookup equal_greater_equal.liga {
+    ignore sub [equal greater less bar] equal' greater equal;
+    ignore sub equal' greater equal [equal greater less];
+    sub SPC SPC equal' by equal_greater_equal.liga;
+    sub SPC greater' equal by SPC;
+    sub equal' greater equal by SPC;
+  } equal_greater_equal.liga;
 
   # <<=
   lookup less_less_equal.liga {
@@ -903,7 +917,7 @@ feature calt {
   lookup less_equal_less.liga {
     ignore sub less less' equal less;
     ignore sub parenleft question less' equal less;
-    ignore sub less' equal less less;
+    ignore sub less' equal less [less equal];
     sub SPC SPC less' by less_equal_less.liga;
     sub SPC equal' less by SPC;
     sub less' equal less by SPC;
@@ -945,7 +959,7 @@ feature calt {
   # >=>
   lookup greater_equal_greater.liga {
     ignore sub greater greater' equal greater;
-    ignore sub greater' equal greater greater;
+    ignore sub greater' equal greater [greater equal];
     sub SPC SPC greater' by greater_equal_greater.liga;
     sub SPC equal' greater by SPC;
     sub greater' equal greater by SPC;
@@ -1724,6 +1738,7 @@ feature cv01 {
   sub asciitilde_at.liga by asciitilde_at.liga.cv01;
   sub at by at.cv01;
   sub dollar by dollar.cv01;
+  sub percent by percent.cv01;
 
   sub equal_greater.liga by equal_greater.liga.cv01;
   sub less_equal_equal.liga by less_equal_equal.liga.cv01;
