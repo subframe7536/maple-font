@@ -139,7 +139,7 @@ try:
             del data["$schema"]
         build_config.update(data)
         if "font_forge_bin" not in build_config["nerd_font"]:
-            build_config["nerd_font"]["font_forge_bin"] = font_forge_bin_default
+            build_config["nerd_font"]["font_forge_bin"] = get_font_forge_bin()
 
         if use_hinted_font is not None:
             build_config["use_hinted"] = use_hinted_font
@@ -211,8 +211,21 @@ def pool_size():
     return build_config["pool_size"] if not getenv("CODESPACE_NAME") else 1
 
 
-# compress folder and return sha1
+def freeze(font: TTFont, is_italic: bool):
+    """
+    freeze font features
+    """
+    freeze_feature(
+        font=font,
+        moving_rules=["ss03"],
+        config=build_config[f"feature_freeze{'_italic' if is_italic else ''}"],
+    )
+
+
 def compress_folder(source_file_or_dir_path: str, target_parent_dir_path: str) -> str:
+    """
+    compress folder and return sha1
+    """
     source_folder_name = path.basename(source_file_or_dir_path)
 
     zip_path = path.join(
@@ -275,7 +288,9 @@ def check_font_patcher() -> bool:
 
 
 def get_nerd_font_patcher_args():
-    # full args: https://github.com/ryanoasis/nerd-fonts?tab=readme-ov-file#font-patcher
+    """
+    full args: https://github.com/ryanoasis/nerd-fonts?tab=readme-ov-file#font-patcher
+    """
     _nf_args = [
         build_config["nerd_font"]["font_forge_bin"],
         "FontPatcher/font-patcher",
@@ -418,9 +433,7 @@ def build_mono(f: str):
     elif style_with_prefix_space == " ExtraLight":
         font["OS/2"].usWeightClass = 275
 
-    freeze_feature(
-        font, build_config[f"feature_freeze{'_italic' if is_italic else ''}"]
-    )
+    freeze(font, is_italic)
 
     font.save(_path)
     font.close()
@@ -551,9 +564,7 @@ def build_cn(f: str):
     # https://github.com/subframe7536/maple-font/issues/188
     fix_cv98(font)
 
-    freeze_feature(
-        font, build_config[f"feature_freeze{'_italic' if is_italic else ''}"]
-    )
+    freeze(font, is_italic)
 
     if build_config["cn"]["narrow"]:
         change_char_width(font, match_width=1200, target_width=1000)
