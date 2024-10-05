@@ -64,7 +64,7 @@ You can change build config in `config.json`
 - There is `--normal` option in `build.py` for common config, just like `Jetbrains Mono` (with slashed zero)
 - For custom `font-patcher` args, `font-forge` (and maybe `python3-fontforge` as well) is needed
 
-### Chinses version
+### Chinese version
 
 1. Download CN base font at [Gitee release](https://gitee.com/subframe7536/Maple/releases/tag/v7.0-beta23)
 2. put them into `./source/cn`
