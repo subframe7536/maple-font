@@ -40,7 +40,7 @@ Inspired by [Source Code Pro](https://github.com/adobe-fonts/source-code-pro), [
   |     `+` and `=` are not centered at some font-size     |             `+` and `=` are always centered             |
 
 - 🗒 **More readable** - cursive style, better glyph shape, lower the height of capital letters and numbers, reduce or modify kerning and center operators `+ - * = ^ ~ < >`
-- 🛠️ **More configable** - enable or disable font features as you want, just make your own font
+- 🛠️ **More configurable** - enable or disable font features as you want, just make your own font
 - ✨ See it in [screenshots](#screenshots)
 
 
