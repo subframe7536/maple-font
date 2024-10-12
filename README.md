@@ -7,7 +7,7 @@
 <h1 align="center"> Maple Font </h1>
 
 <p align="center">
-Open source monospace & nerd font with round corner and ligatures.
+Open source monospace & nerd font with round corners and ligatures.
 </p>
 
 <p align="center">
@@ -31,7 +31,7 @@ Inspired by [Source Code Pro](https://github.com/adobe-fonts/source-code-pro), [
 
 - 🎨 **New shape** - such as `@ # $ % &` and new shape of italic style
 - 🤙🏻 **More ligatures** - such as `.., ..., /*, /**`
-- 📦 **Small size** - leave only contains latin, standard set of accents, table control characters and few symbols
+- 📦 **Small size** - leave only contains Latin, standard set of accents, table control characters and few symbols
 - 🦾 **Better rendering effect** - redesigned it according to Fira Code Retina's spacing and glyph
 
   |                           v4                           |                           v5                            |
@@ -78,18 +78,18 @@ My ability is not enough to solve other problems on Mac OS. I will record the pr
 <img src="./img/base.png" /><br>
 <img src="./img/ligature.png" /><br>
 <img src="./img/ligature.gif"/><br>
-multiply ways to get TODO tag<br>
-ps: in Jetbrains' product, [todo) can't be properly rendered, so please use todo))<br>
+multiple ways to get TODO tag<br>
+ps: in JetBrains' product, [todo) can't be properly rendered, so please use todo))<br>
 </p>
 <p align="center">
 <img src="./img/option.png"/><br>
 <h3 align="center">font features are different in V7, see in <a href="https://github.com/subframe7536/maple-font/tree/variable?tab=readme-ov-file#features">docs</h3><br/>
-compatibility & usage: in <a href="https://github.com/tonsky/FiraCode#editor-compatibility-list" target="_blank">FiraCode README</a>
+Compatibility & usage: in <a href="https://github.com/tonsky/FiraCode#editor-compatibility-list" target="_blank">FiraCode README</a>
 </p>
 
 ## Screenshots
 
-code theme: [vscode-theme-maple](https://github.com/subframe7536/vscode-theme-maple)
+Code theme: [vscode-theme-maple](https://github.com/subframe7536/vscode-theme-maple)
 
 ~~generate by: [VSCodeSnap](https://github.com/luisllamasbinaburo/VSCodeSnap)~~ Seems deprecated, so I made a new one: [CodeImg](https://github.com/subframe7536/vscode-codeimg)
 
@@ -156,7 +156,7 @@ code theme: [vscode-theme-maple](https://github.com/subframe7536/vscode-theme-ma
 
 ## Build your own font
 
-see [doc](./source/README.md)
+See [doc](./source/README.md)
 
 ## Donate
 
