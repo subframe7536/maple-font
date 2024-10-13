@@ -213,6 +213,11 @@
           "description": "Whether to enable Nerd Font",
           "default": true
         },
+        "github_mirror": {
+          "type": "string",
+          "description": "Github mirror for Nerd Font, will download from https://{github_mirror}/ryanoasis/nerd-fonts/releases/download/v{version}/FontPatcher.zip",
+          "default": "github.com"
+        },
         "version": {
           "type": "string",
           "description": "Target version of Nerd Font. If font-patcher not exists when need to use it or there is no prebuild font for current version, will download from Github",

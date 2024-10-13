@@ -6,7 +6,7 @@ import shutil
 import time
 from functools import partial
 from multiprocessing import Pool
-from os import listdir, makedirs, path, remove, walk, getenv
+from os import environ, listdir, makedirs, path, remove, walk, getenv
 from urllib.request import urlopen
 from zipfile import ZIP_DEFLATED, ZipFile
 from fontTools.ttLib import TTFont, newTable
@@ -27,6 +27,7 @@ def check_ftcli():
 
 
 # =========================================================================================
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Optimizer and builder for Maple Mono")
@@ -67,6 +68,7 @@ def parse_args():
     )
 
     return parser.parse_args()
+
 
 # =========================================================================================
 
@@ -167,6 +169,9 @@ class FontConfig:
                 if "font_forge_bin" not in self.nerd_font:
                     self.nerd_font["font_forge_bin"] = get_font_forge_bin()
 
+                if "github_mirror" not in self.nerd_font:
+                    self.nerd_font["github_mirror"] = "github.com"
+
                 if args.hinted is not None:
                     self.use_hinted = True
 
@@ -188,9 +193,10 @@ class FontConfig:
         ):
             return False
 
-        if check_font_patcher(version=self.nerd_font["version"]) and not path.exists(
-            self.nerd_font["font_forge_bin"]
-        ):
+        if check_font_patcher(
+            version=self.nerd_font["version"],
+            github_mirror=self.nerd_font["github_mirror"],
+        ) and not path.exists(self.nerd_font["font_forge_bin"]):
             print(
                 f"FontForge bin({self.nerd_font['font_forge_bin']}) not found. Use prebuild Nerd Font instead."
             )
@@ -263,7 +269,7 @@ def freeze(font: TTFont, freeze_config: dict[str, str]):
     )
 
 
-def check_font_patcher(version: str) -> bool:
+def check_font_patcher(version: str, github_mirror: str) -> bool:
     if path.exists("FontPatcher"):
         with open("FontPatcher/font-patcher", "r", encoding="utf-8") as f:
             if f"# Nerd Fonts Version: {version}" in f.read():
@@ -274,7 +280,10 @@ def check_font_patcher(version: str) -> bool:
 
     zip_path = "FontPatcher.zip"
     if not path.exists(zip_path):
-        url = f"https://github.com/ryanoasis/nerd-fonts/releases/download/v{version}/FontPatcher.zip"
+        github = environ.get("GITHUB")  # custom github mirror, for CN users
+        if not github:
+            github = github_mirror
+        url = f"https://{github}/ryanoasis/nerd-fonts/releases/download/v{version}/FontPatcher.zip"
         try:
             print(f"NerdFont Patcher does not exist, download from {url}")
             with urlopen(url) as response, open(zip_path, "wb") as out_file:
@@ -423,7 +432,9 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
     font.save(_path)
     font.close()
 
-    run(f"ftcli ttf autohint {_path} -out {build_option.output_ttf_hinted}/{font_config.family_name_compact}-AutoHint-{style_compact}.ttf")
+    run(
+        f"ftcli ttf autohint {_path} -out {build_option.output_ttf_hinted}/{font_config.family_name_compact}-AutoHint-{style_compact}.ttf"
+    )
     run(f"ftcli converter ttf2otf {_path} -out {build_option.output_otf}")
     run(f"ftcli converter ft2wf {_path} -out {build_option.output_woff2} -f woff2")
 

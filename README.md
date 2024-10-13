@@ -51,6 +51,10 @@ You can change build config in `config.json`
 2. Put them into `./source/cn`
 3. Run `build.py` and **BE PATIENT**, instantiation will take about 30 minutes
 
+#### Notice
+
+If you have trouble downloading `Font Patcher`, setup `nerd_font.github_mirror` in `config.json` or setup `$GITHUB` to your environment variable.
+
 ### Release Build
 
 ```sh
