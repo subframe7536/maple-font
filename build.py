@@ -7,6 +7,7 @@ import time
 from functools import partial
 from multiprocessing import Pool
 from os import environ, listdir, makedirs, path, remove, walk, getenv
+from typing import Callable
 from urllib.request import urlopen
 from zipfile import ZIP_DEFLATED, ZipFile
 from fontTools.ttLib import TTFont, newTable
@@ -439,61 +440,59 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
     run(f"ftcli converter ft2wf {_path} -out {build_option.output_woff2} -f woff2")
 
 
-def build_nf(f: str, font_config: FontConfig, build_option: BuildOption):
-    print(f"generate NerdFont for {f}")
+def build_nf_by_prebuild_nerd_font(
+    font_basename: str, font_config: FontConfig, build_option: BuildOption
+) -> TTFont:
+    merger = Merger()
+    return merger.merge(
+        [
+            path.join(build_option.ttf_base_dir, font_basename),
+            f"{build_option.src_dir}/MapleMono-NF-Base{'-Mono' if font_config.nerd_font['mono'] else ''}.ttf",
+        ]
+    )
 
-    def get_nerd_font_patcher_args():
-        """
-        full args: https://github.com/ryanoasis/nerd-fonts?tab=readme-ov-file#font-patcher
-        """
-        _nf_args = [
-            font_config.nerd_font["font_forge_bin"],
-            "FontPatcher/font-patcher",
-            "-l",
-            "--careful",
-            "--outputdir",
-            build_option.output_nf,
-        ] + font_config.nerd_font["glyphs"]
 
-        if font_config.nerd_font["mono"]:
-            _nf_args += ["--mono"]
+def build_nf_by_font_patcher(
+    font_basename: str, font_config: FontConfig, build_option: BuildOption
+) -> TTFont:
+    """
+    full args: https://github.com/ryanoasis/nerd-fonts?tab=readme-ov-file#font-patcher
+    """
+    _nf_args = [
+        font_config.nerd_font["font_forge_bin"],
+        "FontPatcher/font-patcher",
+        "-l",
+        "--careful",
+        "--outputdir",
+        build_option.output_nf,
+    ] + font_config.nerd_font["glyphs"]
 
-        _nf_args += font_config.nerd_font["extra_args"]
+    if font_config.nerd_font["mono"]:
+        _nf_args += ["--mono"]
 
-        return _nf_args
+    _nf_args += font_config.nerd_font["extra_args"]
 
+    run(_nf_args + [path.join(build_option.ttf_base_dir, font_basename)])
     nf_file_name = "NerdFont"
     if font_config.nerd_font["mono"]:
         nf_file_name += "Mono"
-
-    def build_using_prebuild_nerd_font(font_basename: str) -> TTFont:
-        merger = Merger()
-        return merger.merge(
-            [
-                path.join(build_option.ttf_base_dir, font_basename),
-                f"{build_option.src_dir}/MapleMono-NF-Base{'-Mono' if font_config.nerd_font['mono'] else ''}.ttf",
-            ]
-        )
-
-    def build_using_font_patcher(font_basename: str) -> TTFont:
-        run(
-            get_nerd_font_patcher_args()
-            + [path.join(build_option.ttf_base_dir, font_basename)]
-        )
-        _path = path.join(
-            build_option.output_nf, font_basename.replace("-", f"{nf_file_name}-")
-        )
-        font = TTFont(_path)
-        remove(_path)
-        return font
-
-    makedirs(build_option.output_nf, exist_ok=True)
-
-    nf_font = (
-        build_using_font_patcher(f)
-        if font_config.should_use_font_patcher()
-        else build_using_prebuild_nerd_font(f)
+    _path = path.join(
+        build_option.output_nf, font_basename.replace("-", f"{nf_file_name}-")
     )
+    font = TTFont(_path)
+    remove(_path)
+    return font
+
+
+def build_nf(
+    f: str,
+    get_ttfont: Callable[[str], TTFont],
+    font_config: FontConfig,
+    build_option: BuildOption,
+):
+    print(f"generate NerdFont for {f}")
+    makedirs(build_option.output_nf, exist_ok=True)
+    nf_font = get_ttfont(f)
 
     # format font name
     style_compact_nf = f.split("-")[-1].split(".")[0]
@@ -697,8 +696,22 @@ def main():
     # =========================================================================================
 
     if font_config.nerd_font["enable"]:
+        get_ttfont_fn = (
+            partial(
+                build_nf_by_font_patcher,
+                font_config=font_config,
+                build_option=build_option,
+            )
+            if font_config.should_use_font_patcher()
+            else partial(
+                build_nf_by_prebuild_nerd_font,
+                font_config=font_config,
+                build_option=build_option,
+            )
+        )
         _build_fn = partial(
             build_nf,
+            get_ttfont=get_ttfont_fn,
             font_config=font_config,
             build_option=build_option,
         )
