@@ -24,7 +24,7 @@
       "properties": {
         "cv01": {
           "type": "string",
-          "description": "Classic '@', '$', '&', 'Q', '=>', '->'",
+          "description": "Classic '@', '$', '%', '&', 'Q', '=>', '->'",
           "enum": [
             "ignore",
             "disable",
@@ -51,7 +51,61 @@
         },
         "cv04": {
           "type": "string",
-          "description": "Alternative 'l' (with bottom left bar) and '1' (without bottom bar)",
+          "description": "Alternative 'l' (with bottom left bar) and '1' (without bottom bar), will be overrided by cv35 in italic style",
+          "enum": [
+            "ignore",
+            "disable",
+            "enable"
+          ]
+        },
+        "cv31": {
+          "type": "string",
+          "description": "[Italic Only] Alternative 'a' (with top alarm)",
+          "enum": [
+            "ignore",
+            "disable",
+            "enable"
+          ]
+        },
+        "cv32": {
+          "type": "string",
+          "description": "[Italic Only] Alternative 'f' (without bottom tail)",
+          "enum": [
+            "ignore",
+            "disable",
+            "enable"
+          ]
+        },
+        "cv33": {
+          "type": "string",
+          "description": "[Italic Only] Alternative 'i' (with bottom left bar) and 'j'",
+          "enum": [
+            "ignore",
+            "disable",
+            "enable"
+          ]
+        },
+        "cv34": {
+          "type": "string",
+          "description": "[Italic Only] Alternative 'k' (without center circle)",
+          "enum": [
+            "ignore",
+            "disable",
+            "enable"
+          ]
+        },
+        "cv35": {
+          "type": "string",
+          "description": "[Italic Only] Alternative 'l' (without center tail)",
+          "enum": [
+            "ignore",
+            "disable",
+            "enable"
+          ]
+        },
+        "cv36": {
+          "type": "string",
+          "description": "[Italic Only] Alternative 'x' (without top and bottom tails)",
           "enum": [
             "ignore",
             "disable",
@@ -60,7 +114,7 @@
         },
         "cv98": {
           "type": "string",
-          "description": "Full width '…'(ellipsis) and '—'(emdash) support for Maple Mono NF CN",
+          "description": "[CN Only] Full width '…'(ellipsis) and '—'(emdash)",
           "enum": [
             "ignore",
             "disable",
@@ -69,7 +123,7 @@
         },
         "cv99": {
           "type": "string",
-          "description": "Traditional punctuations support for Maple Mono NF CN",
+          "description": "[CN Only] Traditional punctuations",
           "enum": [
             "ignore",
             "disable",
@@ -78,7 +132,7 @@
         },
         "ss01": {
           "type": "string",
-          "description": "Non-cursive italic style of 'l i j k x'",
+          "description": "Broken equals ligatures (==, ===, !=, !==, =/=)",
           "enum": [
             "ignore",
             "disable",
@@ -87,7 +141,7 @@
         },
         "ss02": {
           "type": "string",
-          "description": "Disable ligautures on equals like '==', '!=', '<='",
+          "description": "Broken compare and equal ligatures (<=, >=)",
           "enum": [
             "ignore",
             "disable",
@@ -96,7 +150,7 @@
         },
         "ss03": {
           "type": "string",
-          "description": "Ignore cases on all tags",
+          "description": "Enable arbitrary tag (allow to use any case letters in all tags)",
           "enum": [
             "ignore",
             "disable",
@@ -105,112 +159,34 @@
         },
         "ss04": {
           "type": "string",
-          "description": "Disable ligatures on '__', '#__', '***' and escape strings",
+          "description": "Break multiple underscores (__, #__)",
           "enum": [
             "ignore",
             "disable",
             "enable"
           ]
         },
-        "zero": {
+        "ss05": {
           "type": "string",
-          "description": "Dot style '0'",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
-        }
-      }
-    },
-    "feature_freeze_italic": {
-      "type": "object",
-      "description": "Freeze some font features (No effect on Variable font) for italic font \n enable: enable font features by default \n disable: remove some font features \n ignore: skip handle target font features",
-      "properties": {
-        "cv01": {
-          "type": "string",
-          "description": "Classic '@', '$', '&', 'Q', '=>', '->'",
+          "description": "Thin backslash in escape letters (\\w, \\n, \\r ...)",
           "enum": [
             "ignore",
             "disable",
             "enable"
           ]
         },
-        "cv02": {
+        "ss06": {
           "type": "string",
-          "description": "Alternative 'a' (with top alarm)",
+          "description": "[Italic Only] Remove connected strokes between italic letters (al, ul, il ...)",
           "enum": [
             "ignore",
             "disable",
             "enable"
           ]
         },
-        "cv03": {
+        "ss07": {
           "type": "string",
-          "description": "Alternative regular 'i' (without bottom left bar)",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
-        },
-        "cv04": {
-          "type": "string",
-          "description": "Alternative 'l' (with bottom left bar) and '1' (without bottom bar)",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
-        },
-        "cv98": {
-          "type": "string",
-          "description": "Full width '…'(ellipsis) and '—'(emdash) support for Maple Mono NF CN",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
-        },
-        "cv99": {
-          "type": "string",
-          "description": "Traditional punctuations support for Maple Mono NF CN",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
-        },
-        "ss01": {
-          "type": "string",
-          "description": "Non-cursive italic style of 'l i j k x'",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
-        },
-        "ss02": {
-          "type": "string",
-          "description": "Disable ligautures on equals like '==', '!=', '<='",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
-        },
-        "ss03": {
-          "type": "string",
-          "description": "Ignore cases on all tags",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
-        },
-        "ss04": {
-          "type": "string",
-          "description": "Disable ligatures on '__', '#__', '***' and escape strings",
+          "description": "Make space optional in multiple less or greater (<<, >>, <<<, >>>)",
           "enum": [
             "ignore",
             "disable",

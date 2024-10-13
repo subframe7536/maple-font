@@ -32,7 +32,8 @@
 @x = [X x];
 @y = [Y y];
 @z = [Z z];
-@escape = [backslash slash @Digit b B c d D f k n p P r s S t u w W v x dollar period asterisk asciitilde question bar quotesingle quotedbl bracketleft bracketright parenleft parenright braceleft braceright grave comma];
+@escape_letter = [@Digit b B c d D f k n p P r s S t u w W v x];
+@escape_punctuation = [backslash slash dollar period asterisk asciitilde question bar quotesingle quotedbl bracketleft bracketright parenleft parenright braceleft braceright grave comma];
 #/< otclasses
 #< classes
 
@@ -219,7 +220,7 @@ feature calt {
     sub plus' plus plus by SPC;
   } plus_plus_plus.liga;
 
-  # .?
+  # .? Zig
   lookup period_question.liga {
     ignore sub period period' question;
     ignore sub period' question question;
@@ -245,7 +246,7 @@ feature calt {
     sub period' period period by SPC;
   } period_period_period.liga;
 
-  # ..<
+  # ..< Swift
   lookup period_period_less.liga {
     ignore sub period period' period less;
     ignore sub period' period less [less slash greater];
@@ -333,25 +334,18 @@ feature calt {
     sub greater' colon greater by SPC;
   } greater_colon_greater.liga;
 
-  # <<
+  # << with tailing space
   lookup less_less.liga {
-    ignore sub less less' less;
-    ignore sub hyphen less' less;
-    ignore sub equal less' less;
-    ignore sub less' less less;
-    ignore sub less' less equal;
-    ignore sub less' less asciitilde;
-    sub SPC less' by less_less.liga;
-    sub less' less by SPC;
+    ignore sub less less' less space;
+    sub SPC less' space by less_less.liga;
+    sub less' less space by SPC;
   } less_less.liga;
 
-  # <<<
+  # <<< with tailing space
   lookup less_less_less.liga {
-    ignore sub less less' less less;
-    ignore sub less' less less less;
-    sub SPC SPC less' by less_less_less.liga;
-    sub SPC less' less by SPC;
-    sub less' less less by SPC;
+    sub SPC SPC less' space by less_less_less.liga;
+    sub SPC less' less space by SPC;
+    sub less' less less space by SPC;
   } less_less_less.liga;
 
   # <=>
@@ -414,7 +408,7 @@ feature calt {
   # ->>
   lookup hyphen_greater_greater.liga {
     ignore sub hyphen hyphen' greater greater;
-    ignore sub hyphen' greater greater greater;
+    ignore sub hyphen' greater greater [greater hyphen];
     sub SPC SPC greater' by hyphen_greater_greater.liga;
     sub SPC greater' greater by SPC;
     sub hyphen' greater greater by SPC;
@@ -442,26 +436,21 @@ feature calt {
     sub hyphen' greater by SPC;
   } hyphen_greater.liga;
 
-  # >>
+  # >> with heading space
   lookup greater_greater.liga {
     ignore sub greater greater' greater;
-    ignore sub greater' greater greater;
-    ignore sub greater' greater equal;
-    ignore sub greater' greater hyphen;
-    ignore sub equal greater' greater;
-    ignore sub slash greater' greater;
-    ignore sub less greater' greater;
-    sub SPC greater' by greater_greater.liga;
-    sub greater' greater by SPC;
+    ignore sub greater' greater [greater equal hyphen];
+    ignore sub [equal slash less] greater' greater;
+    sub space SPC greater' by greater_greater.liga;
+    sub space greater' greater by SPC;
   } greater_greater.liga;
 
-  # >>>
+  # >>> with heading space
   lookup greater_greater_greater.liga {
-    ignore sub greater greater' greater greater;
     ignore sub greater' greater greater greater;
-    sub SPC SPC greater' by greater_greater_greater.liga;
-    sub SPC greater' greater by SPC;
-    sub greater' greater greater by SPC;
+    sub space SPC SPC greater' by greater_greater_greater.liga;
+    sub space SPC greater' greater by SPC;
+    sub space greater' greater greater by SPC;
   } greater_greater_greater.liga;
 
   # >=
@@ -810,7 +799,7 @@ feature calt {
   # <--
   lookup less_hyphen_hyphen.liga {
     ignore sub less less' hyphen hyphen;
-    ignore sub less' hyphen hyphen hyphen;
+    ignore sub less' hyphen hyphen [hyphen greater less];
     sub SPC SPC hyphen' by less_hyphen_hyphen.liga;
     sub SPC hyphen' hyphen by SPC;
     sub less' hyphen hyphen by SPC;
@@ -852,7 +841,7 @@ feature calt {
     sub question' colon by SPC;
   } question_colon.liga;
 
-  # ?.
+  # ?. TypeScript / Rust
   lookup question_period.liga {
     ignore sub question question' period;
     ignore sub question' period period;
@@ -915,7 +904,7 @@ feature calt {
 
   # <=<
   lookup less_equal_less.liga {
-    ignore sub less less' equal less;
+    ignore sub [less equal] less' equal less;
     ignore sub parenleft question less' equal less;
     ignore sub less' equal less [less equal];
     sub SPC SPC less' by less_equal_less.liga;
@@ -958,7 +947,7 @@ feature calt {
 
   # >=>
   lookup greater_equal_greater.liga {
-    ignore sub greater greater' equal greater;
+    ignore sub [greater equal] greater' equal greater;
     ignore sub greater' equal greater [greater equal];
     sub SPC SPC greater' by greater_equal_greater.liga;
     sub SPC equal' greater by SPC;
@@ -1456,8 +1445,9 @@ feature calt {
   } xml_empty_comment.liga;
 
   lookup escape {
-    ignore sub backslash.liga backslash' @escape;
-    sub backslash' @escape by backslash.liga;
+    ignore sub backslash.liga backslash' @escape_punctuation;
+    ignore sub backslash' percent percent;
+    sub backslash' @escape_punctuation by backslash.liga;
   } escape;
 
 } calt;
@@ -1643,9 +1633,11 @@ feature case {
   sub circumflexcomb_hookabovecomb by circumflexcomb_hookabovecomb.case;
   sub circumflexcomb_tildecomb by circumflexcomb_tildecomb.case;
 } case;
+
 feature zero {
   sub zero by zero.zero;
 } zero;
+
 feature cv01 {
   sub Q by Q.cv01;
   sub ampersand by ampersand.cv01;
@@ -1661,8 +1653,6 @@ feature cv01 {
   sub equal_equal_greater.liga by equal_equal_greater.liga.cv01;
   sub less_equal_equal_greater.liga by less_equal_equal_greater.liga.cv01;
   sub less_equal_greater.liga by less_equal_greater.liga.cv01;
-  sub less_less_equal.liga by less_less_equal.liga.cv01;
-  sub equal_greater_greater.liga by equal_greater_greater.liga.cv01;
   sub less_equal_less.liga by less_equal_less.liga.cv01;
   sub greater_equal_greater.liga by greater_equal_greater.liga.cv01;
   sub less_equal_bar.liga by less_equal_bar.liga.cv01;
@@ -1676,13 +1666,12 @@ feature cv01 {
   sub less_hyphen_less.liga by less_hyphen_less.liga.cv01;
   sub greater_hyphen_greater.liga by greater_hyphen_greater.liga.cv01;
   sub less_hyphen_greater.liga by less_hyphen_greater.liga.cv01;
-  sub less_less_hyphen.liga by less_less_hyphen.liga.cv01;
-  sub hyphen_greater_greater.liga by hyphen_greater_greater.liga.cv01;
 
   sub less_exclam_hyphen_hyphen.liga by less_exclam_hyphen_hyphen.liga.cv01;
   sub less_numbersign_hyphen_hyphen.liga by less_numbersign_hyphen_hyphen.liga.cv01;
   sub xml_empty_comment.liga by xml_empty_comment.liga.cv01;
 } cv01;
+
 feature cv02 {
   sub a by a.cv02;
   sub aacute by aacute.cv02;
@@ -1709,6 +1698,7 @@ feature cv02 {
   sub atilde by atilde.cv02;
   sub ordfeminine by ordfeminine.cv02;
 } cv02;
+
 feature cv03 {
   sub i by i.cv03;
   sub iacute by iacute.cv03;
@@ -1725,6 +1715,7 @@ feature cv03 {
   sub iogonek by iogonek.cv03;
   sub itilde by itilde.cv03;
 } cv03;
+
 feature cv04 {
   sub l by l.cv04;
   sub lacute by lacute.cv04;
@@ -1734,17 +1725,30 @@ feature cv04 {
   sub lslash by lslash.cv04;
   sub one by one.cv04;
 } cv04;
-# split `==`
+
+feature ss01 {
+  featureNames {
+    name "Broken equals ligatures";
+  };
+  sub equal_equal.liga by equal_equal.liga.ss01;
+  sub equal_equal_equal.liga by equal_equal_equal.liga.ss01;
+  sub exclam_equal.liga by exclam_equal.liga.ss01;
+  sub exclam_equal_equal.liga by exclam_equal_equal.liga.ss01;
+  sub equal_slash_equal.liga by equal_slash_equal.liga.ss01;
+} ss01;
+
 feature ss02 {
+  featureNames {
+    name "Broken compare and equal ligatures";
+  };
   sub less_equal.liga by less_equal.liga.ss02;
   sub greater_equal.liga by greater_equal.liga.ss02;
-  sub equal_equal.liga by equal_equal.liga.ss02;
-  sub equal_equal_equal.liga by equal_equal_equal.liga.ss02;
-  sub exclam_equal.liga by exclam_equal.liga.ss02;
-  sub exclam_equal_equal.liga by exclam_equal_equal.liga.ss02;
-  sub equal_slash_equal.liga by equal_slash_equal.liga.ss02;
 } ss02;
+
 feature ss03 {
+  featureNames {
+    name "Enable rbitrary tag";
+  };
   # [TRACE]
   lookup badge_trace.liga.ss03 {
     sub SPC SPC SPC SPC SPC SPC bracketright' by badge_trace.liga;
@@ -1809,7 +1813,7 @@ feature ss03 {
     sub bracketleft' @f @a @t @a @l bracketright by SPC;
   } badge_fatal.liga.ss03;
 
-    # [TODO]
+  # [TODO]
   lookup badge_todo.liga.ss03 {
     sub SPC SPC SPC SPC SPC bracketright' by badge_todo.liga;
     sub SPC SPC SPC SPC @o' bracketright by SPC;
@@ -1832,7 +1836,65 @@ feature ss03 {
 } ss03;
 
 feature ss04 {
+  featureNames {
+    name "Break multiple underscores";
+  };
   sub underscore_underscore.liga by underscore_underscore.liga.ss04;
   sub numbersign_underscore_underscore.liga by numbersign_underscore_underscore.liga.ss04;
-  sub backslash.liga by backslash;
 } ss04;
+
+feature ss05 {
+  featureNames {
+    name "Thin backslash in escape letters";
+  };
+  ignore sub backslash.liga backslash' @escape_letter;
+  sub backslash' @escape_letter by backslash.liga;
+} ss05;
+
+feature ss07 {
+  featureNames {
+    name "Make space optional in multiple less or greater";
+  };
+  # <<
+  lookup loose_less_less.liga {
+    ignore sub less less' less;
+    ignore sub hyphen less' less;
+    ignore sub equal less' less;
+    ignore sub less' less less;
+    ignore sub less' less equal;
+    ignore sub less' less asciitilde;
+    sub SPC less' by less_less.liga;
+    sub less' less by SPC;
+  } loose_less_less.liga;
+
+  # <<<
+  lookup loose_less_less_less.liga {
+    ignore sub less less' less less;
+    ignore sub less' less less less;
+    sub SPC SPC less' by less_less_less.liga;
+    sub SPC less' less by SPC;
+    sub less' less less by SPC;
+  } loose_less_less_less.liga;
+
+  # >>
+  lookup loose_greater_greater.liga {
+    ignore sub greater greater' greater;
+    ignore sub greater' greater greater;
+    ignore sub greater' greater equal;
+    ignore sub greater' greater hyphen;
+    ignore sub equal greater' greater;
+    ignore sub slash greater' greater;
+    ignore sub less greater' greater;
+    sub SPC greater' by greater_greater.liga;
+    sub greater' greater by SPC;
+  } loose_greater_greater.liga;
+
+  # >>>
+  lookup loose_greater_greater_greater.liga {
+    ignore sub greater greater' greater greater;
+    ignore sub greater' greater greater greater;
+    sub SPC SPC greater' by greater_greater_greater.liga;
+    sub SPC greater' greater by SPC;
+    sub greater' greater greater by SPC;
+  } loose_greater_greater_greater.liga;
+} ss07;

@@ -22,26 +22,7 @@ Base on `Jetbrains Mono` and **much "Opinioned"**
 
 - Round corner
 - New shape of `@ $ % & Q a` and cursive italic `f i j k l x y`
-- Large amount of ligatures
-  - equal variants: `==` / `===` / `!=` / `!==` / `>=` / `<=`...
-  - arrow variants: `->` / `=>` / `-->` / `==>` / `<->` / `<=>`...
-  - xml variants: `</` / `/>` / `<>` / `</>` / `<!--`...
-  - flow variants: `|>` / `||>` / `|||>` / `|||>` / `>=>` / `=>>`...
-  - same characters: `++` / `--` / `&&` / `||` / `!!` / `??` / `..` / `::` / `########`...
-  - plain text tag: `[TODO]` / `todo))` / `[FIXME]` / `fixme))`
-    - for logger: `[TRACE]` / `[DEBUG]` / `[INFO]` / `[WARN]` / `[ERROR]` / `[FATAL]`
-- Font features
-  - zero: dot style `0`
-  - cv01: Classic `@` / `$` / `%` / `&` / `Q` / `=>` / `->`
-  - cv02: Alternative `a` (with top alarm)
-  - cv03: Alternative `i` (without bottom left bar)
-  - cv04: Alternative `l` (with bottom left bar) and `1` (without bottom bar)
-  - cv98: Full width `…`(ellipsis) and `—`(emdash) support for Maple Mono NF CN
-  - cv99: Traditional punctuations support for Maple Mono NF CN
-  - ss01: Non-cursive italic style `l i j k x`
-  - ss02: Disable ligautures on equals like `==` / `!=` / `<=`
-  - ss03: Ignore cases on all tags
-  - ss04: Disable ligatures on `__`, `#__`, `\n`
+- Large amount of ligatures, see in [`features/`](./source/features/README.md)
 
 ## Build
 
