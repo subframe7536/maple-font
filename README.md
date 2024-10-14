@@ -49,7 +49,7 @@ You can change build config in `config.json`
 
 1. Download CN base font at [Gitee release](https://gitee.com/subframe7536/Maple/releases/tag/v7.0-beta23)
 2. Put them into `./source/cn`
-3. Run `build.py` and **BE PATIENT**, instantiation will take about 30 minutes
+3. Run `build.py` and **BE PATIENT**, instantiation will take about 40-50 minutes
 
 #### Notice
 
