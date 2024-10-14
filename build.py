@@ -6,7 +6,7 @@ import shutil
 import time
 from functools import partial
 from multiprocessing import Pool
-from os import environ, listdir, makedirs, path, remove, rename, walk, getenv
+from os import environ, listdir, makedirs, path, remove, walk, getenv
 from typing import Callable
 from urllib.request import urlopen
 from zipfile import ZIP_DEFLATED, ZipFile
@@ -46,7 +46,7 @@ def parse_args():
     parser.add_argument(
         "--prefix",
         type=str,
-        help="Output directory prefix",
+        help="Setup output directory prefix",
     )
     parser.add_argument(
         "--normal",
@@ -70,7 +70,7 @@ def parse_args():
     )
     parser.add_argument(
         "--no-hinted",
-        action="store_false",
+        action="store_true",
         help="Whether not to use hinted font as base font, will override `--hinted`",
     )
     parser.add_argument(
@@ -445,10 +445,6 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
     font.close()
 
     run(f"ftcli ttf autohint {_path} -out {build_option.output_ttf_hinted}")
-    rename(
-        f"{build_option.output_ttf_hinted}/{font_config.family_name_compact}-{style_compact}.ttf",
-        f"{build_option.output_ttf_hinted}/{font_config.family_name_compact}-AutoHint-{style_compact}.ttf",
-    )
     run(f"ftcli converter ttf2otf {_path} -out {build_option.output_otf}")
     run(f"ftcli converter ft2wf {_path} -out {build_option.output_woff2} -f woff2")
 
