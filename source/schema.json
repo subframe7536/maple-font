@@ -20,7 +20,7 @@
     },
     "feature_freeze": {
       "type": "object",
-      "description": "Freeze some font features (No effect on Variable font) \n enable: enable font features by default \n disable: remove some font features \n ignore: skip handle target font features",
+      "description": "Freeze some font features (No effect on Variable font) \n enable: Move ligature rules to `calt`, which will enable the ligatures without setting up `cvXX` / `ssXX` / `zero` in font features config, just as default ligatures \n disable: Remove the ligature rules in `cvXX` / `ssXX` / `zero`, which will no longer effect, even if you enable it manually \n ignore: Do nothing",
       "properties": {
         "cv01": {
           "type": "string",
@@ -186,7 +186,7 @@
         },
         "ss07": {
           "type": "string",
-          "description": "Make space optional in multiple less or greater (<<, >>, <<<, >>>)",
+          "description": "Make leading or heading space optional in multiple less or greater (<<, >>, <<<, >>>)",
           "enum": [
             "ignore",
             "disable",

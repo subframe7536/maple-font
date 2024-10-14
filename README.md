@@ -45,6 +45,12 @@ You can change build config in `config.json`
 - There is `--normal` option in `build.py` for common config, just like `JetBrains Mono` (with slashed zero)
 - For custom `font-patcher` args, `font-forge` (and maybe `python3-fontforge` as well) is needed
 
+#### Font Feature Freeze Options
+
+- `enable`: Move ligature rules to `calt`, which will enable the ligatures without setting up `cvXX` / `ssXX` / `zero` in font features config, just as default ligatures
+- `disable`: Remove the ligature rules in `cvXX` / `ssXX` / `zero`, which will no longer effect, even if you enable it manually
+- `ignore`: Do nothing
+
 ### Chinese version
 
 1. Download CN base font at [Gitee release](https://gitee.com/subframe7536/Maple/releases/tag/v7.0-beta23)
