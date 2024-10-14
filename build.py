@@ -12,7 +12,13 @@ from urllib.request import urlopen
 from zipfile import ZIP_DEFLATED, ZipFile
 from fontTools.ttLib import TTFont, newTable
 from fontTools.merge import Merger
-from source.py.utils import get_font_forge_bin, get_font_name, run, set_font_name
+from source.py.utils import (
+    get_font_forge_bin,
+    get_font_name,
+    run,
+    set_font_name,
+    joinPaths,
+)
 from source.py.feature import freeze_feature
 
 # =========================================================================================
@@ -32,6 +38,11 @@ def check_ftcli():
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Optimizer and builder for Maple Mono")
+    parser.add_argument(
+        "--dry",
+        action="store_true",
+        help="Output config and exit",
+    )
     parser.add_argument(
         "--prefix",
         type=str,
@@ -60,7 +71,7 @@ def parse_args():
     parser.add_argument(
         "--no-hinted",
         action="store_false",
-        help="Whether not to use hinted font as base font",
+        help="Whether not to use hinted font as base font, will override `--hinted`",
     )
     parser.add_argument(
         "--release",
@@ -173,13 +184,13 @@ class FontConfig:
                 if "github_mirror" not in self.nerd_font:
                     self.nerd_font["github_mirror"] = "github.com"
 
-                if args.hinted is not None:
+                if args.hinted:
                     self.use_hinted = True
 
-                if args.no_hinted is not None:
+                if args.no_hinted:
                     self.use_hinted = False
 
-                if args.cn_narrow is not None:
+                if args.cn_narrow:
                     self.cn["narrow"] = True
 
         except ():
@@ -208,21 +219,21 @@ class FontConfig:
 
 class BuildOption:
     def __init__(self, config: FontConfig):
+        output_dir_default = "fonts"
         # paths
         self.src_dir = "source"
-        self.output_dir_default = "fonts"
         self.output_dir = (
-            path.join(self.output_dir_default, config.dir_prefix)
+            joinPaths(output_dir_default, config.dir_prefix)
             if config.dir_prefix
-            else self.output_dir_default
+            else output_dir_default
         )
-        self.output_otf = path.join(self.output_dir, "OTF")
-        self.output_ttf = path.join(self.output_dir, "TTF")
-        self.output_ttf_hinted = path.join(self.output_dir, "TTF-AutoHint")
-        self.output_variable = path.join(self.output_dir_default, "Variable")
-        self.output_woff2 = path.join(self.output_dir, "Woff2")
-        self.output_nf = path.join(self.output_dir, "NF")
-        self.ttf_base_dir = path.join(
+        self.output_otf = joinPaths(self.output_dir, "OTF")
+        self.output_ttf = joinPaths(self.output_dir, "TTF")
+        self.output_ttf_hinted = joinPaths(self.output_dir, "TTF-AutoHint")
+        self.output_variable = joinPaths(output_dir_default, "Variable")
+        self.output_woff2 = joinPaths(self.output_dir, "Woff2")
+        self.output_nf = joinPaths(self.output_dir, "NF")
+        self.ttf_base_dir = joinPaths(
             self.output_dir, "TTF-AutoHint" if config.use_hinted else "TTF"
         )
 
@@ -254,9 +265,9 @@ class BuildOption:
             self.cn_suffix = "NF CN"
             self.cn_suffix_compact = "NF-CN"
         else:
-            self.cn_base_font_dir = path.join(self.output_dir, "TTF")
+            self.cn_base_font_dir = joinPaths(self.output_dir, "TTF")
             self.cn_suffix = self.cn_suffix_compact = "CN"
-        self.output_cn = path.join(self.output_dir, self.cn_suffix_compact)
+        self.output_cn = joinPaths(self.output_dir, self.cn_suffix_compact)
 
 
 def freeze(font: TTFont, freeze_config: dict[str, str]):
@@ -386,7 +397,7 @@ def change_char_width(font: TTFont, match_width: int, target_width: int):
 
 
 def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
-    _path = path.join(build_option.output_ttf, f)
+    _path = joinPaths(build_option.output_ttf, f)
     font = TTFont(_path)
 
     style_compact = f.split("-")[-1].split(".")[0]
@@ -436,7 +447,7 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
     run(f"ftcli ttf autohint {_path} -out {build_option.output_ttf_hinted}")
     rename(
         f"{build_option.output_ttf_hinted}/{font_config.family_name_compact}-{style_compact}.ttf",
-        f"{build_option.output_ttf_hinted}/{font_config.family_name_compact}-AutoHint-{style_compact}.ttf"
+        f"{build_option.output_ttf_hinted}/{font_config.family_name_compact}-AutoHint-{style_compact}.ttf",
     )
     run(f"ftcli converter ttf2otf {_path} -out {build_option.output_otf}")
     run(f"ftcli converter ft2wf {_path} -out {build_option.output_woff2} -f woff2")
@@ -448,7 +459,7 @@ def build_nf_by_prebuild_nerd_font(
     merger = Merger()
     return merger.merge(
         [
-            path.join(build_option.ttf_base_dir, font_basename),
+            joinPaths(build_option.ttf_base_dir, font_basename),
             f"{build_option.src_dir}/MapleMono-NF-Base{'-Mono' if font_config.nerd_font['mono'] else ''}.ttf",
         ]
     )
@@ -474,11 +485,11 @@ def build_nf_by_font_patcher(
 
     _nf_args += font_config.nerd_font["extra_args"]
 
-    run(_nf_args + [path.join(build_option.ttf_base_dir, font_basename)])
+    run(_nf_args + [joinPaths(build_option.ttf_base_dir, font_basename)])
     nf_file_name = "NerdFont"
     if font_config.nerd_font["mono"]:
         nf_file_name += "Mono"
-    _path = path.join(
+    _path = joinPaths(
         build_option.output_nf, font_basename.replace("-", f"{nf_file_name}-")
     )
     font = TTFont(_path)
@@ -530,7 +541,7 @@ def build_nf(
         set_font_name(nf_font, f"{font_config.family_name} NF", 16)
         set_font_name(nf_font, style_nf, 17)
 
-    _path = path.join(
+    _path = joinPaths(
         build_option.output_nf,
         f"{font_config.family_name_compact}-NF-{style_compact_nf}.ttf",
     )
@@ -546,8 +557,8 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
     merger = Merger()
     font = merger.merge(
         [
-            path.join(build_option.cn_base_font_dir, f),
-            path.join(
+            joinPaths(build_option.cn_base_font_dir, f),
+            joinPaths(
                 build_option.cn_static_path, f"MapleMonoCN-{style_compact_cn}.ttf"
             ),
         ]
@@ -610,7 +621,7 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
         }
         font["meta"] = meta
 
-    _path = path.join(
+    _path = joinPaths(
         build_option.output_cn,
         f"{font_config.family_name_compact}-{build_option.cn_suffix_compact}-{style_compact_cn}.ttf",
     )
@@ -621,12 +632,20 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
 
 def main():
     check_ftcli()
+    parsed_args = parse_args()
+
     font_config = FontConfig()
-    font_config.load_external(args=parse_args())
+    font_config.load_external(args=parsed_args)
     build_option = BuildOption(font_config)
     build_option.load_cn_dir_and_suffix(
         font_config.cn["with_nerd_font"] and font_config.nerd_font["enable"]
     )
+
+    if parsed_args.dry:
+        print("parsed_args:", json.dumps(parsed_args.__dict__, indent=4))
+        print("font_config:", json.dumps(font_config.__dict__, indent=4))
+        print("build_option:", json.dumps(build_option.__dict__, indent=4))
+        return
 
     print("=== [Clean Cache] ===")
     shutil.rmtree(build_option.output_dir, ignore_errors=True)
@@ -773,7 +792,7 @@ def main():
 
     # write config to output path
     with open(
-        path.join(build_option.output_dir, "build-config.json"), "w", encoding="utf-8"
+        joinPaths(build_option.output_dir, "build-config.json"), "w", encoding="utf-8"
     ) as config_file:
         result = {
             "family_name": font_config.family_name,
@@ -802,7 +821,7 @@ def main():
         """
         source_folder_name = path.basename(source_file_or_dir_path)
 
-        zip_path = path.join(
+        zip_path = joinPaths(
             target_parent_dir_path,
             f"{font_config.family_name_compact}-{source_folder_name}.zip",
         )
@@ -812,14 +831,14 @@ def main():
         ) as zip_file:
             for root, _, files in walk(source_file_or_dir_path):
                 for file in files:
-                    file_path = path.join(root, file)
+                    file_path = joinPaths(root, file)
                     zip_file.write(
                         file_path, path.relpath(file_path, source_file_or_dir_path)
                     )
             zip_file.write("OFL.txt", "LICENSE.txt")
             if not source_file_or_dir_path.endswith("Variable"):
                 zip_file.write(
-                    path.join(build_option.output_dir, "build-config.json"),
+                    joinPaths(build_option.output_dir, "build-config.json"),
                     "config.json",
                 )
 
@@ -838,7 +857,7 @@ def main():
         print("=== [Release Mode] ===")
 
         # archieve fonts
-        release_dir = path.join(build_option.output_dir, "release")
+        release_dir = joinPaths(build_option.output_dir, "release")
         makedirs(release_dir, exist_ok=True)
 
         hash_map = {}
@@ -848,14 +867,14 @@ def main():
             if f == "release" or f.endswith(".json"):
                 continue
             hash_map[f] = compress_folder(
-                source_file_or_dir_path=path.join(build_option.output_dir, f),
+                source_file_or_dir_path=joinPaths(build_option.output_dir, f),
                 target_parent_dir_path=release_dir,
             )
             print(f"archieve: {f}")
 
         # write sha1
         with open(
-            path.join(release_dir, "sha1.json"), "w", encoding="utf-8"
+            joinPaths(release_dir, "sha1.json"), "w", encoding="utf-8"
         ) as hash_file:
             hash_file.write(json.dumps(hash_map, indent=4))
 

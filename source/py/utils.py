@@ -25,6 +25,10 @@ def del_font_name(font: TTFont, id: int):
     font["name"].removeNames(nameID=id)
 
 
+def joinPaths(*args: list[str]) -> str:
+    return "/".join(args)
+
+
 def get_font_forge_bin():
     WIN_FONTFORGE_PATH = "C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe"
     MAC_FONTFORGE_PATH = (
