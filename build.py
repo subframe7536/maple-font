@@ -43,9 +43,18 @@ def parse_args():
         description="✨ Builder and optimizer for Maple Mono"
     )
     parser.add_argument(
+        "-d",
         "--dry",
+        dest="dry",
         action="store_true",
         help="Output config and exit",
+    )
+    parser.add_argument(
+        "-n",
+        "--normal",
+        dest="normal",
+        action="store_true",
+        help="Whether to use normal preset, just like `JetBrains Mono` with slashed zero",
     )
     parser.add_argument(
         "--prefix",
@@ -53,24 +62,52 @@ def parse_args():
         help="Setup output directory prefix",
     )
     parser.add_argument(
-        "--normal",
-        action="store_true",
-        help="Whether to use normal preset, just like `JetBrains Mono` with slashed zero",
-    )
-    parser.add_argument(
         "--hinted",
+        dest="hinted",
         action="store_true",
         help="Whether to use hinted font as base font",
     )
     parser.add_argument(
         "--no-hinted",
+        dest="hinted",
+        action="store_false",
+        help="Whether not to use hinted font as base font",
+    )
+    parser.add_argument(
+        "--liga",
+        dest="liga",
         action="store_true",
-        help="Whether not to use hinted font as base font, will override `--hinted`",
+        help="Whether to remove all the ligatures",
     )
     parser.add_argument(
         "--no-liga",
-        action="store_true",
+        dest="liga",
+        action="store_false",
         help="Whether to remove all the ligatures",
+    )
+    parser.add_argument(
+        "--nerd-font",
+        dest="nerd_font",
+        action="store_true",
+        help="Whether to skip build Nerd Font version",
+    )
+    parser.add_argument(
+        "--no-nerd-font",
+        dest="nerd_font",
+        action="store_false",
+        help="Whether to skip build Nerd Font version",
+    )
+    parser.add_argument(
+        "--cn",
+        dest="cn",
+        action="store_true",
+        help="Whether to skip build Chinese version",
+    )
+    parser.add_argument(
+        "--no-cn",
+        dest="cn",
+        action="store_false",
+        help="Whether to skip build Chinese version",
     )
     parser.add_argument(
         "--cn-both",
@@ -197,17 +234,21 @@ class FontConfig:
                 if "github_mirror" not in self.nerd_font:
                     self.nerd_font["github_mirror"] = "github.com"
 
-                if args.hinted:
-                    self.use_hinted = True
+                if args.hinted is not None:
+                    self.use_hinted = args.hinted
 
-                if args.no_hinted:
-                    self.use_hinted = False
+                if args.liga is not None:
+                    self.enable_liga = args.liga
+
+                if args.nerd_font is not None:
+                    self.nerd_font["enable"] = args.nerd_font
+
+                if args.cn is not None:
+                    self.cn["enable"] = args.cn
 
                 if args.cn_narrow:
                     self.cn["narrow"] = True
 
-                if args.no_liga:
-                    self.enable_liga = False
 
         except ():
             print("Fail to load config.json. Please check your config.json.")
