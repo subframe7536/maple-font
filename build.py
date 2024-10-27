@@ -64,48 +64,56 @@ def parse_args():
     parser.add_argument(
         "--hinted",
         dest="hinted",
+        default=None,
         action="store_true",
         help="Whether to use hinted font as base font",
     )
     parser.add_argument(
         "--no-hinted",
         dest="hinted",
+        default=None,
         action="store_false",
         help="Whether not to use hinted font as base font",
     )
     parser.add_argument(
         "--liga",
         dest="liga",
+        default=None,
         action="store_true",
         help="Whether to remove all the ligatures",
     )
     parser.add_argument(
         "--no-liga",
         dest="liga",
+        default=None,
         action="store_false",
         help="Whether to remove all the ligatures",
     )
     parser.add_argument(
         "--nerd-font",
         dest="nerd_font",
+        default=None,
         action="store_true",
         help="Whether to skip build Nerd Font version",
     )
     parser.add_argument(
         "--no-nerd-font",
         dest="nerd_font",
+        default=None,
         action="store_false",
         help="Whether to skip build Nerd Font version",
     )
     parser.add_argument(
         "--cn",
         dest="cn",
+        default=None,
         action="store_true",
         help="Whether to skip build Chinese version",
     )
     parser.add_argument(
         "--no-cn",
         dest="cn",
+        default=None,
         action="store_false",
         help="Whether to skip build Chinese version",
     )
