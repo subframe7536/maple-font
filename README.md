@@ -47,8 +47,8 @@ You can change build config in `config.json`
 
 #### Font Feature Freeze Options
 
-- `enable`: Move ligature rules to `calt`, which will enable the ligatures without setting up `cvXX` / `ssXX` / `zero` in font features config, just as default ligatures
-- `disable`: Remove the ligature rules in `cvXX` / `ssXX` / `zero`, which will no longer effect, even if you enable it manually
+- `enable`: Move ligature rules to `calt`, which will enable the features without setting up `cvXX` / `ssXX` / `zero` in font features config, just as default ligatures
+- `disable`: Remove the features in `cvXX` / `ssXX` / `zero`, which will no longer effect, even if you enable it manually
 - `ignore`: Do nothing
 
 ### Chinese version

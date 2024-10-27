@@ -1,7 +1,23 @@
 {
-  "title": "Build Configuration Schema",
-  "description": "Schema for the build configuration of Maple Mono in static font format",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Maple Mono Build Configuration Schema",
+  "description": "Schema for the build configuration of Maple Mono",
   "type": "object",
+  "definitions": {
+    "freeze_options": {
+      "type": "string",
+      "enum": [
+        "ignore",
+        "disable",
+        "enable"
+      ],
+      "enumDescriptions": [
+        "Do nothing",
+        "Remove the features from font file",
+        "Enable the features as default ligatures"
+      ]
+    }
+  },
   "properties": {
     "pool_size": {
       "type": "number",
@@ -18,189 +34,98 @@
       "description": "Whether to use hinted TTF as base font",
       "default": true
     },
+    "ligature": {
+      "type": "boolean",
+      "description": "Whether to enable ligature. Remove all the ligatures if set to false",
+      "default": true
+    },
     "feature_freeze": {
       "type": "object",
       "description": "Freeze some font features (No effect on Variable font) \n enable: Move ligature rules to `calt`, which will enable the ligatures without setting up `cvXX` / `ssXX` / `zero` in font features config, just as default ligatures \n disable: Remove the ligature rules in `cvXX` / `ssXX` / `zero`, which will no longer effect, even if you enable it manually \n ignore: Do nothing",
       "properties": {
         "cv01": {
-          "type": "string",
           "description": "Classic '@', '$', '%', '&', 'Q', '=>', '->'",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
+          "$ref": "#/definitions/freeze_options"
         },
         "cv02": {
-          "type": "string",
           "description": "Alternative 'a' (with top alarm)",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
+          "$ref": "#/definitions/freeze_options"
         },
         "cv03": {
-          "type": "string",
           "description": "Alternative regular 'i' (without bottom left bar)",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
+          "$ref": "#/definitions/freeze_options"
         },
         "cv04": {
-          "type": "string",
           "description": "Alternative 'l' (with bottom left bar) and '1' (without bottom bar), will be overrided by cv35 in italic style",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
+          "$ref": "#/definitions/freeze_options"
         },
         "cv31": {
-          "type": "string",
           "description": "[Italic Only] Alternative 'a' (with top alarm)",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
+          "$ref": "#/definitions/freeze_options"
         },
         "cv32": {
-          "type": "string",
           "description": "[Italic Only] Alternative 'f' (without bottom tail)",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
+          "$ref": "#/definitions/freeze_options"
         },
         "cv33": {
-          "type": "string",
           "description": "[Italic Only] Alternative 'i' (with bottom left bar) and 'j'",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
+          "$ref": "#/definitions/freeze_options"
         },
         "cv34": {
-          "type": "string",
           "description": "[Italic Only] Alternative 'k' (without center circle)",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
+          "$ref": "#/definitions/freeze_options"
         },
         "cv35": {
-          "type": "string",
           "description": "[Italic Only] Alternative 'l' (without center tail)",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
+          "$ref": "#/definitions/freeze_options"
         },
         "cv36": {
-          "type": "string",
           "description": "[Italic Only] Alternative 'x' (without top and bottom tails)",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
+          "$ref": "#/definitions/freeze_options"
         },
         "cv98": {
-          "type": "string",
           "description": "[CN Only] Full width '…'(ellipsis) and '—'(emdash)",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
+          "$ref": "#/definitions/freeze_options"
         },
         "cv99": {
-          "type": "string",
           "description": "[CN Only] Traditional punctuations",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
+          "$ref": "#/definitions/freeze_options"
         },
         "ss01": {
-          "type": "string",
           "description": "Broken equals ligatures (==, ===, !=, !==, =/=)",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
+          "$ref": "#/definitions/freeze_options"
         },
         "ss02": {
-          "type": "string",
           "description": "Broken compare and equal ligatures (<=, >=)",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
+          "$ref": "#/definitions/freeze_options"
         },
         "ss03": {
-          "type": "string",
           "description": "Enable arbitrary tag (allow to use any case letters in all tags)",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
+          "$ref": "#/definitions/freeze_options"
         },
         "ss04": {
-          "type": "string",
           "description": "Break multiple underscores (__, #__)",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
+          "$ref": "#/definitions/freeze_options"
         },
         "ss05": {
-          "type": "string",
-          "description": "Thin backslash in escape letters (\\w, \\n, \\r ...)",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
+          "description": "Restore the thickness of backslash in escape letters (\\\\, \\', \\[, ...)",
+          "$ref": "#/definitions/freeze_options"
         },
         "ss06": {
-          "type": "string",
           "description": "[Italic Only] Remove connected strokes between italic letters (al, ul, il ...)",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
+          "$ref": "#/definitions/freeze_options"
         },
         "ss07": {
-          "type": "string",
-          "description": "Make leading or heading space optional in multiple less or greater (<<, >>, <<<, >>>)",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
+          "description": "Make space optional in <<< or >>>",
+          "$ref": "#/definitions/freeze_options"
+        },
+        "ss08": {
+          "description": "Enable double headed arrows and reverse arrows (>>=, -<<, ->>, >- ...)",
+          "$ref": "#/definitions/freeze_options"
         },
         "zero": {
-          "type": "string",
           "description": "Dot style '0'",
-          "enum": [
-            "ignore",
-            "disable",
-            "enable"
-          ]
+          "$ref": "#/definitions/freeze_options"
         }
       }
     },
@@ -312,6 +237,7 @@
   "required": [
     "family_name",
     "use_hinted",
+    "ligature",
     "nerd_font",
     "cn"
   ]

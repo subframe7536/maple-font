@@ -161,11 +161,11 @@ fixme))
 
 #### Italic Only
 - cv31: italic `a` with top arm
-- cv32: italic `f` without bottom tail
-- cv33: italic `i j` with left bottom bar and horizen top bar
-- cv34: italic `k` without circle
-- cv35: italic `l` without tail
-- cv36: italic `x` without tail
+- cv32: italic `f` without bottom tail, just like regular style
+- cv33: italic `i j` with left bottom bar and horizen top bar, just like regular style
+- cv34: italic `k` without circle, just like regular style
+- cv35: italic `l` without tail, just like regular style
+- cv36: italic `x` without tail, just like regular style
 
 #### CN Only
 
@@ -180,4 +180,5 @@ fixme))
 - ss04: Break multiple underscores (`__`, `#__`)
 - ss05: Thin backslash in escape letters (`\w`, `\n`, `\r` ...)
 - ss06: Remove connected strokes between italic letters (`al`, `ul`, `il` ...)
-- ss07: Make space optional in multiple less or greater (`<<`, `>>`, `<<<`, `>>>`)
+- ss07: Make space optional in `<<<` or `>>>`
+- ss08: Enable double headed arrows and reverse arrows (`>>=`, `-<<`, `->>`, `>-` ...)

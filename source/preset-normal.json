@@ -3,6 +3,7 @@
   "family_name": "Maple Mono Normal",
   "use_hinted": true,
   "pool_size": 4,
+  "ligature": true,
   "feature_freeze": {
     "cv01": "enable",
     "cv02": "enable",
@@ -20,9 +21,10 @@
     "ss02": "ignore",
     "ss03": "ignore",
     "ss04": "ignore",
-    "ss05": "ignore",
+    "ss05": "enable",
     "ss06": "enable",
     "ss07": "enable",
+    "ss08": "enable",
     "zero": "ignore"
   },
   "nerd_font": {
