@@ -62,6 +62,11 @@ def parse_args():
         help="Setup output directory prefix",
     )
     parser.add_argument(
+        "--feat",
+        type=lambda x: x.strip().split(","),
+        help="Freeze font features, splited by `,` (e.g. `--feat zero,cv01,ss07,ss08`)",
+    )
+    parser.add_argument(
         "--hinted",
         dest="hinted",
         default=None,
@@ -242,6 +247,11 @@ class FontConfig:
                 if "github_mirror" not in self.nerd_font:
                     self.nerd_font["github_mirror"] = "github.com"
 
+                if args.feat is not None:
+                    for f in args.feat:
+                        if f in self.feature_freeze:
+                            self.feature_freeze[f] = "enable"
+
                 if args.hinted is not None:
                     self.use_hinted = args.hinted
 
@@ -344,12 +354,10 @@ def handle_ligatures(
     """
     whether to enable ligatures and freeze font features
     """
-    if not enable_ligature:
-        del font["GSUB"]
-        return
 
     freeze_feature(
         font=font,
+        calt=enable_ligature,
         moving_rules=["ss03", "ss07", "ss08"],
         config=freeze_config,
     )
