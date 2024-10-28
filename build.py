@@ -871,6 +871,7 @@ def main():
         result = {
             "family_name": font_config.family_name,
             "use_hinted": font_config.use_hinted,
+            "ligature": font_config.enable_liga,
             "feature_freeze": font_config.feature_freeze,
             "nerd_font": font_config.nerd_font,
             "cn": font_config.cn,

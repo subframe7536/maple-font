@@ -1,4 +1,4 @@
-def freeze_feature(font, calt, moving_rules, config):
+def freeze_feature(font, calt, moving_rules=[], config={}):
     # check feature list
     feature_record = font["GSUB"].table.FeatureList.FeatureRecord
     feature_dict = {
@@ -14,7 +14,9 @@ def freeze_feature(font, calt, moving_rules, config):
     else:
         for feature in feature_record:
             if feature.FeatureTag == "calt":
-                feature.LookupListIndex = []
+                feature.Feature.LookupListIndex.clear()
+                feature.Feature.LookupCount = 0
+                feature.FeatureTag = "DELT"
 
     # Process features
     for tag, status in config.items():
