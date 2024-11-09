@@ -21,6 +21,7 @@ from source.py.utils import (
 )
 from source.py.feature import freeze_feature
 
+version = "7.0-beta30"
 # =========================================================================================
 
 
@@ -136,6 +137,12 @@ def parse_args():
         "--release",
         action="store_true",
         help="Whether to archieve fonts",
+    )
+    parser.add_argument(
+        "-v",
+        "--version",
+        action="version",
+        version=f"Maple Mono Builder v{version}",
     )
 
     return parser.parse_args()
@@ -267,10 +274,18 @@ class FontConfig:
                 if args.cn_narrow:
                     self.cn["narrow"] = True
 
-
         except ():
             print("Fail to load config.json. Please check your config.json.")
             exit(1)
+
+        self.freeze_config_str = ""
+        if not self.enable_liga:
+            self.freeze_config_str = "-calt;"
+        for k, v in self.feature_freeze.items():
+            if v == "enable":
+                self.freeze_config_str += f"+{k};"
+            elif v == "disable":
+                self.freeze_config_str += f"-{k};"
 
     def should_use_font_patcher(self) -> bool:
         if not (
@@ -414,24 +429,13 @@ def remove_locl(font: TTFont):
 
 def get_unique_identifier(
     postscript_name: str,
-    enable_ligature: bool,
-    freeze_config: dict[str, str],
+    freeze_config_str: str,
     narrow: bool = False,
-    suffix="",
 ) -> str:
-    if not enable_ligature:
-        suffix = "no-liga;" + suffix
-    elif suffix == "":
-        for k, v in freeze_config.items():
-            if v == "enable":
-                suffix += f"+{k};"
-            elif v == "disable":
-                suffix += f"-{k};"
-
     if "CN" in postscript_name and narrow:
-        suffix = "Narrow;" + suffix
+        freeze_config_str += "Narrow;"
 
-    return f"Version 7.000;SUBF;{postscript_name};2024;FL830;{suffix}"
+    return f"Version 7.000;SUBF;{postscript_name};2024;FL830;{freeze_config_str}"
 
 
 def change_char_width(font: TTFont, match_width: int, target_width: int):
@@ -454,7 +458,7 @@ def change_char_width(font: TTFont, match_width: int, target_width: int):
 
 
 def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
-    print(f"👉 base version for {f}")
+    print(f"👉 Minimal version for {f}")
     _path = joinPaths(build_option.output_ttf, f)
     font = TTFont(_path)
 
@@ -481,9 +485,8 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
     set_font_name(
         font,
         get_unique_identifier(
-            enable_ligature=font_config.enable_liga,
             postscript_name=postscript_name,
-            freeze_config=font_config.feature_freeze,
+            freeze_config_str=font_config.freeze_config_str,
         ),
         3,
     )
@@ -590,9 +593,8 @@ def build_nf(
     set_font_name(
         nf_font,
         get_unique_identifier(
-            enable_ligature=font_config.enable_liga,
             postscript_name=postscript_name,
-            freeze_config=font_config.feature_freeze,
+            freeze_config_str=font_config.feature_freeze,
         ),
         3,
     )
@@ -645,9 +647,8 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
     set_font_name(
         font,
         get_unique_identifier(
-            enable_ligature=font_config.enable_liga,
             postscript_name=postscript_name,
-            freeze_config=font_config.feature_freeze,
+            freeze_config_str=font_config.freeze_config_str,
             narrow=font_config.cn["narrow"],
         ),
         3,
@@ -717,7 +718,7 @@ def main():
     makedirs(build_option.output_variable, exist_ok=True)
 
     start_time = time.time()
-    print("🚩 Start building...\n")
+    print("🚩 Start building ...\n")
     # =========================================================================================
     # ===================================   build basic   =====================================
     # =========================================================================================
@@ -741,12 +742,7 @@ def main():
         set_font_name(font, var_postscript_name, 6)
         set_font_name(
             font,
-            get_unique_identifier(
-                enable_ligature=font_config.enable_liga,
-                postscript_name=var_postscript_name,
-                freeze_config=font_config.feature_freeze,
-                suffix="variable",
-            ),
+            f"Version 7.000;SUBF;{var_postscript_name};2024;FL830;variable",
             3,
         )
         set_font_name(font, font_config.family_name_compact, 25)
@@ -953,7 +949,12 @@ def main():
         ) as hash_file:
             hash_file.write(json.dumps(hash_map, indent=4))
 
-    print(f"\n🏁 Build finished, {time.time() - start_time:.2f} s")
+    freeze_str = (
+        font_config.freeze_config_str
+        if font_config.freeze_config_str != ""
+        else "default config"
+    )
+    print(f"\n🏁 Build finished, {time.time() - start_time:.2f} s, {freeze_str}")
 
 
 if __name__ == "__main__":

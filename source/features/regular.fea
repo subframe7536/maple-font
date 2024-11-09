@@ -269,9 +269,7 @@ feature calt {
   lookup less_hyphen.liga {
     ignore sub less less' hyphen;
     ignore sub less' hyphen hyphen;
-    ignore sub less' hyphen @Digit greater;
-    ignore sub less' hyphen @Digit @Digit greater;
-    ignore sub less' hyphen @Digit @Digit @Digit greater;
+    ignore sub less' hyphen @Digit;
     ignore sub less' hyphen less;
     ignore sub less' hyphen bar;
     ignore sub less' hyphen greater;
