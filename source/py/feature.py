@@ -1,3 +1,14 @@
+def get_freeze_config_str(feature_freeze, enable_liga):
+    result = ""
+    for k, v in feature_freeze.items():
+        if v == "enable":
+            result += f"+{k};"
+        elif v == "disable":
+            result += f"-{k};"
+    if not enable_liga:
+        result += "-calt;"
+    return result
+
 def freeze_feature(font, calt, moving_rules=[], config={}):
     # check feature list
     feature_record = font["GSUB"].table.FeatureList.FeatureRecord

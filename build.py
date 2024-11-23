@@ -19,7 +19,7 @@ from source.py.utils import (
     set_font_name,
     joinPaths,
 )
-from source.py.feature import freeze_feature
+from source.py.feature import freeze_feature, get_freeze_config_str
 
 version = "7.0-beta30"
 # =========================================================================================
@@ -278,14 +278,9 @@ class FontConfig:
             print("Fail to load config.json. Please check your config.json.")
             exit(1)
 
-        self.freeze_config_str = ""
-        if not self.enable_liga:
-            self.freeze_config_str = "-calt;"
-        for k, v in self.feature_freeze.items():
-            if v == "enable":
-                self.freeze_config_str += f"+{k};"
-            elif v == "disable":
-                self.freeze_config_str += f"-{k};"
+        self.freeze_config_str = get_freeze_config_str(
+            self.feature_freeze, self.enable_liga
+        )
 
     def should_use_font_patcher(self) -> bool:
         if not (
