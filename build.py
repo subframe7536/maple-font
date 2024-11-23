@@ -72,7 +72,7 @@ def parse_args():
     feature_group.add_argument(
         "--feat",
         type=lambda x: x.strip().split(","),
-        help="Freeze font features, splited by `,` (e.g. `--feat zero,cv01,ss07,ss08`)",
+        help="Freeze font features, splited by `,` (e.g. `--feat zero,cv01,ss07,ss08`). No effect on variable format",
     )
     feature_group.add_argument(
         "--hinted",
@@ -147,7 +147,7 @@ def parse_args():
     build_group.add_argument(
         "--cache",
         action="store_true",
-        help="Reuse font cache",
+        help="Reuse font cache of TTF, OTF and Woff2 formats",
     )
     build_group.add_argument(
         "--release",
