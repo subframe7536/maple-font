@@ -1,9 +1,11 @@
 #> classes
 #/> otclasses
 @Uppercase = [A Aacute Abreve Abreveacute Abrevedotbelow Abrevegrave Abrevehookabove Abrevetilde Acaron Acircumflex Acircumflexacute Acircumflexdotbelow Acircumflexgrave Acircumflexhookabove Acircumflextilde Adieresis Adotbelow Agrave Ahookabove Amacron Aogonek Aring Atilde AE AEacute B C Cacute Ccaron Ccedilla Ccircumflex Cdotaccent D Eth Dcaron Dcroat E Eacute Ebreve Ecaron Ecircumflex Ecircumflexacute Ecircumflexdotbelow Ecircumflexgrave Ecircumflexhookabove Ecircumflextilde Edieresis Edotaccent Edotbelow Egrave Ehookabove Emacron Eogonek Eopen Etilde Schwa F G Gacute Gbreve Gcaron Gcircumflex Gcommaaccent Gdotaccent H Hbar Hcircumflex I IJ IJ_acute Iacute Ibreve Icircumflex Idieresis Idotaccent Idotbelow Igrave Ihookabove Imacron Iogonek Itilde J Jcircumflex K Kcommaaccent L Lacute Lcaron Lcommaaccent Ldot Lslash M N Nacute Ncaron Ncommaaccent Ntilde Eng O Oacute Obreve Ocircumflex Ocircumflexacute Ocircumflexdotbelow Ocircumflexgrave Ocircumflexhookabove Ocircumflextilde Odieresis Odotbelow Ograve Ohookabove Ohorn Ohornacute Ohorndotbelow Ohorngrave Ohornhookabove Ohorntilde Ohungarumlaut Omacron Oogonek Oslash Oslashacute Otilde OE P Thorn Q R Racute Rcaron Rcommaaccent S Sacute Scaron Scedilla Scircumflex Scommaaccent Germandbls T Tbar Tcaron Tcedilla Tcommaaccent U Uacute Ubreve Ucircumflex Udieresis Udotbelow Ugrave Uhookabove Uhorn Uhornacute Uhorndotbelow Uhorngrave Uhornhookabove Uhorntilde Uhungarumlaut Umacron Uogonek Uring Utilde V W Wacute Wcircumflex Wdieresis Wgrave X Y Yacute Ycircumflex Ydieresis Ydotbelow Ygrave Yhookabove Ymacron Ytilde Z Zacute Zcaron Zdotaccent A-cy Be-cy Ve-cy Ge-cy Gje-cy Gheupturn-cy Ghestroke-cy De-cy Ie-cy Io-cy Zhe-cy Ze-cy Ii-cy Iishort-cy Ka-cy Kje-cy El-cy Em-cy En-cy O-cy Pe-cy Er-cy Es-cy Te-cy U-cy Ushort-cy Ef-cy Ha-cy Che-cy Tse-cy Sha-cy Shcha-cy Dzhe-cy Softsign-cy Yeru-cy Hardsign-cy Lje-cy Nje-cy Dze-cy E-cy Ereversed-cy I-cy Yi-cy Je-cy Tshe-cy Iu-cy Ia-cy Dje-cy Kadescender-cy Endescender-cy Ustraight-cy Ustraightstroke-cy Chedescender-cy Shha-cy Schwa-cy Zhedieresis-cy Zedieresis-cy Idieresis-cy Odieresis-cy Obarred-cy Chedieresis-cy Alpha Beta Gamma Delta Epsilon Zeta Eta Theta Iota Kappa Lambda Mu Nu Xi Omicron Pi Rho Sigma Tau Upsilon Phi Chi Psi Omega Alphatonos Epsilontonos Etatonos Iotatonos Omicrontonos Upsilontonos Omegatonos Iotadieresis Upsilondieresis KaiSymbol];
+@zero = [zero zero.zero];
 @Digit = [zero zero.zero one two three four five six seven eight nine];
 @DigitHex = [a b c d e f A B C D E F];
-@SpaceExlusion = [space bullet periodcentered period];
+@Space = [space nbspace];
+@SpaceExlusion = [@Space bullet periodcentered period];
 @a = [A a a.cv31];
 @b = [B b];
 @c = [C c];
@@ -20,7 +22,7 @@
 @n = [N n];
 @o = [O o];
 @p = [P p];
-@q = [Q q];
+@q = [Q q Q.cv01];
 @r = [R r];
 @s = [S s];
 @t = [T t];
@@ -30,8 +32,6 @@
 @x = [X x x.cv36];
 @y = [Y y];
 @z = [Z z];
-@zero = [zero zero.zero];
-@escape_punctuation = [backslash slash dollar period asterisk asciitilde question bar quotesingle quotedbl bracketleft bracketright parenleft parenright braceleft braceright grave comma];
 @a_l = [a_l.liga a_l.liga.cv31 a_l.liga.cv35 a_l.liga.cv31.cv35 a_l.liga.cv04 a_l.liga.cv04.cv31 a_l.liga.ss06];
 #/< otclasses
 #< classes
@@ -331,11 +331,13 @@ feature calt {
     sub less' less by SPC;
   } less_less.liga;
 
-  # <<< with tailing space
+  # <<<
   lookup less_less_less.liga {
-    sub SPC SPC less' space by less_less_less.liga;
-    sub SPC less' less space by SPC;
-    sub less' less less space by SPC;
+    ignore sub less less' less less;
+    ignore sub less' less less less;
+    sub SPC SPC less' by less_less_less.liga;
+    sub SPC less' less by SPC;
+    sub less' less less by SPC;
   } less_less_less.liga;
 
   # <=>
@@ -417,22 +419,61 @@ feature calt {
     sub hyphen' greater by SPC;
   } hyphen_greater.liga;
 
+  @Var = [@a @b @c @d @e @f @g @h @i @j @k @l @m @n @o @p @q @r @s @t @u @v @w @x @y @z @Digit underscore dollar underscore_underscore.liga];
+  @LeadingSymbolLiga = [plus_plus.liga hyphen_hyphen.liga underscore_underscore.liga];
+  @SymbolBeforeGreater = [bar exclam asciitilde at numbersign percent];
+  @Number = [@Digit plus hyphen];
+  @EH = [equal hyphen];
+
   # >>
   lookup greater_greater.liga {
-    ignore sub greater greater' greater;
     ignore sub greater' greater greater;
+    ignore sub greater greater' greater;
     ignore sub slash greater' greater;
     ignore sub less greater' greater;
-    sub SPC greater' by greater_greater.liga;
-    sub greater' greater by SPC;
+    sub @Var SPC greater' @Space SPC @LeadingSymbolLiga by greater_greater.liga;
+    sub @Var SPC greater' SPC @LeadingSymbolLiga by greater_greater.liga;
+    sub @Var SPC greater' [@Var @Number] by greater_greater.liga;
+    sub [@Space @EH @SymbolBeforeGreater] SPC greater' by greater_greater.liga;
+    sub SPC greater' @Space @Number by greater_greater.liga;
+    sub SPC greater' [@Number @EH slash] by greater_greater.liga;
+    sub grave SPC greater' grave by greater_greater.liga;
+
+    sub @Var greater' greater @Space SPC @LeadingSymbolLiga by SPC;
+    sub @Var greater' greater SPC @LeadingSymbolLiga by SPC;
+    sub @Var greater' greater [@Var @Number] by SPC;
+    sub [@Space @EH @SymbolBeforeGreater] greater' greater by SPC;
+    sub greater' greater @Space @Number by SPC;
+    sub greater' greater [@Number @EH slash] by SPC;
+    sub grave greater' greater grave by SPC;
   } greater_greater.liga;
 
-  # >>> with heading space
+  # >>>
   lookup greater_greater_greater.liga {
     ignore sub greater' greater greater greater;
-    sub space SPC SPC greater' by greater_greater_greater.liga;
-    sub space SPC greater' greater by SPC;
-    sub space greater' greater greater by SPC;
+    sub @Var SPC SPC greater' @Space SPC @LeadingSymbolLiga by greater_greater_greater.liga;
+    sub @Var SPC SPC greater' SPC @LeadingSymbolLiga by greater_greater_greater.liga;
+    sub @Var SPC SPC greater' [@Var @Number] by greater_greater_greater.liga;
+    sub [@Space @SymbolBeforeGreater] SPC SPC greater' by greater_greater_greater.liga;
+    sub SPC SPC greater' @Space @Number by greater_greater_greater.liga;
+    sub SPC SPC greater' [@Number slash] by greater_greater_greater.liga;
+    sub grave SPC SPC greater' grave by greater_greater_greater.liga;
+
+    sub @Var SPC greater' greater @Space SPC @LeadingSymbolLiga by SPC;
+    sub @Var SPC greater' greater SPC @LeadingSymbolLiga by SPC;
+    sub @Var SPC greater' greater [@Var @Number] by SPC;
+    sub [@Space @SymbolBeforeGreater] SPC greater' greater by SPC;
+    sub SPC greater' greater @Space @Number by SPC;
+    sub SPC greater' greater [@Number slash] by SPC;
+    sub grave SPC greater' greater grave by SPC;
+
+    sub @Var greater' greater greater @Space SPC @LeadingSymbolLiga by SPC;
+    sub @Var greater' greater greater SPC @LeadingSymbolLiga by SPC;
+    sub @Var greater' greater greater [@Var @Number] by SPC;
+    sub [@Space @SymbolBeforeGreater] greater' greater greater by SPC;
+    sub greater' greater greater @Space @Number by SPC;
+    sub greater' greater greater [@Number slash] by SPC;
+    sub grave greater' greater greater grave by SPC;
   } greater_greater_greater.liga;
 
   # >=
@@ -1352,13 +1393,14 @@ feature calt {
 
   # \\ \. \? \$ ...
   lookup escape {
-    ignore sub backslash.liga backslash' @escape_punctuation;
+    @Escape = [@Space asciitilde grave exclam at numbersign dollar percent asciicircum ampersand asterisk parenleft parenright hyphen underscore plus equal bracketleft bracketright braceleft braceright bar backslash colon semicolon quotesingle quotedbl less comma greater period slash question];
+    ignore sub backslash.liga backslash' @Escape;
     ignore sub backslash' percent percent;
-    sub backslash' @escape_punctuation by backslash.liga;
+    sub backslash' @Escape by backslash.liga;
   } escape;
 
 # ================[III]================
-
+  # [C a c e i l t u x]
   # Cl
   lookup C_l.liga {
     ignore sub C' l l;
@@ -1373,6 +1415,7 @@ feature calt {
   } a_l.liga;
   # cl
   lookup c_l.liga {
+    ignore sub c' l l;
     sub SPC l' by c_l.liga;
     sub c' l by SPC;
   } c_l.liga;
@@ -1390,6 +1433,7 @@ feature calt {
   } i_l.liga;
   # tl
   lookup t_l.liga {
+    ignore sub t' l l;
     sub SPC l' by t_l.liga;
     sub t' l by SPC;
   } t_l.liga;
@@ -1399,43 +1443,56 @@ feature calt {
     sub SPC l' by u_l.liga;
     sub u' l by SPC;
   } u_l.liga;
+  # xl
+  lookup x_l.liga {
+    ignore sub x' l l;
+    sub SPC l' by x_l.liga;
+    sub x' l by SPC;
+  } x_l.liga;
   # ff
   lookup f_f.liga {
+    ignore sub f' f f;
     sub SPC f' by f_f.liga;
     sub f' f by SPC;
   } f_f.liga;
   # tt
   lookup t_t.liga {
+    ignore sub t' t t;
     sub SPC t' by t_t.liga;
     sub t' t by SPC;
   } t_t.liga;
   # all
   lookup a_l_l.liga {
+    ignore sub a' l l l;
     sub SPC SPC l' by a_l_l.liga;
     sub SPC l' l by SPC;
     sub a' l l by SPC;
   } a_l_l.liga;
   # ell
   lookup e_l_l.liga {
+    ignore sub e' l l l;
     sub SPC SPC l' by e_l_l.liga;
     sub SPC l' l by SPC;
     sub e' l l by SPC;
   } e_l_l.liga;
   # ill
   lookup i_l_l.liga {
+    ignore sub i' l l l;
     sub SPC SPC l' by i_l_l.liga;
     sub SPC l' l by SPC;
     sub i' l l by SPC;
   } i_l_l.liga;
   # ull
   lookup u_l_l.liga {
+    ignore sub u' l l l;
     sub SPC SPC l' by u_l_l.liga;
     sub SPC l' l by SPC;
     sub u' l l by SPC;
   } u_l_l.liga;
   # ll
   lookup l_l.liga {
-    ignore sub [e i] l' l;
+    ignore sub l' l l;
+    ignore sub [C a c e i t u x] l' l;
     sub SPC l' by l_l.liga;
     sub l' l by SPC;
   } l_l.liga;
@@ -1702,6 +1759,7 @@ feature cv04 {
   sub l_l.liga by l_l.liga.cv04;
   sub t_l.liga by t_l.liga.cv04;
   sub u_l.liga by u_l.liga.cv04;
+  sub x_l.liga by x_l.liga.cv04;
   sub a_l_l.liga by a_l_l.liga.cv04;
   sub e_l_l.liga by e_l_l.liga.cv04;
   sub i_l_l.liga by i_l_l.liga.cv04;
@@ -1804,6 +1862,8 @@ feature cv35 {
   sub t_l.liga.cv04 by t_l.liga.cv35;
   sub u_l.liga by u_l.liga.cv35;
   sub u_l.liga.cv04 by u_l.liga.cv35;
+  sub x_l.liga by x_l.liga.cv35;
+  sub x_l.liga.cv04 by x_l.liga.cv35;
   sub a_l_l.liga by a_l_l.liga.cv35;
   sub a_l_l.liga.cv04 by a_l_l.liga.cv35;
   sub e_l_l.liga by e_l_l.liga.cv35;
@@ -1820,6 +1880,9 @@ feature cv35 {
 
 feature cv36 {
   sub x by x.cv36;
+  sub x_l.liga by x_l.liga.cv36;
+  sub x_l.liga.cv04 by x_l.liga.cv04.cv36;
+  sub x_l.liga.cv35 by x_l.liga.cv35.cv36;
 } cv36;
 
 feature ss01 {
@@ -1964,6 +2027,7 @@ feature ss06 {
   sub l_l.liga by l_l.liga.ss06;
   sub t_l.liga by t_l.liga.ss06;
   sub u_l.liga by u_l.liga.ss06;
+  sub x_l.liga by x_l.liga.ss06;
   sub a_l_l.liga by a_l_l.liga.ss06;
   sub a_l_l.liga.cv31 by a_l_l.liga.cv31.ss06;
   sub e_l_l.liga by e_l_l.liga.ss06;
@@ -1977,26 +2041,27 @@ feature ss06 {
 
 feature ss07 {
   featureNames {
-    name "Make space optional in <<< or >>>";
+    name "Relax the conditions for multiple greaters ligatures";
   };
 
-  # <<<
-  lookup loose_less_less_less.liga {
-    ignore sub less less' less less;
-    ignore sub less' less less less;
-    sub SPC SPC less' by less_less_less.liga;
-    sub SPC less' less by SPC;
-    sub less' less less by SPC;
-  } loose_less_less_less.liga;
+  # >>
+  lookup relax_greater_greater.liga {
+    ignore sub greater greater' greater;
+    ignore sub greater' greater greater;
+    ignore sub slash greater' greater;
+    ignore sub less greater' greater;
+    sub SPC greater' by greater_greater.liga;
+    sub greater' greater by SPC;
+  } relax_greater_greater.liga;
 
   # >>>
-  lookup loose_greater_greater_greater.liga {
+  lookup relax_greater_greater_greater.liga {
     ignore sub greater greater' greater greater;
     ignore sub greater' greater greater greater;
     sub SPC SPC greater' by greater_greater_greater.liga;
     sub SPC greater' greater by SPC;
     sub greater' greater greater by SPC;
-  } loose_greater_greater_greater.liga;
+  } relax_greater_greater_greater.liga;
 } ss07;
 
 feature ss08 {

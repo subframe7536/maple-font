@@ -176,9 +176,9 @@ fixme))
 
 - ss01: Broken equals ligatures (`==`, `===`, `!=`, `!==`, `=/=`)
 - ss02: Broken compare and equal ligatures (`<=`, `>=`)
-- ss03: Enable arbitrary tag (allow to use any case letters in all tags)
+- ss03: Enable arbitrary tag (allow to use any case in all tags)
 - ss04: Break multiple underscores (`__`, `#__`)
 - ss05: Thin backslash in escape letters (`\w`, `\n`, `\r` ...)
 - ss06: Remove connected strokes between italic letters (`al`, `ul`, `il` ...)
-- ss07: Make space optional in `<<<` or `>>>`
+- ss07: Relax the conditions for multiple greaters ligatures (`>>` or `>>>`)
 - ss08: Enable double headed arrows and reverse arrows (`>>=`, `-<<`, `->>`, `>-` ...)

@@ -116,7 +116,7 @@
           "$ref": "#/definitions/freeze_options"
         },
         "ss07": {
-          "description": "Make space optional in <<< or >>>",
+          "description": "Relax the conditions for enabling multiple greater ligatures (>>, >>>)",
           "$ref": "#/definitions/freeze_options"
         },
         "ss08": {
@@ -131,11 +131,11 @@
     },
     "nerd_font": {
       "type": "object",
-      "description": "Config for Nerd Font",
+      "description": "Config for Nerd-Font",
       "properties": {
         "enable": {
           "type": "boolean",
-          "description": "Whether to enable Nerd Font",
+          "description": "Whether to enable Nerd-Font",
           "default": true
         },
         "github_mirror": {
@@ -145,7 +145,7 @@
         },
         "version": {
           "type": "string",
-          "description": "Target version of Nerd Font. If font-patcher not exists when need to use it or there is no prebuild font for current version, will download from Github",
+          "description": "Target version of Nerd-Font. If font-patcher not exists when need to use it or there is no prebuild font for current version, will download from Github",
           "default": "3.2.1"
         },
         "mono": {
@@ -159,7 +159,7 @@
         },
         "use_font_patcher": {
           "type": "boolean",
-          "description": "Prefer to use Font Patcher instead of using prebuilt NerdFont base font. If you want to custom build nerd font using font-patcher, you need to set this to True",
+          "description": "Prefer to use Font Patcher instead of using prebuilt NerdFont base font. If you want to custom build Nerd-Font using font-patcher, you need to set this to True",
           "default": false
         },
         "glyphs": {
@@ -201,7 +201,7 @@
         },
         "with_nerd_font": {
           "type": "boolean",
-          "description": "Whether to patch Nerd Font",
+          "description": "Whether to patch Nerd-Font",
           "default": true
         },
         "fix_meta_table": {

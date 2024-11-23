@@ -6,7 +6,6 @@
 >
 > If everything goes well, the stable version will be released later this year.
 
-
 # Maple Font (WIP)
 
 Open source monospace & nerd font with round corner and ligatures.

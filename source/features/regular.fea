@@ -4,7 +4,7 @@
 @zero = [zero zero.zero];
 @Digit = [@zero one two three four five six seven eight nine];
 @DigitHex = [a b c d e f A B C D E F];
-@SpaceExlusion = [space bullet periodcentered period];
+@Space = [space nbspace];
 @noexport = [arrow_double.decorator arrow_double_rev.decorator arrow_header.decorator arrow_single.decorator arrow_single_rev.decorator];
 @a = [A a a.cv02];
 @b = [B b];
@@ -22,7 +22,7 @@
 @n = [N n];
 @o = [O o];
 @p = [P p];
-@q = [Q q];
+@q = [Q q Q.cv01];
 @r = [R r];
 @s = [S s];
 @t = [T t];
@@ -32,7 +32,6 @@
 @x = [X x];
 @y = [Y y];
 @z = [Z z];
-@escape_punctuation = [backslash slash dollar period asterisk asciitilde question bar quotesingle quotedbl bracketleft bracketright parenleft parenright braceleft braceright grave comma];
 #/< otclasses
 #< classes
 
@@ -331,11 +330,13 @@ feature calt {
     sub less' less by SPC;
   } less_less.liga;
 
-  # <<< with tailing space
+  # <<<
   lookup less_less_less.liga {
-    sub SPC SPC less' space by less_less_less.liga;
-    sub SPC less' less space by SPC;
-    sub less' less less space by SPC;
+    ignore sub less less' less less;
+    ignore sub less' less less less;
+    sub SPC SPC less' by less_less_less.liga;
+    sub SPC less' less by SPC;
+    sub less' less less by SPC;
   } less_less_less.liga;
 
   # <=>
@@ -417,22 +418,61 @@ feature calt {
     sub hyphen' greater by SPC;
   } hyphen_greater.liga;
 
+  @Var = [@a @b @c @d @e @f @g @h @i @j @k @l @m @n @o @p @q @r @s @t @u @v @w @x @y @z @Digit underscore dollar underscore_underscore.liga];
+  @LeadingSymbolLiga = [plus_plus.liga hyphen_hyphen.liga underscore_underscore.liga];
+  @SymbolBeforeGreater = [bar exclam asciitilde at numbersign percent];
+  @Number = [@Digit plus hyphen];
+  @EH = [equal hyphen];
+
   # >>
   lookup greater_greater.liga {
-    ignore sub greater greater' greater;
     ignore sub greater' greater greater;
+    ignore sub greater greater' greater;
     ignore sub slash greater' greater;
     ignore sub less greater' greater;
-    sub SPC greater' by greater_greater.liga;
-    sub greater' greater by SPC;
+    sub @Var SPC greater' @Space SPC @LeadingSymbolLiga by greater_greater.liga;
+    sub @Var SPC greater' SPC @LeadingSymbolLiga by greater_greater.liga;
+    sub @Var SPC greater' [@Var @Number] by greater_greater.liga;
+    sub [@Space @EH @SymbolBeforeGreater] SPC greater' by greater_greater.liga;
+    sub SPC greater' @Space @Number by greater_greater.liga;
+    sub SPC greater' [@Number @EH slash] by greater_greater.liga;
+    sub grave SPC greater' grave by greater_greater.liga;
+
+    sub @Var greater' greater @Space SPC @LeadingSymbolLiga by SPC;
+    sub @Var greater' greater SPC @LeadingSymbolLiga by SPC;
+    sub @Var greater' greater [@Var @Number] by SPC;
+    sub [@Space @EH @SymbolBeforeGreater] greater' greater by SPC;
+    sub greater' greater @Space @Number by SPC;
+    sub greater' greater [@Number @EH slash] by SPC;
+    sub grave greater' greater grave by SPC;
   } greater_greater.liga;
 
-  # >>> with heading space
+  # >>>
   lookup greater_greater_greater.liga {
     ignore sub greater' greater greater greater;
-    sub space SPC SPC greater' by greater_greater_greater.liga;
-    sub space SPC greater' greater by SPC;
-    sub space greater' greater greater by SPC;
+    sub @Var SPC SPC greater' @Space SPC @LeadingSymbolLiga by greater_greater_greater.liga;
+    sub @Var SPC SPC greater' SPC @LeadingSymbolLiga by greater_greater_greater.liga;
+    sub @Var SPC SPC greater' [@Var @Number] by greater_greater_greater.liga;
+    sub [@Space @SymbolBeforeGreater] SPC SPC greater' by greater_greater_greater.liga;
+    sub SPC SPC greater' @Space @Number by greater_greater_greater.liga;
+    sub SPC SPC greater' [@Number slash] by greater_greater_greater.liga;
+    sub grave SPC SPC greater' grave by greater_greater_greater.liga;
+
+    sub @Var SPC greater' greater @Space SPC @LeadingSymbolLiga by SPC;
+    sub @Var SPC greater' greater SPC @LeadingSymbolLiga by SPC;
+    sub @Var SPC greater' greater [@Var @Number] by SPC;
+    sub [@Space @SymbolBeforeGreater] SPC greater' greater by SPC;
+    sub SPC greater' greater @Space @Number by SPC;
+    sub SPC greater' greater [@Number slash] by SPC;
+    sub grave SPC greater' greater grave by SPC;
+
+    sub @Var greater' greater greater @Space SPC @LeadingSymbolLiga by SPC;
+    sub @Var greater' greater greater SPC @LeadingSymbolLiga by SPC;
+    sub @Var greater' greater greater [@Var @Number] by SPC;
+    sub [@Space @SymbolBeforeGreater] greater' greater greater by SPC;
+    sub greater' greater greater @Space @Number by SPC;
+    sub greater' greater greater [@Number slash] by SPC;
+    sub grave greater' greater greater grave by SPC;
   } greater_greater_greater.liga;
 
   # >=
@@ -1350,10 +1390,12 @@ feature calt {
     sub less' exclam hyphen hyphen hyphen hyphen greater by SPC;
   } xml_empty_comment.liga;
 
+  # \\ \. \? \$ ...
   lookup escape {
-    ignore sub backslash.liga backslash' @escape_punctuation;
+    @Escape = [@Space asciitilde grave exclam at numbersign dollar percent asciicircum ampersand asterisk parenleft parenright hyphen underscore plus equal bracketleft bracketright braceleft braceright bar backslash colon semicolon quotesingle quotedbl less comma greater period slash question];
+    ignore sub backslash.liga backslash' @Escape;
     ignore sub backslash' percent percent;
-    sub backslash' @escape_punctuation by backslash.liga;
+    sub backslash' @Escape by backslash.liga;
   } escape;
 
 } calt;
@@ -1782,26 +1824,27 @@ feature ss05 {
 
 feature ss07 {
   featureNames {
-    name "Make space optional in <<< or >>>";
+    name "Relax the conditions for multiple greaters ligatures";
   };
 
-  # <<<
-  lookup loose_less_less_less.liga {
-    ignore sub less less' less less;
-    ignore sub less' less less less;
-    sub SPC SPC less' by less_less_less.liga;
-    sub SPC less' less by SPC;
-    sub less' less less by SPC;
-  } loose_less_less_less.liga;
+  # >>
+  lookup relax_greater_greater.liga {
+    ignore sub greater greater' greater;
+    ignore sub greater' greater greater;
+    ignore sub slash greater' greater;
+    ignore sub less greater' greater;
+    sub SPC greater' by greater_greater.liga;
+    sub greater' greater by SPC;
+  } relax_greater_greater.liga;
 
   # >>>
-  lookup loose_greater_greater_greater.liga {
+  lookup relax_greater_greater_greater.liga {
     ignore sub greater greater' greater greater;
     ignore sub greater' greater greater greater;
     sub SPC SPC greater' by greater_greater_greater.liga;
     sub SPC greater' greater by SPC;
     sub greater' greater greater by SPC;
-  } loose_greater_greater_greater.liga;
+  } relax_greater_greater_greater.liga;
 } ss07;
 
 feature ss08 {
