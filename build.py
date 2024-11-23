@@ -14,7 +14,6 @@ from fontTools.merge import Merger
 from source.py.utils import (
     check_font_patcher,
     get_font_forge_bin,
-    get_font_name,
     run,
     set_font_name,
     joinPaths,
@@ -41,7 +40,13 @@ def check_ftcli():
 
 def parse_args():
     parser = argparse.ArgumentParser(
-        description="✨ Builder and optimizer for Maple Mono"
+        description="✨ Builder and optimizer for Maple Mono",
+    )
+    parser.add_argument(
+        "-v",
+        "--version",
+        action="version",
+        version=f"Maple Mono Builder v{version}",
     )
     parser.add_argument(
         "-d",
@@ -51,98 +56,103 @@ def parse_args():
         help="Output config and exit",
     )
     parser.add_argument(
+        "--debug",
+        action="store_true",
+        help="Add `Debug` suffix to family name",
+    )
+
+    feature_group = parser.add_argument_group("Feature Options")
+    feature_group.add_argument(
         "-n",
         "--normal",
         dest="normal",
         action="store_true",
-        help="Whether to use normal preset, just like `JetBrains Mono` with slashed zero",
+        help="Use normal preset, just like `JetBrains Mono` with slashed zero",
     )
-    parser.add_argument(
-        "--prefix",
-        type=str,
-        help="Setup output directory prefix",
-    )
-    parser.add_argument(
+    feature_group.add_argument(
         "--feat",
         type=lambda x: x.strip().split(","),
         help="Freeze font features, splited by `,` (e.g. `--feat zero,cv01,ss07,ss08`)",
     )
-    parser.add_argument(
+    feature_group.add_argument(
         "--hinted",
         dest="hinted",
         default=None,
         action="store_true",
-        help="Whether to use hinted font as base font",
+        help="Use hinted font as base font",
     )
-    parser.add_argument(
+    feature_group.add_argument(
         "--no-hinted",
         dest="hinted",
         default=None,
         action="store_false",
-        help="Whether not to use hinted font as base font",
+        help="Use unhinted font as base font",
     )
-    parser.add_argument(
+    feature_group.add_argument(
         "--liga",
         dest="liga",
         default=None,
         action="store_true",
-        help="Whether to remove all the ligatures",
+        help="Preserve all the ligatures",
     )
-    parser.add_argument(
+    feature_group.add_argument(
         "--no-liga",
         dest="liga",
         default=None,
         action="store_false",
-        help="Whether to remove all the ligatures",
+        help="Remove all the ligatures",
     )
-    parser.add_argument(
+    feature_group.add_argument(
+        "--cn-narrow",
+        action="store_true",
+        help="Make CN characters narrow (experimental)",
+    )
+
+    build_group = parser.add_argument_group("Build Options")
+    nf_group = build_group.add_mutually_exclusive_group()
+    nf_group.add_argument(
         "--nerd-font",
         dest="nerd_font",
         default=None,
         action="store_true",
-        help="Whether to skip build Nerd Font version",
+        help="Build Nerd-Font version",
     )
-    parser.add_argument(
+    nf_group.add_argument(
         "--no-nerd-font",
         dest="nerd_font",
         default=None,
         action="store_false",
-        help="Whether to skip build Nerd Font version",
+        help="Do not build Nerd-Font version",
     )
-    parser.add_argument(
+    cn_group = build_group.add_mutually_exclusive_group()
+    cn_group.add_argument(
         "--cn",
         dest="cn",
         default=None,
         action="store_true",
-        help="Whether to skip build Chinese version",
+        help="Build Chinese version",
     )
-    parser.add_argument(
+    cn_group.add_argument(
         "--no-cn",
         dest="cn",
         default=None,
         action="store_false",
-        help="Whether to skip build Chinese version",
+        help="Do not build Chinese version",
     )
-    parser.add_argument(
+    build_group.add_argument(
         "--cn-both",
         action="store_true",
-        help="Whether to build both `Maple Mono CN` and `Maple Mono NF CN`",
+        help="Build both `Maple Mono CN` and `Maple Mono NF CN`. Nerd-Font version must be enabled",
     )
-    parser.add_argument(
-        "--cn-narrow",
+    build_group.add_argument(
+        "--cache",
         action="store_true",
-        help="Whether to make CN characters narrow (experimental)",
+        help="Reuse font cache",
     )
-    parser.add_argument(
+    build_group.add_argument(
         "--release",
         action="store_true",
-        help="Whether to archieve fonts",
-    )
-    parser.add_argument(
-        "-v",
-        "--version",
-        action="version",
-        version=f"Maple Mono Builder v{version}",
+        help="Build font archieves with config and license",
     )
 
     return parser.parse_args()
@@ -152,10 +162,9 @@ def parse_args():
 
 
 class FontConfig:
-    def __init__(self):
+    def __init__(self, args):
         self.release_mode = None
         self.use_cn_both = None
-        self.dir_prefix = None
         # the number of parallel tasks
         # when run in codespace, this will be 1
         self.pool_size = 1 if not getenv("CODESPACE_NAME") else 4
@@ -189,16 +198,16 @@ class FontConfig:
             "ss08": "ignore",
             "zero": "ignore",
         }
-        # nerd font settings
+        # Nerd-Font settings
         self.nerd_font = {
-            # whether to enable Nerd Font
+            # whether to enable Nerd-Font
             "enable": True,
-            # target version of Nerd Font if font-patcher not exists
+            # target version of Nerd-Font if font-patcher not exists
             "version": "3.2.1",
             # whether to make icon width fixed
             "mono": False,
             # prefer to use Font Patcher instead of using prebuild NerdFont base font
-            # if you want to custom build nerd font using font-patcher, you need to set this to True
+            # if you want to custom build Nerd-Font using font-patcher, you need to set this to True
             "use_font_patcher": False,
             # symbol Fonts settings.
             # default args: ["--complete"]
@@ -216,7 +225,7 @@ class FontConfig:
             # whether to build Chinese fonts
             # skip if Chinese base fonts are not founded
             "enable": True,
-            # whether to patch Nerd Font
+            # whether to patch Nerd-Font
             "with_nerd_font": True,
             # fix design language and supported languages
             "fix_meta_table": True,
@@ -227,11 +236,11 @@ class FontConfig:
             # whether to hint CN font (will increase about 33% size)
             "use_hinted": False,
         }
+        self.__load_external(args)
 
-    def load_external(self, args):
+    def __load_external(self, args):
         self.release_mode = args.release
         self.use_cn_both = args.cn_both
-        self.dir_prefix = args.prefix
 
         try:
             with open(
@@ -245,8 +254,6 @@ class FontConfig:
                 self.feature_freeze = data["feature_freeze"]
                 self.nerd_font = data["nerd_font"]
                 self.cn = data["cn"]
-
-                self.family_name_compact = self.family_name.replace(" ", "")
 
                 if "font_forge_bin" not in self.nerd_font:
                     self.nerd_font["font_forge_bin"] = get_font_forge_bin()
@@ -274,6 +281,11 @@ class FontConfig:
                 if args.cn_narrow:
                     self.cn["narrow"] = True
 
+                if args.debug:
+                    self.family_name += " Debug"
+
+                self.family_name_compact = self.family_name.replace(" ", "")
+
         except ():
             print("Fail to load config.json. Please check your config.json.")
             exit(1)
@@ -295,7 +307,7 @@ class FontConfig:
             github_mirror=self.nerd_font["github_mirror"],
         ) and not path.exists(self.nerd_font["font_forge_bin"]):
             print(
-                f"FontForge bin({self.nerd_font['font_forge_bin']}) not found. Use prebuild Nerd Font instead."
+                f"FontForge bin({self.nerd_font['font_forge_bin']}) not found. Use prebuild Nerd-Font base font instead."
             )
             return False
 
@@ -304,17 +316,20 @@ class FontConfig:
     def should_use_nerd_font(self) -> bool:
         return self.cn["with_nerd_font"] and self.nerd_font["enable"]
 
+    def toggle_nf_cn_config(self) -> bool:
+        if not self.nerd_font["enable"]:
+            print("❗Nerd-Font version is disabled. Toggle failed.")
+            return False
+        self.cn["with_nerd_font"] = not self.cn["with_nerd_font"]
+        return True
+
 
 class BuildOption:
     def __init__(self, config: FontConfig):
         output_dir_default = "fonts"
         # paths
         self.src_dir = "source"
-        self.output_dir = (
-            joinPaths(output_dir_default, config.dir_prefix)
-            if config.dir_prefix
-            else output_dir_default
-        )
+        self.output_dir = output_dir_default
         self.output_otf = joinPaths(self.output_dir, "OTF")
         self.output_ttf = joinPaths(self.output_dir, "TTF")
         self.output_ttf_hinted = joinPaths(self.output_dir, "TTF-AutoHint")
@@ -356,6 +371,24 @@ class BuildOption:
             self.cn_base_font_dir = joinPaths(self.output_dir, "TTF")
             self.cn_suffix = self.cn_suffix_compact = "CN"
         self.output_cn = joinPaths(self.output_dir, self.cn_suffix_compact)
+
+    def has_cache(self) -> bool:
+        return (
+            self.__check_cache_dir(self.output_variable, count=2)
+            and self.__check_cache_dir(self.output_otf)
+            and self.__check_cache_dir(self.output_ttf)
+            and self.__check_cache_dir(self.output_ttf_hinted)
+            and self.__check_cache_dir(self.output_woff2)
+        )
+
+    def __check_cache_dir(self, cache_dir: str, count: int = 16) -> bool:
+        if not path.exists(cache_dir):
+            return False
+        if not path.isdir(cache_dir):
+            return False
+        if listdir(cache_dir).__len__() != count:
+            return False
+        return True
 
 
 def handle_ligatures(
@@ -506,8 +539,14 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
     font.close()
 
     run(f"ftcli ttf autohint {_path} -out {build_option.output_ttf_hinted}")
-    run(f"ftcli converter ttf2otf {_path} -out {build_option.output_otf}")
     run(f"ftcli converter ft2wf {_path} -out {build_option.output_woff2} -f woff2")
+
+    _otf_path = joinPaths(
+        build_option.output_otf, path.basename(_path).replace(".ttf", ".otf")
+    )
+    run(f"ftcli converter ttf2otf {_path} -out {build_option.output_otf}")
+    run(f"ftcli otf check-outlines {_otf_path}")
+    run(f"ftcli otf fix-version {_otf_path}")
 
 
 def build_nf_by_prebuild_nerd_font(
@@ -695,8 +734,7 @@ def main():
     check_ftcli()
     parsed_args = parse_args()
 
-    font_config = FontConfig()
-    font_config.load_external(args=parsed_args)
+    font_config = FontConfig(args=parsed_args)
     build_option = BuildOption(font_config)
     build_option.load_cn_dir_and_suffix(font_config.should_use_nerd_font())
 
@@ -706,67 +744,54 @@ def main():
         print("build_option:", json.dumps(build_option.__dict__, indent=4))
         return
 
-    print("🧹 Clean cache...\n")
-    shutil.rmtree(build_option.output_dir, ignore_errors=True)
-    shutil.rmtree(build_option.output_woff2, ignore_errors=True)
+    should_clear_cache = not parsed_args.cache
+
+    if should_clear_cache:
+        print("🧹 Clean cache...\n")
+        shutil.rmtree(build_option.output_dir, ignore_errors=True)
+        shutil.rmtree(build_option.output_woff2, ignore_errors=True)
+
     makedirs(build_option.output_dir, exist_ok=True)
     makedirs(build_option.output_variable, exist_ok=True)
 
     start_time = time.time()
-    print("🚩 Start building ...\n")
+    print("🚩 Start building ...")
+
     # =========================================================================================
     # ===================================   build basic   =====================================
     # =========================================================================================
 
-    input_files = [
-        f"{build_option.src_dir}/MapleMono-Italic[wght]-VF.ttf",
-        f"{build_option.src_dir}/MapleMono[wght]-VF.ttf",
-    ]
-    for input_file in input_files:
-        font = TTFont(input_file)
+    if should_clear_cache or not build_option.has_cache():
+        input_files = [
+            f"{build_option.src_dir}/MapleMono-Italic[wght]-VF.ttf",
+            f"{build_option.src_dir}/MapleMono[wght]-VF.ttf",
+        ]
+        for input_file in input_files:
+            font = TTFont(input_file)
+            font.save(
+                input_file.replace(build_option.src_dir, build_option.output_variable)
+            )
 
-        set_font_name(font, font_config.family_name, 1)
-        set_font_name(
-            font,
-            get_font_name(font, 4).replace("Maple Mono", font_config.family_name),
-            4,
+        print("\n✨ Instatiate and optimize fonts...\n")
+        run(f"ftcli fix decompose-transformed {build_option.output_variable}")
+        run(f"ftcli fix italic-angle {build_option.output_variable}")
+        run(f"ftcli fix monospace {build_option.output_variable}")
+        run(
+            f"ftcli converter vf2i {build_option.output_variable} -out {build_option.output_ttf}"
         )
-        var_postscript_name = get_font_name(font, 6).replace(
-            "MapleMono", font_config.family_name_compact
-        )
-        set_font_name(font, var_postscript_name, 6)
-        set_font_name(
-            font,
-            f"Version 7.000;SUBF;{var_postscript_name};2024;FL830;variable",
-            3,
-        )
-        set_font_name(font, font_config.family_name_compact, 25)
+        run(f"ftcli fix italic-angle {build_option.output_ttf}")
+        run(f"ftcli fix monospace {build_option.output_ttf}")
+        run(f"ftcli fix strip-names {build_option.output_ttf}")
+        run(f"ftcli ttf dehint {build_option.output_ttf}")
+        run(f"ftcli ttf fix-contours {build_option.output_ttf}")
+        run(f"ftcli ttf remove-overlaps {build_option.output_ttf}")
 
-        font.save(
-            input_file.replace(
-                build_option.src_dir, build_option.output_variable
-            ).replace("MapleMono", font_config.family_name_compact)
+        _build_mono = partial(
+            build_mono, font_config=font_config, build_option=build_option
         )
 
-    print("✨ Instatiate and optimize fonts...\n")
-    run(f"ftcli fix italic-angle {build_option.output_variable}")
-    run(f"ftcli fix monospace {build_option.output_variable}")
-    run(
-        f"ftcli converter vf2i {build_option.output_variable} -out {build_option.output_ttf}"
-    )
-    run(f"ftcli fix italic-angle {build_option.output_ttf}")
-    run(f"ftcli fix monospace {build_option.output_ttf}")
-    run(f"ftcli fix strip-names {build_option.output_ttf}")
-    run(f"ftcli ttf dehint {build_option.output_ttf}")
-    run(f"ftcli ttf fix-contours {build_option.output_ttf}")
-    run(f"ftcli ttf remove-overlaps {build_option.output_ttf}")
-
-    _build_mono = partial(
-        build_mono, font_config=font_config, build_option=build_option
-    )
-
-    with Pool(font_config.pool_size) as p:
-        p.map(_build_mono, listdir(build_option.output_ttf))
+        with Pool(font_config.pool_size) as p:
+            p.map(_build_mono, listdir(build_option.output_ttf))
 
     # =========================================================================================
     # ====================================   build NF   =======================================
@@ -820,38 +845,25 @@ def main():
             run(f"ftcli ttf remove-overlaps {build_option.cn_static_path}")
             run(f"ftcli utils del-table -t kern -t GPOS {build_option.cn_static_path}")
 
-        print(
-            f"\n🔎 Build CN fonts {'with Nerd-Font' if font_config.should_use_nerd_font() else ''}...\n"
-        )
-        makedirs(build_option.output_cn, exist_ok=True)
-
-        _build_cn_alt = partial(
-            build_cn, font_config=font_config, build_option=build_option
-        )
-        with Pool(font_config.pool_size) as p:
-            p.map(_build_cn_alt, listdir(build_option.cn_base_font_dir))
-
-        if font_config.cn["use_hinted"]:
-            run(f"ftcli ttf autohint {build_option.output_cn}")
-
-        if font_config.use_cn_both and font_config.release_mode:
+        def _build_cn():
+            print(
+                f"\n🔎 Build CN fonts {'with Nerd-Font' if font_config.should_use_nerd_font() else ''}...\n"
+            )
             makedirs(build_option.output_cn, exist_ok=True)
+            fn = partial(build_cn, font_config=font_config, build_option=build_option)
+            with Pool(font_config.pool_size) as p:
+                p.map(fn, listdir(build_option.cn_base_font_dir))
 
-            use_nerd_font = not font_config.should_use_nerd_font()
+            if font_config.cn["use_hinted"]:
+                run(f"ftcli ttf autohint {build_option.output_cn}")
 
-            if use_nerd_font and font_config.nerd_font["enable"]:
-                print(
-                    f"\n🔎 Build CN fonts {'with Nerd-Font' if use_nerd_font else ''}...\n"
-                )
-                build_option.load_cn_dir_and_suffix(use_nerd_font)
-                _build_cn_alt = partial(
-                    build_cn, font_config=font_config, build_option=build_option
-                )
-                with Pool(font_config.pool_size) as p:
-                    p.map(_build_cn_alt, listdir(build_option.cn_base_font_dir))
+        _build_cn()
 
-                if font_config.cn["use_hinted"]:
-                    run(f"ftcli ttf autohint {build_option.output_cn}")
+        if font_config.use_cn_both:
+            result = font_config.toggle_nf_cn_config()
+            if result:
+                build_option.load_cn_dir_and_suffix(font_config.should_use_nerd_font())
+                _build_cn()
 
     run(f"ftcli name del-mac-names -r {build_option.output_dir}")
 
@@ -949,7 +961,12 @@ def main():
         if font_config.freeze_config_str != ""
         else "default config"
     )
-    print(f"\n🏁 Build finished, {time.time() - start_time:.2f} s, {freeze_str}")
+    end_time = time.time()
+    date_time_fmt = time.strftime("%H:%M:%S", time.localtime(end_time))
+    time_diff = end_time - start_time
+    print(
+        f"\n🏁 Build finished at {date_time_fmt}, cost {time_diff:.2f} s, family name is {font_config.family_name}, {freeze_str}"
+    )
 
 
 if __name__ == "__main__":
