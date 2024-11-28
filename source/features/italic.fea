@@ -2017,7 +2017,7 @@ feature ss05 {
 
 feature ss06 {
   featureNames {
-    name "Remove connected strokes between italic letters";
+    name "Break connected strokes between italic letters";
   };
   sub C_l.liga by C_l.liga.ss06;
   sub a_l.liga by a_l.liga.ss06;

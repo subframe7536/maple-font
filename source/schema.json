@@ -112,7 +112,7 @@
           "$ref": "#/definitions/freeze_options"
         },
         "ss06": {
-          "description": "[Italic Only] Remove connected strokes between italic letters (al, ul, il ...)",
+          "description": "[Italic Only] Break connected strokes between italic letters (al, ul, il ...)",
           "$ref": "#/definitions/freeze_options"
         },
         "ss07": {
