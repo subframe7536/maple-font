@@ -5,3 +5,6 @@ dist
 /fonts
 /source/cn/static
 __pycache__
+.DS_store
+release
+source/cn

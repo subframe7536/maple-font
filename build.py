@@ -13,7 +13,9 @@ from fontTools.ttLib import TTFont, newTable
 from fontTools.merge import Merger
 from source.py.utils import (
     check_font_patcher,
+    download_cn_static_fonts,
     get_font_forge_bin,
+    is_ci,
     run,
     set_font_name,
     joinPaths,
@@ -341,7 +343,8 @@ class BuildOption:
             self.output_dir, "TTF-AutoHint" if config.use_hinted else "TTF"
         )
 
-        self.cn_static_path = f"{self.src_dir}/cn/static"
+        self.cn_variable_dir = f"{self.src_dir}/cn"
+        self.cn_static_dir = f"{self.cn_variable_dir}/static"
 
         self.cn_base_font_dir = None
         self.cn_suffix = None
@@ -372,6 +375,22 @@ class BuildOption:
             self.cn_base_font_dir = joinPaths(self.output_dir, "TTF")
             self.cn_suffix = self.cn_suffix_compact = "CN"
         self.output_cn = joinPaths(self.output_dir, self.cn_suffix_compact)
+
+    def should_build_cn(self, config: FontConfig) -> bool:
+        if not config.cn["enable"] and not config.use_cn_both:
+            return False
+        if path.exists(self.cn_static_dir) and listdir(self.cn_static_dir).__len__() == 16:
+            return True
+        if not path.exists(self.cn_variable_dir) and listdir(self.cn_variable_dir).__len__() < 1:
+            if is_ci():
+                return download_cn_static_fonts(
+                    tag="cn_static",
+                    target_dir=self.cn_static_dir,
+                    github_mirror=self.nerd_font["github_mirror"],
+                )
+            print("CN varaible fonts does not exist. Skip CN build.")
+            return False
+        return True
 
     def has_cache(self) -> bool:
         return (
@@ -660,7 +679,7 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
         [
             joinPaths(build_option.cn_base_font_dir, f),
             joinPaths(
-                build_option.cn_static_path, f"MapleMonoCN-{style_compact_cn}.ttf"
+                build_option.cn_static_dir, f"MapleMonoCN-{style_compact_cn}.ttf"
             ),
         ]
     )
@@ -742,6 +761,7 @@ def run_build(pool_size: int, fn: Callable, dir: str):
     else:
         for f in listdir(dir):
             fn(f)
+
 
 def main():
     check_ftcli()
@@ -847,20 +867,17 @@ def main():
     # ====================================   build CN   =======================================
     # =========================================================================================
 
-    if font_config.cn["enable"] and path.exists(f"{build_option.src_dir}/cn"):
-        if (
-            not path.exists(build_option.cn_static_path)
-            or font_config.cn["clean_cache"]
-        ):
+    if build_option.should_build_cn(font_config):
+        if not path.exists(build_option.cn_static_dir) or font_config.cn["clean_cache"]:
             print("=========================================")
             print("Instantiating CN Base font, be patient...")
             print("=========================================")
             run(
-                f"ftcli converter vf2i {build_option.src_dir}/cn -out {build_option.cn_static_path}"
+                f"ftcli converter vf2i {build_option.cn_variable_dir} -out {build_option.cn_static_dir}"
             )
-            run(f"ftcli ttf fix-contours {build_option.cn_static_path}")
-            run(f"ftcli ttf remove-overlaps {build_option.cn_static_path}")
-            run(f"ftcli utils del-table -t kern -t GPOS {build_option.cn_static_path}")
+            run(f"ftcli ttf fix-contours {build_option.cn_static_dir}")
+            run(f"ftcli ttf remove-overlaps {build_option.cn_static_dir}")
+            run(f"ftcli utils del-table -t kern -t GPOS {build_option.cn_static_dir}")
 
         def _build_cn():
             print(
@@ -969,7 +986,9 @@ def main():
                 target_parent_dir_path=archieve_dir,
             )
             with open(
-                joinPaths(archieve_dir, f"{font_config.family_name_compact}-{f}.sha256"),
+                joinPaths(
+                    archieve_dir, f"{font_config.family_name_compact}-{f}.sha256"
+                ),
                 "w",
                 encoding="utf-8",
             ) as hash_file:

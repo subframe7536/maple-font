@@ -50,9 +50,58 @@ def get_font_forge_bin():
         return LINUX_FONTFORGE_PATH
 
 
+def is_ci():
+    ci_envs = [
+        "JENKINS_HOME",
+        "TRAVIS",
+        "CIRCLECI",
+        "GITHUB_ACTIONS",
+        "GITLAB_CI",
+        "TF_BUILD",
+    ]
+
+    for env in ci_envs:
+        if environ.get(env):
+            return True
+
+    return False
+
+
+def parse_github_mirror(github_mirror: str) -> str:
+    github = environ.get("GITHUB")  # custom github mirror, for CN users
+    if not github:
+        github = github_mirror
+    return f"https://{github}"
+
+
+def download_zip_and_extract(
+    name: str, url: str, zip_path: str, output_dir: str, remove_zip: bool = True
+) -> bool:
+    try:
+        if not path.exists(zip_path):
+            try:
+                print(f"NerdFont Patcher does not exist, download from {url}")
+                with urlopen(url) as response, open(zip_path, "wb") as out_file:
+                    shutil.copyfileobj(response, out_file)
+            except Exception as e:
+                print(
+                    f"\nFail to download {name}. Please download it manually from {url}, then put downloaded file into project's root and run this script again. \n    Error: {e}"
+                )
+                return False
+        with ZipFile(zip_path, "r") as zip_ref:
+            zip_ref.extractall(output_dir)
+        if remove_zip:
+            remove(zip_path)
+        return True
+    except Exception as e:
+        print(f"Download zip and extract failed, error: {e}")
+        return False
+
+
 def check_font_patcher(version: str, github_mirror: str = "github.com") -> bool:
-    if path.exists("FontPatcher"):
-        with open("FontPatcher/font-patcher", "r", encoding="utf-8") as f:
+    target_dir = "FontPatcher"
+    if path.exists(target_dir):
+        with open(f"{target_dir}/font-patcher", "r", encoding="utf-8") as f:
             if f"# Nerd Fonts Version: {version}" in f.read():
                 return True
             else:
@@ -60,22 +109,17 @@ def check_font_patcher(version: str, github_mirror: str = "github.com") -> bool:
                 shutil.rmtree("FontPatcher", ignore_errors=True)
 
     zip_path = "FontPatcher.zip"
-    if not path.exists(zip_path):
-        github = environ.get("GITHUB")  # custom github mirror, for CN users
-        if not github:
-            github = github_mirror
-        url = f"https://{github}/ryanoasis/nerd-fonts/releases/download/v{version}/FontPatcher.zip"
-        try:
-            print(f"NerdFont Patcher does not exist, download from {url}")
-            with urlopen(url) as response, open(zip_path, "wb") as out_file:
-                shutil.copyfileobj(response, out_file)
-        except Exception as e:
-            print(
-                f"\nFail to download NerdFont Patcher. Please download it manually from {url}, then put downloaded 'FontPatcher.zip' into project's root and run this script again. \n    Error: {e}"
-            )
-            exit(1)
+    url = f"{parse_github_mirror(github_mirror)}/ryanoasis/nerd-fonts/releases/download/v{version}/{zip_path}"
+    return download_zip_and_extract(
+        name="Nerd Font Patcher", url=url, zip_path=zip_path, output_dir=target_dir
+    )
 
-    with ZipFile(zip_path, "r") as zip_ref:
-        zip_ref.extractall("FontPatcher")
-    remove(zip_path)
-    return True
+
+def download_cn_static_fonts(
+    tag: str, target_dir: str, github_mirror: str = "github.com"
+) -> bool:
+    url = f"{parse_github_mirror(github_mirror)}/subframe7536/maple-font/releases/download/{tag}/cn-base.zip"
+    zip_path = "cn-base-static.zip"
+    return download_zip_and_extract(
+        name="Nerd Font Patcher", url=url, zip_path=zip_path, output_dir=target_dir
+    )
