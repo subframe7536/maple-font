@@ -223,6 +223,11 @@
           "type": "boolean",
           "description": "whether to hint CN font (will increase about 33% size)",
           "default": false
+        },
+        "use_static_base_font": {
+          "type": "boolean",
+          "description": "whether to use large pre-instantiated static CN font as base font (instantiate will cost 40-50 minutes)",
+          "default": true
         }
       },
       "required": [
@@ -230,7 +235,9 @@
         "with_nerd_font",
         "fix_meta_table",
         "clean_cache",
-        "narrow"
+        "narrow",
+        "use_hinted",
+        "use_static_base_font"
       ]
     }
   },

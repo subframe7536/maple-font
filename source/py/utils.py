@@ -2,7 +2,7 @@ from os import environ, path, remove
 import platform
 import shutil
 import subprocess
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
 from zipfile import ZipFile
 from fontTools.ttLib import TTFont
 
@@ -80,8 +80,10 @@ def download_zip_and_extract(
     try:
         if not path.exists(zip_path):
             try:
-                print(f"NerdFont Patcher does not exist, download from {url}")
-                with urlopen(url) as response, open(zip_path, "wb") as out_file:
+                print(f"{name} does not exist, download from {url}")
+                user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
+                req = Request(url, headers={'User-Agent': user_agent})
+                with urlopen(req) as response, open(zip_path, "wb") as out_file:
                     shutil.copyfileobj(response, out_file)
             except Exception as e:
                 print(
@@ -115,11 +117,10 @@ def check_font_patcher(version: str, github_mirror: str = "github.com") -> bool:
     )
 
 
-def download_cn_static_fonts(
-    tag: str, target_dir: str, github_mirror: str = "github.com"
+def download_cn_base_font(
+    tag: str, zip_path: str, target_dir: str, github_mirror: str = "github.com"
 ) -> bool:
-    url = f"{parse_github_mirror(github_mirror)}/subframe7536/maple-font/releases/download/{tag}/cn-base.zip"
-    zip_path = "cn-base-static.zip"
+    url = f"{parse_github_mirror(github_mirror)}/subframe7536/maple-font/releases/download/{tag}/{zip_path}"
     return download_zip_and_extract(
-        name="Nerd Font Patcher", url=url, zip_path=zip_path, output_dir=target_dir
+        name="CN base font", url=url, zip_path=zip_path, output_dir=target_dir
     )

@@ -13,7 +13,7 @@ from fontTools.ttLib import TTFont, newTable
 from fontTools.merge import Merger
 from source.py.utils import (
     check_font_patcher,
-    download_cn_static_fonts,
+    download_cn_base_font,
     get_font_forge_bin,
     is_ci,
     run,
@@ -237,6 +237,8 @@ class FontConfig:
             "narrow": False,
             # whether to hint CN font (will increase about 33% size)
             "use_hinted": False,
+            # whether to use pre-instantiated static CN font as base font
+            "use_static_base_font": True
         }
         self.__load_external(args)
 
@@ -378,17 +380,25 @@ class BuildOption:
 
     def should_build_cn(self, config: FontConfig) -> bool:
         if not config.cn["enable"] and not config.use_cn_both:
+            print("No `\"cn.enable\": true` config or no `--cn` / `--cn-both` setup. Skip CN build.")
             return False
-        if path.exists(self.cn_static_dir) and listdir(self.cn_static_dir).__len__() == 16:
-            return True
-        if not path.exists(self.cn_variable_dir) and listdir(self.cn_variable_dir).__len__() < 1:
-            if is_ci():
-                return download_cn_static_fonts(
-                    tag="cn_static",
+        if not path.exists(self.cn_static_dir) or listdir(self.cn_static_dir).__len__() != 16:
+            tag = "cn-base"
+            if is_ci() or config.cn["use_static_base_font"]:
+                return download_cn_base_font(
+                    tag=tag,
+                    zip_path="cn-base-static.zip",
                     target_dir=self.cn_static_dir,
-                    github_mirror=self.nerd_font["github_mirror"],
+                    github_mirror=config.nerd_font["github_mirror"],
                 )
-            print("CN varaible fonts does not exist. Skip CN build.")
+            if not config.cn["use_static_base_font"]:
+                return download_cn_base_font(
+                    tag=tag,
+                    zip_path="cn-base-variable.zip",
+                    target_dir=self.cn_variable_dir,
+                    github_mirror=config.nerd_font["github_mirror"],
+                )
+            print("CN base fonts don't exist. Skip CN build.")
             return False
         return True
 

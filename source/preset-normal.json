@@ -43,6 +43,7 @@
     "fix_meta_table": true,
     "clean_cache": false,
     "narrow": false,
-    "use_hinted": false
+    "use_hinted": false,
+    "use_static_base_font": true
   }
 }
