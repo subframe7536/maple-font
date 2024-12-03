@@ -177,6 +177,7 @@ class FontConfig:
         self.use_hinted = True
         # whether to enable ligature
         self.enable_liga = True
+        self.github_mirror = "github.com"
         self.feature_freeze = {
             "cv01": "ignore",
             "cv02": "ignore",
@@ -226,7 +227,7 @@ class FontConfig:
         self.cn = {
             # whether to build Chinese fonts
             # skip if Chinese base fonts are not founded
-            "enable": True,
+            "enable": False,
             # whether to patch Nerd-Font
             "with_nerd_font": True,
             # fix design language and supported languages
@@ -238,7 +239,7 @@ class FontConfig:
             # whether to hint CN font (will increase about 33% size)
             "use_hinted": False,
             # whether to use pre-instantiated static CN font as base font
-            "use_static_base_font": True
+            "use_static_base_font": True,
         }
         self.__load_external(args)
 
@@ -252,19 +253,28 @@ class FontConfig:
             )
             with open(config_file_path, "r") as f:
                 data = json.load(f)
-                self.family_name = data["family_name"]
-                self.use_hinted = data["use_hinted"]
-                self.enable_liga = data["ligature"]
-                self.pool_size = data["pool_size"]
-                self.feature_freeze = data["feature_freeze"]
-                self.nerd_font = data["nerd_font"]
-                self.cn = data["cn"]
+                for prop in [
+                    "family_name",
+                    "use_hinted",
+                    "enable_liga",
+                    "pool_size",
+                    "github_mirror",
+                    "feature_freeze",
+                    "nerd_font",
+                    "cn",
+                ]:
+                    if prop in data:
+                        val = data[prop]
+                        setattr(
+                            self,
+                            prop,
+                            val
+                            if type(val) is not dict
+                            else {**getattr(self, prop), **val},
+                        )
 
                 if "font_forge_bin" not in self.nerd_font:
                     self.nerd_font["font_forge_bin"] = get_font_forge_bin()
-
-                if "github_mirror" not in self.nerd_font:
-                    self.nerd_font["github_mirror"] = "github.com"
 
                 if args.feat is not None:
                     for f in args.feat:
@@ -309,7 +319,7 @@ class FontConfig:
 
         if check_font_patcher(
             version=self.nerd_font["version"],
-            github_mirror=self.nerd_font["github_mirror"],
+            github_mirror=self.github_mirror,
         ) and not path.exists(self.nerd_font["font_forge_bin"]):
             print(
                 f"FontForge bin({self.nerd_font['font_forge_bin']}) not found. Use prebuild Nerd-Font base font instead."
@@ -380,23 +390,28 @@ class BuildOption:
 
     def should_build_cn(self, config: FontConfig) -> bool:
         if not config.cn["enable"] and not config.use_cn_both:
-            print("No `\"cn.enable\": true` config or no `--cn` / `--cn-both` setup. Skip CN build.")
+            print(
+                'No `"cn.enable": true` config or no `--cn` / `--cn-both` setup. Skip CN build.'
+            )
             return False
-        if not path.exists(self.cn_static_dir) or listdir(self.cn_static_dir).__len__() != 16:
+        if (
+            not path.exists(self.cn_static_dir)
+            or listdir(self.cn_static_dir).__len__() != 16
+        ):
             tag = "cn-base"
             if is_ci() or config.cn["use_static_base_font"]:
                 return download_cn_base_font(
                     tag=tag,
                     zip_path="cn-base-static.zip",
                     target_dir=self.cn_static_dir,
-                    github_mirror=config.nerd_font["github_mirror"],
+                    github_mirror=config.github_mirror,
                 )
             if not config.cn["use_static_base_font"]:
                 return download_cn_base_font(
                     tag=tag,
                     zip_path="cn-base-variable.zip",
                     target_dir=self.cn_variable_dir,
-                    github_mirror=config.nerd_font["github_mirror"],
+                    github_mirror=config.github_mirror,
                 )
             print("CN base fonts don't exist. Skip CN build.")
             return False

@@ -129,6 +129,11 @@
         }
       }
     },
+    "github_mirror": {
+      "type": "string",
+      "description": "Github mirror config, will download from https://{github_mirror}/<user>/<repo>/releases/download/<tag>/<file>",
+      "default": "github.com"
+    },
     "nerd_font": {
       "type": "object",
       "description": "Config for Nerd-Font",
@@ -137,11 +142,6 @@
           "type": "boolean",
           "description": "Whether to enable Nerd-Font",
           "default": true
-        },
-        "github_mirror": {
-          "type": "string",
-          "description": "Github mirror for Nerd Font, will download from https://{github_mirror}/ryanoasis/nerd-fonts/releases/download/v{version}/FontPatcher.zip",
-          "default": "github.com"
         },
         "version": {
           "type": "string",
