@@ -150,9 +150,9 @@ def parse_args():
         help="Reuse font cache of TTF, OTF and Woff2 formats",
     )
     build_group.add_argument(
-        "--release",
+        "--archieve",
         action="store_true",
-        help="Build font archieves with config and license",
+        help="Build font archieves with config and license. If --cache is enabled, only archieve Nerd-Font and CN format",
     )
 
     return parser.parse_args()
@@ -163,7 +163,7 @@ def parse_args():
 
 class FontConfig:
     def __init__(self, args):
-        self.release_mode = None
+        self.archieve = None
         self.use_cn_both = None
         # the number of parallel tasks
         # when run in codespace, this will be 1
@@ -239,7 +239,7 @@ class FontConfig:
         self.__load_external(args)
 
     def __load_external(self, args):
-        self.release_mode = args.release
+        self.archieve = args.archieve
         self.use_cn_both = args.cn_both
 
         try:
@@ -549,8 +549,8 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
     _otf_path = joinPaths(
         build_option.output_otf, path.basename(_path).replace(".ttf", ".otf")
     )
-    run(f"ftcli converter ttf2otf {_path} -out {build_option.output_otf}")
-    run(f"ftcli otf check-outlines {_otf_path}")
+    run(f"ftcli converter ttf2otf --silent {_path} -out {build_option.output_otf}")
+    run(f"ftcli otf check-outlines --quiet-mode {_otf_path}")
     run(f"ftcli otf fix-version {_otf_path}")
 
 
@@ -735,6 +735,14 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
     font.close()
 
 
+def run_build(pool_size: int, fn: Callable, dir: str):
+    if pool_size > 1:
+        with Pool(pool_size) as p:
+            p.map(fn, listdir(dir))
+    else:
+        for f in listdir(dir):
+            fn(f)
+
 def main():
     check_ftcli()
     parsed_args = parse_args()
@@ -787,16 +795,14 @@ def main():
         run(f"ftcli fix italic-angle {build_option.output_ttf}")
         run(f"ftcli fix monospace {build_option.output_ttf}")
         run(f"ftcli fix strip-names {build_option.output_ttf}")
-        run(f"ftcli ttf dehint {build_option.output_ttf}")
-        run(f"ftcli ttf fix-contours {build_option.output_ttf}")
-        run(f"ftcli ttf remove-overlaps {build_option.output_ttf}")
+        # dehint, remove overlap and fix contours
+        run(f"ftcli ttf fix-contours --silent {build_option.output_ttf}")
 
         _build_mono = partial(
             build_mono, font_config=font_config, build_option=build_option
         )
 
-        with Pool(font_config.pool_size) as p:
-            p.map(_build_mono, listdir(build_option.output_ttf))
+        run_build(font_config.pool_size, _build_mono, build_option.output_ttf)
 
         drop_mac_names(build_option.output_variable)
         drop_mac_names(build_option.output_ttf)
@@ -834,9 +840,7 @@ def main():
             f"\n🔧 Patch Nerd-Font v{_version} using {'Font Patcher' if use_font_patcher else 'prebuild base font'}...\n"
         )
 
-        with Pool(font_config.pool_size) as p:
-            p.map(_build_fn, listdir(build_option.output_ttf))
-
+        run_build(font_config.pool_size, _build_fn, build_option.output_ttf)
         drop_mac_names(build_option.output_ttf)
 
     # =========================================================================================
@@ -864,8 +868,8 @@ def main():
             )
             makedirs(build_option.output_cn, exist_ok=True)
             fn = partial(build_cn, font_config=font_config, build_option=build_option)
-            with Pool(font_config.pool_size) as p:
-                p.map(fn, listdir(build_option.cn_base_font_dir))
+
+            run_build(font_config.pool_size, fn, build_option.cn_base_font_dir)
 
             if font_config.cn["use_hinted"]:
                 run(f"ftcli ttf autohint {build_option.output_cn}")
@@ -901,7 +905,7 @@ def main():
         )
 
     # =========================================================================================
-    # ====================================   release   ========================================
+    # ====================================   Archieve   =======================================
     # =========================================================================================
 
     def compress_folder(
@@ -944,16 +948,17 @@ def main():
 
         return sha256.hexdigest()
 
-    if font_config.release_mode:
-        print("\n🚀 Build release files...\n")
+    if font_config.archieve:
+        print("\n🚀 Archieve files...\n")
 
         # archieve fonts
-        release_dir = joinPaths(build_option.output_dir, "releases")
-        makedirs(release_dir, exist_ok=True)
+        archieve_dir_name = "archieve"
+        archieve_dir = joinPaths(build_option.output_dir, archieve_dir_name)
+        makedirs(archieve_dir, exist_ok=True)
 
         # archieve fonts
         for f in listdir(build_option.output_dir):
-            if f == "release" or f.endswith(".json"):
+            if f == archieve_dir_name or f.endswith(".json"):
                 continue
 
             if should_use_cache and f not in ["CN", "NF", "NF-CN"]:
@@ -961,10 +966,10 @@ def main():
 
             sha256 = compress_folder(
                 source_file_or_dir_path=joinPaths(build_option.output_dir, f),
-                target_parent_dir_path=release_dir,
+                target_parent_dir_path=archieve_dir,
             )
             with open(
-                joinPaths(release_dir, f"{font_config.family_name_compact}-{f}.sha256"),
+                joinPaths(archieve_dir, f"{font_config.family_name_compact}-{f}.sha256"),
                 "w",
                 encoding="utf-8",
             ) as hash_file:
