@@ -243,9 +243,10 @@ class FontConfig:
         self.use_cn_both = args.cn_both
 
         try:
-            with open(
-                "./source/preset-normal.json" if args.normal else "config.json", "r"
-            ) as f:
+            config_file_path = (
+                "./source/preset-normal.json" if args.normal else "config.json"
+            )
+            with open(config_file_path, "r") as f:
                 data = json.load(f)
                 self.family_name = data["family_name"]
                 self.use_hinted = data["use_hinted"]
@@ -453,6 +454,10 @@ def remove_locl(font: TTFont):
 
     for feature in features_to_remove:
         gsub.table.FeatureList.FeatureRecord.remove(feature)
+
+
+def drop_mac_names(dir: str):
+    run(f"ftcli name del-mac-names -r {dir}")
 
 
 def get_unique_identifier(
@@ -744,9 +749,9 @@ def main():
         print("build_option:", json.dumps(build_option.__dict__, indent=4))
         return
 
-    should_clear_cache = not parsed_args.cache
+    should_use_cache = parsed_args.cache
 
-    if should_clear_cache:
+    if not should_use_cache:
         print("🧹 Clean cache...\n")
         shutil.rmtree(build_option.output_dir, ignore_errors=True)
         shutil.rmtree(build_option.output_woff2, ignore_errors=True)
@@ -761,7 +766,7 @@ def main():
     # ===================================   build basic   =====================================
     # =========================================================================================
 
-    if should_clear_cache or not build_option.has_cache():
+    if not should_use_cache or not build_option.has_cache():
         input_files = [
             f"{build_option.src_dir}/MapleMono-Italic[wght]-VF.ttf",
             f"{build_option.src_dir}/MapleMono[wght]-VF.ttf",
@@ -792,6 +797,12 @@ def main():
 
         with Pool(font_config.pool_size) as p:
             p.map(_build_mono, listdir(build_option.output_ttf))
+
+        drop_mac_names(build_option.output_variable)
+        drop_mac_names(build_option.output_ttf)
+        drop_mac_names(build_option.output_ttf_hinted)
+        drop_mac_names(build_option.output_otf)
+        drop_mac_names(build_option.output_woff2)
 
     # =========================================================================================
     # ====================================   build NF   =======================================
@@ -826,6 +837,8 @@ def main():
         with Pool(font_config.pool_size) as p:
             p.map(_build_fn, listdir(build_option.output_ttf))
 
+        drop_mac_names(build_option.output_ttf)
+
     # =========================================================================================
     # ====================================   build CN   =======================================
     # =========================================================================================
@@ -857,6 +870,8 @@ def main():
             if font_config.cn["use_hinted"]:
                 run(f"ftcli ttf autohint {build_option.output_cn}")
 
+            drop_mac_names(build_option.cn_base_font_dir)
+
         _build_cn()
 
         if font_config.use_cn_both:
@@ -864,8 +879,6 @@ def main():
             if result:
                 build_option.load_cn_dir_and_suffix(font_config.should_use_nerd_font())
                 _build_cn()
-
-    run(f"ftcli name del-mac-names -r {build_option.output_dir}")
 
     # write config to output path
     with open(
@@ -921,40 +934,43 @@ def main():
                 )
 
         zip_file.close()
-        sha1 = hashlib.sha1()
+        sha256 = hashlib.sha256()
         with open(zip_path, "rb") as zip_file:
             while True:
                 data = zip_file.read(1024)
                 if not data:
                     break
-                sha1.update(data)
+                sha256.update(data)
 
-        return sha1.hexdigest()
+        return sha256.hexdigest()
 
     if font_config.release_mode:
         print("\n🚀 Build release files...\n")
 
         # archieve fonts
-        release_dir = joinPaths(build_option.output_dir, "release")
+        release_dir = joinPaths(build_option.output_dir, "releases")
         makedirs(release_dir, exist_ok=True)
-
-        hash_map = {}
 
         # archieve fonts
         for f in listdir(build_option.output_dir):
             if f == "release" or f.endswith(".json"):
                 continue
-            hash_map[f] = compress_folder(
+
+            if should_use_cache and f not in ["CN", "NF", "NF-CN"]:
+                continue
+
+            sha256 = compress_folder(
                 source_file_or_dir_path=joinPaths(build_option.output_dir, f),
                 target_parent_dir_path=release_dir,
             )
-            print(f"👉 archieve: {f}")
+            with open(
+                joinPaths(release_dir, f"{font_config.family_name_compact}-{f}.sha256"),
+                "w",
+                encoding="utf-8",
+            ) as hash_file:
+                hash_file.write(sha256)
 
-        # write sha1
-        with open(
-            joinPaths(release_dir, "sha1.json"), "w", encoding="utf-8"
-        ) as hash_file:
-            hash_file.write(json.dumps(hash_map, indent=4))
+            print(f"👉 archieve: {f}")
 
     freeze_str = (
         font_config.freeze_config_str
