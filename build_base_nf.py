@@ -22,12 +22,15 @@ if not path.exists(base_font_path):
 
 
 def update_config_json(config_path: str, version: str):
-    with open(config_path, 'r', encoding='utf-8') as file:
+    with open(config_path, "r+", encoding="utf-8") as file:
         data = json.load(file)
-    data["nerd_font"]["version"] = version
-    with open(config_path, "w") as f:
-        json.dump(data, f, ensure_ascii=False, indent=2)
 
+        if "nerd_font" in data:
+            data["nerd_font"]["version"] = version
+
+        file.seek(0)
+        json.dump(data, file, ensure_ascii=False, indent=2)
+        file.truncate()
 
 def check_update():
     current_version = None
@@ -36,6 +39,7 @@ def check_update():
         current_version = data["nerd_font"]["version"]
 
     latest_version = current_version
+    print("Getting latest version from remote...")
     with urlopen(
         "https://api.github.com/repos/ryanoasis/nerd-fonts/releases/latest"
     ) as response:
