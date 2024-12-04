@@ -145,7 +145,7 @@ fixme))
 
 #### Notice
 
-- `<<` / `<<<` should have tailing space, `>>` / `>>>` should have heading space
+- `>>` / `>>>` is much contextual-sensitive
 
 ### Character Varients (cvXX)
 
