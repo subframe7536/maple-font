@@ -6,16 +6,19 @@
 >
 > If everything goes well, the stable version will be released later this year.
 
-# Maple Mono V7
+# Maple Mono
 
-Open source monospace & nerd font with round corner and ligatures.
+Maple Mono is an open source monospace font focused on smoothing your coding experience.
+
+I create it to enhance my working experience, and hope that it can be useful to others.
 
 ## Features
 
-- Variable version, infinity font weights.
-- Round corner, new shape of `@ $ % & Q` and cursive italic `f i j k l x y`
-- Large amount of smart ligatures, see in [`features/`](./source/features/README.md)
-- Nerd-Font patch support
+- ✨ Variable - Infinity font weights with fine-grained italic glyphs.
+- ☁️ Smooth - Round corner, brand-new glyph of `@ $ % & Q ->` and cursive `f i j k l x y` in italic style.
+- 💪 Useful - Large amount of smart ligatures, see in [`features/`](./source/features/README.md)
+- 🎨 Icon - First-Class Nerd-Font patch support, make your terminal more vivid.
+- 🔨 Customize - Enable or disable font features as you want, just make your own font.
 
 ## ScreenShots
 
@@ -112,7 +115,7 @@ Build Options:
 - [Nerd Font](https://github.com/ryanoasis/nerd-fonts)
 - [Font Freeze](https://github.com/MuTsunTsai/fontfreeze/)
 - [Font Viewer](https://tophix.com/font-tools/font-viewer)
-- [Monolisa](https://www.monolisa.dev/) for landing page
+- [Monolisa](https://www.monolisa.dev/)
 - [Recursive](https://www.recursive.design/)
 
 ## License
