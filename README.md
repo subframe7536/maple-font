@@ -76,7 +76,7 @@ options:
   -h, --help      show this help message and exit
   -v, --version   show program's version number and exit
   -d, --dry       Output config and exit
-  --debug         Add `Debug` suffix to family name
+  --debug         Add `Debug` suffix to family name, skip optimization
 
 Feature Options:
   -n, --normal    Use normal preset, just like `JetBrains Mono` with slashed

@@ -60,7 +60,7 @@ def parse_args():
     parser.add_argument(
         "--debug",
         action="store_true",
-        help="Add `Debug` suffix to family name",
+        help="Add `Debug` suffix to family name, skip optimization",
     )
 
     feature_group = parser.add_argument_group("Feature Options")
@@ -167,6 +167,7 @@ class FontConfig:
     def __init__(self, args):
         self.archieve = None
         self.use_cn_both = None
+        self.debug = None
         # the number of parallel tasks
         # when run in codespace, this will be 1
         self.pool_size = 1 if not getenv("CODESPACE_NAME") else 4
@@ -246,6 +247,7 @@ class FontConfig:
     def __load_external(self, args):
         self.archieve = args.archieve
         self.use_cn_both = args.cn_both
+        self.debug = args.debug
 
         try:
             config_file_path = (
@@ -296,7 +298,7 @@ class FontConfig:
                 if args.cn_narrow:
                     self.cn["narrow"] = True
 
-                if args.debug:
+                if self.debug:
                     self.family_name += " Debug"
 
                 self.family_name_compact = self.family_name.replace(" ", "")
@@ -594,8 +596,9 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
         build_option.output_otf, path.basename(_path).replace(".ttf", ".otf")
     )
     run(f"ftcli converter ttf2otf --silent {_path} -out {build_option.output_otf}")
-    run(f"ftcli otf check-outlines --quiet-mode {_otf_path}")
-    run(f"ftcli otf fix-version {_otf_path}")
+    if not font_config.debug:
+        run(f"ftcli otf check-outlines --quiet-mode {_otf_path}")
+        run(f"ftcli otf fix-version {_otf_path}")
 
 
 def build_nf_by_prebuild_nerd_font(
@@ -831,7 +834,10 @@ def main():
             )
 
         print("\n✨ Instatiate and optimize fonts...\n")
-        run(f"ftcli fix decompose-transformed {build_option.output_variable}")
+
+        if not font_config.debug:
+            run(f"ftcli fix decompose-transformed {build_option.output_variable}")
+
         run(f"ftcli fix italic-angle {build_option.output_variable}")
         run(f"ftcli fix monospace {build_option.output_variable}")
         run(
@@ -840,8 +846,12 @@ def main():
         run(f"ftcli fix italic-angle {build_option.output_ttf}")
         run(f"ftcli fix monospace {build_option.output_ttf}")
         run(f"ftcli fix strip-names {build_option.output_ttf}")
-        # dehint, remove overlap and fix contours
-        run(f"ftcli ttf fix-contours --silent {build_option.output_ttf}")
+
+        if font_config.debug:
+            run(f"ftcli ttf dehint {build_option.output_ttf}")
+        else:
+            # dehint, remove overlap and fix contours
+            run(f"ftcli ttf fix-contours --silent {build_option.output_ttf}")
 
         _build_mono = partial(
             build_mono, font_config=font_config, build_option=build_option
