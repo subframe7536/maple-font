@@ -17,7 +17,7 @@ I create it to enhance my working experience, and hope that it can be useful to 
 - ✨ Variable - Infinity font weights with fine-grained italic glyphs.
 - ☁️ Smooth - Round corner, brand-new glyph of `@ $ % & Q ->` and cursive `f i j k l x y` in italic style.
 - 💪 Useful - Large amount of smart ligatures, see in [`features/`](./source/features/README.md)
-- 🎨 Icon - First-Class Nerd-Font patch support, make your terminal more vivid.
+- 🎨 Icon - First-Class [Nerd-Font](https://github.com/ryanoasis/nerd-fonts) support, make your terminal more vivid.
 - 🔨 Customize - Enable or disable font features as you want, just make your own font.
 
 ## ScreenShots
@@ -48,7 +48,6 @@ You can change build config in `config.json`
 - There is `--normal` option in `build.py` for common config, just like `JetBrains Mono` (with slashed zero)
 - For custom `font-patcher` args, `font-forge` (and maybe `python3-fontforge` as well) is needed
 
-
 #### Font Feature Freeze Options
 
 - `enable`: Move ligature rules to `calt`, which will enable the features without setting up `cvXX` / `ssXX` / `zero` in font features config, just as default ligatures
@@ -57,9 +56,9 @@ You can change build config in `config.json`
 
 ### Chinese version
 
-1. Download CN base font at [Gitee release](https://gitee.com/subframe7536/Maple/releases/tag/v7.0-beta23)
-2. Put them into `./source/cn`
-3. Run `build.py` and **BE PATIENT**, instantiation will take about 40-50 minutes
+Run `python build.py --cn`, the CN base fonts (about 135 MB) will download from remote.
+
+If you want to build CN base fonts from variable (about 35 MB), setup `"cn.use_static_base_font": false` in [config.json](./config.json) and **BE PATIENT**, instantiation will take about 40-50 minutes.
 
 #### Notice
 
