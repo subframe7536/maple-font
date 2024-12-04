@@ -301,7 +301,9 @@ class FontConfig:
                 if self.debug:
                     self.family_name += " Debug"
 
-                self.family_name_compact = self.family_name.replace(" ", "")
+                name_arr = [word.capitalize() for word in self.family_name.split(" ")]
+                self.family_name = " ".join(name_arr)
+                self.family_name_compact = "".join(name_arr)
 
         except ():
             print("Fail to load config.json. Please check your config.json.")
@@ -586,6 +588,8 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
         freeze_config=font_config.feature_freeze,
     )
 
+    remove(_path)
+    _path = joinPaths(build_option.output_ttf, f"{postscript_name}.ttf")
     font.save(_path)
     font.close()
 
@@ -1021,9 +1025,7 @@ def main():
                 target_parent_dir_path=archive_dir,
             )
             with open(
-                joinPaths(
-                    archive_dir, f"{font_config.family_name_compact}-{f}.sha256"
-                ),
+                joinPaths(archive_dir, f"{font_config.family_name_compact}-{f}.sha256"),
                 "w",
                 encoding="utf-8",
             ) as hash_file:
