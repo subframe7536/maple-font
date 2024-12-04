@@ -42,12 +42,18 @@ def get_font_forge_bin():
 
     system_name = platform.uname()[0]
 
+    result = ''
     if "Darwin" in system_name:
-        return MAC_FONTFORGE_PATH
+        result = MAC_FONTFORGE_PATH
     elif "Windows" in system_name:
-        return WIN_FONTFORGE_PATH
+        result = WIN_FONTFORGE_PATH
     else:
-        return LINUX_FONTFORGE_PATH
+        result = LINUX_FONTFORGE_PATH
+
+    if not path.exists(result):
+        result = shutil.which("fontforge")
+
+    return result
 
 
 def is_ci():
