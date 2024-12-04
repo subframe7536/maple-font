@@ -16,7 +16,7 @@ def build(normal: bool, hinted: bool, cache: bool = False):
     args = [
         "python",
         "build.py",
-        "--archieve",
+        "--archive",
         "--cn-both",
     ]
 
@@ -34,10 +34,10 @@ def build(normal: bool, hinted: bool, cache: bool = False):
     print(" ".join(args))
     subprocess.run(args)
 
-    build_archieve_dir = f"{output_base}/archieve"
+    build_archive_dir = f"{output_base}/archive"
 
-    for file_name in listdir(build_archieve_dir):
-        file_path = joinPaths(build_archieve_dir, file_name)
+    for file_name in listdir(build_archive_dir):
+        file_path = joinPaths(build_archive_dir, file_name)
         if path.isfile(file_path):
             if not hinted:
                 name, ext = path.splitext(file_name)

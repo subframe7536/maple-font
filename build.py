@@ -152,9 +152,9 @@ def parse_args():
         help="Reuse font cache of TTF, OTF and Woff2 formats",
     )
     build_group.add_argument(
-        "--archieve",
+        "--archive",
         action="store_true",
-        help="Build font archieves with config and license. If --cache is enabled, only archieve Nerd-Font and CN format",
+        help="Build font archives with config and license. If --cache is enabled, only archive Nerd-Font and CN format",
     )
 
     return parser.parse_args()
@@ -165,7 +165,7 @@ def parse_args():
 
 class FontConfig:
     def __init__(self, args):
-        self.archieve = None
+        self.archive = None
         self.use_cn_both = None
         self.debug = None
         # the number of parallel tasks
@@ -245,7 +245,7 @@ class FontConfig:
         self.__load_external(args)
 
     def __load_external(self, args):
-        self.archieve = args.archieve
+        self.archive = args.archive
         self.use_cn_both = args.cn_both
         self.debug = args.debug
 
@@ -393,7 +393,7 @@ class BuildOption:
     def should_build_cn(self, config: FontConfig) -> bool:
         if not config.cn["enable"] and not config.use_cn_both:
             print(
-                'No `"cn.enable": true` in config.json or no `--cn` / `--cn-both` option setup. Skip CN build.'
+                'No `"cn.enable": true` in config.json or no `--cn` / `--cn-both` in argv. Skip CN build.'
             )
             return False
         if (
@@ -957,7 +957,7 @@ def main():
         )
 
     # =========================================================================================
-    # ====================================   Archieve   =======================================
+    # ====================================   archive   =======================================
     # =========================================================================================
 
     def compress_folder(
@@ -1000,17 +1000,17 @@ def main():
 
         return sha256.hexdigest()
 
-    if font_config.archieve:
-        print("\n🚀 Archieve files...\n")
+    if font_config.archive:
+        print("\n🚀 archive files...\n")
 
-        # archieve fonts
-        archieve_dir_name = "archieve"
-        archieve_dir = joinPaths(build_option.output_dir, archieve_dir_name)
-        makedirs(archieve_dir, exist_ok=True)
+        # archive fonts
+        archive_dir_name = "archive"
+        archive_dir = joinPaths(build_option.output_dir, archive_dir_name)
+        makedirs(archive_dir, exist_ok=True)
 
-        # archieve fonts
+        # archive fonts
         for f in listdir(build_option.output_dir):
-            if f == archieve_dir_name or f.endswith(".json"):
+            if f == archive_dir_name or f.endswith(".json"):
                 continue
 
             if should_use_cache and f not in ["CN", "NF", "NF-CN"]:
@@ -1018,18 +1018,18 @@ def main():
 
             sha256 = compress_folder(
                 source_file_or_dir_path=joinPaths(build_option.output_dir, f),
-                target_parent_dir_path=archieve_dir,
+                target_parent_dir_path=archive_dir,
             )
             with open(
                 joinPaths(
-                    archieve_dir, f"{font_config.family_name_compact}-{f}.sha256"
+                    archive_dir, f"{font_config.family_name_compact}-{f}.sha256"
                 ),
                 "w",
                 encoding="utf-8",
             ) as hash_file:
                 hash_file.write(sha256)
 
-            print(f"👉 archieve: {f}")
+            print(f"👉 archive: {f}")
 
     freeze_str = (
         font_config.freeze_config_str
