@@ -21,6 +21,24 @@ if not path.exists(base_font_path):
     exit(1)
 
 
+def parse_codes_from_json(data) -> list[int]:
+    """
+    Load unicodes from `glyphnames.json`
+    """
+    try:
+        codes = [
+            int(f"0x{value['code']}", 16)
+            for key, value in data.items()
+            if isinstance(value, dict) and "code" in value
+        ]
+
+        return codes
+
+    except json.JSONDecodeError:
+        print("Invalide JSON")
+        exit(1)
+
+
 def update_config_json(config_path: str, version: str):
     with open(config_path, "r+", encoding="utf-8") as file:
         data = json.load(file)
@@ -31,6 +49,7 @@ def update_config_json(config_path: str, version: str):
         file.seek(0)
         json.dump(data, file, ensure_ascii=False, indent=2)
         file.truncate()
+
 
 def check_update():
     current_version = None
@@ -45,7 +64,7 @@ def check_update():
     ) as response:
         data = json.loads(response.read().decode("utf-8").split("\n")[0])
         for key in data:
-            if key =="tag_name":
+            if key == "tag_name":
                 latest_version = str(data[key])[1:]
                 break
 
@@ -108,23 +127,24 @@ def build_nf(mono: bool):
     return nf_font
 
 
-def subset(mono: bool):
+def subset(mono: bool, unicodes: list[int]):
     font = build_nf(mono)
     subsetter = Subsetter()
     subsetter.populate(
-        unicodes=range(0xE000, 0xF1AF0),
+        unicodes=unicodes,
     )
     subsetter.subset(font)
 
-    # font.save("source/NerdFontBase.ttf")
     font.save(f"source/MapleMono-NF-Base{'-Mono' if mono else ''}.ttf")
     font.close()
 
 
 def main():
     check_update()
-    subset(True)
-    subset(False)
+    with open("./FontPatcher/glyphnames.json", "r") as f:
+        unicodes = parse_codes_from_json(json.load(f))
+        subset(True, unicodes=unicodes)
+        subset(False, unicodes=unicodes)
 
 
 if __name__ == "__main__":
