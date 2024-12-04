@@ -81,10 +81,26 @@ def download_zip_and_extract(
         if not path.exists(zip_path):
             try:
                 print(f"{name} does not exist, download from {url}")
-                user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3"
-                req = Request(url, headers={'User-Agent': user_agent})
+                user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+                req = Request(url, headers={"User-Agent": user_agent})
                 with urlopen(req) as response, open(zip_path, "wb") as out_file:
-                    shutil.copyfileobj(response, out_file)
+                    total_size = int(response.getheader("Content-Length").strip())
+                    downloaded_size = 0
+                    block_size = 8192
+
+                    while True:
+                        buffer = response.read(block_size)
+                        if not buffer:
+                            break
+
+                        out_file.write(buffer)
+                        downloaded_size += len(buffer)
+
+                        percent_downloaded = (downloaded_size / total_size) * 100
+                        print(
+                            f"Downloading {name}: [{percent_downloaded:.2f}%] {downloaded_size} / {total_size}",
+                            end="\r",
+                        )
             except Exception as e:
                 print(
                     f"\nFail to download {name}. Please download it manually from {url}, then put downloaded file into project's root and run this script again. \n    Error: {e}"
@@ -122,5 +138,8 @@ def download_cn_base_font(
 ) -> bool:
     url = f"{parse_github_mirror(github_mirror)}/subframe7536/maple-font/releases/download/{tag}/{zip_path}"
     return download_zip_and_extract(
-        name="CN base font", url=url, zip_path=zip_path, output_dir=target_dir
+        name=f"{'Static' if 'static' in zip_path else 'Variable'} CN Base Font",
+        url=url,
+        zip_path=zip_path,
+        output_dir=target_dir,
     )

@@ -391,7 +391,7 @@ class BuildOption:
     def should_build_cn(self, config: FontConfig) -> bool:
         if not config.cn["enable"] and not config.use_cn_both:
             print(
-                'No `"cn.enable": true` config or no `--cn` / `--cn-both` setup. Skip CN build.'
+                'No `"cn.enable": true` in config.json or no `--cn` / `--cn-both` option setup. Skip CN build.'
             )
             return False
         if (
