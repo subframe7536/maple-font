@@ -298,10 +298,11 @@ class FontConfig:
                 if args.cn_narrow:
                     self.cn["narrow"] = True
 
-                if self.debug:
-                    self.family_name += " Debug"
-
                 name_arr = [word.capitalize() for word in self.family_name.split(" ")]
+                if not self.enable_liga:
+                    name_arr.append("NL")
+                if self.debug:
+                    name_arr.append("Debug")
                 self.family_name = " ".join(name_arr)
                 self.family_name_compact = "".join(name_arr)
 

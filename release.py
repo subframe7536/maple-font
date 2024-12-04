@@ -12,7 +12,7 @@ def move_and_log(file_path: str, target_path: str):
     print(f"Move {file_path} -> {target_path}")
     move(file_path, target_path)
 
-def build(normal: bool, hinted: bool, cache: bool = False):
+def build(normal: bool, hinted: bool, liga: bool, cache: bool = False):
     args = [
         "python",
         "build.py",
@@ -30,6 +30,11 @@ def build(normal: bool, hinted: bool, cache: bool = False):
         args.append("--hinted")
     else:
         args.append("--no-hinted")
+
+    if liga:
+        args.append("--liga")
+    else:
+        args.append("--no-liga")
 
     print(" ".join(args))
     subprocess.run(args)
@@ -53,10 +58,14 @@ rmtree(output_release, ignore_errors=True)
 mkdir(output_release)
 
 # build all formats
-build(normal=True, hinted=True)
-build(normal=True, hinted=False, cache=True)
-build(normal=False, hinted=True)
-build(normal=False, hinted=False, cache=True)
+build(normal=True, liga=True, hinted=True)
+build(normal=True, liga=True, hinted=False, cache=True)
+build(normal=True, liga=False, hinted=True)
+build(normal=True, liga=False, hinted=False, cache=True)
+build(normal=False, liga=True, hinted=True)
+build(normal=False, liga=True, hinted=False, cache=True)
+build(normal=False, liga=False, hinted=True)
+build(normal=False, liga=False, hinted=False, cache=True)
 
 # copy woff2 to root
 rmtree("woff2", ignore_errors=True)
