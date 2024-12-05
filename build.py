@@ -147,6 +147,11 @@ def parse_args():
         help="Build both `Maple Mono CN` and `Maple Mono NF CN`. Nerd-Font version must be enabled",
     )
     build_group.add_argument(
+        "--ttf-only",
+        action="store_true",
+        help="Only build unhinted TTF format",
+    )
+    build_group.add_argument(
         "--cache",
         action="store_true",
         help="Reuse font cache of TTF, OTF and Woff2 formats",
@@ -167,6 +172,7 @@ class FontConfig:
     def __init__(self, args):
         self.archive = None
         self.use_cn_both = None
+        self.ttf_only = None
         self.debug = None
         # the number of parallel tasks
         # when run in codespace, this will be 1
@@ -298,6 +304,9 @@ class FontConfig:
                 if args.cn_narrow:
                     self.cn["narrow"] = True
 
+                if args.ttf_only:
+                    self.ttf_only = True
+
                 name_arr = [word.capitalize() for word in self.family_name.split(" ")]
                 if not self.enable_liga:
                     name_arr.append("NL")
@@ -333,7 +342,7 @@ class FontConfig:
 
         return True
 
-    def should_use_nerd_font(self) -> bool:
+    def should_cn_use_nerd_font(self) -> bool:
         return self.cn["with_nerd_font"] and self.nerd_font["enable"]
 
     def toggle_nf_cn_config(self) -> bool:
@@ -594,6 +603,9 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
     font.save(_path)
     font.close()
 
+    if font_config.ttf_only:
+        return
+
     run(f"ftcli ttf autohint {_path} -out {build_option.output_ttf_hinted}")
     run(f"ftcli converter ft2wf {_path} -out {build_option.output_woff2} -f woff2")
 
@@ -802,7 +814,7 @@ def main():
 
     font_config = FontConfig(args=parsed_args)
     build_option = BuildOption(font_config)
-    build_option.load_cn_dir_and_suffix(font_config.should_use_nerd_font())
+    build_option.load_cn_dir_and_suffix(font_config.should_cn_use_nerd_font())
 
     if parsed_args.dry:
         print("parsed_args:", json.dumps(parsed_args.__dict__, indent=4))
@@ -866,15 +878,17 @@ def main():
 
         drop_mac_names(build_option.output_variable)
         drop_mac_names(build_option.output_ttf)
-        drop_mac_names(build_option.output_ttf_hinted)
-        drop_mac_names(build_option.output_otf)
-        drop_mac_names(build_option.output_woff2)
+
+        if not font_config.ttf_only:
+            drop_mac_names(build_option.output_ttf_hinted)
+            drop_mac_names(build_option.output_otf)
+            drop_mac_names(build_option.output_woff2)
 
     # =========================================================================================
     # ====================================   build NF   =======================================
     # =========================================================================================
 
-    if font_config.nerd_font["enable"]:
+    if font_config.nerd_font["enable"] and not font_config.ttf_only:
         use_font_patcher = font_config.should_use_font_patcher()
 
         get_ttfont = (
@@ -901,7 +915,7 @@ def main():
     # ====================================   build CN   =======================================
     # =========================================================================================
 
-    if build_option.should_build_cn(font_config):
+    if not font_config.ttf_only and build_option.should_build_cn(font_config):
         if not path.exists(build_option.cn_static_dir) or font_config.cn["clean_cache"]:
             print("=========================================")
             print("Instantiating CN Base font, be patient...")
@@ -915,7 +929,7 @@ def main():
 
         def _build_cn():
             print(
-                f"\n🔎 Build CN fonts {'with Nerd-Font' if font_config.should_use_nerd_font() else ''}...\n"
+                f"\n🔎 Build CN fonts {'with Nerd-Font' if font_config.should_cn_use_nerd_font() else ''}...\n"
             )
             makedirs(build_option.output_cn, exist_ok=True)
             fn = partial(build_cn, font_config=font_config, build_option=build_option)
@@ -932,7 +946,9 @@ def main():
         if font_config.use_cn_both:
             result = font_config.toggle_nf_cn_config()
             if result:
-                build_option.load_cn_dir_and_suffix(font_config.should_use_nerd_font())
+                build_option.load_cn_dir_and_suffix(
+                    font_config.should_cn_use_nerd_font()
+                )
                 _build_cn()
 
     # write config to output path
@@ -956,7 +972,7 @@ def main():
         )
 
     # =========================================================================================
-    # ====================================   archive   =======================================
+    # ====================================   archive   ========================================
     # =========================================================================================
 
     def compress_folder(
