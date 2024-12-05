@@ -22,7 +22,7 @@ from source.py.utils import (
 )
 from source.py.feature import freeze_feature, get_freeze_config_str
 
-version = "7.0-beta30"
+version = "7.000 beta30"
 # =========================================================================================
 
 
@@ -517,7 +517,7 @@ def get_unique_identifier(
     if "CN" in postscript_name and narrow:
         freeze_config_str += "Narrow;"
 
-    return f"Version 7.000;SUBF;{postscript_name};2024;FL830;{freeze_config_str}"
+    return f"Version {version};SUBF;{postscript_name};2024;FL830;{freeze_config_str}"
 
 
 def change_char_width(font: TTFont, match_width: int, target_width: int):
@@ -652,13 +652,13 @@ def build_nf_by_font_patcher(
 
 def build_nf(
     f: str,
-    get_ttfont: Callable[[str], TTFont],
+    get_ttfont: Callable[[str, FontConfig, BuildOption], TTFont],
     font_config: FontConfig,
     build_option: BuildOption,
 ):
     print(f"👉 NerdFont version for {f}")
     makedirs(build_option.output_nf, exist_ok=True)
-    nf_font = get_ttfont(f)
+    nf_font = get_ttfont(f, font_config, build_option)
 
     # format font name
     style_compact_nf = f.split("-")[-1].split(".")[0]
@@ -876,22 +876,16 @@ def main():
 
     if font_config.nerd_font["enable"]:
         use_font_patcher = font_config.should_use_font_patcher()
-        get_ttfont_fn = (
-            partial(
-                build_nf_by_font_patcher,
-                font_config=font_config,
-                build_option=build_option,
-            )
+
+        get_ttfont = (
+            build_nf_by_font_patcher
             if use_font_patcher
-            else partial(
-                build_nf_by_prebuild_nerd_font,
-                font_config=font_config,
-                build_option=build_option,
-            )
+            else build_nf_by_prebuild_nerd_font
         )
+
         _build_fn = partial(
             build_nf,
-            get_ttfont=get_ttfont_fn,
+            get_ttfont=get_ttfont,
             font_config=font_config,
             build_option=build_option,
         )
