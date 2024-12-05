@@ -10,10 +10,12 @@ on:
         description: 'Options for build.py'
         required: false
         default: ''
+        type: string
       cn:
-        description: 'Include Chinese version'
+        description: 'Include Chinese version (add `--cn` to options)'
         required: false
-        default: 'false'
+        default: false
+        type: boolean
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -35,11 +37,11 @@ jobs:
 
       - name: Run release script
         run: |
-          if [ "${{ github..event_name }}" == "push" ]; then
+          if [ "${{ github.event_name }}" == "push" ]; then
             python release.py
           else
             options="${{ github.event.inputs.options }}"
-            if [ "${{ github.event.inputs.cn }}" == "true" ]; then
+            if [ ${{ github.event.inputs.cn }} ]; then
               options="$options --cn"
             fi
             python build.py $options
