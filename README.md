@@ -62,7 +62,7 @@ If you want to build CN base fonts from variable (about 35 MB), setup `"cn.use_s
 
 #### Notice
 
-The build script will auto download neccessory assets from GitHub. If you have trouble downloading, setup `github_mirror` in `config.json` or `$GITHUB` to your environment variable.
+The build script will auto download neccessory assets from GitHub. If you have trouble downloading, please setup `github_mirror` in `config.json` or `$GITHUB` to your environment variable. (Target URL will be `https://{github_mirror}/<user>/<repo>/releases/download/{tag}/{file}`)
 
 ### Build Script Options
 
@@ -81,8 +81,7 @@ options:
   --debug         Add `Debug` suffix to family name, skip optimization
 
 Feature Options:
-  -n, --normal    Use normal preset, just like `JetBrains Mono` with slashed
-                  zero
+  -n, --normal    Use normal preset, just like `JetBrains Mono` with slashed zero
   --feat FEAT     Freeze font features, splited by `,` (e.g. `--feat
                   zero,cv01,ss07,ss08`). No effect on variable format
   --hinted        Use hinted font as base font
@@ -99,8 +98,8 @@ Build Options:
   --cn-both       Build both `Maple Mono CN` and `Maple Mono NF CN`. Nerd-Font
                   version must be enabled
   --cache         Reuse font cache of TTF, OTF and Woff2 formats
-  --archive      Build font archives with config and license. If --cache is
-                  enabled, only archive Nerd-Font and CN format
+  --archive       Build font archives with config and license. If has `--cache`
+                  flag, only archive Nerd-Font and CN formats
 ```
 
 ## Credit

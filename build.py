@@ -154,7 +154,7 @@ def parse_args():
     build_group.add_argument(
         "--archive",
         action="store_true",
-        help="Build font archives with config and license. If --cache is enabled, only archive Nerd-Font and CN format",
+        help="Build font archives with config and license. If has `--cache` flag, only archive Nerd-Font and CN formats",
     )
 
     return parser.parse_args()

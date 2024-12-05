@@ -32,6 +32,7 @@
 @x = [X x];
 @y = [Y y];
 @z = [Z z];
+@NormalSeparator = [braceleft braceright bracketleft bracketright parenleft parenright bar slash backslash];
 #/< otclasses
 #< classes
 
@@ -478,14 +479,14 @@ feature calt {
   # >=
   lookup greater_equal.liga {
     ignore sub [greater equal] greater' equal;
-    ignore sub greater' equal [equal greater less];
+    ignore sub greater' equal [equal greater less @NormalSeparator];
     sub SPC equal' by greater_equal.liga;
     sub greater' equal by SPC;
   } greater_equal.liga;
 
   # <=
   lookup less_equal.liga {
-    ignore sub less' equal [equal less greater bar];
+    ignore sub less' equal [equal less greater @NormalSeparator];
     ignore sub [less equal] less' equal;
     ignore sub parenleft question less' equal;
     sub SPC equal' by less_equal.liga;
@@ -1007,7 +1008,7 @@ feature calt {
   lookup less_equal_bar.liga {
     ignore sub less less' equal bar;
     ignore sub parenleft question less' equal bar;
-    ignore sub less' equal bar bar;
+    ignore sub less' equal bar [@NormalSeparator greater less equal];
     sub SPC SPC bar' by less_equal_bar.liga;
     sub SPC equal' bar by SPC;
     sub less' equal bar by SPC;
@@ -1015,7 +1016,7 @@ feature calt {
 
   # |=>
   lookup bar_equal_greater.liga {
-    ignore sub bar bar' equal greater;
+    ignore sub [@NormalSeparator greater less equal] bar' equal greater;
     ignore sub bar' equal greater greater;
     sub SPC SPC greater' by bar_equal_greater.liga;
     sub SPC equal' greater by SPC;
