@@ -6,16 +6,21 @@ on:
       - 'v*'
   workflow_dispatch:
     inputs:
-      options:
-        description: 'Options for build.py'
-        required: false
-        default: ''
-        type: string
       cn:
-        description: 'Include Chinese version (add `--cn` to options)'
+        description: 'Include Chinese version (add "--cn" to build args)'
         required: false
         default: false
         type: boolean
+      feat:
+        description: 'Enable features, split by "," (add "--feat feat1,feat2" to build args)'
+        required: false
+        default: ''
+        type: string
+      build_args:
+        description: 'Args for build.py'
+        required: false
+        default: ''
+        type: string
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -33,40 +38,37 @@ jobs:
         run: git checkout variable
 
       - name: Install ftcli
-        run: python -m pip install foundrytools-cli
+        run: python -m pip install foundrytools-cli==1.1.22
 
       - name: Run release script
         run: |
           if [ "${{ github.event_name }}" == "push" ]; then
             python release.py
           else
-            options="${{ github.event.inputs.options }}"
+            build_args="${{ github.event.inputs.build_args }} --archive"
             if [ ${{ github.event.inputs.cn }} ]; then
-              options="$options --cn"
+              build_args="$build_args --cn"
             fi
-            python build.py $options
+            if [ ${{ github.event.inputs.feat }} ]; then
+              build_args="$build_args --feat ${{ github.event.inputs.feat }}"
+            fi
+            python build.py $build_args
           fi
 
-      - name: Generate release notes
-        id: release_notes
-        run: |
-          if [ "${{ github.event_name }}" == "push" ]; then
-            echo "notes=$(git log --pretty=%B $(git describe --tags --abbrev=0)..HEAD)" >> $GITHUB_ENV
-          else
-            notes=$(python release.py ${{ github.event.inputs.options }} --dry)
-            echo "notes=### Configuration:\n\n```\n$notes\n```" >> $GITHUB_ENV
-
-      - name: Generate tag name
-        id: generate_timestamp
-        run: echo "::set-output name=tag_name::v$(date +%s)"
-
       - name: Create release
-        id: create_release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ github.ref_name || steps.generate_timestamp.outputs.tag_name }}
-          draft: ${{ github.event_name == 'push' }}
-          body: ${{ env.notes }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          file: |
-            release/*
+        run: |
+          echo "$TAG" >> NOTES
+          if [ "${{ github.event_name }}" == "push" ]; then
+            TAG=${{ github.ref_name }}
+            FILES=release/*.*
+            STATUS="--draft"
+            NOTES="--notes-from-tag"
+          else
+            echo "### Build arguments\n\n${{ github.event.inputs.build_args }}" >> _NOTES
+            echo "### Configuration\n\n```\n$(python release.py ${{ github.event.inputs.build_args }} --dry)\n```" >> _NOTES
+            TAG="v$(date +%s)"
+            FILES=fonts/archive/*.*
+            STATUS=""
+            NOTES="--notes-file _NOTES"
+          fi
+          gh release create $TAG $FILES --generate-notes --notes-file NOTES $STATUS --target variable
