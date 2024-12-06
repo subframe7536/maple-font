@@ -48,10 +48,10 @@ def freeze_feature(font, calt, moving_rules=[], config={}):
             glyph_dict = font["glyf"].glyphs
             hmtx_dict = font["hmtx"].metrics
             for index in target_feature.LookupListIndex:
-                lookup = font["GSUB"].table.LookupList.Lookup[index].SubTable[0].mapping
-                if not lookup:
+                lookup_subtable = font["GSUB"].table.LookupList.Lookup[index].SubTable[0]
+                if not lookup_subtable or "mapping" not in lookup_subtable.__dict__:
                     continue
-                for old_key, new_key in lookup.items():
+                for old_key, new_key in lookup_subtable.mapping.items():
                     if (
                         old_key in glyph_dict
                         and old_key in hmtx_dict
