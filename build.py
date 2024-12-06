@@ -717,7 +717,7 @@ def build_nf(
 def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
     style_compact_cn = f.split("-")[-1].split(".")[0]
 
-    print(f"👉 CN version for {f}")
+    print(f"👉 {build_option.cn_suffix_compact} version for {f}")
 
     merger = Merger()
     font = merger.merge(

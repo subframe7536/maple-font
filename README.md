@@ -67,10 +67,9 @@ The build script will auto download neccessory assets from GitHub. If you have t
 ### Build Script Options
 
 ```
-usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--hinted]
-                [--no-hinted] [--liga] [--no-liga] [--cn-narrow]
-                [--nerd-font | --no-nerd-font] [--cn | --no-cn] [--cn-both]
-                [--cache] [--archive]
+usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--hinted] [--no-hinted]
+                [--liga] [--no-liga] [--cn-narrow] [--nerd-font | --no-nerd-font]
+                [--cn | --no-cn] [--cn-both] [--ttf-only] [--cache] [--archive]
 
 ✨ Builder and optimizer for Maple Mono
 
@@ -95,11 +94,12 @@ Build Options:
   --no-nerd-font  Do not build Nerd-Font version
   --cn            Build Chinese version
   --no-cn         Do not build Chinese version
-  --cn-both       Build both `Maple Mono CN` and `Maple Mono NF CN`. Nerd-Font
-                  version must be enabled
+  --cn-both       Build both `Maple Mono CN` and `Maple Mono NF CN`. Nerd-Font version
+                  must be enabled
+  --ttf-only      Only build unhinted TTF format
   --cache         Reuse font cache of TTF, OTF and Woff2 formats
-  --archive       Build font archives with config and license. If has `--cache`
-                  flag, only archive Nerd-Font and CN formats
+  --archive       Build font archives with config and license. If has `--cache` flag,
+                  only archive Nerd-Font and CN formats
 ```
 
 ## Credit

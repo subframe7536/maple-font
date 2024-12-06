@@ -44,6 +44,12 @@ jobs:
         run: |
           if [ "${{ github.event_name }}" == "push" ]; then
             python release.py
+            git config user.name 'github-actions[bot]'
+            git config user.email 'github-actions[bot]@users.noreply.github.com'
+            set +e
+            git add woff2
+            git commit -m "Update woff2"
+            git push
           else
             build_args="${{ github.event.inputs.build_args }} --archive"
             if [ ${{ github.event.inputs.cn }} ]; then

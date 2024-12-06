@@ -1,5 +1,5 @@
 from os import listdir, mkdir, path
-from shutil import copytree, move, rmtree
+from shutil import move, rmtree
 import subprocess
 
 from source.py.utils import joinPaths
@@ -11,6 +11,7 @@ output_release = "release"
 def move_and_log(file_path: str, target_path: str):
     print(f"Move {file_path} -> {target_path}")
     move(file_path, target_path)
+
 
 def build(normal: bool, hinted: bool, liga: bool, cache: bool = False):
     args = [
@@ -47,7 +48,8 @@ def build(normal: bool, hinted: bool, liga: bool, cache: bool = False):
             if not hinted:
                 name, ext = path.splitext(file_name)
                 file_name = f"{name}-unhinted{ext}"
-
+            if "Variable" in file_name and file_name != "MapleMono-Variable.zip":
+                continue
             move_and_log(file_path, joinPaths(output_release, file_name))
 
 
@@ -58,22 +60,16 @@ rmtree(output_release, ignore_errors=True)
 mkdir(output_release)
 
 # build all formats
-build(normal=True, liga=True, hinted=True)
-build(normal=True, liga=True, hinted=False, cache=True)
 build(normal=True, liga=False, hinted=True)
 build(normal=True, liga=False, hinted=False, cache=True)
-build(normal=False, liga=True, hinted=True)
-build(normal=False, liga=True, hinted=False, cache=True)
+build(normal=True, liga=True, hinted=True)
+build(normal=True, liga=True, hinted=False, cache=True)
 build(normal=False, liga=False, hinted=True)
 build(normal=False, liga=False, hinted=False, cache=True)
+build(normal=False, liga=True, hinted=True)
+build(normal=False, liga=True, hinted=False, cache=True)
 
 # copy woff2 to root
 rmtree("woff2", ignore_errors=True)
-copytree(f"{output_base}/woff2", "woff2")
-print("Copy woff2 to root")
-
+print("Generate variable woff2")
 subprocess.run(f"ftcli converter ft2wf -out woff2/var -f woff2 {output_base}/variable")
-
-target_dir = "website/public-dev/fonts"
-rmtree(target_dir, ignore_errors=True)
-copytree("woff2/var", target_dir)
