@@ -405,7 +405,7 @@ class BuildOption:
     def should_build_cn(self, config: FontConfig) -> bool:
         if not config.cn["enable"] and not config.use_cn_both:
             print(
-                'No `"cn.enable": true` in config.json or no `--cn` / `--cn-both` in argv. Skip CN build.'
+                '\nNo `"cn.enable": true` in config.json or no `--cn` / `--cn-both` in argv. Skip CN build.'
             )
             return False
         if (
@@ -427,7 +427,7 @@ class BuildOption:
                     target_dir=self.cn_variable_dir,
                     github_mirror=config.github_mirror,
                 )
-            print("CN base fonts don't exist. Skip CN build.")
+            print("\nCN base fonts don't exist. Skip CN build.")
             return False
         return True
 
@@ -606,15 +606,19 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
     if font_config.ttf_only:
         return
 
+    print(f"Auto hint {postscript_name}.ttf")
     run(f"ftcli ttf autohint {_path} -out {build_option.output_ttf_hinted}")
+    print(f"Convert {postscript_name}.ttf to WOFF2")
     run(f"ftcli converter ft2wf {_path} -out {build_option.output_woff2} -f woff2")
 
     _otf_path = joinPaths(
         build_option.output_otf, path.basename(_path).replace(".ttf", ".otf")
     )
+    print(f"Convert {postscript_name}.ttf to OTF")
     run(f"ftcli converter ttf2otf --silent {_path} -out {build_option.output_otf}")
     if not font_config.debug:
-        run(f"ftcli otf check-outlines --quiet-mode {_otf_path}")
+        print(f"Optimize {postscript_name}.otf")
+        run(f"ftcli otf fix-contours --silent {_otf_path}")
         run(f"ftcli otf fix-version {_otf_path}")
 
 
@@ -817,10 +821,10 @@ def main():
     build_option.load_cn_dir_and_suffix(font_config.should_cn_use_nerd_font())
 
     if parsed_args.dry:
-        print("parsed_args:", json.dumps(parsed_args.__dict__, indent=4))
         print("font_config:", json.dumps(font_config.__dict__, indent=4))
         if not is_ci():
             print("build_option:", json.dumps(build_option.__dict__, indent=4))
+            print("parsed_args:", json.dumps(parsed_args.__dict__, indent=4))
         return
 
     should_use_cache = parsed_args.cache
@@ -853,14 +857,17 @@ def main():
 
         print("\n✨ Instatiate and optimize fonts...\n")
 
+        print("Check and optimize variable fonts")
         if not font_config.debug:
             run(f"ftcli fix decompose-transformed {build_option.output_variable}")
 
         run(f"ftcli fix italic-angle {build_option.output_variable}")
         run(f"ftcli fix monospace {build_option.output_variable}")
+        print("Instantiate TTF")
         run(
             f"ftcli converter vf2i {build_option.output_variable} -out {build_option.output_ttf}"
         )
+        print("Fix static TTF")
         run(f"ftcli fix italic-angle {build_option.output_ttf}")
         run(f"ftcli fix monospace {build_option.output_ttf}")
         run(f"ftcli fix strip-names {build_option.output_ttf}")
@@ -923,14 +930,11 @@ def main():
             print("=========================================")
             run(
                 f"ftcli converter vf2i {build_option.cn_variable_dir} -out {build_option.cn_static_dir}",
-                log=True,
+                log=True
             )
             run(f"ftcli ttf fix-contours {build_option.cn_static_dir}", log=True)
             run(f"ftcli ttf remove-overlaps {build_option.cn_static_dir}", log=True)
-            run(
-                f"ftcli utils del-table -t kern -t GPOS {build_option.cn_static_dir}",
-                log=True,
-            )
+            run(f"ftcli utils del-table -t kern -t GPOS {build_option.cn_static_dir}", log=True)
 
         def _build_cn():
             print(
@@ -942,6 +946,7 @@ def main():
             run_build(font_config.pool_size, fn, build_option.cn_base_font_dir)
 
             if font_config.cn["use_hinted"]:
+                print("Auto hint all glyphs")
                 run(f"ftcli ttf autohint {build_option.output_cn}")
 
             drop_mac_names(build_option.cn_base_font_dir)
@@ -982,15 +987,17 @@ def main():
 
     def compress_folder(
         source_file_or_dir_path: str, target_parent_dir_path: str
-    ) -> str:
+    ) -> tuple[str, str]:
         """
         compress folder and return sha1
         """
         source_folder_name = path.basename(source_file_or_dir_path)
 
+        zip_file_name_without_ext = f"{font_config.family_name_compact}-{source_folder_name}{'-unhinted' if not font_config.use_hinted else ''}"
+
         zip_path = joinPaths(
             target_parent_dir_path,
-            f"{font_config.family_name_compact}-{source_folder_name}.zip",
+            f"{zip_file_name_without_ext}.zip",
         )
 
         with ZipFile(
@@ -1018,7 +1025,7 @@ def main():
                     break
                 sha256.update(data)
 
-        return sha256.hexdigest()
+        return sha256.hexdigest(), zip_file_name_without_ext
 
     if font_config.archive:
         print("\n🚀 archive files...\n")
@@ -1036,12 +1043,12 @@ def main():
             if should_use_cache and f not in ["CN", "NF", "NF-CN"]:
                 continue
 
-            sha256 = compress_folder(
+            sha256, zip_file_name_without_ext = compress_folder(
                 source_file_or_dir_path=joinPaths(build_option.output_dir, f),
                 target_parent_dir_path=archive_dir,
             )
             with open(
-                joinPaths(archive_dir, f"{font_config.family_name_compact}-{f}.sha256"),
+                joinPaths(archive_dir, f"{zip_file_name_without_ext}.sha256"),
                 "w",
                 encoding="utf-8",
             ) as hash_file:

@@ -1,80 +1,64 @@
-name: Release Font
+name: Build and Release Fonts in All Formats
 
 on:
   push:
     tags:
-      - 'v*'
+      - v*
   workflow_dispatch:
-    inputs:
-      cn:
-        description: 'Include Chinese version (add "--cn" to build args)'
-        required: false
-        default: false
-        type: boolean
-      feat:
-        description: 'Enable features, split by "," (add "--feat feat1,feat2" to build args)'
-        required: false
-        default: ''
-        type: string
-      build_args:
-        description: 'Args for build.py'
-        required: false
-        default: ''
-        type: string
+
+permissions:
+  contents: write
+
 jobs:
-  release:
+  build:
+    strategy:
+      matrix:
+        config: [
+          {name: normal-liga, args: "--normal --liga"},
+          {name: normal-no-liga, args: "--normal --no-liga"},
+          {name: liga, args: "--liga"},
+          {name: no-liga, args: "--no-liga"}
+        ]
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        cache: 'pip'
+        cache-dependency-path: './requirements.txt'
+    - run: pip install -r requirements.txt
+    - name: Build fonts
+      run: |
+        python build.py --archive --cn-both --hinted ${{ matrix.config.args }}
+        python build.py --archive --cn-both --no-hinted --cache ${{ matrix.config.args }}
+    - uses: actions/upload-artifact@v4
+      with:
+        name: release-artifacts-${{ matrix.config.name }}
+        path: fonts/archive/*
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+  create-release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/download-artifact@v4
+      with:
+        pattern: release-artifacts*
+        path: release
 
-      - name: Checkout branch
-        run: git checkout variable
+    - name: Log artifacts tree
+      run: tree release
 
-      - name: Install ftcli
-        run: python -m pip install foundrytools-cli==1.1.22
+    - name: Release artifacts
+      run: |
+        TAG="${{ github.ref_name }}"
+        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+          TAG="v$(date +%s)"
+        fi
 
-      - name: Run release script
-        run: |
-          if [ "${{ github.event_name }}" == "push" ]; then
-            python release.py
-            git config user.name 'github-actions[bot]'
-            git config user.email 'github-actions[bot]@users.noreply.github.com'
-            set +e
-            git add woff2
-            git commit -m "Update woff2"
-            git push
-          else
-            build_args="${{ github.event.inputs.build_args }} --archive"
-            if [ ${{ github.event.inputs.cn }} ]; then
-              build_args="$build_args --cn"
-            fi
-            if [ ${{ github.event.inputs.feat }} ]; then
-              build_args="$build_args --feat ${{ github.event.inputs.feat }}"
-            fi
-            python build.py $build_args
-          fi
+        sed -i "s|https://<url>|https://github.com/subframe7536/maple-font/releases/download/${TAG//\//\\/}|g" release_template.md
 
-      - name: Create release
-        run: |
-          echo "$TAG" >> NOTES
-          if [ "${{ github.event_name }}" == "push" ]; then
-            TAG=${{ github.ref_name }}
-            FILES=release/*.*
-            STATUS="--draft"
-            NOTES="--notes-from-tag"
-          else
-            echo "### Build arguments\n\n${{ github.event.inputs.build_args }}" >> _NOTES
-            echo "### Configuration\n\n```\n$(python release.py ${{ github.event.inputs.build_args }} --dry)\n```" >> _NOTES
-            TAG="v$(date +%s)"
-            FILES=fonts/archive/*.*
-            STATUS=""
-            NOTES="--notes-file _NOTES"
-          fi
-          gh release create $TAG $FILES --generate-notes --notes-file NOTES $STATUS --target variable
+        gh release create "$TAG" release/**/*.* --notes-file .github/release_template.md --draft
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

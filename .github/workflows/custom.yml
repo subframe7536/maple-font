@@ -1,0 +1,94 @@
+name: Custom Build Font
+
+on:
+  workflow_dispatch:
+    inputs:
+      cn:
+        description: 'Include Chinese version (add "--cn" to build args)'
+        required: false
+        default: false
+        type: boolean
+      normal:
+        description: 'Remove opinionated features (add "--normal" to build args)'
+        required: false
+        default: false
+        type: boolean
+      no_liga:
+        description: 'Remove ligatures (add "--no-liga" to build args)'
+        required: false
+        default: false
+        type: boolean
+      no_hinted:
+        description: 'Build unhinted font (add "--no-hinted" to build args)'
+        required: false
+        default: false
+        type: boolean
+      feat:
+        description: 'Enable features, split by "," (add "--feat feat1,feat2" to build args)'
+        required: false
+        default: ''
+        type: string
+      build_args:
+        description: 'Other args for build.py'
+        required: false
+        default: ''
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  custom-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+          cache-dependency-path: './requirements.txt'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run custom script
+        run: |
+          build_args="--archive"
+          if [ "${{ github.event.inputs.cn }}" == "true" ]; then
+            build_args="$build_args --cn"
+          fi
+          if [ "${{ github.event.inputs.normal }}" == "true" ]; then
+            build_args="$build_args --normal"
+          fi
+          if [ "${{ github.event.inputs.no_liga }}" == "true" ]; then
+            build_args="$build_args --no-liga"
+          fi
+          if [ "${{ github.event.inputs.no_hinted }}" == "true" ]; then
+            build_args="$build_args --no-hinted"
+          fi
+          if [ -n "${{ github.event.inputs.feat }}" ]; then
+            build_args="$build_args --feat ${{ github.event.inputs.feat }}"
+          fi
+          if [ -n "${{ github.event.inputs.build_args }}" ]; then
+            build_args="$build_args ${{ github.event.inputs.build_args }}"
+          fi
+          echo "BUILD_ARGS=$build_args" >> $GITHUB_ENV
+          python build.py $build_args
+
+      - name: Create release
+        run: |
+          echo "### Build arguments" >> NOTES
+          echo "\`\`\`" >> NOTES
+          echo "python build.py $BUILD_ARGS" >> NOTES
+          echo "\`\`\`" >> NOTES
+          echo "### Final Configuration" >> NOTES
+          echo "\`\`\`" >> NOTES
+          python build.py $BUILD_ARGS --dry >> NOTES
+          echo "\`\`\`" >> NOTES
+          gh release create "v$(date +%s)" fonts/archive/*.* --notes-file NOTES
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
