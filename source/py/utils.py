@@ -7,9 +7,32 @@ from zipfile import ZipFile
 from fontTools.ttLib import TTFont
 
 
-# run command
-def run(cli: str | list[str], extra_args: list[str] = []):
-    subprocess.run((cli.split(" ") if isinstance(cli, str) else cli) + extra_args)
+def is_ci():
+    ci_envs = [
+        "JENKINS_HOME",
+        "TRAVIS",
+        "CIRCLECI",
+        "GITHUB_ACTIONS",
+        "GITLAB_CI",
+        "TF_BUILD",
+    ]
+
+    for env in ci_envs:
+        if environ.get(env):
+            return True
+
+    return False
+
+
+def run(command, extra_args=None, log=not is_ci()):
+    """
+    Run a command line interface (CLI) command.
+    """
+    if extra_args is None:
+        extra_args = []
+    if isinstance(command, str):
+        command = command.split()
+    subprocess.run(command + extra_args, stdout=subprocess.DEVNULL if not log else None)
 
 
 def set_font_name(font: TTFont, name: str, id: int):
@@ -42,7 +65,7 @@ def get_font_forge_bin():
 
     system_name = platform.uname()[0]
 
-    result = ''
+    result = ""
     if "Darwin" in system_name:
         result = MAC_FONTFORGE_PATH
     elif "Windows" in system_name:
@@ -54,23 +77,6 @@ def get_font_forge_bin():
         result = shutil.which("fontforge")
 
     return result
-
-
-def is_ci():
-    ci_envs = [
-        "JENKINS_HOME",
-        "TRAVIS",
-        "CIRCLECI",
-        "GITHUB_ACTIONS",
-        "GITLAB_CI",
-        "TF_BUILD",
-    ]
-
-    for env in ci_envs:
-        if environ.get(env):
-            return True
-
-    return False
 
 
 def parse_github_mirror(github_mirror: str) -> str:
@@ -100,13 +106,15 @@ def download_zip_and_extract(
                             break
 
                         out_file.write(buffer)
-                        downloaded_size += len(buffer)
 
-                        percent_downloaded = (downloaded_size / total_size) * 100
-                        print(
-                            f"Downloading {name}: [{percent_downloaded:.2f}%] {downloaded_size} / {total_size}",
-                            end="\r",
-                        )
+                        if not is_ci():
+                            downloaded_size += len(buffer)
+
+                            percent_downloaded = (downloaded_size / total_size) * 100
+                            print(
+                                f"Downloading {name}: [{percent_downloaded:.2f}%] {downloaded_size} / {total_size}",
+                                end="\r",
+                            )
             except Exception as e:
                 print(
                     f"\nFail to download {name}. Please download it manually from {url}, then put downloaded file into project's root and run this script again. \n    Error: {e}"

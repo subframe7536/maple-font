@@ -650,7 +650,7 @@ def build_nf_by_font_patcher(
 
     _nf_args += font_config.nerd_font["extra_args"]
 
-    run(_nf_args + [joinPaths(build_option.ttf_base_dir, font_basename)])
+    run(_nf_args + [joinPaths(build_option.ttf_base_dir, font_basename)], log=True)
     nf_file_name = "NerdFont"
     if font_config.nerd_font["mono"]:
         nf_file_name += "Mono"
@@ -819,7 +819,8 @@ def main():
     if parsed_args.dry:
         print("parsed_args:", json.dumps(parsed_args.__dict__, indent=4))
         print("font_config:", json.dumps(font_config.__dict__, indent=4))
-        print("build_option:", json.dumps(build_option.__dict__, indent=4))
+        if not is_ci():
+            print("build_option:", json.dumps(build_option.__dict__, indent=4))
         return
 
     should_use_cache = parsed_args.cache
@@ -921,11 +922,15 @@ def main():
             print("Instantiating CN Base font, be patient...")
             print("=========================================")
             run(
-                f"ftcli converter vf2i {build_option.cn_variable_dir} -out {build_option.cn_static_dir}"
+                f"ftcli converter vf2i {build_option.cn_variable_dir} -out {build_option.cn_static_dir}",
+                log=True,
             )
-            run(f"ftcli ttf fix-contours {build_option.cn_static_dir}")
-            run(f"ftcli ttf remove-overlaps {build_option.cn_static_dir}")
-            run(f"ftcli utils del-table -t kern -t GPOS {build_option.cn_static_dir}")
+            run(f"ftcli ttf fix-contours {build_option.cn_static_dir}", log=True)
+            run(f"ftcli ttf remove-overlaps {build_option.cn_static_dir}", log=True)
+            run(
+                f"ftcli utils del-table -t kern -t GPOS {build_option.cn_static_dir}",
+                log=True,
+            )
 
         def _build_cn():
             print(
