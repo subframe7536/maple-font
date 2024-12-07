@@ -54,7 +54,7 @@ jobs:
           TAG="v$(date +%s)"
         fi
 
-        sed -i "s|https://<url>|https://github.com/subframe7536/maple-font/releases/download/${TAG//\//\\/}|g" release_template.md
+        sed -i "s|https://<url>|https://github.com/subframe7536/maple-font/releases/download/${TAG//\//\\/}|g" .github/release_template.md
 
         gh release create "$TAG" release/**/*.* --notes-file .github/release_template.md --draft
       env:
