@@ -51,18 +51,40 @@ You can checkout old version [here](https://github.com/subframe7536/maple-font/t
 
 ### Font Hint
 
-- *`hinted font`* is used for low resolution screen to have better render effect. From my experience, if your screen resolution is lower or equal than 1080P, it is recommended to use "hinted font".
+- *`Hinted font`* is used for low resolution screen to have better render effect. From my experience, if your screen resolution is lower or equal than 1080P, it is recommended to use "hinted font".
   - In this case, you can choose `MapleMono-TTF-AutoHint` / `MapleMono-NF` / `MapleMono-NF-CN`, etc.
-- *`unhinted font`* is used for high resolution screen (e.g. for Mac), when using "hinted font", it will blur your text or make it looks weird.
+- *`Unhinted font`* is used for high resolution screen (e.g. for Mac), when using "hinted font", it will blur your text or make it looks weird.
   - In this case, you can choose `MapleMono-OTF` / `MapleMono-TTF` / `MapleMono-NF-unhinted` / `MapleMono-NF-CN-unhinted`, etc.
 
 ## Custom Build
+
+### Github Actions
+
+You can use [Github Actions](https://github.com/subframe7536/maple-font/actions) to build the font.
+
+1. Fork the repo
+2. (Optional) Change the content in `config.json`
+3. Go to Actions tab
+4. Click on `Custom Build` menu item on the left
+5. Click on `Run workflow` button with options setup
+6. Wait for the build to finish
+7. Download the font archives from Releases
+
+### Docker
+
+```shell
+git clone https://github.com/subframe7536/maple-font --depth 1 -b variable
+docker build -t maple-font .
+docker run -v "$(pwd)/fonts:/app/fonts" -e BUILD_ARGS="--normal" maple-font
+```
+
+### Local
 
 Clone the repo and run on your local machine. Make sure you have `python3` and `pip` installed
 
 ```shell
 git clone https://github.com/subframe7536/maple-font --depth 1 -b variable
-pip install foundrytools-cli
+pip install -r requirements.txt
 python build.py
 ```
 
@@ -70,7 +92,7 @@ python build.py
 
 If you have trouble installing the dependencies, just create a new Github codespace on `variable` branch and run the commands there
 
-### Customize
+### Options
 
 You can change build config in `config.json`
 - For custom `font-patcher` args, `font-forge` (and maybe `python3-fontforge` as well) is needed
@@ -79,7 +101,7 @@ You can change build config in `config.json`
 
 Add `--normal` flag in `build.py` for common config, make the font just like `JetBrains Mono` (with slashed zero).
 
-#### Font Feature Freeze Options
+#### Font Feature Freeze
 
 - `enable`: Move ligature rules to `calt`, which will enable the features without setting up `cvXX` / `ssXX` / `zero` in font features config, just as default ligatures
 - `disable`: Remove the features in `cvXX` / `ssXX` / `zero`, which will no longer effect, even if you enable it manually
@@ -95,7 +117,7 @@ If you want to build CN base fonts from variable (about 35 MB), setup `"cn.use_s
 
 The build script will auto download neccessory assets from GitHub. If you have trouble downloading, please setup `github_mirror` in `config.json` or `$GITHUB` to your environment variable. (Target URL will be `https://{github_mirror}/<user>/<repo>/releases/download/{tag}/{file}`)
 
-### Build Script Options
+### Build Script Usage
 
 ```
 usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--hinted] [--no-hinted]
