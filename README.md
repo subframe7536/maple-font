@@ -43,10 +43,10 @@ paru -S ttf-maple-beta
 
 ### Features
 
-- **Ligature**: Default version with ligatures
-- **No-Ligature**: Default version without ligatures
-- **Normal-Ligature**: [`--normal` preset](#preset) with ligatures
-- **Normal-No-Ligature**: [`--normal` preset](#preset) without ligatures
+- **Ligature**: Default version with ligatures (`Maple Mono`)
+- **No-Ligature**: Default version without ligatures (`Maple Mono NL`)
+- **Normal-Ligature**: [`--normal` preset](#preset) with ligatures (`Maple Mono Normal`)
+- **Normal-No-Ligature**: [`--normal` preset](#preset) without ligatures (`Maple Mono Normal NL`)
 
 ### Format and Glyph Set
 
@@ -57,7 +57,7 @@ paru -S ttf-maple-beta
 - **WOFF2**: Minimal version, woff2 format, for small size on web pages
 - **NF**: Nerd-Font patched version, add icons for terminal
 - **CN**: Chinese version, embed with Chinese and Japanese glyphs
-- **NF-CN**: Full version, embed with icon, Chinese and Japanese glyphs
+- **NF-CN**: Full version, embed with icons, Chinese and Japanese glyphs
 
 ### Font Hint
 
@@ -65,6 +65,8 @@ paru -S ttf-maple-beta
   - In this case, you can choose `MapleMono-TTF-AutoHint` / `MapleMono-NF` / `MapleMono-NF-CN`, etc.
 - *`Unhinted font`* is used for high resolution screen (e.g. for Mac), when using "hinted font", it will blur your text or make it looks weird.
   - In this case, you can choose `MapleMono-OTF` / `MapleMono-TTF` / `MapleMono-NF-unhinted` / `MapleMono-NF-CN-unhinted`, etc.
+- Why there exists `-AutoHint` and `-unhinted` suffix?
+  - for backward compatibility, I keep the original naming scheme. `-AutoHint` is only used for `TTF` format.
 
 ## Custom Build
 
