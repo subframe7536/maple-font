@@ -1,72 +1,64 @@
-name: Release Font
+name: Build and Release Fonts in All Formats
 
 on:
   push:
     tags:
-      - 'v*'
+      - v*
   workflow_dispatch:
-    inputs:
-      options:
-        description: 'Options for build.py'
-        required: false
-        default: ''
-        type: string
-      cn:
-        description: 'Include Chinese version (add `--cn` to options)'
-        required: false
-        default: false
-        type: boolean
+
+permissions:
+  contents: write
+
 jobs:
-  release:
+  build:
+    strategy:
+      matrix:
+        config: [
+          {name: normal-liga, args: "--normal --liga"},
+          {name: normal-no-liga, args: "--normal --no-liga"},
+          {name: liga, args: "--liga"},
+          {name: no-liga, args: "--no-liga"}
+        ]
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+        cache: 'pip'
+        cache-dependency-path: './requirements.txt'
+    - run: pip install -r requirements.txt
+    - name: Build fonts
+      run: |
+        python build.py --archive --cn-both --hinted ${{ matrix.config.args }}
+        python build.py --archive --cn-both --no-hinted --cache ${{ matrix.config.args }}
+    - uses: actions/upload-artifact@v4
+      with:
+        name: release-artifacts-${{ matrix.config.name }}
+        path: fonts/archive/*
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+  create-release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: actions/download-artifact@v4
+      with:
+        pattern: release-artifacts*
+        path: release
 
-      - name: Checkout branch
-        run: git checkout variable
+    - name: Log artifacts tree
+      run: tree release
 
-      - name: Install ftcli
-        run: python -m pip install foundrytools-cli
+    - name: Release artifacts
+      run: |
+        TAG="${{ github.ref_name }}"
+        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+          TAG="v$(date +%s)"
+        fi
 
-      - name: Run release script
-        run: |
-          if [ "${{ github.event_name }}" == "push" ]; then
-            python release.py
-          else
-            options="${{ github.event.inputs.options }}"
-            if [ ${{ github.event.inputs.cn }} ]; then
-              options="$options --cn"
-            fi
-            python build.py $options
-          fi
+        sed -i "s|https://<url>|https://github.com/subframe7536/maple-font/releases/download/${TAG//\//\\/}|g" release_template.md
 
-      - name: Generate release notes
-        id: release_notes
-        run: |
-          if [ "${{ github.event_name }}" == "push" ]; then
-            echo "notes=$(git log --pretty=%B $(git describe --tags --abbrev=0)..HEAD)" >> $GITHUB_ENV
-          else
-            notes=$(python release.py ${{ github.event.inputs.options }} --dry)
-            echo "notes=### Configuration:\n\n```\n$notes\n```" >> $GITHUB_ENV
-
-      - name: Generate tag name
-        id: generate_timestamp
-        run: echo "::set-output name=tag_name::v$(date +%s)"
-
-      - name: Create release
-        id: create_release
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ github.ref_name || steps.generate_timestamp.outputs.tag_name }}
-          draft: ${{ github.event_name == 'push' }}
-          body: ${{ env.notes }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          file: |
-            release/*
+        gh release create "$TAG" release/**/*.* --notes-file .github/release_template.md --draft
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
