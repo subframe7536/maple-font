@@ -1,4 +1,4 @@
-name: Build and Release Fonts in All Formats
+name: Build All Formats and Release
 
 on:
   push:
@@ -46,9 +46,6 @@ jobs:
       with:
         pattern: release-artifacts*
         path: release
-
-    - name: Log artifacts tree
-      run: tree release
 
     - name: Release artifacts
       run: |
