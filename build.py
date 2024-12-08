@@ -22,7 +22,7 @@ from source.py.utils import (
 )
 from source.py.feature import freeze_feature, get_freeze_config_str
 
-version = "7.000 beta30"
+version = "7.000 beta31"
 # =========================================================================================
 
 
