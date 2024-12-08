@@ -391,6 +391,8 @@ class BuildOption:
         # same as `ftcli assistant commit . --ls 400 700`
         # https://github.com/ftCLI/FoundryTools-CLI/issues/166#issuecomment-2095756721
         self.skip_subfamily_list = ["Regular", "Bold", "Italic", "BoldItalic"]
+        self.is_nf_built = False
+        self.is_cn_built = False
 
     def load_cn_dir_and_suffix(self, with_nerd_font: bool) -> None:
         if with_nerd_font:
@@ -918,6 +920,7 @@ def main():
 
         run_build(font_config.pool_size, _build_fn, build_option.output_ttf)
         drop_mac_names(build_option.output_ttf)
+        build_option.is_nf_built = True
 
     # =========================================================================================
     # ====================================   build CN   =======================================
@@ -930,11 +933,14 @@ def main():
             print("=========================================")
             run(
                 f"ftcli converter vf2i {build_option.cn_variable_dir} -out {build_option.cn_static_dir}",
-                log=True
+                log=True,
             )
             run(f"ftcli ttf fix-contours {build_option.cn_static_dir}", log=True)
             run(f"ftcli ttf remove-overlaps {build_option.cn_static_dir}", log=True)
-            run(f"ftcli utils del-table -t kern -t GPOS {build_option.cn_static_dir}", log=True)
+            run(
+                f"ftcli utils del-table -t kern -t GPOS {build_option.cn_static_dir}",
+                log=True,
+            )
 
         def _build_cn():
             print(
@@ -961,6 +967,8 @@ def main():
                 )
                 _build_cn()
 
+        build_option.is_cn_built = True
+
     # write config to output path
     with open(
         joinPaths(build_option.output_dir, "build-config.json"), "w", encoding="utf-8"
@@ -974,6 +982,8 @@ def main():
             "cn": font_config.cn,
         }
         del result["nerd_font"]["font_forge_bin"]
+        result["nerd_font"]["enable"] = build_option.is_nf_built
+        result["cn"]["enable"] = build_option.is_cn_built
         config_file.write(
             json.dumps(
                 result,

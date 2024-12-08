@@ -52,7 +52,6 @@ paru -S ttf-maple-beta
 
 - **Variable**: Minimal version, smoothly change font weight by variable
 - **TTF**: Minimal version, ttf format [Recommend!]
-- **TTF-AutoHint**: Minimal version, ttf format with hint, better for low resolution monitor
 - **OTF**: Minimal version, otf format
 - **WOFF2**: Minimal version, woff2 format, for small size on web pages
 - **NF**: Nerd-Font patched version, add icons for terminal

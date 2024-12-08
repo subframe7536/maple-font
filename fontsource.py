@@ -50,11 +50,9 @@ def main():
     run("python build.py --ttf-only")
     run(f"ftcli converter ft2wf -f woff2 ./fonts/TTF -out {target_dir}")
     run(f"ftcli converter ft2wf -f woff ./fonts/TTF -out {target_dir}")
+    run("ftcli converter ft2wf -f woff2 ./fonts/Variable -out woff2/var")
 
     rename_files(target_dir)
-    shutil.copy("OFL.txt", f"{target_dir}/LICENSE")
-
-    print(f"Please upload {target_dir} to `maple-mono/` in fontsource/font-files fork")
 
 
 if __name__ == "__main__":
