@@ -1,4 +1,4 @@
-name: Custom Build Font
+name: Custom Build
 
 on:
   workflow_dispatch:

@@ -69,9 +69,13 @@ paru -S ttf-maple-beta
 
 ## Custom Build
 
-### Github Actions
+The [`config.json`](./config.json) file is used to configure the build process. Checkout the [schema](./source/schema.json) for more details.
 
-You can use [Github Actions](https://github.com/subframe7536/maple-font/actions) to build the font.
+There also have some command line options for customizing the build process. Cli options have higher priority than `config.json`.
+
+### Use Github Actions
+
+You can use [Github Actions](https://github.com/subframe7536/maple-font/actions/workflows/custom.yml) to build the font.
 
 1. Fork the repo
 2. (Optional) Change the content in `config.json`
@@ -81,7 +85,7 @@ You can use [Github Actions](https://github.com/subframe7536/maple-font/actions)
 6. Wait for the build to finish
 7. Download the font archives from Releases
 
-### Docker
+### With Docker
 
 ```shell
 git clone https://github.com/subframe7536/maple-font --depth 1 -b variable
@@ -89,7 +93,7 @@ docker build -t maple-font .
 docker run -v "$(pwd)/fonts:/app/fonts" -e BUILD_ARGS="--normal" maple-font
 ```
 
-### Local
+### Local Build
 
 Clone the repo and run on your local machine. Make sure you have `python3` and `pip` installed
 
@@ -103,10 +107,11 @@ python build.py
 
 If you have trouble installing the dependencies, just create a new Github codespace on `variable` branch and run the commands there
 
-### Options
+#### Custom Nerd-Font
 
-You can change build config in `config.json`
-- For custom `font-patcher` args, `font-forge` (and maybe `python3-fontforge` as well) is needed
+For custom `font-patcher` args, `font-forge` (and maybe `python3-fontforge` as well) is required.
+
+You should also change `nerd_font` config in `config.json`
 
 #### Preset
 
