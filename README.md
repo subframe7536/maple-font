@@ -54,9 +54,9 @@ paru -S ttf-maple-beta
 - **TTF**: Minimal version, ttf format [Recommend!]
 - **OTF**: Minimal version, otf format
 - **WOFF2**: Minimal version, woff2 format, for small size on web pages
-- **NF**: Nerd-Font patched version, add icons for terminal
-- **CN**: Chinese version, embed with Chinese and Japanese glyphs
-- **NF-CN**: Full version, embed with icons, Chinese and Japanese glyphs
+- **NF**: Nerd-Font patched version, add icons for terminal (With `-NF` suffix)
+- **CN**: Chinese version, embed with Chinese and Japanese glyphs (With `-CN` suffix)
+- **NF-CN**: Full version, embed with icons, Chinese and Japanese glyphs (With `-NF-CN` suffix)
 
 ### Font Hint
 
