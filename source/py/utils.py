@@ -117,7 +117,7 @@ def download_zip_and_extract(
                             )
             except Exception as e:
                 print(
-                    f"\nFail to download {name}. Please download it manually from {url}, then put downloaded file into project's root and run this script again. \n    Error: {e}"
+                    f"\nFail to download {name}. Please check your internet connection or download it manually from {url}, then put downloaded zip into project's root and run this script again. \n    Error: {e}"
                 )
                 return False
         with ZipFile(zip_path, "r") as zip_ref:

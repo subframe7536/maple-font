@@ -61,9 +61,9 @@ paru -S ttf-maple-beta
 
 ### Font Hint
 
-- *`Hinted font`* is used for low resolution screen to have better render effect. From my experience, if your screen resolution is lower or equal than 1080P, it is recommended to use "hinted font".
+- **Hinted font** is used for low resolution screen to have better render effect. From my experience, if your screen resolution is lower or equal than 1080P, it is recommended to use "hinted font".
   - In this case, you can choose `MapleMono-TTF-AutoHint` / `MapleMono-NF` / `MapleMono-NF-CN`, etc.
-- *`Unhinted font`* is used for high resolution screen (e.g. for Mac), when using "hinted font", it will blur your text or make it looks weird.
+- **Unhinted font** is used for high resolution screen (e.g. for Mac), when using "hinted font", it will blur your text or make it looks weird.
   - In this case, you can choose `MapleMono-OTF` / `MapleMono-TTF` / `MapleMono-NF-unhinted` / `MapleMono-NF-CN-unhinted`, etc.
 - Why there exists `-AutoHint` and `-unhinted` suffix?
   - for backward compatibility, I keep the original naming scheme. `-AutoHint` is only used for `TTF` format.
@@ -127,7 +127,7 @@ If you want to build CN base fonts from variable (about 35 MB), setup `"cn.use_s
 
 #### Notice
 
-The build script will auto download neccessory assets from GitHub. If you have trouble downloading, please setup `github_mirror` in `config.json` or `$GITHUB` to your environment variable. (Target URL will be `https://{github_mirror}/<user>/<repo>/releases/download/{tag}/{file}`)
+The build script will auto download neccessory assets from GitHub. If you have trouble downloading, please setup `github_mirror` in `config.json` or `$GITHUB` to your environment variable. (Target URL will be `https://{github_mirror}/<user>/<repo>/releases/download/{tag}/{file}`), or just download the target `.zip` file and put it in the same directory as `build.py`.
 
 ### Build Script Usage
 
