@@ -6,6 +6,8 @@
 >
 > If everything goes well, the stable version will be released later this year.
 
+![](./resources/header.svg)
+
 # Maple Mono
 
 Maple Mono is an open source monospace font focused on smoothing your coding experience.
