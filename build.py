@@ -520,6 +520,22 @@ def drop_mac_names(dir: str):
     run(f"ftcli name del-mac-names -r {dir}")
 
 
+def rename_glyph_name(font: TTFont, old_glyph_name: str, new_glyph_name: str, post_extra_names: bool = True):
+    glyph_names = font.getGlyphOrder()
+    modified = False
+    for i, _ in enumerate(glyph_names):
+        if glyph_names[i] == old_glyph_name:
+            glyph_names[i] = new_glyph_name
+            print(f"{old_glyph_name} renamed to {new_glyph_name}")
+            modified = True
+    if modified:
+        font.setGlyphOrder(glyph_names)
+
+    if post_extra_names:
+        index = font['post'].extraNames.index(old_glyph_name)
+        font['post'].extraNames[index] = new_glyph_name
+
+
 def get_unique_identifier(
     postscript_name: str,
     freeze_config_str: str,
@@ -853,6 +869,11 @@ def main():
         ]
         for input_file in input_files:
             font = TTFont(input_file)
+
+            # fix auto rename by FontLab
+            rename_glyph_name(font, "uni2047.liga", "question_question.liga")
+            rename_glyph_name(font, "uni00A0", "nbspace")
+
             font.save(
                 input_file.replace(build_option.src_dir, build_option.output_variable)
             )

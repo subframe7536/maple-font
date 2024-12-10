@@ -9,6 +9,7 @@ def get_freeze_config_str(feature_freeze, enable_liga):
         result += "-calt;"
     return result
 
+
 def freeze_feature(font, calt, moving_rules=[], config={}):
     # check feature list
     feature_record = font["GSUB"].table.FeatureList.FeatureRecord
@@ -20,7 +21,9 @@ def freeze_feature(font, calt, moving_rules=[], config={}):
 
     if calt:
         calt_features = [
-            feature.Feature for feature in feature_record if feature.FeatureTag == "calt"
+            feature.Feature
+            for feature in feature_record
+            if feature.FeatureTag == "calt"
         ]
     else:
         for feature in feature_record:
@@ -48,7 +51,9 @@ def freeze_feature(font, calt, moving_rules=[], config={}):
             glyph_dict = font["glyf"].glyphs
             hmtx_dict = font["hmtx"].metrics
             for index in target_feature.LookupListIndex:
-                lookup_subtable = font["GSUB"].table.LookupList.Lookup[index].SubTable[0]
+                lookup_subtable = (
+                    font["GSUB"].table.LookupList.Lookup[index].SubTable[0]
+                )
                 if not lookup_subtable or "mapping" not in lookup_subtable.__dict__:
                     continue
                 for old_key, new_key in lookup_subtable.mapping.items():
