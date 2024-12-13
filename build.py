@@ -533,7 +533,8 @@ def rename_glyph_name(font: TTFont, old_glyph_name: str, new_glyph_name: str, po
 
     if post_extra_names:
         index = font['post'].extraNames.index(old_glyph_name)
-        font['post'].extraNames[index] = new_glyph_name
+        if index != -1:
+            font['post'].extraNames[index] = new_glyph_name
 
 
 def get_unique_identifier(

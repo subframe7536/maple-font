@@ -533,7 +533,7 @@ feature calt {
 
   # _|_
   lookup underscore_bar_underscore.liga {
-    ignore sub underscore underscore' bar underscore;
+    ignore sub [underscore bracketleft comma] underscore' bar underscore;
     ignore sub underscore' bar underscore underscore;
     sub SPC SPC underscore' by underscore_bar_underscore.liga;
     sub SPC bar' underscore by SPC;

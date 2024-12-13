@@ -534,7 +534,7 @@ feature calt {
 
   # _|_
   lookup underscore_bar_underscore.liga {
-    ignore sub underscore underscore' bar underscore;
+    ignore sub [underscore bracketleft comma] underscore' bar underscore;
     ignore sub underscore' bar underscore underscore;
     sub SPC SPC underscore' by underscore_bar_underscore.liga;
     sub SPC bar' underscore by SPC;
@@ -1794,8 +1794,8 @@ feature cv31 {
   sub ordfeminine by ordfeminine.cv31;
 
   sub a_l.liga by a_l.liga.cv31;
-  sub a_l_l.liga by a_l_l.liga.cv31;
   sub a_l.liga.cv04 by a_l.liga.cv04.cv31;
+  sub a_l_l.liga by a_l_l.liga.cv31;
   sub a_l_l.liga.cv04 by a_l_l.liga.cv04.cv31;
 } cv31;
 
@@ -1824,6 +1824,7 @@ feature cv33 {
   sub jdotless by jdotless.cv33;
 
   sub i_l.liga by i_l.liga.cv33;
+  sub i_l.liga.cv04 by i_l.liga.cv04.cv33;
   sub i_l_l.liga by i_l_l.liga.cv33;
   sub i_l_l.liga.cv04 by i_l_l.liga.cv04.cv33;
 } cv33;
@@ -1851,12 +1852,16 @@ feature cv35 {
   sub C_l.liga.cv04 by C_l.liga.cv35;
   sub a_l.liga by a_l.liga.cv35;
   sub a_l.liga.cv04 by a_l.liga.cv35;
+  sub a_l.liga.cv31 by a_l.liga.cv31.cv35;
+  sub a_l.liga.cv04.cv31 by a_l.liga.cv31.cv35;
   sub c_l.liga by c_l.liga.cv35;
   sub c_l.liga.cv04 by c_l.liga.cv35;
   sub e_l.liga by e_l.liga.cv35;
   sub e_l.liga.cv04 by e_l.liga.cv35;
   sub i_l.liga by i_l.liga.cv35;
+  sub i_l.liga.cv33 by i_l.liga.cv33.cv35;
   sub i_l.liga.cv04 by i_l.liga.cv35;
+  sub i_l.liga.cv04.cv33 by i_l.liga.cv33.cv35;
   sub l_l.liga by l_l.liga.cv35;
   sub l_l.liga.cv04 by l_l.liga.cv35;
   sub t_l.liga by t_l.liga.cv35;
@@ -1866,10 +1871,13 @@ feature cv35 {
   sub x_l.liga by x_l.liga.cv35;
   sub x_l.liga.cv04 by x_l.liga.cv35;
   sub a_l_l.liga by a_l_l.liga.cv35;
+  sub a_l_l.liga.cv31 by a_l_l.liga.cv31.cv35;
   sub a_l_l.liga.cv04 by a_l_l.liga.cv35;
+  sub a_l_l.liga.cv04.cv31 by a_l_l.liga.cv31.cv35;
   sub e_l_l.liga by e_l_l.liga.cv35;
   sub e_l_l.liga.cv04 by e_l_l.liga.cv35;
   sub i_l_l.liga by i_l_l.liga.cv35;
+  sub i_l_l.liga.cv33 by i_l_l.liga.cv33.cv35;
   sub i_l_l.liga.cv04 by i_l_l.liga.cv35;
   sub i_l_l.liga.cv04.cv33 by i_l_l.liga.cv33.cv35;
   sub u_l_l.liga by u_l_l.liga.cv35;
