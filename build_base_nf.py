@@ -53,7 +53,7 @@ def update_config_json(config_path: str, version: str):
 
 def check_update():
     current_version = None
-    with open("./config.json", "r") as f:
+    with open("./config.json", "r", encoding="utf-8") as f:
         data = json.load(f)
         current_version = data["nerd_font"]["version"]
 
@@ -70,6 +70,9 @@ def check_update():
 
         if latest_version == current_version:
             print("✨ Current version match latest version")
+            if not check_font_patcher(latest_version):
+                print("Font-Patcher not exist and fail to download, exit")
+                exit(1)
             return
 
         print(
@@ -135,13 +138,15 @@ def subset(mono: bool, unicodes: list[int]):
     )
     subsetter.subset(font)
 
-    font.save(f"source/MapleMono-NF-Base{'-Mono' if mono else ''}.ttf")
+    _path = f"source/MapleMono-NF-Base{'-Mono' if mono else ''}.ttf"
+    font.save(_path)
+    run(f"ftcli fix monospace {_path}")
     font.close()
 
 
 def main():
     check_update()
-    with open("./FontPatcher/glyphnames.json", "r") as f:
+    with open("./FontPatcher/glyphnames.json", "r", encoding="utf-8") as f:
         unicodes = parse_codes_from_json(json.load(f))
         subset(True, unicodes=unicodes)
         subset(False, unicodes=unicodes)
