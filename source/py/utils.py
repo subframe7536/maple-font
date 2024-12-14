@@ -87,7 +87,7 @@ def parse_github_mirror(github_mirror: str) -> str:
 
 
 def download_zip_and_extract(
-    name: str, url: str, zip_path: str, output_dir: str, remove_zip: bool = True
+    name: str, url: str, zip_path: str, output_dir: str, remove_zip: bool = False
 ) -> bool:
     try:
         if not path.exists(zip_path):
@@ -130,10 +130,12 @@ def download_zip_and_extract(
         return False
 
 
-def check_font_patcher(version: str, github_mirror: str = "github.com") -> bool:
-    target_dir = "FontPatcher"
+def check_font_patcher(
+    version: str, github_mirror: str = "github.com", target_dir: str = "FontPatcher"
+) -> bool:
+    bin_path = f"{target_dir}/font-patcher"
     if path.exists(target_dir):
-        with open(f"{target_dir}/font-patcher", "r", encoding="utf-8") as f:
+        with open(bin_path, "r", encoding="utf-8") as f:
             if f"# Nerd Fonts Version: {version}" in f.read():
                 return True
             else:
@@ -142,10 +144,17 @@ def check_font_patcher(version: str, github_mirror: str = "github.com") -> bool:
 
     zip_path = "FontPatcher.zip"
     url = f"{parse_github_mirror(github_mirror)}/ryanoasis/nerd-fonts/releases/download/v{version}/{zip_path}"
-    return download_zip_and_extract(
+    if not download_zip_and_extract(
         name="Nerd Font Patcher", url=url, zip_path=zip_path, output_dir=target_dir
-    )
+    ):
+        return False
 
+    with open(bin_path, "r", encoding="utf-8") as f:
+        if f"# Nerd Fonts Version: {version}" in f.read():
+            return True
+
+    print(f"FontPatcher version is not {version}, please download it from {url}")
+    return False
 
 def download_cn_base_font(
     tag: str, zip_path: str, target_dir: str, github_mirror: str = "github.com"
