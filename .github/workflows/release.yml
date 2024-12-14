@@ -56,6 +56,8 @@ jobs:
 
         sed -i "s|https://<url>|https://github.com/subframe7536/maple-font/releases/download/${TAG//\//\\/}|g" .github/release_template.md
 
-        gh release create "$TAG" release/**/*.* --notes-file .github/release_template.md --draft
+        TITLE=$(python3 -c "print(' '.join(part.capitalize() for part in '$TAG'.split('-')))")
+
+        gh release create "$TAG" release/**/*.* --notes-file .github/release_template.md --draft -t $TITLE
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
