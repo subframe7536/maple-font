@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import json
 from os import path, remove
 from urllib.request import urlopen
