@@ -22,7 +22,7 @@ from source.py.utils import (
 )
 from source.py.feature import freeze_feature, get_freeze_config_str
 
-version = "7.000 beta31"
+FONT_VERSION = "7.000 beta31"
 # =========================================================================================
 
 
@@ -48,7 +48,7 @@ def parse_args():
         "-v",
         "--version",
         action="version",
-        version=f"Maple Mono Builder v{version}",
+        version=f"Maple Mono Builder v{FONT_VERSION}",
     )
     parser.add_argument(
         "-d",
@@ -545,7 +545,7 @@ def get_unique_identifier(
     if "CN" in postscript_name and narrow:
         freeze_config_str += "Narrow;"
 
-    return f"Version {version};SUBF;{postscript_name};2024;FL830;{freeze_config_str}"
+    return f"Version {FONT_VERSION};SUBF;{postscript_name};2024;FL830;{freeze_config_str}"
 
 
 def change_char_width(font: TTFont, match_width: int, target_width: int):
