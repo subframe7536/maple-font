@@ -996,6 +996,7 @@ def main():
         joinPaths(build_option.output_dir, "build-config.json"), "w", encoding="utf-8"
     ) as config_file:
         result = {
+            "version": FONT_VERSION,
             "family_name": font_config.family_name,
             "use_hinted": font_config.use_hinted,
             "ligature": font_config.enable_liga,
