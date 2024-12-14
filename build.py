@@ -22,7 +22,7 @@ from source.py.utils import (
 )
 from source.py.feature import freeze_feature, get_freeze_config_str
 
-FONT_VERSION = "7.000 beta31"
+FONT_VERSION = "v7.0-beta31"
 # =========================================================================================
 
 
@@ -249,6 +249,14 @@ class FontConfig:
             "use_static_base_font": True,
         }
         self.__load_external(args)
+
+        ver = FONT_VERSION
+        if "-" in FONT_VERSION:
+            ver, beta = FONT_VERSION.split("-")
+            self.beta = beta
+
+        major, minor = ver.split(".")
+        self.version_str = f"Version {major}.{minor:03}"
 
     def __load_external(self, args):
         self.archive = args.archive
@@ -520,7 +528,12 @@ def drop_mac_names(dir: str):
     run(f"ftcli name del-mac-names -r {dir}")
 
 
-def rename_glyph_name(font: TTFont, old_glyph_name: str, new_glyph_name: str, post_extra_names: bool = True):
+def rename_glyph_name(
+    font: TTFont,
+    old_glyph_name: str,
+    new_glyph_name: str,
+    post_extra_names: bool = True,
+):
     glyph_names = font.getGlyphOrder()
     modified = False
     for i, _ in enumerate(glyph_names):
@@ -532,20 +545,26 @@ def rename_glyph_name(font: TTFont, old_glyph_name: str, new_glyph_name: str, po
         font.setGlyphOrder(glyph_names)
 
     if post_extra_names:
-        index = font['post'].extraNames.index(old_glyph_name)
+        index = font["post"].extraNames.index(old_glyph_name)
         if index != -1:
-            font['post'].extraNames[index] = new_glyph_name
+            font["post"].extraNames[index] = new_glyph_name
 
 
 def get_unique_identifier(
+    font_config: FontConfig,
     postscript_name: str,
-    freeze_config_str: str,
     narrow: bool = False,
 ) -> str:
+    suffix = font_config.freeze_config_str
     if "CN" in postscript_name and narrow:
-        freeze_config_str += "Narrow;"
+        suffix += "Narrow;"
 
-    return f"Version {FONT_VERSION};SUBF;{postscript_name};2024;FL830;{freeze_config_str}"
+    if "NF" in postscript_name:
+        nf_ver = font_config.nerd_font["version"]
+        suffix = f"NF{nf_ver};{suffix}"
+
+    beta_str = f'-{font_config.beta}' if font_config.beta else ''
+    return f"{font_config.version_str}{beta_str};SUBF;{postscript_name};2024;FL830;{suffix}"
 
 
 def change_char_width(font: TTFont, match_width: int, target_width: int):
@@ -590,13 +609,18 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
         f"{font_config.family_name} {style}",
         4,
     )
+    set_font_name(
+        font,
+        font_config.version_str,
+        5,
+    )
     postscript_name = f"{font_config.family_name_compact}-{style_compact}"
     set_font_name(font, postscript_name, 6)
     set_font_name(
         font,
         get_unique_identifier(
+            font_config=font_config,
             postscript_name=postscript_name,
-            freeze_config_str=font_config.freeze_config_str,
         ),
         3,
     )
@@ -714,13 +738,18 @@ def build_nf(
         f"{font_config.family_name} NF {style_nf}",
         4,
     )
+    set_font_name(
+        nf_font,
+        font_config.version_str,
+        5,
+    )
     postscript_name = f"{font_config.family_name_compact}-NF-{style_compact_nf}"
     set_font_name(nf_font, postscript_name, 6)
     set_font_name(
         nf_font,
         get_unique_identifier(
+            font_config=font_config,
             postscript_name=postscript_name,
-            freeze_config_str=font_config.feature_freeze,
         ),
         3,
     )
@@ -743,7 +772,7 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
     print(f"👉 {build_option.cn_suffix_compact} version for {f}")
 
     merger = Merger()
-    font = merger.merge(
+    cn_font = merger.merge(
         [
             joinPaths(build_option.cn_base_font_dir, f),
             joinPaths(
@@ -758,52 +787,59 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
     )
 
     set_font_name(
-        font,
+        cn_font,
         f"{font_config.family_name} {build_option.cn_suffix}{style_cn_with_prefix_space}",
         1,
     )
-    set_font_name(font, style_cn_in_2, 2)
+    set_font_name(cn_font, style_cn_in_2, 2)
     set_font_name(
-        font,
+        cn_font,
         f"{font_config.family_name} {build_option.cn_suffix} {style_cn}",
         4,
     )
-    postscript_name = f"{font_config.family_name_compact}-{build_option.cn_suffix_compact}-{style_compact_cn}"
-    set_font_name(font, postscript_name, 6)
     set_font_name(
-        font,
+        cn_font,
+        font_config.version_str,
+        5,
+    )
+    postscript_name = f"{font_config.family_name_compact}-{build_option.cn_suffix_compact}-{style_compact_cn}"
+    set_font_name(cn_font, postscript_name, 6)
+    set_font_name(
+        cn_font,
         get_unique_identifier(
+            font_config=font_config,
             postscript_name=postscript_name,
-            freeze_config_str=font_config.freeze_config_str,
             narrow=font_config.cn["narrow"],
         ),
         3,
     )
 
     if style_compact_cn not in build_option.skip_subfamily_list:
-        set_font_name(font, f"{font_config.family_name} {build_option.cn_suffix}", 16)
-        set_font_name(font, style_cn, 17)
+        set_font_name(
+            cn_font, f"{font_config.family_name} {build_option.cn_suffix}", 16
+        )
+        set_font_name(cn_font, style_cn, 17)
 
-    font["OS/2"].xAvgCharWidth = 600
+    cn_font["OS/2"].xAvgCharWidth = 600
 
     # https://github.com/subframe7536/maple-font/issues/188
-    fix_cv98(font)
+    fix_cv98(cn_font)
 
     handle_ligatures(
-        font=font,
+        font=cn_font,
         enable_ligature=font_config.enable_liga,
         freeze_config=font_config.feature_freeze,
     )
 
     if font_config.cn["narrow"]:
-        change_char_width(font=font, match_width=1200, target_width=1000)
+        change_char_width(font=cn_font, match_width=1200, target_width=1000)
 
     # https://github.com/subframe7536/maple-font/issues/239
     # remove_locl(font)
 
     if font_config.cn["fix_meta_table"]:
         # add code page, Latin / Japanese / Simplify Chinese / Traditional Chinese
-        font["OS/2"].ulCodePageRange1 = 1 << 0 | 1 << 17 | 1 << 18 | 1 << 20
+        cn_font["OS/2"].ulCodePageRange1 = 1 << 0 | 1 << 17 | 1 << 18 | 1 << 20
 
         # fix meta table, https://learn.microsoft.com/en-us/typography/opentype/spec/meta
         meta = newTable("meta")
@@ -811,15 +847,15 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
             "dlng": "Latn, Hans, Hant, Jpan",
             "slng": "Latn, Hans, Hant, Jpan",
         }
-        font["meta"] = meta
+        cn_font["meta"] = meta
 
     _path = joinPaths(
         build_option.output_cn,
         f"{font_config.family_name_compact}-{build_option.cn_suffix_compact}-{style_compact_cn}.ttf",
     )
 
-    font.save(_path)
-    font.close()
+    cn_font.save(_path)
+    cn_font.close()
 
 
 def run_build(pool_size: int, fn: Callable, dir: str):

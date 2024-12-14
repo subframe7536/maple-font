@@ -47,15 +47,19 @@ def rename_files(dir: str):
 def parse_tag(args):
     """
     Parse the tag from the command line arguments.
-    Format: v7.000[-beta31]
+    Format: v7.0[-beta3]
     """
     tag = args.tag
+
     if not tag.startswith("v"):
         tag = f"v{tag}"
-    if not re.match(r"^v\d+\.\d{3}$", tag):
-        raise ValueError(f"Tag must end with 3 numbers following a '.', input is {tag}")
+
+    if not re.match(r"^v\d+\.\d+$", tag):
+        raise ValueError(f"Invalide tag: {tag}, format: v7.0")
+
     if args.beta:
         tag += "-" if args.beta.startswith("beta") else "-beta" + args.beta
+
     return tag
 
 def update_build_script_version(tag):
@@ -70,7 +74,7 @@ def update_build_script_version(tag):
 
 def git_commit(tag):
     run("git add woff2/var build.py")
-    run(f"git commit -m 'Release {tag}'")
+    run(["git", "commit", "-m", f"Release {tag}"])
     run(f"git tag {tag}")
     print("Committed and tagged")
 
@@ -84,7 +88,7 @@ def main():
     parser.add_argument(
         "tag",
         type=str,
-        help="The tag to build the release for, format: v7.000",
+        help="The tag to build the release for, format: 7.0 or v7.0",
     )
     parser.add_argument(
         "beta",
