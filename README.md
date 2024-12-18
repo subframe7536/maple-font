@@ -10,7 +10,7 @@
 
 # Maple Mono
 
-Maple Mono is an open source monospace font focused on smoothing your coding experience.
+Maple Mono is an open source monospace font focused on smoothing your coding flow.
 
 I create it to enhance my working experience, and hope that it can be useful to others.
 
@@ -62,9 +62,9 @@ paru -S ttf-maple-beta
 
 ### Font Hint
 
-- **Hinted font** is used for low resolution screen to have better render effect. From my experience, if your screen resolution is lower or equal than 1080P, it is recommended to use "hinted font".
+- **Hinted font** is used for low resolution screen to have better render effect. From my experience, if your screen resolution is lower or equal than 1080P, it is recommended to use "hinted font". Using "unhinted font" will lead to misalignment or uneven thickness on your text.
   - In this case, you can choose `MapleMono-TTF-AutoHint` / `MapleMono-NF` / `MapleMono-NF-CN`, etc.
-- **Unhinted font** is used for high resolution screen (e.g. for Mac), when using "hinted font", it will blur your text or make it looks weird.
+- **Unhinted font** is used for high resolution screen (e.g. for MacBook). Using "hinted font" will blur your text or make it looks weird.
   - In this case, you can choose `MapleMono-OTF` / `MapleMono-TTF` / `MapleMono-NF-unhinted` / `MapleMono-NF-CN-unhinted`, etc.
 - Why there exists `-AutoHint` and `-unhinted` suffix?
   - for backward compatibility, I keep the original naming scheme. `-AutoHint` is only used for `TTF` format.
@@ -87,7 +87,7 @@ You can use [Github Actions](https://github.com/subframe7536/maple-font/actions/
 6. Wait for the build to finish
 7. Download the font archives from Releases
 
-### With Docker
+### Use Docker
 
 ```shell
 git clone https://github.com/subframe7536/maple-font --depth 1 -b variable
