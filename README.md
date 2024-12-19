@@ -14,7 +14,7 @@ Maple Mono is an open source monospace font focused on smoothing your coding flo
 
 I create it to enhance my working experience, and hope that it can be useful to others.
 
-You can checkout old version [here](https://github.com/subframe7536/maple-font/tree/main)
+V7 is a completely remade version, providing variable font, redesigning more than half of the glyphs and offering smarter ligatures. You can checkout V6 [here](https://github.com/subframe7536/maple-font/tree/main)
 
 ## Features
 
