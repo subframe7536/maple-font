@@ -6,7 +6,7 @@
 >
 > If everything goes well, the stable version will be released later this year.
 
-![](./resources/header.svg)
+![](./resources/header.png)
 
 # Maple Mono
 
@@ -28,7 +28,7 @@ V7 is a completely remade version, providing variable font, redesigning more tha
 
 The CN version contails the glyphs of simplified and traditional Chinese, and Japanese, which are not as normal as most famous fonts. The CJK glyphs' spacing is much looser for better metric alignment, see details in [this issue](https://github.com/subframe7536/maple-font/issues/211).
 
-![](./resources/2-1.svg)
+![](./resources/2-1.png)
 
 ## ScreenShots
 
