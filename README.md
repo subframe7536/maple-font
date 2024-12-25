@@ -24,6 +24,12 @@ V7 is a completely remade version, providing variable font, redesigning more tha
 - 🎨 Icon - First-Class [Nerd-Font](https://github.com/ryanoasis/nerd-fonts) support, make your terminal more vivid.
 - 🔨 Customize - Enable or disable font features as you want, just make your own font.
 
+### Simpified Chinese, Traditional Chinese and Japanese
+
+The CN version contails the glyphs of simplified and traditional Chinese, and Japanese, which are not as normal as most famous fonts. The CJK glyphs' spacing is much looser for better metric alignment, see details in [this issue](https://github.com/subframe7536/maple-font/issues/211).
+
+![](./resources/2-1.svg)
+
 ## ScreenShots
 
 ![](https://github.com/subframe7536/maple-font/assets/78338239/19383849-6be1-4cfc-9b34-7b33fc047ecf)
@@ -128,6 +134,7 @@ There are three kind of options for feature freeze:
 3. `ignore`: Do nothing
 
 ### Chinese version
+
 
 Run `python build.py --cn`, the CN base fonts (about 135 MB) will download from GitHub.
 
