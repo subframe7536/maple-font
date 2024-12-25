@@ -97,6 +97,11 @@ def main():
         type=str,
         help="Beta tag name, format: 3 or beta3",
     )
+    parser.add_argument(
+        "--dry",
+        action="store_true",
+        help="Dry run",
+    )
     args = parser.parse_args()
     tag = parse_tag(args)
     # prompt and wait for user input
@@ -112,10 +117,16 @@ def main():
     run("python build.py --ttf-only")
     run(f"ftcli converter ft2wf -f woff2 ./fonts/TTF -out {target_dir}")
     run(f"ftcli converter ft2wf -f woff ./fonts/TTF -out {target_dir}")
-    run("ftcli converter ft2wf -f woff2 ./fonts/Variable -out woff2/var")
     rename_files(target_dir)
+    print('Generate fontsource files')
+    run("ftcli converter ft2wf -f woff2 ./fonts/Variable -out woff2/var")
+    print("Update variable WOFF2")
 
-    git_commit(tag)
+    if not args.dry:
+       git_commit(tag)
+
+    print("Dry run")
+    return
 
 
 if __name__ == "__main__":
