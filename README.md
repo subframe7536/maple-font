@@ -75,6 +75,11 @@ paru -S ttf-maple-beta
 - Why there exists `-AutoHint` and `-unhinted` suffix?
   - for backward compatibility, I keep the original naming scheme. `-AutoHint` is only used for `TTF` format.
 
+## CDN Usage
+
+- [fontsource](https://github.com/fontsource/font-files/pull/90): CDN for `Maple Mono` (waiting for merge)
+- [The Chinese Web Fonts Plan (中文网字计划)](https://chinese-font.netlify.app/zh-cn/fonts/maple-mono-cn/MapleMono-CN-Regular): CDN for `Maple Mono CN`
+
 ## Custom Build
 
 The [`config.json`](./config.json) file is used to configure the build process. Checkout the [schema](./source/schema.json) or [document](https://github.com/subframe7536/maple-font/blob/variable/source/features/README.md) for more details.
