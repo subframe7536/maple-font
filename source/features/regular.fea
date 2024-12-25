@@ -1669,6 +1669,7 @@ feature cv02 {
   sub aogonek by aogonek.cv02;
   sub aring by aring.cv02;
   sub atilde by atilde.cv02;
+  sub a-cy by a-cy.cv02;
   sub ordfeminine by ordfeminine.cv02;
 } cv02;
 

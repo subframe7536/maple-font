@@ -1791,6 +1791,7 @@ feature cv31 {
   sub aogonek by aogonek.cv31;
   sub aring by aring.cv31;
   sub atilde by atilde.cv31;
+  sub a-cy by a-cy.cv31;
   sub ordfeminine by ordfeminine.cv31;
 
   sub a_l.liga by a_l.liga.cv31;
