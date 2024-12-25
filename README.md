@@ -71,7 +71,7 @@ paru -S ttf-maple-beta
 
 ## Custom Build
 
-The [`config.json`](./config.json) file is used to configure the build process. Checkout the [schema](./source/schema.json) for more details.
+The [`config.json`](./config.json) file is used to configure the build process. Checkout the [schema](./source/schema.json) or [document](https://github.com/subframe7536/maple-font/blob/variable/source/features/README.md) for more details.
 
 There also have some [command line options](#build-script-usage) for customizing the build process. Cli options have higher priority than options in `config.json`.
 
