@@ -17,6 +17,7 @@ from source.py.utils import (
     download_cn_base_font,
     get_font_forge_bin,
     is_ci,
+    match_unicode_names,
     run,
     set_font_name,
     joinPaths,
@@ -533,15 +534,32 @@ def rename_glyph_name(
     font: TTFont,
     old_glyph_name: str,
     new_glyph_name: str,
+    map: dict[str, str],
     post_extra_names: bool = True,
 ):
     glyph_names = font.getGlyphOrder()
     modified = False
     for i, _ in enumerate(glyph_names):
-        if glyph_names[i] == old_glyph_name:
+        _old = str(glyph_names[i])
+        if _old == old_glyph_name:
             glyph_names[i] = new_glyph_name
             print(f"{old_glyph_name} renamed to {new_glyph_name}")
             modified = True
+        # elif _old.startswith("uni"):
+        #     new_name = map.get(_old)
+        #     if new_name:
+        #         print(f"{_old} renamed to {new_name}")
+        #         glyph_names[i] = new_name
+        #         modified = True
+        #     else:
+        #         arr = re.split(r"[\._]", _old, maxsplit=2)
+        #         print(arr[0])
+        #         _new = map.get(arr[0])
+        #         if _new:
+        #             print(f"{_old} renamed to {_new + arr[1]}")
+        #             glyph_names[i] = _new + arr[1]
+        #             modified = True
+
     if modified:
         font.setGlyphOrder(glyph_names)
 
@@ -564,7 +582,7 @@ def get_unique_identifier(
         nf_ver = font_config.nerd_font["version"]
         suffix = f"NF{nf_ver};{suffix}"
 
-    beta_str = f'-{font_config.beta}' if font_config.beta else ''
+    beta_str = f"-{font_config.beta}" if font_config.beta else ""
     return f"{font_config.version_str}{beta_str};SUBF;{postscript_name};2024;FL830;{suffix}"
 
 
@@ -909,8 +927,17 @@ def main():
             font = TTFont(input_file)
 
             # fix auto rename by FontLab
-            rename_glyph_name(font, "uni2047.liga", "question_question.liga")
-            rename_glyph_name(font, "uni00A0", "nbspace")
+            with open(
+                input_file.replace(".ttf", ".glyphs").replace("-VF", ""),
+                "r",
+                encoding="utf-8",
+            ) as f:
+                rename_glyph_name(
+                    font=font,
+                    old_glyph_name="uni2047.liga",
+                    new_glyph_name="question_question.liga",
+                    map=match_unicode_names(f.read()),
+                )
 
             font.save(
                 input_file.replace(build_option.src_dir, build_option.output_variable)

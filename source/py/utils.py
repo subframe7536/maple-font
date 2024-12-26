@@ -1,5 +1,6 @@
 from os import environ, path, remove
 import platform
+import re
 import shutil
 import subprocess
 from urllib.request import Request, urlopen
@@ -156,6 +157,7 @@ def check_font_patcher(
     print(f"FontPatcher version is not {version}, please download it from {url}")
     return False
 
+
 def download_cn_base_font(
     tag: str, zip_path: str, target_dir: str, github_mirror: str = "github.com"
 ) -> bool:
@@ -166,3 +168,13 @@ def download_cn_base_font(
         zip_path=zip_path,
         output_dir=target_dir,
     )
+
+
+def match_unicode_names(text: str) -> dict[str, str]:
+    pattern = r"glyphname = ([^;]+);[\s\S]*?unicode = (\d+);"
+    matches = re.findall(pattern, text)
+    return {
+        f"uni{int(match[1]):04X}": match[0].strip('"')
+        for match in matches
+        if not str(match[0]).startswith("uni")
+    }
