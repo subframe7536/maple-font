@@ -26,7 +26,7 @@ V7 is a completely remade version, providing variable font, redesigning more tha
 
 ### Simpified Chinese, Traditional Chinese and Japanese
 
-The CN version contails the glyphs of simplified and traditional Chinese, and Japanese, which are not as normal as most famous fonts. The CJK glyphs' spacing is much looser for better metric alignment, see details in [this issue](https://github.com/subframe7536/maple-font/issues/211).
+The CN version contails the glyphs of simplified and traditional Chinese, and Japanese, which are not as normal as most CN fonts. The CJK glyphs' spacing is much looser for better metric alignment, see details in [release notes](https://github.com/subframe7536/maple-font/releases/tag/cn-base) and [this issue](https://github.com/subframe7536/maple-font/issues/211).
 
 ![](./resources/2-1.png)
 
