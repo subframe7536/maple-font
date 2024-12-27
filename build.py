@@ -18,6 +18,7 @@ from source.py.utils import (
     check_font_patcher,
     download_cn_base_font,
     get_font_forge_bin,
+    get_font_name,
     is_ci,
     match_unicode_names,
     run,
@@ -588,14 +589,18 @@ def get_unique_identifier(
     font_config: FontConfig,
     postscript_name: str,
     narrow: bool = False,
+    ignore_suffix: bool = False
 ) -> str:
-    suffix = font_config.freeze_config_str
-    if "CN" in postscript_name and narrow:
-        suffix += "Narrow;"
+    if ignore_suffix:
+        suffix = ""
+    else:
+        suffix = font_config.freeze_config_str
+        if "CN" in postscript_name and narrow:
+            suffix += "Narrow;"
 
-    if "NF" in postscript_name:
-        nf_ver = font_config.nerd_font["version"]
-        suffix = f"NF{nf_ver};{suffix}"
+        if "NF" in postscript_name:
+            nf_ver = font_config.nerd_font["version"]
+            suffix = f"NF{nf_ver};{suffix}"
 
     beta_str = f"-{font_config.beta}" if font_config.beta else ""
     return f"{font_config.version_str}{beta_str};SUBF;{postscript_name};2024;FL830;{suffix}"
@@ -962,6 +967,16 @@ def main():
                     font,
                     fea_path,
                 )
+
+            set_font_name(
+                font,
+                get_unique_identifier(
+                    font_config=font_config,
+                    postscript_name=get_font_name(font, 6),
+                    ignore_suffix=True
+                ),
+                3,
+            )
 
             font.save(
                 input_file.replace(build_option.src_dir, build_option.output_variable)
