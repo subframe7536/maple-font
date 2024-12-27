@@ -1,12 +1,11 @@
 from os import environ, path, remove
 import platform
-import re
 import shutil
 import subprocess
 from urllib.request import Request, urlopen
 from zipfile import ZipFile
 from fontTools.ttLib import TTFont
-
+from glyphsLib import GSFont
 
 def is_ci():
     ci_envs = [
@@ -170,11 +169,16 @@ def download_cn_base_font(
     )
 
 
-def match_unicode_names(text: str) -> dict[str, str]:
-    pattern = r"glyphname = ([^;]+);[\s\S]*?unicode = (\d+);"
-    matches = re.findall(pattern, text)
-    return {
-        f"uni{int(match[1]):04X}": match[0].strip('"')
-        for match in matches
-        if not str(match[0]).startswith("uni")
-    }
+def match_unicode_names(file_path: str) -> dict[str, str]:
+    font = GSFont(file_path)
+    result = {}
+
+    for glyph in font.glyphs:
+        glyph_name = glyph.name
+        unicode_values = glyph.unicode
+
+        if glyph_name and unicode_values:
+            unicode_str = f"uni{''.join(unicode_values).upper().zfill(4)}"
+            result[unicode_str]=glyph_name
+
+    return result

@@ -1,1 +1,2 @@
 foundrytools-cli==1.1.22
+glyphsLib==6.6.1
