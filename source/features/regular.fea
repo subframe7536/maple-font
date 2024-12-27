@@ -5,7 +5,6 @@
 @Digit = [@zero one two three four five six seven eight nine];
 @DigitHex = [a b c d e f A B C D E F];
 @Space = [space nbspace];
-@noexport = [arrow_double.decorator arrow_double_rev.decorator arrow_header.decorator arrow_single.decorator arrow_single_rev.decorator];
 @a = [A a a.cv02];
 @b = [B b];
 @c = [C c];
