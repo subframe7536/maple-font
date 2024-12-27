@@ -3,6 +3,7 @@ import argparse
 import hashlib
 import importlib.util
 import json
+import re
 import shutil
 import time
 from functools import partial
@@ -530,6 +531,15 @@ def drop_mac_names(dir: str):
     run(f"ftcli name del-mac-names -r {dir}")
 
 
+def get_new_name_from_map(old_name: str, map: dict[str, str]):
+    new_name = map.get(old_name)
+    if not new_name:
+        arr = re.split(r"[\._]", old_name, maxsplit=2)
+        if map.get(arr[0]):
+            new_name = map.get(arr[0]) + old_name[len(arr[0]) :]
+    return new_name
+
+
 def rename_glyph_name(
     font: TTFont,
     map: dict[str, str],
@@ -537,25 +547,23 @@ def rename_glyph_name(
 ):
     not_ci = not is_ci()
     glyph_names = font.getGlyphOrder()
+    extra_names = font["post"].extraNames
     modified = False
+    extra_map = {"uni2047.liga": "question_question.liga", "dotlessi": "idotless"}
     for i, _ in enumerate(glyph_names):
-        _old = str(glyph_names[i])
-        if not _old.startswith("uni"):
-            continue
+        old_name = str(glyph_names[i])
 
-        _new = map.get(_old)
-        if not _new or _new == _old:
+        new_name = get_new_name_from_map(old_name, {**map, **extra_map})
+        if not new_name or new_name == old_name:
             continue
 
         if not_ci:
-            print(f"[Rename] {_old} -> {_new}")
-        glyph_names[i] = _new
+            print(f"[Rename] {old_name} -> {new_name}")
+        glyph_names[i] = new_name
         modified = True
 
-        if post_extra_names:
-            index = font["post"].extraNames.index(_old)
-            if index != -1:
-                font["post"].extraNames[index] = _new
+        if post_extra_names and old_name in extra_names:
+            extra_names[extra_names.index(old_name)] = new_name
 
     if modified:
         font.setGlyphOrder(glyph_names)
