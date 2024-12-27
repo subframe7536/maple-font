@@ -12,6 +12,7 @@ from os import listdir, makedirs, path, remove, walk, getenv
 from typing import Callable
 from zipfile import ZIP_DEFLATED, ZipFile
 from fontTools.ttLib import TTFont, newTable
+from fontTools.feaLib.builder import addOpenTypeFeatures
 from fontTools.merge import Merger
 from source.py.utils import (
     check_font_patcher,
@@ -78,6 +79,12 @@ def parse_args():
         "--feat",
         type=lambda x: x.strip().split(","),
         help="Freeze font features, splited by `,` (e.g. `--feat zero,cv01,ss07,ss08`). No effect on variable format",
+    )
+    feature_group.add_argument(
+        "--apply-fea-file",
+        default=None,
+        action="store_true",
+        help="Load feature file from `source/features/{regular,italic}.fea` to variable font",
     )
     feature_group.add_argument(
         "--hinted",
@@ -177,6 +184,7 @@ class FontConfig:
         self.use_cn_both = None
         self.ttf_only = None
         self.debug = None
+        self.apply_fea_file = None
         # the number of parallel tasks
         # when run in codespace, this will be 1
         self.pool_size = 1 if not getenv("CODESPACE_NAME") else 4
@@ -317,6 +325,9 @@ class FontConfig:
 
                 if args.ttf_only:
                     self.ttf_only = True
+
+                if args.apply_fea_file:
+                    self.apply_fea_file = True
 
                 name_arr = [word.capitalize() for word in self.family_name.split(" ")]
                 if not self.enable_liga:
@@ -549,7 +560,11 @@ def rename_glyph_name(
     glyph_names = font.getGlyphOrder()
     extra_names = font["post"].extraNames
     modified = False
-    extra_map = {"uni2047.liga": "question_question.liga", "dotlessi": "idotless"}
+    extra_map = {
+        "uni2047.liga": "question_question.liga",
+        "dotlessi": "idotless",
+        "f_f": "f_f.liga",
+    }
     for i, _ in enumerate(glyph_names):
         old_name = str(glyph_names[i])
 
@@ -920,19 +935,33 @@ def main():
 
     if not should_use_cache or not build_option.has_cache():
         input_files = [
-            f"{build_option.src_dir}/MapleMono-Italic[wght]-VF.ttf",
-            f"{build_option.src_dir}/MapleMono[wght]-VF.ttf",
+            joinPaths(build_option.src_dir, "MapleMono-Italic[wght]-VF.ttf"),
+            joinPaths(build_option.src_dir, "MapleMono[wght]-VF.ttf"),
         ]
         for input_file in input_files:
             font = TTFont(input_file)
 
             # fix auto rename by FontLab
+            print("Fix names")
             rename_glyph_name(
                 font=font,
                 map=match_unicode_names(
                     input_file.replace(".ttf", ".glyphs").replace("-VF", "")
                 ),
             )
+
+            if font_config.apply_fea_file:
+                fea_path = joinPaths(
+                    build_option.src_dir,
+                    "features/italic.fea"
+                    if "Italic" in input_file
+                    else "features/regular.fea",
+                )
+                print(f"Apply feature file {fea_path} into {path.basename(input_file)}")
+                addOpenTypeFeatures(
+                    font,
+                    fea_path,
+                )
 
             font.save(
                 input_file.replace(build_option.src_dir, build_option.output_variable)

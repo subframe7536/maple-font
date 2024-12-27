@@ -138,8 +138,11 @@ There are three kind of options for feature freeze:
 2. `disable`: Remove the features in `cvXX` / `ssXX` / `zero`, which will no longer effect, even if you enable it manually
 3. `ignore`: Do nothing
 
-### Chinese version
+#### Load Custom Feature File
 
+Run `build.py` with `--apply-fea-file` flag, the feature file from [`source/features/{regular,italic}.fea`](./source/features) will be applied into variable font. You can modify it to change all features, e.g. remove some ligatures in `calt`.
+
+### Chinese version
 
 Run `python build.py --cn`, the CN base fonts (about 135 MB) will download from GitHub.
 
@@ -152,39 +155,42 @@ The build script will auto download neccessory assets from GitHub. If you have t
 ### Build Script Usage
 
 ```
-usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--hinted] [--no-hinted]
-                [--liga] [--no-liga] [--cn-narrow] [--nerd-font | --no-nerd-font]
-                [--cn | --no-cn] [--cn-both] [--ttf-only] [--cache] [--archive]
+usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--apply-fea-file] [--hinted]
+                [--no-hinted] [--liga] [--no-liga] [--cn-narrow]
+                [--nerd-font | --no-nerd-font] [--cn | --no-cn] [--cn-both] [--ttf-only]
+                [--cache] [--archive]
 
 ✨ Builder and optimizer for Maple Mono
 
 options:
-  -h, --help      show this help message and exit
-  -v, --version   show program's version number and exit
-  -d, --dry       Output config and exit
-  --debug         Add `Debug` suffix to family name, skip optimization
+  -h, --help        show this help message and exit
+  -v, --version     show program's version number and exit
+  -d, --dry         Output config and exit
+  --debug           Add `Debug` suffix to family name, skip optimization
 
 Feature Options:
-  -n, --normal    Use normal preset, just like `JetBrains Mono` with slashed zero
-  --feat FEAT     Freeze font features, splited by `,` (e.g. `--feat
-                  zero,cv01,ss07,ss08`). No effect on variable format
-  --hinted        Use hinted font as base font
-  --no-hinted     Use unhinted font as base font
-  --liga          Preserve all the ligatures
-  --no-liga       Remove all the ligatures
-  --cn-narrow     Make CN characters narrow (experimental)
+  -n, --normal      Use normal preset, just like `JetBrains Mono` with slashed zero
+  --feat FEAT       Freeze font features, splited by `,` (e.g. `--feat
+                    zero,cv01,ss07,ss08`). No effect on variable format
+  --apply-fea-file  Load feature file from `source/features/{regular,italic}.fea` to
+                    variable font
+  --hinted          Use hinted font as base font
+  --no-hinted       Use unhinted font as base font
+  --liga            Preserve all the ligatures
+  --no-liga         Remove all the ligatures
+  --cn-narrow       Make CN characters narrow (experimental)
 
 Build Options:
-  --nerd-font     Build Nerd-Font version
-  --no-nerd-font  Do not build Nerd-Font version
-  --cn            Build Chinese version
-  --no-cn         Do not build Chinese version
-  --cn-both       Build both `Maple Mono CN` and `Maple Mono NF CN`. Nerd-Font version
-                  must be enabled
-  --ttf-only      Only build unhinted TTF format
-  --cache         Reuse font cache of TTF, OTF and Woff2 formats
-  --archive       Build font archives with config and license. If has `--cache` flag,
-                  only archive Nerd-Font and CN formats
+  --nerd-font       Build Nerd-Font version
+  --no-nerd-font    Do not build Nerd-Font version
+  --cn              Build Chinese version
+  --no-cn           Do not build Chinese version
+  --cn-both         Build both `Maple Mono CN` and `Maple Mono NF CN`. Nerd-Font version
+                    must be enabled
+  --ttf-only        Only build unhinted TTF format
+  --cache           Reuse font cache of TTF, OTF and Woff2 formats
+  --archive         Build font archives with config and license. If has `--cache` flag,
+                    only archive Nerd-Font and CN formats
 ```
 
 ## Credit
