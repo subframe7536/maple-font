@@ -5,6 +5,12 @@ on:
     tags:
       - v*
   workflow_dispatch:
+    inputs:
+      build_args:
+        description: 'Args for build.py'
+        required: false
+        default: ''
+        type: string
 
 permissions:
   contents: write
@@ -30,8 +36,8 @@ jobs:
     - run: pip install -r requirements.txt
     - name: Build fonts
       run: |
-        python build.py --archive --cn-both --hinted ${{ matrix.config.args }}
-        python build.py --archive --cn-both --no-hinted --cache ${{ matrix.config.args }}
+        python build.py --archive --cn-both --hinted ${{ matrix.config.args }} ${{ github.event.inputs.build_args }}
+        python build.py --archive --cn-both --no-hinted --cache ${{ matrix.config.args }} ${{ github.event.inputs.build_args }}
     - uses: actions/upload-artifact@v4
       with:
         name: release-artifacts-${{ matrix.config.name }}
@@ -42,6 +48,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
     - uses: actions/download-artifact@v4
       with:
         pattern: release-artifacts*
@@ -52,9 +60,16 @@ jobs:
         TAG="${{ github.ref_name }}"
         if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
           TAG="v$(date +%s)"
+          PREV=$(git tag --list --sort=committerdate | tail -n 1)
+          CHANGELOG=$(git log --pretty=format:"- %s" "$PREV"..HEAD)
+        else
+          PREV=$(git tag --list --sort=committerdate | tail -n 2 | head -n 1)
+          CHANGELOG=$(git log --pretty=format:"- %s" "$PREV".."$TAG")
         fi
+        sed -i 's|<!-- changelog -->|'"${CHANGELOG//$'\n'/\\n}"'|' .github/release_template.md
 
         sed -i "s|https://<url>|https://github.com/subframe7536/maple-font/releases/download/${TAG//\//\\/}|g" .github/release_template.md
+
 
         TITLE=$(python3 -c "print(' '.join(part.capitalize() for part in '$TAG'.split('-')))")
 
