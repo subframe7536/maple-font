@@ -1751,6 +1751,10 @@ feature cv04 {
   sub ldot by ldot.cv04;
   sub lslash by lslash.cv04;
   sub one by one.cv04;
+  sub one.dnom by one.dnom.cv04;
+  sub one.numr by one.numr.cv04;
+  sub oneinferior by oneinferior.cv04;
+  sub onesuperior by onesuperior.cv04;
 
   sub C_l.liga by C_l.liga.cv04;
   sub a_l.liga by a_l.liga.cv04;

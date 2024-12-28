@@ -962,7 +962,7 @@ def main():
                     if "Italic" in input_file
                     else "features/regular.fea",
                 )
-                print(f"Apply feature file {fea_path} into {path.basename(input_file)}")
+                print(f"Apply feature file [{fea_path}] into [{path.basename(input_file)}]")
                 addOpenTypeFeatures(
                     font,
                     fea_path,
