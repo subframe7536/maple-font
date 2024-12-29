@@ -55,13 +55,20 @@ def parse_tag(args):
     if not tag.startswith("v"):
         tag = f"v{tag}"
 
-    if not re.match(r"^v\d+\.\d+$", tag):
-        raise ValueError(f"Invalide tag: {tag}, format: v7.0")
+    match = re.match(r"^v(\d+)\.(\d+)$", tag)
+    if not match:
+        raise ValueError(f"Invalid tag: {tag}, expected format: v7.0")
+
+    major, minor = match.groups()
+    # Remove leading zero from the minor version if necessary
+    minor = str(int(minor))
+    tag = f"v{major}.{minor}"
 
     if args.beta:
         tag += "-" if args.beta.startswith("beta") else "-beta" + args.beta
 
     return tag
+
 
 def update_build_script_version(tag):
     with open("build.py", "r", encoding="utf-8") as f:
@@ -118,12 +125,12 @@ def main():
     run(f"ftcli converter ft2wf -f woff2 ./fonts/TTF -out {target_dir}")
     run(f"ftcli converter ft2wf -f woff ./fonts/TTF -out {target_dir}")
     rename_files(target_dir)
-    print('Generate fontsource files')
+    print("Generate fontsource files")
     run("ftcli converter ft2wf -f woff2 ./fonts/Variable -out woff2/var")
     print("Update variable WOFF2")
 
     if not args.dry:
-       git_commit(tag)
+        git_commit(tag)
 
     print("Dry run")
     return
