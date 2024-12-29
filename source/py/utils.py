@@ -7,6 +7,7 @@ from zipfile import ZipFile
 from fontTools.ttLib import TTFont
 from glyphsLib import GSFont
 
+
 def is_ci():
     ci_envs = [
         "JENKINS_HOME",
@@ -86,47 +87,51 @@ def parse_github_mirror(github_mirror: str) -> str:
     return f"https://{github}"
 
 
+def download_file(url: str, target_path: str):
+    user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
+    req = Request(url, headers={"User-Agent": user_agent})
+    not_ci = not is_ci()
+    with urlopen(req) as response, open(target_path, "wb") as out_file:
+        total_size = int(response.getheader("Content-Length").strip())
+        downloaded_size = 0
+        block_size = 8192
+
+        while True:
+            buffer = response.read(block_size)
+            if not buffer:
+                break
+
+            out_file.write(buffer)
+
+            if not_ci:
+                downloaded_size += len(buffer)
+                percent_downloaded = (downloaded_size / total_size) * 100
+                print(
+                    f"Downloading: [{percent_downloaded:.2f}%] {downloaded_size} / {total_size}",
+                    end="\r",
+                )
+
+
 def download_zip_and_extract(
     name: str, url: str, zip_path: str, output_dir: str, remove_zip: bool = False
 ) -> bool:
+    if not path.exists(zip_path):
+        print(f"{name} does not exist, download from {url}")
+        try:
+            download_file(url, target_path=zip_path)
+        except Exception as e:
+            print(
+                f"\nFail to download {name}. Please check your internet connection or download it manually from {url}, then put downloaded zip into project's root and run this script again. \n    Error: {e}"
+            )
+            return False
     try:
-        if not path.exists(zip_path):
-            try:
-                print(f"{name} does not exist, download from {url}")
-                user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
-                req = Request(url, headers={"User-Agent": user_agent})
-                with urlopen(req) as response, open(zip_path, "wb") as out_file:
-                    total_size = int(response.getheader("Content-Length").strip())
-                    downloaded_size = 0
-                    block_size = 8192
-
-                    while True:
-                        buffer = response.read(block_size)
-                        if not buffer:
-                            break
-
-                        out_file.write(buffer)
-
-                        if not is_ci():
-                            downloaded_size += len(buffer)
-
-                            percent_downloaded = (downloaded_size / total_size) * 100
-                            print(
-                                f"Downloading {name}: [{percent_downloaded:.2f}%] {downloaded_size} / {total_size}",
-                                end="\r",
-                            )
-            except Exception as e:
-                print(
-                    f"\nFail to download {name}. Please check your internet connection or download it manually from {url}, then put downloaded zip into project's root and run this script again. \n    Error: {e}"
-                )
-                return False
         with ZipFile(zip_path, "r") as zip_ref:
             zip_ref.extractall(output_dir)
         if remove_zip:
             remove(zip_path)
         return True
     except Exception as e:
-        print(f"Download zip and extract failed, error: {e}")
+        print(f"Fail to extract {name}. Error: {e}")
         return False
 
 
@@ -179,6 +184,6 @@ def match_unicode_names(file_path: str) -> dict[str, str]:
 
         if glyph_name and unicode_values:
             unicode_str = f"uni{''.join(unicode_values).upper().zfill(4)}"
-            result[unicode_str]=glyph_name
+            result[unicode_str] = glyph_name
 
     return result
