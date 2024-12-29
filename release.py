@@ -129,11 +129,10 @@ def main():
     run("ftcli converter ft2wf -f woff2 ./fonts/Variable -out woff2/var")
     print("Update variable WOFF2")
 
-    if not args.dry:
+    if args.dry:
+        print("Dry run")
+    else:
         git_commit(tag)
-
-    print("Dry run")
-    return
 
 
 if __name__ == "__main__":

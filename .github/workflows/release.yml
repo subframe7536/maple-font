@@ -73,6 +73,6 @@ jobs:
 
         TITLE=$(python3 -c "print(' '.join(part.capitalize() for part in '$TAG'.split('-')))")
 
-        gh release create "$TAG" release/**/*.* --notes-file .github/release_template.md --draft -t $TITLE
+        gh release create "$TAG" release/**/*.* --notes-file .github/release_template.md --draft -t "$TITLE"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
