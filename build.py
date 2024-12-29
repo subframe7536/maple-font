@@ -589,7 +589,7 @@ def get_unique_identifier(
     font_config: FontConfig,
     postscript_name: str,
     narrow: bool = False,
-    ignore_suffix: bool = False
+    ignore_suffix: bool = False,
 ) -> str:
     if ignore_suffix:
         suffix = ""
@@ -945,9 +945,10 @@ def main():
         ]
         for input_file in input_files:
             font = TTFont(input_file)
+            basename = path.basename(input_file)
 
             # fix auto rename by FontLab
-            print("Fix names")
+            print(f"Fix names for {basename}")
             rename_glyph_name(
                 font=font,
                 map=match_unicode_names(
@@ -962,7 +963,7 @@ def main():
                     if "Italic" in input_file
                     else "features/regular.fea",
                 )
-                print(f"Apply feature file [{fea_path}] into [{path.basename(input_file)}]")
+                print(f"Apply feature file [{fea_path}] into [{basename}]")
                 addOpenTypeFeatures(
                     font,
                     fea_path,
@@ -973,7 +974,7 @@ def main():
                 get_unique_identifier(
                     font_config=font_config,
                     postscript_name=get_font_name(font, 6),
-                    ignore_suffix=True
+                    ignore_suffix=True,
                 ),
                 3,
             )
