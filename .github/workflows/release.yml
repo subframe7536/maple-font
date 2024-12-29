@@ -61,10 +61,10 @@ jobs:
         if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
           TAG="v$(date +%s)"
           PREV=$(git tag --list --sort=committerdate | tail -n 1)
-          CHANGELOG=$(git log --pretty=format:"- %s" "$PREV"..HEAD)
+          CHANGELOG=$(git log --pretty=format:"- %s" "$PREV"..HEAD | awk '1; END {print ""}' | tail -r)
         else
           PREV=$(git tag --list --sort=committerdate | tail -n 2 | head -n 1)
-          CHANGELOG=$(git log --pretty=format:"- %s" "$PREV".."$TAG")
+          CHANGELOG=$(git log --pretty=format:"- %s" "$PREV".."$TAG" | sed '1d' | awk '1; END {print ""}' | tail -r)
         fi
         sed -i 's|<!-- changelog -->|'"${CHANGELOG//$'\n'/\\n}"'|' .github/release_template.md
 
