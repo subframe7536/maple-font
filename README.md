@@ -79,7 +79,7 @@ paru -S ttf-maple-beta
 
 ### Maple Mono
 
-- [fontsource](https://github.com/fontsource/font-files/pull/90)
+- [fontsource](https://fontsource.org/fonts/maple-mono)
 - [ZeoSeven Fonts](https://fonts.zeoseven.com/items/443/)
 
 ### Maple Mono CN
