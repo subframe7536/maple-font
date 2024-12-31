@@ -29,7 +29,7 @@ def format_filename(filename: str):
     style = match.group(1)
 
     weight = weight_map[style.removesuffix("Italic") if style != "Italic" else "Italic"]
-    suf = "normal" if "italic" in filename.lower() else "italic"
+    suf = "italic" if "italic" in filename.lower() else "normal"
 
     new_filename = f"maple-mono-latin-{weight}-{suf}.{match.group(2)}"
     return new_filename
