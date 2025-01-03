@@ -624,15 +624,15 @@ def change_char_width(font: TTFont, match_width: int, target_width: int):
 
 def update_font_names(
     font: TTFont,
-    family_name: str,
-    style_name: str,
-    full_name: str,
-    version_str: str,
-    postscript_name: str,
-    unique_identifier: str,
+    family_name: str,  # NameID 1
+    style_name: str,  # NameID 2
+    unique_identifier: str,  # NameID 3
+    full_name: str,  # NameID 4
+    version_str: str,  # NameID 5
+    postscript_name: str,  # NameID 6
     is_skip_subfamily: bool,
-    base_family_name: str = None,  # Optional base family name for NameID 16
-    subfamily_name: str = None,  # Optional subfamily name for NameID 17
+    preferred_family_name: str = None,  # NameID 16
+    preferred_style_name: str = None,  # NameID 17
 ):
     set_font_name(font, family_name, 1)
     set_font_name(font, style_name, 2)
@@ -641,9 +641,9 @@ def update_font_names(
     set_font_name(font, version_str, 5)
     set_font_name(font, postscript_name, 6)
 
-    if not is_skip_subfamily and base_family_name and subfamily_name:
-        set_font_name(font, base_family_name, 16)
-        set_font_name(font, subfamily_name, 17)
+    if not is_skip_subfamily and preferred_family_name and preferred_style_name:
+        set_font_name(font, preferred_family_name, 16)
+        set_font_name(font, preferred_style_name, 17)
 
 
 def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
@@ -674,8 +674,8 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
             postscript_name=postscript_name,
         ),
         is_skip_subfamily=is_skip_subfamily,
-        base_family_name=font_config.family_name,
-        subfamily_name=style_in_17,
+        preferred_family_name=font_config.family_name,
+        preferred_style_name=style_in_17,
     )
 
     # https://github.com/ftCLI/FoundryTools-CLI/issues/166#issuecomment-2095433585
@@ -701,13 +701,17 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
     print(f"Auto hint {postscript_name}.ttf")
     run(f"ftcli ttf autohint {target_path} -out {build_option.output_ttf_hinted}")
     print(f"Convert {postscript_name}.ttf to WOFF2")
-    run(f"ftcli converter ft2wf {target_path} -out {build_option.output_woff2} -f woff2")
+    run(
+        f"ftcli converter ft2wf {target_path} -out {build_option.output_woff2} -f woff2"
+    )
 
     _otf_path = joinPaths(
         build_option.output_otf, path.basename(target_path).replace(".ttf", ".otf")
     )
     print(f"Convert {postscript_name}.ttf to OTF")
-    run(f"ftcli converter ttf2otf --silent {target_path} -out {build_option.output_otf}")
+    run(
+        f"ftcli converter ttf2otf --silent {target_path} -out {build_option.output_otf}"
+    )
     if not font_config.debug:
         print(f"Optimize {postscript_name}.otf")
         run(f"ftcli otf fix-contours --silent {_otf_path}")
@@ -792,8 +796,8 @@ def build_nf(
             postscript_name=postscript_name,
         ),
         is_skip_subfamily=is_skip_sufamily,
-        base_family_name=f"{font_config.family_name} NF",
-        subfamily_name=style_in_17,
+        preferred_family_name=f"{font_config.family_name} NF",
+        preferred_style_name=style_in_17,
     )
 
     target_path = joinPaths(
@@ -841,8 +845,8 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
             narrow=font_config.cn["narrow"],
         ),
         is_skip_subfamily=is_skip_subfamily,
-        base_family_name=f"{font_config.family_name} {build_option.cn_suffix}",
-        subfamily_name=style_in_17,
+        preferred_family_name=f"{font_config.family_name} {build_option.cn_suffix}",
+        preferred_style_name=style_in_17,
     )
 
     cn_font["OS/2"].xAvgCharWidth = 600
