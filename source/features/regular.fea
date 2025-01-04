@@ -479,7 +479,7 @@ feature calt {
   # >=
   lookup greater_equal.liga {
     ignore sub [greater equal] greater' equal;
-    ignore sub greater' equal [equal greater less @NormalSeparator];
+    ignore sub greater' equal [equal greater less @NormalSeparator question];
     sub SPC equal' by greater_equal.liga;
     sub greater' equal by SPC;
   } greater_equal.liga;
