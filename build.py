@@ -454,13 +454,29 @@ class BuildOption:
                     target_dir=self.cn_static_dir,
                     github_mirror=config.github_mirror,
                 )
-            if not config.cn["use_static_base_font"]:
-                return download_cn_base_font(
+
+            if config.cn["clean_cache"]:
+                shutil.rmtree(self.cn_static_dir, ignore_errors=True)
+
+            if not config.cn["use_static_base_font"] or not path.exists(self.cn_static_dir):
+                if (
+                    path.exists(self.cn_variable_dir)
+                    and listdir(self.cn_variable_dir).__len__() == 2
+                ):
+                    print("No static CN fonts but detect CN base fonts")
+                    instantiate_cn_base(self.cn_variable_dir, self.cn_static_dir)
+                    return True
+
+                result = download_cn_base_font(
                     tag=tag,
                     zip_path="cn-base-variable.zip",
                     target_dir=self.cn_variable_dir,
                     github_mirror=config.github_mirror,
                 )
+                if result:
+                    instantiate_cn_base(self.cn_variable_dir, self.cn_static_dir)
+                    return True
+
             print("\nCN base fonts don't exist. Skip CN build.")
             return False
         return True
@@ -484,6 +500,22 @@ def handle_ligatures(
         calt=enable_ligature,
         moving_rules=["ss03", "ss07", "ss08"],
         config=freeze_config,
+    )
+
+
+def instantiate_cn_base(cn_variable_dir: str, cn_static_dir: str):
+    print("=========================================")
+    print("Instantiating CN Base font, be patient...")
+    print("=========================================")
+    run(
+        f"ftcli converter vf2i {cn_variable_dir} -out {cn_static_dir}",
+        log=True,
+    )
+    run(f"ftcli ttf fix-contours {cn_static_dir}", log=True)
+    run(f"ftcli ttf remove-overlaps {cn_static_dir}", log=True)
+    run(
+        f"ftcli utils del-table -t kern -t GPOS {cn_static_dir}",
+        log=True,
     )
 
 
@@ -1043,21 +1075,6 @@ def main():
     # =========================================================================================
 
     if not font_config.ttf_only and build_option.should_build_cn(font_config):
-        if not path.exists(build_option.cn_static_dir) or font_config.cn["clean_cache"]:
-            print("=========================================")
-            print("Instantiating CN Base font, be patient...")
-            print("=========================================")
-            run(
-                f"ftcli converter vf2i {build_option.cn_variable_dir} -out {build_option.cn_static_dir}",
-                log=True,
-            )
-            run(f"ftcli ttf fix-contours {build_option.cn_static_dir}", log=True)
-            run(f"ftcli ttf remove-overlaps {build_option.cn_static_dir}", log=True)
-            run(
-                f"ftcli utils del-table -t kern -t GPOS {build_option.cn_static_dir}",
-                log=True,
-            )
-
         def _build_cn():
             print(
                 f"\n🔎 Build CN fonts {'with Nerd-Font' if font_config.should_cn_use_nerd_font() else ''}...\n"
