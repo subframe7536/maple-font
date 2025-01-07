@@ -87,28 +87,30 @@ def parse_args():
         action="store_true",
         help="Load feature file from `source/features/{regular,italic}.fea` to variable font",
     )
-    feature_group.add_argument(
+    hint_group = feature_group.add_mutually_exclusive_group()
+    hint_group.add_argument(
         "--hinted",
         dest="hinted",
         default=None,
         action="store_true",
         help="Use hinted font as base font",
     )
-    feature_group.add_argument(
+    hint_group.add_argument(
         "--no-hinted",
         dest="hinted",
         default=None,
         action="store_false",
         help="Use unhinted font as base font",
     )
-    feature_group.add_argument(
+    liga_group = feature_group.add_mutually_exclusive_group()
+    liga_group.add_argument(
         "--liga",
         dest="liga",
         default=None,
         action="store_true",
         help="Preserve all the ligatures",
     )
-    feature_group.add_argument(
+    liga_group.add_argument(
         "--no-liga",
         dest="liga",
         default=None,
@@ -166,6 +168,11 @@ def parse_args():
         "--cache",
         action="store_true",
         help="Reuse font cache of TTF, OTF and Woff2 formats",
+    )
+    build_group.add_argument(
+        "--cn-rebuild",
+        action="store_true",
+        help="Reinstantiate CN base font",
     )
     build_group.add_argument(
         "--archive",
@@ -338,6 +345,10 @@ class FontConfig:
         if args.apply_fea_file:
             self.apply_fea_file = True
 
+        if args.cn_rebuild:
+            self.cn["clean_cache"] = True
+            self.cn["use_static_base_font"] = False
+
         name_arr = [word.capitalize() for word in self.family_name.split(" ")]
         if not self.enable_liga:
             name_arr.append("NL")
@@ -444,6 +455,11 @@ class BuildOption:
                 '\nNo `"cn.enable": true` in config.json or no `--cn` / `--cn-both` in argv. Skip CN build.'
             )
             return False
+
+        if config.cn["clean_cache"]:
+            print("Clean CN static fonts")
+            shutil.rmtree(self.cn_static_dir, ignore_errors=True)
+
         if (
             not path.exists(self.cn_static_dir)
             or listdir(self.cn_static_dir).__len__() != 16
@@ -457,10 +473,9 @@ class BuildOption:
                     github_mirror=config.github_mirror,
                 )
 
-            if config.cn["clean_cache"]:
-                shutil.rmtree(self.cn_static_dir, ignore_errors=True)
-
-            if not config.cn["use_static_base_font"] or not path.exists(self.cn_static_dir):
+            if not config.cn["use_static_base_font"] or not path.exists(
+                self.cn_static_dir
+            ):
                 if (
                     path.exists(self.cn_variable_dir)
                     and listdir(self.cn_variable_dir).__len__() == 2

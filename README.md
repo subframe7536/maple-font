@@ -162,10 +162,10 @@ The build script will auto download neccessory assets from GitHub. If you have t
 ### Build Script Usage
 
 ```
-usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--apply-fea-file] [--hinted]
-                [--no-hinted] [--liga] [--no-liga] [--cn-narrow]
+usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--apply-fea-file]
+                [--hinted | --no-hinted] [--liga | --no-liga] [--cn-narrow]
                 [--nerd-font | --no-nerd-font] [--cn | --no-cn] [--cn-both] [--ttf-only]
-                [--cache] [--archive]
+                [--cache] [--cn-rebuild] [--archive]
 
 ✨ Builder and optimizer for Maple Mono
 
@@ -196,6 +196,7 @@ Build Options:
                     must be enabled
   --ttf-only        Only build unhinted TTF format
   --cache           Reuse font cache of TTF, OTF and Woff2 formats
+  --cn-rebuild      Reinstantiate CN base font
   --archive         Build font archives with config and license. If has `--cache` flag,
                     only archive Nerd-Font and CN formats
 ```
