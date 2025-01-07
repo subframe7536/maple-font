@@ -148,7 +148,7 @@ def check_font_patcher(
                 shutil.rmtree("FontPatcher", ignore_errors=True)
 
     zip_path = "FontPatcher.zip"
-    url = f"{parse_github_mirror(github_mirror)}/ryanoasis/nerd-fonts/releases/download/v{version}/{zip_path}"
+    url = f"https://{github_mirror}/ryanoasis/nerd-fonts/releases/download/v{version}/{zip_path}"
     if not download_zip_and_extract(
         name="Nerd Font Patcher", url=url, zip_path=zip_path, output_dir=target_dir
     ):
@@ -165,7 +165,7 @@ def check_font_patcher(
 def download_cn_base_font(
     tag: str, zip_path: str, target_dir: str, github_mirror: str = "github.com"
 ) -> bool:
-    url = f"{parse_github_mirror(github_mirror)}/subframe7536/maple-font/releases/download/{tag}/{zip_path}"
+    url = f"https://{github_mirror}/subframe7536/maple-font/releases/download/{tag}/{zip_path}"
     return download_zip_and_extract(
         name=f"{'Static' if 'static' in zip_path else 'Variable'} CN Base Font",
         url=url,

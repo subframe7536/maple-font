@@ -8,7 +8,7 @@ import shutil
 import time
 from functools import partial
 from multiprocessing import Pool
-from os import listdir, makedirs, path, remove, walk, getenv
+from os import environ, listdir, makedirs, path, remove, walk, getenv
 from typing import Callable
 from zipfile import ZIP_DEFLATED, ZipFile
 from fontTools.ttLib import TTFont, newTable
@@ -203,7 +203,7 @@ class FontConfig:
         self.use_hinted = True
         # whether to enable ligature
         self.enable_liga = True
-        self.github_mirror = "github.com"
+        self.github_mirror = environ.get("GITHUB", "github.com")
         self.feature_freeze = {
             "cv01": "ignore",
             "cv02": "ignore",
@@ -568,8 +568,7 @@ def fix_cn_cv(font: TTFont):
                 feature_record.Feature.LookupListIndex[0]
             ].SubTable[0]
             sub_table.mapping = {
-                value: f"{value}.full"
-                for value in config[feature_record.FeatureTag]
+                value: f"{value}.full" for value in config[feature_record.FeatureTag]
             }
 
 
