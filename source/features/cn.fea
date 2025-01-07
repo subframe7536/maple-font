@@ -13,10 +13,20 @@ lookup CN2TW {
   sub uniFF1F by uniFF1F.tw;
 } CN2TW;
 
-lookup full_width_e {
-  sub emdash by emdash.cv98;
-  sub ellipsis by ellipsis.cv98;
-} full_width_e;
+lookup full_width_quote {
+  sub quoteleft by quoteleft.full;
+  sub quoteright by quoteright.full;
+  sub quotedblleft by quotedblleft.full;
+  sub quotedblright by quotedblright.full;
+} full_width_quote;
+
+lookup full_width_ellipsis {
+  sub ellipsis by ellipsis.full;
+} full_width_ellipsis;
+
+lookup full_width_emdash {
+  sub emdash by emdash.full;
+} full_width_emdash;
 
 feature ccmp {
 # GSUB feature: Glyph Composition / Decomposition
@@ -48,8 +58,26 @@ feature ccmp {
 
 } ccmp;
 
+feature locl {
+  language ZHH; # Chinese, Traditional, Hong Kong SAR
+  lookup CN2TW;
+  language ZHT; # Chinese, Traditional
+  lookup CN2TW;
+} locl;
+
+# “” ‘’
+feature cv96 {
+	lookup full_width_quote;
+} cv96;
+
+# ……
+feature cv97 {
+	lookup full_width_ellipsis;
+} cv97;
+
+# ——
 feature cv98 {
-	lookup full_width_e;
+	lookup full_width_emdash;
 } cv98;
 
 feature cv99 {

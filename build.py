@@ -208,6 +208,8 @@ class FontConfig:
             "cv34": "ignore",
             "cv35": "ignore",
             "cv36": "ignore",
+            "cv96": "ignore",
+            "cv97": "ignore",
             "cv98": "ignore",
             "cv99": "ignore",
             "ss01": "ignore",
@@ -537,21 +539,23 @@ def parse_style_name(style_name_compact: str, skip_subfamily_list: list[str]):
         )
 
 
-def fix_cv98(font: TTFont):
+def fix_cn_cv(font: TTFont):
     gsub_table = font["GSUB"].table
-    feature_list = gsub_table.FeatureList
+    config = {
+        "cv96": ["quoteleft", "quoteright", "quotedblleft", "quotedblright"],
+        "cv97": ["ellipsis"],
+        "cv98": ["emdash"],
+    }
 
-    for feature_record in feature_list.FeatureRecord:
-        if feature_record.FeatureTag != "cv98":
-            continue
-        sub_table = gsub_table.LookupList.Lookup[
-            feature_record.Feature.LookupListIndex[0]
-        ].SubTable[0]
-        sub_table.mapping = {
-            "emdash": "emdash.cv98",
-            "ellipsis": "ellipsis.cv98",
-        }
-        break
+    for feature_record in gsub_table.FeatureList.FeatureRecord:
+        if feature_record.FeatureTag in config:
+            sub_table = gsub_table.LookupList.Lookup[
+                feature_record.Feature.LookupListIndex[0]
+            ].SubTable[0]
+            sub_table.mapping = {
+                value: f"{value}.full"
+                for value in config[feature_record.FeatureTag]
+            }
 
 
 def remove_locl(font: TTFont):
@@ -884,7 +888,8 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
     cn_font["OS/2"].xAvgCharWidth = 600
 
     # https://github.com/subframe7536/maple-font/issues/188
-    fix_cv98(cn_font)
+    # https://github.com/subframe7536/maple-font/issues/313
+    fix_cn_cv(cn_font)
 
     handle_ligatures(
         font=cn_font,
@@ -1075,6 +1080,7 @@ def main():
     # =========================================================================================
 
     if not font_config.ttf_only and build_option.should_build_cn(font_config):
+
         def _build_cn():
             print(
                 f"\n🔎 Build CN fonts {'with Nerd-Font' if font_config.should_cn_use_nerd_font() else ''}...\n"

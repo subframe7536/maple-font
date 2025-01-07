@@ -165,7 +165,9 @@ fixme))
 
 #### CN Only
 
-- cv98: Full width `…`(ellipsis) and `—`(emdash)
+- cv96: Full width `“`(double quote left), `”`(double quote right), `‘`(single quote left), `’`(single quote right)
+- cv97: Full width `…`(ellipsis)
+- cv98: Full width `—`(emdash)
 - cv99: Traditional punctuations
 
 ### Style Sets (ssXX)

@@ -15,6 +15,8 @@
     "cv34": "enable",
     "cv35": "enable",
     "cv36": "enable",
+    "cv96": "ignore",
+    "cv97": "ignore",
     "cv98": "ignore",
     "cv99": "ignore",
     "ss01": "ignore",
