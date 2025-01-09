@@ -151,7 +151,7 @@ fixme))
 
 - zero: `0` with dot style
 - cv01: `@ $ & % Q => ->` without gap
-- cv02: `a` with top arm
+- cv02: `a` with top arm, no effect on italic `a`
 - cv03: `i` without left bottom bar
 - cv04: `l` with left bottom bar, like consolas, will be overrided by cv35 in italic style
 
@@ -161,7 +161,7 @@ fixme))
 - cv33: italic `i j` with left bottom bar and horizen top bar, just like regular style
 - cv34: italic `k` without circle, just like regular style
 - cv35: italic `l` without tail, just like regular style
-- cv36: italic `x` without tail, just like regular style
+- cv36: italic `x` without tails, just like regular style
 
 #### CN Only
 
