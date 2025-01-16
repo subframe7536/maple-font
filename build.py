@@ -203,7 +203,6 @@ class FontConfig:
         self.use_hinted = True
         # whether to enable ligature
         self.enable_liga = True
-        self.github_mirror = environ.get("GITHUB", "github.com")
         self.feature_freeze = {
             "cv01": "ignore",
             "cv02": "ignore",
@@ -361,31 +360,12 @@ class FontConfig:
             self.feature_freeze, self.enable_liga
         )
 
-    def should_use_font_patcher(self) -> bool:
-        if not (
-            len(self.nerd_font["extra_args"]) > 0
-            or self.nerd_font["use_font_patcher"]
-            or self.nerd_font["glyphs"] != ["--complete"]
-        ):
-            return False
-
-        if check_font_patcher(
-            version=self.nerd_font["version"],
-            github_mirror=self.github_mirror,
-        ) and not path.exists(self.nerd_font["font_forge_bin"]):
-            print(
-                f"FontForge bin({self.nerd_font['font_forge_bin']}) not found. Use prebuild Nerd-Font base font instead."
-            )
-            return False
-
-        return True
-
-    def should_cn_use_nerd_font(self) -> bool:
+    def should_build_nf_cn(self) -> bool:
         return self.cn["with_nerd_font"] and self.nerd_font["enable"]
 
     def toggle_nf_cn_config(self) -> bool:
         if not self.nerd_font["enable"]:
-            print("❗Nerd-Font version is disabled. Toggle failed.")
+            print("❗Nerd-Font version is disabled, skip toggle.")
             return False
         self.cn["with_nerd_font"] = not self.cn["with_nerd_font"]
         return True
@@ -438,6 +418,7 @@ class BuildOption:
             and check_cache_dir(self.output_ttf_hinted)
             and check_cache_dir(self.output_woff2)
         )
+        self.github_mirror = environ.get("GITHUB", "github.com")
 
     def load_cn_dir_and_suffix(self, with_nerd_font: bool) -> None:
         if with_nerd_font:
@@ -448,6 +429,25 @@ class BuildOption:
             self.cn_base_font_dir = joinPaths(self.output_dir, "TTF")
             self.cn_suffix = self.cn_suffix_compact = "CN"
         self.output_cn = joinPaths(self.output_dir, self.cn_suffix_compact)
+
+    def should_use_font_patcher(self, config: FontConfig) -> bool:
+        if not (
+            len(config.nerd_font["extra_args"]) > 0
+            or config.nerd_font["use_font_patcher"]
+            or config.nerd_font["glyphs"] != ["--complete"]
+        ):
+            return False
+
+        if check_font_patcher(
+            version=config.nerd_font["version"],
+            github_mirror=self.github_mirror,
+        ) and not path.exists(config.nerd_font["font_forge_bin"]):
+            print(
+                f"FontForge bin({config.nerd_font['font_forge_bin']}) not found. Use prebuild Nerd-Font base font instead."
+            )
+            return False
+
+        return True
 
     def should_build_cn(self, config: FontConfig) -> bool:
         if not config.cn["enable"] and not config.use_cn_both:
@@ -470,7 +470,7 @@ class BuildOption:
                     tag=tag,
                     zip_path="cn-base-static.zip",
                     target_dir=self.cn_static_dir,
-                    github_mirror=config.github_mirror,
+                    github_mirror=self.github_mirror,
                 )
 
             if not config.cn["use_static_base_font"] or not path.exists(
@@ -488,7 +488,7 @@ class BuildOption:
                     tag=tag,
                     zip_path="cn-base-variable.zip",
                     target_dir=self.cn_variable_dir,
-                    github_mirror=config.github_mirror,
+                    github_mirror=self.github_mirror,
                 )
                 if result:
                     instantiate_cn_base(self.cn_variable_dir, self.cn_static_dir)
@@ -953,7 +953,7 @@ def main():
 
     font_config = FontConfig(args=parsed_args)
     build_option = BuildOption(font_config)
-    build_option.load_cn_dir_and_suffix(font_config.should_cn_use_nerd_font())
+    build_option.load_cn_dir_and_suffix(font_config.should_build_nf_cn())
 
     if parsed_args.dry:
         print("font_config:", json.dumps(font_config.__dict__, indent=4))
@@ -1066,7 +1066,7 @@ def main():
     # =========================================================================================
 
     if font_config.nerd_font["enable"] and not font_config.ttf_only:
-        use_font_patcher = font_config.should_use_font_patcher()
+        use_font_patcher = build_option.should_use_font_patcher(font_config)
 
         get_ttfont = (
             build_nf_by_font_patcher
@@ -1097,7 +1097,7 @@ def main():
 
         def _build_cn():
             print(
-                f"\n🔎 Build CN fonts {'with Nerd-Font' if font_config.should_cn_use_nerd_font() else ''}...\n"
+                f"\n🔎 Build CN fonts {'with Nerd-Font' if font_config.should_build_nf_cn() else ''}...\n"
             )
             makedirs(build_option.output_cn, exist_ok=True)
             fn = partial(build_cn, font_config=font_config, build_option=build_option)
@@ -1105,7 +1105,7 @@ def main():
             run_build(font_config.pool_size, fn, build_option.cn_base_font_dir)
 
             if font_config.cn["use_hinted"]:
-                print("Auto hint all glyphs")
+                print("Auto hinting all glyphs")
                 run(f"ftcli ttf autohint {build_option.output_cn}")
 
             drop_mac_names(build_option.cn_base_font_dir)
@@ -1115,9 +1115,7 @@ def main():
         if font_config.use_cn_both:
             result = font_config.toggle_nf_cn_config()
             if result:
-                build_option.load_cn_dir_and_suffix(
-                    font_config.should_cn_use_nerd_font()
-                )
+                build_option.load_cn_dir_and_suffix(font_config.should_build_nf_cn())
                 _build_cn()
 
         build_option.is_cn_built = True
