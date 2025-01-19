@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 import argparse
+import json
 import os
 import re
 import shutil
-
+from fontTools.ttLib import TTFont
 from source.py.utils import run
 
 # Mapping of style names to weights
@@ -80,8 +81,8 @@ def update_build_script_version(tag):
         f.close()
 
 
-def git_commit(tag):
-    run("git add woff2/var build.py")
+def git_commit(tag, files):
+    run(f"git add {' '.join(files)}")
     run(["git", "commit", "-m", f"Release {tag}"])
     run(f"git tag {tag}")
     print("Committed and tagged")
@@ -89,6 +90,26 @@ def git_commit(tag):
     run("git push origin")
     run(f"git push origin {tag}")
     print("Pushed to origin")
+
+
+def format_font_map_key(key: int) -> str:
+    formatted_key = f"{key:05X}"
+    if formatted_key.startswith("0"):
+        return formatted_key[1:]
+    return formatted_key
+
+
+def write_unicode_map_json(font_path: str, output: str):
+    font = TTFont(font_path)
+    font_map = {
+        format_font_map_key(k): v
+        for k, v in font.getBestCmap().items()
+        if k is not None
+    }
+    with open(output, "w", encoding="utf-8") as f:
+        f.write(json.dumps(font_map, indent=2))
+    print(f"Write font map to {output}")
+    font.close()
 
 
 def main():
@@ -129,10 +150,14 @@ def main():
     run("ftcli converter ft2wf -f woff2 ./fonts/Variable -out woff2/var")
     print("Update variable WOFF2")
 
+    # write_unicode_map_json(
+    #     "./fonts/TTF/MapleMono-Regular.ttf", "./resources/glyph-map.json"
+    # )
+
     if args.dry:
         print("Dry run")
     else:
-        git_commit(tag)
+        git_commit(tag, ['build.py', 'woff2'])
 
 
 if __name__ == "__main__":
