@@ -27,7 +27,7 @@ from source.py.utils import (
 )
 from source.py.feature import freeze_feature, get_freeze_config_str
 
-FONT_VERSION = "v7.0-beta34"
+FONT_VERSION = "v7.0-beta35"
 # =========================================================================================
 
 
