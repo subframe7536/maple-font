@@ -187,3 +187,20 @@ def match_unicode_names(file_path: str) -> dict[str, str]:
             result[unicode_str] = glyph_name
 
     return result
+
+
+def check_glyph_width(font: TTFont, matched_width: tuple[int]):
+    print("Checking glyph width...")
+    result: tuple[str, int] = []
+    for name in font.getGlyphOrder():
+        width, _ = font["hmtx"][name]
+        if width not in matched_width:
+            result.append([name, width])
+
+    if result.__len__() > 0:
+        print("Exist unmatched width:")
+        for item in result:
+            print(f"{item[0]}\t{item[1]}")
+        raise Exception(
+            f"The font may contain glyphs that are not {matched_width} wide, which may broke monospace rule."
+        )

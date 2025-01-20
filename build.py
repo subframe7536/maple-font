@@ -16,6 +16,7 @@ from fontTools.feaLib.builder import addOpenTypeFeatures
 from fontTools.merge import Merger
 from source.py.utils import (
     check_font_patcher,
+    check_glyph_width,
     download_cn_base_font,
     get_font_forge_bin,
     get_font_name,
@@ -930,6 +931,7 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
         }
         cn_font["meta"] = meta
 
+    # check_char_width(cn_font, [0, 600, 1200])
     target_path = joinPaths(
         build_option.output_cn,
         f"{font_config.family_name_compact}-{build_option.cn_suffix_compact}-{style_compact_cn}.ttf",
@@ -954,6 +956,8 @@ def main():
     font_config = FontConfig(args=parsed_args)
     build_option = BuildOption(font_config)
     build_option.load_cn_dir_and_suffix(font_config.should_build_nf_cn())
+
+    glyph_width = 600
 
     if parsed_args.dry:
         print("font_config:", json.dumps(font_config.__dict__, indent=4))
@@ -1019,6 +1023,8 @@ def main():
                 ),
                 3,
             )
+
+            check_glyph_width(font, [0, glyph_width])
 
             font.save(
                 input_file.replace(build_option.src_dir, build_option.output_variable)
@@ -1119,6 +1125,13 @@ def main():
                 _build_cn()
 
         build_option.is_cn_built = True
+
+        check_glyph_width(
+            TTFont(
+                joinPaths(build_option.output_cn, listdir(build_option.output_cn)[0])
+            ),
+            [0, glyph_width, glyph_width * 2]
+        )
 
     # write config to output path
     with open(
