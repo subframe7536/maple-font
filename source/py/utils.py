@@ -189,18 +189,19 @@ def match_unicode_names(file_path: str) -> dict[str, str]:
     return result
 
 
-def check_glyph_width(font: TTFont, matched_width: tuple[int]):
+# https://github.com/subframe7536/maple-font/issues/314
+def check_glyph_width(font: TTFont, expect_widths: list[int]):
     print("Checking glyph width...")
     result: tuple[str, int] = []
     for name in font.getGlyphOrder():
         width, _ = font["hmtx"][name]
-        if width not in matched_width:
+        if width not in expect_widths:
             result.append([name, width])
 
     if result.__len__() > 0:
-        print("Exist unmatched width:")
+        print(f"Every glyph's width should be in {expect_widths}, but these are not:")
         for item in result:
-            print(f"{item[0]}\t{item[1]}")
+            print(f"{item[0]}  =>  {item[1]}")
         raise Exception(
-            f"The font may contain glyphs that are not {matched_width} wide, which may broke monospace rule."
+            f"The font may contain glyphs that width is not in {expect_widths}, which may broke monospace rule."
         )
