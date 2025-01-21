@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import argparse
-import hashlib
 import importlib.util
 import json
 import re
@@ -8,15 +7,15 @@ import shutil
 import time
 from functools import partial
 from multiprocessing import Pool
-from os import environ, getcwd, listdir, makedirs, path, remove, walk, getenv
+from os import environ, getcwd, listdir, makedirs, path, remove, getenv
 from typing import Callable
-from zipfile import ZIP_DEFLATED, ZipFile
 from fontTools.ttLib import TTFont, newTable
 from fontTools.feaLib.builder import addOpenTypeFeatures
 from fontTools.merge import Merger
 from source.py.utils import (
     check_font_patcher,
-    check_glyph_width,
+    verify_glyph_width,
+    compress_folder,
     download_cn_base_font,
     get_font_forge_bin,
     get_font_name,
@@ -1022,7 +1021,7 @@ def main():
                 3,
             )
 
-            check_glyph_width(font, [0, glyph_width])
+            verify_glyph_width(font, [0, glyph_width])
 
             font.save(
                 input_file.replace(build_option.src_dir, build_option.output_variable)
@@ -1124,7 +1123,7 @@ def main():
 
         build_option.is_cn_built = True
 
-        check_glyph_width(
+        verify_glyph_width(
             TTFont(
                 joinPaths(build_option.output_cn, listdir(build_option.output_cn)[0])
             ),
@@ -1159,49 +1158,6 @@ def main():
     # =========================================================================================
     # ====================================   archive   ========================================
     # =========================================================================================
-
-    def compress_folder(
-        source_file_or_dir_path: str, target_parent_dir_path: str
-    ) -> tuple[str, str]:
-        """
-        compress folder and return sha1
-        """
-        source_folder_name = path.basename(source_file_or_dir_path)
-
-        zip_file_name_without_ext = f"{font_config.family_name_compact}-{source_folder_name}{'-unhinted' if not font_config.use_hinted else ''}"
-
-        zip_path = joinPaths(
-            target_parent_dir_path,
-            f"{zip_file_name_without_ext}.zip",
-        )
-
-        with ZipFile(
-            zip_path, "w", compression=ZIP_DEFLATED, compresslevel=5
-        ) as zip_file:
-            for root, _, files in walk(source_file_or_dir_path):
-                for file in files:
-                    file_path = joinPaths(root, file)
-                    zip_file.write(
-                        file_path, path.relpath(file_path, source_file_or_dir_path)
-                    )
-            zip_file.write("OFL.txt", "LICENSE.txt")
-            if not source_file_or_dir_path.endswith("Variable"):
-                zip_file.write(
-                    joinPaths(build_option.output_dir, "build-config.json"),
-                    "config.json",
-                )
-
-        zip_file.close()
-        sha256 = hashlib.sha256()
-        with open(zip_path, "rb") as zip_file:
-            while True:
-                data = zip_file.read(1024)
-                if not data:
-                    break
-                sha256.update(data)
-
-        return sha256.hexdigest(), zip_file_name_without_ext
-
     if font_config.archive:
         print("\n🚀 archive files...\n")
 
@@ -1219,7 +1175,12 @@ def main():
                 continue
 
             sha256, zip_file_name_without_ext = compress_folder(
+                family_name_compact=font_config.family_name_compact,
+                suffix="-unhinted" if not font_config.use_hinted else "",
                 source_file_or_dir_path=joinPaths(build_option.output_dir, f),
+                build_config_path=joinPaths(
+                    build_option.output_dir, "build-config.json"
+                ),
                 target_parent_dir_path=archive_dir,
             )
             with open(

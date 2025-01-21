@@ -1,9 +1,10 @@
-from os import environ, path, remove
+import hashlib
+from os import environ, path, remove, walk
 import platform
 import shutil
 import subprocess
 from urllib.request import Request, urlopen
-from zipfile import ZipFile
+from zipfile import ZIP_DEFLATED, ZipFile
 from fontTools.ttLib import TTFont
 from glyphsLib import GSFont
 
@@ -190,7 +191,7 @@ def match_unicode_names(file_path: str) -> dict[str, str]:
 
 
 # https://github.com/subframe7536/maple-font/issues/314
-def check_glyph_width(font: TTFont, expect_widths: list[int]):
+def verify_glyph_width(font: TTFont, expect_widths: list[int]):
     print("Checking glyph width...")
     result: tuple[str, int] = []
     for name in font.getGlyphOrder():
@@ -205,3 +206,48 @@ def check_glyph_width(font: TTFont, expect_widths: list[int]):
         raise Exception(
             f"The font may contain glyphs that width is not in {expect_widths}, which may broke monospace rule."
         )
+
+
+def compress_folder(
+    source_file_or_dir_path: str,
+    target_parent_dir_path: str,
+    family_name_compact: str,
+    suffix: str,
+    build_config_path: str,
+) -> tuple[str, str]:
+    """
+    Archive folder and return sha1 and file name
+    """
+    source_folder_name = path.basename(source_file_or_dir_path)
+
+    zip_name_without_ext = f"{family_name_compact}-{source_folder_name}{suffix}"
+
+    zip_path = joinPaths(
+        target_parent_dir_path,
+        f"{zip_name_without_ext}.zip",
+    )
+
+    with ZipFile(zip_path, "w", compression=ZIP_DEFLATED, compresslevel=5) as zip_file:
+        for root, _, files in walk(source_file_or_dir_path):
+            for file in files:
+                file_path = joinPaths(root, file)
+                zip_file.write(
+                    file_path, path.relpath(file_path, source_file_or_dir_path)
+                )
+        zip_file.write("OFL.txt", "LICENSE.txt")
+        if not source_file_or_dir_path.endswith("Variable"):
+            zip_file.write(
+                build_config_path,
+                "config.json",
+            )
+
+    zip_file.close()
+    sha256 = hashlib.sha256()
+    with open(zip_path, "rb") as zip_file:
+        while True:
+            data = zip_file.read(1024)
+            if not data:
+                break
+            sha256.update(data)
+
+    return sha256.hexdigest(), zip_name_without_ext
