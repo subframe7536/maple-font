@@ -8,7 +8,7 @@ import shutil
 import time
 from functools import partial
 from multiprocessing import Pool
-from os import environ, listdir, makedirs, path, remove, walk, getenv
+from os import environ, getcwd, listdir, makedirs, path, remove, walk, getenv
 from typing import Callable
 from zipfile import ZIP_DEFLATED, ZipFile
 from fontTools.ttLib import TTFont, newTable
@@ -374,14 +374,13 @@ class FontConfig:
 
 class BuildOption:
     def __init__(self, config: FontConfig):
-        output_dir_default = "fonts"
         # paths
         self.src_dir = "source"
-        self.output_dir = output_dir_default
+        self.output_dir = "fonts"
         self.output_otf = joinPaths(self.output_dir, "OTF")
         self.output_ttf = joinPaths(self.output_dir, "TTF")
         self.output_ttf_hinted = joinPaths(self.output_dir, "TTF-AutoHint")
-        self.output_variable = joinPaths(output_dir_default, "Variable")
+        self.output_variable = joinPaths(self.output_dir, "Variable")
         self.output_woff2 = joinPaths(self.output_dir, "Woff2")
         self.output_nf = joinPaths(self.output_dir, "NF")
         self.ttf_base_dir = joinPaths(
@@ -654,7 +653,7 @@ def get_unique_identifier(
     return f"{font_config.version_str}{beta_str};SUBF;{postscript_name};2024;FL830;{suffix}"
 
 
-def change_char_width(font: TTFont, match_width: int, target_width: int):
+def change_glyph_width(font: TTFont, match_width: int, target_width: int):
     font["hhea"].advanceWidthMax = target_width
     for name in font.getGlyphOrder():
         glyph = font["glyf"][name]
@@ -913,10 +912,10 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
     )
 
     if font_config.cn["narrow"]:
-        change_char_width(font=cn_font, match_width=1200, target_width=1000)
+        change_glyph_width(font=cn_font, match_width=1200, target_width=1000)
 
     # https://github.com/subframe7536/maple-font/issues/239
-    # already removed in source file
+    # already removed at merge time
     # remove_locl(font)
 
     if font_config.cn["fix_meta_table"]:
@@ -931,7 +930,6 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
         }
         cn_font["meta"] = meta
 
-    # check_char_width(cn_font, [0, 600, 1200])
     target_path = joinPaths(
         build_option.output_cn,
         f"{font_config.family_name_compact}-{build_option.cn_suffix_compact}-{style_compact_cn}.ttf",
@@ -980,7 +978,7 @@ def main():
     print("🚩 Start building ...")
 
     # =========================================================================================
-    # ===================================   build basic   =====================================
+    # ===================================   Build basic   =====================================
     # =========================================================================================
 
     if not should_use_cache or not build_option.has_cache:
@@ -1068,7 +1066,7 @@ def main():
             drop_mac_names(build_option.output_woff2)
 
     # =========================================================================================
-    # ====================================   build NF   =======================================
+    # ====================================   Build NF   =======================================
     # =========================================================================================
 
     if font_config.nerd_font["enable"] and not font_config.ttf_only:
@@ -1096,7 +1094,7 @@ def main():
         build_option.is_nf_built = True
 
     # =========================================================================================
-    # ====================================   build CN   =======================================
+    # ====================================   Build CN   =======================================
     # =========================================================================================
 
     if not font_config.ttf_only and build_option.should_build_cn(font_config):
@@ -1133,7 +1131,9 @@ def main():
             [0, glyph_width, glyph_width * 2]
         )
 
-    # write config to output path
+    # =========================================================================================
+    # ==================================   Write Config   =====================================
+    # =========================================================================================
     with open(
         joinPaths(build_option.output_dir, "build-config.json"), "w", encoding="utf-8"
     ) as config_file:
@@ -1231,6 +1231,12 @@ def main():
 
             print(f"👉 archive: {f}")
 
+    # =========================================================================================
+    # =====================================   Finish   ========================================
+    # =========================================================================================
+    if is_ci():
+        return
+
     freeze_str = (
         font_config.freeze_config_str
         if font_config.freeze_config_str != ""
@@ -1239,9 +1245,9 @@ def main():
     end_time = time.time()
     date_time_fmt = time.strftime("%H:%M:%S", time.localtime(end_time))
     time_diff = end_time - start_time
+    output = joinPaths(getcwd().replace('\\', '/'), build_option.output_dir)
     print(
-        f"\n🏁 Build finished at {date_time_fmt}, cost {time_diff:.2f} s, family name is {font_config.family_name}, {freeze_str}"
-    )
+        f"\n🏁 Build finished at {date_time_fmt}, cost {time_diff:.2f} s, family name is {font_config.family_name}, {freeze_str}\n   See your fonts in {output}")
 
 
 if __name__ == "__main__":
