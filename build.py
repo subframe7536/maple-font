@@ -411,11 +411,11 @@ class BuildOption:
         self.is_nf_built = False
         self.is_cn_built = False
         self.has_cache = (
-            check_cache_dir(self.output_variable, count=2)
-            and check_cache_dir(self.output_otf)
-            and check_cache_dir(self.output_ttf)
-            and check_cache_dir(self.output_ttf_hinted)
-            and check_cache_dir(self.output_woff2)
+            self.check_cache_dir(self.output_variable, count=2)
+            and self.check_cache_dir(self.output_otf)
+            and self.check_cache_dir(self.output_ttf)
+            and self.check_cache_dir(self.output_ttf_hinted)
+            and self.check_cache_dir(self.output_woff2)
         )
         self.github_mirror = environ.get("GITHUB", "github.com")
 
@@ -497,11 +497,10 @@ class BuildOption:
             return False
         return True
 
-
-def check_cache_dir(cache_dir: str, count: int = 16) -> bool:
-    if not path.isdir(cache_dir):
-        return False
-    return listdir(cache_dir).__len__() == count
+    def check_cache_dir(self, cache_dir: str, count: int = 16) -> bool:
+        if not path.isdir(cache_dir):
+            return False
+        return listdir(cache_dir).__len__() == count
 
 
 def handle_ligatures(
@@ -607,15 +606,19 @@ def rename_glyph_name(
     glyph_names = font.getGlyphOrder()
     extra_names = font["post"].extraNames
     modified = False
-    extra_map = {
-        "uni2047.liga": "question_question.liga",
-        "dotlessi": "idotless",
-        "f_f": "f_f.liga",
+    merged_map = {
+        **map,
+        **{
+            "uni2047.liga": "question_question.liga",
+            "dotlessi": "idotless",
+            "f_f": "f_f.liga",
+        },
     }
+
     for i, _ in enumerate(glyph_names):
         old_name = str(glyph_names[i])
 
-        new_name = get_new_name_from_map(old_name, {**map, **extra_map})
+        new_name = get_new_name_from_map(old_name, merged_map)
         if not new_name or new_name == old_name:
             continue
 
@@ -1127,7 +1130,7 @@ def main():
             TTFont(
                 joinPaths(build_option.output_cn, listdir(build_option.output_cn)[0])
             ),
-            [0, glyph_width, glyph_width * 2]
+            [0, glyph_width, glyph_width * 2],
         )
 
     # =========================================================================================
@@ -1206,9 +1209,10 @@ def main():
     end_time = time.time()
     date_time_fmt = time.strftime("%H:%M:%S", time.localtime(end_time))
     time_diff = end_time - start_time
-    output = joinPaths(getcwd().replace('\\', '/'), build_option.output_dir)
+    output = joinPaths(getcwd().replace("\\", "/"), build_option.output_dir)
     print(
-        f"\n🏁 Build finished at {date_time_fmt}, cost {time_diff:.2f} s, family name is {font_config.family_name}, {freeze_str}\n   See your fonts in {output}")
+        f"\n🏁 Build finished at {date_time_fmt}, cost {time_diff:.2f} s, family name is {font_config.family_name}, {freeze_str}\n   See your fonts in {output}"
+    )
 
 
 if __name__ == "__main__":
