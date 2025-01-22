@@ -277,6 +277,10 @@ class FontConfig:
             self.beta = beta
 
         major, minor = ver.split(".")
+
+        if major.startswith('v'):
+            major = major[1:]
+
         self.version_str = f"Version {major}.{minor:03}"
 
     def __load_config(self, use_normal):
