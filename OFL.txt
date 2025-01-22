@@ -1,9 +1,8 @@
-Copyright (c) 2022, subframe7536 (https://github.com/subframe7536),
-with Reserved Font Name Maple Mono.
+Copyright 2022 The Maple Mono Project Authors (https://github.com/subframe7536/maple-font)
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
-http://scripts.sil.org/OFL
+https://openfontlicense.org/
 
 
 -----------------------------------------------------------
