@@ -278,7 +278,7 @@ class FontConfig:
 
         major, minor = ver.split(".")
 
-        if major.startswith('v'):
+        if major.startswith("v"):
             major = major[1:]
 
         self.version_str = f"Version {major}.{minor:03}"
@@ -606,7 +606,7 @@ def rename_glyph_name(
     map: dict[str, str],
     post_extra_names: bool = True,
 ):
-    not_ci = not is_ci()
+    print("Rename glyph names")
     glyph_names = font.getGlyphOrder()
     extra_names = font["post"].extraNames
     modified = False
@@ -626,8 +626,7 @@ def rename_glyph_name(
         if not new_name or new_name == old_name:
             continue
 
-        if not_ci:
-            print(f"[Rename] {old_name} -> {new_name}")
+        # print(f"[Rename] {old_name} -> {new_name}")
         glyph_names[i] = new_name
         modified = True
 
@@ -700,6 +699,13 @@ def update_font_names(
     if not is_skip_subfamily and preferred_family_name and preferred_style_name:
         set_font_name(font, preferred_family_name, 16)
         set_font_name(font, preferred_style_name, 17)
+
+
+def add_gasp(font: TTFont):
+    print("Fix GASP table")
+    gasp = newTable("gasp")
+    gasp.gaspRange = {65535: 15}
+    font["gasp"] = gasp
 
 
 def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
@@ -995,9 +1001,9 @@ def main():
         for input_file in input_files:
             font = TTFont(input_file)
             basename = path.basename(input_file)
+            print(f"\n👉 Variable version for {basename}")
 
             # fix auto rename by FontLab
-            print(f"Fix names for {basename}")
             rename_glyph_name(
                 font=font,
                 map=match_unicode_names(
@@ -1030,8 +1036,12 @@ def main():
 
             verify_glyph_width(font, [0, glyph_width])
 
+            add_gasp(font)
+
             font.save(
-                input_file.replace(build_option.src_dir, build_option.output_variable)
+                input_file.replace(
+                    build_option.src_dir, build_option.output_variable
+                ).replace("-VF", "")
             )
 
         print("\n✨ Instatiate and optimize fonts...\n")
