@@ -4,6 +4,7 @@ import json
 import os
 import re
 import shutil
+from typing import Callable
 from fontTools.ttLib import TTFont
 from source.py.utils import run
 
@@ -21,7 +22,7 @@ weight_map = {
 }
 
 
-def format_filename(filename: str):
+def format_fontsource_name(filename: str):
     match = re.match(r"MapleMono-(.*)\.(.*)$", filename)
 
     if not match:
@@ -36,11 +37,15 @@ def format_filename(filename: str):
     return new_filename
 
 
-def rename_files(dir: str):
+def format_woff2_name(filename: str):
+    return filename.replace('.woff2', '-VF.woff2')
+
+
+def rename_files(dir: str, fn: Callable[[str], str]):
     for filename in os.listdir(dir):
         if not filename.endswith(".woff") and not filename.endswith(".woff2"):
             continue
-        new_name = format_filename(filename)
+        new_name = fn(filename)
         if new_name:
             os.rename(os.path.join(dir, filename), os.path.join(dir, new_name))
             print(f"Renamed: {filename} -> {new_name}")
@@ -145,9 +150,14 @@ def main():
     run("python build.py --ttf-only")
     run(f"ftcli converter ft2wf -f woff2 ./fonts/TTF -out {target_dir}")
     run(f"ftcli converter ft2wf -f woff ./fonts/TTF -out {target_dir}")
-    rename_files(target_dir)
+    rename_files(target_dir, format_fontsource_name)
     print("Generate fontsource files")
-    run("ftcli converter ft2wf -f woff2 ./fonts/Variable -out woff2/var")
+
+    woff2_dir = 'woff2/var'
+    if os.path.exists(target_dir):
+        shutil.rmtree(woff2_dir)
+    run(f"ftcli converter ft2wf -f woff2 ./fonts/Variable -out {woff2_dir}")
+    rename_files(woff2_dir, format_woff2_name)
     print("Update variable WOFF2")
 
     # write_unicode_map_json(
