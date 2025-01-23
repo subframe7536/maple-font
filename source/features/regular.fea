@@ -1725,7 +1725,7 @@ feature ss02 {
 
 feature ss03 {
   featureNames {
-    name "Enable rbitrary tag";
+    name "Enable arbitrary tag";
   };
   # [TRACE]
   lookup badge_trace.liga.ss03 {
