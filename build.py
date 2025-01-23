@@ -987,7 +987,7 @@ def main():
     makedirs(build_option.output_variable, exist_ok=True)
 
     start_time = time.time()
-    print("🚩 Start building ...")
+    print("🚩 Start building ...\n")
 
     # =========================================================================================
     # ===================================   Build basic   =====================================
@@ -1001,7 +1001,7 @@ def main():
         for input_file in input_files:
             font = TTFont(input_file)
             basename = path.basename(input_file)
-            print(f"\n👉 Variable version for {basename}")
+            print(f"👉 Variable version for {basename}")
 
             # fix auto rename by FontLab
             rename_glyph_name(
