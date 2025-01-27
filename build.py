@@ -1085,7 +1085,7 @@ def main():
     # ====================================   Build NF   =======================================
     # =========================================================================================
 
-    if font_config.nerd_font["enable"] and not font_config.ttf_only:
+    if font_config.nerd_font["enable"]:
         use_font_patcher = build_option.should_use_font_patcher(font_config)
 
         get_ttfont = (
@@ -1113,7 +1113,7 @@ def main():
     # ====================================   Build CN   =======================================
     # =========================================================================================
 
-    if not font_config.ttf_only and build_option.should_build_cn(font_config):
+    if build_option.should_build_cn(font_config):
 
         def _build_cn():
             print(
