@@ -49,11 +49,11 @@ Inspired by [Source Code Pro](https://github.com/adobe-fonts/source-code-pro), [
 
 ### V6
 
-| Platform   | Command                                                                     |
-| :--------- | :-------------------------------------------------------------------------- |
-| macOS      | `brew install --cask font-maple`                                            |
-| Arch Linux | `paru -S ttf-maple`                                                         |
-| Others     | Download in [releases](https://github.com/subframe7536/Maple-font/releases) |
+| Platform   | Command                                                                          |
+| :--------- | :------------------------------------------------------------------------------- |
+| macOS      | `brew install --cask font-maple`                                                 |
+| Arch Linux | `paru -S ttf-maple`                                                              |
+| Others     | Download in [releases](https://github.com/subframe7536/Maple-font/releases/v6.4) |
 
 ### V7 Beta
 
