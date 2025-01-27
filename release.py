@@ -144,17 +144,19 @@ def main():
         return
     update_build_script_version(tag)
 
-    target_dir = "fontsource"
-    if os.path.exists(target_dir):
-        shutil.rmtree(target_dir)
-    run("python build.py --ttf-only")
-    run(f"ftcli converter ft2wf -f woff2 ./fonts/TTF -out {target_dir}")
-    run(f"ftcli converter ft2wf -f woff ./fonts/TTF -out {target_dir}")
-    rename_files(target_dir, format_fontsource_name)
+    shutil.rmtree("./cdn", ignore_errors=True)
+    target_fontsource_dir = "cdn/fontsource"
+    run("python build.py --ttf-only --no-nerd-font --cn --no-hinted")
+    run(f"ftcli converter ft2wf -f woff2 ./fonts/TTF -out {target_fontsource_dir}")
+    run(f"ftcli converter ft2wf -f woff ./fonts/TTF -out {target_fontsource_dir}")
+    rename_files(target_fontsource_dir, format_fontsource_name)
     print("Generate fontsource files")
 
+    shutil.copytree("./fonts/CN", "./cdn/cn")
+    print("Generate CN files")
+
     woff2_dir = 'woff2/var'
-    if os.path.exists(target_dir):
+    if os.path.exists(target_fontsource_dir):
         shutil.rmtree(woff2_dir)
     run(f"ftcli converter ft2wf -f woff2 ./fonts/Variable -out {woff2_dir}")
     rename_files(woff2_dir, format_woff2_name)
