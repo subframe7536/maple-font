@@ -26,7 +26,6 @@ For more details, please check out `.fea` files and [OpenType Feature Spec](http
 ...
 ..<
 <!--
-<<-
 <-
 <#--
 <>
@@ -42,12 +41,10 @@ For more details, please check out `.fea` files and [OpenType Feature Spec](http
 ||>
 |>
 -|
-->>
 -->
 ->
 >=
 <=
-<<=
 <==
 !=
 !!
@@ -94,7 +91,6 @@ __
 <-|
 <=|
 |=>
->-
 <~
 ~~
 <~>

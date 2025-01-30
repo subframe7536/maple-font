@@ -6,6 +6,8 @@
 
 [Which File to Download?](https://github.com/subframe7536/maple-font/tree/variable?tab=readme-ov-file#naming-faq)
 
+If you want to get the font that similar to `JetBrains Mono`, please download the "Normal-Ligature" or "Normal-No-Ligature"
+
 | Format   | Ligature (default)                                                                                     | No-Ligature                                                                                                | Normal-Ligature                                                                                                    | Normal-No-Ligature                                                                                                     |
 | -------- | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------- |
 | Variable | [📦 Download](https://<url>/MapleMono-Variable.zip)                                                     | [📦 Download](https://<url>/MapleMonoNL-Variable.zip)                                                       | [📦 Download](https://<url>/MapleMonoNormal-Variable.zip)                                                           | [📦 Download](https://<url>/MapleMonoNormalNL-Variable.zip)                                                             |
