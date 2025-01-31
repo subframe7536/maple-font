@@ -157,7 +157,7 @@ If you want to build CN base fonts from variable (about 35 MB), setup `"cn.use_s
 
 #### GitHub Mirror
 
-The build script will auto download neccessory assets from GitHub. If you have trouble downloading, please setup `github_mirror` in [config.json](./config.json) or `$GITHUB` to your environment variable. (Target URL will be `https://{github_mirror}/<user>/<repo>/releases/download/{tag}/{file}`), or just download the target `.zip` file and put it in the same directory as `build.py`.
+The build script will auto download necessary assets from GitHub. If you have trouble downloading, please setup `github_mirror` in [config.json](./config.json) or `$GITHUB` to your environment variable. (Target URL will be `https://{github_mirror}/<user>/<repo>/releases/download/{tag}/{file}`), or just download the target `.zip` file and put it in the same directory as `build.py`.
 
 ### Build Script Usage
 
