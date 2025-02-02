@@ -4,7 +4,9 @@ Here is the basic list and explaination of Maple Mono ligatures and features.
 
 For more details, please check out `.fea` files and [OpenType Feature Spec](https://adobe-type-tools.github.io/afdko/OpenTypeFeatureFileSpecification.html).
 
-### calt
+## Ligatures
+
+in `calt`:
 
 ```
 {{
@@ -139,9 +141,11 @@ fixme))
 \\
 ```
 
-#### Notice
+### Notice
 
 - `>>` / `>>>` is much contextual-sensitive
+
+## Features
 
 ### Character Varients (cvXX)
 

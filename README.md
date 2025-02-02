@@ -1,10 +1,10 @@
 > [!note]
 > ### When will V7 become stable?
-> It is almost stable now.
+> It is already stable. The V7.0-beta36 is the stable version.
 >
-> As a side project during my weekends, I will release a new beta version to fix the bugs reported or encountered in my daily coding within 1-2 weeks, and do some work on the new website and build tools.
+> The reason for retaining the "beta" suffix is to remind everyone that the landing page and the web tool for visualized configuration and custom build is still under development.
 >
-> If everything goes well, the stable version will be released later this year.
+> If everything goes well, the stable version will be released before March.
 
 ![header.png](./resources/header.png)
 
@@ -46,6 +46,13 @@ You can download all the font archives from [Releases](https://github.com/subfra
 ```shell
 paru -S ttf-maple-beta
 ```
+
+## Feature Configurations
+
+See in [document](./source/features/README.md#features)
+
+> [!note]
+> The web tool for visualized configuration and custom build is under development.
 
 ## Naming FAQ
 
@@ -89,7 +96,7 @@ paru -S ttf-maple-beta
 
 ## Custom Build
 
-The [`config.json`](./config.json) file is used to configure the build process. Checkout the [schema](./source/schema.json) or [document](https://github.com/subframe7536/maple-font/blob/variable/source/features/README.md) for more details.
+The [`config.json`](./config.json) file is used to configure the build process. Checkout the [schema](./source/schema.json) or [document](./source/features/README.md) for more details.
 
 There also have some [command line options](#build-script-usage) for customizing the build process. Cli options have higher priority than options in `config.json`.
 
