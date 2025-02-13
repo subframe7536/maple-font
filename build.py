@@ -272,6 +272,7 @@ class FontConfig:
         self.__load_args(args)
 
         ver = FONT_VERSION
+        self.beta = None
         if "-" in FONT_VERSION:
             ver, beta = FONT_VERSION.split("-")
             self.beta = beta
