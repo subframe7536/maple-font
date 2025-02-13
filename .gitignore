@@ -1,11 +1,8 @@
-.astro
-node_modules
-dist
-/FontPatcher
-/fonts
-/source/cn/static
-__pycache__
-.DS_store
+FontPatcher
+fonts
 release
 source/cn
 cdn
+
+__pycache__
+.DS_store
