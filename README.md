@@ -41,6 +41,19 @@ The CN version contails the glyphs of simplified and traditional Chinese, and Ja
 
 You can download all the font archives from [Releases](https://github.com/subframe7536/maple-font/releases).
 
+### Homebrew (MacOS, Linux)
+
+```sh
+# Maple Mono
+brew install --cask font-maple-mono
+# Maple Mono NF
+brew install --cask font-maple-mono-nf
+# Maple Mono CN
+brew install --cask font-maple-mono-cn
+# Maple Mono NF CN
+brew install --cask font-maple-mono-nf-cn
+```
+
 ### Arch Linux
 
 ```shell
