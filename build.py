@@ -1145,7 +1145,7 @@ def main():
             TTFont(
                 joinPaths(build_option.output_cn, listdir(build_option.output_cn)[0])
             ),
-            [0, glyph_width, glyph_width * 2],
+            [0, glyph_width, 1000 if font_config.cn['narrow'] else glyph_width * 2],
         )
 
     # =========================================================================================
