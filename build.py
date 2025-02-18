@@ -100,7 +100,7 @@ def parse_args():
         dest="hinted",
         default=None,
         action="store_false",
-        help="Use unhinted font as base font",
+        help="Use unhinted font as base font in NF / CN / NF-CN",
     )
     liga_group = feature_group.add_mutually_exclusive_group()
     liga_group.add_argument(
@@ -162,7 +162,7 @@ def parse_args():
     build_group.add_argument(
         "--ttf-only",
         action="store_true",
-        help="Only build unhinted TTF format",
+        help="Only build TTF format",
     )
     build_group.add_argument(
         "--cache",
@@ -758,16 +758,20 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
     font.save(target_path)
     font.close()
 
+    # Autohint version
+    print(f"Auto hint {postscript_name}.ttf")
+    run(f"ftcli ttf autohint {target_path} -out {build_option.output_ttf_hinted}")
+
     if font_config.ttf_only:
         return
 
-    print(f"Auto hint {postscript_name}.ttf")
-    run(f"ftcli ttf autohint {target_path} -out {build_option.output_ttf_hinted}")
+    # Woff2 version
     print(f"Convert {postscript_name}.ttf to WOFF2")
     run(
         f"ftcli converter ft2wf {target_path} -out {build_option.output_woff2} -f woff2"
     )
 
+    # OTF version
     _otf_path = joinPaths(
         build_option.output_otf, path.basename(target_path).replace(".ttf", ".otf")
     )
