@@ -184,8 +184,8 @@ The build script will auto download necessary assets from GitHub. If you have tr
 ```
 usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--apply-fea-file]
                 [--hinted | --no-hinted] [--liga | --no-liga] [--cn-narrow]
-                [--nerd-font | --no-nerd-font] [--cn | --no-cn] [--cn-both] [--ttf-only]
-                [--cache] [--cn-rebuild] [--archive]
+                [--nerd-font | --no-nerd-font] [--cn | --no-cn] [--cn-both]
+                [--ttf-only] [--cache] [--cn-rebuild] [--archive]
 
 ✨ Builder and optimizer for Maple Mono
 
@@ -201,24 +201,24 @@ Feature Options:
                     zero,cv01,ss07,ss08`). No effect on variable format
   --apply-fea-file  Load feature file from `source/features/{regular,italic}.fea` to
                     variable font
-  --hinted          Use hinted font as base font in NF / CN / NF-CN
+  --hinted          Use hinted font as base font in NF / CN / NF-CN (default)
   --no-hinted       Use unhinted font as base font in NF / CN / NF-CN
-  --liga            Preserve all the ligatures
+  --liga            Preserve all the ligatures (default)
   --no-liga         Remove all the ligatures
   --cn-narrow       Make CN characters narrow (experimental)
 
 Build Options:
-  --nerd-font       Build Nerd-Font version
+  --nerd-font       Build Nerd-Font version (default)
   --no-nerd-font    Do not build Nerd-Font version
   --cn              Build Chinese version
-  --no-cn           Do not build Chinese version
-  --cn-both         Build both `Maple Mono CN` and `Maple Mono NF CN`. Nerd-Font version
-                    must be enabled
+  --no-cn           Do not build Chinese version (default)
+  --cn-both         Build both `Maple Mono CN` and `Maple Mono NF CN`. Nerd-Font
+                    version must be enabled
   --ttf-only        Only build TTF format
   --cache           Reuse font cache of TTF, OTF and Woff2 formats
   --cn-rebuild      Reinstantiate CN base font
-  --archive         Build font archives with config and license. If has `--cache` flag,
-                    only archive Nerd-Font and CN formats
+  --archive         Build font archives with config and license. If has `--cache`
+                    flag, only archive Nerd-Font and CN formats
 ```
 
 ## Credit

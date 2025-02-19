@@ -93,7 +93,7 @@ def parse_args():
         dest="hinted",
         default=None,
         action="store_true",
-        help="Use hinted font as base font in NF / CN / NF-CN",
+        help="Use hinted font as base font in NF / CN / NF-CN (default)",
     )
     hint_group.add_argument(
         "--no-hinted",
@@ -108,7 +108,7 @@ def parse_args():
         dest="liga",
         default=None,
         action="store_true",
-        help="Preserve all the ligatures",
+        help="Preserve all the ligatures (default)",
     )
     liga_group.add_argument(
         "--no-liga",
@@ -130,7 +130,7 @@ def parse_args():
         dest="nerd_font",
         default=None,
         action="store_true",
-        help="Build Nerd-Font version",
+        help="Build Nerd-Font version (default)",
     )
     nf_group.add_argument(
         "--no-nerd-font",
@@ -152,7 +152,7 @@ def parse_args():
         dest="cn",
         default=None,
         action="store_false",
-        help="Do not build Chinese version",
+        help="Do not build Chinese version (default)",
     )
     build_group.add_argument(
         "--cn-both",
