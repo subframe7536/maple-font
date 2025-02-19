@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import importlib.util
 import json
 import re
 import shutil
+import threading
 import time
 from functools import partial
-from multiprocessing import Pool
 from os import environ, getcwd, listdir, makedirs, path, remove, getenv
 from typing import Callable
 from fontTools.ttLib import TTFont, newTable
@@ -983,12 +984,36 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
 
 
 def run_build(pool_size: int, fn: Callable, dir: str):
-    if pool_size > 1:
-        with Pool(pool_size) as p:
-            p.map(fn, listdir(dir))
-    else:
-        for f in listdir(dir):
+    files = listdir(dir)
+
+    if pool_size <= 1:
+        for f in files:
             fn(f)
+        return
+
+    shutdown_event = threading.Event()
+
+    def wrapped_fn(filename):
+        if shutdown_event.is_set():
+            return
+        try:
+            return fn(filename)
+        except Exception as e:
+            shutdown_event.set()
+            raise e
+
+    with ThreadPoolExecutor(max_workers=pool_size) as executor:
+        futures = {executor.submit(wrapped_fn, f): f for f in files}
+
+        for future in as_completed(futures):
+            try:
+                future.result()
+            except Exception as e:
+                shutdown_event.set()
+                for f in futures:
+                    f.cancel()
+                executor.shutdown(wait=False, cancel_futures=True)
+                raise e
 
 
 def main():
