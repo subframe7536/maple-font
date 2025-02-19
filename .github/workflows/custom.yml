@@ -24,7 +24,7 @@ on:
         default: false
         type: boolean
       feat:
-        description: 'Enable features, split by "," (add "--feat feat1,feat2" to build args)'
+        description: 'Enable features, split by `,`, e.g. "cv01,ss02" (add "--feat feat1,feat2" to build args)'
         required: false
         default: ''
         type: string
