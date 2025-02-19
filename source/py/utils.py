@@ -192,7 +192,7 @@ def match_unicode_names(file_path: str) -> dict[str, str]:
 
 # https://github.com/subframe7536/maple-font/issues/314
 def verify_glyph_width(font: TTFont, expect_widths: list[int]):
-    print("Verify glyph width")
+    print("Verify glyph width...")
     result: tuple[str, int] = []
     for name in font.getGlyphOrder():
         width, _ = font["hmtx"][name]

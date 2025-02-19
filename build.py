@@ -1132,6 +1132,13 @@ def main():
         drop_mac_names(build_option.output_ttf)
         build_option.is_nf_built = True
 
+        verify_glyph_width(
+            font=TTFont(
+                joinPaths(build_option.output_nf, listdir(build_option.output_nf)[0])
+            ),
+            expect_widths=font_config.get_valid_glyph_width_list(),
+        )
+
     # =========================================================================================
     # ====================================   Build CN   =======================================
     # =========================================================================================
