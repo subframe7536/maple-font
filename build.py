@@ -93,7 +93,7 @@ def parse_args():
         dest="hinted",
         default=None,
         action="store_true",
-        help="Use hinted font as base font",
+        help="Use hinted font as base font in NF / CN / NF-CN",
     )
     hint_group.add_argument(
         "--no-hinted",
@@ -268,6 +268,8 @@ class FontConfig:
             # whether to use pre-instantiated static CN font as base font
             "use_static_base_font": True,
         }
+        self.glyph_width = 600
+        self.glyph_width_cn_narrow = 1000
         self.__load_config(args.normal)
         self.__load_args(args)
 
@@ -374,6 +376,18 @@ class FontConfig:
             return False
         self.cn["with_nerd_font"] = not self.cn["with_nerd_font"]
         return True
+
+    def get_valid_glyph_width_list(self, cn=False):
+        if cn:
+            return [
+                0,
+                self.glyph_width,
+                self.glyph_width_cn_narrow
+                if self.cn["narrow"]
+                else 2 * self.glyph_width,
+            ]
+        else:
+            return [0, self.glyph_width]
 
 
 class BuildOption:
@@ -929,7 +943,11 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
     )
 
     if font_config.cn["narrow"]:
-        change_glyph_width(font=cn_font, match_width=1200, target_width=1000)
+        change_glyph_width(
+            font=cn_font,
+            match_width=2 * font_config.glyph_width,
+            target_width=font_config.glyph_width_cn_narrow,
+        )
 
     # https://github.com/subframe7536/maple-font/issues/239
     # already removed at merge time
@@ -971,8 +989,6 @@ def main():
     font_config = FontConfig(args=parsed_args)
     build_option = BuildOption(font_config)
     build_option.load_cn_dir_and_suffix(font_config.should_build_nf_cn())
-
-    glyph_width = 600
 
     if parsed_args.dry:
         print("font_config:", json.dumps(font_config.__dict__, indent=4))
@@ -1039,7 +1055,9 @@ def main():
                 3,
             )
 
-            verify_glyph_width(font, [0, glyph_width])
+            verify_glyph_width(
+                font=font, expect_widths=font_config.get_valid_glyph_width_list()
+            )
 
             add_gasp(font)
 
@@ -1146,10 +1164,10 @@ def main():
         build_option.is_cn_built = True
 
         verify_glyph_width(
-            TTFont(
+            font=TTFont(
                 joinPaths(build_option.output_cn, listdir(build_option.output_cn)[0])
             ),
-            [0, glyph_width, 1000 if font_config.cn['narrow'] else glyph_width * 2],
+            expect_widths=font_config.get_valid_glyph_width_list(True),
         )
 
     # =========================================================================================
