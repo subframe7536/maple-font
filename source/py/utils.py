@@ -191,7 +191,7 @@ def match_unicode_names(file_path: str) -> dict[str, str]:
 
 
 # https://github.com/subframe7536/maple-font/issues/314
-def verify_glyph_width(font: TTFont, expect_widths: list[int], name: str = None):
+def verify_glyph_width(font: TTFont, expect_widths: list[int], file_name: str = None):
     print("Verify glyph width...")
     result: tuple[str, int] = []
     for name in font.getGlyphNames():
@@ -205,7 +205,7 @@ def verify_glyph_width(font: TTFont, expect_widths: list[int], name: str = None)
             print(f"{item[0]}  =>  {item[1]}")
 
         raise Exception(
-            f"{name or 'The font'} may contain glyphs that width is not in {expect_widths}, which may broke monospace rule."
+            f"{file_name or 'The font'} may contain glyphs that width is not in {expect_widths}, which may broke monospace rule."
         )
 
 

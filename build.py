@@ -771,7 +771,7 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
     verify_glyph_width(
         font=font,
         expect_widths=font_config.get_valid_glyph_width_list(),
-        name=postscript_name,
+        file_name=postscript_name,
     )
 
     remove(source_path)
@@ -890,7 +890,7 @@ def build_nf(
     verify_glyph_width(
         font=nf_font,
         expect_widths=font_config.get_valid_glyph_width_list(),
-        name=postscript_name,
+        file_name=postscript_name,
     )
 
     target_path = joinPaths(
@@ -979,7 +979,7 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
     verify_glyph_width(
         font=cn_font,
         expect_widths=font_config.get_valid_glyph_width_list(True),
-        name=postscript_name,
+        file_name=postscript_name,
     )
     target_path = joinPaths(
         build_option.output_cn,
@@ -1098,7 +1098,7 @@ def main():
             verify_glyph_width(
                 font=font,
                 expect_widths=font_config.get_valid_glyph_width_list(),
-                name=basename,
+                file_name=basename,
             )
 
             add_gasp(font)
