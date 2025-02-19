@@ -191,7 +191,7 @@ def match_unicode_names(file_path: str) -> dict[str, str]:
 
 
 # https://github.com/subframe7536/maple-font/issues/314
-def verify_glyph_width(font: TTFont, expect_widths: list[int], forgive: bool):
+def verify_glyph_width(font: TTFont, expect_widths: list[int], name: str = None):
     print("Verify glyph width...")
     result: tuple[str, int] = []
     for name in font.getGlyphNames():
@@ -204,12 +204,9 @@ def verify_glyph_width(font: TTFont, expect_widths: list[int], forgive: bool):
         for item in result:
             print(f"{item[0]}  =>  {item[1]}")
 
-        if forgive:
-            print("❗Forgive it")
-        else:
-            raise Exception(
-                f"The font may contain glyphs that width is not in {expect_widths}, which may broke monospace rule."
-            )
+        raise Exception(
+            f"{name or 'The font'} may contain glyphs that width is not in {expect_widths}, which may broke monospace rule."
+        )
 
 
 def compress_folder(

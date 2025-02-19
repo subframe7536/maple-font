@@ -180,11 +180,6 @@ def parse_args():
         action="store_true",
         help="Build font archives with config and license. If has `--cache` flag, only archive Nerd-Font and CN formats",
     )
-    build_group.add_argument(
-        "--forgive",
-        action="store_true",
-        help="Forgive errors",
-    )
 
     return parser.parse_args()
 
@@ -276,7 +271,6 @@ class FontConfig:
         }
         self.glyph_width = 600
         self.glyph_width_cn_narrow = 1000
-        self.forgive = False
         self.__load_config(args.normal)
         self.__load_args(args)
 
@@ -357,9 +351,6 @@ class FontConfig:
 
         if args.apply_fea_file:
             self.apply_fea_file = True
-
-        if args.forgive:
-            self.forgive = True
 
         if args.cn_rebuild:
             self.cn["clean_cache"] = True
@@ -777,6 +768,12 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
         freeze_config=font_config.feature_freeze,
     )
 
+    verify_glyph_width(
+        font=font,
+        expect_widths=font_config.get_valid_glyph_width_list(),
+        name=postscript_name,
+    )
+
     remove(source_path)
     target_path = joinPaths(build_option.output_ttf, f"{postscript_name}.ttf")
     font.save(target_path)
@@ -890,10 +887,15 @@ def build_nf(
         preferred_family_name=f"{font_config.family_name} NF",
         preferred_style_name=style_in_17,
     )
+    verify_glyph_width(
+        font=nf_font,
+        expect_widths=font_config.get_valid_glyph_width_list(),
+        name=postscript_name,
+    )
 
     target_path = joinPaths(
         build_option.output_nf,
-        f"{font_config.family_name_compact}-NF-{style_compact_nf}.ttf",
+        f"{postscript_name}.ttf",
     )
     nf_font.save(target_path)
     nf_font.close()
@@ -974,10 +976,14 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
             "slng": "Latn, Hans, Hant, Jpan",
         }
         cn_font["meta"] = meta
-
+    verify_glyph_width(
+        font=cn_font,
+        expect_widths=font_config.get_valid_glyph_width_list(True),
+        name=postscript_name,
+    )
     target_path = joinPaths(
         build_option.output_cn,
-        f"{font_config.family_name_compact}-{build_option.cn_suffix_compact}-{style_compact_cn}.ttf",
+        f"{postscript_name}.ttf",
     )
     cn_font.save(target_path)
     cn_font.close()
@@ -1092,7 +1098,7 @@ def main():
             verify_glyph_width(
                 font=font,
                 expect_widths=font_config.get_valid_glyph_width_list(),
-                forgive=font_config.forgive,
+                name=basename,
             )
 
             add_gasp(font)
@@ -1168,14 +1174,6 @@ def main():
         drop_mac_names(build_option.output_ttf)
         build_option.is_nf_built = True
 
-        verify_glyph_width(
-            font=TTFont(
-                joinPaths(build_option.output_nf, listdir(build_option.output_nf)[0])
-            ),
-            expect_widths=font_config.get_valid_glyph_width_list(),
-            forgive=font_config.forgive,
-        )
-
     # =========================================================================================
     # ====================================   Build CN   =======================================
     # =========================================================================================
@@ -1204,14 +1202,6 @@ def main():
             _build_cn()
 
         build_option.is_cn_built = True
-
-        verify_glyph_width(
-            font=TTFont(
-                joinPaths(build_option.output_cn, listdir(build_option.output_cn)[0])
-            ),
-            expect_widths=font_config.get_valid_glyph_width_list(True),
-            forgive=font_config.forgive,
-        )
 
     # =========================================================================================
     # ==================================   Write Config   =====================================
