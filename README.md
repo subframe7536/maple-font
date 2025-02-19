@@ -175,6 +175,10 @@ Run `python build.py --cn`, the CN base fonts (about 130 MB) will download from 
 
 If you want to build CN base fonts from variable (about 35 MB), setup `"cn.use_static_base_font": false` in [config.json](./config.json) and **BE PATIENT**, instantiation will take about 40-50 minutes.
 
+#### Narrow spacing in CN glyphs
+
+If you does not care about spacing, there is a EXPERIMENTAL build option `cn.narrow` or flag `--cn-narrow` to narrow spacing in CN glyphs. You can see effect and track issues in #249
+
 #### GitHub Mirror
 
 The build script will auto download necessary assets from GitHub. If you have trouble downloading, please setup `github_mirror` in [config.json](./config.json) or `$GITHUB` to your environment variable. (Target URL will be `https://{github_mirror}/<user>/<repo>/releases/download/{tag}/{file}`), or just download the target `.zip` file and put it in the same directory as `build.py`.
