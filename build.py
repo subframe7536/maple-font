@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 import argparse
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ProcessPoolExecutor, as_completed
 import importlib.util
 import json
+from multiprocessing import Manager
 import re
 import shutil
-import threading
 import time
 from functools import partial
 from os import environ, getcwd, listdir, makedirs, path, remove, getenv
@@ -983,6 +983,16 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
     cn_font.close()
 
 
+def wrapped_fn(shutdown_event, fn, filename):
+    if shutdown_event.is_set():
+        return
+    try:
+        return fn(filename)
+    except Exception as e:
+        shutdown_event.set()
+        raise e
+
+
 def run_build(pool_size: int, fn: Callable, dir: str):
     files = listdir(dir)
 
@@ -991,28 +1001,25 @@ def run_build(pool_size: int, fn: Callable, dir: str):
             fn(f)
         return
 
-    shutdown_event = threading.Event()
+    # Use a multiprocessing manager to handle cross-process events
+    with Manager() as manager:
+        shutdown_event = manager.Event()
 
-    def wrapped_fn(filename):
-        if shutdown_event.is_set():
-            return
-        try:
-            return fn(filename)
-        except Exception as e:
-            shutdown_event.set()
-            raise e
+        with ProcessPoolExecutor(max_workers=pool_size) as executor:
+            futures = {
+                executor.submit(wrapped_fn, shutdown_event, fn, f): f for f in files
+            }
 
-    with ThreadPoolExecutor(max_workers=pool_size) as executor:
-        futures = {executor.submit(wrapped_fn, f): f for f in files}
-
-        for future in as_completed(futures):
             try:
-                future.result()
+                for future in as_completed(futures):
+                    future.result()
             except Exception as e:
+                # Signal all processes to shutdown
                 shutdown_event.set()
-                for f in futures:
-                    f.cancel()
-                executor.shutdown(wait=False, cancel_futures=True)
+                # Cancel remaining futures and shutdown executor
+                for future in futures:
+                    future.cancel()
+                executor.shutdown(wait=True)  # Wait for running tasks to finish
                 raise e
 
 
