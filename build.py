@@ -509,7 +509,11 @@ class BuildOption:
                     and listdir(self.cn_variable_dir).__len__() == 2
                 ):
                     print("No static CN fonts but detect CN base fonts")
-                    instantiate_cn_base(self.cn_variable_dir, self.cn_static_dir)
+                    instantiate_cn_base(
+                        cn_variable_dir=self.cn_variable_dir,
+                        cn_static_dir=self.cn_static_dir,
+                        pool_size=config.pool_size,
+                    )
                     return True
 
                 result = download_cn_base_font(
@@ -519,7 +523,11 @@ class BuildOption:
                     github_mirror=self.github_mirror,
                 )
                 if result:
-                    instantiate_cn_base(self.cn_variable_dir, self.cn_static_dir)
+                    instantiate_cn_base(
+                        cn_variable_dir=self.cn_variable_dir,
+                        cn_static_dir=self.cn_static_dir,
+                        pool_size=config.pool_size,
+                    )
                     return True
 
             print("\nCN base fonts don't exist. Skip CN build.")
@@ -547,19 +555,38 @@ def handle_ligatures(
     )
 
 
-def instantiate_cn_base(cn_variable_dir: str, cn_static_dir: str):
+def instantiate_cn_var(f: str, base_dir: str, output_dir: str):
+    run(
+        f"ftcli converter vf2i -out {output_dir} {joinPaths(base_dir, f)}",
+        log=True,
+    )
+
+
+def optimize_cn_base(f: str, base_dir: str):
+    font_path = joinPaths(base_dir, f)
+    print(f"✨ Optimize {font_path}")
+    run(f"ftcli ttf fix-contours {font_path}")
+    run(f"ftcli ttf remove-overlaps {font_path}")
+    run(
+        f"ftcli utils del-table -t kern -t GPOS {font_path}",
+    )
+
+
+def instantiate_cn_base(cn_variable_dir: str, cn_static_dir: str, pool_size: int):
     print("=========================================")
     print("Instantiating CN Base font, be patient...")
     print("=========================================")
-    run(
-        f"ftcli converter vf2i {cn_variable_dir} -out {cn_static_dir}",
-        log=True,
+    run_build(
+        pool_size=pool_size,
+        fn=partial(
+            instantiate_cn_var, base_dir=cn_variable_dir, output_dir=cn_static_dir
+        ),
+        dir=cn_variable_dir,
     )
-    run(f"ftcli ttf fix-contours {cn_static_dir}", log=True)
-    run(f"ftcli ttf remove-overlaps {cn_static_dir}", log=True)
-    run(
-        f"ftcli utils del-table -t kern -t GPOS {cn_static_dir}",
-        log=True,
+    run_build(
+        pool_size=pool_size,
+        fn=partial(optimize_cn_base, base_dir=cn_static_dir),
+        dir=cn_static_dir,
     )
 
 
@@ -736,6 +763,17 @@ def add_gasp(font: TTFont):
 def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
     print(f"👉 Minimal version for {f}")
     source_path = joinPaths(build_option.output_ttf, f)
+
+    run(f"ftcli fix italic-angle {source_path}")
+    run(f"ftcli fix monospace {source_path}")
+    run(f"ftcli fix strip-names {source_path}")
+
+    if font_config.debug:
+        run(f"ftcli ttf dehint {source_path}")
+    else:
+        # dehint, remove overlap and fix contours
+        run(f"ftcli ttf fix-contours --silent {source_path}")
+
     font = TTFont(source_path)
 
     style_compact = f.split("-")[-1].split(".")[0]
@@ -1120,18 +1158,8 @@ def main():
         run(f"ftcli fix monospace {build_option.output_variable}")
         print("Instantiate TTF")
         run(
-            f"ftcli converter vf2i {build_option.output_variable} -out {build_option.output_ttf}"
+            f"ftcli converter vf2i -out {build_option.output_ttf} {build_option.output_variable}"
         )
-        print("Fix static TTF")
-        run(f"ftcli fix italic-angle {build_option.output_ttf}")
-        run(f"ftcli fix monospace {build_option.output_ttf}")
-        run(f"ftcli fix strip-names {build_option.output_ttf}")
-
-        if font_config.debug:
-            run(f"ftcli ttf dehint {build_option.output_ttf}")
-        else:
-            # dehint, remove overlap and fix contours
-            run(f"ftcli ttf fix-contours --silent {build_option.output_ttf}")
 
         _build_mono = partial(
             build_mono, font_config=font_config, build_option=build_option
