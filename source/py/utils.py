@@ -203,8 +203,9 @@ def verify_glyph_width(font: TTFont, expect_widths: list[int], forgive: bool):
         print(f"Every glyph's width should be in {expect_widths}, but these are not:")
         for item in result:
             print(f"{item[0]}  =>  {item[1]}")
+
         if forgive:
-            print("[WARN] Forgive it")
+            print("❗Forgive it")
         else:
             raise Exception(
                 f"The font may contain glyphs that width is not in {expect_widths}, which may broke monospace rule."

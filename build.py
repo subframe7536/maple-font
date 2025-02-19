@@ -1174,11 +1174,9 @@ def main():
 
         _build_cn()
 
-        if font_config.use_cn_both:
-            result = font_config.toggle_nf_cn_config()
-            if result:
-                build_option.load_cn_dir_and_suffix(font_config.should_build_nf_cn())
-                _build_cn()
+        if font_config.use_cn_both and font_config.toggle_nf_cn_config():
+            build_option.load_cn_dir_and_suffix(font_config.should_build_nf_cn())
+            _build_cn()
 
         build_option.is_cn_built = True
 
