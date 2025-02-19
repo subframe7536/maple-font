@@ -194,7 +194,7 @@ def match_unicode_names(file_path: str) -> dict[str, str]:
 def verify_glyph_width(font: TTFont, expect_widths: list[int], forgive: bool):
     print("Verify glyph width...")
     result: tuple[str, int] = []
-    for name in font.getGlyphOrder():
+    for name in font.getGlyphNames():
         width, _ = font["hmtx"][name]
         if width not in expect_widths:
             result.append([name, width])
