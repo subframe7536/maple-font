@@ -179,6 +179,11 @@ def parse_args():
         action="store_true",
         help="Build font archives with config and license. If has `--cache` flag, only archive Nerd-Font and CN formats",
     )
+    build_group.add_argument(
+        "--forgive",
+        action="store_true",
+        help="Forgive errors",
+    )
 
     return parser.parse_args()
 
@@ -270,6 +275,7 @@ class FontConfig:
         }
         self.glyph_width = 600
         self.glyph_width_cn_narrow = 1000
+        self.forgive = False
         self.__load_config(args.normal)
         self.__load_args(args)
 
@@ -350,6 +356,9 @@ class FontConfig:
 
         if args.apply_fea_file:
             self.apply_fea_file = True
+
+        if args.forgive:
+            self.forgive = True
 
         if args.cn_rebuild:
             self.cn["clean_cache"] = True
@@ -1056,7 +1065,9 @@ def main():
             )
 
             verify_glyph_width(
-                font=font, expect_widths=font_config.get_valid_glyph_width_list()
+                font=font,
+                expect_widths=font_config.get_valid_glyph_width_list(),
+                forgive=font_config.forgive,
             )
 
             add_gasp(font)
@@ -1137,6 +1148,7 @@ def main():
                 joinPaths(build_option.output_nf, listdir(build_option.output_nf)[0])
             ),
             expect_widths=font_config.get_valid_glyph_width_list(),
+            forgive=font_config.forgive,
         )
 
     # =========================================================================================
@@ -1175,6 +1187,7 @@ def main():
                 joinPaths(build_option.output_cn, listdir(build_option.output_cn)[0])
             ),
             expect_widths=font_config.get_valid_glyph_width_list(True),
+            forgive=font_config.forgive,
         )
 
     # =========================================================================================
