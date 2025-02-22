@@ -313,8 +313,14 @@ class FontConfig:
                             else {**getattr(self, prop), **val},
                         )
 
-        except ():
-            print("Fail to load config.json. Please check your config.json.")
+        except FileNotFoundError:
+            print(f"🚨 Config file not found: {config_file_path}, use default config")
+            pass
+        except json.JSONDecodeError:
+            print(f"❗ Error: Invalid JSON in config file: {config_file_path}")
+            exit(1)
+        except Exception as e: # Catch any other unexpected error
+            print(f"❗ An unexpected error occurred: {e}")
             exit(1)
 
     def __load_args(self, args):
