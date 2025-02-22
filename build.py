@@ -37,7 +37,7 @@ def check_ftcli():
 
     if not package_installed:
         print(
-            f"❗{package_name} is not found. Please run `pip install foundrytools-cli`"
+            f"❗ {package_name} is not found. Please run `pip install foundrytools-cli`"
         )
         exit(1)
 
@@ -436,11 +436,11 @@ class BuildOption:
         self.is_nf_built = False
         self.is_cn_built = False
         self.has_cache = (
-            self.check_cache_dir(self.output_variable, count=2)
-            and self.check_cache_dir(self.output_otf)
-            and self.check_cache_dir(self.output_ttf)
-            and self.check_cache_dir(self.output_ttf_hinted)
-            and self.check_cache_dir(self.output_woff2)
+            self.__check_cache_dir(self.output_variable, count=2)
+            and self.__check_cache_dir(self.output_otf)
+            and self.__check_cache_dir(self.output_ttf)
+            and self.__check_cache_dir(self.output_ttf_hinted)
+            and self.__check_cache_dir(self.output_woff2)
         )
         self.github_mirror = environ.get("GITHUB", "github.com")
 
@@ -479,61 +479,68 @@ class BuildOption:
                 '\nNo `"cn.enable": true` in config.json or no `--cn` / `--cn-both` in argv. Skip CN build.'
             )
             return False
+        return self.__ensure_cn_static_fonts(
+            clean_cache=config.cn["clean_cache"],
+            use_static=config.cn["use_static_base_font"],
+            pool_size=config.pool_size,
+        )
 
-        if config.cn["clean_cache"]:
+    def __ensure_cn_static_fonts(
+        self, clean_cache: bool, use_static: bool, pool_size: int
+    ) -> bool:
+        if clean_cache:
             print("Clean CN static fonts")
             shutil.rmtree(self.cn_static_dir, ignore_errors=True)
 
-        if (
-            not path.exists(self.cn_static_dir)
-            or listdir(self.cn_static_dir).__len__() != 16
-        ):
-            tag = "cn-base"
-            if is_ci() or config.cn["use_static_base_font"]:
-                return download_cn_base_font(
-                    tag=tag,
-                    zip_path="cn-base-static.zip",
-                    target_dir=self.cn_static_dir,
-                    github_mirror=self.github_mirror,
-                )
+        if path.exists(self.cn_static_dir) and len(listdir(self.cn_static_dir)) == 16:
+            return True
 
-            if not config.cn["use_static_base_font"] or not path.exists(
-                self.cn_static_dir
+        tag = "cn-base"
+        if is_ci() or use_static:
+            if download_cn_base_font(
+                tag=tag,
+                zip_path="cn-base-static.zip",
+                target_dir=self.cn_static_dir,
+                github_mirror=self.github_mirror,
             ):
-                if (
-                    path.exists(self.cn_variable_dir)
-                    and listdir(self.cn_variable_dir).__len__() == 2
-                ):
-                    print("No static CN fonts but detect CN base fonts")
-                    instantiate_cn_base(
-                        cn_variable_dir=self.cn_variable_dir,
-                        cn_static_dir=self.cn_static_dir,
-                        pool_size=config.pool_size,
-                    )
-                    return True
+                return True
 
-                result = download_cn_base_font(
-                    tag=tag,
-                    zip_path="cn-base-variable.zip",
-                    target_dir=self.cn_variable_dir,
-                    github_mirror=self.github_mirror,
-                )
-                if result:
-                    instantiate_cn_base(
-                        cn_variable_dir=self.cn_variable_dir,
-                        cn_static_dir=self.cn_static_dir,
-                        pool_size=config.pool_size,
-                    )
-                    return True
+        # Try using variable fonts if static fonts aren't available
+        if (
+            path.exists(self.cn_variable_dir)
+            and len(listdir(self.cn_variable_dir)) == 2
+        ):
+            print(
+                "No static CN fonts but detect variable version, start instantiating..."
+            )
+            instantiate_cn_base(
+                cn_variable_dir=self.cn_variable_dir,
+                cn_static_dir=self.cn_static_dir,
+                pool_size=pool_size,
+            )
+            return True
 
-            print("\nCN base fonts don't exist. Skip CN build.")
-            return False
-        return True
+        # Download variable fonts and instantiate if necessary
+        if download_cn_base_font(
+            tag=tag,
+            zip_path="cn-base-variable.zip",
+            target_dir=self.cn_variable_dir,
+            github_mirror=self.github_mirror,
+        ):
+            instantiate_cn_base(
+                cn_variable_dir=self.cn_variable_dir,
+                cn_static_dir=self.cn_static_dir,
+                pool_size=pool_size,
+            )
+            return True
 
-    def check_cache_dir(self, cache_dir: str, count: int = 16) -> bool:
+        print("\nCN base fonts don't exist. Skip CN build.")
+        return False
+
+    def __check_cache_dir(self, cache_dir: str, count: int = 16) -> bool:
         if not path.isdir(cache_dir):
             return False
-        return listdir(cache_dir).__len__() == count
+        return len(listdir(cache_dir)) == count
 
 
 def handle_ligatures(
