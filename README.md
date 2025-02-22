@@ -57,7 +57,12 @@ brew install --cask font-maple-mono-nf-cn
 ### Arch Linux
 
 ```shell
+# Maple Mono
 paru -S ttf-maple-beta
+# Maple Mono NF
+paru -S ttf-maple-beta-nf
+# Maple Mono NF CN
+paru -S ttf-maple-beta-nf-cn
 ```
 
 ## Feature Configurations
