@@ -3,7 +3,6 @@ import argparse
 from concurrent.futures import ProcessPoolExecutor, as_completed
 import importlib.util
 import json
-from multiprocessing import Manager
 import re
 import shutil
 import time
@@ -1045,26 +1044,13 @@ def run_build(pool_size: int, fn: Callable, dir: str):
             fn(f)
         return
 
-    # Use a multiprocessing manager to handle cross-process events
-    with Manager() as manager:
-        shutdown_event = manager.Event()
+    with ProcessPoolExecutor(max_workers=pool_size) as executor:
+        futures = {
+            executor.submit(fn, f): f for f in files
+        }
 
-        with ProcessPoolExecutor(max_workers=pool_size) as executor:
-            futures = {
-                executor.submit(wrapped_fn, shutdown_event, fn, f): f for f in files
-            }
-
-            try:
-                for future in as_completed(futures):
-                    future.result()
-            except Exception as e:
-                # Signal all processes to shutdown
-                shutdown_event.set()
-                # Cancel remaining futures and shutdown executor
-                for future in futures:
-                    future.cancel()
-                executor.shutdown(wait=True)  # Wait for running tasks to finish
-                raise e
+        for future in as_completed(futures):
+            future.result()
 
 
 def main():
