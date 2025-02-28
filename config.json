@@ -5,7 +5,7 @@
   "pool_size": 4,
   "ligature": true,
   "feature_freeze": {
-    "cv01": "ignore",
+    "cv01": "enable",
     "cv02": "ignore",
     "cv03": "ignore",
     "cv04": "ignore",
