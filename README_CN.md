@@ -272,6 +272,10 @@ Build Options:
 
 如果这个字体对您有所帮助，可以通过 [爱发电](https://afdian.com/a/subframe7536) 赞助我
 
+## 点星
+
+[![Star History Chart](https://api.star-history.com/svg?repos=subframe7536/maple-font&type=Date)](https://www.star-history.com/#subframe7536/maple-font&Date)
+
 ## 许可
 
 SIL Open Font License 1.1
