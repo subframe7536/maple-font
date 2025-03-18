@@ -273,6 +273,10 @@ If this font is helpful to you, please feel free to buy me a coffee
 
 or sponser me through [Afdian](https://afdian.com/a/subframe7536)
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=subframe7536/maple-font&type=Date)](https://www.star-history.com/#subframe7536/maple-font&Date)
+
 ## License
 
 SIL Open Font License 1.1
