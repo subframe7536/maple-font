@@ -50,53 +50,153 @@ You can download all the font archives from [Releases](https://github.com/subfra
 
 ### Scoop (Windows)
 
-```sh
-# Add bucket
-scoop bucket add nerd-fonts
-# Maple Mono (ttf format)
-scoop install Maple-Mono
-# Maple Mono (hinted ttf format)
-scoop install Maple-Mono-autohint
-# Maple Mono (otf format)
-scoop install Maple-Mono-otf
-# Maple Mono NF
-scoop install Maple-Mono-NF
-# Maple Mono NF CN
-scoop install Maple-Mono-NF-CN
-```
+<details>
+  <summary>Click to expand</summary>
+
+  ```sh
+  # Add bucket
+  scoop bucket add nerd-fonts
+  # Maple Mono (ttf format)
+  scoop install Maple-Mono
+  # Maple Mono (hinted ttf format)
+  scoop install Maple-Mono-autohint
+  # Maple Mono (otf format)
+  scoop install Maple-Mono-otf
+  # Maple Mono NF
+  scoop install Maple-Mono-NF
+  # Maple Mono NF CN
+  scoop install Maple-Mono-NF-CN
+  ```
+
+</details>
 
 ### Homebrew (MacOS, Linux)
 
-```sh
-# Maple Mono
-brew install --cask font-maple-mono
-# Maple Mono NF
-brew install --cask font-maple-mono-nf
-# Maple Mono CN
-brew install --cask font-maple-mono-cn
-# Maple Mono NF CN
-brew install --cask font-maple-mono-nf-cn
+<details>
+  <summary>Click to expand</summary>
 
-# Maple Mono Normal
-brew install --cask font-maple-mono-normal
-# Maple Mono Normal NF
-brew install --cask font-maple-mono-normal-nf
-# Maple Mono Normal CN
-brew install --cask font-maple-mono-normal-cn
-# Maple Mono Normal NF CN
-brew install --cask font-maple-mono-normal-nf-cn
-```
+  ```sh
+  # Maple Mono
+  brew install --cask font-maple-mono
+  # Maple Mono NF
+  brew install --cask font-maple-mono-nf
+  # Maple Mono CN
+  brew install --cask font-maple-mono-cn
+  # Maple Mono NF CN
+  brew install --cask font-maple-mono-nf-cn
+
+  # Maple Mono Normal
+  brew install --cask font-maple-mono-normal
+  # Maple Mono Normal NF
+  brew install --cask font-maple-mono-normal-nf
+  # Maple Mono Normal CN
+  brew install --cask font-maple-mono-normal-cn
+  # Maple Mono Normal NF CN
+  brew install --cask font-maple-mono-normal-nf-cn
+  ```
+
+</details>
 
 ### AUR (Arch Linux)
 
-```shell
-# Maple Mono
-paru -S ttf-maple-beta
-# Maple Mono NF
-paru -S ttf-maple-beta-nf
-# Maple Mono NF CN
-paru -S ttf-maple-beta-nf-cn
-```
+<details>
+  <summary>Click to expand</summary>
+
+  ```sh
+  # Maple Mono (Ligature Variable)
+  paru -S maplemono-variable
+  # Maple Mono (Ligature TTF hinted)
+  paru -S maplemono-ttf-autohint
+  # Maple Mono (Ligature TTF unhinted)
+  paru -S maplemono-ttf
+  # Maple Mono (Ligature OTF)
+  paru -S maplemono-otf
+  # Maple Mono (Ligature WOFF2)
+  paru -S maplemono-woff2
+  # Maple Mono NF (Ligature hinted)
+  paru -S maplemono-nf
+  # Maple Mono NF (Ligature unhinted)
+  paru -S maplemono-nf-unhinted
+  # Maple Mono CN (Ligature hinted)
+  paru -S maplemono-cn
+  # Maple Mono CN (Ligature unhinted)
+  paru -S maplemono-cn-unhinted
+  # Maple Mono NF CN (Ligature hinted)
+  paru -S maplemono-nf-cn
+  # Maple Mono NF CN (Ligature unhinted)
+  paru -S maplemono-nf-cn-unhinted
+
+  # Maple Mono (No-Ligature Variable)
+  paru -S maplemononl-variable
+  # Maple Mono (No-Ligature TTF hinted)
+  paru -S maplemononl-ttf-autohint
+  # Maple Mono (No-Ligature TTF unhinted)
+  paru -S maplemononl-ttf
+  # Maple Mono (No-Ligature OTF)
+  paru -S maplemononl-otf
+  # Maple Mono (No-Ligature WOFF2)
+  paru -S maplemononl-woff2
+  # Maple Mono NF (No-Ligature hinted)
+  paru -S maplemononl-nf
+  # Maple Mono NF (No-Ligature unhinted)
+  paru -S maplemononl-nf-unhinted
+  # Maple Mono CN (No-Ligature hinted)
+  paru -S maplemononl-cn
+  # Maple Mono CN (No-Ligature unhinted)
+  paru -S maplemononl-cn-unhinted
+  # Maple Mono NF CN (No-Ligature hinted)
+  paru -S maplemononl-nf-cn
+  # Maple Mono NF CN (No-Ligature unhinted)
+  paru -S maplemononl-nf-cn-unhinted
+
+  # Maple Mono Normal (Ligature Variable)
+  paru -S maplemononormal-variable
+  # Maple Mono Normal (Ligature TTF hinted)
+  paru -S maplemononormal-ttf-autohint
+  # Maple Mono Normal (Ligature TTF unhinted)
+  paru -S maplemononormal-ttf
+  # Maple Mono Normal (Ligature OTF)
+  paru -S maplemononormal-otf
+  # Maple Mono Normal (Ligature WOFF2)
+  paru -S maplemononormal-woff2
+  # Maple Mono Normal NF (Ligature hinted)
+  paru -S maplemononormal-nf
+  # Maple Mono Normal NF (Ligature unhinted)
+  paru -S maplemononormal-nf-unhinted
+  # Maple Mono Normal CN (Ligature hinted)
+  paru -S maplemononormal-cn
+  # Maple Mono Normal CN (Ligature unhinted)
+  paru -S maplemononormal-cn-unhinted
+  # Maple Mono Normal NF CN (Ligature hinted)
+  paru -S maplemononormal-nf-cn
+  # Maple Mono Normal NF CN (Ligature unhinted)
+  paru -S maplemononormal-nf-cn-unhinted
+
+  # Maple Mono Normal (No-Ligature Variable)
+  paru -S maplemononormalnl-variable
+  # Maple Mono Normal (No-Ligature TTF hinted)
+  paru -S maplemononormalnl-ttf-autohint
+  # Maple Mono Normal (No-Ligature TTF unhinted)
+  paru -S maplemononormalnl-ttf
+  # Maple Mono Normal (No-Ligature OTF)
+  paru -S maplemononormalnl-otf
+  # Maple Mono Normal (No-Ligature WOFF2)
+  paru -S maplemononormalnl-woff2
+  # Maple Mono Normal NF (No-Ligature hinted)
+  paru -S maplemononormalnl-nf
+  # Maple Mono Normal NF (No-Ligature unhinted)
+  paru -S maplemononormalnl-nf-unhinted
+  # Maple Mono Normal CN (No-Ligature hinted)
+  paru -S maplemononormalnl-cn
+  # Maple Mono Normal CN (No-Ligature unhinted)
+  paru -S maplemononormalnl-cn-unhinted
+  # Maple Mono Normal NF CN (No-Ligature hinted)
+  paru -S maplemononormalnl-nf-cn
+  # Maple Mono Normal NF CN (No-Ligature unhinted)
+  paru -S maplemononormalnl-nf-cn-unhinted
+  ```
+
+</details>
 
 ## CDN
 
