@@ -11,7 +11,8 @@
   <a href="#download">Download</a> |
   <a href="https://font.subf.dev">Website</a> |
   English |
-  <a href="./README_CN.md">中文</a>
+  <a href="./README_CN.md">中文</a> |
+  <a href="./README_JA.md">日本語</a>
 </p>
 
 # Maple Mono

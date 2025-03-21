@@ -11,6 +11,7 @@
   <a href="#下载">下载</a> |
   <a href="https://font.subf.dev">网站</a> |
   <a href="./README.md">English</a> |
+  <a href="./README_JA.md">日本語</a> |
   中文
 </p>
 
