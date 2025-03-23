@@ -26,7 +26,7 @@ from source.py.utils import (
     set_font_name,
     joinPaths,
 )
-from source.py.feature import freeze_feature, get_freeze_config_str
+from source.py.freeze import freeze_feature, get_freeze_config_str
 
 FONT_VERSION = "v7.0"
 # =========================================================================================
