@@ -98,7 +98,112 @@ You can download all the font archives from [Releases](https://github.com/subfra
 
 </details>
 
-### AUR (Arch Linux)
+### Arch Linux
+
+ArchLinuxCN repository allows downloading a single package zip file without downloading all the package zip files in pkgbase, but AUR does not. (If you have a good solution, please contact Cyberczy(czysheep@gmail.com))
+
+#### ArchLinuxCN(Recommended)
+
+<details>
+  <summary>Click to expand</summary>
+
+  ```sh
+  # Maple Mono (Ligature Variable)
+  paru -S ttf-maplemono-variable
+  # Maple Mono (Ligature TTF hinted)
+  paru -S ttf-maplemono-autohint
+  # Maple Mono (Ligature TTF unhinted)
+  paru -S ttf-maplemono
+  # Maple Mono (Ligature OTF)
+  paru -S otf-maplemono
+  # Maple Mono (Ligature WOFF2)
+  paru -S woff2-maplemono
+  # Maple Mono NF (Ligature hinted)
+  paru -S ttf-maplemono-nf
+  # Maple Mono NF (Ligature unhinted)
+  paru -S ttf-maplemono-nf-unhinted
+  # Maple Mono CN (Ligature hinted)
+  paru -S ttf-maplemono-cn
+  # Maple Mono CN (Ligature unhinted)
+  paru -S ttf-maplemono-cn-unhinted
+  # Maple Mono NF CN (Ligature hinted)
+  paru -S ttf-maplemono-nf-cn
+  # Maple Mono NF CN (Ligature unhinted)
+  paru -S ttf-maplemono-nf-cn-unhinted
+
+  # Maple Mono (No-Ligature Variable)
+  paru -S ttf-maplemononl-variable
+  # Maple Mono (No-Ligature TTF hinted)
+  paru -S ttf-maplemononl-autohint
+  # Maple Mono (No-Ligature TTF unhinted)
+  paru -S ttf-maplemononl
+  # Maple Mono (No-Ligature OTF)
+  paru -S otf-maplemononl
+  # Maple Mono (No-Ligature WOFF2)
+  paru -S woff2-maplemononl
+  # Maple Mono NF (No-Ligature hinted)
+  paru -S ttf-maplemononl-nf
+  # Maple Mono NF (No-Ligature unhinted)
+  paru -S ttf-maplemononl-nf-unhinted
+  # Maple Mono CN (No-Ligature hinted)
+  paru -S ttf-maplemononl-cn
+  # Maple Mono CN (No-Ligature unhinted)
+  paru -S ttf-maplemononl-cn-unhinted
+  # Maple Mono NF CN (No-Ligature hinted)
+  paru -S ttf-maplemononl-nf-cn
+  # Maple Mono NF CN (No-Ligature unhinted)
+  paru -S ttf-maplemononl-nf-cn-unhinted
+
+  # Maple Mono Normal (Ligature Variable)
+  paru -S ttf-maplemononormal-variable
+  # Maple Mono Normal (Ligature TTF hinted)
+  paru -S ttf-maplemononormal-autohint
+  # Maple Mono Normal (Ligature TTF unhinted)
+  paru -S ttf-maplemononormal
+  # Maple Mono Normal (Ligature OTF)
+  paru -S otf-maplemononormal
+  # Maple Mono Normal (Ligature WOFF2)
+  paru -S woff2-maplemononormal
+  # Maple Mono Normal NF (Ligature hinted)
+  paru -S ttf-maplemononormal-nf
+  # Maple Mono Normal NF (Ligature unhinted)
+  paru -S ttf-maplemononormal-nf-unhinted
+  # Maple Mono Normal CN (Ligature hinted)
+  paru -S ttf-maplemononormal-cn
+  # Maple Mono Normal CN (Ligature unhinted)
+  paru -S ttf-maplemononormal-cn-unhinted
+  # Maple Mono Normal NF CN (Ligature hinted)
+  paru -S ttf-maplemononormal-nf-cn
+  # Maple Mono Normal NF CN (Ligature unhinted)
+  paru -S ttf-maplemononormal-nf-cn-unhinted
+
+  # Maple Mono Normal (No-Ligature Variable)
+  paru -S ttf-maplemononormalnl-variable
+  # Maple Mono Normal (No-Ligature TTF hinted)
+  paru -S ttf-maplemononormalnl-autohint
+  # Maple Mono Normal (No-Ligature TTF unhinted)
+  paru -S ttf-maplemononormalnl
+  # Maple Mono Normal (No-Ligature OTF)
+  paru -S otf-maplemononormalnl
+  # Maple Mono Normal (No-Ligature WOFF2)
+  paru -S woff2-maplemononormalnl
+  # Maple Mono Normal NF (No-Ligature hinted)
+  paru -S ttf-maplemononormalnl-nf
+  # Maple Mono Normal NF (No-Ligature unhinted)
+  paru -S ttf-maplemononormalnl-nf-unhinted
+  # Maple Mono Normal CN (No-Ligature hinted)
+  paru -S ttf-maplemononormalnl-cn
+  # Maple Mono Normal CN (No-Ligature unhinted)
+  paru -S ttf-maplemononormalnl-cn-unhinted
+  # Maple Mono Normal NF CN (No-Ligature hinted)
+  paru -S ttf-maplemononormalnl-nf-cn
+  # Maple Mono Normal NF CN (No-Ligature unhinted)
+  paru -S ttf-maplemononormalnl-nf-cn-unhinted
+  ```
+
+</details>
+
+#### AUR(Not Recommended)
 
 <details>
   <summary>Click to expand</summary>
