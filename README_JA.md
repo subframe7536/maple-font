@@ -51,8 +51,19 @@ CNバージョンは[Resource Han Rounded](https://github.com/CyanoHao/Resource-
 
 ### Scoop (Windows)
 
+```sh
+# バケットを追加
+scoop bucket add nerd-fonts
+# Maple Mono (ttf 形式)
+scoop install Maple-Mono
+# Maple Mono NF
+scoop install Maple-Mono-NF
+# Maple Mono NF CN
+scoop install Maple-Mono-NF-CN
+```
+
 <details>
-  <summary>クリックして展開</summary>
+  <summary>すべてのパッケージ (クリックして展開)</summary>
 
   ```sh
   # バケットを追加
@@ -73,8 +84,17 @@ CNバージョンは[Resource Han Rounded](https://github.com/CyanoHao/Resource-
 
 ### Homebrew (MacOS, Linux)
 
+```sh
+# Maple Mono
+brew install --cask font-maple-mono
+# Maple Mono NF
+brew install --cask font-maple-mono-nf
+# Maple Mono NF CN
+brew install --cask font-maple-mono-nf-cn
+```
+
 <details>
-  <summary>クリックして展開</summary>
+  <summary>すべてのパッケージ (クリックして展開)</summary>
 
   ```sh
   # Maple Mono
@@ -98,10 +118,133 @@ CNバージョンは[Resource Han Rounded](https://github.com/CyanoHao/Resource-
 
 </details>
 
-### AUR (Arch Linux)
+### Arch Linux
+
+ArchLinuxCN リポジトリでは、pkgbase 内のすべてのパッケージ zip ファイルをダウンロードせずに、単一のパッケージ zip ファイルをダウンロードできますが、AUR ではできません。(良い解決策がある場合は、Cyberczy(czysheep@gmail.com) までご連絡ください)
+
+#### ArchLinuxCN (推奨)
+
+```sh
+# Maple Mono (Ligature TTF unhinted)
+paru -S ttf-maplemono
+# Maple Mono NF (Ligature unhinted)
+paru -S ttf-maplemono-nf-unhinted
+# Maple Mono NF CN (Ligature unhinted)
+paru -S ttf-maplemono-nf-cn-unhinted
+```
 
 <details>
-  <summary>クリックして展開</summary>
+  <summary>すべてのパッケージ (クリックして展開)</summary>
+
+  ```sh
+  # Maple Mono (Ligature Variable)
+  paru -S ttf-maplemono-variable
+  # Maple Mono (Ligature TTF hinted)
+  paru -S ttf-maplemono-autohint
+  # Maple Mono (Ligature TTF unhinted)
+  paru -S ttf-maplemono
+  # Maple Mono (Ligature OTF)
+  paru -S otf-maplemono
+  # Maple Mono (Ligature WOFF2)
+  paru -S woff2-maplemono
+  # Maple Mono NF (Ligature hinted)
+  paru -S ttf-maplemono-nf
+  # Maple Mono NF (Ligature unhinted)
+  paru -S ttf-maplemono-nf-unhinted
+  # Maple Mono CN (Ligature hinted)
+  paru -S ttf-maplemono-cn
+  # Maple Mono CN (Ligature unhinted)
+  paru -S ttf-maplemono-cn-unhinted
+  # Maple Mono NF CN (Ligature hinted)
+  paru -S ttf-maplemono-nf-cn
+  # Maple Mono NF CN (Ligature unhinted)
+  paru -S ttf-maplemono-nf-cn-unhinted
+
+  # Maple Mono (No-Ligature Variable)
+  paru -S ttf-maplemononl-variable
+  # Maple Mono (No-Ligature TTF hinted)
+  paru -S ttf-maplemononl-autohint
+  # Maple Mono (No-Ligature TTF unhinted)
+  paru -S ttf-maplemononl
+  # Maple Mono (No-Ligature OTF)
+  paru -S otf-maplemononl
+  # Maple Mono (No-Ligature WOFF2)
+  paru -S woff2-maplemononl
+  # Maple Mono NF (No-Ligature hinted)
+  paru -S ttf-maplemononl-nf
+  # Maple Mono NF (No-Ligature unhinted)
+  paru -S ttf-maplemononl-nf-unhinted
+  # Maple Mono CN (No-Ligature hinted)
+  paru -S ttf-maplemononl-cn
+  # Maple Mono CN (No-Ligature unhinted)
+  paru -S ttf-maplemononl-cn-unhinted
+  # Maple Mono NF CN (No-Ligature hinted)
+  paru -S ttf-maplemononl-nf-cn
+  # Maple Mono NF CN (No-Ligature unhinted)
+  paru -S ttf-maplemononl-nf-cn-unhinted
+
+  # Maple Mono Normal (Ligature Variable)
+  paru -S ttf-maplemononormal-variable
+  # Maple Mono Normal (Ligature TTF hinted)
+  paru -S ttf-maplemononormal-autohint
+  # Maple Mono Normal (Ligature TTF unhinted)
+  paru -S ttf-maplemononormal
+  # Maple Mono Normal (Ligature OTF)
+  paru -S otf-maplemononormal
+  # Maple Mono Normal (Ligature WOFF2)
+  paru -S woff2-maplemononormal
+  # Maple Mono Normal NF (Ligature hinted)
+  paru -S ttf-maplemononormal-nf
+  # Maple Mono Normal NF (Ligature unhinted)
+  paru -S ttf-maplemononormal-nf-unhinted
+  # Maple Mono Normal CN (Ligature hinted)
+  paru -S ttf-maplemononormal-cn
+  # Maple Mono Normal CN (Ligature unhinted)
+  paru -S ttf-maplemononormal-cn-unhinted
+  # Maple Mono Normal NF CN (Ligature hinted)
+  paru -S ttf-maplemononormal-nf-cn
+  # Maple Mono Normal NF CN (Ligature unhinted)
+  paru -S ttf-maplemononormal-nf-cn-unhinted
+
+  # Maple Mono Normal (No-Ligature Variable)
+  paru -S ttf-maplemononormalnl-variable
+  # Maple Mono Normal (No-Ligature TTF hinted)
+  paru -S ttf-maplemononormalnl-autohint
+  # Maple Mono Normal (No-Ligature TTF unhinted)
+  paru -S ttf-maplemononormalnl
+  # Maple Mono Normal (No-Ligature OTF)
+  paru -S otf-maplemononormalnl
+  # Maple Mono Normal (No-Ligature WOFF2)
+  paru -S woff2-maplemononormalnl
+  # Maple Mono Normal NF (No-Ligature hinted)
+  paru -S ttf-maplemononormalnl-nf
+  # Maple Mono Normal NF (No-Ligature unhinted)
+  paru -S ttf-maplemononormalnl-nf-unhinted
+  # Maple Mono Normal CN (No-Ligature hinted)
+  paru -S ttf-maplemononormalnl-cn
+  # Maple Mono Normal CN (No-Ligature unhinted)
+  paru -S ttf-maplemononormalnl-cn-unhinted
+  # Maple Mono Normal NF CN (No-Ligature hinted)
+  paru -S ttf-maplemononormalnl-nf-cn
+  # Maple Mono Normal NF CN (No-Ligature unhinted)
+  paru -S ttf-maplemononormalnl-nf-cn-unhinted
+  ```
+
+</details>
+
+#### AUR (非推奨)
+
+```sh
+# Maple Mono (Ligature TTF unhinted)
+paru -S maplemono-ttf
+# Maple Mono NF (Ligature unhinted)
+paru -S maplemono-nf-unhinted
+# Maple Mono NF CN (Ligature unhinted)
+paru -S maplemono-nf-cn-unhinted
+```
+
+<details>
+  <summary>すべてのパッケージ (クリックして展開)</summary>
 
   ```sh
   # Maple Mono (Ligature Variable)
@@ -195,6 +338,120 @@ CNバージョンは[Resource Han Rounded](https://github.com/CyanoHao/Resource-
   paru -S maplemononormalnl-nf-cn
   # Maple Mono Normal NF CN (No-Ligature unhinted)
   paru -S maplemononormalnl-nf-cn-unhinted
+  ```
+
+</details>
+
+### Nixpkgs (NixOS, Linux, MacOS)
+
+```nix
+fonts.packages = with pkgs; [
+  # Maple Mono (Ligature TTF unhinted)
+  maple-mono.truetype
+  # Maple Mono NF (Ligature unhinted)
+  maple-mono.NF-unhinted
+  # Maple Mono NF CN (Ligature unhinted)
+  maple-mono.NF-CN-unhinted
+];
+```
+
+<details>
+  <summary>すべてのパッケージ (クリックして展開)</summary>
+
+  ```nix
+  fonts.packages = with pkgs; [
+    # Maple Mono (Ligature Variable)
+    maple-mono.variable
+    # Maple Mono (Ligature TTF hinted)
+    maple-mono.truetype-autohint
+    # Maple Mono (Ligature TTF unhinted)
+    maple-mono.truetype
+    # Maple Mono (Ligature OTF)
+    maple-mono.opentype
+    # Maple Mono (Ligature WOFF2)
+    maple-mono.woff2
+    # Maple Mono NF (Ligature hinted)
+    maple-mono.NF
+    # Maple Mono NF (Ligature unhinted)
+    maple-mono.NF-unhinted
+    # Maple Mono CN (Ligature hinted)
+    maple-mono.CN
+    # Maple Mono CN (Ligature unhinted)
+    maple-mono.CN-unhinted
+    # Maple Mono NF CN (Ligature hinted)
+    maple-mono.NF-CN
+    # Maple Mono NF CN (Ligature unhinted)
+    maple-mono.NF-CN-unhinted
+
+    # Maple Mono (No-Ligature Variable)
+    maple-mono.NL-Variable
+    # Maple Mono (No-Ligature TTF hinted)
+    maple-mono.NL-TTF-AutoHint
+    # Maple Mono (No-Ligature TTF unhinted)
+    maple-mono.NL-TTF
+    # Maple Mono (No-Ligature OTF)
+    maple-mono.NL-OTF
+    # Maple Mono (No-Ligature WOFF2)
+    maple-mono.NL-Woff2
+    # Maple Mono NF (No-Ligature hinted)
+    maple-mono.NL-NF
+    # Maple Mono NF (No-Ligature unhinted)
+    maple-mono.NL-NF-unhinted
+    # Maple Mono CN (No-Ligature hinted)
+    maple-mono.NL-CN
+    # Maple Mono CN (No-Ligature unhinted)
+    maple-mono.NL-CN-unhinted
+    # Maple Mono NF CN (No-Ligature hinted)
+    maple-mono.NL-NF-CN
+    # Maple Mono NF CN (No-Ligature unhinted)
+    maple-mono.NL-NF-CN-unhinted
+
+    # Maple Mono Normal (Ligature Variable)
+    maple-mono.Normal-Variable
+    # Maple Mono Normal (Ligature TTF hinted)
+    maple-mono.Normal-TTF-AutoHint
+    # Maple Mono Normal (Ligature TTF unhinted)
+    maple-mono.Normal-TTF
+    # Maple Mono Normal (Ligature OTF)
+    maple-mono.Normal-OTF
+    # Maple Mono Normal (Ligature WOFF2)
+    maple-mono.Normal-Woff2
+    # Maple Mono Normal NF (Ligature hinted)
+    maple-mono.Normal-NF
+    # Maple Mono Normal NF (Ligature unhinted)
+    maple-mono.Normal-NF-unhinted
+    # Maple Mono Normal CN (Ligature hinted)
+    maple-mono.Normal-CN
+    # Maple Mono Normal CN (Ligature unhinted)
+    maple-mono.Normal-CN-unhinted
+    # Maple Mono Normal NF CN (Ligature hinted)
+    maple-mono.Normal-NF-CN
+    # Maple Mono Normal NF CN (Ligature unhinted)
+    maple-mono.Normal-NF-CN-unhinted
+
+    # Maple Mono Normal (No-Ligature Variable)
+    maple-mono.NormalNL-Variable
+    # Maple Mono Normal (No-Ligature TTF hinted)
+    maple-mono.NormalNL-TTF-AutoHint
+    # Maple Mono Normal (No-Ligature TTF unhinted)
+    maple-mono.NormalNL-TTF
+    # Maple Mono Normal (No-Ligature OTF)
+    maple-mono.NormalNL-OTF
+    # Maple Mono Normal (No-Ligature WOFF2)
+    maple-mono.NormalNL-Woff2
+    # Maple Mono Normal NF (No-Ligature hinted)
+    maple-mono.NormalNL-NF
+    # Maple Mono Normal NF (No-Ligature unhinted)
+    maple-mono.NormalNL-NF-unhinted
+    # Maple Mono Normal CN (No-Ligature hinted)
+    maple-mono.NormalNL-CN
+    # Maple Mono Normal CN (No-Ligature unhinted)
+    maple-mono.NormalNL-CN-unhinted
+    # Maple Mono Normal NF CN (No-Ligature hinted)
+    maple-mono.NormalNL-NF-CN
+    # Maple Mono Normal NF CN (No-Ligature unhinted)
+    maple-mono.NormalNL-NF-CN-unhinted
+  ];
   ```
 
 </details>
@@ -321,6 +578,10 @@ CNバージョンはデフォルトで無効になっています。`python buil
 #### CNグリフの間隔を狭くする
 
 CNグリフの間隔が**非常に大きい**と感じる場合、間隔を狭くする**実験的**なビルドオプション`cn.narrow`またはフラグ`--cn-narrow`があります。効果を確認し、[#249](https://github.com/subframe7536/maple-font/issues/249)で問題を追跡できます。
+
+#### 繁体中文の句読点サポート
+
+`cv99` を開くことで、すべての中国語の句読点が中央に配置されます。詳細は [#150](https://github.com/subframe7536/maple-font/issues/150) を参照してください
 
 #### GitHubミラー
 

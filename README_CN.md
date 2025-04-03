@@ -11,8 +11,8 @@
   <a href="#下载">下载</a> |
   <a href="https://font.subf.dev">网站</a> |
   <a href="./README.md">English</a> |
-  <a href="./README_JA.md">日本語</a> |
-  中文
+  中文 |
+  <a href="./README_JA.md">日本語</a>
 </p>
 
 # Maple Mono
@@ -51,8 +51,19 @@ CN 版本基于[资源圆体](https://github.com/CyanoHao/Resource-Han-Rounded)�
 
 ### Scoop (Windows)
 
+```sh
+# Add bucket
+scoop bucket add nerd-fonts
+# Maple Mono (ttf 格式)
+scoop install Maple-Mono
+# Maple Mono NF
+scoop install Maple-Mono-NF
+# Maple Mono NF CN
+scoop install Maple-Mono-NF-CN
+```
+
 <details>
-  <summary>点击展开</summary>
+  <summary>所有包 (点击展开)</summary>
 
   ```sh
   # 添加 bucket
@@ -73,8 +84,17 @@ CN 版本基于[资源圆体](https://github.com/CyanoHao/Resource-Han-Rounded)�
 
 ### Homebrew (MacOS, Linux)
 
+```sh
+# Maple Mono
+brew install --cask font-maple-mono
+# Maple Mono NF
+brew install --cask font-maple-mono-nf
+# Maple Mono NF CN
+brew install --cask font-maple-mono-nf-cn
+```
+
 <details>
-  <summary>点击展开</summary>
+  <summary>所有包 (点击展开)</summary>
 
   ```sh
   # Maple Mono
@@ -98,10 +118,133 @@ CN 版本基于[资源圆体](https://github.com/CyanoHao/Resource-Han-Rounded)�
 
 </details>
 
-### AUR (Arch Linux)
+### Arch Linux
+
+ArchLinuxCN仓库允许下载单个软件包的zip文件，而无需下载pkgbase中的所有软件包的zip文件，但AUR不允许。(如果您有好的解决方案，请联系Cyberczy(czysheep@gmail.com))
+
+#### ArchLinuxCN (推荐)
+
+```sh
+# Maple Mono (Ligature TTF unhinted)
+paru -S ttf-maplemono
+# Maple Mono NF (Ligature unhinted)
+paru -S ttf-maplemono-nf-unhinted
+# Maple Mono NF CN (Ligature unhinted)
+paru -S ttf-maplemono-nf-cn-unhinted
+```
 
 <details>
-  <summary>点击展开</summary>
+  <summary>所有包 (点击展开)</summary>
+
+  ```sh
+  # Maple Mono (Ligature Variable)
+  paru -S ttf-maplemono-variable
+  # Maple Mono (Ligature TTF hinted)
+  paru -S ttf-maplemono-autohint
+  # Maple Mono (Ligature TTF unhinted)
+  paru -S ttf-maplemono
+  # Maple Mono (Ligature OTF)
+  paru -S otf-maplemono
+  # Maple Mono (Ligature WOFF2)
+  paru -S woff2-maplemono
+  # Maple Mono NF (Ligature hinted)
+  paru -S ttf-maplemono-nf
+  # Maple Mono NF (Ligature unhinted)
+  paru -S ttf-maplemono-nf-unhinted
+  # Maple Mono CN (Ligature hinted)
+  paru -S ttf-maplemono-cn
+  # Maple Mono CN (Ligature unhinted)
+  paru -S ttf-maplemono-cn-unhinted
+  # Maple Mono NF CN (Ligature hinted)
+  paru -S ttf-maplemono-nf-cn
+  # Maple Mono NF CN (Ligature unhinted)
+  paru -S ttf-maplemono-nf-cn-unhinted
+
+  # Maple Mono (No-Ligature Variable)
+  paru -S ttf-maplemononl-variable
+  # Maple Mono (No-Ligature TTF hinted)
+  paru -S ttf-maplemononl-autohint
+  # Maple Mono (No-Ligature TTF unhinted)
+  paru -S ttf-maplemononl
+  # Maple Mono (No-Ligature OTF)
+  paru -S otf-maplemononl
+  # Maple Mono (No-Ligature WOFF2)
+  paru -S woff2-maplemononl
+  # Maple Mono NF (No-Ligature hinted)
+  paru -S ttf-maplemononl-nf
+  # Maple Mono NF (No-Ligature unhinted)
+  paru -S ttf-maplemononl-nf-unhinted
+  # Maple Mono CN (No-Ligature hinted)
+  paru -S ttf-maplemononl-cn
+  # Maple Mono CN (No-Ligature unhinted)
+  paru -S ttf-maplemononl-cn-unhinted
+  # Maple Mono NF CN (No-Ligature hinted)
+  paru -S ttf-maplemononl-nf-cn
+  # Maple Mono NF CN (No-Ligature unhinted)
+  paru -S ttf-maplemononl-nf-cn-unhinted
+
+  # Maple Mono Normal (Ligature Variable)
+  paru -S ttf-maplemononormal-variable
+  # Maple Mono Normal (Ligature TTF hinted)
+  paru -S ttf-maplemononormal-autohint
+  # Maple Mono Normal (Ligature TTF unhinted)
+  paru -S ttf-maplemononormal
+  # Maple Mono Normal (Ligature OTF)
+  paru -S otf-maplemononormal
+  # Maple Mono Normal (Ligature WOFF2)
+  paru -S woff2-maplemononormal
+  # Maple Mono Normal NF (Ligature hinted)
+  paru -S ttf-maplemononormal-nf
+  # Maple Mono Normal NF (Ligature unhinted)
+  paru -S ttf-maplemononormal-nf-unhinted
+  # Maple Mono Normal CN (Ligature hinted)
+  paru -S ttf-maplemononormal-cn
+  # Maple Mono Normal CN (Ligature unhinted)
+  paru -S ttf-maplemononormal-cn-unhinted
+  # Maple Mono Normal NF CN (Ligature hinted)
+  paru -S ttf-maplemononormal-nf-cn
+  # Maple Mono Normal NF CN (Ligature unhinted)
+  paru -S ttf-maplemononormal-nf-cn-unhinted
+
+  # Maple Mono Normal (No-Ligature Variable)
+  paru -S ttf-maplemononormalnl-variable
+  # Maple Mono Normal (No-Ligature TTF hinted)
+  paru -S ttf-maplemononormalnl-autohint
+  # Maple Mono Normal (No-Ligature TTF unhinted)
+  paru -S ttf-maplemononormalnl
+  # Maple Mono Normal (No-Ligature OTF)
+  paru -S otf-maplemononormalnl
+  # Maple Mono Normal (No-Ligature WOFF2)
+  paru -S woff2-maplemononormalnl
+  # Maple Mono Normal NF (No-Ligature hinted)
+  paru -S ttf-maplemononormalnl-nf
+  # Maple Mono Normal NF (No-Ligature unhinted)
+  paru -S ttf-maplemononormalnl-nf-unhinted
+  # Maple Mono Normal CN (No-Ligature hinted)
+  paru -S ttf-maplemononormalnl-cn
+  # Maple Mono Normal CN (No-Ligature unhinted)
+  paru -S ttf-maplemononormalnl-cn-unhinted
+  # Maple Mono Normal NF CN (No-Ligature hinted)
+  paru -S ttf-maplemononormalnl-nf-cn
+  # Maple Mono Normal NF CN (No-Ligature unhinted)
+  paru -S ttf-maplemononormalnl-nf-cn-unhinted
+  ```
+
+</details>
+
+#### AUR (不推荐)
+
+```sh
+# Maple Mono (Ligature TTF unhinted)
+paru -S maplemono-ttf
+# Maple Mono NF (Ligature unhinted)
+paru -S maplemono-nf-unhinted
+# Maple Mono NF CN (Ligature unhinted)
+paru -S maplemono-nf-cn-unhinted
+```
+
+<details>
+  <summary>所有包 (点击展开)</summary>
 
   ```sh
   # Maple Mono (Ligature Variable)
@@ -126,7 +269,7 @@ CN 版本基于[资源圆体](https://github.com/CyanoHao/Resource-Han-Rounded)�
   paru -S maplemono-nf-cn
   # Maple Mono NF CN (Ligature unhinted)
   paru -S maplemono-nf-cn-unhinted
-  
+
   # Maple Mono (No-Ligature Variable)
   paru -S maplemononl-variable
   # Maple Mono (No-Ligature TTF hinted)
@@ -149,7 +292,7 @@ CN 版本基于[资源圆体](https://github.com/CyanoHao/Resource-Han-Rounded)�
   paru -S maplemononl-nf-cn
   # Maple Mono NF CN (No-Ligature unhinted)
   paru -S maplemononl-nf-cn-unhinted
-  
+
   # Maple Mono Normal (Ligature Variable)
   paru -S maplemononormal-variable
   # Maple Mono Normal (Ligature TTF hinted)
@@ -172,7 +315,7 @@ CN 版本基于[资源圆体](https://github.com/CyanoHao/Resource-Han-Rounded)�
   paru -S maplemononormal-nf-cn
   # Maple Mono Normal NF CN (Ligature unhinted)
   paru -S maplemononormal-nf-cn-unhinted
-  
+
   # Maple Mono Normal (No-Ligature Variable)
   paru -S maplemononormalnl-variable
   # Maple Mono Normal (No-Ligature TTF hinted)
@@ -195,6 +338,120 @@ CN 版本基于[资源圆体](https://github.com/CyanoHao/Resource-Han-Rounded)�
   paru -S maplemononormalnl-nf-cn
   # Maple Mono Normal NF CN (No-Ligature unhinted)
   paru -S maplemononormalnl-nf-cn-unhinted
+  ```
+
+</details>
+
+### Nixpkgs (NixOS, Linux, MacOS)
+
+```nix
+fonts.packages = with pkgs; [
+  # Maple Mono (Ligature TTF unhinted)
+  maple-mono.truetype
+  # Maple Mono NF (Ligature unhinted)
+  maple-mono.NF-unhinted
+  # Maple Mono NF CN (Ligature unhinted)
+  maple-mono.NF-CN-unhinted
+];
+```
+
+<details>
+  <summary>所有包 (点击展开)</summary>
+
+  ```nix
+  fonts.packages = with pkgs; [
+    # Maple Mono (Ligature Variable)
+    maple-mono.variable
+    # Maple Mono (Ligature TTF hinted)
+    maple-mono.truetype-autohint
+    # Maple Mono (Ligature TTF unhinted)
+    maple-mono.truetype
+    # Maple Mono (Ligature OTF)
+    maple-mono.opentype
+    # Maple Mono (Ligature WOFF2)
+    maple-mono.woff2
+    # Maple Mono NF (Ligature hinted)
+    maple-mono.NF
+    # Maple Mono NF (Ligature unhinted)
+    maple-mono.NF-unhinted
+    # Maple Mono CN (Ligature hinted)
+    maple-mono.CN
+    # Maple Mono CN (Ligature unhinted)
+    maple-mono.CN-unhinted
+    # Maple Mono NF CN (Ligature hinted)
+    maple-mono.NF-CN
+    # Maple Mono NF CN (Ligature unhinted)
+    maple-mono.NF-CN-unhinted
+
+    # Maple Mono (No-Ligature Variable)
+    maple-mono.NL-Variable
+    # Maple Mono (No-Ligature TTF hinted)
+    maple-mono.NL-TTF-AutoHint
+    # Maple Mono (No-Ligature TTF unhinted)
+    maple-mono.NL-TTF
+    # Maple Mono (No-Ligature OTF)
+    maple-mono.NL-OTF
+    # Maple Mono (No-Ligature WOFF2)
+    maple-mono.NL-Woff2
+    # Maple Mono NF (No-Ligature hinted)
+    maple-mono.NL-NF
+    # Maple Mono NF (No-Ligature unhinted)
+    maple-mono.NL-NF-unhinted
+    # Maple Mono CN (No-Ligature hinted)
+    maple-mono.NL-CN
+    # Maple Mono CN (No-Ligature unhinted)
+    maple-mono.NL-CN-unhinted
+    # Maple Mono NF CN (No-Ligature hinted)
+    maple-mono.NL-NF-CN
+    # Maple Mono NF CN (No-Ligature unhinted)
+    maple-mono.NL-NF-CN-unhinted
+
+    # Maple Mono Normal (Ligature Variable)
+    maple-mono.Normal-Variable
+    # Maple Mono Normal (Ligature TTF hinted)
+    maple-mono.Normal-TTF-AutoHint
+    # Maple Mono Normal (Ligature TTF unhinted)
+    maple-mono.Normal-TTF
+    # Maple Mono Normal (Ligature OTF)
+    maple-mono.Normal-OTF
+    # Maple Mono Normal (Ligature WOFF2)
+    maple-mono.Normal-Woff2
+    # Maple Mono Normal NF (Ligature hinted)
+    maple-mono.Normal-NF
+    # Maple Mono Normal NF (Ligature unhinted)
+    maple-mono.Normal-NF-unhinted
+    # Maple Mono Normal CN (Ligature hinted)
+    maple-mono.Normal-CN
+    # Maple Mono Normal CN (Ligature unhinted)
+    maple-mono.Normal-CN-unhinted
+    # Maple Mono Normal NF CN (Ligature hinted)
+    maple-mono.Normal-NF-CN
+    # Maple Mono Normal NF CN (Ligature unhinted)
+    maple-mono.Normal-NF-CN-unhinted
+
+    # Maple Mono Normal (No-Ligature Variable)
+    maple-mono.NormalNL-Variable
+    # Maple Mono Normal (No-Ligature TTF hinted)
+    maple-mono.NormalNL-TTF-AutoHint
+    # Maple Mono Normal (No-Ligature TTF unhinted)
+    maple-mono.NormalNL-TTF
+    # Maple Mono Normal (No-Ligature OTF)
+    maple-mono.NormalNL-OTF
+    # Maple Mono Normal (No-Ligature WOFF2)
+    maple-mono.NormalNL-Woff2
+    # Maple Mono Normal NF (No-Ligature hinted)
+    maple-mono.NormalNL-NF
+    # Maple Mono Normal NF (No-Ligature unhinted)
+    maple-mono.NormalNL-NF-unhinted
+    # Maple Mono Normal CN (No-Ligature hinted)
+    maple-mono.NormalNL-CN
+    # Maple Mono Normal CN (No-Ligature unhinted)
+    maple-mono.NormalNL-CN-unhinted
+    # Maple Mono Normal NF CN (No-Ligature hinted)
+    maple-mono.NormalNL-NF-CN
+    # Maple Mono Normal NF CN (No-Ligature unhinted)
+    maple-mono.NormalNL-NF-CN-unhinted
+  ];
   ```
 
 </details>
@@ -325,6 +582,10 @@ python build.py
 #### GitHub 镜像
 
 构建脚本将自动从 GitHub 下载所需的资源。如果您在下载时遇到问题，请在 [config.json](./config.json) 中设置 `github_mirror` 或将 `$GITHUB` 设置为您的环境变量。（目标 URL 为 `https://<github_mirror>/<user>/<repo>/releases/download/<tag>/<file>`），或者直接下载目标 `.zip` 文件并将其放在与 `build.py` 相同的目录中。
+
+#### 繁體中文標點符號支援
+
+通過開啟 `cv99`，所有的中文標點符號都會居中，詳情見 [#150](https://github.com/subframe7536/maple-font/issues/150)
 
 ### 构建脚本用法
 

@@ -1393,7 +1393,7 @@ feature calt {
     sub less' exclam hyphen hyphen hyphen hyphen greater by SPC;
   } xml_empty_comment.liga;
 
-  # \\ \. \? \$ ...
+  # \\ \. \? ...
   lookup escape {
     @Escape = [@Space asciitilde grave exclam at numbersign dollar percent asciicircum ampersand asterisk parenleft parenright hyphen underscore plus equal bracketleft bracketright braceleft braceright bar backslash colon semicolon quotesingle quotedbl less comma greater period slash question];
     ignore sub backslash.liga backslash' @Escape;
