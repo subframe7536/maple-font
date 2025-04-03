@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-import argparse
 import json
 import os
 import re
@@ -51,12 +49,11 @@ def rename_files(dir: str, fn: Callable[[str], str | None]):
             print(f"Renamed: {filename} -> {new_name}")
 
 
-def parse_tag(args):
+def parse_tag(tag: str, beta: str):
     """
     Parse the tag from the command line arguments.
     Format: v7.0[-beta3]
     """
-    tag = args.tag
 
     if not tag.startswith("v"):
         tag = f"v{tag}"
@@ -70,8 +67,8 @@ def parse_tag(args):
     minor = str(int(minor))
     tag = f"v{major}.{minor}"
 
-    if args.beta:
-        tag += "-" if args.beta.startswith("beta") else "-beta" + args.beta
+    if beta:
+        tag += "-" if beta.startswith("beta") else "-beta" + beta
 
     return tag
 
@@ -125,28 +122,10 @@ def write_unicode_map_json(font_path: str, output: str):
     font.close()
 
 
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "tag",
-        type=str,
-        help="The tag to build the release for, format: 7.0 or v7.0",
-    )
-    parser.add_argument(
-        "beta",
-        nargs="?",
-        type=str,
-        help="Beta tag name, format: 3 or beta3",
-    )
-    parser.add_argument(
-        "--dry",
-        action="store_true",
-        help="Dry run",
-    )
-    args = parser.parse_args()
-    tag = parse_tag(args)
+def release(tag: str, beta: str, dry: bool):
+    tag = parse_tag(tag, beta)
     # prompt and wait for user input
-    choose = input(f"{'[DRY] ' if args.dry else ''}Tag {tag}? (Y or n) ")
+    choose = input(f"{'[DRY] ' if dry else ''}Tag {tag}? (Y or n) ")
     if choose != "" and choose.lower() != "y":
         print("Aborted")
         return
@@ -159,6 +138,8 @@ def main():
     run(f"ftcli converter ft2wf -f woff ./fonts/TTF -out {target_fontsource_dir}")
     rename_files(target_fontsource_dir, format_fontsource_name)
     print("Generate fontsource files")
+
+    run("uv pip compile pyproject.toml -o requirements.txt")
 
     shutil.copytree("./fonts/CN", "./cdn/cn")
     print("Generate CN files")
@@ -186,11 +167,7 @@ def main():
     #     "./fonts/TTF/MapleMono-Regular.ttf", "./resources/glyph-map.json"
     # )
 
-    if args.dry:
+    if dry:
         print("Dry run")
     else:
         git_commit(tag, ["build.py", "woff2"])
-
-
-if __name__ == "__main__":
-    main()

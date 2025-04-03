@@ -18,6 +18,11 @@ cffsubr==0.3.0
     # via foundrytools-cli
 click==8.1.8
     # via foundrytools-cli
+colorama==0.4.6
+    # via
+    #   click
+    #   loguru
+    #   tqdm
 defcon==0.12.1
     # via
     #   afdko
@@ -95,6 +100,10 @@ ufonormalizer==0.6.2
     # via afdko
 ufoprocessor==1.13.3
     # via afdko
+unicodedata2==16.0.0
+    # via fonttools
+win32-setctime==1.2.0
+    # via loguru
 zopfli==0.2.3.post1
     # via
     #   fonttools

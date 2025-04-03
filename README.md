@@ -368,6 +368,21 @@ Build Options:
                     flag, only archive Nerd-Font and CN formats
 ```
 
+## Development
+
+```sh
+# Init project
+uv sync
+# Dev
+uv run build.py --ttf-only --cn
+# Update nerd font
+uv run task.py nerd-font
+# Update fea file
+uv run task.py fea --cn
+# Release
+uv run task.py release 7.0
+```
+
 ## Credit
 
 - [JetBrains Mono](https://github.com/JetBrains/JetBrainsMono)
