@@ -2,6 +2,24 @@ from source.py.feature import ast
 
 
 def liga_cls(text: str):
+    # There are many classes for letters, allows to use letters in any case
+    # e.g. `@I @N @F @O` matches:
+    #   - INFO
+    #   - INFo
+    #   - INfO
+    #   - INfo
+    #   - InFO
+    #   - InFo
+    #   - InfO
+    #   - Info
+    #   - iNFO
+    #   - iNFo
+    #   - iNfO
+    #   - iNfo
+    #   - inFO
+    #   - inFo
+    #   - infO
+    #   - info
     arr = ["["] + [f"@{g.upper()}" for g in list(text)] + ["]"]
     return ast.subst_liga(
         arr,

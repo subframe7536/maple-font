@@ -95,19 +95,17 @@ def comb_jp(c1: str, c2: str) -> ast.Line:
 ccmp_latin = ast.lookup(
     "ccmp_latin",
     None,
-    ast.flatten(
-        [
-            ast.Line("lookupflag 0;"),
-            comb("breve", "acute"),
-            comb("breve", "grave"),
-            comb("breve", "hookabove"),
-            comb("breve", "tilde"),
-            comb("circumflex", "acute"),
-            comb("circumflex", "grave"),
-            comb("circumflex", "hookabove"),
-            comb("circumflex", "tilde"),
-        ]
-    ),
+    [
+        ast.Line("lookupflag 0;"),
+        comb("breve", "acute"),
+        comb("breve", "grave"),
+        comb("breve", "hookabove"),
+        comb("breve", "tilde"),
+        comb("circumflex", "acute"),
+        comb("circumflex", "grave"),
+        comb("circumflex", "hookabove"),
+        comb("circumflex", "tilde"),
+    ],
 )
 start_other = ast.clazz(["i", "i-cy", "iogonek", "idotbelow", "j", "je-cy"])
 end_other = ast.clazz(
@@ -146,11 +144,10 @@ ccmp_other = ast.lookup(
 )
 
 
-
-ccmp_features = ast.feature(
+ccmp_feature = ast.feature(
     "ccmp",
     [
-        *ast.clazz_states(
+        ast.clazz_states(
             [
                 comb_top_acc,
                 comb_non_top_acc,
@@ -158,11 +155,11 @@ ccmp_features = ast.feature(
                 marks_comb_case,
             ]
         ),
-        *ccmp_other,
-        *ccmp_latin,
+        ccmp_other,
+        ccmp_latin,
         ast.script("latn"),
         ast.use_lookup(ccmp_other_name),
-    ]
+    ],
 )
 
 ccmp_features_cn = ast.feature(
@@ -191,5 +188,5 @@ ccmp_features_cn = ast.feature(
         comb_jp("30C4", "309A"),
         comb_jp("30C8", "309A"),
         comb_jp("30F3", "3099"),
-    ]
+    ],
 )

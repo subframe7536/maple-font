@@ -31,14 +31,15 @@ ordn = [
     ast.subst(clazz_number, ast.clazz(["O", "o"]), None, "ordmasculine"),
     ast.__subst("N o period", "numero"),
 ]
+
 frac = [
-    *ast.lookup("FRAC", "",[ast.subst(None, "/", None, "fraction")]),
-    *ast.lookup(
+    ast.lookup("FRAC", "",[ast.subst(None, "/", None, "fraction")]),
+    ast.lookup(
         "UP",
         None,
         [ast.subst(None, clazz_number, None, clazz_numr)],
     ),
-    *ast.lookup(
+    ast.lookup(
         "DOWN",
         None,
         [
@@ -56,12 +57,12 @@ frac = [
 ]
 
 number_features = [
-    *ast.feature("zero", zero),
-    *ast.feature("sinf", sinf),
-    *ast.feature("subs", subs),
-    *ast.feature("sups", sups),
-    *ast.feature("numr", numr),
-    *ast.feature("dnom", dnom),
-    *ast.feature("frac", frac),
-    *ast.feature("ordn", ordn),
+    ast.feature("zero", zero),
+    ast.feature("sinf", sinf),
+    ast.feature("subs", subs),
+    ast.feature("sups", sups),
+    ast.feature("numr", numr),
+    ast.feature("dnom", dnom),
+    ast.feature("frac", frac),
+    ast.feature("ordn", ordn),
 ]

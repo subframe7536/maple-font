@@ -36,8 +36,8 @@ def cv35_subst():
     suf_cv35 = ".cv35"
 
     result = [
-        *ast.subst_map(base_glyphs, target_suffix=suf_cv35),
-        *ast.subst_map(
+        ast.subst_map(base_glyphs, target_suffix=suf_cv35),
+        ast.subst_map(
             base_glyphs,
             source_suffix=suf_cv04,
             target_suffix=suf_cv35,
@@ -48,8 +48,8 @@ def cv35_subst():
         result.extend(
             [
                 # overwrite
-                *ast.subst_map([f"{liga}{suf}"], target_suffix=suf_cv35),
-                *ast.subst_map(
+                ast.subst_map([f"{liga}{suf}"], target_suffix=suf_cv35),
+                ast.subst_map(
                     [liga],
                     source_suffix=f"{suf_cv04}{suf}",
                     target_suffix=f"{suf}{suf_cv35}",

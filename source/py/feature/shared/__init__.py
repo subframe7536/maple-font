@@ -1,10 +1,11 @@
 import source.py.feature.ast as ast
-from source.py.feature.shared.ccmp import ccmp_features, ccmp_features_cn
+from source.py.feature.shared.case import case_feature
+from source.py.feature.shared.ccmp import ccmp_feature, ccmp_features_cn
 from source.py.feature.shared.number import number_features
-from source.py.feature.shared.locl import locl_features, locl_features_cn
+from source.py.feature.shared.locl import locl_feature, locl_features_cn
 
 
-aalt_features = ast.feature(
+aalt_feature = ast.feature(
     "aalt",
     [
         ast.use_feature("calt"),
@@ -19,69 +20,25 @@ aalt_features = ast.feature(
     ],
 )
 
-case_features = ast.feature(
-    "case",
-    ast.subst_map(
-        [
-            "colon",
-            "periodcentered.loclCAT",
-            "dieresiscomb",
-            "dotaccentcomb",
-            "gravecomb",
-            "acutecomb",
-            "hungarumlautcomb",
-            "circumflexcomb",
-            "caroncomb",
-            "brevecomb",
-            "ringcomb",
-            "tildecomb",
-            "macroncomb",
-            "hookabovecomb",
-            "dblgravecomb",
-            "commaturnedabovecomb",
-            "horncomb",
-            "dotbelowcomb",
-            "commaaccentcomb",
-            "cedillacomb",
-            "ogonekcomb",
-            "dieresis",
-            "dotaccent",
-            "grave",
-            "acute",
-            "hungarumlaut",
-            "circumflex",
-            "caron",
-            "breve",
-            "ring",
-            "tilde",
-            "macron",
-            "tonos",
-            "brevecomb_acutecomb",
-            "brevecomb_gravecomb",
-            "brevecomb_hookabovecomb",
-            "brevecomb_tildecomb",
-            "circumflexcomb_acutecomb",
-            "circumflexcomb_gravecomb",
-            "circumflexcomb_hookabovecomb",
-            "circumflexcomb_tildecomb",
-        ],
-        target_suffix=".case",
-    ),
-)
-
-
-base_features = [
-    *aalt_features,
+__features = [
+    aalt_feature,
     *number_features,
-    *case_features,
-    *ccmp_features,
-    *locl_features,
+    case_feature,
 ]
 
-base_features_cn = [
-    *aalt_features,
-    *number_features,
-    *case_features,
-    *ccmp_features_cn,
-    *locl_features_cn,
+__features_cn_only = [
+    ccmp_features_cn,
+    locl_features_cn,
+]
+
+common_features = [
+    *__features,
+    ccmp_feature,
+    locl_feature,
+]
+
+
+common_features_cn = [
+    *__features,
+    *__features_cn_only,
 ]

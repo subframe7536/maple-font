@@ -162,16 +162,21 @@ def clazz_states(cls: list[Clazz], prefix_empty_line=True) -> list[Line]:
     return result
 
 
-def create(cls: list[Clazz], content: list[Line], indent=2) -> str:
+def create(
+    cls: list[Clazz], content: Sequence[Line | list[Line] | list[list[Line]]], indent=2
+) -> str:
     _idt = indent * " "
     lines: list[Line] = []
 
-    for line in clazz_states(cls, False) + content:
+    for line in clazz_states(cls, False) + flatten(content):
         if (
             len(lines) > 0
             and lines[-1].text
             and not lines[-1].text.startswith("#")
-            and (line.text.startswith("#") or line.text.startswith("lookup"))
+            and (
+                line.text.startswith("#")
+                or (line.text.startswith("lookup") and not line.text.endswith(";"))
+            )
         ) or (line.text.startswith("feature ") and line.text.endswith("{")):
             lines.append(Line(""))
         lines.append(line)
@@ -179,7 +184,9 @@ def create(cls: list[Clazz], content: list[Line], indent=2) -> str:
     return "".join([("\n" + _idt * c.level + c.text) for c in lines])[1:]
 
 
-def feature(tag: str, content: Sequence[Line | list[Line]]) -> list[Line]:
+def feature(
+    tag: str, content: Sequence[Line | list[Line] | list[list[Line]]]
+) -> list[Line]:
     """Generate a feature block with indented content.
     This function creates a feature block with the specified tag and content,
     formatting it according to the OpenType feature file syntax.
@@ -287,7 +294,9 @@ def script(script: str) -> Line:
     return Line(f"script {script};")
 
 
-def lookup(name: str, desc: str | None, content: list[Line]) -> list[Line]:
+def lookup(
+    name: str, desc: str | None, content: Sequence[Line | list[Line]]
+) -> list[Line]:
     """
     Generate lookup table.
 
@@ -306,7 +315,7 @@ def lookup(name: str, desc: str | None, content: list[Line]) -> list[Line]:
 
     arr.append(Line(f"lookup {name} {{"))
 
-    for c in content:
+    for c in flatten(content):
         arr.append(c.indent())
 
     arr.append(Line(f"}} {name};"))

@@ -30,9 +30,9 @@ locl_1 = ast.lookup(
     [
         ast.script("latn"),
         ast.lang("ROM"),
-        *st_acc,
+        st_acc,
         ast.lang("MOL"),
-        *st_acc,
+        st_acc,
     ],
 )
 
@@ -80,7 +80,7 @@ lookup_tw = ast.lookup(
 )
 
 
-locl_features = ast.feature(
+locl_feature = ast.feature(
     "locl",
     [
         locl_0,
@@ -93,7 +93,11 @@ locl_features = ast.feature(
 locl_features_cn = ast.feature(
     "locl",
     [
-        *lookup_tw,
+        locl_0,
+        locl_1,
+        locl_2,
+        locl_3,
+        lookup_tw,
         ast.lang("ZHH"),
         ast.use_lookup(lookup_tw_name),
         ast.lang("ZHT"),

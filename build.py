@@ -10,7 +10,7 @@ from functools import partial
 from os import environ, getcwd, listdir, makedirs, path, remove, getenv
 from typing import Callable
 from fontTools.ttLib import TTFont, newTable
-from fontTools.feaLib.builder import addOpenTypeFeaturesFromString
+from fontTools.feaLib.builder import addOpenTypeFeaturesFromString, addOpenTypeFeatures
 from source.py.utils import (
     check_font_patcher,
     generate_directory_hash,
@@ -270,8 +270,6 @@ class FontConfig:
             # whether to use pre-instantiated static CN font as base font
             "use_static_base_font": True,
         }
-        self.glyph_width = 600
-        self.glyph_width_cn_narrow = 1000
         self.__load_config(args.normal)
         self.__load_args(args)
 
@@ -386,16 +384,16 @@ class FontConfig:
         return True
 
     def get_valid_glyph_width_list(self, cn=False):
+        width = 600
+        width_cn_narrow = 1000
         if cn:
             return [
                 0,
-                self.glyph_width,
-                self.glyph_width_cn_narrow
-                if self.cn["narrow"]
-                else 2 * self.glyph_width,
+                width,
+                width_cn_narrow if self.cn["narrow"] else 2 * width,
             ]
         else:
-            return [0, self.glyph_width]
+            return [0, width]
 
 
 class BuildOption:
@@ -1015,7 +1013,10 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
     # https://github.com/subframe7536/maple-font/issues/188
     # https://github.com/subframe7536/maple-font/issues/313
     # fix_cn_cv(cn_font)
-    generate_fea_string("Italic" in style_in_2, is_italic)
+
+    addOpenTypeFeaturesFromString(
+        cn_font, generate_fea_string("Italic" in style_in_2, is_italic)
+    )
 
     handle_ligatures(
         font=cn_font,
@@ -1133,10 +1134,23 @@ def main():
                 ),
             )
 
-            addOpenTypeFeaturesFromString(
-                font,
-                generate_fea_string("Italic" in input_file, False),
-            )
+            is_italic = "Italic" in input_file
+            if font_config.apply_fea_file:
+                fea_path = joinPaths(
+                    build_option.src_dir,
+                    "features/italic.fea" if is_italic else "features/regular.fea",
+                )
+                print(f"Apply feature file [{fea_path}]")
+                addOpenTypeFeatures(
+                    font,
+                    fea_path,
+                )
+            else:
+                print("Apply feature string")
+                addOpenTypeFeaturesFromString(
+                    font,
+                    generate_fea_string(is_italic, False),
+                )
 
             set_font_name(
                 font,
