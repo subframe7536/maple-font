@@ -1320,6 +1320,25 @@ feature calt {
     sub bracketleft' I N F O bracketright by SPC;
   } badge_end.liga;
 
+  # [LEN]
+  lookup badge_len.liga {
+    sub SPC SPC SPC SPC bracketright' by badge_len.liga;
+    sub SPC SPC SPC N' bracketright by SPC;
+    sub SPC SPC E' N bracketright by SPC;
+    sub SPC L' E N bracketright by SPC;
+    sub bracketleft' L E N bracketright by SPC;
+  } badge_len.liga;
+
+  # [PARA]
+  lookup badge_para.liga {
+    sub SPC SPC SPC SPC SPC bracketright' by badge_para.liga;
+    sub SPC SPC SPC SPC A' bracketright by SPC;
+    sub SPC SPC SPC R' A bracketright by SPC;
+    sub SPC SPC A' R A bracketright by SPC;
+    sub SPC P' A R A bracketright by SPC;
+    sub bracketleft' P A R A bracketright by SPC;
+  } badge_para.liga;
+
   # [INFO]
   lookup badge_info.liga {
     sub SPC SPC SPC SPC SPC bracketright' by badge_info.liga;
