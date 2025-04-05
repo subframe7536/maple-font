@@ -1284,6 +1284,59 @@ feature calt {
     sub bracketleft' D E B U G bracketright by SPC;
   } badge_debug.liga;
 
+  # [SUCCESS]
+  lookup badge_success.liga {
+    sub SPC SPC SPC SPC SPC SPC SPC SPC bracketright' by badge_success.liga;
+    sub SPC SPC SPC SPC SPC SPC SPC S' bracketright by SPC;
+    sub SPC SPC SPC SPC SPC SPC S' S bracketright by SPC;
+    sub SPC SPC SPC SPC SPC E' S S bracketright by SPC;
+    sub SPC SPC SPC SPC C' E S S bracketright by SPC;
+    sub SPC SPC SPC C' C E S S bracketright by SPC;
+    sub SPC SPC U' C C E S S bracketright by SPC;
+    sub SPC S' U C C E S S bracketright by SPC;
+    sub bracketleft' S U C C E S S bracketright by SPC;
+  } badge_success.liga;
+
+
+  # [BEGIN]
+  lookup badge_begin.liga {
+    sub SPC SPC SPC SPC SPC bracketright' by badge_begin.liga;
+    sub SPC SPC SPC SPC SPC N' bracketright by SPC;
+    sub SPC SPC SPC SPC I' N bracketright by SPC;
+    sub SPC SPC SPC G' I N bracketright by SPC;
+    sub SPC SPC E' G I N bracketright by SPC;
+    sub SPC B' E G I N bracketright by SPC;
+    sub bracketleft' B E G I N bracketright by SPC;
+  } badge_begin.liga;
+
+  # [END]
+  lookup badge_end.liga {
+    sub SPC SPC SPC SPC bracketright' by badge_end.liga;
+    sub SPC SPC SPC D' bracketright by SPC;
+    sub SPC SPC N' D bracketright by SPC;
+    sub SPC E' N D bracketright by SPC;
+    sub bracketleft' I N F O bracketright by SPC;
+  } badge_end.liga;
+
+  # [LEN]
+  lookup badge_len.liga {
+    sub SPC SPC SPC SPC bracketright' by badge_len.liga;
+    sub SPC SPC SPC N' bracketright by SPC;
+    sub SPC SPC E' N bracketright by SPC;
+    sub SPC L' E N bracketright by SPC;
+    sub bracketleft' L E N bracketright by SPC;
+  } badge_len.liga;
+
+  # [PARA]
+  lookup badge_para.liga {
+    sub SPC SPC SPC SPC SPC bracketright' by badge_para.liga;
+    sub SPC SPC SPC SPC A' bracketright by SPC;
+    sub SPC SPC SPC R' A bracketright by SPC;
+    sub SPC SPC A' R A bracketright by SPC;
+    sub SPC P' A R A bracketright by SPC;
+    sub bracketleft' P A R A bracketright by SPC;
+  } badge_para.liga;
+
   # [INFO]
   lookup badge_info.liga {
     sub SPC SPC SPC SPC SPC bracketright' by badge_info.liga;
