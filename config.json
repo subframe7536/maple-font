@@ -1,7 +1,7 @@
 {
   "$schema": "./source/schema.json",
   "family_name": "Maple Mono",
-  "use_hinted": true,
+  "use_hinted": false,
   "pool_size": 4,
   "ligature": true,
   "feature_freeze": {
@@ -30,23 +30,23 @@
     "ss08": "ignore",
     "zero": "ignore"
   },
-  "nerd_font": {
-    "enable": true,
-    "version": "3.3.0",
-    "mono": false,
-    "use_font_patcher": false,
-    "glyphs": [
-      "--complete"
-    ],
-    "extra_args": []
-  },
-  "cn": {
-    "enable": false,
-    "with_nerd_font": true,
-    "fix_meta_table": true,
-    "clean_cache": false,
-    "narrow": false,
-    "use_hinted": false,
-    "use_static_base_font": true
-  }
+    "nerd_font": {
+        "enable": true,
+        "version": "3.3.0",
+        "mono": false,
+        "use_font_patcher": false,
+        "glyphs": [
+            "--complete"
+        ],
+        "extra_args": []
+    },
+    "cn": {
+        "enable": true,
+        "with_nerd_font": false,
+        "fix_meta_table": true,
+        "clean_cache": false,
+        "narrow": false,
+        "use_hinted": false,
+        "use_static_base_font": true
+    }
 }
