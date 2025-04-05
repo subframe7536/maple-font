@@ -348,7 +348,7 @@ def subst(
 
 
 def subst_map(
-    glyphs: list[str],
+    glyphs: str | list[str],
     source_suffix: str = "",
     target_suffix: str = "",
 ) -> list[Line]:
@@ -363,6 +363,10 @@ def subst_map(
     ]
     """
     result = []
+
+    if isinstance(glyphs, str):
+        glyphs = [glyphs]
+
     for g in glyphs:
         _g = __parse_glyph(g)
         result.append(__subst(f"{_g}{source_suffix}", f"{_g}{target_suffix}"))

@@ -50,8 +50,8 @@ def get_lookup(letter_list: list[ast.Clazz]):
         ast.subst_liga(
             ">>",
             banner=[
-                ast.ignore(None, ">", [">", ">"]),
                 ast.ignore(ast.clazz(["<", "/", ">"]), ">", [">"]),
+                ast.ignore(None, ">", [">", ">"]),
             ],
             surround=surround,
         ),

@@ -3,7 +3,7 @@ import source.py.feature.ast as ast
 
 def cv97_subst():
     return ast.subst_map(
-        ["…"],
+        "…",
         target_suffix=".full",
     )
 

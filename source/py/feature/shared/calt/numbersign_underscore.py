@@ -1,11 +1,12 @@
 from source.py.feature import ast
 
 
-def get_lookup():
-    start = "numbersign_start.liga"
-    mid = "numbersign_middle.liga"
-    end = "numbersign_end.liga"
+start = "numbersign_start.liga"
+mid = "numbersign_middle.liga"
+end = "numbersign_end.liga"
 
+
+def get_lookup():
     return [
         ast.subst_liga(
             "__",

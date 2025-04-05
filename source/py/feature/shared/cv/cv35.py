@@ -48,16 +48,16 @@ def cv35_subst():
         result.extend(
             [
                 # overwrite
-                ast.subst_map([f"{liga}{suf}"], target_suffix=suf_cv35),
+                ast.subst_map(f"{liga}{suf}", target_suffix=suf_cv35),
                 ast.subst_map(
-                    [liga],
+                    liga,
                     source_suffix=f"{suf_cv04}{suf}",
                     target_suffix=f"{suf}{suf_cv35}",
                 ),
             ]
         )
 
-    result.append(ast.subst(None, "one.cv04", None, "one"))
+    result.append([ast.subst(None, "one.cv04", None, "one")])
 
     return result
 
