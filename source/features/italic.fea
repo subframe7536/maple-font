@@ -1287,8 +1287,8 @@ feature calt {
   } badge_debug.liga;
 
   # [SUCCESS]
-  lookup badge_debug.liga {
-    sub SPC SPC SPC SPC SPC SPC SPC SPC bracketright' by badge_debug.liga;
+  lookup badge_success.liga {
+    sub SPC SPC SPC SPC SPC SPC SPC SPC bracketright' by badge_success.liga;
     sub SPC SPC SPC SPC SPC SPC SPC S' bracketright by SPC;
     sub SPC SPC SPC SPC SPC SPC S' S bracketright by SPC;
     sub SPC SPC SPC SPC SPC E' S S bracketright by SPC;
@@ -1297,7 +1297,28 @@ feature calt {
     sub SPC SPC U' C C E S S bracketright by SPC;
     sub SPC S' U C C E S S bracketright by SPC;
     sub bracketleft' S U C C E S S bracketright by SPC;
-  } badge_debug.liga;
+  } badge_success.liga;
+
+
+  # [BEGIN]
+  lookup badge_begin.liga {
+    sub SPC SPC SPC SPC SPC bracketright' by badge_begin.liga;
+    sub SPC SPC SPC SPC SPC N' bracketright by SPC;
+    sub SPC SPC SPC SPC I' N bracketright by SPC;
+    sub SPC SPC SPC G' I N bracketright by SPC;
+    sub SPC SPC E' G I N bracketright by SPC;
+    sub SPC B' E G I N bracketright by SPC;
+    sub bracketleft' B E G I N bracketright by SPC;
+  } badge_begin.liga;
+
+  # [END]
+  lookup badge_end.liga {
+    sub SPC SPC SPC SPC bracketright' by badge_end.liga;
+    sub SPC SPC SPC D' bracketright by SPC;
+    sub SPC SPC N' D bracketright by SPC;
+    sub SPC E' N D bracketright by SPC;
+    sub bracketleft' I N F O bracketright by SPC;
+  } badge_end.liga;
 
   # [INFO]
   lookup badge_info.liga {
