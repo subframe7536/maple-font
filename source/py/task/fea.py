@@ -12,12 +12,11 @@ def write_to_file(file_path: str, content: str, mode: str = "w") -> None:
         file.write(content)
 
 
-def fea(output: str, cn: bool):
+def fea(output: str):
     regular_fea = generate_fea_string(False, False)
     write_to_file(joinPaths(output, "regular.fea"), regular_fea)
     italic_fea = generate_fea_string(True, False)
     write_to_file(joinPaths(output, "italic.fea"), italic_fea)
 
-    if cn:
-        cn_fea = generate_fea_string_cn_only()
-        write_to_file(joinPaths(output, "cn.fea"), cn_fea)
+    cn_fea = generate_fea_string_cn_only()
+    write_to_file(joinPaths(output, "cn.fea"), cn_fea)
