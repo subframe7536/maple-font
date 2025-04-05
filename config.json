@@ -30,7 +30,7 @@
     "ss08": "ignore",
     "zero": "ignore"
   },
-    "nerd_font": {
+  "nerd_font": {
         "enable": true,
         "version": "3.3.0",
         "mono": false,
