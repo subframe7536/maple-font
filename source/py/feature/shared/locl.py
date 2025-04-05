@@ -79,28 +79,27 @@ lookup_tw = ast.lookup(
     ),
 )
 
+__locl = [
+    locl_0,
+    locl_1,
+    locl_2,
+    locl_3,
+]
 
-locl_feature = ast.feature(
-    "locl",
-    [
-        locl_0,
-        locl_1,
-        locl_2,
-        locl_3,
-    ]
-)
+__locl_cn_only = [
+    *lookup_tw,
+    ast.lang("ZHH"),
+    ast.use_lookup(lookup_tw_name),
+    ast.lang("ZHT"),
+    ast.use_lookup(lookup_tw_name),
+]
 
+locl_feature = ast.feature("locl", __locl)
+locl_features_cn_only = ast.feature("locl", __locl_cn_only)
 locl_features_cn = ast.feature(
     "locl",
     [
-        locl_0,
-        locl_1,
-        locl_2,
-        locl_3,
-        lookup_tw,
-        ast.lang("ZHH"),
-        ast.use_lookup(lookup_tw_name),
-        ast.lang("ZHT"),
-        ast.use_lookup(lookup_tw_name),
-    ]
+        __locl,
+        __locl_cn_only,
+    ],
 )

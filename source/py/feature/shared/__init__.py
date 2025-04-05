@@ -26,19 +26,14 @@ __features = [
     case_feature,
 ]
 
-__features_cn_only = [
-    ccmp_features_cn,
-    locl_features_cn,
-]
-
 common_features = [
     *__features,
     ccmp_feature,
     locl_feature,
 ]
 
-
 common_features_cn = [
     *__features,
-    *__features_cn_only,
+    ccmp_features_cn,
+    locl_features_cn,
 ]

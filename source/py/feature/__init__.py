@@ -1,8 +1,10 @@
 from source.py.feature import ast
 from source.py.feature.regular import feature_file_regular, feature_file_regular_cn
 from source.py.feature.italic import feature_file_italic, feature_file_italic_cn
-from source.py.feature.shared import __features_cn_only
 from source.py.feature.shared.cv import cv96, cv97, cv98, cv99
+from source.py.feature.shared.locl import locl_features_cn_only
+from source.py.feature.shared.ccmp import ccmp_features_cn
+
 
 def generate_fea_string(italic: bool, cn: bool):
     if italic:
@@ -21,7 +23,8 @@ def generate_fea_string_cn_only():
     return ast.create(
         [],
         [
-            __features_cn_only,
+            locl_features_cn_only,
+            ccmp_features_cn,
             cv96.cv96_feat_cn,
             cv97.cv97_feat_cn,
             cv98.cv98_feat_cn,
