@@ -1,5 +1,5 @@
 from source.py.feature import ast
-from source.py.feature.shared.calt import (
+from source.py.feature.calt import (
     asciitilde,
     brace,
     colon,

@@ -1,8 +1,8 @@
 import source.py.feature.ast as ast
-from source.py.feature.shared.case import case_feature
-from source.py.feature.shared.ccmp import ccmp_feature, ccmp_features_cn
-from source.py.feature.shared.number import number_features
-from source.py.feature.shared.locl import locl_feature, locl_features_cn
+from source.py.feature.base.case import case_feature
+from source.py.feature.base.ccmp import ccmp_feature, ccmp_features_cn
+from source.py.feature.base.number import number_features
+from source.py.feature.base.locl import locl_feature, locl_features_cn
 
 
 aalt_feature = ast.feature(
@@ -26,13 +26,13 @@ __features = [
     case_feature,
 ]
 
-common_features = [
+base_features = [
     *__features,
     ccmp_feature,
     locl_feature,
 ]
 
-common_features_cn = [
+base_features_cn = [
     *__features,
     ccmp_features_cn,
     locl_features_cn,

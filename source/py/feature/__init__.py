@@ -1,9 +1,9 @@
 from source.py.feature import ast
 from source.py.feature.regular import feature_file_regular, feature_file_regular_cn
 from source.py.feature.italic import feature_file_italic, feature_file_italic_cn
-from source.py.feature.shared.cv import cv96, cv97, cv98, cv99
-from source.py.feature.shared.locl import locl_features_cn_only
-from source.py.feature.shared.ccmp import ccmp_features_cn
+from source.py.feature.cv import cv96, cv97, cv98, cv99
+from source.py.feature.base.locl import locl_features_cn_only
+from source.py.feature.base.ccmp import ccmp_features_cn
 
 
 def generate_fea_string(italic: bool, cn: bool):

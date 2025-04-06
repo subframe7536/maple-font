@@ -1,5 +1,5 @@
 from source.py.feature import ast
-from source.py.feature.shared.clazz import normal_separator
+from source.py.feature.base.clazz import normal_separator
 
 
 def get_lookup():

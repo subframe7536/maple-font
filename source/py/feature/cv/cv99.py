@@ -1,5 +1,5 @@
 import source.py.feature.ast as ast
-from source.py.feature.shared.locl import lookup_tw_name
+from source.py.feature.base.locl import lookup_tw_name
 
 
 def cv99_subst():

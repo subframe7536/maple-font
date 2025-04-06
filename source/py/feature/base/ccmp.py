@@ -1,5 +1,5 @@
 import source.py.feature.ast as ast
-from source.py.feature.shared.clazz import uppercase
+from source.py.feature.base.clazz import uppercase
 
 
 comb_top_acc = ast.Clazz(

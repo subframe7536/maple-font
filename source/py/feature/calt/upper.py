@@ -1,5 +1,5 @@
 from source.py.feature import ast
-from source.py.feature.shared.clazz import digit, uppercase
+from source.py.feature.base.clazz import digit, uppercase
 
 
 def get_lookup():

@@ -1,5 +1,5 @@
 from source.py.feature import ast
-from source.py.feature.shared.clazz import zero, digit
+from source.py.feature.base.clazz import zero, digit
 
 
 def get_lookup(hex_letter: ast.Clazz):

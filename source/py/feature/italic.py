@@ -1,7 +1,7 @@
 import source.py.feature.ast as ast
-from source.py.feature.shared import common_features, common_features_cn
-from source.py.feature.shared.calt import get_calt_italic
-from source.py.feature.shared.cv import (
+from source.py.feature.base import base_features, base_features_cn
+from source.py.feature.calt import get_calt_italic
+from source.py.feature.cv import (
     cv01,
     cv04,
     cv31,
@@ -16,9 +16,9 @@ from source.py.feature.shared.cv import (
     cv98,
     cv99,
 )
-from source.py.feature.shared.ss import ss01, ss02, ss03, ss04, ss05, ss06, ss07, ss08
-from source.py.feature.shared.lang import lang_list
-from source.py.feature.shared.clazz import base_class_list
+from source.py.feature.ss import ss01, ss02, ss03, ss04, ss05, ss06, ss07, ss08
+from source.py.feature.base.lang import lang_list
+from source.py.feature.base.clazz import base_class_list
 
 
 cls_a = ast.Clazz("A", ["A", "a", "a.cv31"])
@@ -137,7 +137,7 @@ feature_file_italic = ast.create(
     class_list,
     [
         lang_list,
-        common_features,
+        base_features,
         calt,
         cv_list,
         ss_list,
@@ -148,7 +148,7 @@ feature_file_italic_cn = ast.create(
     class_list,
     [
         lang_list,
-        common_features_cn,
+        base_features_cn,
         calt,
         cv_list,
         cv_list_cn,
