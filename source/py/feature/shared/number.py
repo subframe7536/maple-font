@@ -17,7 +17,8 @@ clazz_numr = ast.clazz([f"{n}.numr" for n in _number_list])
 clazz_dnom = ast.clazz([f"{n}.dnom" for n in _number_list])
 
 zero = ast.subst_map(
-    ["zero", "zero.dnom", "zero.numr", "zeroinferior", "zerosuperior"], target_suffix=".zero"
+    ["zero", "zero.dnom", "zero.numr", "zeroinferior", "zerosuperior"],
+    target_suffix=".zero",
 )
 
 sinf = ast.subst_map(_number_list, target_suffix="inferior")
@@ -33,7 +34,7 @@ ordn = [
 ]
 
 frac = [
-    ast.lookup("FRAC", "",[ast.subst(None, "/", None, "fraction")]),
+    ast.lookup("FRAC", None, [ast.subst(None, "/", None, "fraction")]),
     ast.lookup(
         "UP",
         None,
@@ -43,9 +44,7 @@ frac = [
         "DOWN",
         None,
         [
-            ast.subst(
-                "fraction", clazz_numr, None, clazz_dnom
-            ),
+            ast.subst("fraction", clazz_numr, None, clazz_dnom),
             ast.subst(
                 clazz_dnom,
                 clazz_numr,

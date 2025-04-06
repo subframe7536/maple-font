@@ -3,7 +3,7 @@ import source.py.feature.ast as ast
 
 i_acc = ast.__subst("i", "idotaccent")
 locl_0 = ast.lookup(
-    "locl_latin_0",
+    "locl_latn_0",
     None,
     [
         ast.script("latn"),
@@ -25,7 +25,7 @@ st_acc = ast.subst_map(
 )
 
 locl_1 = ast.lookup(
-    "locl_latin_1",
+    "locl_latn_1",
     None,
     [
         ast.script("latn"),
@@ -39,7 +39,7 @@ locl_1 = ast.lookup(
 glyph_2 = "periodcentered"
 
 locl_2 = ast.lookup(
-    "locl_latin_2",
+    "locl_latn_2",
     None,
     [
         ast.script("latn"),
@@ -50,7 +50,7 @@ locl_2 = ast.lookup(
 )
 
 locl_3 = ast.lookup(
-    "locl_latin_3",
+    "locl_latn_3",
     None,
     [
         ast.script("latn"),

@@ -16,14 +16,14 @@ cv04_base = [
 ]
 
 
-def cv04_subst():
+def cv04_subst_regular():
     return ast.subst_map(
         cv04_base,
         target_suffix=".cv04",
     )
 
 
-def cv04_subst_i():
+def cv04_subst_italic():
     return ast.subst_map(
         [
             *cv04_base,
@@ -45,5 +45,5 @@ def cv04_subst_i():
     )
 
 cv04_name = "Alternative l"
-cv04_feat_regular = ast.cv(4, cv04_name, cv04_subst())
-cv04_feat_italic = ast.cv(4, cv04_name, cv04_subst_i())
+cv04_feat_regular = ast.cv(4, cv04_name, cv04_subst_regular())
+cv04_feat_italic = ast.cv(4, cv04_name, cv04_subst_italic())

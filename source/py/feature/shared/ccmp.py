@@ -92,8 +92,8 @@ def comb_jp(c1: str, c2: str) -> ast.Line:
     return ast.__subst(f"uni{c1} uni{c1}", f"uni{c1}{c2}")
 
 
-ccmp_latin = ast.lookup(
-    "ccmp_latin",
+ccmp_latn = ast.lookup(
+    "ccmp_latn",
     None,
     [
         ast.Line("lookupflag 0;"),
@@ -156,7 +156,7 @@ ccmp_feature = ast.feature(
             ]
         ),
         ccmp_other,
-        ccmp_latin,
+        ccmp_latn,
         ast.script("latn"),
         ast.use_lookup(ccmp_other_name),
     ],
