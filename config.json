@@ -42,7 +42,7 @@
     },
     "cn": {
         "enable": true,
-        "with_nerd_font": false,
+        "with_nerd_font": true,
         "fix_meta_table": true,
         "clean_cache": false,
         "narrow": false,
