@@ -3,7 +3,6 @@ from source.py.feature import ast
 
 def ss08_subst():
     return [
-        # --------------------------------------------------------------------
         ast.subst_liga(
             "<<-",
             target=ast.gly("<<-", ".ss08", True),
@@ -13,7 +12,6 @@ def ss08_subst():
                 ast.subst(ast.SPC, ast.gly("<<"), "-", ast.SPC),
             ],
         ),
-        # --------------------------------------------------------------------
         ast.subst_liga(
             ">>-",
             target=ast.gly(">>-", ".ss08", True),
@@ -23,7 +21,6 @@ def ss08_subst():
                 ast.subst(ast.SPC, ast.gly(">>"), "-", ast.SPC),
             ],
         ),
-        # --------------------------------------------------------------------
         ast.subst_liga(
             "<<=",
             target=ast.gly("<<=", ".ss08", True),
@@ -33,7 +30,6 @@ def ss08_subst():
                 ast.subst(ast.SPC, ast.gly("<<"), "=", ast.SPC),
             ],
         ),
-        # --------------------------------------------------------------------
         ast.subst_liga(
             ">>=",
             target=ast.gly(">>=", ".ss08", True),
@@ -43,7 +39,6 @@ def ss08_subst():
                 ast.subst(ast.SPC, ast.gly(">>"), "=", ast.SPC),
             ],
         ),
-        # --------------------------------------------------------------------
         ast.subst_liga(
             "-<<",
             target=ast.gly("-<<", ".ss08", True),
@@ -59,7 +54,6 @@ def ss08_subst():
                 ast.subst(None, "-", [ast.SPC, ast.gly("<<")], ast.SPC),
             ],
         ),
-        # --------------------------------------------------------------------
         ast.subst_liga(
             "->>",
             target=ast.gly("->>", ".ss08", True),
@@ -75,7 +69,6 @@ def ss08_subst():
                 ast.subst(None, "-", [ast.SPC, ast.gly(">>")], ast.SPC),
             ],
         ),
-        # --------------------------------------------------------------------
         ast.subst_liga(
             "=<<",
             target=ast.gly("=<<", ".ss08", True),
@@ -92,7 +85,6 @@ def ss08_subst():
                 ast.subst(None, "=", [ast.SPC, ast.gly("<<")], ast.SPC),
             ],
         ),
-        # --------------------------------------------------------------------
         ast.subst_liga(
             "=>>",
             target=ast.gly("=>>", ".ss08", True),
@@ -109,7 +101,6 @@ def ss08_subst():
                 ast.subst(None, "=", [ast.SPC, ast.gly(">>")], ast.SPC),
             ],
         ),
-        # --------------------------------------------------------------------
         ast.subst_liga(
             "-<",
             target=ast.gly("-<", ".ss08", True),
@@ -118,7 +109,6 @@ def ss08_subst():
                 ast.ignore(None, "-", ["<", ast.clazz(["<", "/", "?"])]),
             ],
         ),
-        # --------------------------------------------------------------------
         ast.subst_liga(
             ">-",
             target=ast.gly(">-", ".ss08", True),
@@ -127,7 +117,6 @@ def ss08_subst():
                 ast.ignore(None, ">", ["-", ast.clazz(["-", ">", "<"])]),
             ],
         ),
-        # --------------------------------------------------------------------
     ]
 
 
