@@ -139,7 +139,9 @@ def release(tag: str, beta: str, dry: bool):
     rename_files(target_fontsource_dir, format_fontsource_name)
     print("Generate fontsource files")
 
-    run("uv pip compile pyproject.toml -o requirements.txt")
+    run(
+        "uv export --format requirements-txt --no-hashes --output-file requirements.txt --quiet"
+    )
 
     shutil.copytree("./fonts/CN", "./cdn/cn")
     print("Generate CN files")
