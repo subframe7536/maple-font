@@ -144,8 +144,8 @@ def subset(mono: bool, unicodes: list[int]):
     font.close()
 
 
-def nerd_font(update: bool):
-    if update:
+def nerd_font(no_update: bool):
+    if not no_update:
         check_update()
 
     with open("./FontPatcher/glyphnames.json", "r", encoding="utf-8") as f:

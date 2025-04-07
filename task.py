@@ -10,10 +10,9 @@ def main():
 
     nerdfont_parser = command.add_parser("nerd-font", help="Build Nerd-Font base font")
     nerdfont_parser.add_argument(
-        "--update",
+        "--no-update",
         action="store_true",
-        default=True,
-        help="Check version and update if available",
+        help="Do not check version and update if available",
     )
 
     feature_parser = command.add_parser("fea", help="Build fea files")
@@ -23,13 +22,13 @@ def main():
     release_parser.add_argument(
         "tag",
         type=str,
-        help="The tag to build the release for, format: 7.0 or v7.0",
+        help="The tag to build the release for, e.g. 7.0 or v7.0",
     )
     release_parser.add_argument(
         "beta",
         nargs="?",
         type=str,
-        help="Beta tag name, format: 3 or beta3",
+        help="Beta tag name, e.g. 3 or beta3",
     )
     release_parser.add_argument(
         "--dry",
@@ -41,7 +40,7 @@ def main():
     if args.command == "nerd-font":
         from source.py.task.nerdfont import nerd_font
 
-        nerd_font(args.update)
+        nerd_font(args.no_update)
 
     elif args.command == "fea":
         from source.py.task.fea import fea

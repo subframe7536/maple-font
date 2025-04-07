@@ -83,7 +83,7 @@ def update_build_script_version(tag):
         f.close()
 
 
-def git_commit(tag, files):
+def git_release_commit(tag, files):
     run(f"git add {' '.join(files)}")
     run(["git", "commit", "-m", f"Release {tag}"])
     run(f"git tag {tag}")
@@ -170,4 +170,4 @@ def release(tag: str, beta: str, dry: bool):
     if dry:
         print("Dry run")
     else:
-        git_commit(tag, ["build.py", "woff2"])
+        git_release_commit(tag, ["build.py", "woff2"])
