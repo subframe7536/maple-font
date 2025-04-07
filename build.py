@@ -518,7 +518,7 @@ class BuildOption:
             print(
                 "No static CN fonts but detect variable version, start instantiating..."
             )
-            instantiate_cn_base(
+            self.__instantiate_cn_base(
                 cn_variable_dir=self.cn_variable_dir,
                 cn_static_dir=self.cn_static_dir,
                 pool_size=pool_size,
@@ -532,7 +532,7 @@ class BuildOption:
             target_dir=self.cn_variable_dir,
             github_mirror=self.github_mirror,
         ):
-            instantiate_cn_base(
+            self.__instantiate_cn_base(
                 cn_variable_dir=self.cn_variable_dir,
                 cn_static_dir=self.cn_static_dir,
                 pool_size=pool_size,
@@ -553,6 +553,23 @@ class BuildOption:
             print("Unmatched CN static font hash, clean up")
             shutil.rmtree(static_path)
             return False
+
+    def __instantiate_cn_base(cn_variable_dir: str, cn_static_dir: str, pool_size: int):
+        print("=========================================")
+        print("Instantiating CN Base font, be patient...")
+        print("=========================================")
+        run_build(
+            pool_size=pool_size,
+            fn=partial(
+                instantiate_cn_var, base_dir=cn_variable_dir, output_dir=cn_static_dir
+            ),
+            dir=cn_variable_dir,
+        )
+        run_build(
+            pool_size=pool_size,
+            fn=partial(optimize_cn_base, base_dir=cn_static_dir),
+            dir=cn_static_dir,
+        )
 
     def __check_cache_dir(self, cache_dir: str, count: int = 16) -> bool:
         if not path.isdir(cache_dir):
@@ -592,24 +609,6 @@ def optimize_cn_base(f: str, base_dir: str):
     )
 
 
-def instantiate_cn_base(cn_variable_dir: str, cn_static_dir: str, pool_size: int):
-    print("=========================================")
-    print("Instantiating CN Base font, be patient...")
-    print("=========================================")
-    run_build(
-        pool_size=pool_size,
-        fn=partial(
-            instantiate_cn_var, base_dir=cn_variable_dir, output_dir=cn_static_dir
-        ),
-        dir=cn_variable_dir,
-    )
-    run_build(
-        pool_size=pool_size,
-        fn=partial(optimize_cn_base, base_dir=cn_static_dir),
-        dir=cn_static_dir,
-    )
-
-
 def parse_style_name(style_name_compact: str, skip_subfamily_list: list[str]):
     is_italic = style_name_compact.endswith("Italic")
 
@@ -629,50 +628,40 @@ def parse_style_name(style_name_compact: str, skip_subfamily_list: list[str]):
         )
 
 
-def fix_cn_cv(font: TTFont):
-    gsub_table = font["GSUB"].table
-    config = {
-        "cv96": ["quoteleft", "quoteright", "quotedblleft", "quotedblright"],
-        "cv97": ["ellipsis"],
-        "cv98": ["emdash"],
-    }
+# def fix_cn_cv(font: TTFont):
+#     gsub_table = font["GSUB"].table
+#     config = {
+#         "cv96": ["quoteleft", "quoteright", "quotedblleft", "quotedblright"],
+#         "cv97": ["ellipsis"],
+#         "cv98": ["emdash"],
+#     }
 
-    for feature_record in gsub_table.FeatureList.FeatureRecord:
-        if feature_record.FeatureTag in config:
-            sub_table = gsub_table.LookupList.Lookup[
-                feature_record.Feature.LookupListIndex[0]
-            ].SubTable[0]
-            sub_table.mapping = {
-                value: f"{value}.full" for value in config[feature_record.FeatureTag]
-            }
+#     for feature_record in gsub_table.FeatureList.FeatureRecord:
+#         if feature_record.FeatureTag in config:
+#             sub_table = gsub_table.LookupList.Lookup[
+#                 feature_record.Feature.LookupListIndex[0]
+#             ].SubTable[0]
+#             sub_table.mapping = {
+#                 value: f"{value}.full" for value in config[feature_record.FeatureTag]
+#             }
 
 
-def remove_locl(font: TTFont):
-    gsub = font["GSUB"]
-    features_to_remove = []
+# def remove_locl(font: TTFont):
+#     gsub = font["GSUB"]
+#     features_to_remove = []
 
-    for feature in gsub.table.FeatureList.FeatureRecord:
-        feature_tag = feature.FeatureTag
+#     for feature in gsub.table.FeatureList.FeatureRecord:
+#         feature_tag = feature.FeatureTag
 
-        if feature_tag == "locl":
-            features_to_remove.append(feature)
+#         if feature_tag == "locl":
+#             features_to_remove.append(feature)
 
-    for feature in features_to_remove:
-        gsub.table.FeatureList.FeatureRecord.remove(feature)
+#     for feature in features_to_remove:
+#         gsub.table.FeatureList.FeatureRecord.remove(feature)
 
 
 def drop_mac_names(dir: str):
     run(f"ftcli name del-mac-names -r {dir}")
-
-
-def get_new_name_from_map(old_name: str, map: dict[str, str]):
-    new_name = map.get(old_name)
-    if not new_name:
-        arr = re.split(r"[\._]", old_name, maxsplit=2)
-        name = map.get(arr[0])
-        if name:
-            new_name = name + old_name[len(arr[0]) :]
-    return new_name
 
 
 def rename_glyph_name(
@@ -680,6 +669,15 @@ def rename_glyph_name(
     map: dict[str, str],
     post_extra_names: bool = True,
 ):
+    def get_new_name_from_map(old_name: str, map: dict[str, str]):
+        new_name = map.get(old_name)
+        if not new_name:
+            arr = re.split(r"[\._]", old_name, maxsplit=2)
+            name = map.get(arr[0])
+            if name:
+                new_name = name + old_name[len(arr[0]) :]
+        return new_name
+
     print("Rename glyph names")
     glyph_names = font.getGlyphOrder()
     extra_names = font["post"].extraNames
@@ -1066,26 +1064,26 @@ def run_build(pool_size: int, fn: Callable, dir: str):
         if pid not in processes:
             processes.append(pid)
 
-    def kill_all(processes: list[int]):
-        for pid in processes:
+    def kill_all(pids: list[int]):
+        for pid in pids:
             try:
                 kill(pid, signal.SIGTERM)
             except Exception:
-                if is_windows:
-                    run(f"taskkill.exe /pid {pid}")
-                else:
-                    kill(pid, signal.SIGTKILL)
+                try:
+                    if is_windows:
+                        run(f"taskkill.exe /pid {pid}")
+                    else:
+                        kill(pid, signal.SIGTKILL)
+                except Exception:
+                    pass
+            pids.remove(pid)
 
     files = listdir(dir)
     pids = []
 
     if pool_size <= 1:
         for f in files:
-            try:
-                fn(f)
-            except Exception as e:
-                print(f"Error processing {f}: {str(e)}")
-                raise
+            fn(f)
         return
 
     with multiprocessing.Pool(processes=pool_size) as pool:
@@ -1098,8 +1096,7 @@ def run_build(pool_size: int, fn: Callable, dir: str):
             for r in results:
                 try:
                     r.get()
-                except Exception as e:
-                    print(f"Error occurred: {str(e)}")
+                except Exception:
                     kill_all(pids)
                     raise
 
