@@ -151,7 +151,7 @@ def clazz(glyphs: Sequence[str | Clazz]) -> str:
 
     for g in glyphs:
         arr.append(__parse_glyph(g))
-
+    arr.sort()
     return "[" + " ".join(arr) + "]"
 
 
