@@ -213,7 +213,7 @@ def use_feature(name: str) -> Line:
     return Line(f"feature {name};")
 
 
-def cv(id: int, name: str, content: Sequence[Line | list[Line]]) -> list[Line]:
+def cv(id: int, name: str, content: list) -> list[Line]:
     """
     Generate Character Variants (cv) OpenType feature.
     Raises:
@@ -253,7 +253,7 @@ def cv(id: int, name: str, content: Sequence[Line | list[Line]]) -> list[Line]:
     return feature(f"cv{id:02d}", lines)
 
 
-def ss(id: int, name: str, content: Sequence[Line | list[Line]]) -> list[Line]:
+def ss(id: int, name: str, content: list) -> list[Line]:
     """
     Creates stylistic set (ss) OpenType feature.
     Raises:
@@ -299,7 +299,7 @@ def script(script: str) -> Line:
 
 
 def lookup(
-    name: str, desc: str | None, content: Sequence[Line | list[Line]]
+    name: str, desc: str | None, content: list
 ) -> list[Line]:
     """
     Generate lookup table.
