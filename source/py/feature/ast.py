@@ -155,26 +155,18 @@ def clazz(glyphs: Sequence[str | Clazz]) -> str:
     return "[" + " ".join(arr) + "]"
 
 
-def clazz_states(cls: Clazz | list[Clazz], prefix_empty_line=True) -> list[Line]:
+def clazz_states(cls: Clazz | list[Clazz]) -> list[Line]:
     """
-    Declare classes
+    Declare classes with prefix empty line.
     """
-    result = []
-    if prefix_empty_line:
-        result.append(Line(""))
-    if isinstance(cls, list):
-        for c in cls:
-            result.append(c.state())
-    else:
-        result.append(cls.state())
-    return result
+    return [Line("")] + flatten(cls)
 
 
-def create(cls: list[Clazz], content: list, indent=2) -> str:
+def create(content: list, indent=2) -> str:
     _idt = indent * " "
     lines: list[Line] = []
 
-    for line in clazz_states(cls, False) + flatten(content):
+    for line in flatten(content):
         if (
             len(lines) > 0
             and lines[-1].text
@@ -298,9 +290,7 @@ def script(script: str) -> Line:
     return Line(f"script {script};")
 
 
-def lookup(
-    name: str, desc: str | None, content: list
-) -> list[Line]:
+def lookup(name: str, desc: str | None, content: list) -> list[Line]:
     """
     Generate lookup table.
 
@@ -484,13 +474,20 @@ def ignore(
     return Line(f"ignore sub {__prefix(prefix)}{__gly(glyph)}'{__suffix(suffix)};")
 
 
-def flatten(data: list) -> list[Line]:
+def flatten(data: Line | Clazz | list) -> list[Line]:
+    if isinstance(data, Clazz):
+        return [data.state()]
+    elif isinstance(data, Line):
+        return [data]
+
     result = []
     for item in data:
         if isinstance(item, list):
             result += flatten(item)
-        elif not isinstance(item, Line):
-            raise TypeError(f"Item is not Line: {item} ({type(item)})")
-        else:
+        elif isinstance(item, Clazz):
+            result.append(item.state())
+        elif isinstance(item, Line):
             result.append(item)
+        else:
+            raise TypeError(f"Invalid item: {item} ({type(item)})")
     return result

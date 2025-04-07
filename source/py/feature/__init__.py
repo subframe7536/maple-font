@@ -21,7 +21,6 @@ def generate_fea_string(italic: bool, cn: bool):
 
 def generate_fea_string_cn_only():
     return ast.create(
-        [],
         [
             locl_features_cn_only,
             ccmp_features_cn,

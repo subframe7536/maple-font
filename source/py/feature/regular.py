@@ -104,8 +104,8 @@ ss_list = [
 
 
 feature_file_regular = ast.create(
-    class_list,
     [
+        class_list,
         lang_list,
         base_features,
         calt,
@@ -115,8 +115,8 @@ feature_file_regular = ast.create(
 )
 
 feature_file_regular_cn = ast.create(
-    class_list,
     [
+        class_list,
         lang_list,
         base_features_cn,
         calt,

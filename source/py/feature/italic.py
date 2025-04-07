@@ -134,8 +134,8 @@ ss_list = [
 ]
 
 feature_file_italic = ast.create(
-    class_list,
     [
+        class_list,
         lang_list,
         base_features,
         calt,
@@ -145,8 +145,8 @@ feature_file_italic = ast.create(
 )
 
 feature_file_italic_cn = ast.create(
-    class_list,
     [
+        class_list,
         lang_list,
         base_features_cn,
         calt,
