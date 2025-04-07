@@ -1070,10 +1070,10 @@ def run_build(pool_size: int, fn: Callable, dir: str):
                 kill(pid, signal.SIGTERM)
             except Exception:
                 try:
-                    if is_windows:
+                    if is_windows():
                         run(f"taskkill.exe /pid {pid}")
                     else:
-                        kill(pid, signal.SIGTKILL)
+                        kill(pid, signal.SIGKILL)
                 except Exception:
                     pass
             pids.remove(pid)

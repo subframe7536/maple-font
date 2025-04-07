@@ -64,7 +64,7 @@ __PUNCTUATION_MAP = {
 __PUNCTUATION_CN_MAP = {
     "“": "quotedblleft",
     "”": "quotedblright",
-    "‘": "quoteleft1",
+    "‘": "quoteleft",
     "’": "quoteright",
     "…": "ellipsis",
     "—": "emdash",
