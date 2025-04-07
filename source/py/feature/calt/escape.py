@@ -2,7 +2,7 @@ from source.py.feature import ast
 
 
 def get_lookup():
-    escape_cls = ast.Clazz("Escape", list(ast.KNOWN_PUNCTUATIONS))
+    escape_cls = ast.Clazz("Escape", list(ast.LATIN_PUNCTUATIONS))
     escape_liga = ast.gly("\\", ".liga")
     return [
         ast.clazz_states([escape_cls]),

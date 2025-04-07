@@ -1,25 +1,28 @@
 #!/usr/bin/env python3
 import argparse
-from concurrent.futures import ProcessPoolExecutor, as_completed
 import importlib.util
 import json
+import multiprocessing
 import re
 import shutil
+import signal
 import time
 from functools import partial
-from os import environ, getcwd, listdir, makedirs, path, remove, getenv
+from os import environ, getcwd, getpid, kill, listdir, makedirs, path, remove, getenv
 from typing import Callable
 from fontTools.ttLib import TTFont, newTable
-from fontTools.feaLib.builder import addOpenTypeFeaturesFromString, addOpenTypeFeatures
+from fontTools.feaLib.builder import addOpenTypeFeatures
 from source.py.utils import (
     check_font_patcher,
     generate_directory_hash,
+    patch_fea_string,
     verify_glyph_width,
     compress_folder,
     download_cn_base_font,
     get_font_forge_bin,
     get_font_name,
     is_ci,
+    is_windows,
     match_unicode_names,
     run,
     set_font_name,
@@ -27,7 +30,6 @@ from source.py.utils import (
     merge_ttfonts,
 )
 from source.py.freeze import freeze_feature, get_freeze_config_str
-from source.py.feature import generate_fea_string
 
 FONT_VERSION = "v7.0"
 # =========================================================================================
@@ -1014,9 +1016,7 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
     # https://github.com/subframe7536/maple-font/issues/313
     # fix_cn_cv(cn_font)
 
-    addOpenTypeFeaturesFromString(
-        cn_font, generate_fea_string("Italic" in style_in_2, is_italic)
-    )
+    patch_fea_string(cn_font, is_italic, True)
 
     handle_ligatures(
         font=cn_font,
@@ -1046,6 +1046,7 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
             "slng": "Latn, Hans, Hant, Jpan",
         }
         cn_font["meta"] = meta
+
     verify_glyph_width(
         font=cn_font,
         expect_widths=font_config.get_valid_glyph_width_list(True),
@@ -1059,29 +1060,52 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
     cn_font.close()
 
 
-def wrapped_fn(shutdown_event, fn, filename):
-    if shutdown_event.is_set():
-        return
-    try:
-        return fn(filename)
-    except Exception as e:
-        shutdown_event.set()
-        raise e
-
-
 def run_build(pool_size: int, fn: Callable, dir: str):
+    def track_pid(processes: list[int], _):
+        pid = getpid()
+        if pid not in processes:
+            processes.append(pid)
+
+    def kill_all(processes: list[int]):
+        for pid in processes:
+            try:
+                kill(pid, signal.SIGTERM)
+            except Exception:
+                if is_windows:
+                    run(f"taskkill.exe /pid {pid}")
+                else:
+                    kill(pid, signal.SIGTKILL)
+
     files = listdir(dir)
+    pids = []
 
     if pool_size <= 1:
         for f in files:
-            fn(f)
+            try:
+                fn(f)
+            except Exception as e:
+                print(f"Error processing {f}: {str(e)}")
+                raise
         return
 
-    with ProcessPoolExecutor(max_workers=pool_size) as executor:
-        futures = {executor.submit(fn, f): f for f in files}
+    with multiprocessing.Pool(processes=pool_size) as pool:
+        try:
+            results = [
+                pool.apply_async(fn, (f,), callback=lambda _: track_pid(pids, _))
+                for f in files
+            ]
 
-        for future in as_completed(futures):
-            future.result()
+            for r in results:
+                try:
+                    r.get()
+                except Exception as e:
+                    print(f"Error occurred: {str(e)}")
+                    kill_all(pids)
+                    raise
+
+        except Exception:
+            kill_all(pids)
+            raise
 
 
 def main():
@@ -1147,9 +1171,10 @@ def main():
                 )
             else:
                 print("Apply feature string")
-                addOpenTypeFeaturesFromString(
+                patch_fea_string(
                     font,
-                    generate_fea_string(is_italic, False),
+                    is_italic,
+                    False,
                 )
 
             set_font_name(

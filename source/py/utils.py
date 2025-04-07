@@ -1,12 +1,15 @@
 import hashlib
 from os import environ, path, remove, walk
-import platform
+import sys
 import shutil
 import subprocess
 from urllib.request import Request, urlopen
 from zipfile import ZIP_DEFLATED, ZipFile
 from fontTools.ttLib import TTFont
+from fontTools.feaLib.builder import addOpenTypeFeaturesFromString
 from glyphsLib import GSFont
+
+from source.py.feature import generate_fea_string
 
 
 def is_ci():
@@ -60,6 +63,14 @@ def joinPaths(*args: str) -> str:
     return "/".join(args)
 
 
+def is_windows():
+    return sys.platform == "win32"
+
+
+def is_macos():
+    return sys.platform == "darwin"
+
+
 def get_font_forge_bin():
     WIN_FONTFORGE_PATH = "C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe"
     MAC_FONTFORGE_PATH = (
@@ -67,12 +78,10 @@ def get_font_forge_bin():
     )
     LINUX_FONTFORGE_PATH = "/usr/bin/fontforge"
 
-    system_name = platform.uname()[0]
-
     result = ""
-    if "Darwin" in system_name:
+    if is_macos():
         result = MAC_FONTFORGE_PATH
-    elif "Windows" in system_name:
+    elif is_windows():
         result = WIN_FONTFORGE_PATH
     else:
         result = LINUX_FONTFORGE_PATH
@@ -353,3 +362,16 @@ def merge_ttfonts(base_font_path: str, extra_font_path: str) -> TTFont:
     except Exception as e:
         print(f"Error merging fonts: {str(e)}")
         raise
+
+
+def patch_fea_string(font: TTFont, is_italic: bool, is_cn: bool):
+    fea_str = generate_fea_string(is_italic, is_cn)
+    try:
+        addOpenTypeFeaturesFromString(font, fea_str)
+    except Exception as e:
+        p = path.realpath("./fonts/issue.fea")
+        with open(p, "w+") as f:
+            f.write(fea_str)
+        raise Exception(
+            f"Error patching fea string: {e}\n\nSee generated fea string in {p}"
+        )

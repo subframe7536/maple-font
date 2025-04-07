@@ -59,15 +59,18 @@ __PUNCTUATION_MAP = {
     "|": "bar",
     "`": "grave",
     "~": "asciitilde",
-    "“": "quoteleft",
-    "”": "quoteright",
-    "‘": "quotedblleft",
-    "’": "quotedblright",
+}
+
+__PUNCTUATION_CN_MAP = {
+    "“": "quotedblleft",
+    "”": "quotedblright",
+    "‘": "quoteleft1",
+    "’": "quoteright",
     "…": "ellipsis",
     "—": "emdash",
 }
 
-KNOWN_PUNCTUATIONS = set(__PUNCTUATION_MAP.keys())
+LATIN_PUNCTUATIONS = set(__PUNCTUATION_MAP.keys())
 
 
 def __gly(g: str | Clazz | Sequence[str | Clazz] | None) -> str:
@@ -81,6 +84,8 @@ def __gly(g: str | Clazz | Sequence[str | Clazz] | None) -> str:
         raise TypeError(f"{g}({type(g)}) is invalid for __gly")
     if g in __PUNCTUATION_MAP:
         return __PUNCTUATION_MAP[g]
+    if g in __PUNCTUATION_CN_MAP:
+        return __PUNCTUATION_CN_MAP[g]
     return g
 
 
@@ -101,7 +106,7 @@ def __subst(source: str, target: str) -> Line:
 
 
 def __parse_glyph(g: str | Clazz):
-    if isinstance(g, str) and len(g) > 1 and g[0] in KNOWN_PUNCTUATIONS:
+    if isinstance(g, str) and len(g) > 1 and g[0] in LATIN_PUNCTUATIONS:
         return "_".join(map(__gly, list(g))) + ".liga"
     else:
         return __gly(g)
@@ -163,7 +168,7 @@ def clazz_states(cls: list[Clazz], prefix_empty_line=True) -> list[Line]:
 
 
 def create(
-    cls: list[Clazz], content: Sequence[Line | list[Line] | list[list[Line]]], indent=2
+    cls: list[Clazz], content: list, indent=2
 ) -> str:
     _idt = indent * " "
     lines: list[Line] = []
@@ -184,9 +189,7 @@ def create(
     return "".join([("\n" + _idt * c.level + c.text) for c in lines])[1:]
 
 
-def feature(
-    tag: str, content: Sequence[Line | list[Line] | list[list[Line]]]
-) -> list[Line]:
+def feature(tag: str, content: list) -> list[Line]:
     """Generate a feature block with indented content.
     This function creates a feature block with the specified tag and content,
     formatting it according to the OpenType feature file syntax.
@@ -480,11 +483,13 @@ def ignore(
     return Line(f"ignore sub {__prefix(prefix)}{__gly(glyph)}'{__suffix(suffix)};")
 
 
-def flatten(data: Sequence[Line | list[Line] | list[list[Line]]]) -> list[Line]:
+def flatten(data: list) -> list[Line]:
     result = []
     for item in data:
         if isinstance(item, list):
             result += flatten(item)
+        elif not isinstance(item, Line):
+            raise TypeError(f"Item is not Line: {item} ({type(item)})")
         else:
             result.append(item)
     return result
