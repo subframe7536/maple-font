@@ -5,7 +5,7 @@ def get_lookup():
     escape_cls = ast.Clazz("Escape", list(ast.LATIN_PUNCTUATIONS))
     escape_liga = ast.gly("\\", ".liga")
     return [
-        ast.clazz_states([escape_cls]),
+        ast.clazz_states(escape_cls),
         ast.lookup(
             "escape",
             "Thin backslash (\\) to better distingish escape chars",

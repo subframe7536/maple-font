@@ -80,7 +80,7 @@ def get_lookup():
         ),
         ast.lookup(
             ast.gly("##__"),
-            "Ligature rules for ##__",
+            "##__",
             [
                 ast.ignore("#", "#", [ast.SPC, ast.SPC, ast.gly("#__")]),
                 ast.subst(None, "#", [ast.SPC, ast.SPC, ast.gly("#__")], start),
@@ -95,7 +95,7 @@ def get_lookup():
         ),
         ast.lookup(
             ast.gly("##_("),
-            "Ligature rules for ##_(",
+            "##_(",
             [
                 ast.ignore("#", "#", [ast.SPC, ast.SPC, ast.gly("#_(")]),
                 ast.subst(None, "#", [ast.SPC, ast.SPC, ast.gly("#_(")], start),

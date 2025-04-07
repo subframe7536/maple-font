@@ -155,21 +155,22 @@ def clazz(glyphs: Sequence[str | Clazz]) -> str:
     return "[" + " ".join(arr) + "]"
 
 
-def clazz_states(cls: list[Clazz], prefix_empty_line=True) -> list[Line]:
+def clazz_states(cls: Clazz | list[Clazz], prefix_empty_line=True) -> list[Line]:
     """
     Declare classes
     """
     result = []
     if prefix_empty_line:
         result.append(Line(""))
-    for c in cls:
-        result.append(c.state())
+    if isinstance(cls, list):
+        for c in cls:
+            result.append(c.state())
+    else:
+        result.append(cls.state())
     return result
 
 
-def create(
-    cls: list[Clazz], content: list, indent=2
-) -> str:
+def create(cls: list[Clazz], content: list, indent=2) -> str:
     _idt = indent * " "
     lines: list[Line] = []
 

@@ -11,17 +11,17 @@ def get_lookup():
             ],
         ),
         ast.subst_liga(
-            "{|",
-            banner=[
-                ast.ignore("{", "{", "|"),
-                ast.ignore(None, "{", ["|", ast.clazz(["|", "}"])]),
-            ],
-        ),
-        ast.subst_liga(
             "}}",
             banner=[
                 ast.ignore(ast.clazz(["}", "-"]), "}", "}"),
                 ast.ignore(None, "}", ["}", "}"]),
+            ],
+        ),
+        ast.subst_liga(
+            "{|",
+            banner=[
+                ast.ignore("{", "{", "|"),
+                ast.ignore(None, "{", ["|", ast.clazz(["|", "}"])]),
             ],
         ),
         ast.subst_liga(
