@@ -22,18 +22,18 @@ aalt_feature = ast.feature(
 
 __features = [
     aalt_feature,
-    *number_features,
+    number_features,
     case_feature,
 ]
 
 base_features = [
-    *__features,
+    __features,
     ccmp_feature,
     locl_feature,
 ]
 
 base_features_cn = [
-    *__features,
+    __features,
     ccmp_features_cn,
     locl_features_cn,
 ]
