@@ -16,7 +16,7 @@ def fea(output: str):
     write_to_file(joinPaths(output, "regular.fea"), generate_fea_string(False, False))
     write_to_file(joinPaths(output, "italic.fea"), generate_fea_string(True, False))
 
-    write_to_file(joinPaths(output, "regular_cn.fea"), generate_fea_string(False, True))
-    write_to_file(joinPaths(output, "italic_cn.fea"), generate_fea_string(True, True))
+    # write_to_file(joinPaths(output, "regular_cn.fea"), generate_fea_string(False, True))
+    # write_to_file(joinPaths(output, "italic_cn.fea"), generate_fea_string(True, True))
 
     write_to_file(joinPaths(output, "cn.fea"), generate_fea_string_cn_only())
