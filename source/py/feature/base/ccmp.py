@@ -188,8 +188,8 @@ __ccmp = [
     ast.use_lookup(ccmp_other_name),
 ]
 
-__ccmp_cn = [__ccmp, ccmp_jp]
-
 ccmp_feature = ast.feature("ccmp", __ccmp)
 
-ccmp_features_cn = ast.feature("ccmp", __ccmp_cn)
+ccmp_features_cn_only = ast.feature("ccmp", ccmp_jp)
+
+ccmp_features_cn = ast.feature("ccmp", [__ccmp, ccmp_jp])
