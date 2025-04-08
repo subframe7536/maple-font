@@ -13,10 +13,10 @@ def write_to_file(file_path: str, content: str, mode: str = "w") -> None:
 
 
 def fea(output: str):
-    regular_fea = generate_fea_string(False, False)
-    write_to_file(joinPaths(output, "regular.fea"), regular_fea)
-    italic_fea = generate_fea_string(True, False)
-    write_to_file(joinPaths(output, "italic.fea"), italic_fea)
+    write_to_file(joinPaths(output, "regular.fea"), generate_fea_string(False, False))
+    write_to_file(joinPaths(output, "italic.fea"), generate_fea_string(True, False))
 
-    cn_fea = generate_fea_string_cn_only()
-    write_to_file(joinPaths(output, "cn.fea"), cn_fea)
+    write_to_file(joinPaths(output, "regular_cn.fea"), generate_fea_string(False, True))
+    write_to_file(joinPaths(output, "italic_cn.fea"), generate_fea_string(True, True))
+
+    write_to_file(joinPaths(output, "cn.fea"), generate_fea_string_cn_only())

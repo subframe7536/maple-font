@@ -272,6 +272,8 @@ class FontConfig:
             # whether to use pre-instantiated static CN font as base font
             "use_static_base_font": True,
         }
+        self.glyph_width = 600
+        self.glyph_width_cn_narrow = 1000
         self.__load_config(args.normal)
         self.__load_args(args)
 
@@ -386,16 +388,14 @@ class FontConfig:
         return True
 
     def get_valid_glyph_width_list(self, cn=False):
-        width = 600
-        width_cn_narrow = 1000
         if cn:
             return [
                 0,
-                width,
-                width_cn_narrow if self.cn["narrow"] else 2 * width,
+                self.glyph_width,
+                self.glyph_width_cn_narrow if self.cn["narrow"] else 2 * self.glyph_width,
             ]
         else:
-            return [0, width]
+            return [0, self.glyph_width]
 
 
 class BuildOption:
@@ -554,7 +554,7 @@ class BuildOption:
             shutil.rmtree(static_path)
             return False
 
-    def __instantiate_cn_base(cn_variable_dir: str, cn_static_dir: str, pool_size: int):
+    def __instantiate_cn_base(self, cn_variable_dir: str, cn_static_dir: str, pool_size: int):
         print("=========================================")
         print("Instantiating CN Base font, be patient...")
         print("=========================================")
@@ -758,8 +758,8 @@ def update_font_names(
     version_str: str,  # NameID 5
     postscript_name: str,  # NameID 6
     is_skip_subfamily: bool,
-    preferred_family_name: str = None,  # NameID 16
-    preferred_style_name: str = None,  # NameID 17
+    preferred_family_name: str | None = None,  # NameID 16
+    preferred_style_name: str | None = None,  # NameID 17
 ):
     set_font_name(font, family_name, 1)
     set_font_name(font, style_name, 2)
