@@ -1,6 +1,6 @@
 import source.py.feature.ast as ast
 from source.py.feature.base import base_features, base_features_cn
-from source.py.feature.calt import get_calt_italic
+from source.py.feature.calt import get_calt
 from source.py.feature.cv import (
     cv01,
     cv04,
@@ -101,10 +101,7 @@ class_list = [
 ]
 
 
-calt = ast.feature(
-    "calt",
-    get_calt_italic(cls_var, cls_hex_letter),
-)
+calt = get_calt(cls_var, cls_hex_letter, is_italic=True)
 
 cv_list = [
     cv01.cv01_feat_italic,
