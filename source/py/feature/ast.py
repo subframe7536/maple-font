@@ -70,7 +70,7 @@ __PUNCTUATION_CN_MAP = {
     "—": "emdash",
 }
 
-LATIN_PUNCTUATIONS = set(__PUNCTUATION_MAP.keys())
+LATIN_PUNCTUATIONS = list(__PUNCTUATION_MAP.keys())
 
 
 def __gly(g: str | Clazz | Sequence[str | Clazz] | None) -> str:
@@ -106,7 +106,7 @@ def __subst(source: str, target: str) -> Line:
 
 
 def __parse_glyph(g: str | Clazz):
-    if isinstance(g, str) and len(g) > 1 and g[0] in LATIN_PUNCTUATIONS:
+    if isinstance(g, str) and len(g) > 1 and g[0] in __PUNCTUATION_MAP:
         return "_".join(map(__gly, list(g))) + ".liga"
     else:
         return __gly(g)
@@ -151,7 +151,7 @@ def clazz(glyphs: Sequence[str | Clazz]) -> str:
 
     for g in glyphs:
         arr.append(__parse_glyph(g))
-    arr.sort()
+
     return "[" + " ".join(arr) + "]"
 
 
