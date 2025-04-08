@@ -19,25 +19,25 @@ from source.py.feature.calt import (
 )
 
 
-def get_calt_regular(letter: list[ast.Clazz], hex: ast.Clazz):
+def get_calt_regular(cls_var: ast.Clazz, cls_hex_letter: ast.Clazz):
     return [
         upper.get_lookup(),
         asciitilde.get_lookup(),
         brace.get_lookup(),
         colon.get_lookup(),
-        cross.get_lookup(hex),
-        equal_arrow.get_lookup(),
+        cross.get_lookup(cls_hex_letter),
+        equal_arrow.get_lookup(cls_var),
         equals.get_lookup(),
         escape.get_lookup(),
         hyphen_arrow.get_lookup(),
         lines.get_lookup(),
         markup_like.get_lookup(),
-        multiple_compare.get_lookup(letter),
+        multiple_compare.get_lookup(cls_var),
         numbersign_underscore.get_lookup(),
         tag.get_lookup(),
         whitespace.get_lookup(),
     ]
 
 
-def get_calt_italic(letter: list[ast.Clazz], hex: ast.Clazz):
-    return get_calt_regular(letter, hex) + italic.get_lookup()
+def get_calt_italic(cls_var: ast.Clazz, cls_hex_letter: ast.Clazz):
+    return get_calt_regular(cls_var, cls_hex_letter) + italic.get_lookup()

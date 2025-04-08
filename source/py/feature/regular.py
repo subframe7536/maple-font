@@ -3,7 +3,7 @@ from source.py.feature.base import base_features, base_features_cn
 from source.py.feature.calt import get_calt_regular
 from source.py.feature.cv import cv01, cv02, cv03, cv04, cv96, cv97, cv98, cv99
 from source.py.feature.ss import ss01, ss02, ss03, ss04, ss05, ss07, ss08
-from source.py.feature.base.clazz import base_class_list
+from source.py.feature.base.clazz import base_class_list, digit
 from source.py.feature.base.lang import lang_list
 
 
@@ -33,7 +33,7 @@ cls_w = ast.Clazz("W", ["W", "w"])
 cls_x = ast.Clazz("X", ["X", "x"])
 cls_y = ast.Clazz("Y", ["Y", "y"])
 cls_z = ast.Clazz("Z", ["Z", "z"])
-hex_letter = ast.Clazz("HexLetter", [cls_a, cls_b, cls_c, cls_d, cls_e, cls_f])
+cls_hex_letter = ast.Clazz("HexLetter", [cls_a, cls_b, cls_c, cls_d, cls_e, cls_f])
 
 cls_letters_list = [
     cls_a,
@@ -64,16 +64,13 @@ cls_letters_list = [
     cls_z,
 ]
 
-class_list = [
-    *base_class_list,
-    *cls_letters_list,
-    hex_letter,
-]
+cls_var = ast.Clazz("Var", ["_", "__", *cls_letters_list, digit])
 
+class_list = [*base_class_list, *cls_letters_list, cls_hex_letter, cls_var]
 
 calt = ast.feature(
     "calt",
-    get_calt_regular(cls_letters_list, hex_letter),
+    get_calt_regular(cls_var, cls_hex_letter),
 )
 
 cv_list = [

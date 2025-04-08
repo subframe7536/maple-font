@@ -2,23 +2,22 @@ from source.py.feature import ast
 from source.py.feature.base.clazz import digit
 
 
-def get_lookup(letter_list: list[ast.Clazz]):
-    var = ast.Clazz("Var", ["_", "__", *letter_list, digit])
-    space = ast.Clazz("Space", ["space", "nbspace"])
-    leading_symbol_liga = ast.Clazz("LeadingSymbolLiga", ["++", "--", "__"])
-    symbol_before_greater = ast.Clazz(
+def get_lookup(cls_var: ast.Clazz):
+    cls_space = ast.Clazz("Space", ["space", "nbspace"])
+    cls_leading_symbol_liga = ast.Clazz("LeadingSymbolLiga", ["++", "--", "__"])
+    cls_symbol_before_greater = ast.Clazz(
         "SymbolBeforeGreater", ["|", "!", "~", "~", "#", "%"]
     )
-    number = ast.Clazz("Number", ["+", "-", digit])
-    eh = ast.Clazz("EH", ["=", "-"])
+    cls_number = ast.Clazz("Number", ["+", "-", digit])
+    cls_equal_hyphen = ast.Clazz("EqualHyphen", ["=", "-"])
 
     surround = [
-        [var, [space, ast.SPC, leading_symbol_liga]],
-        [var, [ast.SPC, leading_symbol_liga]],
-        [var, ast.clazz([var, number])],
-        [ast.clazz([space, eh, symbol_before_greater]), None],
-        [None, [space, number]],
-        [None, ast.clazz(["/", number, eh])],
+        [cls_var, [cls_space, ast.SPC, cls_leading_symbol_liga]],
+        [cls_var, [ast.SPC, cls_leading_symbol_liga]],
+        [cls_var, ast.clazz([cls_var, cls_number])],
+        [ast.clazz([cls_space, cls_equal_hyphen, cls_symbol_before_greater]), None],
+        [None, [cls_space, cls_number]],
+        [None, ast.clazz(["/", cls_number, cls_equal_hyphen])],
         ["`", "`"],
     ]
 
@@ -39,12 +38,11 @@ def get_lookup(letter_list: list[ast.Clazz]):
         ),
         ast.clazz_states(
             [
-                var,
-                space,
-                leading_symbol_liga,
-                symbol_before_greater,
-                number,
-                eh,
+                cls_space,
+                cls_leading_symbol_liga,
+                cls_symbol_before_greater,
+                cls_number,
+                cls_equal_hyphen,
             ]
         ),
         ast.subst_liga(

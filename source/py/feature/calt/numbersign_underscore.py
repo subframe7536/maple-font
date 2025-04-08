@@ -68,37 +68,19 @@ def get_lookup():
             "#_",
             banner=[
                 ast.ignore("#", "#", "_"),
-                ast.ignore(None, "#", ["_", "_"]),
+                ast.ignore(None, "#", ["_", ast.clazz(["_", "("])]),
             ],
         ),
         ast.subst_liga(
             "#__",
             banner=[
-                ast.ignore("#", "#", ["_", "_"]),
                 ast.ignore(None, "#", ["_", "_", "_"]),
-            ],
-        ),
-        ast.lookup(
-            ast.gly("##__"),
-            "##__",
-            [
-                ast.ignore("#", "#", [ast.SPC, ast.SPC, ast.gly("#__")]),
-                ast.subst(None, "#", [ast.SPC, ast.SPC, ast.gly("#__")], start),
             ],
         ),
         ast.subst_liga(
             "#_(",
             banner=[
-                ast.ignore("#", "#", ["_", "("]),
                 ast.ignore(None, "#", ["_", "(", "("]),
-            ],
-        ),
-        ast.lookup(
-            ast.gly("##_("),
-            "##_(",
-            [
-                ast.ignore("#", "#", [ast.SPC, ast.SPC, ast.gly("#_(")]),
-                ast.subst(None, "#", [ast.SPC, ast.SPC, ast.gly("#_(")], start),
             ],
         ),
         ast.subst_liga(
