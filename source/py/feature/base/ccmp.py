@@ -143,27 +143,9 @@ ccmp_other = ast.lookup(
     ],
 )
 
-
-ccmp_feature = ast.feature(
-    "ccmp",
-    [
-        ast.clazz_states(
-            [
-                comb_top_acc,
-                comb_non_top_acc,
-                marks_comb,
-                marks_comb_case,
-            ]
-        ),
-        ccmp_other,
-        ccmp_latn,
-        ast.script("latn"),
-        ast.use_lookup(ccmp_other_name),
-    ],
-)
-
-ccmp_features_cn = ast.feature(
-    "ccmp",
+ccmp_jp = ast.lookup(
+    "ccmp_jp",
+    None,
     [
         comb_jp("3042", "3099"),
         comb_jp("3044", "3099"),
@@ -190,3 +172,24 @@ ccmp_features_cn = ast.feature(
         comb_jp("30F3", "3099"),
     ],
 )
+
+__ccmp = [
+    ast.clazz_states(
+        [
+            comb_top_acc,
+            comb_non_top_acc,
+            marks_comb,
+            marks_comb_case,
+        ]
+    ),
+    ccmp_other,
+    ccmp_latn,
+    ast.script("latn"),
+    ast.use_lookup(ccmp_other_name),
+]
+
+__ccmp_cn = [__ccmp, ccmp_jp]
+
+ccmp_feature = ast.feature("ccmp", __ccmp)
+
+ccmp_features_cn = ast.feature("ccmp", __ccmp_cn)

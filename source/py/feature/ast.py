@@ -163,23 +163,24 @@ def clazz_states(cls: Clazz | list[Clazz]) -> list[Line]:
 
 
 def create(content: list, indent=2) -> str:
-    _idt = indent * " "
-    lines: list[Line] = []
-
+    lines = []
     for line in flatten(content):
-        if (
-            len(lines) > 0
-            and lines[-1].text
-            and not lines[-1].text.startswith("#")
-            and (
+        # Skip duplicate empty lines
+        if not line.text and lines and not lines[-1].text:
+            continue
+
+        # Add spacing before features and lookups
+        if lines and lines[-1].text and not lines[-1].text.startswith("#"):
+            if (
                 line.text.startswith("#")
                 or (line.text.startswith("lookup") and not line.text.endswith(";"))
-            )
-        ) or (line.text.startswith("feature ") and line.text.endswith("{")):
-            lines.append(Line(""))
+                or (line.text.startswith("feature ") and line.text.endswith("{"))
+            ):
+                lines.append(Line(""))
+
         lines.append(line)
 
-    return "".join([("\n" + _idt * c.level + c.text) for c in lines])[1:]
+    return "\n".join(f"{' ' * (indent * line.level)}{line.text}" for line in lines)
 
 
 def feature(tag: str, content: list) -> list[Line]:

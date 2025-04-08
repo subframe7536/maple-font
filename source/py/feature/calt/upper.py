@@ -8,10 +8,10 @@ def get_lookup():
     dbls_calt = f"{dbls}.calt"
     return [
         ast.lookup(
-            "cases", None, [ast.subst(pre, ":", pre, ast.gly(":", ".case"))]
+            "uppercase_colon", None, [ast.subst(pre, ":", pre, ast.gly(":", ".case"))]
         ),
         ast.lookup(
-            "uppercaseSharpS",
+            "uppercase_sharp_s",
             None,
             [
                 ast.subst([uppercase, uppercase], dbls, None, dbls_calt),
