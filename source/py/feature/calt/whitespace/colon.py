@@ -6,12 +6,6 @@ def get_lookup():
     cls_ign_markup = ast.Clazz("IgnoreMarkup", ["<", "/", ">"])
 
     return [
-        ast.clazz_states(
-            [
-                cls_ign_colon,
-                cls_ign_markup,
-            ]
-        ),
         ast.subst_liga(
             "::",
             banner=[
@@ -30,22 +24,28 @@ def get_lookup():
             "?:",
             banner=[
                 ast.ignore("?", "?", ":"),
-                ast.ignore(None, "?", [":", ast.clazz([".", cls_ign_colon])]),
+                ast.ignore(None, "?", [":", ":"]),
             ],
         ),
         ast.subst_liga(
             ":?",
             banner=[
-                ast.ignore(cls_ign_colon, ":", "?"),
+                ast.ignore(":", ":", "?"),
                 ast.ignore(None, ":", ["?", ast.clazz(["?", ">"])]),
             ],
         ),
         ast.subst_liga(
             ":?>",
             banner=[
-                ast.ignore(cls_ign_colon, ":", ["?", ">"]),
+                ast.ignore(":", ":", ["?", ">"]),
                 ast.ignore(None, ":", ["?", ">", ">"]),
             ],
+        ),
+        ast.clazz_states(
+            [
+                cls_ign_colon,
+                cls_ign_markup,
+            ]
         ),
         ast.subst_liga(
             ":=",
