@@ -1802,6 +1802,60 @@ feature ss03 {
     sub bracketleft' @d @e @b @u @g bracketright by SPC;
   } badge_debug.liga.ss03;
 
+
+  # [SUCCESS]
+  lookup badge_success.liga.ss03 {
+    sub SPC SPC SPC SPC SPC SPC SPC SPC bracketright' by badge_success.liga;
+    sub SPC SPC SPC SPC SPC SPC SPC @s' bracketright by SPC;
+    sub SPC SPC SPC SPC SPC SPC @s' @s bracketright by SPC;
+    sub SPC SPC SPC SPC SPC @e' @s @s bracketright by SPC;
+    sub SPC SPC SPC SPC @c' @e @s @s bracketright by SPC;
+    sub SPC SPC SPC @c' @c @e @s @s bracketright by SPC;
+    sub SPC SPC @u' @c @c @e @s @s bracketright by SPC;
+    sub SPC @s' @u @c @c @e @s @s bracketright by SPC;
+    sub bracketleft' @s @u @c @c @e @s @s bracketright by SPC;
+  } badge_success.liga.ss03;
+
+
+  # [BEGIN]
+  lookup badge_begin.liga.ss03 {
+    sub SPC SPC SPC SPC SPC bracketright' by badge_begin.liga;
+    sub SPC SPC SPC SPC SPC @n' bracketright by SPC;
+    sub SPC SPC SPC SPC @i' @n bracketright by SPC;
+    sub SPC SPC SPC @g' @i @n bracketright by SPC;
+    sub SPC SPC @e' @g @i @n bracketright by SPC;
+    sub SPC @b' @e @g @i @n bracketright by SPC;
+    sub bracketleft' @b @e @g @i @n bracketright by SPC;
+  } badge_begin.liga.ss03;
+
+  # [END]
+  lookup badge_end.liga.ss03 {
+    sub SPC SPC SPC SPC bracketright' by badge_end.liga;
+    sub SPC SPC SPC @d' bracketright by SPC;
+    sub SPC SPC @n' @d bracketright by SPC;
+    sub SPC @e' @n @d bracketright by SPC;
+    sub bracketleft' @e @n @d bracketright by SPC;
+  } badge_end.liga.ss03;
+
+  # [LEN]
+  lookup badge_len.liga.ss03 {
+    sub SPC SPC SPC SPC bracketright' by badge_len.liga;
+    sub SPC SPC SPC @n' bracketright by SPC;
+    sub SPC SPC @e' @n bracketright by SPC;
+    sub SPC @l' @e @n bracketright by SPC;
+    sub bracketleft' @l @e @n bracketright by SPC;
+  } badge_len.liga.ss03;
+
+  # [PARA]
+  lookup badge_para.liga.ss03 {
+    sub SPC SPC SPC SPC SPC bracketright' by badge_para.liga;
+    sub SPC SPC SPC SPC @a' bracketright by SPC;
+    sub SPC SPC SPC @r' @a bracketright by SPC;
+    sub SPC SPC @a' @r @a bracketright by SPC;
+    sub SPC P' @a @r @a bracketright by SPC;
+    sub bracketleft' @p @a @r @a bracketright by SPC;
+  } badge_para.liga.ss03;
+
   # [INFO]
   lookup badge_info.liga.ss03 {
     sub SPC SPC SPC SPC SPC bracketright' by badge_info.liga;
