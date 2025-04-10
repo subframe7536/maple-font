@@ -1135,7 +1135,7 @@ feature calt {
     sub bar' bar equal by SPC;
   } bar_bar_equal.liga;
 
-  # \\ \" \.
+  # \/ \" \.
   lookup escape {
 
     @Escape = [braceleft braceright bracketleft bracketright parenleft parenright less greater period comma hyphen underscore equal plus colon semicolon question exclam at numbersign dollar percent asciicircum ampersand asterisk quotesingle quotedbl slash backslash bar grave asciitilde];

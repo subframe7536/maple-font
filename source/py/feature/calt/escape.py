@@ -8,7 +8,7 @@ def get_lookup():
         # Thin backslash (\\) to better distingish escape chars
         ast.Lookup(
             "escape",
-            "\\\\ \\\" \\.",
+            "\\/ \\\" \\.",
             [
                 ast.cls_states(escape_cls),
                 ast.ignore(escape_liga, "\\", escape_cls),
