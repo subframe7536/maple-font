@@ -1,10 +1,10 @@
 import source.py.feature.ast as ast
-from source.py.feature.base.locl import lookup_tw_name
+from source.py.feature.base.locl import lookup_tw
 
 
 def cv99_subst():
-    return [ast.use_lookup(lookup_tw_name)]
+    return [lookup_tw.use()]
 
 
 cv99_name = "Traditional centered punctuations"
-cv99_feat_cn = ast.cv(99, cv99_name, cv99_subst())
+cv99_feat_cn = ast.CharacterVariant(99, cv99_name, cv99_subst())

@@ -7,7 +7,7 @@ def ss07_subst():
             ">>",
             lookup_name=f"relax_{ast.gly('>>')}",
             banner=[
-                ast.ignore(ast.clazz([">", "/", "<"]), ">", ">"),
+                ast.ignore(ast.cls([">", "/", "<"]), ">", ">"),
                 ast.ignore(None, ">", [">", ">"]),
             ],
         ),
@@ -22,5 +22,5 @@ def ss07_subst():
     ]
 
 
-ss07_name = "Break connected strokes between italic letters"
-ss07_feat = ast.ss(7, ss07_name, ss07_subst())
+ss07_name = "Break connected strokes between italic letters (`>>` or `>>>`)"
+ss07_feat = ast.StylisticSet(7, ss07_name, ss07_subst())

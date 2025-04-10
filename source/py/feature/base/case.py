@@ -1,7 +1,7 @@
 import source.py.feature.ast as ast
 
 
-case_feature = ast.feature(
+case_feature = ast.Feature(
     "case",
     ast.subst_map(
         [

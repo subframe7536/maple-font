@@ -1,5 +1,5 @@
 import source.py.feature.ast as ast
-from source.py.feature.base import base_features, base_features_cn
+from source.py.feature.base import get_base_features
 from source.py.feature.calt import get_calt
 from source.py.feature.cv import cv01, cv02, cv03, cv04, cv96, cv97, cv98, cv99
 from source.py.feature.ss import ss01, ss02, ss03, ss04, ss05, ss07, ss08
@@ -101,8 +101,7 @@ feature_file_regular = ast.create(
     [
         class_list,
         lang_list,
-        base_features,
-        calt,
+        get_base_features(calt, False),
         cv_list,
         ss_list,
     ],
@@ -112,8 +111,7 @@ feature_file_regular_cn = ast.create(
     [
         class_list,
         lang_list,
-        base_features_cn,
-        calt,
+        get_base_features(calt, True),
         cv_list,
         cv_list_cn,
         ss_list,

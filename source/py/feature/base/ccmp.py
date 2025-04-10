@@ -92,7 +92,7 @@ def comb_jp(c1: str, c2: str) -> ast.Line:
     return ast.__subst(f"uni{c1} uni{c1}", f"uni{c1}{c2}")
 
 
-ccmp_latn = ast.lookup(
+ccmp_latn = ast.Lookup(
     "ccmp_latn",
     None,
     [
@@ -107,8 +107,8 @@ ccmp_latn = ast.lookup(
         comb("circumflex", "tilde"),
     ],
 )
-start_other = ast.clazz(["i", "i-cy", "iogonek", "idotbelow", "j", "je-cy"])
-end_other = ast.clazz(
+start_other = ast.cls(["i", "i-cy", "iogonek", "idotbelow", "j", "je-cy"])
+end_other = ast.cls(
     [
         "idotless",
         "idotless",
@@ -120,7 +120,7 @@ end_other = ast.clazz(
 )
 
 ccmp_other_name = "ccmp_other"
-ccmp_other = ast.lookup(
+ccmp_other = ast.Lookup(
     ccmp_other_name,
     None,
     [
@@ -143,7 +143,7 @@ ccmp_other = ast.lookup(
     ],
 )
 
-ccmp_jp = ast.lookup(
+ccmp_jp = ast.Lookup(
     "ccmp_jp",
     None,
     [
@@ -174,7 +174,7 @@ ccmp_jp = ast.lookup(
 )
 
 __ccmp = [
-    ast.clazz_states(
+    ast.cls_states(
         [
             comb_top_acc,
             comb_non_top_acc,
@@ -185,11 +185,11 @@ __ccmp = [
     ccmp_other,
     ccmp_latn,
     ast.script("latn"),
-    ast.use_lookup(ccmp_other_name),
+    ccmp_other.use(),
 ]
 
-ccmp_feature = ast.feature("ccmp", __ccmp)
+ccmp_feature = ast.Feature("ccmp", __ccmp)
 
-ccmp_features_cn_only = ast.feature("ccmp", ccmp_jp)
+ccmp_features_cn_only = ast.Feature("ccmp", ccmp_jp)
 
-ccmp_features_cn = ast.feature("ccmp", [__ccmp, ccmp_jp])
+ccmp_features_cn = ast.Feature("ccmp", [__ccmp, ccmp_jp])

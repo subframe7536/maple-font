@@ -8,5 +8,5 @@ def cv97_subst():
     )
 
 
-cv97_name = "Full width ellipse"
-cv97_feat_cn = ast.cv(97, cv97_name, cv97_subst())
+cv97_name = "Full width ellipsis(`…`)"
+cv97_feat_cn = ast.CharacterVariant(97, cv97_name, cv97_subst())

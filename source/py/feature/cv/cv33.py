@@ -29,5 +29,5 @@ def cv33_subst():
     )
 
 
-cv33_name = "Italic i and j with left bottom bar and horizen top bar"
-cv33_feat_italic = ast.cv(33, cv33_name, cv33_subst())
+cv33_name = "Alternative Italic `i` and `j` with left bottom bar and horizen top bar"
+cv33_feat_italic = ast.CharacterVariant(33, cv33_name, cv33_subst())

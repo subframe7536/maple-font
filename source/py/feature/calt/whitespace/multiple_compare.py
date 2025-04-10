@@ -14,10 +14,10 @@ def get_lookup(cls_var: ast.Clazz):
     surround = [
         [cls_var, [cls_space, ast.SPC, cls_leading_symbol_liga]],
         [cls_var, [ast.SPC, cls_leading_symbol_liga]],
-        [cls_var, ast.clazz([cls_var, cls_number])],
-        [ast.clazz([cls_space, cls_equal_hyphen, cls_symbol_before_greater]), None],
+        [cls_var, ast.cls([cls_var, cls_number])],
+        [ast.cls([cls_space, cls_equal_hyphen, cls_symbol_before_greater]), None],
         [None, [cls_space, cls_number]],
-        [None, ast.clazz(["/", cls_number, cls_equal_hyphen])],
+        [None, ast.cls(["/", cls_number, cls_equal_hyphen])],
         ["`", "`"],
     ]
 
@@ -26,7 +26,7 @@ def get_lookup(cls_var: ast.Clazz):
             "<<",
             banner=[
                 ast.ignore("<", "<", "<"),
-                ast.ignore(None, "<", ["<", ast.clazz(["<", "~"])]),
+                ast.ignore(None, "<", ["<", ast.cls(["<", "~"])]),
             ],
         ),
         ast.subst_liga(
@@ -36,7 +36,7 @@ def get_lookup(cls_var: ast.Clazz):
                 ast.ignore(None, "<", ["<", "<", "<"]),
             ],
         ),
-        ast.clazz_states(
+        ast.cls_states(
             [
                 cls_space,
                 cls_leading_symbol_liga,
@@ -48,7 +48,7 @@ def get_lookup(cls_var: ast.Clazz):
         ast.subst_liga(
             ">>",
             banner=[
-                ast.ignore(ast.clazz(["<", "/", ">"]), ">", [">"]),
+                ast.ignore(ast.cls(["<", "/", ">"]), ">", [">"]),
                 ast.ignore(None, ">", [">", ">"]),
             ],
             surround=surround,

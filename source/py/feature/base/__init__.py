@@ -1,39 +1,34 @@
 import source.py.feature.ast as ast
 from source.py.feature.base.case import case_feature
-from source.py.feature.base.ccmp import ccmp_feature, ccmp_features_cn
+from source.py.feature.base.ccmp import ccmp_feature, ccmp_features_cn, ccmp_features_cn_only
 from source.py.feature.base.number import number_features
-from source.py.feature.base.locl import locl_feature, locl_features_cn
+from source.py.feature.base.locl import locl_feature, locl_features_cn, lookup_tw, locl_features_cn_only
 
 
-aalt_feature = ast.feature(
-    "aalt",
-    [
-        ast.use_feature("calt"),
-        ast.use_feature("locl"),
-        ast.use_feature("subs"),
-        ast.use_feature("sinf"),
-        ast.use_feature("sups"),
-        ast.use_feature("frac"),
-        ast.use_feature("ordn"),
-        ast.use_feature("case"),
-        ast.use_feature("zero"),
-    ],
-)
+def get_base_features(calt: ast.Feature, is_cn: bool):
+    result = [case_feature] + number_features
 
-__features = [
-    aalt_feature,
-    number_features,
-    case_feature,
-]
+    if is_cn:
+        result = [locl_features_cn] + result
+    else:
+        result = [locl_feature] + result
 
-base_features = [
-    __features,
-    ccmp_feature,
-    locl_feature,
-]
+    aalt_feature = ast.Feature("aalt", [feat.use() for feat in result + [calt]])
+    result = [aalt_feature] + result + [calt]
 
-base_features_cn = [
-    __features,
-    ccmp_features_cn,
-    locl_features_cn,
-]
+    if is_cn:
+        result += [ccmp_features_cn]
+    else:
+        result += [ccmp_feature]
+
+    if is_cn:
+        result = [lookup_tw] + result
+
+    return result
+
+def get_base_feature_cn_only():
+    return [
+        lookup_tw,
+        locl_features_cn_only,
+        ccmp_features_cn_only,
+    ]

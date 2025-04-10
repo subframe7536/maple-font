@@ -1,4 +1,5 @@
 from collections.abc import Sequence
+import re
 
 
 class Line:
@@ -23,7 +24,113 @@ class Clazz:
         return f"@{self.name}"
 
     def state(self) -> Line:
-        return Line(f"{self.use()} = {clazz(self.glyphs)};")
+        return Line(f"{self.use()} = {cls(self.glyphs)};")
+
+
+class Lookup:
+    __slots__ = ("name", "desc", "content")
+
+    def __init__(self, name: str, desc: str | None, content: list) -> None:
+        self.name = name
+        self.desc = desc
+        self.content = content
+
+    def use(self) -> Line:
+        return Line(f"lookup {self.name};")
+
+    def state(self) -> list[Line]:
+        arr = []
+
+        if self.desc:
+            arr.append(Line(f"# {self.desc}"))
+
+        arr.append(Line(f"lookup {self.name} {{"))
+
+        for c in flatten(self.content):
+            arr.append(c.indent())
+
+        arr.append(Line(f"}} {self.name};"))
+        return arr
+
+
+class Feature:
+    __slots__ = ("tag", "content")
+
+    def __init__(self, tag: str, content: Clazz | Lookup | Line | list):
+        self.tag = tag
+        self.content = content
+
+    def use(self) -> Line:
+        return Line(f"feature {self.tag};")
+
+    def get_name_lines(self) -> list[Line]:
+        return []
+
+    def state(self) -> list[Line]:
+        target = []
+        for c in self.get_name_lines() + flatten(self.content):
+            target.append(c.indent())
+
+        return [
+            Line(f"feature {self.tag} {{"),
+            Line(""),
+            *target,
+            Line(""),
+            Line(f"}} {self.tag};"),
+        ]
+
+REGEXP = r"\(.*\)"
+
+class CharacterVariant(Feature):
+    __slots__ = ("tag", "desc", "content")
+
+    def __init__(self, id: int, desc: str, content: Clazz | Lookup | Line | list):
+        if id < 1 or id > 99:
+            raise TypeError(
+                f"id should > 0 and < 100 in Character Variants, current is {id}"
+            )
+
+        Feature.__init__(self, f"cv{id:02d}", content)
+        self.desc = desc
+
+    def get_name_lines(self) -> list[Line]:
+        _name = re.sub(REGEXP, "", self.desc.replace("`", ""))
+        return [
+            Line('cvParameters {'),
+            Line('FeatUILabelNameID {', 1),
+            Line(f'name "{_name}";', 2),
+            Line('};', 1),
+            Line('};'),
+            Line(''),
+        ]
+
+    def desc_item(self) -> str:
+        return f"- {self.tag}: {self.desc}"
+
+
+class StylisticSet(Feature):
+    __slots__ = ("tag", "desc", "content")
+
+    def __init__(self, id: int, desc: str, content: Clazz | Lookup | Line | list):
+        if id < 1 or id > 20:
+            raise TypeError(
+                f"id should > 0 and < 20 in Stylistic Sets, current is {id}"
+            )
+
+        Feature.__init__(self, f"ss{id:02d}", content)
+        self.desc = desc
+
+    def get_name_lines(self) -> list[Line]:
+        _name = re.sub(REGEXP, "", self.desc.replace("`", ""))
+        return [
+            Line("featureNames {"),
+            Line(f'name "{_name}";', 1),
+            Line("};"),
+            Line(""),
+        ]
+
+    def desc_item(self):
+        return f"- {self.tag}: {self.desc}"
 
 
 __PUNCTUATION_MAP = {
@@ -139,11 +246,11 @@ def gly(g: str | Clazz | Sequence[str | Clazz], suffix: str = "", overwrite=Fals
     return __gly(g) + suffix
 
 
-def clazz(glyphs: Sequence[str | Clazz]) -> str:
+def cls(glyphs: Sequence[str | Clazz]) -> str:
     """
     Generate inline class.
 
-    >>> clazz(["a", "@", "++", cls])
+    >>> cls(["a", "@", "++", cls])
     "[a at plus_plus.liga @cls]"
     """
 
@@ -155,7 +262,7 @@ def clazz(glyphs: Sequence[str | Clazz]) -> str:
     return "[" + " ".join(arr) + "]"
 
 
-def clazz_states(cls: Clazz | list[Clazz]) -> list[Line]:
+def cls_states(cls: Clazz | list[Clazz]) -> list[Line]:
     """
     Declare classes with prefix empty line.
     """
@@ -183,102 +290,6 @@ def create(content: list, indent=2) -> str:
     return "\n".join(f"{' ' * (indent * line.level)}{line.text}" for line in lines)
 
 
-def feature(tag: str, content: list) -> list[Line]:
-    """Generate a feature block with indented content.
-    This function creates a feature block with the specified tag and content,
-    formatting it according to the OpenType feature file syntax.
-
-    >>> feature("liga", [subst("a", "b", "c", "d")])
-    [
-        Line("feature liga {"),
-        Line("sub a b' c by d"),
-        Line("} liga;")
-    ]
-    """
-    target = []
-    for c in flatten(content):
-        target.append(c.indent())
-
-    return [Line(f"feature {tag} {{"), Line(""), *target, Line(""), Line(f"}} {tag};")]
-
-
-def use_feature(name: str) -> Line:
-    return Line(f"feature {name};")
-
-
-def cv(id: int, name: str, content: list) -> list[Line]:
-    """
-    Generate Character Variants (cv) OpenType feature.
-    Raises:
-        TypeError: If id is not between 1 and 99.
-    Example:
-        >>> cv(1, "Alternate a", [Line("sub a by a.alt;")])
-        [
-            Line("feature cv01 {"),
-            Line("cvParameters {"),
-            Line("FeatUILabelNameID {", 1),
-            Line('name "Alternate a";', 2),
-            Line("};", 1),
-            Line("sub a by a.alt"),
-            Line("};"),
-        ]
-    """
-    if id < 1 or id > 99:
-        raise TypeError(
-            f"id should > 0 and < 100 in Character Variants, current is {id}"
-        )
-
-    lines = [
-        Line("cvParameters {"),
-        Line("FeatUILabelNameID {", 1),
-        Line(f'name "{name}";', 2),
-        Line("};", 1),
-        Line("};"),
-    ]
-
-    _content = flatten(content)
-
-    if _content[0].text:
-        lines.append(Line(""))
-
-    lines += _content
-
-    return feature(f"cv{id:02d}", lines)
-
-
-def ss(id: int, name: str, content: list) -> list[Line]:
-    """
-    Creates stylistic set (ss) OpenType feature.
-    Raises:
-        TypeError: If the ID is not between 1 and 20
-    Example:
-        >>> ss(1, "Stylistic Set 1", [Line("sub a by a.ss01;")])
-        [
-            Line("feature ss01 {"),
-            Line("featureNames {", 1),
-            Line('name "Stylistic Set 1";', 2),
-            Line("};", 1),
-            Line("sub a by a.ss01;", 1),
-            Line("};")
-        ]
-    """
-    if id < 1 or id > 20:
-        raise TypeError(f"id should > 0 and < 21 in Stylistic Sets, current is {id}")
-
-    _content = flatten(content)
-    lines = [
-        Line("featureNames {"),
-        Line(f'name "{name}";', 1),
-        Line("};"),
-    ]
-    if _content[0].text:
-        lines.append(Line(""))
-
-    lines += _content
-
-    return feature(f"ss{id:02d}", lines)
-
-
 def langsys(script: str, lang: str) -> Line:
     return Line(f"languagesystem {script} {lang};")
 
@@ -289,36 +300,6 @@ def lang(lang: str) -> Line:
 
 def script(script: str) -> Line:
     return Line(f"script {script};")
-
-
-def lookup(name: str, desc: str | None, content: list) -> list[Line]:
-    """
-    Generate lookup table.
-
-    >>> lookup("example", "Replace a with b", [Line("sub a by b;")])
-    [
-        Line("# Replace a with b"),
-        Line("lookup example {"),
-        Line("sub a by b;"),
-        Line("} example;")
-    ]
-    """
-    arr = []
-
-    if desc:
-        arr.append(Line(f"# {desc}"))
-
-    arr.append(Line(f"lookup {name} {{"))
-
-    for c in flatten(content):
-        arr.append(c.indent())
-
-    arr.append(Line(f"}} {name};"))
-    return arr
-
-
-def use_lookup(name: str) -> Line:
-    return Line(f"lookup {name};")
 
 
 def subst(
@@ -376,7 +357,7 @@ def subst_liga(
     desc: str | None = None,
     surround: list[list[Sequence[str | Clazz]]] = [],
     banner: list[Line] | None = None,
-):
+) -> Lookup:
     """
     Generate substitution lines for target ligature.
 
@@ -452,7 +433,7 @@ def subst_liga(
         subst_prefix = prfx_list + [SPC] * (n - 1)
         subst_rules.insert(0, subst(subst_prefix, source_arr[-1], sfx_list, target))
 
-    return lookup(
+    return Lookup(
         lookup_name,
         desc,
         banner + subst_rules,
@@ -475,11 +456,13 @@ def ignore(
     return Line(f"ignore sub {__prefix(prefix)}{__gly(glyph)}'{__suffix(suffix)};")
 
 
-def flatten(data: Line | Clazz | list) -> list[Line]:
+def flatten(data: Line | Clazz | Lookup | Feature | list) -> list[Line]:
     if isinstance(data, Clazz):
         return [data.state()]
     elif isinstance(data, Line):
         return [data]
+    elif isinstance(data, (Lookup, Feature)):
+        return data.state()
 
     result = []
     for item in data:
@@ -489,6 +472,8 @@ def flatten(data: Line | Clazz | list) -> list[Line]:
             result.append(item.state())
         elif isinstance(item, Line):
             result.append(item)
+        elif isinstance(item, (Lookup, Feature)):
+            result += item.state()
         else:
             raise TypeError(f"Invalid item: {item} ({type(item)})")
     return result

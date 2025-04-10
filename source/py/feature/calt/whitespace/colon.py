@@ -10,7 +10,7 @@ def get_lookup():
             "::",
             banner=[
                 ast.ignore(":", ":", ":"),
-                ast.ignore(None, ":", [":", ast.clazz(["=", ":"])]),
+                ast.ignore(None, ":", [":", ast.cls(["=", ":"])]),
             ],
         ),
         ast.subst_liga(
@@ -31,7 +31,7 @@ def get_lookup():
             ":?",
             banner=[
                 ast.ignore(":", ":", "?"),
-                ast.ignore(None, ":", ["?", ast.clazz(["?", ">"])]),
+                ast.ignore(None, ":", ["?", ast.cls(["?", ">"])]),
             ],
         ),
         ast.subst_liga(
@@ -41,7 +41,7 @@ def get_lookup():
                 ast.ignore(None, ":", ["?", ">", ">"]),
             ],
         ),
-        ast.clazz_states(
+        ast.cls_states(
             [
                 cls_ign_colon,
                 cls_ign_markup,
@@ -50,8 +50,8 @@ def get_lookup():
         ast.subst_liga(
             ":=",
             banner=[
-                ast.ignore(ast.clazz([cls_ign_colon, "?"]), ":", "="),
-                ast.ignore(None, ":", ["=", ast.clazz(["=", ":"])]),
+                ast.ignore(ast.cls([cls_ign_colon, "?"]), ":", "="),
+                ast.ignore(None, ":", ["=", ast.cls(["=", ":"])]),
             ],
         ),
         ast.subst_liga(
@@ -59,15 +59,15 @@ def get_lookup():
             banner=[
                 ast.ignore(cls_ign_colon, "=", ":"),
                 ast.ignore(["(", "?"], "=", ":"),
-                ast.ignore(None, "=", [":", ast.clazz(["=", ":"])]),
+                ast.ignore(None, "=", [":", ast.cls(["=", ":"])]),
             ],
         ),
         ast.subst_liga(
             ":=:",
             banner=[
-                ast.ignore(ast.clazz([cls_ign_colon, "?"]), ":", ["=", ":"]),
+                ast.ignore(ast.cls([cls_ign_colon, "?"]), ":", ["=", ":"]),
                 ast.ignore(["(", "?"], ":", ["=", ":"]),
-                ast.ignore(None, ":", ["=", ":", ast.clazz([cls_ign_colon, "?"])]),
+                ast.ignore(None, ":", ["=", ":", ast.cls([cls_ign_colon, "?"])]),
             ],
         ),
         ast.subst_liga(

@@ -34,5 +34,5 @@ def cv02_subst():
     )
 
 
-cv02_name = "Alternative a"
-cv02_feat_regular = ast.cv(2, cv02_name, cv02_subst())
+cv02_name = "Alternative `a` with top arm, no effect on italic `a`"
+cv02_feat_regular = ast.CharacterVariant(2, cv02_name, cv02_subst())

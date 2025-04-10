@@ -21,7 +21,7 @@ def get_lookup():
             "ll",
             banner=[
                 ast.ignore(
-                    ast.clazz(
+                    ast.cls(
                         [
                             "C",
                             "a",

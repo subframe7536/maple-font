@@ -55,6 +55,6 @@ def cv01_subst():
     ]
 
 
-cv01_name = "Normalize Special Symbols"
-cv01_feat_regular = ast.cv(1, cv01_name, cv01_subst())
-cv01_feat_italic = ast.cv(1, cv01_name, cv01_subst())
+cv01_desc = "Normalize special symbols, make `@ $ & % Q => ->` without gap"
+cv01_feat_regular = ast.CharacterVariant(1, cv01_desc, cv01_subst())
+cv01_feat_italic = ast.CharacterVariant(1, cv01_desc, cv01_subst())

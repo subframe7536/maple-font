@@ -14,13 +14,13 @@ def get_lookup():
             "</",
             banner=[
                 ast.ignore("<", "<", "/"),
-                ast.ignore(None, "<", ["/", ast.clazz(["/", ">"])]),
+                ast.ignore(None, "<", ["/", ast.cls(["/", ">"])]),
             ],
         ),
         ast.subst_liga(
             "/>",
             banner=[
-                ast.ignore(ast.clazz(["<", "/"]), "/", ">"),
+                ast.ignore(ast.cls(["<", "/"]), "/", ">"),
                 ast.ignore(None, "/", [">", ">"]),
             ],
         ),
@@ -35,13 +35,13 @@ def get_lookup():
             "<+",
             banner=[
                 ast.ignore("<", "<", "+"),
-                ast.ignore(None, "<", ["+", ast.clazz(["+", ">"])]),
+                ast.ignore(None, "<", ["+", ast.cls(["+", ">"])]),
             ],
         ),
         ast.subst_liga(
             "+>",
             banner=[
-                ast.ignore(ast.clazz(["+", "<"]), "+", ">"),
+                ast.ignore(ast.cls(["+", "<"]), "+", ">"),
                 ast.ignore(None, "+", [">", ">"]),
             ],
         ),
@@ -56,13 +56,13 @@ def get_lookup():
             "<*",
             banner=[
                 ast.ignore("<", "<", "*"),
-                ast.ignore(None, "<", ["*", ast.clazz(["*", ">"])]),
+                ast.ignore(None, "<", ["*", ast.cls(["*", ">"])]),
             ],
         ),
         ast.subst_liga(
             "*>",
             banner=[
-                ast.ignore(ast.clazz(["*", "<"]), "*", ">"),
+                ast.ignore(ast.cls(["*", "<"]), "*", ">"),
                 ast.ignore(None, "*", [">", ">"]),
             ],
         ),

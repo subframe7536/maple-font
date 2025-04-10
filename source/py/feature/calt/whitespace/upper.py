@@ -3,14 +3,22 @@ from source.py.feature.base.clazz import digit, uppercase
 
 
 def get_lookup():
-    pre = ast.clazz([digit, uppercase])
     dbls = "germandbls"
     dbls_calt = f"{dbls}.calt"
     return [
-        ast.lookup(
-            "uppercase_colon", None, [ast.subst(pre, ":", pre, ast.gly(":", ".case"))]
+        ast.Lookup(
+            "uppercase_colon",
+            None,
+            [
+                ast.subst(
+                    ast.cls([digit, uppercase]),
+                    ":",
+                    ast.cls([digit, uppercase]),
+                    ast.gly(":", ".case"),
+                )
+            ],
         ),
-        ast.lookup(
+        ast.Lookup(
             "uppercase_sharp_s",
             None,
             [

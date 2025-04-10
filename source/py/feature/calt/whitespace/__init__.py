@@ -20,13 +20,13 @@ def get_lookup(cls_var: ast.Clazz):
                 "[|",
                 banner=[
                     ast.ignore("[", "[", "|"),
-                    ast.ignore(None, "[", ["|", ast.clazz(["]", "|"])]),
+                    ast.ignore(None, "[", ["|", ast.cls(["]", "|"])]),
                 ],
             ),
             ast.subst_liga(
                 "|]",
                 banner=[
-                    ast.ignore(ast.clazz(["[", "|"]), "|", "]"),
+                    ast.ignore(ast.cls(["[", "|"]), "|", "]"),
                     ast.ignore(None, "|", ["]", "]"]),
                 ],
             ),
@@ -42,8 +42,8 @@ def get_lookup(cls_var: ast.Clazz):
             ast.subst_liga(
                 "||",
                 banner=[
-                    ast.ignore(ast.clazz(["-", "|", "[", "<"]), "|", "|"),
-                    ast.ignore(None, "|", ["|", ast.clazz(["|", "]", ">", "-"])]),
+                    ast.ignore(ast.cls(["-", "|", "[", "<"]), "|", "|"),
+                    ast.ignore(None, "|", ["|", ast.cls(["|", "]", ">", "-"])]),
                 ],
             ),
             ast.subst_liga(
@@ -78,7 +78,7 @@ def get_lookup(cls_var: ast.Clazz):
                 "//",
                 banner=[
                     ast.ignore("/", "/", "/"),
-                    ast.ignore(None, "/", ["/", ast.clazz(["/", "="])]),
+                    ast.ignore(None, "/", ["/", ast.cls(["/", "="])]),
                 ],
             ),
             ast.subst_liga(
@@ -91,29 +91,29 @@ def get_lookup(cls_var: ast.Clazz):
             ast.subst_liga(
                 "/*",
                 banner=[
-                    ast.ignore(ast.clazz(["/", "*"]), "/", "*"),
-                    ast.ignore(None, "/", ["*", ast.clazz(["/", "*", "."])]),
+                    ast.ignore(ast.cls(["/", "*"]), "/", "*"),
+                    ast.ignore(None, "/", ["*", ast.cls(["/", "*", "."])]),
                 ],
             ),
             ast.subst_liga(
                 "/**",
                 banner=[
-                    ast.ignore(ast.clazz(["/", "*"]), "/", ["*", "*"]),
-                    ast.ignore(None, "/", ["*", "*", ast.clazz(["/", "*", "."])]),
+                    ast.ignore(ast.cls(["/", "*"]), "/", ["*", "*"]),
+                    ast.ignore(None, "/", ["*", "*", ast.cls(["/", "*", "."])]),
                 ],
             ),
             ast.subst_liga(
                 "*/",
                 banner=[
-                    ast.ignore(ast.clazz(["/", "*", "."]), "*", "/"),
-                    ast.ignore(None, "*", ["/", ast.clazz(["/", "*"])]),
+                    ast.ignore(ast.cls(["/", "*", "."]), "*", "/"),
+                    ast.ignore(None, "*", ["/", ast.cls(["/", "*"])]),
                 ],
             ),
             ast.subst_liga(
                 "++",
                 banner=[
-                    ast.ignore(ast.clazz(["+", ":"]), "+", "+"),
-                    ast.ignore(None, "+", ["+", ast.clazz(["+", ":"])]),
+                    ast.ignore(ast.cls(["+", ":"]), "+", "+"),
+                    ast.ignore(None, "+", ["+", ast.cls(["+", ":"])]),
                 ],
             ),
             ast.subst_liga(
@@ -126,16 +126,16 @@ def get_lookup(cls_var: ast.Clazz):
             ast.subst_liga(
                 "--",
                 banner=[
-                    ast.ignore(ast.clazz(["<", "-"]), "-", "-"),
-                    ast.ignore(["<", ast.clazz(["#", "!"])], "-", "-"),
-                    ast.ignore(None, "-", ["-", ast.clazz(["-", ">"])]),
+                    ast.ignore(ast.cls(["<", "-"]), "-", "-"),
+                    ast.ignore(["<", ast.cls(["#", "!"])], "-", "-"),
+                    ast.ignore(None, "-", ["-", ast.cls(["-", ">"])]),
                     ast.ignore(
                         ["(", "?", "<", "!"],
                         "-",
                         "-",
                     ),
                     ast.ignore(
-                        ast.clazz(["<", "-"]),
+                        ast.cls(["<", "-"]),
                         "-",
                         "-",
                     ),
@@ -167,14 +167,14 @@ def get_lookup(cls_var: ast.Clazz):
                 "..",
                 banner=[
                     ast.ignore(".", ".", "."),
-                    ast.ignore(None, ".", [".", ast.clazz([".", "<", "?"])]),
+                    ast.ignore(None, ".", [".", ast.cls([".", "<", "?"])]),
                 ],
             ),
             ast.subst_liga(
                 "...",
                 banner=[
                     ast.ignore(".", ".", [".", "."]),
-                    ast.ignore(None, ".", [".", ".", ast.clazz([".", "<", "?"])]),
+                    ast.ignore(None, ".", [".", ".", ast.cls([".", "<", "?"])]),
                 ],
             ),
             ast.subst_liga(
@@ -188,14 +188,14 @@ def get_lookup(cls_var: ast.Clazz):
                 "?.",  # TypeScript / Rust
                 banner=[
                     ast.ignore("?", "?", "."),
-                    ast.ignore(None, "?", [".", ast.clazz([".", "=", "?"])]),
+                    ast.ignore(None, "?", [".", ast.cls([".", "=", "?"])]),
                 ],
             ),
             ast.subst_liga(
                 "..<",  # Swift
                 banner=[
                     ast.ignore(".", ".", [".", "<"]),
-                    ast.ignore(None, ".", [".", "<", ast.clazz(["<", "/", ">"])]),
+                    ast.ignore(None, ".", [".", "<", ast.cls(["<", "/", ">"])]),
                 ],
             ),
             ast.subst_liga(

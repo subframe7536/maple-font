@@ -1,5 +1,5 @@
 import source.py.feature.ast as ast
-from source.py.feature.base import base_features, base_features_cn
+from source.py.feature.base import get_base_features
 from source.py.feature.calt import get_calt
 from source.py.feature.cv import (
     cv01,
@@ -137,8 +137,7 @@ feature_file_italic = ast.create(
     [
         class_list,
         lang_list,
-        base_features,
-        calt,
+        get_base_features(calt, False),
         cv_list,
         ss_list,
     ],
@@ -148,8 +147,7 @@ feature_file_italic_cn = ast.create(
     [
         class_list,
         lang_list,
-        base_features_cn,
-        calt,
+        get_base_features(calt, True),
         cv_list,
         cv_list_cn,
         ss_list,

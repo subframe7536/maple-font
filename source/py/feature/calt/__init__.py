@@ -14,9 +14,9 @@ from source.py.feature.calt import (
 )
 
 
-def get_calt(
+def get_calt_lookup(
     cls_var: ast.Clazz, cls_hex_letter: ast.Clazz, is_italic: bool
-) -> list[ast.Line]:
+) -> list[list[ast.Lookup]]:
     lookup = [
         whitespace.get_lookup(cls_var),
         asciitilde.get_lookup(),
@@ -31,6 +31,12 @@ def get_calt(
     ]
 
     if is_italic:
-        lookup += italic.get_lookup()
+        lookup += [italic.get_lookup()]
 
-    return ast.feature("calt", lookup)
+    return lookup
+
+
+def get_calt(
+    cls_var: ast.Clazz, cls_hex_letter: ast.Clazz, is_italic: bool
+) -> ast.Feature:
+    return ast.Feature("calt", get_calt_lookup(cls_var, cls_hex_letter, is_italic))

@@ -2,7 +2,7 @@ import source.py.feature.ast as ast
 
 
 i_acc = ast.__subst("i", "idotaccent")
-locl_0 = ast.lookup(
+locl_0 = ast.Lookup(
     "locl_latn_0",
     None,
     [
@@ -24,7 +24,7 @@ st_acc = ast.subst_map(
     ["S", "s", "T", "t"], source_suffix="cedilla", target_suffix="commaaccent"
 )
 
-locl_1 = ast.lookup(
+locl_1 = ast.Lookup(
     "locl_latn_1",
     None,
     [
@@ -38,7 +38,7 @@ locl_1 = ast.lookup(
 
 glyph_2 = "periodcentered"
 
-locl_2 = ast.lookup(
+locl_2 = ast.Lookup(
     "locl_latn_2",
     None,
     [
@@ -49,7 +49,7 @@ locl_2 = ast.lookup(
     ],
 )
 
-locl_3 = ast.lookup(
+locl_3 = ast.Lookup(
     "locl_latn_3",
     None,
     [
@@ -62,7 +62,9 @@ locl_3 = ast.lookup(
 
 
 lookup_tw_name = "PunctuationTW"
-lookup_tw = ast.lookup(
+
+# Must before all features
+lookup_tw = ast.Lookup(
     lookup_tw_name,
     "Centered punctuations",
     ast.subst_map(
@@ -88,20 +90,17 @@ __locl = [
 
 __locl_cn_only = [
     ast.lang("ZHH"),
-    ast.use_lookup(lookup_tw_name),
+    lookup_tw.use(),
     ast.lang("ZHT"),
-    ast.use_lookup(lookup_tw_name),
+    lookup_tw.use(),
 ]
 
-locl_feature = ast.feature("locl", __locl)
-locl_features_cn_only = [lookup_tw, ast.feature("locl", __locl_cn_only)]
-locl_features_cn = [
-    lookup_tw,
-    ast.feature(
-        "locl",
-        [
-            __locl,
-            __locl_cn_only,
-        ],
-    ),
-]
+locl_feature = ast.Feature("locl", __locl)
+locl_features_cn_only = ast.Feature("locl", __locl_cn_only)
+locl_features_cn = ast.Feature(
+    "locl",
+    [
+        __locl,
+        __locl_cn_only,
+    ],
+)

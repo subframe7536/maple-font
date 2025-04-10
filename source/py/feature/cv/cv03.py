@@ -23,5 +23,5 @@ def cv03_subst():
     )
 
 
-cv03_name = "Alternative i"
-cv03_feat_regular = ast.cv(3, cv03_name, cv03_subst())
+cv03_name = "Alternative `i` without left bottom bar"
+cv03_feat_regular = ast.CharacterVariant(3, cv03_name, cv03_subst())

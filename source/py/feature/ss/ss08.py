@@ -105,8 +105,8 @@ def ss08_subst():
             "-<",
             target=ast.gly("-<", ".ss08", True),
             banner=[
-                ast.ignore(ast.clazz([">", "<", "-"]), "-", "<"),
-                ast.ignore(None, "-", ["<", ast.clazz(["<", "/", "?"])]),
+                ast.ignore(ast.cls([">", "<", "-"]), "-", "<"),
+                ast.ignore(None, "-", ["<", ast.cls(["<", "/", "?"])]),
             ],
         ),
         ast.subst_liga(
@@ -114,11 +114,13 @@ def ss08_subst():
             target=ast.gly(">-", ".ss08", True),
             banner=[
                 ast.ignore(">", ">", "-"),
-                ast.ignore(None, ">", ["-", ast.clazz(["-", ">", "<"])]),
+                ast.ignore(None, ">", ["-", ast.cls(["-", ">", "<"])]),
             ],
         ),
     ]
 
 
-ss08_name = "Double headed arrows and reverse arrows ligatures"
-ss08_feat = ast.ss(8, ss08_name, ss08_subst())
+ss08_name = (
+    "Double headed arrows and reverse arrows ligatures (`>>=`, `-<<`, `->>`, `>-` ...)"
+)
+ss08_feat = ast.StylisticSet(8, ss08_name, ss08_subst())
