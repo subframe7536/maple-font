@@ -1,4 +1,4 @@
-[👉 English Version](./README.md)
+# 特性文档由代码自动生成，中文文档不再维护，请查看[英文文档](./README.md)
 
 # 连字和特性
 

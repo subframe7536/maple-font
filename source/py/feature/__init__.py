@@ -52,7 +52,7 @@ def get_all_calt_text():
     return "\n".join(result)
 
 
-zero_desc = "Dot style '0'"
+zero_desc = "Dot style `0`"
 
 
 def get_cv_desc():
@@ -108,6 +108,6 @@ def get_total_feat() -> dict[str, str]:
         if item.tag not in result:
             result[item.tag] = item.desc.replace("`", "'")
 
-    result["zero"] = zero_desc
+    result["zero"] = zero_desc.replace("`", "'")
 
     return dict(sorted(result.items()))

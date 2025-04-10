@@ -1,5 +1,3 @@
-[👉 中文版](./README_CN.md)
-
 # Ligatures And Features
 
 Here is the check list and explaination of Maple Mono ligatures and features.
@@ -189,11 +187,11 @@ fixme))
 ### Character Varients (cvXX)
 
 <!-- CV -->
-- cv01: Normalize special symbols, make `@ $ & % Q => ->` without gap
+- cv01: Normalize special symbols, remove the gaps in `@ $ & % Q => ->`
 - cv02: Alternative `a` with top arm, no effect on italic `a`
 - cv03: Alternative `i` without left bottom bar
 - cv04: Alternative `l` with left bottom bar, like consolas, will be overrided by `cv35` in italic style
-- zero: Dot style '0'
+- zero: Dot style `0`
 <!-- CV -->
 
 #### Italic Only

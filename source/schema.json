@@ -44,7 +44,7 @@
       "description": "Freeze some font features (No effect on Variable font) \n enable: Move ligature rules to `calt`, which will enable the ligatures without setting up `cvXX` / `ssXX` / `zero` in font features config, just as default ligatures \n disable: Remove the ligature rules in `cvXX` / `ssXX` / `zero`, which will no longer effect, even if you enable it manually \n ignore: Do nothing",
       "properties": {
         "cv01": {
-          "description": "Normalize special symbols, make '@ $ & % Q => ->' without gap",
+          "description": "Normalize special symbols, remove the gaps in '@ $ & % Q => ->'",
           "$ref": "#/definitions/freeze_options"
         },
         "cv02": {

@@ -1586,7 +1586,7 @@ feature cv01 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "Normalize special symbols, make @ $ & % Q => -> without gap";
+      name "Normalize special symbols, remove the gaps in @ $ & % Q => ->";
     };
   };
 

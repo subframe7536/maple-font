@@ -459,17 +459,12 @@ def ignore(
     return Line(f"ignore sub {__prefix(prefix)}{__gly(glyph)}'{__suffix(suffix)};")
 
 
-def flatten(data: Line | Clazz | Lookup | Feature | list) -> list:
-    if not isinstance(data, list):
-        return [data]
-
-    result = []
-    for item in data:
-        if isinstance(item, list):
-            result += flatten(item)
-        else:
-            result.append(item)
-    return result
+def flatten(data):
+    if isinstance(data, list):
+        for item in data:
+            yield from flatten(item)
+    else:
+        yield data
 
 
 def flatten_to_lines(data: Line | Clazz | Lookup | Feature | list) -> list[Line]:
