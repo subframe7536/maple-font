@@ -48,7 +48,6 @@ def update_config_json(config_path: str, version: str):
 
         file.seek(0)
         json.dump(data, file, ensure_ascii=False, indent=2)
-        file.truncate()
 
 
 def check_update():

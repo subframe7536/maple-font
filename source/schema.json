@@ -44,95 +44,95 @@
       "description": "Freeze some font features (No effect on Variable font) \n enable: Move ligature rules to `calt`, which will enable the ligatures without setting up `cvXX` / `ssXX` / `zero` in font features config, just as default ligatures \n disable: Remove the ligature rules in `cvXX` / `ssXX` / `zero`, which will no longer effect, even if you enable it manually \n ignore: Do nothing",
       "properties": {
         "cv01": {
-          "description": "Classic '@', '$', '%', '&', 'Q', '=>', '->'",
+          "description": "Normalize special symbols, make '@ $ & % Q => ->' without gap",
           "$ref": "#/definitions/freeze_options"
         },
         "cv02": {
-          "description": "Alternative 'a' (with top alarm)",
+          "description": "Alternative 'a' with top arm, no effect on italic 'a'",
           "$ref": "#/definitions/freeze_options"
         },
         "cv03": {
-          "description": "Alternative regular 'i' (without bottom left bar)",
+          "description": "Alternative 'i' without left bottom bar",
           "$ref": "#/definitions/freeze_options"
         },
         "cv04": {
-          "description": "Alternative 'l' (with bottom left bar) and '1' (without bottom bar), will be overrided by cv35 in italic style",
+          "description": "Alternative 'l' with left bottom bar, like consolas, will be overrided by 'cv35' in italic style",
           "$ref": "#/definitions/freeze_options"
         },
         "cv31": {
-          "description": "[Italic Only] Alternative 'a' (with top alarm)",
+          "description": "Alternative italic 'a' with top arm",
           "$ref": "#/definitions/freeze_options"
         },
         "cv32": {
-          "description": "[Italic Only] Alternative 'f' (without bottom tail)",
+          "description": "Alternative Italic 'f' without bottom tail",
           "$ref": "#/definitions/freeze_options"
         },
         "cv33": {
-          "description": "[Italic Only] Alternative 'i' (with bottom left bar) and 'j'",
+          "description": "Alternative Italic 'i' and 'j' with left bottom bar and horizen top bar",
           "$ref": "#/definitions/freeze_options"
         },
         "cv34": {
-          "description": "[Italic Only] Alternative 'k' (without center circle)",
+          "description": "Alternative Italic 'k' without center circle",
           "$ref": "#/definitions/freeze_options"
         },
         "cv35": {
-          "description": "[Italic Only] Alternative 'l' (without center tail)",
+          "description": "Alternative Italic 'l' without center tail",
           "$ref": "#/definitions/freeze_options"
         },
         "cv36": {
-          "description": "[Italic Only] Alternative 'x' (without top and bottom tails)",
+          "description": "Alternative Italic 'x' without top and bottom tails",
           "$ref": "#/definitions/freeze_options"
         },
         "cv37": {
-          "description": "[Italic Only] Alternative 'y' (with straight intersection)",
+          "description": "Alternative Italic 'y' with straight intersection",
           "$ref": "#/definitions/freeze_options"
         },
         "cv96": {
-          "description": "[CN Only] Full width '“'(double quote left), '”'(double quote right), '‘'(single quote left), '’'(single quote right)",
+          "description": "Full width quotes ('\u201c' / '\u201d' / '\u2018' / '\u2019')",
           "$ref": "#/definitions/freeze_options"
         },
         "cv97": {
-          "description": "[CN Only] Full width '…'(ellipsis)",
+          "description": "Full width ellipsis ('\u2026')",
           "$ref": "#/definitions/freeze_options"
         },
         "cv98": {
-          "description": "[CN Only] Full width '—'(emdash)",
+          "description": "Full width emdash ('\u2014')",
           "$ref": "#/definitions/freeze_options"
         },
         "cv99": {
-          "description": "[CN Only] Traditional punctuations",
+          "description": "Traditional centered punctuations",
           "$ref": "#/definitions/freeze_options"
         },
         "ss01": {
-          "description": "Broken equals ligatures (==, ===, !=, !==, =/=)",
+          "description": "Broken multiple equals ligatures ('==', '===', '!=', '!==', '=/=')",
           "$ref": "#/definitions/freeze_options"
         },
         "ss02": {
-          "description": "Broken compare and equal ligatures (<=, >=)",
+          "description": "Broken compare and equal ligatures ('<=', '>=')",
           "$ref": "#/definitions/freeze_options"
         },
         "ss03": {
-          "description": "Enable arbitrary tag (allow to use any case letters in all tags)",
+          "description": "Allow to use any case in all tags",
           "$ref": "#/definitions/freeze_options"
         },
         "ss04": {
-          "description": "Break multiple underscores (__, #__)",
+          "description": "Broken multiple underscores ligatures ('__', '#__')",
           "$ref": "#/definitions/freeze_options"
         },
         "ss05": {
-          "description": "Restore the thickness of backslash in escape letters (\\\\, \\', \\[, ...)",
+          "description": "Revert thin backslash in escape symbols ('\\', '\"', '.' ...)",
           "$ref": "#/definitions/freeze_options"
         },
         "ss06": {
-          "description": "[Italic Only] Break connected strokes between italic letters (al, ul, il ...)",
+          "description": "Break connected strokes between italic letters ('al', 'il', 'ull' ...)",
           "$ref": "#/definitions/freeze_options"
         },
         "ss07": {
-          "description": "Relax the conditions for enabling multiple greater ligatures (>>, >>>)",
+          "description": "Break connected strokes between italic letters ('>>' or '>>>')",
           "$ref": "#/definitions/freeze_options"
         },
         "ss08": {
-          "description": "Enable double headed arrows and reverse arrows (>>=, -<<, ->>, >- ...)",
+          "description": "Double headed arrows and reverse arrows ligatures ('>>=', '-<<', '->>', '>-' ...)",
           "$ref": "#/definitions/freeze_options"
         },
         "zero": {
@@ -165,7 +165,7 @@
           "description": "Whether to make icon width fixed",
           "default": false
         },
-        "font_forge_bin":{
+        "font_forge_bin": {
           "type": "string",
           "description": "Font Forge bin path. Default: \n Windows: C:/Program Files (x86)/FontForgeBuilds/bin/fontforge.exe \n MacOS: /Applications/FontForge.app/Contents/Resources/opt/local/bin/fontforge\" \n Linux: /usr/bin/fontforge"
         },

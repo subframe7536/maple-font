@@ -46,7 +46,7 @@ class Lookup:
 
         arr.append(Line(f"lookup {self.name} {{"))
 
-        for c in flatten(self.content):
+        for c in flatten_to_lines(self.content):
             arr.append(c.indent())
 
         arr.append(Line(f"}} {self.name};"))
@@ -68,7 +68,7 @@ class Feature:
 
     def state(self) -> list[Line]:
         target = []
-        for c in self.get_name_lines() + flatten(self.content):
+        for c in self.get_name_lines() + flatten_to_lines(self.content):
             target.append(c.indent())
 
         return [
@@ -79,29 +79,31 @@ class Feature:
             Line(f"}} {self.tag};"),
         ]
 
+
 REGEXP = r"\(.*\)"
 
+
 class CharacterVariant(Feature):
-    __slots__ = ("tag", "desc", "content")
+    __slots__ = ("id", "tag", "desc", "content")
 
     def __init__(self, id: int, desc: str, content: Clazz | Lookup | Line | list):
         if id < 1 or id > 99:
             raise TypeError(
                 f"id should > 0 and < 100 in Character Variants, current is {id}"
             )
-
-        Feature.__init__(self, f"cv{id:02d}", content)
+        self.id = id
         self.desc = desc
+        Feature.__init__(self, f"cv{id:02d}", content)
 
     def get_name_lines(self) -> list[Line]:
         _name = re.sub(REGEXP, "", self.desc.replace("`", ""))
         return [
-            Line('cvParameters {'),
-            Line('FeatUILabelNameID {', 1),
+            Line("cvParameters {"),
+            Line("FeatUILabelNameID {", 1),
             Line(f'name "{_name}";', 2),
-            Line('};', 1),
-            Line('};'),
-            Line(''),
+            Line("};", 1),
+            Line("};"),
+            Line(""),
         ]
 
     def desc_item(self) -> str:
@@ -109,7 +111,7 @@ class CharacterVariant(Feature):
 
 
 class StylisticSet(Feature):
-    __slots__ = ("tag", "desc", "content")
+    __slots__ = ("id", "tag", "desc", "content")
 
     def __init__(self, id: int, desc: str, content: Clazz | Lookup | Line | list):
         if id < 1 or id > 20:
@@ -117,8 +119,9 @@ class StylisticSet(Feature):
                 f"id should > 0 and < 20 in Stylistic Sets, current is {id}"
             )
 
-        Feature.__init__(self, f"ss{id:02d}", content)
+        self.id = id
         self.desc = desc
+        Feature.__init__(self, f"ss{id:02d}", content)
 
     def get_name_lines(self) -> list[Line]:
         _name = re.sub(REGEXP, "", self.desc.replace("`", ""))
@@ -266,12 +269,12 @@ def cls_states(cls: Clazz | list[Clazz]) -> list[Line]:
     """
     Declare classes with prefix empty line.
     """
-    return [Line("")] + flatten(cls)
+    return [Line("")] + flatten_to_lines(cls)
 
 
 def create(content: list, indent=2) -> str:
     lines = []
-    for line in flatten(content):
+    for line in flatten_to_lines(content):
         # Skip duplicate empty lines
         if not line.text and lines and not lines[-1].text:
             continue
@@ -456,18 +459,25 @@ def ignore(
     return Line(f"ignore sub {__prefix(prefix)}{__gly(glyph)}'{__suffix(suffix)};")
 
 
-def flatten(data: Line | Clazz | Lookup | Feature | list) -> list[Line]:
-    if isinstance(data, Clazz):
-        return [data.state()]
-    elif isinstance(data, Line):
+def flatten(data: Line | Clazz | Lookup | Feature | list) -> list:
+    if not isinstance(data, list):
         return [data]
-    elif isinstance(data, (Lookup, Feature)):
-        return data.state()
 
     result = []
     for item in data:
         if isinstance(item, list):
             result += flatten(item)
+        else:
+            result.append(item)
+    return result
+
+
+def flatten_to_lines(data: Line | Clazz | Lookup | Feature | list) -> list[Line]:
+    result = []
+
+    for item in flatten(data):
+        if isinstance(item, list):
+            result += flatten_to_lines(item)
         elif isinstance(item, Clazz):
             result.append(item.state())
         elif isinstance(item, Line):
@@ -475,5 +485,6 @@ def flatten(data: Line | Clazz | Lookup | Feature | list) -> list[Line]:
         elif isinstance(item, (Lookup, Feature)):
             result += item.state()
         else:
-            raise TypeError(f"Invalid item: {item} ({type(item)})")
+            raise TypeError(f"Invalid item to flatten: {item}")
+
     return result

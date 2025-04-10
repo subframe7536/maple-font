@@ -92,7 +92,7 @@ cls_letters_list = [
 
 cls_var = ast.Clazz("Var", ["_", "__", *cls_letters_list, digit])
 
-class_list = [
+class_list_italic = [
     *base_class_list,
     *cls_letters_list,
     cls_hex_letter,
@@ -101,9 +101,9 @@ class_list = [
 ]
 
 
-calt = get_calt(cls_var, cls_hex_letter, is_italic=True)
+calt_italic = get_calt(cls_var, cls_hex_letter, is_italic=True)
 
-cv_list = [
+cv_list_italic = [
     cv01.cv01_feat_italic,
     cv04.cv04_feat_italic,
     cv31.cv31_feat_italic,
@@ -122,7 +122,7 @@ cv_list_cn = [
     cv99.cv99_feat_cn,
 ]
 
-ss_list = [
+ss_list_italic = [
     ss01.ss01_feat,
     ss02.ss02_feat,
     ss03.ss03_feat,
@@ -135,21 +135,21 @@ ss_list = [
 
 feature_file_italic = ast.create(
     [
-        class_list,
+        class_list_italic,
         lang_list,
-        get_base_features(calt, False),
-        cv_list,
-        ss_list,
+        get_base_features(calt_italic, False),
+        cv_list_italic,
+        ss_list_italic,
     ],
 )
 
 feature_file_italic_cn = ast.create(
     [
-        class_list,
+        class_list_italic,
         lang_list,
-        get_base_features(calt, True),
-        cv_list,
+        get_base_features(calt_italic, True),
+        cv_list_italic,
         cv_list_cn,
-        ss_list,
+        ss_list_italic,
     ],
 )
