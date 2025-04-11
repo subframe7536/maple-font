@@ -4,8 +4,10 @@ import source.py.feature.ast as ast
 def cv05_subst():
     return ast.subst_map(
         [
-            "comma",
-            "semicolon",
+            ",",
+            ";",
+            ";;",
+            ";;;"
         ],
         target_suffix=".cv05",
     )

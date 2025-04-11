@@ -1781,6 +1781,8 @@ feature cv05 {
 
   sub comma by comma.cv05;
   sub semicolon by semicolon.cv05;
+  sub semicolon_semicolon.liga by semicolon_semicolon.liga.cv05;
+  sub semicolon_semicolon_semicolon.liga by semicolon_semicolon_semicolon.liga.cv05;
 
 } cv05;
 
