@@ -96,7 +96,7 @@ class CharacterVariant(Feature):
         Feature.__init__(self, f"cv{id:02d}", content)
 
     def get_name_lines(self) -> list[Line]:
-        _name = re.sub(REGEXP, "", self.desc.replace("`", ""))
+        _name = re.sub(REGEXP, "", self.desc.replace("`", "")).strip()
         return [
             Line("cvParameters {"),
             Line("FeatUILabelNameID {", 1),
@@ -124,7 +124,7 @@ class StylisticSet(Feature):
         Feature.__init__(self, f"ss{id:02d}", content)
 
     def get_name_lines(self) -> list[Line]:
-        _name = re.sub(REGEXP, "", self.desc.replace("`", ""))
+        _name = re.sub(REGEXP, "", self.desc.replace("`", "")).strip()
         return [
             Line("featureNames {"),
             Line(f'name "{_name}";', 1),

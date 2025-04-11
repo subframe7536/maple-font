@@ -46,9 +46,14 @@ def generate_fea_string_cn_only():
 
 def get_all_calt_text():
     result = []
+
     for item in ast.flatten(get_calt_lookup(cls_var, cls_hex_letter, False)):
         if isinstance(item, ast.Lookup) and item.desc:
-            result.append(item.desc)
+            if item.name == "escape":
+                result.append(item.desc.replace("\\ ", "\\\\ "))
+            else:
+                result.append(item.desc)
+
     return "\n".join(result)
 
 

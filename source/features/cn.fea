@@ -52,7 +52,7 @@ feature cv96 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "Full width quotes ";
+      name "Full width quotes";
     };
   };
 
@@ -67,7 +67,7 @@ feature cv97 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "Full width ellipsis ";
+      name "Full width ellipsis";
     };
   };
 
@@ -79,7 +79,7 @@ feature cv98 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "Full width emdash ";
+      name "Full width emdash";
     };
   };
 

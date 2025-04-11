@@ -1135,7 +1135,7 @@ feature calt {
     sub bar' bar equal by SPC;
   } bar_bar_equal.liga;
 
-  # \/ \" \.
+  # \\ \" \.
   lookup escape {
 
     @Escape = [braceleft braceright bracketleft bracketright parenleft parenright less greater period comma hyphen underscore equal plus colon semicolon question exclam at numbersign dollar percent asciicircum ampersand asterisk quotesingle quotedbl slash backslash bar grave asciitilde];
@@ -1961,7 +1961,7 @@ feature cv37 {
 feature ss01 {
 
   featureNames {
-    name "Broken multiple equals ligatures ";
+    name "Broken multiple equals ligatures";
   };
 
   sub equal_equal.liga by equal_equal.liga.ss01;
@@ -1975,7 +1975,7 @@ feature ss01 {
 feature ss02 {
 
   featureNames {
-    name "Broken compare and equal ligatures ";
+    name "Broken compare and equal ligatures";
   };
 
   sub less_equal.liga by less_equal.liga.ss02;
@@ -2079,7 +2079,7 @@ feature ss03 {
 feature ss04 {
 
   featureNames {
-    name "Broken multiple underscores ligatures ";
+    name "Broken multiple underscores ligatures";
   };
 
   sub underscore_underscore.liga by underscore_underscore.liga.ss04;
@@ -2090,7 +2090,7 @@ feature ss04 {
 feature ss05 {
 
   featureNames {
-    name "Revert thin backslash in escape symbols ";
+    name "Revert thin backslash in escape symbols";
   };
 
   sub backslash.liga by backslash;
@@ -2100,7 +2100,7 @@ feature ss05 {
 feature ss06 {
 
   featureNames {
-    name "Break connected strokes between italic letters ";
+    name "Break connected strokes between italic letters";
   };
 
   sub C_l.liga by C_l.liga.ss06;
@@ -2127,7 +2127,7 @@ feature ss06 {
 feature ss07 {
 
   featureNames {
-    name "Break connected strokes between italic letters ";
+    name "Break connected strokes between italic letters";
   };
 
   # >>
@@ -2152,7 +2152,7 @@ feature ss07 {
 feature ss08 {
 
   featureNames {
-    name "Double headed arrows and reverse arrows ligatures ";
+    name "Double headed arrows and reverse arrows ligatures";
   };
 
   # <<-
