@@ -8,6 +8,200 @@ from source.py.feature.calt.whitespace import (
 )
 
 
+def get_base_lookup():
+    return [
+        ast.subst_liga(
+            "[|",
+            banner=[
+                ast.ignore("[", "[", "|"),
+                ast.ignore(None, "[", ["|", ast.cls("]", "|")]),
+            ],
+        ),
+        ast.subst_liga(
+            "|]",
+            banner=[
+                ast.ignore(ast.cls("[", "|"), "|", "]"),
+                ast.ignore(None, "|", ["]", "]"]),
+            ],
+        ),
+        ast.subst_liga(
+            "!!",
+            banner=[
+                ast.ignore("!", "!", "!"),
+                ast.ignore(None, "!", ["!", "!"]),
+                ast.ignore(["(", "?"], "!", "!"),
+                ast.ignore(["(", "?", "<"], "!", "!"),
+            ],
+        ),
+        ast.subst_liga(
+            "||",
+            banner=[
+                ast.ignore(ast.cls("-", "|", "[", "<"), "|", "|"),
+                ast.ignore(None, "|", ["|", ast.cls("|", "]", ">", "-")]),
+            ],
+        ),
+        ast.subst_liga(
+            "??",
+            banner=[
+                ast.ignore("?", "?", "?"),
+                ast.ignore(None, "?", ["?", "?"]),
+            ],
+        ),
+        ast.subst_liga(
+            "???",
+            banner=[
+                ast.ignore("?", "?", ["?", "?"]),
+                ast.ignore(None, "?", ["?", "?", "?"]),
+            ],
+        ),
+        ast.subst_liga(
+            "&&",
+            banner=[
+                ast.ignore("&", "&", "&"),
+                ast.ignore(None, "&", ["&", "&"]),
+            ],
+        ),
+        ast.subst_liga(
+            "&&&",
+            banner=[
+                ast.ignore("&", "&", ["&", "&"]),
+                ast.ignore(None, "&", ["&", "&", "&"]),
+            ],
+        ),
+        ast.subst_liga(
+            "//",
+            banner=[
+                ast.ignore("/", "/", "/"),
+                ast.ignore(None, "/", ["/", ast.cls("/", "=")]),
+            ],
+        ),
+        ast.subst_liga(
+            "///",
+            banner=[
+                ast.ignore("/", "/", ["/", "/"]),
+                ast.ignore(None, "/", ["/", "/", "/"]),
+            ],
+        ),
+        ast.subst_liga(
+            "/*",
+            banner=[
+                ast.ignore(ast.cls("/", "*"), "/", "*"),
+                ast.ignore(None, "/", ["*", ast.cls("/", "*", ".")]),
+            ],
+        ),
+        ast.subst_liga(
+            "/**",
+            banner=[
+                ast.ignore(ast.cls("/", "*"), "/", ["*", "*"]),
+                ast.ignore(None, "/", ["*", "*", ast.cls("/", "*", ".")]),
+            ],
+        ),
+        ast.subst_liga(
+            "*/",
+            banner=[
+                ast.ignore(ast.cls("/", "*", "."), "*", "/"),
+                ast.ignore(None, "*", ["/", ast.cls("/", "*")]),
+            ],
+        ),
+        ast.subst_liga(
+            "++",
+            banner=[
+                ast.ignore(ast.cls("+", ":"), "+", "+"),
+                ast.ignore(None, "+", ["+", ast.cls("+", ":")]),
+            ],
+        ),
+        ast.subst_liga(
+            "+++",
+            banner=[
+                ast.ignore("+", "+", ["+", "+"]),
+                ast.ignore(None, "+", ["+", "+", "+"]),
+            ],
+        ),
+        ast.subst_liga(
+            "--",
+            banner=[
+                ast.ignore(ast.cls("<", "-"), "-", "-"),
+                ast.ignore(["<", ast.cls("#", "!")], "-", "-"),
+                ast.ignore(None, "-", ["-", ast.cls("-", ">")]),
+                ast.ignore(
+                    ["(", "?", "<", "!"],
+                    "-",
+                    "-",
+                ),
+                ast.ignore(
+                    ast.cls("<", "-"),
+                    "-",
+                    "-",
+                ),
+            ],
+        ),
+        ast.subst_liga(
+            "---",
+            banner=[
+                ast.ignore("<", "-", ["-", "-", ">"]),
+                ast.ignore("-", "-", ["-", "-"]),
+                ast.ignore(None, "-", ["-", "-", "-"]),
+            ],
+        ),
+        ast.subst_liga(
+            ";;",
+            banner=[
+                ast.ignore(";", ";", ";"),
+                ast.ignore(None, ";", [";", ";"]),
+            ],
+        ),
+        ast.subst_liga(
+            ";;;",
+            banner=[
+                ast.ignore(";", ";", [";", ";"]),
+                ast.ignore(None, ";", [";", ";", ";"]),
+            ],
+        ),
+        ast.subst_liga(
+            "..",
+            banner=[
+                ast.ignore(".", ".", "."),
+                ast.ignore(None, ".", [".", ast.cls(".", "<", "?")]),
+            ],
+        ),
+        ast.subst_liga(
+            "...",
+            banner=[
+                ast.ignore(".", ".", [".", "."]),
+                ast.ignore(None, ".", [".", ".", ast.cls(".", "<", "?")]),
+            ],
+        ),
+        ast.subst_liga(
+            ".?",  # Zig
+            banner=[
+                ast.ignore(".", ".", "?"),
+                ast.ignore(None, ".", ["?", "?"]),
+            ],
+        ),
+        ast.subst_liga(
+            "?.",  # TypeScript / Rust
+            banner=[
+                ast.ignore("?", "?", "."),
+                ast.ignore(None, "?", [".", ast.cls(".", "=", "?")]),
+            ],
+        ),
+        ast.subst_liga(
+            "..<",  # Swift
+            banner=[
+                ast.ignore(".", ".", [".", "<"]),
+                ast.ignore(None, ".", [".", "<", ast.cls("<", "/", ">")]),
+            ],
+        ),
+        ast.subst_liga(
+            ".=",  # Swift
+            banner=[
+                ast.ignore(".", ".", "="),
+                ast.ignore(None, ".", ["=", "="]),
+            ],
+        ),
+    ]
+
+
 def get_lookup(cls_var: ast.Clazz):
     return (
         upper.get_lookup()
@@ -15,195 +209,5 @@ def get_lookup(cls_var: ast.Clazz):
         + numbersign_underscore.get_lookup()
         + multiple_compare.get_lookup(cls_var)
         + brace.get_lookup()
-        + [
-            ast.subst_liga(
-                "[|",
-                banner=[
-                    ast.ignore("[", "[", "|"),
-                    ast.ignore(None, "[", ["|", ast.cls("]", "|")]),
-                ],
-            ),
-            ast.subst_liga(
-                "|]",
-                banner=[
-                    ast.ignore(ast.cls("[", "|"), "|", "]"),
-                    ast.ignore(None, "|", ["]", "]"]),
-                ],
-            ),
-            ast.subst_liga(
-                "!!",
-                banner=[
-                    ast.ignore("!", "!", "!"),
-                    ast.ignore(None, "!", ["!", "!"]),
-                    ast.ignore(["(", "?"], "!", "!"),
-                    ast.ignore(["(", "?", "<"], "!", "!"),
-                ],
-            ),
-            ast.subst_liga(
-                "||",
-                banner=[
-                    ast.ignore(ast.cls("-", "|", "[", "<"), "|", "|"),
-                    ast.ignore(None, "|", ["|", ast.cls("|", "]", ">", "-")]),
-                ],
-            ),
-            ast.subst_liga(
-                "??",
-                banner=[
-                    ast.ignore("?", "?", "?"),
-                    ast.ignore(None, "?", ["?", "?"]),
-                ],
-            ),
-            ast.subst_liga(
-                "???",
-                banner=[
-                    ast.ignore("?", "?", ["?", "?"]),
-                    ast.ignore(None, "?", ["?", "?", "?"]),
-                ],
-            ),
-            ast.subst_liga(
-                "&&",
-                banner=[
-                    ast.ignore("&", "&", "&"),
-                    ast.ignore(None, "&", ["&", "&"]),
-                ],
-            ),
-            ast.subst_liga(
-                "&&&",
-                banner=[
-                    ast.ignore("&", "&", ["&", "&"]),
-                    ast.ignore(None, "&", ["&", "&", "&"]),
-                ],
-            ),
-            ast.subst_liga(
-                "//",
-                banner=[
-                    ast.ignore("/", "/", "/"),
-                    ast.ignore(None, "/", ["/", ast.cls("/", "=")]),
-                ],
-            ),
-            ast.subst_liga(
-                "///",
-                banner=[
-                    ast.ignore("/", "/", ["/", "/"]),
-                    ast.ignore(None, "/", ["/", "/", "/"]),
-                ],
-            ),
-            ast.subst_liga(
-                "/*",
-                banner=[
-                    ast.ignore(ast.cls("/", "*"), "/", "*"),
-                    ast.ignore(None, "/", ["*", ast.cls("/", "*", ".")]),
-                ],
-            ),
-            ast.subst_liga(
-                "/**",
-                banner=[
-                    ast.ignore(ast.cls("/", "*"), "/", ["*", "*"]),
-                    ast.ignore(None, "/", ["*", "*", ast.cls("/", "*", ".")]),
-                ],
-            ),
-            ast.subst_liga(
-                "*/",
-                banner=[
-                    ast.ignore(ast.cls("/", "*", "."), "*", "/"),
-                    ast.ignore(None, "*", ["/", ast.cls("/", "*")]),
-                ],
-            ),
-            ast.subst_liga(
-                "++",
-                banner=[
-                    ast.ignore(ast.cls("+", ":"), "+", "+"),
-                    ast.ignore(None, "+", ["+", ast.cls("+", ":")]),
-                ],
-            ),
-            ast.subst_liga(
-                "+++",
-                banner=[
-                    ast.ignore("+", "+", ["+", "+"]),
-                    ast.ignore(None, "+", ["+", "+", "+"]),
-                ],
-            ),
-            ast.subst_liga(
-                "--",
-                banner=[
-                    ast.ignore(ast.cls("<", "-"), "-", "-"),
-                    ast.ignore(["<", ast.cls("#", "!")], "-", "-"),
-                    ast.ignore(None, "-", ["-", ast.cls("-", ">")]),
-                    ast.ignore(
-                        ["(", "?", "<", "!"],
-                        "-",
-                        "-",
-                    ),
-                    ast.ignore(
-                        ast.cls("<", "-"),
-                        "-",
-                        "-",
-                    ),
-                ],
-            ),
-            ast.subst_liga(
-                "---",
-                banner=[
-                    ast.ignore("<", "-", ["-", "-", ">"]),
-                    ast.ignore("-", "-", ["-", "-"]),
-                    ast.ignore(None, "-", ["-", "-", "-"]),
-                ],
-            ),
-            ast.subst_liga(
-                ";;",
-                banner=[
-                    ast.ignore(";", ";", ";"),
-                    ast.ignore(None, ";", [";", ";"]),
-                ],
-            ),
-            ast.subst_liga(
-                ";;;",
-                banner=[
-                    ast.ignore(";", ";", [";", ";"]),
-                    ast.ignore(None, ";", [";", ";", ";"]),
-                ],
-            ),
-            ast.subst_liga(
-                "..",
-                banner=[
-                    ast.ignore(".", ".", "."),
-                    ast.ignore(None, ".", [".", ast.cls(".", "<", "?")]),
-                ],
-            ),
-            ast.subst_liga(
-                "...",
-                banner=[
-                    ast.ignore(".", ".", [".", "."]),
-                    ast.ignore(None, ".", [".", ".", ast.cls(".", "<", "?")]),
-                ],
-            ),
-            ast.subst_liga(
-                ".?",  # Zig
-                banner=[
-                    ast.ignore(".", ".", "?"),
-                    ast.ignore(None, ".", ["?", "?"]),
-                ],
-            ),
-            ast.subst_liga(
-                "?.",  # TypeScript / Rust
-                banner=[
-                    ast.ignore("?", "?", "."),
-                    ast.ignore(None, "?", [".", ast.cls(".", "=", "?")]),
-                ],
-            ),
-            ast.subst_liga(
-                "..<",  # Swift
-                banner=[
-                    ast.ignore(".", ".", [".", "<"]),
-                    ast.ignore(None, ".", [".", "<", ast.cls("<", "/", ">")]),
-                ],
-            ),
-            ast.subst_liga(
-                ".=",  # Swift
-                banner=[
-                    ast.ignore(".", ".", "="),
-                    ast.ignore(None, ".", ["=", "="]),
-                ],
-            ),
-        ]
+        + get_base_lookup()
     )
