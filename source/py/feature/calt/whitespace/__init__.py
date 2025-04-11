@@ -186,7 +186,7 @@ def get_base_lookup():
             ],
         ),
         ast.subst_liga(
-            "..<",  # Swift
+            "..<",  # Swift / Kotlin
             banner=[
                 ast.ignore(".", ".", [".", "<"]),
                 ast.ignore(None, ".", [".", "<", ast.cls("<", "/", ">")]),
@@ -196,7 +196,7 @@ def get_base_lookup():
             ".=",  # Swift
             banner=[
                 ast.ignore(".", ".", "="),
-                ast.ignore(None, ".", ["=", "="]),
+                ast.ignore(None, ".", ["=", ast.cls("=", ">")]),
             ],
         ),
     ]

@@ -24,7 +24,7 @@ def get_lookup():
             "?:",
             banner=[
                 ast.ignore("?", "?", ":"),
-                ast.ignore(None, "?", [":", ":"]),
+                ast.ignore(None, "?", [":", ast.cls(":", "=")]),
             ],
         ),
         ast.subst_liga(

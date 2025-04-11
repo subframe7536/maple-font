@@ -293,7 +293,7 @@ feature calt {
   # ?:
   lookup question_colon.liga {
     ignore sub question question' colon;
-    ignore sub question' colon colon;
+    ignore sub question' colon [colon equal];
     sub SPC colon' by question_colon.liga;
     sub question' colon by SPC;
   } question_colon.liga;
@@ -449,7 +449,7 @@ feature calt {
   # #!
   lookup numbersign_exclam.liga {
     ignore sub numbersign numbersign' exclam;
-    ignore sub numbersign' exclam exclam;
+    ignore sub numbersign' exclam [exclam equal];
     sub SPC exclam' by numbersign_exclam.liga;
     sub numbersign' exclam by SPC;
   } numbersign_exclam.liga;
@@ -457,7 +457,7 @@ feature calt {
   # #:
   lookup numbersign_colon.liga {
     ignore sub numbersign numbersign' colon;
-    ignore sub numbersign' colon colon;
+    ignore sub numbersign' colon [colon equal];
     sub SPC colon' by numbersign_colon.liga;
     sub numbersign' colon by SPC;
   } numbersign_colon.liga;
@@ -841,7 +841,7 @@ feature calt {
   # .=
   lookup period_equal.liga {
     ignore sub period period' equal;
-    ignore sub period' equal equal;
+    ignore sub period' equal [equal greater];
     sub SPC equal' by period_equal.liga;
     sub period' equal by SPC;
   } period_equal.liga;

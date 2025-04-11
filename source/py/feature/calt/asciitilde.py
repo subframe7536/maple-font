@@ -60,7 +60,7 @@ def get_lookup():
             ],
         ),
         ast.subst_liga(
-            "~@",
+            "~@", # Cloujure
             banner=[
                 ast.ignore("~", "~", "@"),
                 ast.ignore(None, "~", ["@", "@"]),
