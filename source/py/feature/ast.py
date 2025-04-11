@@ -453,10 +453,10 @@ def ignore(
     return Line(f"ignore sub {__prefix(prefix)}{__gly(glyph)}'{__suffix(suffix)};")
 
 
-def flatten(data):
-    if isinstance(data, list):
+def recursive_iterate(data):
+    if isinstance(data, Sequence) and not isinstance(data, str):
         for item in data:
-            yield from flatten(item)
+            yield from recursive_iterate(item)
     else:
         yield data
 
@@ -464,7 +464,7 @@ def flatten(data):
 def flatten_to_lines(data: Line | Clazz | Lookup | Feature | list) -> list[Line]:
     result = []
 
-    for item in flatten(data):
+    for item in recursive_iterate(data):
         if isinstance(item, list):
             result += flatten_to_lines(item)
         elif isinstance(item, Clazz):
@@ -472,7 +472,7 @@ def flatten_to_lines(data: Line | Clazz | Lookup | Feature | list) -> list[Line]
         elif isinstance(item, Line):
             result.append(item)
         elif isinstance(item, (Lookup, Feature)):
-            result += item.state()
+            result.extend(item.state())
         else:
             raise TypeError(f"Invalid item to flatten: {item}")
 
