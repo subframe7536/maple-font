@@ -1587,18 +1587,18 @@ feature cv01 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "Normalize special symbols, remove the gaps in @ $ & % Q => ->";
+      name "Normalize special symbols";
     };
   };
 
-  sub Q by Q.cv01;
+  sub dollar by dollar.cv01;
+  sub percent by percent.cv01;
   sub ampersand by ampersand.cv01;
   sub ampersand_ampersand.liga by ampersand_ampersand.liga.cv01;
   sub ampersand_ampersand_ampersand.liga by ampersand_ampersand_ampersand.liga.cv01;
   sub at by at.cv01;
   sub asciitilde_at.liga by asciitilde_at.liga.cv01;
-  sub dollar by dollar.cv01;
-  sub percent by percent.cv01;
+  sub Q by Q.cv01;
   sub equal_greater.liga by equal_greater.liga.cv01;
   sub less_equal_equal.liga by less_equal_equal.liga.cv01;
   sub equal_equal_greater.liga by equal_equal_greater.liga.cv01;

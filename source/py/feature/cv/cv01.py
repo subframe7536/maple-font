@@ -7,7 +7,11 @@ sfx = ".cv01"
 def cv01_subst():
     return [
         ast.subst_map(
-            "Q",
+            "$",
+            target_suffix=sfx,
+        ),
+        ast.subst_map(
+            "%",
             target_suffix=sfx,
         ),
         ast.subst_map(
@@ -19,11 +23,7 @@ def cv01_subst():
             target_suffix=sfx,
         ),
         ast.subst_map(
-            "$",
-            target_suffix=sfx,
-        ),
-        ast.subst_map(
-            "%",
+            "Q",
             target_suffix=sfx,
         ),
         ast.subst_map(
@@ -55,6 +55,6 @@ def cv01_subst():
     ]
 
 
-cv01_desc = "Normalize special symbols, remove the gaps in `@ $ & % Q => ->`"
+cv01_desc = "Normalize special symbols (`@ $ & % Q => ->`)"
 cv01_feat_regular = ast.CharacterVariant(1, cv01_desc, cv01_subst())
 cv01_feat_italic = ast.CharacterVariant(1, cv01_desc, cv01_subst())
