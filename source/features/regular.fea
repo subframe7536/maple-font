@@ -528,9 +528,9 @@ feature calt {
 
   @Space = [space nbspace];
   @LeadingSymbolLiga = [plus_plus.liga hyphen_hyphen.liga underscore_underscore.liga];
+  @EqualHyphen = [equal hyphen];
   @SymbolBeforeGreater = [bar exclam asciitilde asciitilde numbersign percent @Space @EqualHyphen];
   @Number = [plus hyphen @Digit];
-  @EqualHyphen = [equal hyphen];
   @QuoteLike = [grave quotesingle quotedbl];
 
   # >>

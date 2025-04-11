@@ -41,9 +41,9 @@ def get_lookup(cls_var: ast.Clazz):
         ast.cls_states(
             cls_space,
             cls_leading_symbol_liga,
+            cls_equal_hyphen,
             cls_symbol_before_greater,
             cls_number,
-            cls_equal_hyphen,
             cls_quote_like,
         ),
         ast.subst_liga(
