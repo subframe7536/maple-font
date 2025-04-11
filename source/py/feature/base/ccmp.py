@@ -107,16 +107,14 @@ ccmp_latn = ast.Lookup(
         comb("circumflex", "tilde"),
     ],
 )
-start_other = ast.cls(["i", "i-cy", "iogonek", "idotbelow", "j", "je-cy"])
+start_other = ast.cls("i", "i-cy", "iogonek", "idotbelow", "j", "je-cy")
 end_other = ast.cls(
-    [
-        "idotless",
-        "idotless",
-        "iogonekdotless",
-        "idotbelowdotless",
-        "jdotless",
-        "jdotless",
-    ]
+    "idotless",
+    "idotless",
+    "iogonekdotless",
+    "idotbelowdotless",
+    "jdotless",
+    "jdotless",
 )
 
 ccmp_other_name = "ccmp_other"
@@ -175,12 +173,10 @@ ccmp_jp = ast.Lookup(
 
 __ccmp = [
     ast.cls_states(
-        [
-            comb_top_acc,
-            comb_non_top_acc,
-            marks_comb,
-            marks_comb_case,
-        ]
+        comb_top_acc,
+        comb_non_top_acc,
+        marks_comb,
+        marks_comb_case,
     ),
     ccmp_other,
     ccmp_latn,

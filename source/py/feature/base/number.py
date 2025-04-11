@@ -28,8 +28,8 @@ sups = ast.subst_map(_number_list, target_suffix="superior")
 numr = ast.subst_map(_number_list, target_suffix=".numr")
 dnom = ast.subst_map(_number_list, target_suffix=".dnom")
 ordn = [
-    ast.subst(clazz_number, ast.cls(["A", "a"]), None, "ordfeminine"),
-    ast.subst(clazz_number, ast.cls(["O", "o"]), None, "ordmasculine"),
+    ast.subst(clazz_number, ast.cls("A", "a"), None, "ordfeminine"),
+    ast.subst(clazz_number, ast.cls("O", "o"), None, "ordmasculine"),
     ast.__subst("N o period", "numero"),
 ]
 

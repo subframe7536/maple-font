@@ -249,17 +249,20 @@ def gly(g: str | Clazz | Sequence[str | Clazz], suffix: str = "", overwrite=Fals
     return __gly(g) + suffix
 
 
-def cls(glyphs: Sequence[str | Clazz]) -> str:
+def cls(glyphs: str | Clazz | Sequence[str | Clazz], *rest: str | Clazz) -> str:
     """
     Generate inline class.
 
     >>> cls(["a", "@", "++", cl])
     "[a at plus_plus.liga @cl]"
+    >>> cls("b", "_", "--", cl)
+    "[b underscore hyphen_hyphen.liga @cl]"
     """
-    return "[" + " ".join([__parse_glyph(g) for g in glyphs]) + "]"
+    glyphs_list = list(recursive_iterate(glyphs)) + list(rest)
+    return "[" + " ".join([__parse_glyph(g) for g in glyphs_list]) + "]"
 
 
-def cls_states(cls: Clazz | list[Clazz]) -> list[Line]:
+def cls_states(*cls: Clazz) -> list[Line]:
     """
     Declare classes with prefix empty line.
     """
@@ -352,7 +355,7 @@ def subst_liga(
     target: str | None = None,
     lookup_name: str | None = None,
     desc: str | None = None,
-    surround: list[list[Sequence[str | Clazz]]] = [],
+    surround: list[tuple[Sequence[str | Clazz] | None, Sequence[str | Clazz] | None]] = [],
     banner: list[Line] | None = None,
 ) -> Lookup:
     """
@@ -368,7 +371,7 @@ def subst_liga(
         lookup_name: Name of the lookup block; defaults to ``target``.
         desc: Content of comment before the lookup block; defaults to ``source``,
             or ``lookup_name`` if ``source`` is ``list``.
-        surround: List of [prefix, suffix] pairs specifying contexts for substitution.
+        surround: List of (prefix, suffix) tuples specifying contexts for substitution.
             Each prefix/suffix is ``Sequence[str | Clazz]``.
             If empty, generates basic substitution rules without context.
         banner: List of substitution rules before the main rules in lookup block.
@@ -385,7 +388,7 @@ def subst_liga(
             Line("sub SPC equal' by exclam_equal.liga;"),
             Line("} lookup exclam_equal.liga;")
         ]
-        >>> subst_liga("!=", surround=[[["a","b"], "c"], [cls, ["a","c"]]])
+        >>> subst_liga("!=", surround=[((["a","b"], "c")), (cls, ["a","c"])])
         [
             Line("lookup exclam_equal.liga {"),
             Line("sub a b exclam' equal c by SPC;"),
@@ -415,7 +418,7 @@ def subst_liga(
 
     subst_rules = []
     if not surround:
-        surround = [[[], []]]
+        surround = [([],[])]
 
     for prfx, sfx in surround:
         prfx_list = to_list(prfx)
@@ -461,7 +464,7 @@ def recursive_iterate(data):
         yield data
 
 
-def flatten_to_lines(data: Line | Clazz | Lookup | Feature | list) -> list[Line]:
+def flatten_to_lines(data: Line | Clazz | Lookup | Feature | list | tuple) -> list[Line]:
     result = []
 
     for item in recursive_iterate(data):

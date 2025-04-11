@@ -7,7 +7,7 @@ def ss07_subst():
             ">>",
             lookup_name=f"relax_{ast.gly('>>')}",
             banner=[
-                ast.ignore(ast.cls([">", "/", "<"]), ">", ">"),
+                ast.ignore(ast.cls(">", "/", "<"), ">", ">"),
                 ast.ignore(None, ">", [">", ">"]),
             ],
         ),

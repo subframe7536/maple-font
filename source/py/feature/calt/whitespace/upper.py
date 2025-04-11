@@ -11,9 +11,9 @@ def get_lookup():
             None,
             [
                 ast.subst(
-                    ast.cls([digit, uppercase]),
+                    ast.cls(digit, uppercase),
                     ":",
-                    ast.cls([digit, uppercase]),
+                    ast.cls(digit, uppercase),
                     ast.gly(":", ".case"),
                 )
             ],

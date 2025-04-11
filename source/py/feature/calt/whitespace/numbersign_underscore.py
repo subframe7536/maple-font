@@ -11,7 +11,7 @@ def get_lookup():
         ast.subst_liga(
             "__",
             banner=[
-                ast.ignore(ast.cls(["_", "#"]), "_", "_"),
+                ast.ignore(ast.cls("_", "#"), "_", "_"),
                 ast.ignore(None, "_", ["_", "_"]),
             ],
         ),
@@ -68,7 +68,7 @@ def get_lookup():
             "#_",
             banner=[
                 ast.ignore("#", "#", "_"),
-                ast.ignore(None, "#", ["_", ast.cls(["_", "("])]),
+                ast.ignore(None, "#", ["_", ast.cls("_", "(")]),
             ],
         ),
         ast.subst_liga(
@@ -94,8 +94,8 @@ def get_lookup():
             "infinity_numbersigns",
             "#######",
             [
-                ast.subst(ast.cls([start, mid]), "#", "#", mid),
-                ast.subst(ast.cls([start, mid]), "#", None, end),
+                ast.subst(ast.cls(start, mid), "#", "#", mid),
+                ast.subst(ast.cls(start, mid), "#", None, end),
                 ast.subst(None, "#", "#", start),
             ],
         ),

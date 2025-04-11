@@ -14,13 +14,13 @@ def get_lookup(cls_var: ast.Clazz):
     cls_quote_like = ast.Clazz("QuoteLike", ["`", "'", '"'])
 
     surround = [
-        [cls_var, [cls_space, ast.SPC, cls_leading_symbol_liga]],
-        [cls_var, [ast.SPC, cls_leading_symbol_liga]],
-        [cls_var, ast.cls([cls_var, cls_number])],
-        [cls_symbol_before_greater, None],
-        [None, [cls_space, cls_number]],
-        [None, ast.cls(["/", cls_number, cls_equal_hyphen])],
-        [cls_quote_like, cls_quote_like],
+        (cls_var, [cls_space, ast.SPC, cls_leading_symbol_liga]),
+        (cls_var, [ast.SPC, cls_leading_symbol_liga]),
+        (cls_var, ast.cls(cls_var, cls_number)),
+        (cls_symbol_before_greater, None),
+        (None, [cls_space, cls_number]),
+        (None, ast.cls("/", cls_number, cls_equal_hyphen)),
+        (cls_quote_like, cls_quote_like),
     ]
 
     return [
@@ -28,7 +28,7 @@ def get_lookup(cls_var: ast.Clazz):
             "<<",
             banner=[
                 ast.ignore("<", "<", "<"),
-                ast.ignore(None, "<", ["<", ast.cls(["<", "~"])]),
+                ast.ignore(None, "<", ["<", ast.cls("<", "~")]),
             ],
         ),
         ast.subst_liga(
@@ -39,19 +39,17 @@ def get_lookup(cls_var: ast.Clazz):
             ],
         ),
         ast.cls_states(
-            [
-                cls_space,
-                cls_leading_symbol_liga,
-                cls_symbol_before_greater,
-                cls_number,
-                cls_equal_hyphen,
-                cls_quote_like,
-            ]
+            cls_space,
+            cls_leading_symbol_liga,
+            cls_symbol_before_greater,
+            cls_number,
+            cls_equal_hyphen,
+            cls_quote_like,
         ),
         ast.subst_liga(
             ">>",
             banner=[
-                ast.ignore(ast.cls(["<", "/", ">"]), ">", [">"]),
+                ast.ignore(ast.cls("<", "/", ">"), ">", [">"]),
                 ast.ignore(None, ">", [">", ">"]),
             ],
             surround=surround,
