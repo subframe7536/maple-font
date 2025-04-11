@@ -529,22 +529,23 @@ feature calt {
 
   @Space = [space nbspace];
   @LeadingSymbolLiga = [plus_plus.liga hyphen_hyphen.liga underscore_underscore.liga];
-  @SymbolBeforeGreater = [bar exclam asciitilde asciitilde numbersign percent];
+  @SymbolBeforeGreater = [bar exclam asciitilde asciitilde numbersign percent @Space @EqualHyphen];
   @Number = [plus hyphen @Digit];
   @EqualHyphen = [equal hyphen];
+  @QuoteLike = [grave quotesingle quotedbl];
 
   # >>
   lookup greater_greater.liga {
     ignore sub [less slash greater] greater' greater;
     ignore sub greater' greater greater;
-    sub grave SPC greater' grave by greater_greater.liga;
-    sub grave greater' greater grave by SPC;
+    sub @QuoteLike SPC greater' @QuoteLike by greater_greater.liga;
+    sub @QuoteLike greater' greater @QuoteLike by SPC;
     sub SPC greater' [slash @Number @EqualHyphen] by greater_greater.liga;
     sub greater' greater [slash @Number @EqualHyphen] by SPC;
     sub SPC greater' @Space @Number by greater_greater.liga;
     sub greater' greater @Space @Number by SPC;
-    sub [@Space @EqualHyphen @SymbolBeforeGreater] SPC greater' by greater_greater.liga;
-    sub [@Space @EqualHyphen @SymbolBeforeGreater] greater' greater by SPC;
+    sub @SymbolBeforeGreater SPC greater' by greater_greater.liga;
+    sub @SymbolBeforeGreater greater' greater by SPC;
     sub @Var SPC greater' [@Var @Number] by greater_greater.liga;
     sub @Var greater' greater [@Var @Number] by SPC;
     sub @Var SPC greater' SPC @LeadingSymbolLiga by greater_greater.liga;
@@ -556,18 +557,18 @@ feature calt {
   # >>>
   lookup greater_greater_greater.liga {
     ignore sub greater greater' greater greater;
-    sub grave SPC SPC greater' grave by greater_greater_greater.liga;
-    sub grave SPC greater' greater grave by SPC;
-    sub grave greater' greater greater grave by SPC;
+    sub @QuoteLike SPC SPC greater' @QuoteLike by greater_greater_greater.liga;
+    sub @QuoteLike SPC greater' greater @QuoteLike by SPC;
+    sub @QuoteLike greater' greater greater @QuoteLike by SPC;
     sub SPC SPC greater' [slash @Number @EqualHyphen] by greater_greater_greater.liga;
     sub SPC greater' greater [slash @Number @EqualHyphen] by SPC;
     sub greater' greater greater [slash @Number @EqualHyphen] by SPC;
     sub SPC SPC greater' @Space @Number by greater_greater_greater.liga;
     sub SPC greater' greater @Space @Number by SPC;
     sub greater' greater greater @Space @Number by SPC;
-    sub [@Space @EqualHyphen @SymbolBeforeGreater] SPC SPC greater' by greater_greater_greater.liga;
-    sub [@Space @EqualHyphen @SymbolBeforeGreater] SPC greater' greater by SPC;
-    sub [@Space @EqualHyphen @SymbolBeforeGreater] greater' greater greater by SPC;
+    sub @SymbolBeforeGreater SPC SPC greater' by greater_greater_greater.liga;
+    sub @SymbolBeforeGreater SPC greater' greater by SPC;
+    sub @SymbolBeforeGreater greater' greater greater by SPC;
     sub @Var SPC SPC greater' [@Var @Number] by greater_greater_greater.liga;
     sub @Var SPC greater' greater [@Var @Number] by SPC;
     sub @Var greater' greater greater [@Var @Number] by SPC;

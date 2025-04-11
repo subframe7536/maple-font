@@ -253,8 +253,8 @@ def cls(glyphs: Sequence[str | Clazz]) -> str:
     """
     Generate inline class.
 
-    >>> cls(["a", "@", "++", cls])
-    "[a at plus_plus.liga @cls]"
+    >>> cls(["a", "@", "++", cl])
+    "[a at plus_plus.liga @cl]"
     """
     return "[" + " ".join([__parse_glyph(g) for g in glyphs]) + "]"
 
