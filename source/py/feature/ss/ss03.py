@@ -20,7 +20,7 @@ def liga_cls(text: str):
     #   - inFo
     #   - infO
     #   - info
-    arr = ["["] + [f"@{g.upper()}" for g in list(text)] + ["]"]
+    arr = ["["] + [f"@{g.upper()}" for g in text] + ["]"]
     return ast.subst_liga(
         arr,
         target=f"badge_{text}.liga",

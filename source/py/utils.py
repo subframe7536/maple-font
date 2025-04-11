@@ -205,7 +205,7 @@ def match_unicode_names(file_path: str) -> dict[str, str]:
 def verify_glyph_width(
     font: TTFont, expect_widths: list[int], file_name: str | None = None
 ):
-    print("Verify glyph width...")
+    print("Verify glyph width")
     result = []
     for name in font.getGlyphNames():
         width, _ = font["hmtx"][name]

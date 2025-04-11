@@ -83,27 +83,6 @@ def get_ss_desc():
     return "\n".join(result.values())
 
 
-def custom_sort(s: str):
-    if s == "zero":
-        return (0, 0)
-
-    if s.startswith("cv"):
-        try:
-            num = int(s[2:])
-            return (1, num)
-        except ValueError:
-            pass
-
-    if s.startswith("ss"):
-        try:
-            num = int(s[2:])
-            return (2, num)
-        except ValueError:
-            pass
-
-    return (3, s)
-
-
 def get_total_feat() -> dict[str, str]:
     result = {}
 

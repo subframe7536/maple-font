@@ -120,7 +120,7 @@
           "$ref": "#/definitions/freeze_options"
         },
         "ss05": {
-          "description": "Revert thin backslash in escape symbols ('\\', '\"', '.' ...)",
+          "description": "Revert thin backslash in escape symbols ('\\\\', '\\\"', '\\.' ...)",
           "$ref": "#/definitions/freeze_options"
         },
         "ss06": {

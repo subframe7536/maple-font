@@ -222,7 +222,7 @@ fixme))
 - ss02: Broken compare and equal ligatures (`<=`, `>=`)
 - ss03: Allow to use any case in all tags
 - ss04: Broken multiple underscores ligatures (`__`, `#__`)
-- ss05: Revert thin backslash in escape symbols (`\`, `"`, `.` ...)
+- ss05: Revert thin backslash in escape symbols (`\`, `\"`, `\.` ...)
 - ss07: Break connected strokes between italic letters (`>>` or `>>>`)
 - ss08: Double headed arrows and reverse arrows ligatures (`>>=`, `-<<`, `->>`, `>-` ...)
 - ss06: Break connected strokes between italic letters (`al`, `il`, `ull` ...)

@@ -392,7 +392,9 @@ class FontConfig:
             return [
                 0,
                 self.glyph_width,
-                self.glyph_width_cn_narrow if self.cn["narrow"] else 2 * self.glyph_width,
+                self.glyph_width_cn_narrow
+                if self.cn["narrow"]
+                else 2 * self.glyph_width,
             ]
         else:
             return [0, self.glyph_width]
@@ -554,7 +556,9 @@ class BuildOption:
             shutil.rmtree(static_path)
             return False
 
-    def __instantiate_cn_base(self, cn_variable_dir: str, cn_static_dir: str, pool_size: int):
+    def __instantiate_cn_base(
+        self, cn_variable_dir: str, cn_static_dir: str, pool_size: int
+    ):
         print("=========================================")
         print("Instantiating CN Base font, be patient...")
         print("=========================================")
@@ -1096,11 +1100,11 @@ def run_build(pool_size: int, fn: Callable, dir: str):
             for r in results:
                 try:
                     r.get()
-                except Exception:
+                except BaseException:
                     kill_all(pids)
                     raise
 
-        except Exception:
+        except BaseException:
             kill_all(pids)
             raise
 

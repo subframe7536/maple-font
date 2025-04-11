@@ -256,13 +256,7 @@ def cls(glyphs: Sequence[str | Clazz]) -> str:
     >>> cls(["a", "@", "++", cls])
     "[a at plus_plus.liga @cls]"
     """
-
-    arr = []
-
-    for g in glyphs:
-        arr.append(__parse_glyph(g))
-
-    return "[" + " ".join(arr) + "]"
+    return "[" + " ".join([__parse_glyph(g) for g in glyphs]) + "]"
 
 
 def cls_states(cls: Clazz | list[Clazz]) -> list[Line]:
