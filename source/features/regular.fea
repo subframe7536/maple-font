@@ -1708,6 +1708,19 @@ feature cv04 {
 
 } cv04;
 
+feature cv05 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV05: Alternative , and ; with straight tail";
+    };
+  };
+
+  sub comma by comma.cv05;
+  sub semicolon by semicolon.cv05;
+
+} cv05;
+
 feature ss01 {
 
   featureNames {

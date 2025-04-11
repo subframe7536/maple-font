@@ -191,6 +191,7 @@ fixme))
 - cv02: Alternative `a` with top arm, no effect on italic `a`
 - cv03: Alternative `i` without left bottom bar
 - cv04: Alternative `l` with left bottom bar, like consolas, will be overrided by `cv35` in italic style
+- cv05: Alternative `,` and `;` with straight tail
 - zero: Dot style `0`
 <!-- CV -->
 

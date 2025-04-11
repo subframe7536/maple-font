@@ -4,6 +4,7 @@ from source.py.feature.calt import get_calt
 from source.py.feature.cv import (
     cv01,
     cv04,
+    cv05,
     cv31,
     cv32,
     cv33,
@@ -106,6 +107,7 @@ calt_italic = get_calt(cls_var, cls_hex_letter, is_italic=True)
 cv_list_italic = [
     cv01.cv01_feat_italic,
     cv04.cv04_feat_italic,
+    cv05.cv05_feat_italic,
     cv31.cv31_feat_italic,
     cv32.cv32_feat_italic,
     cv33.cv33_feat_italic,

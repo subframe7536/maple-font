@@ -1,7 +1,7 @@
 import source.py.feature.ast as ast
 from source.py.feature.base import get_base_features
 from source.py.feature.calt import get_calt
-from source.py.feature.cv import cv01, cv02, cv03, cv04, cv96, cv97, cv98, cv99
+from source.py.feature.cv import cv01, cv02, cv03, cv04, cv05, cv96, cv97, cv98, cv99
 from source.py.feature.ss import ss01, ss02, ss03, ss04, ss05, ss07, ss08
 from source.py.feature.base.clazz import base_class_list, digit
 from source.py.feature.base.lang import lang_list
@@ -75,6 +75,7 @@ cv_list_regular = [
     cv02.cv02_feat_regular,
     cv03.cv03_feat_regular,
     cv04.cv04_feat_regular,
+    cv05.cv05_feat_regular,
 ]
 
 
