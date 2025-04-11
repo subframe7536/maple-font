@@ -1,3 +1,4 @@
+import os
 import re
 import json
 from source.py.feature import (
@@ -67,7 +68,7 @@ def update_schema(file_path: str, features: dict[str, str]) -> None:
     update_json_file(file_path, schema)
 
 
-def fea(output: str) -> None:
+def fea(output: str, cn: bool) -> None:
     # Generate feature files
     files = {
         "regular.fea": generate_fea_string(False, False),
@@ -76,6 +77,20 @@ def fea(output: str) -> None:
     }
     for filename, content in files.items():
         write_file(joinPaths(output, filename), content)
+
+    files_cn = {
+        "regular_cn.fea": generate_fea_string(False, True),
+        "italic_cn.fea": generate_fea_string(True, True),
+    }
+    for filename, content in files_cn.items():
+        fea_path = joinPaths(output, filename)
+        if cn:
+            write_file(fea_path, content)
+        else:
+            try:
+                os.remove(fea_path)
+            except Exception:
+                pass
 
     # Update README sections
     md_path = joinPaths(output, "README.md")

@@ -9,7 +9,7 @@ def get_base_features(calt: ast.Feature, is_cn: bool):
     result = [case_feature] + number_features
 
     if is_cn:
-        result = [locl_features_cn] + result
+        result = [lookup_tw, locl_features_cn] + result
     else:
         result = [locl_feature] + result
 
@@ -20,9 +20,6 @@ def get_base_features(calt: ast.Feature, is_cn: bool):
         result += [ccmp_features_cn]
     else:
         result += [ccmp_feature]
-
-    if is_cn:
-        result = [lookup_tw] + result
 
     return result
 

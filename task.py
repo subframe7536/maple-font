@@ -17,6 +17,7 @@ def main():
 
     feature_parser = command.add_parser("fea", help="Build fea files")
     feature_parser.add_argument("--output", type=str, default="./source/features", help="Output directory")
+    feature_parser.add_argument("--cn", action="store_true", help="Generate features that contains CN features, remove exists CN feature files if not set")
 
     release_parser = command.add_parser("release", help="Release new version")
     release_parser.add_argument(
@@ -45,7 +46,7 @@ def main():
     elif args.command == "fea":
         from source.py.task.fea import fea
 
-        fea(args.output)
+        fea(args.output, args.cn)
 
     elif args.command == "release":
         from source.py.task.release import release
