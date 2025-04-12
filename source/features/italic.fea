@@ -590,7 +590,7 @@ feature calt {
 
   # }}
   lookup braceright_braceright.liga {
-    ignore sub [braceright hyphen] braceright' braceright;
+    ignore sub [exclam braceright hyphen] braceright' braceright;
     ignore sub braceright' braceright braceright;
     sub braceright' braceright by braceright_start.liga;
     sub braceright_start.liga braceright' by braceright_end.liga;
@@ -621,6 +621,17 @@ feature calt {
     sub SPC braceleft' hyphen hyphen by SPC;
     sub braceleft' braceleft hyphen hyphen by SPC;
   } braceleft_braceleft_hyphen_hyphen.liga;
+
+  # {{!--
+  lookup braceleft_braceleft_exclam_hyphen_hyphen.liga {
+    ignore sub braceleft braceleft' braceleft exclam hyphen hyphen;
+    ignore sub braceleft' braceleft exclam hyphen hyphen hyphen;
+    sub SPC SPC SPC SPC hyphen' by braceleft_braceleft_exclam_hyphen_hyphen.liga;
+    sub SPC SPC SPC hyphen' hyphen by SPC;
+    sub SPC SPC exclam' hyphen hyphen by SPC;
+    sub SPC braceleft' exclam hyphen hyphen by SPC;
+    sub braceleft' braceleft exclam hyphen hyphen by SPC;
+  } braceleft_braceleft_exclam_hyphen_hyphen.liga;
 
   # --}}
   lookup hyphen_hyphen_braceright_braceright.liga {
@@ -1136,7 +1147,7 @@ feature calt {
     sub bar' bar equal by SPC;
   } bar_bar_equal.liga;
 
-  # \\ \" \.
+  # \\ \' \.
   lookup escape {
 
     @Escape = [braceleft braceright bracketleft bracketright parenleft parenright less greater period comma hyphen underscore equal plus colon semicolon question exclam at numbersign dollar percent asciicircum ampersand asterisk quotesingle quotedbl slash backslash bar grave asciitilde];

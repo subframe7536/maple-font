@@ -19,7 +19,7 @@ def get_lookup():
             ast.gly("}}"),
             "}}",
             [
-                ast.ignore(ast.cls("}", "-"), "}", "}"),
+                ast.ignore(ast.cls("!", "}", "-"), "}", "}"),
                 ast.ignore(None, "}", ["}", "}"]),
                 ast.subst(None, "}", "}", ast.gly_var("}", "start")),
                 ast.subst(
@@ -53,6 +53,21 @@ def get_lookup():
                     None,
                     "{",
                     ["{", "-", "-", "-"],
+                ),
+            ],
+        ),
+        ast.subst_liga(
+            "{{!--",
+            banner=[
+                ast.ignore(
+                    "{",
+                    "{",
+                    ["{", "!", "-", "-"],
+                ),
+                ast.ignore(
+                    None,
+                    "{",
+                    ["{", "!", "-", "-", "-"],
                 ),
             ],
         ),
