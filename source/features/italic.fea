@@ -584,16 +584,16 @@ feature calt {
   lookup braceleft_braceleft.liga {
     ignore sub braceleft braceleft' braceleft;
     ignore sub braceleft' braceleft [braceleft exclam hyphen];
-    sub SPC braceleft' by braceleft_braceleft.liga;
-    sub braceleft' braceleft by SPC;
+    sub braceleft' braceleft by braceleft_start.liga;
+    sub braceleft_start.liga braceleft' by braceleft_end.liga;
   } braceleft_braceleft.liga;
 
   # }}
   lookup braceright_braceright.liga {
     ignore sub [braceright hyphen] braceright' braceright;
     ignore sub braceright' braceright braceright;
-    sub SPC braceright' by braceright_braceright.liga;
-    sub braceright' braceright by SPC;
+    sub braceright' braceright by braceright_start.liga;
+    sub braceright_start.liga braceright' by braceright_end.liga;
   } braceright_braceright.liga;
 
   # {|

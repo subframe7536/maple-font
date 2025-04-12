@@ -1,12 +1,10 @@
 from source.py.feature import ast
 
 
-start = "numbersign_start.liga"
-mid = "numbersign_middle.liga"
-end = "numbersign_end.liga"
-
-
 def get_lookup():
+    start = ast.gly_var("#", "start")
+    mid = ast.gly_var("#", "middle")
+    end = ast.gly_var("#", "end")
     return [
         ast.subst_liga(
             "__",

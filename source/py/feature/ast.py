@@ -249,6 +249,15 @@ def gly(g: str | Clazz | Sequence[str | Clazz], suffix: str = "", overwrite=Fals
     return __gly(g) + suffix
 
 
+def gly_var(g: str, variant: str):
+    """
+    Normalize glyph names with variant
+    >>> gly_var("{", "start")
+    "braceleft_start.liga"
+    """
+    return gly(g, f"_{variant}.liga", True)
+
+
 def cls(glyphs: str | Clazz | Sequence[str | Clazz], *rest: str | Clazz) -> str:
     """
     Generate inline class.
@@ -355,7 +364,9 @@ def subst_liga(
     target: str | None = None,
     lookup_name: str | None = None,
     desc: str | None = None,
-    surround: list[tuple[Sequence[str | Clazz] | None, Sequence[str | Clazz] | None]] = [],
+    surround: list[
+        tuple[Sequence[str | Clazz] | None, Sequence[str | Clazz] | None]
+    ] = [],
     banner: list[Line] | None = None,
 ) -> Lookup:
     """
@@ -418,7 +429,7 @@ def subst_liga(
 
     subst_rules = []
     if not surround:
-        surround = [([],[])]
+        surround = [([], [])]
 
     for prfx, sfx in surround:
         prfx_list = to_list(prfx)
@@ -464,7 +475,9 @@ def recursive_iterate(data):
         yield data
 
 
-def flatten_to_lines(data: Line | Clazz | Lookup | Feature | list | tuple) -> list[Line]:
+def flatten_to_lines(
+    data: Line | Clazz | Lookup | Feature | list | tuple,
+) -> list[Line]:
     result = []
 
     for item in recursive_iterate(data):
