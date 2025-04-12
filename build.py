@@ -691,6 +691,7 @@ def rename_glyph_name(
         **map,
         **{
             "uni2047.liga": "question_question.liga",
+            "uni2047.liga.cv62": "question_question.liga.cv62",
             "dotlessi": "idotless",
             "f_f": "f_f.liga",
         },

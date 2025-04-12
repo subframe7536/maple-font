@@ -113,6 +113,8 @@ def fea(output: str, cn: bool) -> None:
         "cv34",
         "cv35",
         "cv36",
+        "cv61",
+        "cv62",
         "ss05",
         "ss06",
         "ss07",
