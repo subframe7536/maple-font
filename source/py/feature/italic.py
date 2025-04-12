@@ -4,7 +4,6 @@ from source.py.feature.calt import get_calt
 from source.py.feature.cv import (
     cv01,
     cv04,
-    cv05,
     cv31,
     cv32,
     cv33,
@@ -12,6 +11,8 @@ from source.py.feature.cv import (
     cv35,
     cv36,
     cv37,
+    cv61,
+    cv62,
     cv96,
     cv97,
     cv98,
@@ -19,7 +20,7 @@ from source.py.feature.cv import (
 )
 from source.py.feature.ss import ss01, ss02, ss03, ss04, ss05, ss06, ss07, ss08
 from source.py.feature.base.lang import lang_list
-from source.py.feature.base.clazz import base_class_list, digit
+from source.py.feature.base.clazz import base_class_list, cls_digit
 
 
 cls_a = ast.Clazz("A", ["A", "a", "a.cv31"])
@@ -91,7 +92,7 @@ cls_letters_list = [
     cls_z,
 ]
 
-cls_var = ast.Clazz("Var", ["_", "__", *cls_letters_list, digit])
+cls_var = ast.Clazz("Var", ["_", "__", *cls_letters_list, cls_digit])
 
 class_list_italic = [
     *base_class_list,
@@ -107,7 +108,8 @@ calt_italic = get_calt(cls_var, cls_hex_letter, is_italic=True)
 cv_list_italic = [
     cv01.cv01_feat_italic,
     cv04.cv04_feat_italic,
-    cv05.cv05_feat_italic,
+    cv61.cv61_feat_italic,
+    cv62.cv62_feat_italic,
     cv31.cv31_feat_italic,
     cv32.cv32_feat_italic,
     cv33.cv33_feat_italic,

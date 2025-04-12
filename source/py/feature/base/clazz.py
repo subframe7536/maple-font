@@ -1,13 +1,29 @@
 import source.py.feature.ast as ast
 
-zero = ast.Clazz("Zero", ["zero", "zero.zero"])
-one = ast.Clazz("One", ["one", "one.cv04"])
-digit = ast.Clazz(
+cls_zero = ast.Clazz("Zero", ["zero", "zero.zero"])
+cls_one = ast.Clazz("One", ["one", "one.cv04"])
+cls_digit = ast.Clazz(
     "Digit",
-    [zero, one, "two", "three", "four", "five", "six", "seven", "eight", "nine"],
+    [cls_zero, cls_one, "two", "three", "four", "five", "six", "seven", "eight", "nine"],
 )
+cls_normal_separator = ast.Clazz(
+    "NormalSeparator",
+    [
+        "{",
+        "}",
+        "[",
+        "]",
+        "(",
+        ")",
+        "|",
+        "/",
+        "\\",
+    ],
+)
+cls_comma = ast.Clazz("Comma", [",", ast.gly(",", ".cv61")])
+cls_question = ast.Clazz("Question", ["?", ast.gly("?", ".cv62")])
 
-uppercase = ast.Clazz(
+cls_uppercase = ast.Clazz(
     "Uppercase",
     [
         "A",
@@ -290,25 +306,14 @@ uppercase = ast.Clazz(
     ],
 )
 
-normal_separator = ast.Clazz(
-    "NormalSeparator",
-    [
-        "{",
-        "}",
-        "[",
-        "]",
-        "(",
-        ")",
-        "|",
-        "/",
-        "\\",
-    ],
-)
+
 
 base_class_list = [
-    zero,
-    one,
-    digit,
-    uppercase,
-    normal_separator,
+    cls_zero,
+    cls_one,
+    cls_digit,
+    cls_comma,
+    cls_question,
+    cls_uppercase,
+    cls_normal_separator,
 ]

@@ -1,5 +1,5 @@
 from source.py.feature import ast
-from source.py.feature.base.clazz import digit
+from source.py.feature.base.clazz import cls_digit
 
 
 def get_lookup(cls_var: ast.Clazz):
@@ -10,7 +10,7 @@ def get_lookup(cls_var: ast.Clazz):
         "SymbolBeforeGreater",
         ["|", "!", "~", "~", "#", "%", cls_space, cls_equal_hyphen],
     )
-    cls_number = ast.Clazz("Number", ["+", "-", digit])
+    cls_number = ast.Clazz("Number", ["+", "-", cls_digit])
     cls_quote_like = ast.Clazz("QuoteLike", ["`", "'", '"'])
 
     surround = [

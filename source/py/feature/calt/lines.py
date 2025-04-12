@@ -1,5 +1,5 @@
 from source.py.feature import ast
-
+from source.py.feature.base.clazz import cls_comma
 
 def get_lookup():
     return [
@@ -69,7 +69,7 @@ def get_lookup():
         ast.subst_liga(
             "_|_",
             banner=[
-                ast.ignore(ast.cls("_", "[", ","), "_", ["|", "_"]),
+                ast.ignore(ast.cls("_", "[", cls_comma), "_", ["|", "_"]),
                 ast.ignore(None, "_", ["|", "_", "_"]),
             ],
         ),

@@ -1,4 +1,5 @@
 from source.py.feature import ast
+from source.py.feature.base.clazz import cls_question
 
 
 def get_lookup():
@@ -21,24 +22,30 @@ def get_lookup():
             ],
         ),
         ast.subst_liga(
-            "?:",
+            [cls_question.use(), ast.gly(":")],
+            target=ast.gly("?:"),
+            desc="?:",
             banner=[
-                ast.ignore("?", "?", ":"),
-                ast.ignore(None, "?", [":", ast.cls(":", "=")]),
+                ast.ignore(cls_question, cls_question, ":"),
+                ast.ignore(None, cls_question, [":", ast.cls(":", "=")]),
             ],
         ),
         ast.subst_liga(
-            ":?",
+            [ast.gly(":"), cls_question.use()],
+            target=ast.gly(":?"),
+            desc=":?",
             banner=[
-                ast.ignore(":", ":", "?"),
-                ast.ignore(None, ":", ["?", ast.cls("?", ">")]),
+                ast.ignore(":", ":", cls_question),
+                ast.ignore(None, ":", [cls_question, ast.cls(cls_question, ">")]),
             ],
         ),
         ast.subst_liga(
-            ":?>",
+            [ast.gly(":"), cls_question.use(), ast.gly(">")],
+            target=ast.gly(":?>"),
+            desc=":?>",
             banner=[
-                ast.ignore(":", ":", ["?", ">"]),
-                ast.ignore(None, ":", ["?", ">", ">"]),
+                ast.ignore(":", ":", [cls_question, ">"]),
+                ast.ignore(None, ":", [cls_question, ">", ">"]),
             ],
         ),
         ast.cls_states(
@@ -48,7 +55,7 @@ def get_lookup():
         ast.subst_liga(
             ":=",
             banner=[
-                ast.ignore(ast.cls(cls_ign_colon, "?"), ":", "="),
+                ast.ignore(ast.cls(cls_ign_colon, cls_question), ":", "="),
                 ast.ignore(None, ":", ["=", ast.cls("=", ":")]),
             ],
         ),
@@ -56,16 +63,16 @@ def get_lookup():
             "=:",
             banner=[
                 ast.ignore(cls_ign_colon, "=", ":"),
-                ast.ignore(["(", "?"], "=", ":"),
+                ast.ignore(["(", cls_question], "=", ":"),
                 ast.ignore(None, "=", [":", ast.cls("=", ":")]),
             ],
         ),
         ast.subst_liga(
             ":=:",
             banner=[
-                ast.ignore(ast.cls(cls_ign_colon, "?"), ":", ["=", ":"]),
-                ast.ignore(["(", "?"], ":", ["=", ":"]),
-                ast.ignore(None, ":", ["=", ":", ast.cls(cls_ign_colon, "?")]),
+                ast.ignore(ast.cls(cls_ign_colon, cls_question), ":", ["=", ":"]),
+                ast.ignore(["(", cls_question], ":", ["=", ":"]),
+                ast.ignore(None, ":", ["=", ":", ast.cls(cls_ign_colon, cls_question)]),
             ],
         ),
         ast.subst_liga(
@@ -73,7 +80,7 @@ def get_lookup():
             banner=[
                 ast.ignore("=", "=", [":", "="]),
                 ast.ignore(None, "=", [":", "=", "="]),
-                ast.ignore(["(", "?"], "=", [":", "="]),
+                ast.ignore(["(", cls_question], "=", [":", "="]),
             ],
         ),
         ast.subst_liga(

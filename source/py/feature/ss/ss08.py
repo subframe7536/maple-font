@@ -1,5 +1,5 @@
 from source.py.feature import ast
-
+from source.py.feature.base.clazz import cls_question
 
 def ss08_subst():
     return [
@@ -74,7 +74,7 @@ def ss08_subst():
             target=ast.gly("=<<", ".ss08", True),
             banner=[
                 ast.ignore("=", "=", ["<", "<"]),
-                ast.ignore(["(", "?"], "=", ["<", "<"]),
+                ast.ignore(["(", cls_question], "=", ["<", "<"]),
                 ast.ignore(None, "=", ["<", "<", "<"]),
                 ast.subst(
                     [ast.SPC, ast.SPC],
@@ -90,7 +90,7 @@ def ss08_subst():
             target=ast.gly("=>>", ".ss08", True),
             banner=[
                 ast.ignore("=", "=", [">", ">"]),
-                ast.ignore(["(", "?"], "=", [">", ">"]),
+                ast.ignore(["(", cls_question], "=", [">", ">"]),
                 ast.ignore(None, "=", [">", ">", ">"]),
                 ast.subst(
                     [ast.SPC, ast.SPC],
@@ -106,7 +106,7 @@ def ss08_subst():
             target=ast.gly("-<", ".ss08", True),
             banner=[
                 ast.ignore(ast.cls(">", "<", "-"), "-", "<"),
-                ast.ignore(None, "-", ["<", ast.cls("<", "/", "?")]),
+                ast.ignore(None, "-", ["<", ast.cls("<", "/", cls_question)]),
             ],
         ),
         ast.subst_liga(

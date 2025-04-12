@@ -1,5 +1,5 @@
 from source.py.feature import ast
-from source.py.feature.base.clazz import normal_separator
+from source.py.feature.base.clazz import cls_normal_separator, cls_question
 
 
 def get_lookup(cls_var: ast.Clazz):
@@ -9,7 +9,7 @@ def get_lookup(cls_var: ast.Clazz):
             banner=[
                 ast.ignore("<", "<", ["=", ">"]),
                 ast.ignore(None, "<", ["=", ">", ">"]),
-                ast.ignore(["(", "?"], "<", ["=", ">"]),
+                ast.ignore(["(", cls_question], "<", ["=", ">"]),
             ],
         ),
         ast.subst_liga(
@@ -17,7 +17,7 @@ def get_lookup(cls_var: ast.Clazz):
             banner=[
                 ast.ignore("<", "<", ["=", "=", ">"]),
                 ast.ignore(None, "<", ["=", "=", ">", ">"]),
-                ast.ignore(["(", "?"], "<", ["=", "=", ">"]),
+                ast.ignore(["(", cls_question], "<", ["=", "=", ">"]),
             ],
         ),
         ast.subst_liga(
@@ -25,7 +25,9 @@ def get_lookup(cls_var: ast.Clazz):
             banner=[
                 ast.ignore(ast.cls(">", "="), ">", "="),
                 ast.ignore(
-                    None, ">", ["=", ast.cls("<", ">", "=", "?", normal_separator)]
+                    None,
+                    ">",
+                    ["=", ast.cls("<", ">", "=", cls_question, cls_normal_separator)],
                 ),
             ],
         ),
@@ -34,9 +36,9 @@ def get_lookup(cls_var: ast.Clazz):
             banner=[
                 ast.ignore(ast.cls("<", "="), "<", "="),
                 ast.ignore(
-                    None, "<", ["=", ast.cls("<", ">", "=", normal_separator)]
+                    None, "<", ["=", ast.cls("<", ">", "=", cls_normal_separator)]
                 ),
-                ast.ignore(["(", "?"], "<", "="),
+                ast.ignore(["(", cls_question], "<", "="),
             ],
         ),
         ast.subst_liga(
@@ -44,7 +46,7 @@ def get_lookup(cls_var: ast.Clazz):
             banner=[
                 ast.ignore("<", "<", ["=", "="]),
                 ast.ignore(None, "<", ["=", "=", ast.cls("=", ">")]),
-                ast.ignore(["(", "?"], "<", ["=", "="]),
+                ast.ignore(["(", cls_question], "<", ["=", "="]),
             ],
         ),
         ast.subst_liga(
@@ -52,8 +54,8 @@ def get_lookup(cls_var: ast.Clazz):
             banner=[
                 ast.ignore(ast.cls("[", "="), "=", ["=", ">"]),
                 ast.ignore(None, "=", ["=", ">", ">"]),
-                ast.ignore(["(", "?", "<"], "=", ["=", ">"]),
-                ast.ignore(["(", "?"], "=", ["=", ">"]),
+                ast.ignore(["(", cls_question, "<"], "=", ["=", ">"]),
+                ast.ignore(["(", cls_question], "=", ["=", ">"]),
             ],
         ),
         ast.subst_liga(
@@ -61,8 +63,8 @@ def get_lookup(cls_var: ast.Clazz):
             banner=[
                 ast.ignore(ast.cls("[", "=", ">", "|"), "=", ">"),
                 ast.ignore(None, "=", [">", ast.cls("=", ">")]),
-                ast.ignore(["(", "?", "<"], "=", ">"),
-                ast.ignore(["(", "?"], "=", ">"),
+                ast.ignore(["(", cls_question, "<"], "=", ">"),
+                ast.ignore(["(", cls_question], "=", ">"),
             ],
         ),
         ast.subst_liga(
@@ -75,7 +77,7 @@ def get_lookup(cls_var: ast.Clazz):
                 # public func <=<V: Value>(lhs: Expression<V>, rhs: Expression<V>) -> Expression<Bool> where V.Datatype: Comparable
                 # ```
                 ast.ignore(None, "<", ["=", "<", ast.cls("<", "=", cls_var)]),
-                ast.ignore(["(", "?"], "<", ["=", "<"]),
+                ast.ignore(["(", cls_question], "<", ["=", "<"]),
             ],
         ),
         ast.subst_liga(
@@ -92,16 +94,16 @@ def get_lookup(cls_var: ast.Clazz):
                 ast.ignore(
                     None,
                     "<",
-                    ["=", "|", ast.cls("<", ">", "=", normal_separator)],
+                    ["=", "|", ast.cls("<", ">", "=", cls_normal_separator)],
                 ),
-                ast.ignore(["(", "?"], "<", ["=", "|"]),
+                ast.ignore(["(", cls_question], "<", ["=", "|"]),
             ],
         ),
         ast.subst_liga(
             "|=>",
             banner=[
                 ast.ignore(
-                    ast.cls("<", ">", "=", normal_separator), "|", ["=", ">"]
+                    ast.cls("<", ">", "=", cls_normal_separator), "|", ["=", ">"]
                 ),
                 ast.ignore(None, "|", ["=", ">", ">"]),
             ],

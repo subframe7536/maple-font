@@ -453,7 +453,7 @@ def subst_liga(
 
 def ignore(
     prefix: str | Clazz | Sequence[str | Clazz] | None,
-    glyph: str,
+    glyph: str | Clazz,
     suffix: str | Clazz | Sequence[str | Clazz] | None,
 ) -> Line:
     """

@@ -59,10 +59,6 @@
           "description": "Alternative 'l' with left bottom bar, like consolas, will be overrided by 'cv35' in italic style",
           "$ref": "#/definitions/freeze_options"
         },
-        "cv05": {
-          "description": "Alternative ',' and ';' with straight tail",
-          "$ref": "#/definitions/freeze_options"
-        },
         "cv31": {
           "description": "Alternative italic 'a' with top arm",
           "$ref": "#/definitions/freeze_options"
@@ -89,6 +85,14 @@
         },
         "cv37": {
           "description": "Alternative Italic 'y' with straight intersection",
+          "$ref": "#/definitions/freeze_options"
+        },
+        "cv61": {
+          "description": "Alternative ',' and ';' with straight tail",
+          "$ref": "#/definitions/freeze_options"
+        },
+        "cv62": {
+          "description": "Alternative '?' with larger openings",
           "$ref": "#/definitions/freeze_options"
         },
         "cv96": {

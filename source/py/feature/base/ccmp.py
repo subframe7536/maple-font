@@ -1,5 +1,5 @@
 import source.py.feature.ast as ast
-from source.py.feature.base.clazz import uppercase
+from source.py.feature.base.clazz import cls_uppercase
 
 
 comb_top_acc = ast.Clazz(
@@ -135,7 +135,7 @@ ccmp_other = ast.Lookup(
             end_other,
         ),
         ast.subst(marks_comb, marks_comb, None, marks_comb_case),
-        ast.subst(uppercase, marks_comb, None, marks_comb_case),
+        ast.subst(cls_uppercase, marks_comb, None, marks_comb_case),
         ast.subst(None, marks_comb, marks_comb_case, marks_comb_case),
         ast.subst(marks_comb_case, marks_comb, None, marks_comb_case),
     ],

@@ -1,5 +1,5 @@
 from source.py.feature import ast
-from source.py.feature.base.clazz import digit
+from source.py.feature.base.clazz import cls_digit, cls_question
 
 
 def get_lookup():
@@ -9,7 +9,7 @@ def get_lookup():
             banner=[
                 ast.ignore("<", "<", ["!", "-", "-"]),
                 ast.ignore(None, "<", ["!", "-", "-", "-"]),
-                ast.ignore(["(", "?"], "<", ["!", "-", "-"]),
+                ast.ignore(["(", cls_question], "<", ["!", "-", "-"]),
             ],
         ),
         ast.subst_liga(
@@ -39,7 +39,7 @@ def get_lookup():
             banner=[
                 ast.ignore("<", "<", "-"),
                 ast.ignore(
-                    None, "<", ["-", ast.cls("-", "<", ">", "|", "+", "/", digit)]
+                    None, "<", ["-", ast.cls("-", "<", ">", "|", "+", "/", cls_digit)]
                 ),
             ],
         ),

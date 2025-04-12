@@ -1,5 +1,5 @@
 from source.py.feature import ast
-
+from source.py.feature.base.clazz import cls_question
 
 def get_lookup():
     start = ast.gly_var("#", "start")
@@ -37,8 +37,8 @@ def get_lookup():
         ast.subst_liga(
             "#?",
             banner=[
-                ast.ignore("#", "#", "?"),
-                ast.ignore(None, "#", ["?", "?"]),
+                ast.ignore("#", "#", cls_question),
+                ast.ignore(None, "#", [cls_question, cls_question]),
             ],
         ),
         ast.subst_liga(

@@ -1,5 +1,5 @@
 from source.py.feature import ast
-from source.py.feature.base.clazz import digit, uppercase
+from source.py.feature.base.clazz import cls_digit, cls_uppercase
 
 
 def get_lookup():
@@ -11,9 +11,9 @@ def get_lookup():
             None,
             [
                 ast.subst(
-                    ast.cls(digit, uppercase),
+                    ast.cls(cls_digit, cls_uppercase),
                     ":",
-                    ast.cls(digit, uppercase),
+                    ast.cls(cls_digit, cls_uppercase),
                     ast.gly(":", ".case"),
                 )
             ],
@@ -22,8 +22,8 @@ def get_lookup():
             "uppercase_sharp_s",
             None,
             [
-                ast.subst([uppercase, uppercase], dbls, None, dbls_calt),
-                ast.subst(None, dbls, uppercase, dbls_calt),
+                ast.subst([cls_uppercase, cls_uppercase], dbls, None, dbls_calt),
+                ast.subst(None, dbls, cls_uppercase, dbls_calt),
             ],
         ),
     ]

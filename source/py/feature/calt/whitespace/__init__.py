@@ -1,4 +1,5 @@
 from source.py.feature import ast
+from source.py.feature.base.clazz import cls_question
 from source.py.feature.calt.whitespace import (
     brace,
     colon,
@@ -29,8 +30,8 @@ def get_base_lookup():
             banner=[
                 ast.ignore("!", "!", "!"),
                 ast.ignore(None, "!", ["!", "!"]),
-                ast.ignore(["(", "?"], "!", "!"),
-                ast.ignore(["(", "?", "<"], "!", "!"),
+                ast.ignore(["(", cls_question], "!", "!"),
+                ast.ignore(["(", cls_question, "<"], "!", "!"),
             ],
         ),
         ast.subst_liga(
@@ -41,17 +42,23 @@ def get_base_lookup():
             ],
         ),
         ast.subst_liga(
-            "??",
+            2 * [cls_question.use()],
+            target=ast.gly("??"),
+            desc="??",
             banner=[
-                ast.ignore("?", "?", "?"),
-                ast.ignore(None, "?", ["?", "?"]),
+                ast.ignore(cls_question, cls_question, cls_question),
+                ast.ignore(None, cls_question, [cls_question, cls_question]),
             ],
         ),
         ast.subst_liga(
-            "???",
+            3 * [cls_question.use()],
+            target=ast.gly("???"),
+            desc="???",
             banner=[
-                ast.ignore("?", "?", ["?", "?"]),
-                ast.ignore(None, "?", ["?", "?", "?"]),
+                ast.ignore(cls_question, cls_question, [cls_question, cls_question]),
+                ast.ignore(
+                    None, cls_question, [cls_question, cls_question, cls_question]
+                ),
             ],
         ),
         ast.subst_liga(
@@ -124,7 +131,7 @@ def get_base_lookup():
                 ast.ignore(["<", ast.cls("#", "!")], "-", "-"),
                 ast.ignore(None, "-", ["-", ast.cls("-", ">")]),
                 ast.ignore(
-                    ["(", "?", "<", "!"],
+                    ["(", cls_question, "<", "!"],
                     "-",
                     "-",
                 ),
@@ -161,28 +168,32 @@ def get_base_lookup():
             "..",
             banner=[
                 ast.ignore(".", ".", "."),
-                ast.ignore(None, ".", [".", ast.cls(".", "<", "?")]),
+                ast.ignore(None, ".", [".", ast.cls(".", "<", cls_question)]),
             ],
         ),
         ast.subst_liga(
             "...",
             banner=[
                 ast.ignore(".", ".", [".", "."]),
-                ast.ignore(None, ".", [".", ".", ast.cls(".", "<", "?")]),
+                ast.ignore(None, ".", [".", ".", ast.cls(".", "<", cls_question)]),
             ],
         ),
         ast.subst_liga(
-            ".?",  # Zig
+            [ast.gly("."), cls_question.use()],  # Zig
+            target=ast.gly(".?"),
+            desc=".?",
             banner=[
-                ast.ignore(".", ".", "?"),
-                ast.ignore(None, ".", ["?", "?"]),
+                ast.ignore(".", ".", cls_question),
+                ast.ignore(None, ".", [cls_question, cls_question]),
             ],
         ),
         ast.subst_liga(
-            "?.",  # TypeScript / Rust
+            [cls_question.use(), ast.gly(".")],  # TypeScript / Rust
+            target=ast.gly("?."),
+            desc="?.",
             banner=[
-                ast.ignore("?", "?", "."),
-                ast.ignore(None, "?", [".", ast.cls(".", "=", "?")]),
+                ast.ignore(cls_question, cls_question, "."),
+                ast.ignore(None, cls_question, [".", ast.cls(".", "=", cls_question)]),
             ],
         ),
         ast.subst_liga(

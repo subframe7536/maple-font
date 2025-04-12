@@ -1,6 +1,8 @@
 @Zero = [zero zero.zero];
 @One = [one one.cv04];
 @Digit = [@Zero @One two three four five six seven eight nine];
+@Comma = [comma comma.cv61];
+@Question = [question question.cv62];
 @Uppercase = [A Aacute Abreve Abreveacute Abrevedotbelow Abrevegrave Abrevehookabove Abrevetilde Acaron Acircumflex Acircumflexacute Acircumflexdotbelow Acircumflexgrave Acircumflexhookabove Acircumflextilde Adieresis Adotbelow Agrave Ahookabove Amacron Aogonek Aring Atilde AE AEacute B C Cacute Ccaron Ccedilla Ccircumflex Cdotaccent D Eth Dcaron Dcroat E Eacute Ebreve Ecaron Ecircumflex Ecircumflexacute Ecircumflexdotbelow Ecircumflexgrave Ecircumflexhookabove Ecircumflextilde Edieresis Edotaccent Edotbelow Egrave Ehookabove Emacron Eogonek Eopen Etilde Schwa F G Gacute Gbreve Gcaron Gcircumflex Gcommaaccent Gdotaccent H Hbar Hcircumflex I IJ IJ_acute Iacute Ibreve Icircumflex Idieresis Idotaccent Idotbelow Igrave Ihookabove Imacron Iogonek Itilde J Jcircumflex K Kcommaaccent L Lacute Lcaron Lcommaaccent Ldot Lslash M N Nacute Ncaron Ncommaaccent Ntilde Eng O Oacute Obreve Ocircumflex Ocircumflexacute Ocircumflexdotbelow Ocircumflexgrave Ocircumflexhookabove Ocircumflextilde Odieresis Odotbelow Ograve Ohookabove Ohorn Ohornacute Ohorndotbelow Ohorngrave Ohornhookabove Ohorntilde Ohungarumlaut Omacron Oogonek Oslash Oslashacute Otilde OE P Thorn Q R Racute Rcaron Rcommaaccent S Sacute Scaron Scedilla Scircumflex Scommaaccent Germandbls T Tbar Tcaron Tcedilla Tcommaaccent U Uacute Ubreve Ucircumflex Udieresis Udotbelow Ugrave Uhookabove Uhorn Uhornacute Uhorndotbelow Uhorngrave Uhornhookabove Uhorntilde Uhungarumlaut Umacron Uogonek Uring Utilde V W Wacute Wcircumflex Wdieresis Wgrave X Y Yacute Ycircumflex Ydieresis Ydotbelow Ygrave Yhookabove Ymacron Ytilde Z Zacute Zcaron Zdotaccent A-cy Be-cy Ve-cy Ge-cy Gje-cy Gheupturn-cy Ghestroke-cy De-cy Ie-cy Io-cy Zhe-cy Ze-cy Ii-cy Iishort-cy Ka-cy Kje-cy El-cy Em-cy En-cy O-cy Pe-cy Er-cy Es-cy Te-cy U-cy Ushort-cy Ef-cy Ha-cy Che-cy Tse-cy Sha-cy Shcha-cy Dzhe-cy Softsign-cy Yeru-cy Hardsign-cy Lje-cy Nje-cy Dze-cy E-cy Ereversed-cy I-cy Yi-cy Je-cy Tshe-cy Iu-cy Ia-cy Dje-cy Kadescender-cy Endescender-cy Ustraight-cy Ustraightstroke-cy Chedescender-cy Shha-cy Schwa-cy Zhedieresis-cy Zedieresis-cy Idieresis-cy Odieresis-cy Obarred-cy Chedieresis-cy Alpha Beta Gamma Delta Epsilon Zeta Eta Theta Iota Kappa Lambda Mu Nu Xi Omicron Pi Rho Sigma Tau Upsilon Phi Chi Psi Omega Alphatonos Epsilontonos Etatonos Iotatonos Omicrontonos Upsilontonos Omegatonos Iotadieresis Upsilondieresis KaiSymbol];
 @NormalSeparator = [braceleft braceright bracketleft bracketright parenleft parenright bar slash backslash];
 @A = [A a a.cv31];
@@ -293,27 +295,27 @@ feature calt {
 
   # ?:
   lookup question_colon.liga {
-    ignore sub question question' colon;
-    ignore sub question' colon [colon equal];
+    ignore sub @Question @Question' colon;
+    ignore sub @Question' colon [colon equal];
     sub SPC colon' by question_colon.liga;
-    sub question' colon by SPC;
+    sub @Question' colon by SPC;
   } question_colon.liga;
 
   # :?
   lookup colon_question.liga {
-    ignore sub colon colon' question;
-    ignore sub colon' question [question greater];
-    sub SPC question' by colon_question.liga;
-    sub colon' question by SPC;
+    ignore sub colon colon' @Question;
+    ignore sub colon' @Question [@Question greater];
+    sub SPC @Question' by colon_question.liga;
+    sub colon' @Question by SPC;
   } colon_question.liga;
 
   # :?>
   lookup colon_question_greater.liga {
-    ignore sub colon colon' question greater;
-    ignore sub colon' question greater greater;
+    ignore sub colon colon' @Question greater;
+    ignore sub colon' @Question greater greater;
     sub SPC SPC greater' by colon_question_greater.liga;
-    sub SPC question' greater by SPC;
-    sub colon' question greater by SPC;
+    sub SPC @Question' greater by SPC;
+    sub colon' @Question greater by SPC;
   } colon_question_greater.liga;
 
   @IgnoreColon = [less colon greater equal];
@@ -321,7 +323,7 @@ feature calt {
 
   # :=
   lookup colon_equal.liga {
-    ignore sub [@IgnoreColon question] colon' equal;
+    ignore sub [@IgnoreColon @Question] colon' equal;
     ignore sub colon' equal [equal colon];
     sub SPC equal' by colon_equal.liga;
     sub colon' equal by SPC;
@@ -330,7 +332,7 @@ feature calt {
   # =:
   lookup equal_colon.liga {
     ignore sub @IgnoreColon equal' colon;
-    ignore sub parenleft question equal' colon;
+    ignore sub parenleft @Question equal' colon;
     ignore sub equal' colon [equal colon];
     sub SPC colon' by equal_colon.liga;
     sub equal' colon by SPC;
@@ -338,9 +340,9 @@ feature calt {
 
   # :=:
   lookup colon_equal_colon.liga {
-    ignore sub [@IgnoreColon question] colon' equal colon;
-    ignore sub parenleft question colon' equal colon;
-    ignore sub colon' equal colon [@IgnoreColon question];
+    ignore sub [@IgnoreColon @Question] colon' equal colon;
+    ignore sub parenleft @Question colon' equal colon;
+    ignore sub colon' equal colon [@IgnoreColon @Question];
     sub SPC SPC colon' by colon_equal_colon.liga;
     sub SPC equal' colon by SPC;
     sub colon' equal colon by SPC;
@@ -350,7 +352,7 @@ feature calt {
   lookup equal_colon_equal.liga {
     ignore sub equal equal' colon equal;
     ignore sub equal' colon equal equal;
-    ignore sub parenleft question equal' colon equal;
+    ignore sub parenleft @Question equal' colon equal;
     sub SPC SPC equal' by equal_colon_equal.liga;
     sub SPC colon' equal by SPC;
     sub equal' colon equal by SPC;
@@ -441,8 +443,8 @@ feature calt {
 
   # #?
   lookup numbersign_question.liga {
-    ignore sub numbersign numbersign' question;
-    ignore sub numbersign' question question;
+    ignore sub numbersign numbersign' @Question;
+    ignore sub numbersign' @Question @Question;
     sub SPC question' by numbersign_question.liga;
     sub numbersign' question by SPC;
   } numbersign_question.liga;
@@ -663,8 +665,8 @@ feature calt {
   lookup exclam_exclam.liga {
     ignore sub exclam exclam' exclam;
     ignore sub exclam' exclam exclam;
-    ignore sub parenleft question exclam' exclam;
-    ignore sub parenleft question less exclam' exclam;
+    ignore sub parenleft @Question exclam' exclam;
+    ignore sub parenleft @Question less exclam' exclam;
     sub SPC exclam' by exclam_exclam.liga;
     sub exclam' exclam by SPC;
   } exclam_exclam.liga;
@@ -679,19 +681,19 @@ feature calt {
 
   # ??
   lookup question_question.liga {
-    ignore sub question question' question;
-    ignore sub question' question question;
-    sub SPC question' by question_question.liga;
-    sub question' question by SPC;
+    ignore sub @Question @Question' @Question;
+    ignore sub @Question' @Question @Question;
+    sub SPC @Question' by question_question.liga;
+    sub @Question' @Question by SPC;
   } question_question.liga;
 
   # ???
   lookup question_question_question.liga {
-    ignore sub question question' question question;
-    ignore sub question' question question question;
-    sub SPC SPC question' by question_question_question.liga;
-    sub SPC question' question by SPC;
-    sub question' question question by SPC;
+    ignore sub @Question @Question' @Question @Question;
+    ignore sub @Question' @Question @Question @Question;
+    sub SPC SPC @Question' by question_question_question.liga;
+    sub SPC @Question' @Question by SPC;
+    sub @Question' @Question @Question by SPC;
   } question_question_question.liga;
 
   # &&
@@ -775,7 +777,7 @@ feature calt {
     ignore sub [less hyphen] hyphen' hyphen;
     ignore sub less [numbersign exclam] hyphen' hyphen;
     ignore sub hyphen' hyphen [hyphen greater];
-    ignore sub parenleft question less exclam hyphen' hyphen;
+    ignore sub parenleft @Question less exclam hyphen' hyphen;
     ignore sub [less hyphen] hyphen' hyphen;
     sub SPC hyphen' by hyphen_hyphen.liga;
     sub hyphen' hyphen by SPC;
@@ -811,7 +813,7 @@ feature calt {
   # ..
   lookup period_period.liga {
     ignore sub period period' period;
-    ignore sub period' period [period less question];
+    ignore sub period' period [period less @Question];
     sub SPC period' by period_period.liga;
     sub period' period by SPC;
   } period_period.liga;
@@ -819,7 +821,7 @@ feature calt {
   # ...
   lookup period_period_period.liga {
     ignore sub period period' period period;
-    ignore sub period' period period [period less question];
+    ignore sub period' period period [period less @Question];
     sub SPC SPC period' by period_period_period.liga;
     sub SPC period' period by SPC;
     sub period' period period by SPC;
@@ -827,18 +829,18 @@ feature calt {
 
   # .?
   lookup period_question.liga {
-    ignore sub period period' question;
-    ignore sub period' question question;
-    sub SPC question' by period_question.liga;
-    sub period' question by SPC;
+    ignore sub period period' @Question;
+    ignore sub period' @Question @Question;
+    sub SPC @Question' by period_question.liga;
+    sub period' @Question by SPC;
   } period_question.liga;
 
   # ?.
   lookup question_period.liga {
-    ignore sub question question' period;
-    ignore sub question' period [period equal question];
+    ignore sub @Question @Question' period;
+    ignore sub @Question' period [period equal @Question];
     sub SPC period' by question_period.liga;
-    sub question' period by SPC;
+    sub @Question' period by SPC;
   } question_period.liga;
 
   # ..<
@@ -943,7 +945,7 @@ feature calt {
   lookup less_equal_greater.liga {
     ignore sub less less' equal greater;
     ignore sub less' equal greater greater;
-    ignore sub parenleft question less' equal greater;
+    ignore sub parenleft @Question less' equal greater;
     sub SPC SPC greater' by less_equal_greater.liga;
     sub SPC equal' greater by SPC;
     sub less' equal greater by SPC;
@@ -953,7 +955,7 @@ feature calt {
   lookup less_equal_equal_greater.liga {
     ignore sub less less' equal equal greater;
     ignore sub less' equal equal greater greater;
-    ignore sub parenleft question less' equal equal greater;
+    ignore sub parenleft @Question less' equal equal greater;
     sub SPC SPC SPC greater' by less_equal_equal_greater.liga;
     sub SPC SPC equal' greater by SPC;
     sub SPC equal' equal greater by SPC;
@@ -963,7 +965,7 @@ feature calt {
   # >=
   lookup greater_equal.liga {
     ignore sub [greater equal] greater' equal;
-    ignore sub greater' equal [less greater equal question @NormalSeparator];
+    ignore sub greater' equal [less greater equal @Question @NormalSeparator];
     sub SPC equal' by greater_equal.liga;
     sub greater' equal by SPC;
   } greater_equal.liga;
@@ -972,7 +974,7 @@ feature calt {
   lookup less_equal.liga {
     ignore sub [less equal] less' equal;
     ignore sub less' equal [less greater equal @NormalSeparator];
-    ignore sub parenleft question less' equal;
+    ignore sub parenleft @Question less' equal;
     sub SPC equal' by less_equal.liga;
     sub less' equal by SPC;
   } less_equal.liga;
@@ -981,7 +983,7 @@ feature calt {
   lookup less_equal_equal.liga {
     ignore sub less less' equal equal;
     ignore sub less' equal equal [equal greater];
-    ignore sub parenleft question less' equal equal;
+    ignore sub parenleft @Question less' equal equal;
     sub SPC SPC equal' by less_equal_equal.liga;
     sub SPC equal' equal by SPC;
     sub less' equal equal by SPC;
@@ -991,8 +993,8 @@ feature calt {
   lookup equal_equal_greater.liga {
     ignore sub [bracketleft equal] equal' equal greater;
     ignore sub equal' equal greater greater;
-    ignore sub parenleft question less equal' equal greater;
-    ignore sub parenleft question equal' equal greater;
+    ignore sub parenleft @Question less equal' equal greater;
+    ignore sub parenleft @Question equal' equal greater;
     sub SPC SPC greater' by equal_equal_greater.liga;
     sub SPC equal' greater by SPC;
     sub equal' equal greater by SPC;
@@ -1002,8 +1004,8 @@ feature calt {
   lookup equal_greater.liga {
     ignore sub [bracketleft equal greater bar] equal' greater;
     ignore sub equal' greater [equal greater];
-    ignore sub parenleft question less equal' greater;
-    ignore sub parenleft question equal' greater;
+    ignore sub parenleft @Question less equal' greater;
+    ignore sub parenleft @Question equal' greater;
     sub SPC greater' by equal_greater.liga;
     sub equal' greater by SPC;
   } equal_greater.liga;
@@ -1012,7 +1014,7 @@ feature calt {
   lookup less_equal_less.liga {
     ignore sub [less equal] less' equal less;
     ignore sub less' equal less [less equal @Var];
-    ignore sub parenleft question less' equal less;
+    ignore sub parenleft @Question less' equal less;
     sub SPC SPC less' by less_equal_less.liga;
     sub SPC equal' less by SPC;
     sub less' equal less by SPC;
@@ -1031,7 +1033,7 @@ feature calt {
   lookup less_equal_bar.liga {
     ignore sub less less' equal bar;
     ignore sub less' equal bar [less greater equal @NormalSeparator];
-    ignore sub parenleft question less' equal bar;
+    ignore sub parenleft @Question less' equal bar;
     sub SPC SPC bar' by less_equal_bar.liga;
     sub SPC equal' bar by SPC;
     sub less' equal bar by SPC;
@@ -1050,8 +1052,8 @@ feature calt {
   lookup equal_equal.liga {
     ignore sub [equal exclam] equal' equal;
     ignore sub equal' equal [equal greater];
-    ignore sub parenleft question equal' equal;
-    ignore sub parenleft question less equal' equal;
+    ignore sub parenleft @Question equal' equal;
+    ignore sub parenleft @Question less equal' equal;
     sub SPC equal' by equal_equal.liga;
     sub equal' equal by SPC;
   } equal_equal.liga;
@@ -1060,8 +1062,8 @@ feature calt {
   lookup equal_equal_equal.liga {
     ignore sub equal equal' equal equal;
     ignore sub equal' equal equal [equal greater];
-    ignore sub parenleft question equal' equal equal;
-    ignore sub parenleft question less equal' equal equal;
+    ignore sub parenleft @Question equal' equal equal;
+    ignore sub parenleft @Question less equal' equal equal;
     sub SPC SPC equal' by equal_equal_equal.liga;
     sub SPC equal' equal by SPC;
     sub equal' equal equal by SPC;
@@ -1071,8 +1073,8 @@ feature calt {
   lookup exclam_equal.liga {
     ignore sub [exclam equal] exclam' equal;
     ignore sub exclam' equal equal;
-    ignore sub parenleft question exclam' equal;
-    ignore sub parenleft question less exclam' equal;
+    ignore sub parenleft @Question exclam' equal;
+    ignore sub parenleft @Question less exclam' equal;
     sub SPC equal' by exclam_equal.liga;
     sub exclam' equal by SPC;
   } exclam_equal.liga;
@@ -1081,8 +1083,8 @@ feature calt {
   lookup exclam_equal_equal.liga {
     ignore sub [exclam equal] exclam' equal equal;
     ignore sub exclam' equal equal equal;
-    ignore sub parenleft question exclam' equal equal;
-    ignore sub parenleft question less exclam' equal equal;
+    ignore sub parenleft @Question exclam' equal equal;
+    ignore sub parenleft @Question less exclam' equal equal;
     sub SPC SPC equal' by exclam_equal_equal.liga;
     sub SPC equal' equal by SPC;
     sub exclam' equal equal by SPC;
@@ -1092,8 +1094,8 @@ feature calt {
   lookup equal_slash_equal.liga {
     ignore sub equal equal' slash equal;
     ignore sub equal' slash equal equal;
-    ignore sub parenleft question equal' slash equal;
-    ignore sub parenleft question less equal' slash equal;
+    ignore sub parenleft @Question equal' slash equal;
+    ignore sub parenleft @Question less equal' slash equal;
     sub SPC SPC equal' by equal_slash_equal.liga;
     sub SPC slash' equal by SPC;
     sub equal' slash equal by SPC;
@@ -1103,8 +1105,8 @@ feature calt {
   lookup equal_exclam_equal.liga {
     ignore sub equal equal' exclam equal;
     ignore sub equal' exclam equal equal;
-    ignore sub parenleft question equal' exclam equal;
-    ignore sub parenleft question less equal' exclam equal;
+    ignore sub parenleft @Question equal' exclam equal;
+    ignore sub parenleft @Question less equal' exclam equal;
     sub SPC SPC equal' by equal_exclam_equal.liga;
     sub SPC exclam' equal by SPC;
     sub equal' exclam equal by SPC;
@@ -1114,7 +1116,7 @@ feature calt {
   lookup equal_less_equal.liga {
     ignore sub [equal greater less bar] equal' less equal;
     ignore sub equal' less equal [equal less greater];
-    ignore sub parenleft question equal' greater equal;
+    ignore sub parenleft @Question equal' greater equal;
     sub SPC SPC equal' by equal_less_equal.liga;
     sub SPC less' equal by SPC;
     sub equal' less equal by SPC;
@@ -1124,7 +1126,7 @@ feature calt {
   lookup equal_greater_equal.liga {
     ignore sub [equal greater less bar] equal' greater equal;
     ignore sub equal' greater equal [equal less greater];
-    ignore sub parenleft question equal' greater equal;
+    ignore sub parenleft @Question equal' greater equal;
     sub SPC SPC equal' by equal_greater_equal.liga;
     sub SPC greater' equal by SPC;
     sub equal' greater equal by SPC;
@@ -1150,7 +1152,7 @@ feature calt {
   # \\ \' \.
   lookup escape {
 
-    @Escape = [braceleft braceright bracketleft bracketright parenleft parenright less greater period comma hyphen underscore equal plus colon semicolon question exclam at numbersign dollar percent asciicircum ampersand asterisk quotesingle quotedbl slash backslash bar grave asciitilde];
+    @Escape = [braceleft braceright bracketleft bracketright parenleft parenright less greater period comma hyphen underscore equal plus colon semicolon question exclam at numbersign dollar percent asciicircum ampersand asterisk quotesingle quotedbl slash backslash bar grave asciitilde @Comma @Question];
     ignore sub backslash.liga backslash' @Escape;
     ignore sub backslash' percent percent;
     sub backslash' @Escape by backslash.liga;
@@ -1160,7 +1162,7 @@ feature calt {
   lookup less_exclam_hyphen_hyphen.liga {
     ignore sub less less' exclam hyphen hyphen;
     ignore sub less' exclam hyphen hyphen hyphen;
-    ignore sub parenleft question less' exclam hyphen hyphen;
+    ignore sub parenleft @Question less' exclam hyphen hyphen;
     sub SPC SPC SPC hyphen' by less_exclam_hyphen_hyphen.liga;
     sub SPC SPC hyphen' hyphen by SPC;
     sub SPC exclam' hyphen hyphen by SPC;
@@ -1348,7 +1350,7 @@ feature calt {
 
   # _|_
   lookup underscore_bar_underscore.liga {
-    ignore sub [underscore bracketleft comma] underscore' bar underscore;
+    ignore sub [underscore bracketleft @Comma] underscore' bar underscore;
     ignore sub underscore' bar underscore underscore;
     sub SPC SPC underscore' by underscore_bar_underscore.liga;
     sub SPC bar' underscore by SPC;
@@ -1782,20 +1784,41 @@ feature cv04 {
 
 } cv04;
 
-feature cv05 {
+feature cv61 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV05: Alternative , and ; with straight tail";
+      name "CV61: Alternative , and ; with straight tail";
     };
   };
 
-  sub comma by comma.cv05;
-  sub semicolon by semicolon.cv05;
-  sub semicolon_semicolon.liga by semicolon_semicolon.liga.cv05;
-  sub semicolon_semicolon_semicolon.liga by semicolon_semicolon_semicolon.liga.cv05;
+  sub comma by comma.cv61;
+  sub semicolon by semicolon.cv61;
+  sub semicolon_semicolon.liga by semicolon_semicolon.liga.cv61;
+  sub semicolon_semicolon_semicolon.liga by semicolon_semicolon_semicolon.liga.cv61;
 
-} cv05;
+} cv61;
+
+feature cv62 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV62: Alternative ? with larger openings";
+    };
+  };
+
+  sub question by question.cv62;
+  sub questiondown by questiondown.cv62;
+  sub question_question.liga by question_question.liga.cv62;
+  sub question_question_question.liga by question_question_question.liga.cv62;
+  sub question_colon.liga by question_colon.liga.cv62;
+  sub colon_question.liga by colon_question.liga.cv62;
+  sub colon_question_greater.liga by colon_question_greater.liga.cv62;
+  sub question_period.liga by question_period.liga.cv62;
+  sub period_question.liga by period_question.liga.cv62;
+  sub numbersign_question.liga by numbersign_question.liga.cv62;
+
+} cv62;
 
 feature cv31 {
 
@@ -2249,7 +2272,7 @@ feature ss08 {
   # =<<
   lookup equal_less_less.ss08 {
     ignore sub equal equal' less less;
-    ignore sub parenleft question equal' less less;
+    ignore sub parenleft @Question equal' less less;
     ignore sub equal' less less less;
     sub SPC SPC less_less.liga' by equal_less_less.ss08;
     sub equal' SPC less_less.liga by SPC;
@@ -2261,7 +2284,7 @@ feature ss08 {
   # =>>
   lookup equal_greater_greater.ss08 {
     ignore sub equal equal' greater greater;
-    ignore sub parenleft question equal' greater greater;
+    ignore sub parenleft @Question equal' greater greater;
     ignore sub equal' greater greater greater;
     sub SPC SPC greater_greater.liga' by equal_greater_greater.ss08;
     sub equal' SPC greater_greater.liga by SPC;
@@ -2273,7 +2296,7 @@ feature ss08 {
   # -<
   lookup hyphen_less.ss08 {
     ignore sub [greater less hyphen] hyphen' less;
-    ignore sub hyphen' less [less slash question];
+    ignore sub hyphen' less [less slash @Question];
     sub SPC less' by hyphen_less.ss08;
     sub hyphen' less by SPC;
   } hyphen_less.ss08;
