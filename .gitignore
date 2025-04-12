@@ -10,3 +10,4 @@ __pycache__
 .venv
 .vscode
 uv.lock
+*.backup
