@@ -1,14 +1,10 @@
 import source.py.feature.ast as ast
+from source.py.feature.cv.const import GLYPHS_L, GLYPHS_ONE
 
 
 def cv35_subst():
     base_glyphs = [
-        "l",
-        "lacute",
-        "lcaron",
-        "lcommaaccent",
-        "ldot",
-        "lslash",
+        *GLYPHS_L,
         ast.gly("Cl"),
         ast.gly("al"),
         ast.gly("cl"),
@@ -57,7 +53,7 @@ def cv35_subst():
             ]
         )
 
-    result.append([ast.subst(None, "one.cv04", None, "one")])
+    result += ast.subst_map(GLYPHS_ONE, source_suffix=".cv04")
 
     return result
 

@@ -1,24 +1,10 @@
 import source.py.feature.ast as ast
+from source.py.feature.cv.const import GLYPHS_I
 
 
 def cv03_subst():
     return ast.subst_map(
-        [
-            "i",
-            "iacute",
-            "ibreve",
-            "icaron",
-            "icircumflex",
-            "idieresis",
-            "idotaccent",
-            "idotbelow",
-            "idotless",
-            "igrave",
-            "ihookabove",
-            "imacron",
-            "iogonek",
-            "itilde",
-        ],
+        GLYPHS_I,
         target_suffix=".cv03",
     )
 

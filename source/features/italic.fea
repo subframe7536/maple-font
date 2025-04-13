@@ -1889,6 +1889,7 @@ feature cv33 {
   sub icaron by icaron.cv33;
   sub icircumflex by icircumflex.cv33;
   sub idieresis by idieresis.cv33;
+  sub idotaccent by idotaccent.cv33;
   sub idotbelow by idotbelow.cv33;
   sub idotless by idotless.cv33;
   sub igrave by igrave.cv33;
@@ -1974,6 +1975,10 @@ feature cv35 {
   sub i_l_l.liga.cv33 by i_l_l.liga.cv33.cv35;
   sub i_l_l.liga.cv04.cv33 by i_l_l.liga.cv33.cv35;
   sub one.cv04 by one;
+  sub one.dnom.cv04 by one.dnom;
+  sub one.numr.cv04 by one.numr;
+  sub oneinferior.cv04 by oneinferior;
+  sub onesuperior.cv04 by onesuperior;
 
 } cv35;
 

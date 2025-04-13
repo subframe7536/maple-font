@@ -1,18 +1,10 @@
 import source.py.feature.ast as ast
+from source.py.feature.cv.const import GLYPHS_G
 
 
 def cv05_subst():
     return ast.subst_map(
-        [
-
-            "g",
-            "gacute",
-            "gbreve",
-            "gcaron",
-            "gcircumflex",
-            "gcommaaccent",
-            "gdotaccent",
-        ],
+        GLYPHS_G,
         target_suffix=".cv05",
     )
 

@@ -1,35 +1,10 @@
 import source.py.feature.ast as ast
+from source.py.feature.cv.const import GLYPHS_A
 
 
 def cv02_subst():
     return ast.subst_map(
-        [
-            "a",
-            "aacute",
-            "abreve",
-            "abreveacute",
-            "abrevedotbelow",
-            "abrevegrave",
-            "abrevehookabove",
-            "abrevetilde",
-            "acaron",
-            "acircumflex",
-            "acircumflexacute",
-            "acircumflexdotbelow",
-            "acircumflexgrave",
-            "acircumflexhookabove",
-            "acircumflextilde",
-            "adieresis",
-            "adotbelow",
-            "agrave",
-            "ahookabove",
-            "amacron",
-            "aogonek",
-            "aring",
-            "atilde",
-            "a-cy",
-            "ordfeminine",
-        ],
+        GLYPHS_A,
         target_suffix=".cv02",
     )
 
