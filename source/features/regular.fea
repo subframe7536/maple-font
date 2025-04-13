@@ -15,7 +15,7 @@
 @F = [F f];
 @G = [G g g.cv05];
 @H = [H h];
-@I = [I i i.cv03];
+@I = [I i i.cv03 i.cv06];
 @J = [J j];
 @K = [K k];
 @L = [L l l.cv04];
@@ -1698,6 +1698,8 @@ feature cv03 {
   sub imacron by imacron.cv03;
   sub iogonek by iogonek.cv03;
   sub itilde by itilde.cv03;
+  sub idotbelowdotless by idotbelowdotless.cv03;
+  sub iogonekdotless by iogonekdotless.cv03;
 
 } cv03;
 
@@ -1740,6 +1742,49 @@ feature cv05 {
   sub gdotaccent by gdotaccent.cv05;
 
 } cv05;
+
+feature cv06 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV06: Alternative i without bottom bar, no effect on italic i";
+    };
+  };
+
+  sub i by i.cv06;
+  sub iacute by iacute.cv06;
+  sub ibreve by ibreve.cv06;
+  sub icaron by icaron.cv06;
+  sub icircumflex by icircumflex.cv06;
+  sub idieresis by idieresis.cv06;
+  sub idotaccent by idotaccent.cv06;
+  sub idotbelow by idotbelow.cv06;
+  sub idotless by idotless.cv06;
+  sub igrave by igrave.cv06;
+  sub ihookabove by ihookabove.cv06;
+  sub imacron by imacron.cv06;
+  sub iogonek by iogonek.cv06;
+  sub itilde by itilde.cv06;
+  sub idotbelowdotless by idotbelowdotless.cv06;
+  sub iogonekdotless by iogonekdotless.cv06;
+  sub i.cv03 by i.cv06;
+  sub iacute.cv03 by iacute.cv06;
+  sub ibreve.cv03 by ibreve.cv06;
+  sub icaron.cv03 by icaron.cv06;
+  sub icircumflex.cv03 by icircumflex.cv06;
+  sub idieresis.cv03 by idieresis.cv06;
+  sub idotaccent.cv03 by idotaccent.cv06;
+  sub idotbelow.cv03 by idotbelow.cv06;
+  sub idotless.cv03 by idotless.cv06;
+  sub igrave.cv03 by igrave.cv06;
+  sub ihookabove.cv03 by ihookabove.cv06;
+  sub imacron.cv03 by imacron.cv06;
+  sub iogonek.cv03 by iogonek.cv06;
+  sub itilde.cv03 by itilde.cv06;
+  sub idotbelowdotless.cv03 by idotbelowdotless.cv06;
+  sub iogonekdotless.cv03 by iogonekdotless.cv06;
+
+} cv06;
 
 feature cv61 {
 

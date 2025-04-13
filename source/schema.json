@@ -63,6 +63,10 @@
           "description": "Alternative 'g' in double story style, no effect on italic 'g'",
           "$ref": "#/definitions/freeze_options"
         },
+        "cv06": {
+          "description": "Alternative 'i' without bottom bar, no effect on italic 'i'",
+          "$ref": "#/definitions/freeze_options"
+        },
         "cv31": {
           "description": "Alternative italic 'a' with top arm",
           "$ref": "#/definitions/freeze_options"
@@ -93,6 +97,10 @@
         },
         "cv38": {
           "description": "Alternative italic 'g' in double story style",
+          "$ref": "#/definitions/freeze_options"
+        },
+        "cv39": {
+          "description": "Alternative Italic 'i' without bottom bar",
           "$ref": "#/definitions/freeze_options"
         },
         "cv61": {

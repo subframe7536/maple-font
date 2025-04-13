@@ -15,7 +15,7 @@
 @F = [F f f.cv32];
 @G = [G g g.cv38];
 @H = [H h];
-@I = [I i i.cv33];
+@I = [I i i.cv33 i.cv39];
 @J = [J j j.cv33];
 @K = [K k k.cv34];
 @L = [L l l.cv35];
@@ -1897,6 +1897,8 @@ feature cv33 {
   sub imacron by imacron.cv33;
   sub iogonek by iogonek.cv33;
   sub itilde by itilde.cv33;
+  sub idotbelowdotless by idotbelowdotless.cv33;
+  sub iogonekdotless by iogonekdotless.cv33;
   sub j by j.cv33;
   sub jcircumflex by jcircumflex.cv33;
   sub jdotless by jdotless.cv33;
@@ -2034,6 +2036,59 @@ feature cv38 {
   sub gdotaccent by gdotaccent.cv38;
 
 } cv38;
+
+feature cv39 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV39: Alternative Italic i without bottom bar";
+    };
+  };
+
+  sub i by i.cv39;
+  sub iacute by iacute.cv39;
+  sub ibreve by ibreve.cv39;
+  sub icaron by icaron.cv39;
+  sub icircumflex by icircumflex.cv39;
+  sub idieresis by idieresis.cv39;
+  sub idotaccent by idotaccent.cv39;
+  sub idotbelow by idotbelow.cv39;
+  sub idotless by idotless.cv39;
+  sub igrave by igrave.cv39;
+  sub ihookabove by ihookabove.cv39;
+  sub imacron by imacron.cv39;
+  sub iogonek by iogonek.cv39;
+  sub itilde by itilde.cv39;
+  sub idotbelowdotless by idotbelowdotless.cv39;
+  sub iogonekdotless by iogonekdotless.cv39;
+  sub i.cv33 by i.cv39;
+  sub iacute.cv33 by iacute.cv39;
+  sub ibreve.cv33 by ibreve.cv39;
+  sub icaron.cv33 by icaron.cv39;
+  sub icircumflex.cv33 by icircumflex.cv39;
+  sub idieresis.cv33 by idieresis.cv39;
+  sub idotaccent.cv33 by idotaccent.cv39;
+  sub idotbelow.cv33 by idotbelow.cv39;
+  sub idotless.cv33 by idotless.cv39;
+  sub igrave.cv33 by igrave.cv39;
+  sub ihookabove.cv33 by ihookabove.cv39;
+  sub imacron.cv33 by imacron.cv39;
+  sub iogonek.cv33 by iogonek.cv39;
+  sub itilde.cv33 by itilde.cv39;
+  sub idotbelowdotless.cv33 by idotbelowdotless.cv39;
+  sub iogonekdotless.cv33 by iogonekdotless.cv39;
+  sub i_l.liga by i_l.liga.cv39;
+  sub i_l_l.liga by i_l_l.liga.cv39;
+  sub i_l.liga.cv04 by i_l.liga.cv04.cv39;
+  sub i_l_l.liga.cv04 by i_l_l.liga.cv04.cv39;
+  sub i_l.liga.cv33 by i_l.liga.cv33.cv39;
+  sub i_l_l.liga.cv33 by i_l_l.liga.cv33.cv39;
+  sub i_l.liga.cv04.cv33 by i_l.liga.cv04.cv33.cv39;
+  sub i_l_l.liga.cv04.cv33 by i_l_l.liga.cv04.cv33.cv39;
+  sub i_l.liga.cv33.cv35 by i_l.liga.cv33.cv35.cv39;
+  sub i_l_l.liga.cv33.cv35 by i_l_l.liga.cv33.cv35.cv39;
+
+} cv39;
 
 feature ss01 {
 
@@ -2195,6 +2250,8 @@ feature ss06 {
   sub e_l_l.liga by e_l_l.liga.ss06;
   sub i_l_l.liga by i_l_l.liga.ss06;
   sub i_l_l.liga.cv33 by i_l_l.liga.cv33.ss06;
+  sub i_l_l.liga.cv39 by i_l_l.liga.cv39.ss06;
+  sub i_l_l.liga.cv33.cv39 by i_l_l.liga.cv33.cv39.ss06;
   sub u_l_l.liga by u_l_l.liga.ss06;
   sub f_f.liga by f_f.liga.ss06;
   sub f_f.liga.cv32 by f_f.liga.cv32.ss06;

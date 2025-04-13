@@ -41,6 +41,8 @@ GLYPHS_I = [
     "imacron",
     "iogonek",
     "itilde",
+    "idotbelowdotless",
+    "iogonekdotless",
 ]
 
 GLYPHS_L = [

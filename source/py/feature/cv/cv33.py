@@ -3,16 +3,21 @@ from source.py.feature.cv.const import GLYPHS_I
 
 
 def cv33_subst():
+    def gen(*suffix_list: str):
+        result: list[str] = []
+
+        for suf in suffix_list:
+            result.append(ast.gly("il", suf))
+            result.append(ast.gly("ill", suf))
+
+        return result
     return ast.subst_map(
         [
             *GLYPHS_I,
             "j",
             "jcircumflex",
             "jdotless",
-            ast.gly("il"),
-            ast.gly("ill"),
-            ast.gly("il", ".cv04"),
-            ast.gly("ill", ".cv04"),
+            *gen("", ".cv04"),
         ],
         target_suffix=".cv33",
     )

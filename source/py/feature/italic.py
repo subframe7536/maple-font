@@ -12,6 +12,7 @@ from source.py.feature.cv import (
     cv36,
     cv37,
     cv38,
+    cv39,
     cv61,
     cv62,
     cv96,
@@ -32,7 +33,7 @@ cls_e = ast.Clazz("E", ["E", "e"])
 cls_f = ast.Clazz("F", ["F", "f", "f.cv32"])
 cls_g = ast.Clazz("G", ["G", "g", "g.cv38"])
 cls_h = ast.Clazz("H", ["H", "h"])
-cls_i = ast.Clazz("I", ["I", "i", "i.cv33"])
+cls_i = ast.Clazz("I", ["I", "i", "i.cv33", "i.cv39"])
 cls_j = ast.Clazz("J", ["J", "j", "j.cv33"])
 cls_k = ast.Clazz("K", ["K", "k", "k.cv34"])
 cls_l = ast.Clazz("L", ["L", "l", "l.cv35"])
@@ -119,6 +120,7 @@ cv_list_italic = [
     cv36.cv36_feat_italic,
     cv37.cv37_feat_italic,
     cv38.cv38_feat_italic,
+    cv39.cv39_feat_italic,
 ]
 
 cv_list_cn = [
