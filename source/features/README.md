@@ -192,6 +192,7 @@ fixme))
 - cv02: Alternative `a` with top arm, no effect on italic `a`
 - cv03: Alternative `i` without left bottom bar
 - cv04: Alternative `l` with left bottom bar, like consolas, will be overrided by `cv35` in italic style
+- cv05: Alternative `g` in double story style, no effect on italic `g`
 - cv61: Alternative `,` and `;` with straight tail
 - cv62: Alternative `?` with larger openings
 - zero: Dot style `0`
@@ -209,6 +210,7 @@ fixme))
 - cv35: Alternative Italic `l` without center tail
 - cv36: Alternative Italic `x` without top and bottom tails
 - cv37: Alternative Italic `y` with straight intersection
+- cv38: Alternative italic `g` in double story style
 <!-- CV-IT -->
 
 #### CN Only

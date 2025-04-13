@@ -1721,6 +1721,24 @@ feature cv04 {
 
 } cv04;
 
+feature cv05 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV05: Alternative g in double story style, no effect on italic g";
+    };
+  };
+
+  sub g by g.cv05;
+  sub gacute by gacute.cv05;
+  sub gbreve by gbreve.cv05;
+  sub gcaron by gcaron.cv05;
+  sub gcircumflex by gcircumflex.cv05;
+  sub gcommaaccent by gcommaaccent.cv05;
+  sub gdotaccent by gdotaccent.cv05;
+
+} cv05;
+
 feature cv61 {
 
   cvParameters {

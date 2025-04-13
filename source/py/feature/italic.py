@@ -11,6 +11,7 @@ from source.py.feature.cv import (
     cv35,
     cv36,
     cv37,
+    cv38,
     cv61,
     cv62,
     cv96,
@@ -117,6 +118,7 @@ cv_list_italic = [
     cv35.cv35_feat_italic,
     cv36.cv36_feat_italic,
     cv37.cv37_feat_italic,
+    cv38.cv38_feat_italic,
 ]
 
 cv_list_cn = [

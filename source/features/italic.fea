@@ -2010,6 +2010,24 @@ feature cv37 {
 
 } cv37;
 
+feature cv38 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV38: Alternative italic g in double story style";
+    };
+  };
+
+  sub g by g.cv38;
+  sub gacute by gacute.cv38;
+  sub gbreve by gbreve.cv38;
+  sub gcaron by gcaron.cv38;
+  sub gcircumflex by gcircumflex.cv38;
+  sub gcommaaccent by gcommaaccent.cv38;
+  sub gdotaccent by gdotaccent.cv38;
+
+} cv38;
+
 feature ss01 {
 
   featureNames {
