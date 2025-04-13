@@ -9,6 +9,7 @@ def ss06_subst():
             ast.gly("cl"),
             ast.gly("el"),
             ast.gly("il"),
+            ast.gly("il", ".cv33"),
             ast.gly("ll"),
             ast.gly("tl"),
             ast.gly("ul"),
