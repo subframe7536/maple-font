@@ -76,3 +76,10 @@ GLYPHS_J_UPPER = [
     "J",
     "Jcircumflex",
 ]
+
+GLYPHS_R = [
+    "r",
+    "racute",
+    "rcaron",
+    "rcommaaccent",
+]

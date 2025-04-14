@@ -2067,6 +2067,21 @@ feature cv40 {
 
 } cv40;
 
+feature cv41 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV41: Alternative italic r with bottom bar";
+    };
+  };
+
+  sub r by r.cv41;
+  sub racute by racute.cv41;
+  sub rcaron by rcaron.cv41;
+  sub rcommaaccent by rcommaaccent.cv41;
+
+} cv41;
+
 feature cv61 {
 
   cvParameters {

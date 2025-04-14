@@ -1644,7 +1644,7 @@ feature cv02 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV02: Alternative a with top arm, no effect on italic a";
+      name "CV02: Alternative a with top arm, no effect in italic style";
     };
   };
 
@@ -1729,7 +1729,7 @@ feature cv05 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV05: Alternative g in double story style, no effect on italic g";
+      name "CV05: Alternative g in double story style, no effect in italic style";
     };
   };
 
@@ -1747,7 +1747,7 @@ feature cv06 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV06: Alternative i without bottom bar, no effect on italic i";
+      name "CV06: Alternative i without bottom bar, no effect in italic style";
     };
   };
 
@@ -1790,7 +1790,7 @@ feature cv07 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV07: Alternative J without top bar, no effect on italic J";
+      name "CV07: Alternative J without top bar, no effect in italic style";
     };
   };
 
@@ -1798,6 +1798,21 @@ feature cv07 {
   sub Jcircumflex by Jcircumflex.cv07;
 
 } cv07;
+
+feature cv08 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV08: Alternative r with bottom bar, no effect in italic style";
+    };
+  };
+
+  sub r by r.cv08;
+  sub racute by racute.cv08;
+  sub rcaron by rcaron.cv08;
+  sub rcommaaccent by rcommaaccent.cv08;
+
+} cv08;
 
 feature cv61 {
 

@@ -12,5 +12,5 @@ def cv07_subst():
     ]
 
 
-cv07_name = "Alternative `J` without top bar, no effect on italic `J`"
+cv07_name = "Alternative `J` without top bar, no effect in italic style"
 cv07_feat_regular = ast.CharacterVariant(7, cv07_name, cv07_subst())

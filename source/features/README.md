@@ -189,12 +189,13 @@ fixme))
 
 <!-- CV -->
 - cv01: Normalize special symbols (`@ $ & % Q => ->`)
-- cv02: Alternative `a` with top arm, no effect on italic `a`
+- cv02: Alternative `a` with top arm, no effect in italic style
 - cv03: Alternative `i` without left bottom bar
 - cv04: Alternative `l` with left bottom bar, like consolas, will be overrided by `cv35` in italic style
-- cv05: Alternative `g` in double story style, no effect on italic `g`
-- cv06: Alternative `i` without bottom bar, no effect on italic `i`
-- cv07: Alternative `J` without top bar, no effect on italic `J`
+- cv05: Alternative `g` in double story style, no effect in italic style
+- cv06: Alternative `i` without bottom bar, no effect in italic style
+- cv07: Alternative `J` without top bar, no effect in italic style
+- cv08: Alternative `r` with bottom bar, no effect in italic style
 - cv61: Alternative `,` and `;` with straight tail
 - cv62: Alternative `?` with larger openings
 - cv63: Enable `~=` as not equal to, broken by `ss01`
@@ -215,6 +216,7 @@ fixme))
 - cv38: Alternative italic `g` in double story style
 - cv39: Alternative Italic `i` without bottom bar
 - cv40: Alternative italic `J` without top bar
+- cv41: Alternative italic `r` with bottom bar
 <!-- CV-IT -->
 
 #### CN Only

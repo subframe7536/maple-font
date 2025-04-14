@@ -13,4 +13,4 @@ def cv40_subst():
 
 
 cv40_name = "Alternative italic `J` without top bar"
-cv40_feat_regular = ast.CharacterVariant(40, cv40_name, cv40_subst())
+cv40_feat_italic = ast.CharacterVariant(40, cv40_name, cv40_subst())

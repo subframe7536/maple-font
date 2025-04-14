@@ -48,7 +48,7 @@
           "$ref": "#/definitions/freeze_options"
         },
         "cv02": {
-          "description": "Alternative 'a' with top arm, no effect on italic 'a'",
+          "description": "Alternative 'a' with top arm, no effect in italic style",
           "$ref": "#/definitions/freeze_options"
         },
         "cv03": {
@@ -60,15 +60,19 @@
           "$ref": "#/definitions/freeze_options"
         },
         "cv05": {
-          "description": "Alternative 'g' in double story style, no effect on italic 'g'",
+          "description": "Alternative 'g' in double story style, no effect in italic style",
           "$ref": "#/definitions/freeze_options"
         },
         "cv06": {
-          "description": "Alternative 'i' without bottom bar, no effect on italic 'i'",
+          "description": "Alternative 'i' without bottom bar, no effect in italic style",
           "$ref": "#/definitions/freeze_options"
         },
         "cv07": {
-          "description": "Alternative 'J' without top bar, no effect on italic 'J'",
+          "description": "Alternative 'J' without top bar, no effect in italic style",
+          "$ref": "#/definitions/freeze_options"
+        },
+        "cv08": {
+          "description": "Alternative 'r' with bottom bar, no effect in italic style",
           "$ref": "#/definitions/freeze_options"
         },
         "cv31": {
@@ -109,6 +113,10 @@
         },
         "cv40": {
           "description": "Alternative italic 'J' without top bar",
+          "$ref": "#/definitions/freeze_options"
+        },
+        "cv41": {
+          "description": "Alternative italic 'r' with bottom bar",
           "$ref": "#/definitions/freeze_options"
         },
         "cv61": {
