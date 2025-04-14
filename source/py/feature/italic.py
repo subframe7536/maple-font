@@ -13,6 +13,7 @@ from source.py.feature.cv import (
     cv37,
     cv38,
     cv39,
+    cv40,
     cv61,
     cv62,
     cv96,
@@ -34,7 +35,7 @@ cls_f = ast.Clazz("F", ["F", "f", "f.cv32"])
 cls_g = ast.Clazz("G", ["G", "g", "g.cv38"])
 cls_h = ast.Clazz("H", ["H", "h"])
 cls_i = ast.Clazz("I", ["I", "i", "i.cv33", "i.cv39"])
-cls_j = ast.Clazz("J", ["J", "j", "j.cv33"])
+cls_j = ast.Clazz("J", ["J", "j", "j.cv33", "J.cv40"])
 cls_k = ast.Clazz("K", ["K", "k", "k.cv34"])
 cls_l = ast.Clazz("L", ["L", "l", "l.cv35"])
 cls_m = ast.Clazz("M", ["M", "m"])
@@ -110,8 +111,6 @@ calt_italic = get_calt(cls_var, cls_hex_letter, is_italic=True)
 cv_list_italic = [
     cv01.cv01_feat_italic,
     cv04.cv04_feat_italic,
-    cv61.cv61_feat_italic,
-    cv62.cv62_feat_italic,
     cv31.cv31_feat_italic,
     cv32.cv32_feat_italic,
     cv33.cv33_feat_italic,
@@ -121,6 +120,9 @@ cv_list_italic = [
     cv37.cv37_feat_italic,
     cv38.cv38_feat_italic,
     cv39.cv39_feat_italic,
+    cv40.cv40_feat_regular,
+    cv61.cv61_feat_italic,
+    cv62.cv62_feat_italic,
 ]
 
 cv_list_cn = [

@@ -8,6 +8,7 @@ from source.py.feature.cv import (
     cv04,
     cv05,
     cv06,
+    cv07,
     cv61,
     cv62,
     cv96,
@@ -29,7 +30,7 @@ cls_f = ast.Clazz("F", ["F", "f"])
 cls_g = ast.Clazz("G", ["G", "g", "g.cv05"])
 cls_h = ast.Clazz("H", ["H", "h"])
 cls_i = ast.Clazz("I", ["I", "i", "i.cv03", "i.cv06"])
-cls_j = ast.Clazz("J", ["J", "j"])
+cls_j = ast.Clazz("J", ["J", "j", "J.cv07"])
 cls_k = ast.Clazz("K", ["K", "k"])
 cls_l = ast.Clazz("L", ["L", "l", "l.cv04"])
 cls_m = ast.Clazz("M", ["M", "m"])
@@ -90,6 +91,7 @@ cv_list_regular = [
     cv04.cv04_feat_regular,
     cv05.cv05_feat_regular,
     cv06.cv06_feat_regular,
+    cv07.cv07_feat_regular,
     cv61.cv61_feat_regular,
     cv62.cv62_feat_regular,
 ]

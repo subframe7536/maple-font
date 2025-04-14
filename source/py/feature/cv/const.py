@@ -71,3 +71,8 @@ GLYPHS_G = [
     "gcommaaccent",
     "gdotaccent",
 ]
+
+GLYPHS_J_UPPER = [
+    "J",
+    "Jcircumflex",
+]

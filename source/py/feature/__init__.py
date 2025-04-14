@@ -67,7 +67,7 @@ def get_cv_desc():
 
 
 def get_cv_italic_desc():
-    return "\n".join([cv.desc_item() for cv in cv_list_italic if cv.id > 30])
+    return "\n".join([cv.desc_item() for cv in cv_list_italic if cv.id > 30 and cv.id < 61])
 
 
 def get_cv_cn_desc():

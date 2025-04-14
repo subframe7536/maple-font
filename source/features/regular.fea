@@ -16,7 +16,7 @@
 @G = [G g g.cv05];
 @H = [H h];
 @I = [I i i.cv03 i.cv06];
-@J = [J j];
+@J = [J j J.cv07];
 @K = [K k];
 @L = [L l l.cv04];
 @M = [M m];
@@ -1785,6 +1785,19 @@ feature cv06 {
   sub iogonekdotless.cv03 by iogonekdotless.cv06;
 
 } cv06;
+
+feature cv07 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV07: Alternative J without top bar, no effect on italic J";
+    };
+  };
+
+  sub J by J.cv07;
+  sub Jcircumflex by Jcircumflex.cv07;
+
+} cv07;
 
 feature cv61 {
 

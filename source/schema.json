@@ -67,6 +67,10 @@
           "description": "Alternative 'i' without bottom bar, no effect on italic 'i'",
           "$ref": "#/definitions/freeze_options"
         },
+        "cv07": {
+          "description": "Alternative 'J' without top bar, no effect on italic 'J'",
+          "$ref": "#/definitions/freeze_options"
+        },
         "cv31": {
           "description": "Alternative italic 'a' with top arm",
           "$ref": "#/definitions/freeze_options"
@@ -101,6 +105,10 @@
         },
         "cv39": {
           "description": "Alternative Italic 'i' without bottom bar",
+          "$ref": "#/definitions/freeze_options"
+        },
+        "cv40": {
+          "description": "Alternative italic 'J' without top bar",
           "$ref": "#/definitions/freeze_options"
         },
         "cv61": {

@@ -16,7 +16,7 @@
 @G = [G g g.cv38];
 @H = [H h];
 @I = [I i i.cv33 i.cv39];
-@J = [J j j.cv33];
+@J = [J j j.cv33 J.cv40];
 @K = [K k k.cv34];
 @L = [L l l.cv35];
 @M = [M m];
@@ -1786,42 +1786,6 @@ feature cv04 {
 
 } cv04;
 
-feature cv61 {
-
-  cvParameters {
-    FeatUILabelNameID {
-      name "CV61: Alternative , and ; with straight tail";
-    };
-  };
-
-  sub comma by comma.cv61;
-  sub semicolon by semicolon.cv61;
-  sub semicolon_semicolon.liga by semicolon_semicolon.liga.cv61;
-  sub semicolon_semicolon_semicolon.liga by semicolon_semicolon_semicolon.liga.cv61;
-
-} cv61;
-
-feature cv62 {
-
-  cvParameters {
-    FeatUILabelNameID {
-      name "CV62: Alternative ? with larger openings";
-    };
-  };
-
-  sub question by question.cv62;
-  sub questiondown by questiondown.cv62;
-  sub question_question.liga by question_question.liga.cv62;
-  sub question_question_question.liga by question_question_question.liga.cv62;
-  sub question_colon.liga by question_colon.liga.cv62;
-  sub colon_question.liga by colon_question.liga.cv62;
-  sub colon_question_greater.liga by colon_question_greater.liga.cv62;
-  sub question_period.liga by question_period.liga.cv62;
-  sub period_question.liga by period_question.liga.cv62;
-  sub numbersign_question.liga by numbersign_question.liga.cv62;
-
-} cv62;
-
 feature cv31 {
 
   cvParameters {
@@ -2089,6 +2053,55 @@ feature cv39 {
   sub i_l_l.liga.cv33.cv35 by i_l_l.liga.cv33.cv35.cv39;
 
 } cv39;
+
+feature cv40 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV40: Alternative italic J without top bar";
+    };
+  };
+
+  sub J by J.cv40;
+  sub Jcircumflex by Jcircumflex.cv40;
+
+} cv40;
+
+feature cv61 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV61: Alternative , and ; with straight tail";
+    };
+  };
+
+  sub comma by comma.cv61;
+  sub semicolon by semicolon.cv61;
+  sub semicolon_semicolon.liga by semicolon_semicolon.liga.cv61;
+  sub semicolon_semicolon_semicolon.liga by semicolon_semicolon_semicolon.liga.cv61;
+
+} cv61;
+
+feature cv62 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV62: Alternative ? with larger openings";
+    };
+  };
+
+  sub question by question.cv62;
+  sub questiondown by questiondown.cv62;
+  sub question_question.liga by question_question.liga.cv62;
+  sub question_question_question.liga by question_question_question.liga.cv62;
+  sub question_colon.liga by question_colon.liga.cv62;
+  sub colon_question.liga by colon_question.liga.cv62;
+  sub colon_question_greater.liga by colon_question_greater.liga.cv62;
+  sub question_period.liga by question_period.liga.cv62;
+  sub period_question.liga by period_question.liga.cv62;
+  sub numbersign_question.liga by numbersign_question.liga.cv62;
+
+} cv62;
 
 feature ss01 {
 
