@@ -2,6 +2,11 @@ from source.py.feature import ast
 
 
 def ss06_subst():
+    # Only handle glyphs that contains:
+    # - default letter & default `l`
+    # - default `ll`
+    # - `ff`
+    # - `tt`
     return ast.subst_map(
         [
             ast.gly("Cl"),
@@ -9,7 +14,6 @@ def ss06_subst():
             ast.gly("cl"),
             ast.gly("el"),
             ast.gly("il"),
-            ast.gly("il", ".cv33"),
             ast.gly("ll"),
             ast.gly("tl"),
             ast.gly("ul"),

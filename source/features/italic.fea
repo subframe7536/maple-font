@@ -2240,7 +2240,6 @@ feature ss06 {
   sub c_l.liga by c_l.liga.ss06;
   sub e_l.liga by e_l.liga.ss06;
   sub i_l.liga by i_l.liga.ss06;
-  sub i_l.liga.cv33 by i_l.liga.cv33.ss06;
   sub l_l.liga by l_l.liga.ss06;
   sub t_l.liga by t_l.liga.ss06;
   sub u_l.liga by u_l.liga.ss06;
