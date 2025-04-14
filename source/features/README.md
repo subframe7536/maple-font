@@ -197,6 +197,8 @@ fixme))
 - cv07: Alternative `J` without top bar, no effect on italic `J`
 - cv61: Alternative `,` and `;` with straight tail
 - cv62: Alternative `?` with larger openings
+- cv63: Enable `~=` as not equal to, broken by `ss01`
+- cv64: Enable `=~` and `!~` as approximately equal to and not equal to, broken by `ss01`
 - zero: Dot style `0`
 <!-- CV -->
 
@@ -227,7 +229,7 @@ fixme))
 ### Stylistic Sets (ssXX)
 
 <!-- SS -->
-- ss01: Broken multiple equals ligatures (`==`, `===`, `!=`, `!==`, `=/=`)
+- ss01: Broken multiple equals ligatures (`==`, `===`, `!=`, `!==` ...)
 - ss02: Broken compare and equal ligatures (`<=`, `>=`)
 - ss03: Allow to use any case in all tags
 - ss04: Broken multiple underscores ligatures (`__`, `#__`)

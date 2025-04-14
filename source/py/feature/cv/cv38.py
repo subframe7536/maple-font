@@ -2,6 +2,7 @@ import source.py.feature.ast as ast
 from source.py.feature.cv.const import GLYPHS_G
 
 
+# https://github.com/subframe7536/maple-font/issues/329
 def cv38_subst():
     return ast.subst_map(
         GLYPHS_G,

@@ -1,6 +1,7 @@
 import source.py.feature.ast as ast
 
 
+# https://github.com/subframe7536/maple-font/issues/348
 def cv62_subst():
     return ast.subst_map(
         ["?", "questiondown", "??", "???", "?:", ":?", ":?>", "?.", ".?", "#?"],

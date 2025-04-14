@@ -119,6 +119,14 @@
           "description": "Alternative '?' with larger openings",
           "$ref": "#/definitions/freeze_options"
         },
+        "cv63": {
+          "description": "Enable '~=' as not equal to, broken by 'ss01'",
+          "$ref": "#/definitions/freeze_options"
+        },
+        "cv64": {
+          "description": "Enable '=~' and '!~' as approximately equal to and not equal to, broken by 'ss01'",
+          "$ref": "#/definitions/freeze_options"
+        },
         "cv96": {
           "description": "Full width quotes ('\u201c' / '\u201d' / '\u2018' / '\u2019')",
           "$ref": "#/definitions/freeze_options"
@@ -136,7 +144,7 @@
           "$ref": "#/definitions/freeze_options"
         },
         "ss01": {
-          "description": "Broken multiple equals ligatures ('==', '===', '!=', '!==', '=/=')",
+          "description": "Broken multiple equals ligatures ('==', '===', '!=', '!==' ...)",
           "$ref": "#/definitions/freeze_options"
         },
         "ss02": {
