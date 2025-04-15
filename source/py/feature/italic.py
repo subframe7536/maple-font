@@ -17,14 +17,23 @@ from source.py.feature.cv import (
     cv41,
     cv61,
     cv62,
-    cv63,
-    cv64,
     cv96,
     cv97,
     cv98,
     cv99,
 )
-from source.py.feature.ss import ss01, ss02, ss03, ss04, ss05, ss06, ss07, ss08
+from source.py.feature.ss import (
+    ss01,
+    ss02,
+    ss03,
+    ss04,
+    ss05,
+    ss06,
+    ss07,
+    ss08,
+    ss09,
+    ss10,
+)
 from source.py.feature.base.lang import lang_list
 from source.py.feature.base.clazz import base_class_list, cls_digit
 
@@ -127,8 +136,6 @@ cv_list_italic = [
     cv41.cv41_feat_italic,
     cv61.cv61_feat_italic,
     cv62.cv62_feat_italic,
-    cv63.cv63_feat_italic,
-    cv64.cv64_feat_italic,
 ]
 
 cv_list_cn = [
@@ -147,6 +154,8 @@ ss_list_italic = [
     ss06.ss06_feat,
     ss07.ss07_feat,
     ss08.ss08_feat,
+    ss09.ss09_feat,
+    ss10.ss10_feat,
 ]
 
 feature_file_italic = ast.create(

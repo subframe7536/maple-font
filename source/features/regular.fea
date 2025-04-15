@@ -1850,50 +1850,6 @@ feature cv62 {
 
 } cv62;
 
-feature cv63 {
-
-  cvParameters {
-    FeatUILabelNameID {
-      name "CV63: Enable ~= as not equal to, broken by ss01";
-    };
-  };
-
-  # ~=
-  lookup asciitilde_equal.liga.cv63 {
-    ignore sub [asciitilde less equal] asciitilde' equal;
-    ignore sub asciitilde' equal [asciitilde equal greater less colon];
-    sub SPC equal' by asciitilde_equal.liga.cv63;
-    sub asciitilde' equal by SPC;
-  } asciitilde_equal.liga.cv63;
-
-} cv63;
-
-feature cv64 {
-
-  cvParameters {
-    FeatUILabelNameID {
-      name "CV64: Enable =~ and !~ as approximately equal to and not equal to, broken by ss01";
-    };
-  };
-
-  # =~
-  lookup equal_asciitilde.liga.cv64 {
-    ignore sub [asciitilde less greater colon equal] equal' asciitilde;
-    ignore sub equal' asciitilde [asciitilde equal greater];
-    sub SPC asciitilde' by equal_asciitilde.liga.cv64;
-    sub equal' asciitilde by SPC;
-  } equal_asciitilde.liga.cv64;
-
-  # !~
-  lookup exclam_asciitilde.liga.cv64 {
-    ignore sub exclam exclam' asciitilde;
-    ignore sub exclam' asciitilde [exclam asciitilde equal greater];
-    sub SPC asciitilde' by exclam_asciitilde.liga.cv64;
-    sub exclam' asciitilde by SPC;
-  } exclam_asciitilde.liga.cv64;
-
-} cv64;
-
 feature ss01 {
 
   featureNames {
@@ -1905,9 +1861,6 @@ feature ss01 {
   sub exclam_equal.liga by exclam_equal.liga.ss01;
   sub exclam_equal_equal.liga by exclam_equal_equal.liga.ss01;
   sub equal_slash_equal.liga by equal_slash_equal.liga.ss01;
-  sub asciitilde_equal.liga.cv63 by asciitilde_equal.liga.cv63.ss01;
-  sub equal_asciitilde.liga.cv64 by equal_asciitilde.liga.cv64.ss01;
-  sub exclam_asciitilde.liga.cv64 by exclam_asciitilde.liga.cv64.ss01;
 
 } ss01;
 
@@ -2170,3 +2123,43 @@ feature ss08 {
   } greater_hyphen.ss08;
 
 } ss08;
+
+feature ss09 {
+
+  featureNames {
+    name "SS09: Asciitilde equal as not equal to ligature";
+  };
+
+  # ~=
+  lookup asciitilde_equal.liga.ss09 {
+    ignore sub [asciitilde less equal] asciitilde' equal;
+    ignore sub asciitilde' equal [asciitilde equal greater less colon];
+    sub SPC equal' by asciitilde_equal.liga.ss09;
+    sub asciitilde' equal by SPC;
+  } asciitilde_equal.liga.ss09;
+
+} ss09;
+
+feature ss10 {
+
+  featureNames {
+    name "SS10: Approximately equal to and approximately not equal to ligatures";
+  };
+
+  # =~
+  lookup equal_asciitilde.liga.ss10 {
+    ignore sub [asciitilde less greater colon equal] equal' asciitilde;
+    ignore sub equal' asciitilde [asciitilde equal greater];
+    sub SPC asciitilde' by equal_asciitilde.liga.ss10;
+    sub equal' asciitilde by SPC;
+  } equal_asciitilde.liga.ss10;
+
+  # !~
+  lookup exclam_asciitilde.liga.ss10 {
+    ignore sub exclam exclam' asciitilde;
+    ignore sub exclam' asciitilde [exclam asciitilde equal greater];
+    sub SPC asciitilde' by exclam_asciitilde.liga.ss10;
+    sub exclam' asciitilde by SPC;
+  } exclam_asciitilde.liga.ss10;
+
+} ss10;

@@ -9,9 +9,6 @@ def ss01_subst():
             "!=",
             "!==",
             "=/=",
-            ast.gly("~=", ".cv63"),
-            ast.gly("=~", ".cv64"),
-            ast.gly("!~", ".cv64"),
         ],
         target_suffix=".ss01",
     )

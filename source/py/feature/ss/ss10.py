@@ -1,11 +1,11 @@
 import source.py.feature.ast as ast
 
 
-def cv64_subst():
+def ss10_subst():
     return [
         ast.subst_liga(
             "=~",
-            target=ast.gly("=~", ".cv64"),
+            target=ast.gly("=~", ".ss10"),
             banner=[
                 ast.ignore(ast.cls("~", "<", ">", ":", "="), "=", "~"),
                 ast.ignore(None, "=", ["~", ast.cls("~", "=", ">")]),
@@ -13,7 +13,7 @@ def cv64_subst():
         ),
         ast.subst_liga(
             "!~",
-            target=ast.gly("!~", ".cv64"),
+            target=ast.gly("!~", ".ss10"),
             banner=[
                 ast.ignore("!", "!", "~"),
                 ast.ignore(None, "!", ["~", ast.cls("!", "~", "=", ">")]),
@@ -22,7 +22,7 @@ def cv64_subst():
     ]
 
 
-cv64_name = (
-    "Enable `=~` and `!~` as approximately equal to and not equal to, broken by `ss01`"
+ss10_name = (
+    "Approximately equal to and approximately not equal to ligatures (`=~`, `!~`)"
 )
-cv64_feat_regular = cv64_feat_italic = ast.CharacterVariant(64, cv64_name, cv64_subst())
+ss10_feat = ast.StylisticSet(10, ss10_name, ss10_subst())

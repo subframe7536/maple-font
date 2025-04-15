@@ -2,10 +2,10 @@ import source.py.feature.ast as ast
 
 
 # https://github.com/subframe7536/maple-font/issues/352
-def cv63_subst():
+def ss09_subst():
     return ast.subst_liga(
         "~=",  # Lua
-        target=ast.gly("~=", ".cv63"),
+        target=ast.gly("~=", ".ss09"),
         banner=[
             ast.ignore(ast.cls("~", "<", "="), "~", "="),
             ast.ignore(None, "~", ["=", ast.cls("~", "=", ">", "<", ":")]),
@@ -13,5 +13,5 @@ def cv63_subst():
     )
 
 
-cv63_name = "Enable `~=` as not equal to, broken by `ss01`"
-cv63_feat_regular = cv63_feat_italic = ast.CharacterVariant(63, cv63_name, cv63_subst())
+ss09_name = "Asciitilde equal as not equal to ligature (`~=`)"
+ss09_feat = ast.StylisticSet(9, ss09_name, ss09_subst())

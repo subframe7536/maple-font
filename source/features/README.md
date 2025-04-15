@@ -198,8 +198,6 @@ fixme))
 - cv08: Alternative `r` with bottom bar, no effect in italic style
 - cv61: Alternative `,` and `;` with straight tail
 - cv62: Alternative `?` with larger openings
-- cv63: Enable `~=` as not equal to, broken by `ss01`
-- cv64: Enable `=~` and `!~` as approximately equal to and not equal to, broken by `ss01`
 - zero: Dot style `0`
 <!-- CV -->
 
@@ -239,4 +237,6 @@ fixme))
 - ss06: Break connected strokes between italic letters (`al`, `il`, `ull` ...)
 - ss07: Relax the conditions for multiple greaters ligatures (`>>` or `>>>`)
 - ss08: Double headed arrows and reverse arrows ligatures (`>>=`, `-<<`, `->>`, `>-` ...)
+- ss09: Asciitilde equal as not equal to ligature (`~=`)
+- ss10: Approximately equal to and approximately not equal to ligatures (`=~`, `!~`)
 <!-- SS -->
