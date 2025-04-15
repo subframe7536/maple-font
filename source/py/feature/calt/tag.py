@@ -1,7 +1,7 @@
 from source.py.feature import ast
 
 
-def upper_tag(text: str):
+def upper_badge(text: str):
     source = ["["] + [g.upper() for g in text] + ["]"]
     return ast.subst_liga(
         source,
@@ -11,7 +11,7 @@ def upper_tag(text: str):
     )
 
 
-def any_tag(text: str, cls_var: ast.Clazz):
+def any_badge(text: str, cls_var: ast.Clazz):
     glyphs_first = f"@{text[0].upper()}"
     glyphs_rest = [f"@{g.upper()}" for g in text[1:]] + [")", ")"]
     return ast.subst_liga(
@@ -23,16 +23,26 @@ def any_tag(text: str, cls_var: ast.Clazz):
     )
 
 
+# def colon_badge(text: str):
+#     return ast.subst_liga(
+#         [g.upper() for g in text] + [":"],
+#         target=f"badge_{text}.liga",
+#         lookup_name=f"badge_{text}_colon",
+#         desc=f" {text}:",
+#     )
+
+
 def get_lookup(cls_var: ast.Clazz):
     return [
-        upper_tag("trace"),
-        upper_tag("debug"),
-        upper_tag("info"),
-        upper_tag("warn"),
-        upper_tag("error"),
-        upper_tag("fatal"),
-        upper_tag("todo"),
-        upper_tag("fixme"),
-        any_tag("todo", cls_var),
-        any_tag("fixme", cls_var),
+        upper_badge("trace"),
+        upper_badge("debug"),
+        upper_badge("info"),
+        upper_badge("warn"),
+        upper_badge("error"),
+        upper_badge("fatal"),
+        upper_badge("todo"),
+        upper_badge("fixme"),
+        any_badge("todo", cls_var),
+        any_badge("fixme", cls_var),
+        # colon_badge("todo")
     ]
