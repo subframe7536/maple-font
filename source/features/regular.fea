@@ -2039,7 +2039,7 @@ feature ss05 {
 feature ss07 {
 
   featureNames {
-    name "SS07: Break connected strokes between italic letters";
+    name "SS07: Relax the conditions for multiple greaters ligatures";
   };
 
   # >>

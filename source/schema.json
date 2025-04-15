@@ -176,7 +176,7 @@
           "$ref": "#/definitions/freeze_options"
         },
         "ss07": {
-          "description": "Break connected strokes between italic letters ('>>' or '>>>')",
+          "description": "Relax the conditions for multiple greaters ligatures ('>>' or '>>>')",
           "$ref": "#/definitions/freeze_options"
         },
         "ss08": {
