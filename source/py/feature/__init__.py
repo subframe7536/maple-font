@@ -67,7 +67,9 @@ def get_cv_desc():
 
 
 def get_cv_italic_desc():
-    return "\n".join([cv.desc_item() for cv in cv_list_italic if cv.id > 30 and cv.id < 61])
+    return "\n".join(
+        [cv.desc_item() for cv in cv_list_italic if cv.id > 30 and cv.id < 61]
+    )
 
 
 def get_cv_cn_desc():
@@ -83,15 +85,28 @@ def get_ss_desc():
     return "\n".join(result.values())
 
 
+__total_feat_list = (
+    cv_list_regular + cv_list_italic + cv_list_cn + ss_list_regular + ss_list_italic
+)
+
+
 def get_total_feat() -> dict[str, str]:
     result = {}
 
-    for item in (
-        cv_list_regular + cv_list_italic + cv_list_cn + ss_list_regular + ss_list_italic
-    ):
+    for item in __total_feat_list:
         if item.tag not in result:
             result[item.tag] = item.desc.replace("`", "'")
 
     result["zero"] = zero_desc.replace("`", "'")
 
     return dict(sorted(result.items()))
+
+
+def get_freeze_moving_rules() -> list[str]:
+    result = set()
+
+    for feat in __total_feat_list:
+        if feat.has_lookup:
+            result.add(feat.tag)
+
+    return list(result)

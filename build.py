@@ -30,6 +30,7 @@ from source.py.utils import (
     merge_ttfonts,
 )
 from source.py.freeze import freeze_feature, get_freeze_config_str
+from source.py.feature import get_freeze_moving_rules
 
 FONT_VERSION = "v7.1-dev"
 # =========================================================================================
@@ -592,7 +593,7 @@ def handle_ligatures(
     freeze_feature(
         font=font,
         calt=enable_ligature,
-        moving_rules=["ss03", "ss07", "ss08"],
+        moving_rules=get_freeze_moving_rules(),
         config=freeze_config,
     )
 

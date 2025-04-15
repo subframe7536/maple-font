@@ -54,11 +54,19 @@ class Lookup:
 
 
 class Feature:
-    __slots__ = ("tag", "content")
+    __slots__ = ("tag", "content", "has_lookup")
 
     def __init__(self, tag: str, content: Clazz | Lookup | Line | list):
         self.tag = tag
         self.content = content
+        self.has_lookup = False
+        if isinstance(content, Lookup):
+            self.has_lookup = True
+        elif isinstance(content, list):
+            for item in recursive_iterate(content):
+                if isinstance(item, Lookup):
+                    self.has_lookup = True
+                    break
 
     def use(self) -> Line:
         return Line(f"feature {self.tag};")
