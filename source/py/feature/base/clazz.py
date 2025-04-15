@@ -6,6 +6,7 @@ cls_digit = ast.Clazz(
     "Digit",
     [cls_zero, cls_one, "two", "three", "four", "five", "six", "seven", "eight", "nine"],
 )
+cls_space = ast.Clazz("Space", ["space", "nbspace"])
 cls_normal_separator = ast.Clazz(
     "NormalSeparator",
     [
@@ -316,4 +317,5 @@ base_class_list = [
     cls_question,
     cls_uppercase,
     cls_normal_separator,
+    cls_space,
 ]

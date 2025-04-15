@@ -1,9 +1,8 @@
 from source.py.feature import ast
-from source.py.feature.base.clazz import cls_digit
+from source.py.feature.base.clazz import cls_digit, cls_space
 
 
 def get_lookup(cls_var: ast.Clazz):
-    cls_space = ast.Clazz("Space", ["space", "nbspace"])
     cls_leading_symbol_liga = ast.Clazz("LeadingSymbolLiga", ["++", "--", "__"])
     cls_equal_hyphen = ast.Clazz("EqualHyphen", ["=", "-"])
     cls_symbol_before_greater = ast.Clazz(
@@ -39,7 +38,6 @@ def get_lookup(cls_var: ast.Clazz):
             ],
         ),
         ast.cls_states(
-            cls_space,
             cls_leading_symbol_liga,
             cls_equal_hyphen,
             cls_symbol_before_greater,
