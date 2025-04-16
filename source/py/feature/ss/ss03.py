@@ -114,6 +114,6 @@ def ss03_subst():
         # tag_custom("_todo_", "(todo)"),
     ]
 
-
+# :TODO:
 ss03_name = "Allow to use any case in all tags"
 ss03_feat = ast.StylisticSet(3, ss03_name, ss03_subst())
