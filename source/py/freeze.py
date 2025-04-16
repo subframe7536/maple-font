@@ -1,10 +1,34 @@
+def is_enable(v):
+    return v.upper().startswith("ENABLE")
+
+
+def is_disable(v):
+    return v.upper().startswith("DISABLE")
+
+
+def is_ignore(v):
+    return v.upper().startswith("IGNORE")
+
+
 def get_freeze_config_str(feature_freeze, enable_liga):
+    invalid_items = []
+
     result = ""
     for k, v in feature_freeze.items():
-        if v == "enable":
-            result += f"+{k};"
-        elif v == "disable":
-            result += f"-{k};"
+        if isinstance(v, str):
+            if is_enable(v):
+                result += f"+{k};"
+            elif is_disable(v):
+                result += f"-{k};"
+            elif not is_ignore(v):
+                invalid_items.append((k, v))
+        else:
+            invalid_items.append((k, v))
+
+    if len(invalid_items) > 0:
+        report = ", ".join([f"{k}: {v}" for k, v in invalid_items])
+        raise TypeError(f"Invalid freeze config item: {{ {report} }}")
+
     if not enable_liga:
         result += "-calt;"
     return result
@@ -36,10 +60,10 @@ def freeze_feature(font, calt, moving_rules=[], config={}):
     # Process features
     for tag, status in config.items():
         target_feature = feature_dict.get(tag)
-        if not target_feature or status == "ignore":
+        if not target_feature or is_ignore(status):
             continue
 
-        if status == "disable":
+        if is_disable(status):
             target_feature.LookupListIndex = []
             continue
 
