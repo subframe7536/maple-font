@@ -2213,15 +2213,15 @@ feature ss03 {
     sub bracketleft' @F @A @T @A @L bracketright by SPC;
   } badge_fatal.liga.ss03;
 
-  # todo
-  lookup custom_badge_todo {
-    sub base.bg T.bg O.bg D.bg O.bg parenright' by circle_right.bg;
-    sub base.bg T.bg O.bg D.bg @O' parenright by O.bg;
-    sub base.bg T.bg O.bg @D' @O parenright by D.bg;
-    sub base.bg T.bg @O' @D @O parenright by O.bg;
-    sub base.bg @T' @O @D @O parenright by T.bg;
-    sub bracketleft' @T @O @D @O parenright by base.bg;
-  } custom_badge_todo;
+  # [todo]
+  lookup badge_todo.liga.ss03 {
+    sub SPC SPC SPC SPC SPC bracketright' by badge_todo.liga;
+    sub SPC SPC SPC SPC @O' bracketright by SPC;
+    sub SPC SPC SPC @D' @O bracketright by SPC;
+    sub SPC SPC @O' @D @O bracketright by SPC;
+    sub SPC @T' @O @D @O bracketright by SPC;
+    sub bracketleft' @T @O @D @O bracketright by SPC;
+  } badge_todo.liga.ss03;
 
   # [fixme]
   lookup badge_fixme.liga.ss03 {

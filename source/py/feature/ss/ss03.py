@@ -3,67 +3,77 @@ from source.py.feature import ast
 
 
 __map = {
-    ">": "sharp_right.bg",
-    "<": "sharp_left.bg",
-    ")": "circle_right.bg",
-    "(": "circle_left.bg",
-    "[": "base.bg",
-    "]": "base.bg",
+    "<": "sharp_start",
+    ">": "sharp_end",
+    "(": "circle_start",
+    ")": "circle_end",
+    "[": "block_start",
+    "]": "block_end",
 }
 
 
-def badge(content: str | Sequence[str | ast.Clazz], target: str):
+def tag_custom(content: str | Sequence[str | ast.Clazz], target: str):
     """
-    Generate OpenType feature file substitutions for a given content and target.
-
+    Generate custom tag lookup.
     Args:
-        content (str): The input sequence of glyphs (e.g., '[todo]', 'todo))').
-        target (str): The target string defining the letter variants (e.g., 'todo', 'warn').
-
+        content: The source glyphs to be replaced. Can be either a string or
+            a sequence of strings/ast.Clazz objects.
+        target: The target pattern to replace with. Must end with characters present
+            in the ["<", ">", "(", ")", "[", "]"]. Middle characters must be ASCII letters.
     Returns:
-        list[str]: A list of substitution rules in OpenType feature file format.
+        ast.Lookup: A Lookup object containing the substitution rules, named with pattern
+            "custom_tag_{target middle chars}".
+    Example:
+        >>> tag_custom("_TODO_", "(TODO)")
     """
-    # Split content into individual glyphs
     glyphs = list(content)
-    glyphs_len = len(glyphs)  # Total length of the content
-    target_len = len(target)  # Number of letters in the target
+    glyphs_len = len(glyphs)
+    target_len = len(target)
 
-    if target_len + 2 != glyphs_len:
+    if target_len != glyphs_len:
         raise ValueError(
-            f"Content length ({glyphs_len}) must be equal to target length ({target_len}) + 2."
+            f"length of `content` ({glyphs_len}) must be equal to length of `target` ({target_len})."
+        )
+    if target[-1] not in __map:
+        raise ValueError(
+            f"Last letter of `target` must in {list(__map.keys())}, current is '{target[-1]}'"
         )
 
-    glyph_reps = []
+    # Parse source
+    source_list = []
     for g in glyphs:
         if isinstance(g, ast.Clazz):
-            glyph_reps.append(g)
+            source_list.append(g)
         elif g.isalpha():
-            glyph_reps.append(f"@{g.upper()}")
+            source_list.append(f"@{g.upper()}")
         else:
-            glyph_reps.append(ast.gly(g))
+            source_list.append(ast.gly(g))
 
-    target_list = [
-        __map["["],
-        *[f"{t.upper()}.bg" for t in target],
-        __map[")"],
-    ]
+    # Parse target
+    target_list = []
+    for target_gly in target:
+        if target_gly in __map:
+            target_list.append(f"{__map[target_gly]}.bg")
+        elif target_gly.isalpha():
+            target_list.append(f"{target_gly.upper()}.bg")
+        else:
+            raise Exception(
+                f"All badge content must be in ASCII letters or {list(__map.keys())}, current is {target[1:-1]}"
+            )
 
     # Generate substitutions in reverse order (from last glyph to first)
     result = []
     for i in range(glyphs_len, 0, -1):
         before = target_list[: i - 1]
-        after = glyph_reps[i:] if i < glyphs_len else None
-        source = glyph_reps[i - 1]
-        replacement = target_list[i - 1]
-        result.append(ast.subst(before, source, after, replacement))
+        glyph = source_list[i - 1]
+        after = source_list[i:] if i < glyphs_len else None
+        replace = target_list[i - 1]
+        result.append(ast.subst(before, glyph, after, replace))
 
-    return ast.Lookup(name=f"custom_badge_{target}", desc=target, content=result)
-
-
-# print(ast.create([badge("(todo:", "todo")]))
+    return ast.Lookup(name=f"custom_tag_{target[1:-1]}", desc=target, content=result)
 
 
-def liga_cls(text: str):
+def tag_arbitrary(text: str):
     # There are many classes for letters, allows to use letters in any case
     # e.g. `@I @N @F @O` matches:
     #   - INFO
@@ -93,15 +103,15 @@ def liga_cls(text: str):
 
 def ss03_subst():
     return [
-        liga_cls("trace"),
-        liga_cls("debug"),
-        liga_cls("info"),
-        liga_cls("warn"),
-        liga_cls("error"),
-        liga_cls("fatal"),
-        # liga_cls("todo"),
-        badge("[todo)", "todo"),
-        liga_cls("fixme"),
+        tag_arbitrary("trace"),
+        tag_arbitrary("debug"),
+        tag_arbitrary("info"),
+        tag_arbitrary("warn"),
+        tag_arbitrary("error"),
+        tag_arbitrary("fatal"),
+        tag_arbitrary("todo"),
+        tag_arbitrary("fixme"),
+        # tag_custom("_todo_", "(todo)"),
     ]
 
 
