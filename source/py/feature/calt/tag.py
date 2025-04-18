@@ -118,6 +118,13 @@ upper_tag_text = [
     "fatal",
     "todo",
     "fixme",
+    # todo))
+    "note",
+    "hack",
+    "mark",
+    "bug",
+    "eror",
+    "warning",
 ]
 
 
