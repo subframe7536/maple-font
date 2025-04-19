@@ -203,6 +203,7 @@ fixme))
 - cv08: Alternative `r` with bottom bar, no effect in italic style
 - cv61: Alternative `,` and `;` with straight tail
 - cv62: Alternative `?` with larger openings
+- cv63: Alternative `<=` in arrow style
 - zero: Dot style `0`
 <!-- CV -->
 

@@ -12,6 +12,7 @@ from source.py.feature.cv import (
     cv08,
     cv61,
     cv62,
+    cv63,
     cv96,
     cv97,
     cv98,
@@ -107,6 +108,7 @@ cv_list_regular = [
     cv08.cv08_feat_regular,
     cv61.cv61_feat_regular,
     cv62.cv62_feat_regular,
+    cv63.cv63_feat_regular,
 ]
 
 

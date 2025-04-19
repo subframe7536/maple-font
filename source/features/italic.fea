@@ -2176,6 +2176,18 @@ feature cv62 {
 
 } cv62;
 
+feature cv63 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV63: Alternative <= in arrow style";
+    };
+  };
+
+  sub less_equal.liga by less_equal.liga.cv63;
+
+} cv63;
+
 feature ss01 {
 
   featureNames {
