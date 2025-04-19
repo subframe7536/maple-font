@@ -695,6 +695,9 @@ def rename_glyph_name(
             "uni2047.liga.cv62": "question_question.liga.cv62",
             "dotlessi": "idotless",
             "f_f": "f_f.liga",
+            "tag_uni061C.liga": "tag_mark.liga",
+            "tag_u1F5C8.liga": "tag_note.liga",
+            "tag_uni26A0.liga": "tag_warning.liga",
         },
     }
 
