@@ -80,7 +80,12 @@ def get_ss_desc():
     result = {}
     for ss in ss_list_regular + ss_list_italic:
         if ss.id not in result:
-            result[ss.id] = ss.desc_item()
+            desc = ss.desc_item()
+
+            if ss.id == 5:
+                desc = desc.replace("`\\\\`", "`\\\\\\\\`")
+
+            result[ss.id] = desc
 
     return "\n".join(sorted(result.values()))
 
