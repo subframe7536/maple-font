@@ -33,6 +33,7 @@ from source.py.feature.ss import (
     ss08,
     ss09,
     ss10,
+    ss11,
 )
 from source.py.feature.base.lang import lang_list
 from source.py.feature.base.clazz import base_class_list, cls_digit
@@ -156,6 +157,7 @@ ss_list_italic = [
     ss08.ss08_feat,
     ss09.ss09_feat,
     ss10.ss10_feat,
+    ss11.ss11_feat,
 ]
 
 feature_file_italic = ast.create(

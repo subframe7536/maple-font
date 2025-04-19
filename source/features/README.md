@@ -244,4 +244,5 @@ fixme))
 - ss08: Double headed arrows and reverse arrows ligatures (`>>=`, `-<<`, `->>`, `>-` ...)
 - ss09: Asciitilde equal as not equal to ligature (`~=`)
 - ss10: Approximately equal to and approximately not equal to ligatures (`=~`, `!~`)
+- ss11: Equal and extra punctuation ligatures (`|=`, `/=`, `?=`, `&=`, ...)
 <!-- SS -->

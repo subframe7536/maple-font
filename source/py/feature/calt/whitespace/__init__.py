@@ -38,7 +38,7 @@ def get_base_lookup():
             "||",
             banner=[
                 ast.ignore(ast.cls("-", "|", "[", "<"), "|", "|"),
-                ast.ignore(None, "|", ["|", ast.cls("|", "]", ">", "-")]),
+                ast.ignore(None, "|", ["|", ast.cls("|", "]", ">", "-", "=")]),
             ],
         ),
         ast.subst_liga(
@@ -47,7 +47,7 @@ def get_base_lookup():
             desc="??",
             banner=[
                 ast.ignore(cls_question, cls_question, cls_question),
-                ast.ignore(None, cls_question, [cls_question, cls_question]),
+                ast.ignore(None, cls_question, [cls_question, ast.cls(cls_question, "=")]),
             ],
         ),
         ast.subst_liga(
@@ -65,7 +65,7 @@ def get_base_lookup():
             "&&",
             banner=[
                 ast.ignore("&", "&", "&"),
-                ast.ignore(None, "&", ["&", "&"]),
+                ast.ignore(None, "&", ["&", ast.cls("&", "=")]),
             ],
         ),
         ast.subst_liga(

@@ -183,6 +183,10 @@
           "description": "Approximately equal to and approximately not equal to ligatures ('=~', '!~')",
           "$ref": "#/definitions/freeze_options"
         },
+        "ss11": {
+          "description": "Equal and extra punctuation ligatures ('|=', '/=', '?=', '&=', ...)",
+          "$ref": "#/definitions/freeze_options"
+        },
         "zero": {
           "description": "Dot style '0'",
           "$ref": "#/definitions/freeze_options"

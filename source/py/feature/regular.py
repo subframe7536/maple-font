@@ -17,7 +17,18 @@ from source.py.feature.cv import (
     cv98,
     cv99,
 )
-from source.py.feature.ss import ss01, ss02, ss03, ss04, ss05, ss07, ss08, ss09, ss10
+from source.py.feature.ss import (
+    ss01,
+    ss02,
+    ss03,
+    ss04,
+    ss05,
+    ss07,
+    ss08,
+    ss09,
+    ss10,
+    ss11,
+)
 from source.py.feature.base.clazz import base_class_list, cls_digit
 from source.py.feature.base.lang import lang_list
 
@@ -117,6 +128,7 @@ ss_list_regular = [
     ss08.ss08_feat,
     ss09.ss09_feat,
     ss10.ss10_feat,
+    ss11.ss11_feat,
 ]
 
 

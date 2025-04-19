@@ -5,7 +5,7 @@ def ss08_subst():
     return [
         ast.subst_liga(
             "<<-",
-            target=ast.gly("<<-", ".ss08", True),
+            target=ast.gly("<<-", ".ss08"),
             banner=[
                 ast.ignore("<", "<", ["<", "-"]),
                 ast.ignore(None, "<", ["<", "-", "-"]),
@@ -14,7 +14,7 @@ def ss08_subst():
         ),
         ast.subst_liga(
             ">>-",
-            target=ast.gly(">>-", ".ss08", True),
+            target=ast.gly(">>-", ".ss08"),
             banner=[
                 ast.ignore(">", ">", [">", "-"]),
                 ast.ignore(None, ">", [">", "-", "-"]),
@@ -23,7 +23,7 @@ def ss08_subst():
         ),
         ast.subst_liga(
             "<<=",
-            target=ast.gly("<<=", ".ss08", True),
+            target=ast.gly("<<=", ".ss08"),
             banner=[
                 ast.ignore("<", "<", ["<", "="]),
                 ast.ignore(None, "<", ["<", "=", "="]),
@@ -32,7 +32,7 @@ def ss08_subst():
         ),
         ast.subst_liga(
             ">>=",
-            target=ast.gly(">>=", ".ss08", True),
+            target=ast.gly(">>=", ".ss08"),
             banner=[
                 ast.ignore(">", ">", [">", "="]),
                 ast.ignore(None, ">", [">", "=", "="]),
@@ -41,7 +41,7 @@ def ss08_subst():
         ),
         ast.subst_liga(
             "-<<",
-            target=ast.gly("-<<", ".ss08", True),
+            target=ast.gly("-<<", ".ss08"),
             banner=[
                 ast.ignore("-", "-", ["<", "<"]),
                 ast.ignore(None, "-", ["<", "<", "<"]),
@@ -49,14 +49,14 @@ def ss08_subst():
                     [ast.SPC, ast.SPC],
                     ast.gly("<<"),
                     None,
-                    ast.gly("-<<", ".ss08", True),
+                    ast.gly("-<<", ".ss08"),
                 ),
                 ast.subst(None, "-", [ast.SPC, ast.gly("<<")], ast.SPC),
             ],
         ),
         ast.subst_liga(
             "->>",
-            target=ast.gly("->>", ".ss08", True),
+            target=ast.gly("->>", ".ss08"),
             banner=[
                 ast.ignore("-", "-", [">", ">"]),
                 ast.ignore(None, "-", [">", ">", ">"]),
@@ -64,14 +64,14 @@ def ss08_subst():
                     [ast.SPC, ast.SPC],
                     ast.gly(">>"),
                     None,
-                    ast.gly("->>", ".ss08", True),
+                    ast.gly("->>", ".ss08"),
                 ),
                 ast.subst(None, "-", [ast.SPC, ast.gly(">>")], ast.SPC),
             ],
         ),
         ast.subst_liga(
             "=<<",
-            target=ast.gly("=<<", ".ss08", True),
+            target=ast.gly("=<<", ".ss08"),
             banner=[
                 ast.ignore("=", "=", ["<", "<"]),
                 ast.ignore(["(", cls_question], "=", ["<", "<"]),
@@ -80,14 +80,14 @@ def ss08_subst():
                     [ast.SPC, ast.SPC],
                     ast.gly("<<"),
                     None,
-                    ast.gly("=<<", ".ss08", True),
+                    ast.gly("=<<", ".ss08"),
                 ),
                 ast.subst(None, "=", [ast.SPC, ast.gly("<<")], ast.SPC),
             ],
         ),
         ast.subst_liga(
             "=>>",
-            target=ast.gly("=>>", ".ss08", True),
+            target=ast.gly("=>>", ".ss08"),
             banner=[
                 ast.ignore("=", "=", [">", ">"]),
                 ast.ignore(["(", cls_question], "=", [">", ">"]),
@@ -96,14 +96,14 @@ def ss08_subst():
                     [ast.SPC, ast.SPC],
                     ast.gly(">>"),
                     None,
-                    ast.gly("=>>", ".ss08", True),
+                    ast.gly("=>>", ".ss08"),
                 ),
                 ast.subst(None, "=", [ast.SPC, ast.gly(">>")], ast.SPC),
             ],
         ),
         ast.subst_liga(
             "-<",
-            target=ast.gly("-<", ".ss08", True),
+            target=ast.gly("-<", ".ss08"),
             banner=[
                 ast.ignore(ast.cls(">", "<", "-"), "-", "<"),
                 ast.ignore(None, "-", ["<", ast.cls("<", "/", cls_question)]),
@@ -111,7 +111,7 @@ def ss08_subst():
         ),
         ast.subst_liga(
             ">-",
-            target=ast.gly(">-", ".ss08", True),
+            target=ast.gly(">-", ".ss08"),
             banner=[
                 ast.ignore(">", ">", "-"),
                 ast.ignore(None, ">", ["-", ast.cls("-", ">", "<")]),
