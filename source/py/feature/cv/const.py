@@ -75,6 +75,7 @@ GLYPHS_G = [
 GLYPHS_J_UPPER = [
     "J",
     "Jcircumflex",
+    "J.bg"
 ]
 
 GLYPHS_R = [

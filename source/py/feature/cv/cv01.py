@@ -23,7 +23,7 @@ def cv01_subst():
             target_suffix=sfx,
         ),
         ast.subst_map(
-            "Q",
+            ["Q", "Q.bg"],
             target_suffix=sfx,
         ),
         ast.subst_map(

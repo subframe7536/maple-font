@@ -27,8 +27,8 @@ def ss03_subst():
         result.append(
             ast.subst_liga(
                 arr,
-                target=f"badge_{text}.liga",
-                lookup_name=f"badge_{text}.liga.ss03",
+                target=f"tag_{text}.liga",
+                lookup_name=f"tag_{text}.liga.ss03",
                 desc=f"[{text}]",
             )
         )

@@ -174,6 +174,11 @@ _|_
 [FATAL]
 [TODO]
 [FIXME]
+[NOTE]
+[HACK]
+[MARK]
+[EROR]
+[WARNING]
 todo))
 fixme))
 ```
