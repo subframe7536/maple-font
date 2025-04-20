@@ -123,7 +123,7 @@ def tag_custom(
             elif isinstance(item, ast.Clazz):
                 desc.append(f"_{item.name}_")
 
-        lookup_name = f"custom_tag_{"_".join(desc)}"
+        lookup_name = f"custom_tag_{'_'.join(desc)}"
 
         result.append(
             ast.Lookup(
