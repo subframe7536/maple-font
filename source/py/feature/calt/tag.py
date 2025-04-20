@@ -179,13 +179,13 @@ def get_lookup(cls_var: ast.Clazz):
         # =========================================================
         #                       Custom tags
         # ---------------------------------------------------------
-        # tag_custom(
-        #     [
-        #         ("_bug_", "[bug]"),
-        #         ("_noqa_", "(noqa)"),
-        #     ],
-        #     bg_cls,
-        # ),
+        tag_custom(
+            [
+                # ("_bug_", "[bug]"),
+                # ("_noqa_", "(noqa)"),
+            ],
+            bg_cls,
+        ),
         # =========================================================
         #                Mark annotation in Xcode
         #             example: `// TODO: code review`
