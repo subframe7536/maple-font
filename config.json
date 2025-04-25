@@ -4,22 +4,10 @@
   "use_hinted": true,
   "pool_size": 4,
   "ligature": false,
-  "feature_freeze": {
-    "calt": "freeze",
-    "cv01": "freeze",
-    "cv02": "freeze",
-    "cv04": "freeze",
-    "cv31": "freeze",
-    "cv33": "freeze",
-    "cv34": "freeze",
-    "cv35": "freeze",
-    "cv36": "freeze",
-    "cv37": "freeze",
-    "ss01": "freeze",
-    "ss02": "freeze",
-    "ss04": "freeze",
-    "ss07": "freeze"
-  },
+  "feature_freeze": [
+    "calt", "cv01", "cv02", "cv04", "cv31", "cv33",
+    "cv34", "cv35", "cv36", "cv37", "ss01", "ss02", "ss04", "ss07"
+  ],
   "nerd_font": {
     "enable": false,
     "version": "3.4.0",
