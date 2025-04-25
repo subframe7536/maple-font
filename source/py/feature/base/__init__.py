@@ -14,7 +14,7 @@ from source.py.feature.base.locl import (
 )
 
 
-def get_base_features(calt: ast.Feature, is_cn: bool):
+def get_base_features(calt: ast.Feature | None, is_cn: bool):
     result = [case_feature] + number_features
 
     if is_cn:
@@ -24,10 +24,14 @@ def get_base_features(calt: ast.Feature, is_cn: bool):
 
     aalt_feature = ast.Feature(
         "aalt",
-        [feat.use() for feat in result + [calt] if isinstance(feat, ast.Feature)],
+        [
+            feat.use()
+            for feat in ((result + [calt]) if calt else result)
+            if isinstance(feat, ast.Feature)
+        ],
         "7.0",
     )
-    result = [aalt_feature] + result + [calt]
+    result = [aalt_feature] + ((result + [calt]) if calt else result)
 
     if is_cn:
         result += [ccmp_features_cn]

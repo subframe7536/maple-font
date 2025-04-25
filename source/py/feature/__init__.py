@@ -18,11 +18,11 @@ from source.py.feature.italic import (
 from source.py.feature.cv import cv96, cv97, cv98, cv99
 
 
-def generate_fea_string(italic: bool, cn: bool, normal: bool = False):
+def generate_fea_string(italic: bool, cn: bool, normal: bool = False, calt: bool = True):
     if italic:
-        return get_feature_file_italic(cn, normal)
+        return get_feature_file_italic(cn, normal, calt)
     else:
-        return get_feature_file_regular(cn)
+        return get_feature_file_regular(cn, normal, calt)
 
 
 def generate_fea_string_cn_only():

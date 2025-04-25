@@ -1041,7 +1041,7 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
     # https://github.com/subframe7536/maple-font/issues/313
     # fix_cn_cv(cn_font)
 
-    patch_fea_string(cn_font, is_italic, True, font_config.use_normal_preset)
+    patch_fea_string(cn_font, is_italic, True, font_config.use_normal_preset, font_config.enable_liga)
 
     handle_ligatures(
         font=cn_font,
@@ -1210,7 +1210,7 @@ def main():
                 )
             else:
                 print("Apply feature string")
-                patch_fea_string(font, is_italic, False, font_config.use_normal_preset)
+                patch_fea_string(font, is_italic, False, font_config.use_normal_preset, font_config.enable_liga)
 
             set_font_name(
                 font,

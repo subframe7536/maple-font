@@ -131,16 +131,22 @@ ss_list_regular = [
     ss11.ss11_feat,
 ]
 
-def get_feature_file_regular(is_cn: bool):
-    calt = get_calt(cls_var, cls_hex_letter, is_italic=False)
+
+def get_feature_file_regular(is_cn: bool, normal: bool, calt: bool):
+    calt_feat = None
+    if calt:
+        calt_feat = get_calt(
+            cls_var,
+            cls_hex_letter,
+            is_italic=False,
+        )
     return ast.create(
         [
             class_list_regular,
             lang_list,
-            get_base_features(calt, is_cn=is_cn),
+            get_base_features(calt_feat, is_cn=is_cn),
             cv_list_regular,
             cv_list_cn if is_cn else None,
             ss_list_regular,
         ],
     )
-
