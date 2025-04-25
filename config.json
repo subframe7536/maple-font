@@ -1,24 +1,18 @@
 {
   "$schema": "./source/schema.json",
-  "family_name": "Maple Mono",
+  "family_name": "Maple Mono Custom",
   "use_hinted": true,
   "pool_size": 4,
   "ligature": false,
   "feature_freeze": {
     "calt": "enable",
     "cv01": "enable",
-    "cv02": "enable",
     "cv04": "enable",
-    "cv31": "enable",
     "cv33": "enable",
     "cv34": "enable",
     "cv35": "enable",
     "cv36": "enable",
-    "cv37": "enable",
-    "ss01": "enable",
-    "ss02": "enable",
-    "ss04": "enable",
-    "ss07": "enable"
+    "cv37": "enable"
   },
   "nerd_font": {
     "enable": false,
