@@ -10,6 +10,7 @@ from source.py.feature import (
     get_cv_cn_desc,
     get_ss_desc,
     get_total_feat_dict,
+    normal_enable_keys,
 )
 from source.py.task._utils import write_json, write_text
 from source.py.utils import joinPaths
@@ -95,25 +96,9 @@ def fea(output: str, cn: bool) -> None:
 
     # Update configuration files
     features = get_total_feat_dict()
-    normal_enable_keys = [
-        "cv01",
-        "cv02",
-        "cv33",
-        "cv34",
-        "cv35",
-        "cv36",
-        "cv61",
-        "cv62",
-        "ss05",
-        "ss06",
-        "ss07",
-        "ss08",
-    ]
 
     update_schema(joinPaths("source", "schema.json"), features)
     update_feature_freeze(
         joinPaths("source", "preset-normal.json"), features, normal_enable_keys
     )
     update_feature_freeze(joinPaths("config.json"), features)
-
-
