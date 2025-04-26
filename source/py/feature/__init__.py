@@ -2,16 +2,16 @@ import json
 from source.py.feature import ast
 from source.py.feature.base import get_base_feature_cn_only
 from source.py.feature.calt import get_calt_lookup
+from source.py.feature.common import get_feature_file, cv_list_cn
 from source.py.feature.regular import (
-    get_feature_file_regular,
     cls_var,
     cls_hex_letter,
+    class_list_regular,
     cv_list_regular,
-    cv_list_cn,
     ss_list_regular,
 )
 from source.py.feature.italic import (
-    get_feature_file_italic,
+    class_list_italic,
     cv_list_italic,
     ss_list_italic,
 )
@@ -25,11 +25,24 @@ def generate_fea_string(
     calt: bool = True,
     variable: bool = False,
 ):
-    print(f"Generating feature file with italic={italic}, cn={cn}, normal={normal}, calt={calt}, variable={variable}")
-    if italic:
-        return get_feature_file_italic(cn, normal, calt, variable)
-    else:
-        return get_feature_file_regular(cn, normal, calt, variable)
+    print(
+        f"Generating feature string with italic={italic}, cn={cn}, normal={normal}, calt={calt}, variable={variable}"
+    )
+
+    class_list = class_list_italic if italic else class_list_regular
+    cv_list = cv_list_italic if italic else cv_list_regular
+    ss_list = ss_list_italic if italic else ss_list_regular
+
+    return get_feature_file(
+        class_list,
+        cv_list,
+        ss_list,
+        italic,
+        cn,
+        normal,
+        calt,
+        variable,
+    )
 
 
 def generate_fea_string_cn_only():

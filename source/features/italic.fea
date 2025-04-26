@@ -34,9 +34,9 @@
 @X = [X x x.cv36];
 @Y = [Y y y.cv37];
 @Z = [Z z];
-@HexLetter = [@A @B @C @D @E @F];
-@Var = [underscore underscore_underscore.liga @A @B @C @D @E @F @G @H @I @J @K @L @M @N @O @P @Q @R @S @T @U @V @W @X @Y @Z @Digit];
 @AL = [a_l.liga a_l.liga.cv31 a_l.liga.cv35 a_l.liga.cv31.cv35 a_l.liga.cv04 a_l.liga.cv04.cv31 a_l.liga.ss06];
+@Var = [underscore underscore_underscore.liga @A @B @C @D @E @F @G @H @I @J @K @L @M @N @O @P @Q @R @S @T @U @V @W @X @Y @Z @Digit];
+@HexLetter = [@A @B @C @D @E @F];
 
 languagesystem DFLT dflt;
 

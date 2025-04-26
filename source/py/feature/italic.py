@@ -1,8 +1,5 @@
-from copy import deepcopy
 import source.py.feature.ast as ast
-from source.py.feature.base import get_base_features
 from source.py.feature.calt import get_calt
-from source.py.feature.common import cv_list_cn, normal_enabled_features
 from source.py.feature.cv import (
     cv01,
     cv04,
@@ -34,7 +31,6 @@ from source.py.feature.ss import (
     ss10,
     ss11,
 )
-from source.py.feature.base.lang import get_lang_list
 from source.py.feature.base.clazz import get_base_class_list, cls_digit
 
 
@@ -64,7 +60,6 @@ cls_w = ast.Clazz("W", ["W", "w"])
 cls_x = ast.Clazz("X", ["X", "x", "x.cv36"])
 cls_y = ast.Clazz("Y", ["Y", "y", "y.cv37"])
 cls_z = ast.Clazz("Z", ["Z", "z"])
-cls_hex_letter = ast.Clazz("HexLetter", [cls_a, cls_b, cls_c, cls_d, cls_e, cls_f])
 a_l = ast.Clazz(
     "AL",
     [
@@ -108,13 +103,14 @@ cls_letters_list = [
 ]
 
 cls_var = ast.Clazz("Var", ["_", "__", *cls_letters_list, cls_digit])
+cls_hex_letter = ast.Clazz("HexLetter", [cls_a, cls_b, cls_c, cls_d, cls_e, cls_f])
 
 class_list_italic = [
     *get_base_class_list(),
     *cls_letters_list,
-    cls_hex_letter,
-    cls_var,
     a_l,
+    cls_var,
+    cls_hex_letter,
 ]
 
 
@@ -152,35 +148,3 @@ ss_list_italic = [
     ss10.ss10_feat,
     ss11.ss11_feat,
 ]
-
-
-def get_feature_file_italic(is_cn: bool, normal: bool, calt: bool, variable: bool):
-    calt_feat = get_calt(cls_var, cls_hex_letter, is_italic=True, normal=normal)
-    if not calt:
-        calt_feat.content = []
-
-    cv_ss_list = deepcopy(
-        cv_list_italic + (cv_list_cn if is_cn else []) + ss_list_italic
-    )
-
-    if normal and variable:
-        for feat in cv_ss_list:
-            if feat.tag in normal_enabled_features:
-                if not calt and feat.has_lookup:
-                    continue
-                calt_feat.content = [
-                    ast.Lookup(f"move_{feat.tag}", None, feat.content)
-                ] + calt_feat.content
-                feat.content = []
-
-    if not calt_feat.content:
-        calt_feat = None
-
-    return ast.create(
-        [
-            class_list_italic,
-            get_lang_list(),
-            get_base_features(calt_feat, is_cn=is_cn),
-            cv_ss_list,
-        ],
-    )
