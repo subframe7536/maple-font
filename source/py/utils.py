@@ -375,15 +375,20 @@ def merge_ttfonts(base_font_path: str, extra_font_path: str) -> TTFont:
 
 
 def patch_fea_string(
-    font: TTFont, italic: bool, cn: bool, normal: bool, calt: bool, variable: bool
+    font: TTFont,
+    is_italic: bool,
+    is_cn: bool,
+    is_normal: bool,
+    is_calt: bool,
+    is_variable: bool,
 ):
-    fea_str = generate_fea_string(italic, cn, normal, calt, variable)
+    fea_str = generate_fea_string(is_italic, is_cn, is_normal, is_calt, is_variable)
     try:
         addOpenTypeFeaturesFromString(font, fea_str)
     except Exception as e:
         p = path.realpath("./fonts/issue.fea")
         with open(p, "w+") as f:
-            banner = f"Generated feature with italic={italic}, cn={cn}, normal={normal}, calt={calt}, variable={variable}"
+            banner = f"Generated feature with italic={is_italic}, cn={is_cn}, normal={is_normal}, calt={is_calt}, variable={is_variable}"
             f.write(f"# {banner}\n\n{fea_str}")
         raise Exception(
             f"Error patching fea string: {e}\n\nSee generated fea string in {p}"

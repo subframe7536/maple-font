@@ -33,11 +33,11 @@ def get_feature_file(
     class_list: list[ast.Clazz],
     cv_list: list[ast.CharacterVariant],
     ss_list: list[ast.StylisticSet],
-    italic: bool,
-    cn: bool,
-    normal: bool,
-    calt: bool,
-    variable: bool,
+    is_italic: bool,
+    is_cn: bool,
+    is_normal: bool,
+    is_calt: bool,
+    is_variable: bool,
 ):
     """
     Generates feature string.
@@ -50,35 +50,35 @@ def get_feature_file(
     - the ``class_list[-1]`` is ``@HexLetter``
 
     Args:
-        class_list (list[ast.Clazz]): List of class definitions, must end with [@Var, @HexLetter]
+        class_list (list[ast.Clazz]): List of class definitions
         cv_list (list[ast.CharacterVariant]): List of character variant features
         ss_list (list[ast.StylisticSet]): List of stylistic set features
-        italic (bool): Whether to generate italic features
-        cn (bool): Whether to include Chinese-specific features
-        normal (bool): Whether to generate normal (non-italic) features
-        calt (bool): Whether to enable contextual alternates feature
-        variable (bool): Whether this is for a variable font
+        is_italic (bool): Whether to generate italic features
+        is_cn (bool): Whether to include Chinese-specific features
+        is_normal (bool): Whether to generate normal preset
+        is_calt (bool): Whether to enable calt
+        is_variable (bool): Whether this is for a variable font
     """
     if class_list[-2].name != "Var" or class_list[-1].name != "HexLetter":
         raise TypeError("Invalid class_list, must ends with [@Var, @HexLetter]")
 
     calt_feat = get_calt(
-        class_list[-2], class_list[-1], is_italic=italic, normal=normal
+        class_list[-2], class_list[-1], is_italic=is_italic, is_normal=is_normal
     )
 
     # clear calt for no ligature
-    if not calt:
+    if not is_calt:
         calt_feat.content = []
 
-    cv_ss_list = deepcopy(cv_list + (cv_list_cn if cn else []) + ss_list)
+    cv_ss_list = deepcopy(cv_list + (cv_list_cn if is_cn else []) + ss_list)
 
     # for variable font, freeze feature by moving it to `calt`
-    if normal and variable:
+    if is_normal and is_variable:
         extracted_lookup_list = []
         for feat in cv_ss_list:
             if feat.tag in normal_enabled_features:
                 # prevent features that add ligatures like `ss08`
-                if not calt and feat.has_lookup:
+                if not is_calt and feat.has_lookup:
                     continue
 
                 extracted_lookup_list.append(
@@ -100,7 +100,7 @@ def get_feature_file(
         [
             class_list,
             get_lang_list(),
-            get_base_features(calt_feat, is_cn=cn),
+            get_base_features(calt_feat, is_cn=is_cn),
             cv_ss_list,
         ],
     )

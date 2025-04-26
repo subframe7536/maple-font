@@ -19,29 +19,29 @@ from source.py.feature.cv import cv96, cv97, cv98, cv99
 
 
 def generate_fea_string(
-    italic: bool,
-    cn: bool,
-    normal: bool = False,
-    calt: bool = True,
-    variable: bool = False,
+    is_italic: bool,
+    is_cn: bool,
+    is_normal: bool = False,
+    is_calt: bool = True,
+    is_variable: bool = False,
 ):
     print(
-        f"Generating feature string with italic={italic}, cn={cn}, normal={normal}, calt={calt}, variable={variable}"
+        f"Generating feature string with italic={is_italic}, cn={is_cn}, normal={is_normal}, calt={is_calt}, variable={is_variable}"
     )
 
-    class_list = class_list_italic if italic else class_list_regular
-    cv_list = cv_list_italic if italic else cv_list_regular
-    ss_list = ss_list_italic if italic else ss_list_regular
+    class_list = class_list_italic if is_italic else class_list_regular
+    cv_list = cv_list_italic if is_italic else cv_list_regular
+    ss_list = ss_list_italic if is_italic else ss_list_regular
 
     return get_feature_file(
         class_list,
         cv_list,
         ss_list,
-        italic,
-        cn,
-        normal,
-        calt,
-        variable,
+        is_italic,
+        is_cn,
+        is_normal,
+        is_calt,
+        is_variable,
     )
 
 

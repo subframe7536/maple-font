@@ -865,11 +865,11 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
 
     patch_fea_string(
         font=font,
-        italic=is_italic,
-        cn=False,
-        normal=font_config.use_normal_preset,
-        calt=font_config.enable_liga,
-        variable=False,
+        is_italic=is_italic,
+        is_cn=False,
+        is_normal=font_config.use_normal_preset,
+        is_calt=font_config.enable_liga,
+        is_variable=False,
     )
 
     handle_ligatures(
@@ -1058,11 +1058,11 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
 
     patch_fea_string(
         font=cn_font,
-        italic=is_italic,
-        cn=True,
-        normal=font_config.use_normal_preset,
-        calt=font_config.enable_liga,
-        variable=False,
+        is_italic=is_italic,
+        is_cn=True,
+        is_normal=font_config.use_normal_preset,
+        is_calt=font_config.enable_liga,
+        is_variable=False,
     )
 
     handle_ligatures(
@@ -1234,11 +1234,11 @@ def main():
                 print("Apply feature string")
                 patch_fea_string(
                     font=font,
-                    italic=is_italic,
-                    cn=False,
-                    normal=font_config.use_normal_preset,
-                    calt=font_config.enable_liga,
-                    variable=True,
+                    is_italic=is_italic,
+                    is_cn=False,
+                    is_normal=font_config.use_normal_preset,
+                    is_calt=font_config.enable_liga,
+                    is_variable=True,
                 )
 
             set_font_name(

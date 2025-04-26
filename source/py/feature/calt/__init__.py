@@ -37,8 +37,8 @@ def get_calt_lookup(
 
 
 def get_calt(
-    cls_var: ast.Clazz, cls_hex_letter: ast.Clazz, is_italic: bool, normal: bool = False
+    cls_var: ast.Clazz, cls_hex_letter: ast.Clazz, is_italic: bool, is_normal: bool = False
 ) -> ast.Feature:
     return ast.Feature(
-        "calt", get_calt_lookup(cls_var, cls_hex_letter, is_italic, normal), "7.0"
+        "calt", get_calt_lookup(cls_var, cls_hex_letter, is_italic, is_normal), "7.0"
     )

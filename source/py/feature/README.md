@@ -64,6 +64,11 @@ to:
 2. The tag will be splited if letter spacing > 0, see in [#381](https://github.com/subframe7536/maple-font/issues/381#issuecomment-2808022878)
 3. The tag's color follows the original text color, see in [#381](https://github.com/subframe7536/maple-font/issues/381#issuecomment-2809622541)
 
+### Freeze feature in variable format
+
+- only the `normal` preset can be applied into the variable format.
+- To get all the features, please enable `calt` feature
+
 ### AST Utilities
 
 The `ast.py` file provides classes and functions to define OpenType features. Below are some key utilities:
