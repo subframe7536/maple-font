@@ -1,6 +1,7 @@
 import source.py.feature.ast as ast
 from source.py.feature.base import get_base_features
 from source.py.feature.calt import get_calt
+from source.py.feature.const import cv_list_cn
 from source.py.feature.cv import (
     cv01,
     cv04,
@@ -18,10 +19,6 @@ from source.py.feature.cv import (
     cv61,
     cv62,
     cv63,
-    cv96,
-    cv97,
-    cv98,
-    cv99,
 )
 from source.py.feature.ss import (
     ss01,
@@ -139,13 +136,6 @@ cv_list_italic = [
     cv61.cv61_feat_italic,
     cv62.cv62_feat_italic,
     cv63.cv63_feat_italic,
-]
-
-cv_list_cn = [
-    cv96.cv96_feat_cn,
-    cv97.cv97_feat_cn,
-    cv98.cv98_feat_cn,
-    cv99.cv99_feat_cn,
 ]
 
 ss_list_italic = [

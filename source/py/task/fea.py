@@ -10,8 +10,8 @@ from source.py.feature import (
     get_cv_cn_desc,
     get_ss_desc,
     get_total_feat_dict,
-    normal_enable_keys,
 )
+from source.py.feature.const import normal_enabled_features
 from source.py.task._utils import write_json, write_text
 from source.py.utils import joinPaths
 
@@ -99,6 +99,6 @@ def fea(output: str, cn: bool) -> None:
 
     update_schema(joinPaths("source", "schema.json"), features)
     update_feature_freeze(
-        joinPaths("source", "preset-normal.json"), features, normal_enable_keys
+        joinPaths("source", "preset-normal.json"), features, normal_enabled_features
     )
     update_feature_freeze(joinPaths("config.json"), features)

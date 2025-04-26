@@ -18,21 +18,6 @@ from source.py.feature.italic import (
 from source.py.feature.cv import cv96, cv97, cv98, cv99
 
 
-normal_enable_keys = [
-    "cv01",
-    "cv02",
-    "cv33",
-    "cv34",
-    "cv35",
-    "cv36",
-    "cv61",
-    "cv62",
-    "ss05",
-    "ss06",
-    "ss07",
-    "ss08",
-]
-
 def generate_fea_string(italic: bool, cn: bool, normal: bool = False, calt: bool = True):
     if italic:
         return get_feature_file_italic(cn, normal, calt)
