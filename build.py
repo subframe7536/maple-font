@@ -865,8 +865,8 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
 
     patch_fea_string(
         font=font,
-        is_italic=is_italic,
-        is_cn=False,
+        italic=is_italic,
+        cn=False,
         normal=font_config.use_normal_preset,
         calt=font_config.enable_liga,
         variable=False,
@@ -1058,8 +1058,8 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
 
     patch_fea_string(
         font=cn_font,
-        is_italic=is_italic,
-        is_cn=True,
+        italic=is_italic,
+        cn=True,
         normal=font_config.use_normal_preset,
         calt=font_config.enable_liga,
         variable=False,
@@ -1234,8 +1234,8 @@ def main():
                 print("Apply feature string")
                 patch_fea_string(
                     font=font,
-                    is_italic=is_italic,
-                    is_cn=False,
+                    italic=is_italic,
+                    cn=False,
                     normal=font_config.use_normal_preset,
                     calt=font_config.enable_liga,
                     variable=True,

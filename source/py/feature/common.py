@@ -59,10 +59,12 @@ def get_feature_file(
         calt (bool): Whether to enable contextual alternates feature
         variable (bool): Whether this is for a variable font
     """
-    if (class_list[-2].name != 'Var' or class_list[-1].name != 'HexLetter'):
+    if class_list[-2].name != "Var" or class_list[-1].name != "HexLetter":
         raise TypeError("Invalid class_list, must ends with [@Var, @HexLetter]")
 
-    calt_feat = get_calt(class_list[-2], class_list[-1], is_italic=italic, normal=normal)
+    calt_feat = get_calt(
+        class_list[-2], class_list[-1], is_italic=italic, normal=normal
+    )
 
     # clear calt for no ligature
     if not calt:
@@ -72,18 +74,23 @@ def get_feature_file(
 
     # for variable font, freeze feature by moving it to `calt`
     if normal and variable:
+        extracted_lookup_list = []
         for feat in cv_ss_list:
             if feat.tag in normal_enabled_features:
                 # prevent features that add ligatures like `ss08`
                 if not calt and feat.has_lookup:
                     continue
 
-                calt_feat.content = [
-                    ast.Lookup(f"move_{feat.tag}", None, feat.content)
-                ] + calt_feat.content
+                extracted_lookup_list.append(
+                    feat.content
+                    if feat.has_lookup
+                    else [ast.Lookup(f"move_{feat.tag}", None, feat.content)]
+                )
 
                 # cleanup
                 feat.content = []
+
+        calt_feat.content.extend(extracted_lookup_list)
 
     # remove calt if empty, to prevent fonttools warning
     if not calt_feat.content:
