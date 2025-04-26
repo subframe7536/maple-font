@@ -68,7 +68,7 @@ class Feature:
             for item in recursive_iterate(content):
                 if isinstance(item, Lookup):
                     self.has_lookup = True
-                self.content.append(content)
+                self.content.append(item)
         else:
             self.content.append(content)
 

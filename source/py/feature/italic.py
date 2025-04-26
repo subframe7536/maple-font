@@ -36,8 +36,8 @@ from source.py.feature.ss import (
     ss10,
     ss11,
 )
-from source.py.feature.base.lang import lang_list
-from source.py.feature.base.clazz import base_class_list, cls_digit
+from source.py.feature.base.lang import get_lang_list
+from source.py.feature.base.clazz import get_base_class_list, cls_digit
 
 
 cls_a = ast.Clazz("A", ["A", "a", "a.cv31"])
@@ -112,7 +112,7 @@ cls_letters_list = [
 cls_var = ast.Clazz("Var", ["_", "__", *cls_letters_list, cls_digit])
 
 class_list_italic = [
-    *base_class_list,
+    *get_base_class_list(),
     *cls_letters_list,
     cls_hex_letter,
     cls_var,
@@ -175,7 +175,7 @@ def get_feature_file_italic(is_cn: bool, normal: bool, calt: bool):
     return ast.create(
         [
             class_list_italic,
-            lang_list,
+            get_lang_list(),
             get_base_features(calt_feat, is_cn=is_cn),
             cv_list_italic,
             cv_list_cn if is_cn else None,

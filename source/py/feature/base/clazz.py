@@ -4,7 +4,18 @@ cls_zero = ast.Clazz("Zero", ["zero", "zero.zero"])
 cls_one = ast.Clazz("One", ["one", "one.cv04"])
 cls_digit = ast.Clazz(
     "Digit",
-    [cls_zero, cls_one, "two", "three", "four", "five", "six", "seven", "eight", "nine"],
+    [
+        cls_zero,
+        cls_one,
+        "two",
+        "three",
+        "four",
+        "five",
+        "six",
+        "seven",
+        "eight",
+        "nine",
+    ],
 )
 cls_space = ast.Clazz("Space", ["space", "nbspace"])
 cls_normal_separator = ast.Clazz(
@@ -308,14 +319,14 @@ cls_uppercase = ast.Clazz(
 )
 
 
-
-base_class_list = [
-    cls_zero,
-    cls_one,
-    cls_digit,
-    cls_comma,
-    cls_question,
-    cls_uppercase,
-    cls_normal_separator,
-    cls_space,
-]
+def get_base_class_list():
+    return [
+        cls_zero,
+        cls_one,
+        cls_digit,
+        cls_comma,
+        cls_question,
+        cls_uppercase,
+        cls_normal_separator,
+        cls_space,
+    ]

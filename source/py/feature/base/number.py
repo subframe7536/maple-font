@@ -55,13 +55,15 @@ frac = [
     ),
 ]
 
-number_features = [
-    ast.Feature("sinf", sinf, "7.0"),
-    ast.Feature("subs", subs, "7.0"),
-    ast.Feature("sups", sups, "7.0"),
-    ast.Feature("numr", numr, "7.0"),
-    ast.Feature("dnom", dnom, "7.0"),
-    ast.Feature("frac", frac, "7.0"),
-    ast.Feature("ordn", ordn, "7.0"),
-    ast.Feature("zero", zero, "7.0"),
-]
+
+def get_number_feature_list():
+    return [
+        ast.Feature("sinf", sinf, "7.0"),
+        ast.Feature("subs", subs, "7.0"),
+        ast.Feature("sups", sups, "7.0"),
+        ast.Feature("numr", numr, "7.0"),
+        ast.Feature("dnom", dnom, "7.0"),
+        ast.Feature("frac", frac, "7.0"),
+        ast.Feature("ordn", ordn, "7.0"),
+        ast.Feature("zero", zero, "7.0"),
+    ]

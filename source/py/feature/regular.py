@@ -30,8 +30,8 @@ from source.py.feature.ss import (
     ss10,
     ss11,
 )
-from source.py.feature.base.clazz import base_class_list, cls_digit
-from source.py.feature.base.lang import lang_list
+from source.py.feature.base.clazz import get_base_class_list, cls_digit
+from source.py.feature.base.lang import get_lang_list
 
 
 cls_a = ast.Clazz("A", ["A", "a", "a.cv02"])
@@ -93,7 +93,7 @@ cls_letters_list = [
 
 cls_var = ast.Clazz("Var", ["_", "__", *cls_letters_list, cls_digit])
 
-class_list_regular = [*base_class_list, *cls_letters_list, cls_hex_letter, cls_var]
+class_list_regular = [*get_base_class_list(), *cls_letters_list, cls_hex_letter, cls_var]
 
 cv_list_regular = [
     cv01.cv01_feat_regular,
@@ -143,7 +143,7 @@ def get_feature_file_regular(is_cn: bool, normal: bool, calt: bool):
     return ast.create(
         [
             class_list_regular,
-            lang_list,
+            get_lang_list(),
             get_base_features(calt_feat, is_cn=is_cn),
             cv_list_regular,
             cv_list_cn if is_cn else None,

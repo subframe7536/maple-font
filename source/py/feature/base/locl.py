@@ -105,3 +105,13 @@ locl_features_cn = ast.Feature(
     ],
     "7.0",
 )
+
+def get_locl_feature_list(cn: bool, cn_only: bool = False):
+    if not cn:
+        return [ast.Feature("locl", __locl, "7.0")]
+
+    if cn_only:
+        content = __locl_cn_only
+    else:
+        content = __locl + __locl_cn_only
+    return [lookup_tw, ast.Feature("locl", content, "7.0")]
