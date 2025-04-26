@@ -129,7 +129,7 @@ brew install --cask font-maple-mono-nf-cn
 
 ### Arch Linux
 
-ArchLinuxCN仓库允许下载单个软件包的zip文件，而无需下载pkgbase中的所有软件包的zip文件，但AUR不允许。(如果您有好的解决方案，请联系Cyberczy(czysheep@gmail.com))
+ArchLinuxCN 仓库允许下载单个软件包的 zip 文件，而无需下载 pkgbase 中的所有软件包的 zip 文件，但 AUR 不允许。(如果您有好的解决方案，请联系 Cyberczy(czysheep@gmail.com))
 
 #### ArchLinuxCN (推荐)
 
