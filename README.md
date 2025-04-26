@@ -565,6 +565,8 @@ Default args: `-l --careful --outputdir dir`
 
 Run `build.py` with `--normal` flag, make the font looks not such "Opinioned" , just like `JetBrains Mono` (with slashed zero).
 
+If you are using variable font (NOT recommended), please enable `calt` to make all features work.
+
 Enabled features:
 <!-- NORMAL -->
 ```
