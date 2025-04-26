@@ -32,6 +32,7 @@ from source.py.utils import (
 )
 from source.py.freeze import freeze_feature, get_freeze_config_str
 from source.py.feature import get_freeze_moving_rules
+from source.py.feature.common import normal_enabled_features
 
 FONT_VERSION = "v7.1-dev"
 # =========================================================================================
@@ -199,11 +200,11 @@ def parse_args():
 
 class FontConfig:
     def __init__(self, args):
-        self.archive = None
-        self.use_cn_both = None
-        self.ttf_only = None
-        self.debug = None
-        self.apply_fea_file = None
+        self.archive = False
+        self.use_cn_both = False
+        self.ttf_only = False
+        self.debug = False
+        self.apply_fea_file = False
         # the number of parallel tasks
         # when run in codespace, this will be 1
         self.pool_size = 1 if not getenv("CODESPACE_NAME") else 4
@@ -282,7 +283,7 @@ class FontConfig:
         }
         self.glyph_width = 600
         self.glyph_width_cn_narrow = 1000
-        self.use_normal_preset = args.normal
+        self.use_normal_preset = False
         self.__load_config()
         self.__load_args(args)
 
@@ -300,9 +301,7 @@ class FontConfig:
         self.version_str = f"Version {major}.{minor:03}"
 
     def __load_config(self):
-        config_file_path = (
-            "./source/preset-normal.json" if self.use_normal_preset else "config.json"
-        )
+        config_file_path = "config.json"
         try:
             with open(config_file_path, "r") as f:
                 data = json.load(f)
@@ -330,8 +329,10 @@ class FontConfig:
             print(f"🚨 Config file not found: {config_file_path}, use default config")
             pass
         except json.JSONDecodeError:
-            print(f"❗ Error: Invalid JSON in config file: {config_file_path}")
-            exit(1)
+            print(
+                f"❗ Error: Invalid JSON in config file: {config_file_path}, use default config"
+            )
+            pass
         except Exception as e:
             print(f"❗ An unexpected error occurred: {e}")
             exit(1)
@@ -343,6 +344,11 @@ class FontConfig:
 
         if "font_forge_bin" not in self.nerd_font:
             self.nerd_font["font_forge_bin"] = get_font_forge_bin()
+
+        if args.normal:
+            self.use_normal_preset = True
+            for feat in normal_enabled_features:
+                self.feature_freeze[feat] = "enable"
 
         if args.feat is not None:
             for f in args.feat:
@@ -375,6 +381,8 @@ class FontConfig:
             self.cn["use_static_base_font"] = False
 
         name_arr = [word.capitalize() for word in self.family_name.split(" ")]
+        if self.use_normal_preset:
+            name_arr.append("Normal")
         if not self.enable_liga:
             name_arr.append("NL")
         if self.debug:

@@ -26,23 +26,20 @@ def replace_section(md_path: str, border: str, content: str) -> None:
     write_text(md_path, updated_content)
 
 
-def get_feature_freeze_config(
-    features: dict[str, str], enable_keys: list[str] | None = None
-) -> dict:
+def get_feature_freeze_config(features: dict[str, str]) -> dict:
     feature_freeze = {}
     for tag in features.keys():
-        feature_freeze[tag] = (
-            "enable" if enable_keys and tag in enable_keys else "ignore"
-        )
+        feature_freeze[tag] = "ignore"
     return feature_freeze
 
 
 def update_feature_freeze(
-    file_path: str, features: dict[str, str], enable_keys: list[str] | None = None
+    file_path: str,
+    features: dict[str, str],
 ) -> None:
     with open(file_path, "r", encoding="utf-8") as file:
         config = json.load(file)
-    config["feature_freeze"] = get_feature_freeze_config(features, enable_keys)
+    config["feature_freeze"] = get_feature_freeze_config(features)
     write_json(file_path, config)
 
 
@@ -98,7 +95,7 @@ def fea(output: str, cn: bool) -> None:
     features = get_total_feat_dict()
 
     update_schema(joinPaths("source", "schema.json"), features)
-    update_feature_freeze(
-        joinPaths("source", "preset-normal.json"), features, normal_enabled_features
-    )
-    update_feature_freeze(joinPaths("config.json"), features)
+    update_feature_freeze("config.json", features)
+    feat_str = ", ".join(normal_enabled_features)
+    for f in ["README.md", "README_CN.md", "README_JA.md"]:
+        replace_section(f, "<!-- NORMAL -->", f"```\n{feat_str}\n```")
