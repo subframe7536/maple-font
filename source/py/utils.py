@@ -373,8 +373,8 @@ def merge_ttfonts(base_font_path: str, extra_font_path: str) -> TTFont:
         raise
 
 
-def patch_fea_string(font: TTFont, is_italic: bool, is_cn: bool, normal: bool, calt: bool):
-    fea_str = generate_fea_string(is_italic, is_cn, normal, calt)
+def patch_fea_string(font: TTFont, is_italic: bool, is_cn: bool, normal: bool, calt: bool, variable: bool):
+    fea_str = generate_fea_string(is_italic, is_cn, normal, calt, variable)
     try:
         addOpenTypeFeaturesFromString(font, fea_str)
     except Exception as e:

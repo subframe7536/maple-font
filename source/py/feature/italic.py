@@ -1,7 +1,8 @@
+from copy import deepcopy
 import source.py.feature.ast as ast
 from source.py.feature.base import get_base_features
 from source.py.feature.calt import get_calt
-from source.py.feature.const import cv_list_cn
+from source.py.feature.common import cv_list_cn, normal_enabled_features
 from source.py.feature.cv import (
     cv01,
     cv04,
@@ -153,22 +154,33 @@ ss_list_italic = [
 ]
 
 
-def get_feature_file_italic(is_cn: bool, normal: bool, calt: bool):
-    calt_feat = None
-    if calt:
-        calt_feat = get_calt(
-            cls_var,
-            cls_hex_letter,
-            is_italic=True,
-            normal=normal,
-        )
+def get_feature_file_italic(is_cn: bool, normal: bool, calt: bool, variable: bool):
+    calt_feat = get_calt(cls_var, cls_hex_letter, is_italic=True, normal=normal)
+    if not calt:
+        calt_feat.content = []
+
+    cv_ss_list = deepcopy(
+        cv_list_italic + (cv_list_cn if is_cn else []) + ss_list_italic
+    )
+
+    if normal and variable:
+        for feat in cv_ss_list:
+            if feat.tag in normal_enabled_features:
+                if not calt and feat.has_lookup:
+                    continue
+                calt_feat.content = [
+                    ast.Lookup(f"move_{feat.tag}", None, feat.content)
+                ] + calt_feat.content
+                feat.content = []
+
+    if not calt_feat.content:
+        calt_feat = None
+
     return ast.create(
         [
             class_list_italic,
             get_lang_list(),
             get_base_features(calt_feat, is_cn=is_cn),
-            cv_list_italic,
-            cv_list_cn if is_cn else None,
-            ss_list_italic,
+            cv_ss_list,
         ],
     )

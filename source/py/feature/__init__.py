@@ -18,11 +18,18 @@ from source.py.feature.italic import (
 from source.py.feature.cv import cv96, cv97, cv98, cv99
 
 
-def generate_fea_string(italic: bool, cn: bool, normal: bool = False, calt: bool = True):
+def generate_fea_string(
+    italic: bool,
+    cn: bool,
+    normal: bool = False,
+    calt: bool = True,
+    variable: bool = False,
+):
+    print(f"Generating feature file with italic={italic}, cn={cn}, normal={normal}, calt={calt}, variable={variable}")
     if italic:
-        return get_feature_file_italic(cn, normal, calt)
+        return get_feature_file_italic(cn, normal, calt, variable)
     else:
-        return get_feature_file_regular(cn, normal, calt)
+        return get_feature_file_regular(cn, normal, calt, variable)
 
 
 def generate_fea_string_cn_only():
@@ -79,6 +86,7 @@ def get_cv_italic_desc():
         [cv.desc_item() for cv in cv_list_italic if cv.id > 30 and cv.id < 61]
     )
 
+
 def get_cv_italic_version_info() -> dict[str, dict[str, str]]:
     return get_version_info([cv for cv in cv_list_italic if cv.id > 30 and cv.id < 61])
 
@@ -89,6 +97,7 @@ def get_cv_cn_desc():
 
 def get_cv_cn_version_info() -> dict[str, dict[str, str]]:
     return get_version_info(cv_list_cn)
+
 
 def get_ss_desc():
     result = {}

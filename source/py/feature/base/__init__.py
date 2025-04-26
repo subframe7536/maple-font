@@ -10,9 +10,8 @@ def get_base_features(calt: ast.Feature | None, is_cn: bool):
         get_locl_feature_list(cn=is_cn)
         + [get_case_feature()]
         + get_number_feature_list()
+        + [calt]
     )
-    if calt:
-        aalt_feat_list.append(calt)
 
     aalt_feature = ast.Feature(
         "aalt",

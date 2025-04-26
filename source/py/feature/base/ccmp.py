@@ -184,12 +184,6 @@ __ccmp = [
     ccmp_other.use(),
 ]
 
-ccmp_feature = ast.Feature("ccmp", __ccmp, "7.0")
-
-ccmp_features_cn_only = ast.Feature("ccmp", ccmp_jp, "7.0")
-
-ccmp_features_cn = ast.Feature("ccmp", [__ccmp, ccmp_jp], "7.0")
-
 def get_ccmp_feature(cn: bool, cn_only: bool = False):
     if cn:
         if cn_only:
