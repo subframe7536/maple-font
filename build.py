@@ -775,18 +775,21 @@ def get_unique_identifier(
     font_config: FontConfig,
     postscript_name: str,
     narrow: bool = False,
-    ignore_suffix: bool = False,
+    variable: bool = False,
 ) -> str:
-    if ignore_suffix:
-        suffix = ""
-    else:
-        suffix = font_config.freeze_config_str
-        if "CN" in postscript_name and narrow:
-            suffix += "Narrow;"
+    suffix = ""
 
-        if "NF" in postscript_name:
-            nf_ver = font_config.nerd_font["version"]
-            suffix = f"NF{nf_ver};{suffix}"
+    if variable:
+        suffix += "Variable;"
+
+    if "NF" in postscript_name:
+        nf_ver = font_config.nerd_font["version"]
+        suffix += f"NF{nf_ver};"
+
+    if "CN" in postscript_name and narrow:
+        suffix += "Narrow;"
+
+    suffix += font_config.freeze_config_str
 
     beta_str = f"-{font_config.beta}" if font_config.beta else ""
     return f"{font_config.version_str}{beta_str};SUBF;{postscript_name};2024;FL830;{suffix}"
@@ -1266,16 +1269,22 @@ def main():
                     is_variable=True,
                 )
 
-            set_font_name(
-                font,
-                get_unique_identifier(
+            style_name = "Italic" if is_italic else "Regular"
+            postscript_name = f"{font_config.family_name_compact}-{style_name}"
+            update_font_names(
+                font=font,
+                family_name=font_config.family_name,
+                style_name=style_name,
+                full_name=f"{font_config.family_name} {style_name}",
+                version_str=font_config.version_str,
+                postscript_name=postscript_name,
+                unique_identifier=get_unique_identifier(
                     font_config=font_config,
                     postscript_name=get_font_name(font, 6),
-                    ignore_suffix=True,
+                    variable=True,
                 ),
-                3,
+                is_skip_subfamily=True,
             )
-
             verify_glyph_width(
                 font=font,
                 expect_widths=font_config.get_valid_glyph_width_list(),
@@ -1284,11 +1293,11 @@ def main():
 
             add_gasp(font)
 
-            font.save(
-                input_file.replace(
-                    build_option.src_dir, build_option.output_variable
-                ).replace("-VF", "")
-            )
+            file_name = font_config.family_name_compact
+            if is_italic:
+                file_name += "-Italic"
+
+            font.save(joinPaths(build_option.output_variable, f"{file_name}[wght].ttf"))
 
         print("\n✨ Instatiate and optimize fonts...\n")
 
