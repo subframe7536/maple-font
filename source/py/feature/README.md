@@ -71,6 +71,8 @@ Currently, the second approach cannot be implemented in variable format, so in t
 
 Since the feature-loading logic was refactored to Python, features are loaded dynamically. The logic in [`common.py`](./common.py) moves rules from the target feature to `calt` (method 1). Enabling the `calt` feature will yield styling equivalent to the static version.
 
+So, please **ENABLE FONT LIGATURE** to make all features work if you are using variable font (NOT recommended).
+
 ### AST Utilities
 
 The `ast.py` file provides classes and functions to define OpenType features. Below are some key utilities:
