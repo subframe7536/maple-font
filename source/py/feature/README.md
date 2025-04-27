@@ -164,7 +164,7 @@ print(fea_content)
 
 In most of time, you don't need to update the fea files. The generated fea string will be automatically applied at build time without using `--apply-fea-file` flag.
 
-To update exists fea files, you can run:
+To update existing fea files, you can run:
 
 ```sh
 uv run task.py fea
