@@ -66,8 +66,18 @@ to:
 
 ### Freeze feature in variable format
 
-- only the `normal` preset can be applied into the variable format.
-- To get all the features, please enable `calt` feature
+There are 2 ways to freeze feature:
+
+1. If the feature contains lookups that implemnt new ligature (like `ss08`), move features into `calt`
+2. If the feature are just glyph replacement (like `cv01`), directly replace glyph in the feature into the original glyph
+
+I cannot find a way to implement the second method in varible format, so in V7.0 release, all the variants of variable format are all the same except family name. The build script provide escape hatch: `--apply-fea-file`
+
+Luckily, since the feature load logic refactored to Python, the features can be loaded dynamically. All the feature load logic is located at [`common.py`](./common.py), it makes the replacement effect by moving rules from target feature to `calt` (method 1), so:
+
+**Please enable `calt` feature to get the same style as static one**
+
+It is trick, and if you have better way to implement, feel free to open a issue / discussion or contribute a PR!
 
 ### AST Utilities
 
