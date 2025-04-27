@@ -329,12 +329,10 @@ class FontConfig:
 
         except FileNotFoundError:
             print(f"🚨 Config file not found: {config_file_path}, use default config")
-            pass
         except json.JSONDecodeError:
             print(
                 f"❗ Error: Invalid JSON in config file: {config_file_path}, use default config"
             )
-            pass
         except Exception as e:
             print(f"❗ An unexpected error occurred: {e}")
             exit(1)
@@ -444,9 +442,9 @@ class FontConfig:
             with open(issue_fea_path, "w+") as f:
                 banner = f"Generated feature with italic={is_italic}, cn={is_cn}, normal={self.use_normal_preset}, calt={self.enable_liga}, variable={is_variable}"
                 f.write(f"# {banner}\n\n{fea_str}")
-            raise Exception(
+            raise SyntaxError(
                 f"Error patching fea string: {e}\n\nSee generated fea string in {issue_fea_path}"
-            )
+            ) from e
 
 
 class BuildOption:

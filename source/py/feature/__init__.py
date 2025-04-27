@@ -47,7 +47,7 @@ def generate_fea_string(
     is_cn: bool,
     is_normal: bool = False,
     is_calt: bool = True,
-    variable_enabled_feature_list: list[str] = [],
+    variable_enabled_feature_list: list[str] | None = None,
 ):
     """
     Generates feature string.
@@ -88,7 +88,7 @@ def generate_fea_string(
     if variable_enabled_feature_list:
         extracted_lookup_list = []
         for feat in cv_ss_list:
-            if feat.tag in variable_enabled_feature_list:
+            if feat.tag in variable_enabled_feature_list or []:
                 # prevent features that add ligatures like `ss08`
                 if not is_calt and feat.has_lookup:
                     continue
