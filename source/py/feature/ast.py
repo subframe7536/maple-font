@@ -99,7 +99,12 @@ class CharacterVariant(Feature):
     __slots__ = ("id", "desc", "sample")
 
     def __init__(
-        self, id: int, desc: str, content: Clazz | Lookup | Line | list, version: str, example: str
+        self,
+        id: int,
+        desc: str,
+        content: Clazz | Lookup | Line | list,
+        version: str,
+        example: str,
     ):
         if id < 1 or id > 99:
             raise TypeError(
@@ -129,7 +134,12 @@ class StylisticSet(Feature):
     __slots__ = ("id", "desc", "sample")
 
     def __init__(
-        self, id: int, desc: str, content: Clazz | Lookup | Line | list, version: str, sample: str
+        self,
+        id: int,
+        desc: str,
+        content: Clazz | Lookup | Line | list,
+        version: str,
+        sample: str,
     ):
         if id < 1 or id > 20:
             raise TypeError(

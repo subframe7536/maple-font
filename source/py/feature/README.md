@@ -6,15 +6,13 @@ This module provides utilities for defining and managing OpenType font features.
 
 The `feature/` module is designed to simplify the creation of OpenType font features. It uses an abstract syntax tree (AST) approach to define and manage features programmatically.
 
-
-
 ### Key Components
 
 - **`ast.py`**: Core utilities for defining OpenType features.
 - **`common.py`**: Shared feature and feature file generation logic.
 - **`regular.py`**: Entry file for regular features.
 - **`italic.py`**: Entry file for italic features.
-- **`base/`**: Contains foundational classes and features like numbers, cases, and localized forms.
+- **`base/`**: Foundational classes and features (e.g., numbers, cases, localized forms)..
 - **`calt/`**: Default ligatures.
 - **`cv/`**: Character variants.
 - **`ss/`**: Stylistic sets.
@@ -47,37 +45,31 @@ tag_custom(
     bg_cls_dict,
 )
 ```
-
-This will convert
-
+This converts:
 ```
 :attention: _noqa_
 ```
 
-to:
+into a styled tag:
 
 ![Image](https://github.com/user-attachments/assets/e67f282c-e961-4e55-9169-2f20d7ccfbc6)
 
-#### Limitation
+#### Limitations
 
-1. The built-in tags are optimized for glyph spacing, but the custom tags not.
-2. The tag will be splited if letter spacing > 0, see in [#381](https://github.com/subframe7536/maple-font/issues/381#issuecomment-2808022878)
-3. The tag's color follows the original text color, see in [#381](https://github.com/subframe7536/maple-font/issues/381#issuecomment-2809622541)
+1. Built-in tags are optimized for spacing; custom tags are not.
+2. Tags may split if letter spacing > 0. See [#381](https://github.com/subframe7536/maple-font/issues/381#issuecomment-2808022878).
+3. Tags inherit the original text color. See [#381](https://github.com/subframe7536/maple-font/issues/381#issuecomment-2809622541).
 
-### Freeze feature in variable format
+## Freeze Feature in Variable Format
 
-There are 2 ways to freeze feature:
+There are two strategies to freeze a feature:
 
-1. If the feature contains lookups that implemnt new ligature (like `ss08`), move features into `calt`
-2. If the feature are just glyph replacement (like `cv01`), directly replace glyph in the feature into the original glyph
+1. For lookups implementing new ligatures (e.g., `ss08`), move rules into `calt`.
+2. For glyph replacements (e.g., `cv01`), substitute glyphs directly with their originals.
 
-I cannot find a way to implement the second method in varible format, so in V7.0 release, all the variants of variable format are all the same except family name. The build script provide escape hatch: `--apply-fea-file`
+Currently, the second approach cannot be implemented in variable format, so in the V7.0 release all variable format variants are identical except for the family name. The build script provides an escape hatch with the `--apply-fea-file` flag.
 
-Luckily, since the feature load logic refactored to Python, the features can be loaded dynamically. All the feature load logic is located at [`common.py`](./common.py), it makes the replacement effect by moving rules from target feature to `calt` (method 1), so:
-
-**Please enable `calt` feature to get the same style as static one**
-
-It is trick, and if you have better way to implement, feel free to open a issue / discussion or contribute a PR!
+Since the feature-loading logic was refactored to Python, features are loaded dynamically. The logic in [`common.py`](./common.py) moves rules from the target feature to `calt` (method 1). Enabling the `calt` feature will yield styling equivalent to the static version.
 
 ### AST Utilities
 
@@ -155,7 +147,7 @@ feature calt {
 }
 ```
 
-#### `create`
+#### Create
 
 Generates the final OpenType feature file content.
 
@@ -170,7 +162,11 @@ print(fea_content)
 
 In most of time, you don't need to update the fea files. The generated fea string will be automatically applied at build time without using `--apply-fea-file` flag.
 
-You can use `uv run task.py fea` to update exists fea files.
+To update exists fea files, you can run:
+
+```sh
+uv run task.py fea
+```
 
 Here is an example to show how to use the `generate_fea_string` function to generate feature files
 

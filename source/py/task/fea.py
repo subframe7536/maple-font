@@ -11,7 +11,7 @@ from source.py.feature import (
     get_ss_desc,
     get_total_feat_dict,
 )
-from source.py.feature.common import normal_enabled_features
+from source.py.feature import normal_enabled_features
 from source.py.task._utils import write_json, write_text
 from source.py.utils import joinPaths
 

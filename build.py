@@ -30,8 +30,11 @@ from source.py.utils import (
     merge_ttfonts,
 )
 from source.py.freeze import freeze_feature, get_freeze_config_str, is_enable
-from source.py.feature import generate_fea_string, get_freeze_moving_rules
-from source.py.feature.common import normal_enabled_features
+from source.py.feature import (
+    generate_fea_string,
+    get_freeze_moving_rules,
+    normal_enabled_features,
+)
 
 FONT_VERSION = "v7.1-dev"
 # =========================================================================================
@@ -428,10 +431,11 @@ class FontConfig:
             is_cn=is_cn,
             is_normal=self.use_normal_preset,
             is_calt=self.enable_liga,
-            is_variable=is_variable,
-            enable_feature_list=[
+            variable_enabled_feature_list=[
                 key for key, val in self.feature_freeze.items() if is_enable(val)
-            ],
+            ]
+            if is_variable
+            else [],
         )
         try:
             addOpenTypeFeaturesFromString(font, fea_str)
