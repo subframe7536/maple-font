@@ -24,6 +24,7 @@ def generate_fea_string(
     is_normal: bool = False,
     is_calt: bool = True,
     is_variable: bool = False,
+    enable_feature_list: list[str] = [],
 ):
     print(
         f"Generating feature string with italic={is_italic}, cn={is_cn}, normal={is_normal}, calt={is_calt}, variable={is_variable}"
@@ -37,6 +38,7 @@ def generate_fea_string(
         class_list,
         cv_list,
         ss_list,
+        enable_feature_list,
         is_italic,
         is_cn,
         is_normal,

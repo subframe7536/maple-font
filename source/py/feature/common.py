@@ -33,6 +33,7 @@ def get_feature_file(
     class_list: list[ast.Clazz],
     cv_list: list[ast.CharacterVariant],
     ss_list: list[ast.StylisticSet],
+    enable_feature_list: list[str],
     is_italic: bool,
     is_cn: bool,
     is_normal: bool,
@@ -73,10 +74,10 @@ def get_feature_file(
     cv_ss_list = deepcopy(cv_list + (cv_list_cn if is_cn else []) + ss_list)
 
     # for variable font, freeze feature by moving it to `calt`
-    if is_normal and is_variable:
+    if enable_feature_list and is_variable:
         extracted_lookup_list = []
         for feat in cv_ss_list:
-            if feat.tag in normal_enabled_features:
+            if feat.tag in enable_feature_list:
                 # prevent features that add ligatures like `ss08`
                 if not is_calt and feat.has_lookup:
                     continue

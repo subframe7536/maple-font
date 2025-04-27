@@ -11,12 +11,11 @@ from functools import partial
 from os import environ, getcwd, getpid, kill, listdir, makedirs, path, remove, getenv
 from typing import Callable
 from fontTools.ttLib import TTFont, newTable
-from fontTools.feaLib.builder import addOpenTypeFeatures
+from fontTools.feaLib.builder import addOpenTypeFeatures, addOpenTypeFeaturesFromString
 from source.py.utils import (
     check_font_patcher,
     check_directory_hash,
     get_directory_hash,
-    patch_fea_string,
     verify_glyph_width,
     compress_folder,
     download_cn_base_font,
@@ -30,8 +29,8 @@ from source.py.utils import (
     joinPaths,
     merge_ttfonts,
 )
-from source.py.freeze import freeze_feature, get_freeze_config_str
-from source.py.feature import get_freeze_moving_rules
+from source.py.freeze import freeze_feature, get_freeze_config_str, is_enable
+from source.py.feature import generate_fea_string, get_freeze_moving_rules
 from source.py.feature.common import normal_enabled_features
 
 FONT_VERSION = "v7.1-dev"
@@ -415,6 +414,35 @@ class FontConfig:
             ]
         else:
             return [0, self.glyph_width]
+
+    def patch_fea_string(
+        self,
+        font: TTFont,
+        issue_fea_dir: str,
+        is_italic: bool,
+        is_cn: bool,
+        is_variable: bool,
+    ):
+        fea_str = generate_fea_string(
+            is_italic=is_italic,
+            is_cn=is_cn,
+            is_normal=self.use_normal_preset,
+            is_calt=self.enable_liga,
+            is_variable=is_variable,
+            enable_feature_list=[
+                key for key, val in self.feature_freeze.items() if is_enable(val)
+            ],
+        )
+        try:
+            addOpenTypeFeaturesFromString(font, fea_str)
+        except Exception as e:
+            issue_fea_path = joinPaths(issue_fea_dir, "issue.fea")
+            with open(issue_fea_path, "w+") as f:
+                banner = f"Generated feature with italic={is_italic}, cn={is_cn}, normal={self.use_normal_preset}, calt={self.enable_liga}, variable={is_variable}"
+                f.write(f"# {banner}\n\n{fea_str}")
+            raise Exception(
+                f"Error patching fea string: {e}\n\nSee generated fea string in {issue_fea_path}"
+            )
 
 
 class BuildOption:
@@ -863,12 +891,11 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
     elif style_with_prefix_space == " ExtraLight":
         font["OS/2"].usWeightClass = 275  # type: ignore
 
-    patch_fea_string(
+    font_config.patch_fea_string(
         font=font,
+        issue_fea_dir=build_option.output_dir,
         is_italic=is_italic,
         is_cn=False,
-        is_normal=font_config.use_normal_preset,
-        is_calt=font_config.enable_liga,
         is_variable=False,
     )
 
@@ -1056,12 +1083,11 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
     # https://github.com/subframe7536/maple-font/issues/313
     # fix_cn_cv(cn_font)
 
-    patch_fea_string(
+    font_config.patch_fea_string(
         font=cn_font,
+        issue_fea_dir=build_option.output_dir,
         is_italic=is_italic,
         is_cn=True,
-        is_normal=font_config.use_normal_preset,
-        is_calt=font_config.enable_liga,
         is_variable=False,
     )
 
@@ -1232,12 +1258,11 @@ def main():
                 )
             else:
                 print("Apply feature string")
-                patch_fea_string(
+                font_config.patch_fea_string(
                     font=font,
+                    issue_fea_dir=build_option.output_dir,
                     is_italic=is_italic,
                     is_cn=False,
-                    is_normal=font_config.use_normal_preset,
-                    is_calt=font_config.enable_liga,
                     is_variable=True,
                 )
 

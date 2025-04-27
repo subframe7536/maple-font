@@ -6,10 +6,8 @@ import subprocess
 from urllib.request import Request, urlopen
 from zipfile import ZIP_DEFLATED, ZipFile
 from fontTools.ttLib import TTFont
-from fontTools.feaLib.builder import addOpenTypeFeaturesFromString
 from glyphsLib import GSFont
 
-from source.py.feature import generate_fea_string
 
 
 def is_ci():
@@ -372,24 +370,3 @@ def merge_ttfonts(base_font_path: str, extra_font_path: str) -> TTFont:
     except Exception as e:
         print(f"Error merging fonts: {str(e)}")
         raise
-
-
-def patch_fea_string(
-    font: TTFont,
-    is_italic: bool,
-    is_cn: bool,
-    is_normal: bool,
-    is_calt: bool,
-    is_variable: bool,
-):
-    fea_str = generate_fea_string(is_italic, is_cn, is_normal, is_calt, is_variable)
-    try:
-        addOpenTypeFeaturesFromString(font, fea_str)
-    except Exception as e:
-        p = path.realpath("./fonts/issue.fea")
-        with open(p, "w+") as f:
-            banner = f"Generated feature with italic={is_italic}, cn={is_cn}, normal={is_normal}, calt={is_calt}, variable={is_variable}"
-            f.write(f"# {banner}\n\n{fea_str}")
-        raise Exception(
-            f"Error patching fea string: {e}\n\nSee generated fea string in {p}"
-        )
