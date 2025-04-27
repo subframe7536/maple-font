@@ -12,7 +12,7 @@ The `feature/` module is designed to simplify the creation of OpenType font feat
 - **`common.py`**: Shared feature and feature file generation logic.
 - **`regular.py`**: Entry file for regular features.
 - **`italic.py`**: Entry file for italic features.
-- **`base/`**: Foundational classes and features (e.g., numbers, cases, localized forms)..
+- **`base/`**: Foundational classes and features (e.g., numbers, cases, localized forms).
 - **`calt/`**: Default ligatures.
 - **`cv/`**: Character variants.
 - **`ss/`**: Stylistic sets.
