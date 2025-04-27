@@ -4,7 +4,7 @@ from source.py.feature import ast
 from source.py.feature.base import get_base_feature_cn_only, get_base_features
 from source.py.feature.base.lang import get_lang_list
 from source.py.feature.calt import get_calt, get_calt_lookup
-from source.py.feature.cv import cv_list_cn
+from source.py.feature.cv import cv96, cv97, cv98, cv99
 from source.py.feature.regular import (
     cls_var,
     cls_hex_letter,
@@ -31,6 +31,14 @@ normal_enabled_features = [
     "ss06",
     "ss07",
     "ss08",
+]
+
+
+cv_list_cn = [
+    cv96.cv96_feat_cn,
+    cv97.cv97_feat_cn,
+    cv98.cv98_feat_cn,
+    cv99.cv99_feat_cn,
 ]
 
 
