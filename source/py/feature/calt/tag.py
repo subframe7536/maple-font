@@ -80,15 +80,14 @@ def tag_any(text_list: list[str], cls_var: ast.Clazz):
             print(f"{text} is not in {built_in_tag_text}, skip")
             continue
 
-        glyphs_first = f"@{text[0].upper()}"
-        glyphs_rest = [f"@{g.upper()}" for g in text[1:]] + [")", ")"]
+        glyphs = [f"@{g.upper()}" for g in text] + [")", ")"]
         result.append(
             ast.subst_liga(
-                [glyphs_first] + glyphs_rest,
+                glyphs,
                 target=f"tag_{text}.liga",
                 lookup_name=f"tag_{text}_alt",
                 desc=f"{text}))",
-                banner=[ast.ignore(cls_var, glyphs_first, glyphs_rest)],
+                ign_prefix=cls_var,
             )
         )
 

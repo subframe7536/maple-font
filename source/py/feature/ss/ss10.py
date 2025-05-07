@@ -6,18 +6,14 @@ def ss10_subst():
         ast.subst_liga(
             "=~",
             target=ast.gly("=~", ".ss10"),
-            banner=[
-                ast.ignore(ast.cls("~", "<", ">", ":", "="), "=", "~"),
-                ast.ignore(None, "=", ["~", ast.cls("~", "=", ">")]),
-            ],
+            ign_prefix=ast.cls("~", "<", ">", ":", "="),
+            ign_suffix=ast.cls("~", "=", ">"),
         ),
         ast.subst_liga(
             "!~",
             target=ast.gly("!~", ".ss10"),
-            banner=[
-                ast.ignore("!", "!", "~"),
-                ast.ignore(None, "!", ["~", ast.cls("!", "~", "=", ">")]),
-            ],
+            ign_prefix="!",
+            ign_suffix=ast.cls("!", "~", "=", ">"),
         ),
     ]
 

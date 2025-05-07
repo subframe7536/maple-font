@@ -7,45 +7,45 @@ def ss08_subst():
         ast.subst_liga(
             "<<-",
             target=ast.gly("<<-", ".ss08"),
-            banner=[
-                ast.ignore("<", "<", ["<", "-"]),
-                ast.ignore(None, "<", ["<", "-", "-"]),
+            ign_prefix="<",
+            ign_suffix="-",
+            extra_rules=[
                 ast.subst(ast.SPC, ast.gly("<<"), "-", ast.SPC),
             ],
         ),
         ast.subst_liga(
             ">>-",
             target=ast.gly(">>-", ".ss08"),
-            banner=[
-                ast.ignore(">", ">", [">", "-"]),
-                ast.ignore(None, ">", [">", "-", "-"]),
+            ign_prefix=">",
+            ign_suffix="-",
+            extra_rules=[
                 ast.subst(ast.SPC, ast.gly(">>"), "-", ast.SPC),
             ],
         ),
         ast.subst_liga(
             "<<=",
             target=ast.gly("<<=", ".ss08"),
-            banner=[
-                ast.ignore("<", "<", ["<", "="]),
-                ast.ignore(None, "<", ["<", "=", "="]),
+            ign_prefix="<",
+            ign_suffix="=",
+            extra_rules=[
                 ast.subst(ast.SPC, ast.gly("<<"), "=", ast.SPC),
             ],
         ),
         ast.subst_liga(
             ">>=",
             target=ast.gly(">>=", ".ss08"),
-            banner=[
-                ast.ignore(">", ">", [">", "="]),
-                ast.ignore(None, ">", [">", "=", "="]),
+            ign_prefix=">",
+            ign_suffix="=",
+            extra_rules=[
                 ast.subst(ast.SPC, ast.gly(">>"), "=", ast.SPC),
             ],
         ),
         ast.subst_liga(
             "-<<",
             target=ast.gly("-<<", ".ss08"),
-            banner=[
-                ast.ignore("-", "-", ["<", "<"]),
-                ast.ignore(None, "-", ["<", "<", "<"]),
+            ign_prefix="-",
+            ign_suffix="<",
+            extra_rules=[
                 ast.subst(
                     [ast.SPC, ast.SPC],
                     ast.gly("<<"),
@@ -58,9 +58,9 @@ def ss08_subst():
         ast.subst_liga(
             "->>",
             target=ast.gly("->>", ".ss08"),
-            banner=[
-                ast.ignore("-", "-", [">", ">"]),
-                ast.ignore(None, "-", [">", ">", ">"]),
+            ign_prefix="-",
+            ign_suffix=">",
+            extra_rules=[
                 ast.subst(
                     [ast.SPC, ast.SPC],
                     ast.gly(">>"),
@@ -73,10 +73,10 @@ def ss08_subst():
         ast.subst_liga(
             "=<<",
             target=ast.gly("=<<", ".ss08"),
-            banner=[
-                ast.ignore("=", "=", ["<", "<"]),
+            ign_prefix="=",
+            ign_suffix="<",
+            extra_rules=[
                 ast.ignore(["(", cls_question], "=", ["<", "<"]),
-                ast.ignore(None, "=", ["<", "<", "<"]),
                 ast.subst(
                     [ast.SPC, ast.SPC],
                     ast.gly("<<"),
@@ -89,10 +89,10 @@ def ss08_subst():
         ast.subst_liga(
             "=>>",
             target=ast.gly("=>>", ".ss08"),
-            banner=[
-                ast.ignore("=", "=", [">", ">"]),
+            ign_prefix="=",
+            ign_suffix=">",
+            extra_rules=[
                 ast.ignore(["(", cls_question], "=", [">", ">"]),
-                ast.ignore(None, "=", [">", ">", ">"]),
                 ast.subst(
                     [ast.SPC, ast.SPC],
                     ast.gly(">>"),
@@ -105,18 +105,14 @@ def ss08_subst():
         ast.subst_liga(
             "-<",
             target=ast.gly("-<", ".ss08"),
-            banner=[
-                ast.ignore(ast.cls(">", "<", "-"), "-", "<"),
-                ast.ignore(None, "-", ["<", ast.cls("<", "/", cls_question)]),
-            ],
+            ign_prefix=ast.cls(">", "<", "-"),
+            ign_suffix=ast.cls("<", "/", cls_question),
         ),
         ast.subst_liga(
             ">-",
             target=ast.gly(">-", ".ss08"),
-            banner=[
-                ast.ignore(">", ">", "-"),
-                ast.ignore(None, ">", ["-", ast.cls("-", ">", "<")]),
-            ],
+            ign_prefix=">",
+            ign_suffix=ast.cls("-", ">", "<"),
         ),
     ]
 

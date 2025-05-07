@@ -6,18 +6,14 @@ def ss07_subst():
         ast.subst_liga(
             ">>",
             lookup_name=f"relax_{ast.gly('>>')}",
-            banner=[
-                ast.ignore(ast.cls(">", "/", "<"), ">", ">"),
-                ast.ignore(None, ">", [">", ">"]),
-            ],
+            ign_prefix=ast.cls(">", "/", "<"),
+            ign_suffix=">",
         ),
         ast.subst_liga(
             ">>>",
             lookup_name=f"relax_{ast.gly('>>>')}",
-            banner=[
-                ast.ignore(">", ">", [">", ">"]),
-                ast.ignore(None, ">", [">", ">", ">"]),
-            ],
+            ign_prefix=">",
+            ign_suffix=">",
         ),
     ]
 

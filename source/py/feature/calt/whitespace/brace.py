@@ -29,61 +29,27 @@ def get_lookup():
         ),
         ast.subst_liga(
             "{|",
-            banner=[
-                ast.ignore("{", "{", "|"),
-                ast.ignore(None, "{", ["|", ast.cls("|", "}")]),
-            ],
+            ign_prefix="{",
+            ign_suffix=ast.cls("|", "}"),
         ),
         ast.subst_liga(
             "|}",
-            banner=[
-                ast.ignore(ast.cls("{", "|"), "|", "}"),
-                ast.ignore(None, "|", ["|", "}"]),
-            ],
+            ign_prefix=ast.cls("{", "|"),
+            ign_suffix="}",
         ),
         ast.subst_liga(
             "{{--",
-            banner=[
-                ast.ignore(
-                    "{",
-                    "{",
-                    ["{", "-", "-"],
-                ),
-                ast.ignore(
-                    None,
-                    "{",
-                    ["{", "-", "-", "-"],
-                ),
-            ],
+            ign_prefix="{",
+            ign_suffix="-",
         ),
         ast.subst_liga(
             "{{!--",
-            banner=[
-                ast.ignore(
-                    "{",
-                    "{",
-                    ["{", "!", "-", "-"],
-                ),
-                ast.ignore(
-                    None,
-                    "{",
-                    ["{", "!", "-", "-", "-"],
-                ),
-            ],
+            ign_prefix="{",
+            ign_suffix="-",
         ),
         ast.subst_liga(
             "--}}",
-            banner=[
-                ast.ignore(
-                    "-",
-                    "-",
-                    ["-", "}", "}"],
-                ),
-                ast.ignore(
-                    None,
-                    "-",
-                    ["-", "}", "}", "}"],
-                ),
-            ],
+            ign_prefix="-",
+            ign_suffix="}",
         ),
     ]

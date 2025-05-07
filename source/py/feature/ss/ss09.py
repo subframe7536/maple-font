@@ -6,10 +6,8 @@ def ss09_subst():
     return ast.subst_liga(
         "~=",  # Lua
         target=ast.gly("~=", ".ss09"),
-        banner=[
-            ast.ignore(ast.cls("~", "<", "="), "~", "="),
-            ast.ignore(None, "~", ["=", ast.cls("~", "=", ">", "<", ":")]),
-        ],
+        ign_prefix=ast.cls("~", "<", "="),
+        ign_suffix=ast.cls("~", "=", ">", "<", ":"),
     )
 
 

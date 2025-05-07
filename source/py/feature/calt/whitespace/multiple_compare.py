@@ -25,17 +25,13 @@ def get_lookup(cls_var: ast.Clazz):
     return [
         ast.subst_liga(
             "<<",
-            banner=[
-                ast.ignore("<", "<", "<"),
-                ast.ignore(None, "<", ["<", ast.cls("<", "~")]),
-            ],
+            ign_prefix="<",
+            ign_suffix=ast.cls("<", "~"),
         ),
         ast.subst_liga(
             "<<<",
-            banner=[
-                ast.ignore("<", "<", ["<", "<"]),
-                ast.ignore(None, "<", ["<", "<", "<"]),
-            ],
+            ign_prefix="<",
+            ign_suffix="<",
         ),
         ast.cls_states(
             cls_leading_symbol_liga,
@@ -46,17 +42,14 @@ def get_lookup(cls_var: ast.Clazz):
         ),
         ast.subst_liga(
             ">>",
-            banner=[
-                ast.ignore(ast.cls("<", "/", ">"), ">", [">"]),
-                ast.ignore(None, ">", [">", ">"]),
-            ],
+            ign_prefix=ast.cls("<", "/", ">"),
+            ign_suffix=">",
             surround=surround,
         ),
         ast.subst_liga(
             ">>>",
-            banner=[
-                ast.ignore(">", ">", [">", ">"]),
-            ],
+            ign_prefix=">",
+            ign_suffix=">",
             surround=surround,
         ),
     ]

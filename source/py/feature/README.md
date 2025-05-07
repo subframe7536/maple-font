@@ -1,4 +1,4 @@
-# MapleFont Feature Module
+# Maple Mono Feature Module
 
 This module provides utilities for defining and managing OpenType font features. It includes tools for creating stylistic sets, character variants, ligatures, and more.
 
@@ -9,7 +9,6 @@ The `feature/` module is designed to simplify the creation of OpenType font feat
 ### Key Components
 
 - **`ast.py`**: Core utilities for defining OpenType features.
-- **`common.py`**: Shared feature and feature file generation logic.
 - **`regular.py`**: Entry file for regular features.
 - **`italic.py`**: Entry file for italic features.
 - **`base/`**: Foundational classes and features (e.g., numbers, cases, localized forms).

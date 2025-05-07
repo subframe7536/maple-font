@@ -395,7 +395,9 @@ def subst_liga(
     surround: list[
         tuple[Sequence[str | Clazz] | None, Sequence[str | Clazz] | None]
     ] = [],
-    banner: list[Line] | None = None,
+    ign_prefix: str | Clazz | list = [],
+    ign_suffix: str | Clazz | list = [],
+    extra_rules: list[Line] | None = None,
 ) -> Lookup:
     """
     Generate substitution lines for target ligature.
@@ -413,15 +415,19 @@ def subst_liga(
         surround: List of (prefix, suffix) tuples specifying contexts for substitution.
             Each prefix/suffix is ``Sequence[str | Clazz]``.
             If empty, generates basic substitution rules without context.
-        banner: List of substitution rules before the main rules in lookup block.
+        ign_prefix: Prefix glyphs that prevent the ligature
+        ign_suffix: Suffix glyphs that prevent the ligature
+        extra_rules: List of rules between the main rules and the
+            generated ignore rules in lookup block.
 
     Returns:
         list[Line]: Lines forming a lookup block with substitution rules.
 
     Examples:
-        >>> subst_liga("!=", banner=[ignore("a", "b", "c")])
+        >>> subst_liga("!=", ign_prefix="!" extra_rules=[ign("a", "b", "c")])
         [
             Line("lookup exclam_equal.liga {"),
+            Line("ignore sub exclam exclam' equal;"),
             Line("ignore sub a b' c;"),
             Line("sub exclam' equal by SPC;"),
             Line("sub SPC equal' by exclam_equal.liga;"),
@@ -444,8 +450,9 @@ def subst_liga(
         lookup_name = target
     if not desc:
         desc = source if isinstance(source, str) else lookup_name
-    if banner is None:
-        banner = []
+    if extra_rules is None:
+        extra_rules = []
+
 
     def to_list(item):
         if item is None:
@@ -454,6 +461,12 @@ def subst_liga(
             return [item]
         else:
             return list(item)
+
+    generated_ignores = []
+    if ign_prefix:
+        generated_ignores.append(ignore(ign_prefix, source_arr[0], source_arr[1:]))
+    if ign_suffix:
+        generated_ignores.append(ignore(None, source_arr[0], source_arr[1:] + to_list(ign_suffix)))
 
     subst_rules = []
     if not surround:
@@ -475,7 +488,7 @@ def subst_liga(
     return Lookup(
         lookup_name,
         desc,
-        banner + subst_rules,
+        generated_ignores + extra_rules + subst_rules,
     )
 
 
@@ -487,9 +500,9 @@ def ignore(
     """
     Generate ignore rule.
 
-    >>> ignore("{", "b", ["c", "d"])
+    >>> ign("{", "b", ["c", "d"])
     Line("ignore sub braceleft b' c d;")
-    >>> ignore(["_", "_"], "b", cls)
+    >>> ign(["_", "_"], "b", cls)
     Line("ignore sub underscore underscore b' @cls;")
     """
     return Line(f"ignore sub {__prefix(prefix)}{__gly(glyph)}'{__suffix(suffix)};")

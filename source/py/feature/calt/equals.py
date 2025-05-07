@@ -6,86 +6,82 @@ def get_lookup():
     return [
         ast.subst_liga(
             "==",
-            banner=[
-                ast.ignore(ast.cls("=", "!"), "=", "="),
-                ast.ignore(None, "=", ["=", ast.cls("=", ">")]),
+            ign_prefix=ast.cls("=", "!"),
+            ign_suffix=ast.cls("=", ">"),
+            extra_rules=[
                 ast.ignore(["(", cls_question], "=", "="),
                 ast.ignore(["(", cls_question, "<"], "=", "="),
             ],
         ),
         ast.subst_liga(
             "===",
-            banner=[
-                ast.ignore("=", "=", ["=", "="]),
-                ast.ignore(None, "=", ["=", "=", ast.cls("=", ">")]),
+            ign_prefix="=",
+            ign_suffix=ast.cls("=", ">"),
+            extra_rules=[
                 ast.ignore(["(", cls_question], "=", ["=", "="]),
                 ast.ignore(["(", cls_question, "<"], "=", ["=", "="]),
             ],
         ),
         ast.subst_liga(
             "!=",
-            banner=[
-                ast.ignore(ast.cls("!", "="), "!", "="),
-                ast.ignore(None, "!", ["=", "="]),
+            ign_prefix=ast.cls("!", "="),
+            ign_suffix="=",
+            extra_rules=[
                 ast.ignore(["(", cls_question], "!", "="),
                 ast.ignore(["(", cls_question, "<"], "!", "="),
             ],
         ),
         ast.subst_liga(
             "!==",
-            banner=[
-                ast.ignore(ast.cls("!", "="), "!", ["=", "="]),
-                ast.ignore(None, "!", ["=", "=", "="]),
+            ign_prefix=ast.cls("!", "="),
+            ign_suffix="=",
+            extra_rules=[
                 ast.ignore(["(", cls_question], "!", ["=", "="]),
                 ast.ignore(["(", cls_question, "<"], "!", ["=", "="]),
             ],
         ),
         ast.subst_liga(
             "=/=",
-            banner=[
-                ast.ignore("=", "=", ["/", "="]),
-                ast.ignore(None, "=", ["/", "=", "="]),
+            ign_prefix="=",
+            ign_suffix="=",
+            extra_rules=[
                 ast.ignore(["(", cls_question], "=", ["/", "="]),
                 ast.ignore(["(", cls_question, "<"], "=", ["/", "="]),
             ],
         ),
         ast.subst_liga(
             "=!=",
-            banner=[
-                ast.ignore("=", "=", ["!", "="]),
-                ast.ignore(None, "=", ["!", "=", "="]),
+            ign_prefix="=",
+            ign_suffix="=",
+            extra_rules=[
                 ast.ignore(["(", cls_question], "=", ["!", "="]),
                 ast.ignore(["(", cls_question, "<"], "=", ["!", "="]),
             ],
         ),
         ast.subst_liga(
             "=<=",
-            banner=[
-                ast.ignore(ast.cls("=", ">", "<", "|"), "=", ["<", "="]),
-                ast.ignore(None, "=", ["<", "=", ast.cls("=", "<", ">")]),
+            ign_prefix=ast.cls("=", ">", "<", "|"),
+            ign_suffix=ast.cls("=", "<", ">"),
+            extra_rules=[
                 ast.ignore(["(", cls_question], "=", [">", "="]),
             ],
         ),
         ast.subst_liga(
             "=>=",
-            banner=[
-                ast.ignore(ast.cls("=", ">", "<", "|"), "=", [">", "="]),
-                ast.ignore(None, "=", [">", "=", ast.cls("=", "<", ">")]),
+            ign_prefix=ast.cls("=", ">", "<", "|"),
+            ign_suffix=ast.cls("=", "<", ">"),
+            extra_rules=[
                 ast.ignore(["(", cls_question], "=", [">", "="]),
             ],
         ),
         ast.subst_liga(
             "|=",
-            banner=[
-                ast.ignore("|", "|", "="),
-                ast.ignore(None, "|", ["=", ast.cls(">", "=")]),
-            ],
+            ign_prefix="|",
+            ign_suffix=ast.cls(">", "="),
         ),
         ast.subst_liga(
             "||=",
-            banner=[
-                ast.ignore("|", "|", ["|", "="]),
-                ast.ignore(None, "|", ["|", "=", "="]),
-            ],
+            ign_prefix="|",
+            ign_suffix="=",
         ),
     ]

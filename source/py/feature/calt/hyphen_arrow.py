@@ -6,83 +6,61 @@ def get_lookup():
     return [
         ast.subst_liga(
             "<!--",
-            banner=[
-                ast.ignore("<", "<", ["!", "-", "-"]),
-                ast.ignore(None, "<", ["!", "-", "-", "-"]),
+            ign_prefix="<",
+            ign_suffix="-",
+            extra_rules=[
                 ast.ignore(["(", cls_question], "<", ["!", "-", "-"]),
             ],
         ),
         ast.subst_liga(
             "<#--",
-            banner=[
-                ast.ignore("<", "<", ["#", "-", "-"]),
-                ast.ignore(None, "<", ["#", "-", "-", "-"]),
-            ],
+            ign_prefix="<",
+            ign_suffix="-",
         ),
         ast.subst_liga("<!---->", target="xml_empty_comment.liga"),
         ast.subst_liga(
             "<->",
-            banner=[
-                ast.ignore("<", "<", ["-", ">"]),
-                ast.ignore(None, "<", ["-", ">", ">"]),
-            ],
+            ign_prefix="<",
+            ign_suffix=">",
         ),
         ast.subst_liga(
             "->",
-            banner=[
-                ast.ignore(ast.cls("-", "<", ">", "|", "+"), "-", ">"),
-                ast.ignore(None, "-", [">", ">"]),
-            ],
+            ign_prefix=ast.cls("-", "<", ">", "|", "+"),
+            ign_suffix=">",
         ),
         ast.subst_liga(
             "<-",
-            banner=[
-                ast.ignore("<", "<", "-"),
-                ast.ignore(
-                    None, "<", ["-", ast.cls("-", "<", ">", "|", "+", "/", cls_digit)]
-                ),
-            ],
+            ign_prefix="<",
+            ign_suffix=ast.cls("-", "<", ">", "|", "+", "/", cls_digit),
         ),
         ast.subst_liga(
             "-->",
-            banner=[
-                ast.ignore("-", "-", ["-", ">"]),
-                ast.ignore(None, "-", ["-", ">", ">"]),
-            ],
+            ign_prefix="-",
+            ign_suffix=">",
         ),
         ast.subst_liga(
             "<--",
-            banner=[
-                ast.ignore("<", "<", ["-", "-"]),
-                ast.ignore(None, "<", ["-", "-", "-"]),
-            ],
+            ign_prefix="<",
+            ign_suffix="-",
         ),
         ast.subst_liga(
             "<-<",
-            banner=[
-                ast.ignore("<", "<", ["-", "<"]),
-                ast.ignore(None, "<", ["-", "<", "<"]),
-            ],
+            ign_prefix="<",
+            ign_suffix="<",
         ),
         ast.subst_liga(
             ">->",
-            banner=[
-                ast.ignore(">", ">", ["-", ">"]),
-                ast.ignore(None, ">", ["-", ">", ">"]),
-            ],
+            ign_prefix=">",
+            ign_suffix=">",
         ),
         ast.subst_liga(
             "<-|",
-            banner=[
-                ast.ignore("<", "<", ["-", "|"]),
-                ast.ignore(None, "<", ["-", "|", "|"]),
-            ],
+            ign_prefix="<",
+            ign_suffix="|",
         ),
         ast.subst_liga(
             "|->",
-            banner=[
-                ast.ignore("|", "|", ["-", ">"]),
-                ast.ignore(None, "|", ["-", ">", ">"]),
-            ],
+            ign_prefix="|",
+            ign_suffix=">",
         ),
     ]

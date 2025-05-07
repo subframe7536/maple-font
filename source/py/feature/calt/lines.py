@@ -5,79 +5,57 @@ def get_lookup():
     return [
         ast.subst_liga(
             "<|||",
-            banner=[
-                ast.ignore("<", "<", ["|", "|", "|"]),
-                ast.ignore(None, "<", ["|", "|", "|", ast.cls("|", ">")]),
-            ],
+            ign_prefix="<",
+            ign_suffix=ast.cls("|", ">"),
         ),
         ast.subst_liga(
             "|||>",
-            banner=[
-                ast.ignore("|", "|", ["|", "|", ">"]),
-                ast.ignore(None, "|", ["|", "|", ">", ">"]),
-            ],
+            ign_prefix="|",
+            ign_suffix=">",
         ),
         ast.subst_liga(
             "<||",
-            banner=[
-                ast.ignore("<", "<", ["|", "|"]),
-                ast.ignore(None, "<", ["|", "|", ast.cls("|", ">")]),
-            ],
+            ign_prefix="<",
+            ign_suffix=ast.cls("|", ">"),
         ),
         ast.subst_liga(
             "||>",
-            banner=[
-                ast.ignore(ast.cls("-", "<"), "|", ["|", ">"]),
-                ast.ignore(None, "|", ["|", ">", ">"]),
-            ],
+            ign_prefix=ast.cls("-", "<"),
+            ign_suffix=">",
         ),
         ast.subst_liga(
             "<|",
-            banner=[
-                ast.ignore("<", "<", "|"),
-                ast.ignore(None, "<", ["|", ast.cls("|", ">")]),
-            ],
+            ign_prefix="<",
+            ign_suffix=ast.cls("|", ">"),
         ),
         ast.subst_liga(
             "|>",
-            banner=[
-                ast.ignore(ast.cls("-", "<", "|"), "|", ">"),
-                ast.ignore(None, "|", [">", ">"]),
-            ],
+            ign_prefix=ast.cls("-", "<", "|"),
+            ign_suffix=ast.cls(">", "="),
         ),
         ast.subst_liga(
             "<|>",
-            banner=[
-                ast.ignore("<", "<", ["|", ">"]),
-                ast.ignore(None, "<", ["|", ">", ">"]),
-            ],
+            ign_prefix="<",
+            ign_suffix=">",
         ),
         ast.subst_liga(
             "-|",
-            banner=[
-                ast.ignore(ast.cls("-", "<"), "-", "|"),
-                ast.ignore(None, "-", ["|", "|"]),
-            ],
+            ign_prefix=ast.cls("-", "<"),
+            ign_suffix="|",
         ),
         ast.subst_liga(
             "|-",
-            banner=[
-                ast.ignore("|", "|", "-"),
-                ast.ignore(None, "|", ["-", ast.cls("-", ">")]),
-            ],
+            ign_prefix="|",
+            ign_suffix=ast.cls("-", ">"),
         ),
         ast.subst_liga(
             "_|_",
-            banner=[
-                ast.ignore(ast.cls("_", "[", cls_comma), "_", ["|", "_"]),
-                ast.ignore(None, "_", ["|", "_", "_"]),
-            ],
+            ign_prefix=ast.cls("_", "[", cls_comma),
+            ign_suffix="_",
         ),
         ast.subst_liga(
             "||-",
-            banner=[
-                ast.ignore("|", "|", ["|", "-"]),
-                ast.ignore(None, "|", ["|", "-", "-"]),
-            ],
+            ign_prefix="|",
+            ign_suffix="-",
         ),
     ]
