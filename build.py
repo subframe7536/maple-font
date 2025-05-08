@@ -202,7 +202,6 @@ def parse_args(args: list[str] | None = None):
 
 class FontConfig:
     def __init__(self, args, version: str | None = None):
-
         if version:
             global FONT_VERSION
             FONT_VERSION = version
@@ -428,7 +427,17 @@ class FontConfig:
         is_italic: bool,
         is_cn: bool,
         is_variable: bool,
+        fea_path: str | None = None,
     ):
+        if self.apply_fea_file:
+            if fea_path:
+                print(f"Apply feature file [{fea_path}]")
+                addOpenTypeFeatures(
+                    font,
+                    fea_path,
+                )
+            return
+
         fea_str = generate_fea_string(
             is_italic=is_italic,
             is_cn=is_cn,
@@ -1232,7 +1241,9 @@ def main(args: list[str] | None = None, version: str | None = None):
     makedirs(build_option.output_variable, exist_ok=True)
 
     start_time = time.time()
-    print(f"🚩 Start building {font_config.family_name} {font_config.version_str} ...\n")
+    print(
+        f"🚩 Start building {font_config.family_name} {font_config.version_str} ...\n"
+    )
 
     # =========================================================================================
     # ===================================   Build basic   =====================================
@@ -1257,25 +1268,18 @@ def main(args: list[str] | None = None, version: str | None = None):
             )
 
             is_italic = "Italic" in input_file
-            if font_config.apply_fea_file:
-                fea_path = joinPaths(
+
+            font_config.patch_fea_string(
+                font=font,
+                issue_fea_dir=build_option.output_dir,
+                is_italic=is_italic,
+                is_cn=False,
+                is_variable=True,
+                fea_path=joinPaths(
                     build_option.src_dir,
                     "features/italic.fea" if is_italic else "features/regular.fea",
-                )
-                print(f"Apply feature file [{fea_path}]")
-                addOpenTypeFeatures(
-                    font,
-                    fea_path,
-                )
-            else:
-                print("Apply feature string")
-                font_config.patch_fea_string(
-                    font=font,
-                    issue_fea_dir=build_option.output_dir,
-                    is_italic=is_italic,
-                    is_cn=False,
-                    is_variable=True,
-                )
+                ),
+            )
 
             style_name = "Italic" if is_italic else "Regular"
             postscript_name = f"{font_config.family_name_compact}-{style_name}"
