@@ -395,8 +395,8 @@ def subst_liga(
     surround: list[
         tuple[Sequence[str | Clazz] | None, Sequence[str | Clazz] | None]
     ] = [],
-    ign_prefix: str | Clazz | list = [],
-    ign_suffix: str | Clazz | list = [],
+    ign_prefix: str | Clazz | None = None,
+    ign_suffix: str | Clazz | None = None,
     extra_rules: list[Line] | None = None,
 ) -> Lookup:
     """
@@ -466,7 +466,7 @@ def subst_liga(
     if ign_prefix:
         generated_ignores.append(ignore(ign_prefix, source_arr[0], source_arr[1:]))
     if ign_suffix:
-        generated_ignores.append(ignore(None, source_arr[0], source_arr[1:] + to_list(ign_suffix)))
+        generated_ignores.append(ignore(None, source_arr[0], source_arr[1:] + [ign_suffix]))
 
     subst_rules = []
     if not surround:
