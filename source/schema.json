@@ -296,6 +296,11 @@
           "type": "boolean",
           "description": "whether to use large pre-instantiated static CN font as base font (instantiate will cost 40-50 minutes)",
           "default": true
+        },
+        "scale_factor": {
+          "type": "number",
+          "description": "Scale factor for CN glyphs (default: 1.0)",
+          "default": 1.0
         }
       },
       "required": [

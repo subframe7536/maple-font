@@ -615,42 +615,46 @@ CN グリフの間隔が**非常に大きい**と感じる場合、間隔を狭�
 ```
 usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--apply-fea-file]
                 [--hinted | --no-hinted] [--liga | --no-liga] [--cn-narrow]
-                [--nerd-font | --no-nerd-font] [--cn | --no-cn] [--cn-both]
-                [--ttf-only] [--least-styles] [--cache] [--cn-rebuild]
-                [--archive]
+                [--cn-scale-factor CN_SCALE_FACTOR] [--nerd-font | --no-nerd-font]
+                [--cn | --no-cn] [--cn-both] [--ttf-only] [--least-styles] [--cache]
+                [--cn-rebuild] [--archive]
 
 ✨ Builder and optimizer for Maple Mono
 
 options:
-  -h, --help        このヘルプメッセージを表示して終了
-  -v, --version     プログラムのバージョン番号を表示して終了
-  -d, --dry         設定を出力して終了
-  --debug           ファミリ名に `Debug` サフィックスを追加し、ビルドを高速化します
+  -h, --help            このヘルプメッセージを表示して終了
+  -v, --version         プログラムのバージョン番号を表示して終了
+  -d, --dry             設定を出力して終了
+  --debug               ファミリ名に `Debug` サフィックスを追加し、ビルドを高速化
 
 Feature Options:
-  -n, --normal      `JetBrains Mono` のように斜線付きゼロを持つ通常のプリセットを使用
-  --feat FEAT       フォント機能をフリーズし、`,` で区切る（例： `--feat zero,cv01,ss07,ss08` ）。
-                    可変フォーマットには効果がありません
-  --apply-fea-file  `source/features/{regular,italic}.fea` から機能ファイルを読み込み、可変フォントに適用
-  --hinted          NF / CN / NF-CNでヒント付きフォントをベースフォントとして使用（デフォルト）
-  --no-hinted       NF / CN / NF-CNでヒントなしフォントをベースフォントとして使用
-  --liga            すべてのリガチャを保持（デフォルト）
-  --no-liga         すべてのリガチャを削除
-  --cn-narrow       CN文字を狭くする（実験的）
+  -n, --normal          `JetBrains Mono` のように斜線付きゼロを持つ通常のプリセットを使用
+  --feat FEAT           フォント機能をフリーズし、`,` で区切る（例： `--feat
+                        zero,cv01,ss07,ss08`）。可変フォーマットには効果がありません
+  --apply-fea-file      `source/features/{regular,italic}.fea` から機能ファイルを読み込み、
+                        可変フォントに適用
+  --hinted              NF / CN / NF-CNでヒント付きフォントをベースフォントとして使用
+                        （デフォルト）
+  --no-hinted           NF / CN / NF-CNでヒントなしフォントをベースフォントとして使用
+  --liga                すべてのリガチャを保持（デフォルト）
+  --no-liga             すべてのリガチャを削除
+  --cn-narrow           CN文字を狭くする（実験的）
+  --cn-scale-factor CN_SCALE_FACTOR
+                        CN グリフのスケール係数（例：1.1）
 
 Build Options:
-  --nerd-font       Nerd-Fontバージョンをビルド（デフォルト）
-  --no-nerd-font    Nerd-Fontバージョンをビルドしない
-  --cn              中国語バージョンをビルド
-  --no-cn           中国語バージョンをビルドしない（デフォルト）
-  --cn-both         `Maple Mono CN` と `Maple Mono NF CN` の両方をビルド。
-                    Nerd-Fontバージョンが有効である必要があります
-  --ttf-only        TTF形式のみをビルド
-  --least-styles    通常の / 太字 / 斜体 / 太字斜体スタイルのみを構築する
-  --cache           TTF、OTF、Woff2形式のフォントキャッシュを再利用
-  --cn-rebuild      CNベースフォントを再インスタンス化
-  --archive         設定とライセンスを含むフォントアーカイブをビルド。
-                    `--cache` フラグがある場合、Nerd-FontとCN形式のみをアーカイブ
+  --nerd-font           Nerd-Fontバージョンをビルド（デフォルト）
+  --no-nerd-font        Nerd-Fontバージョンをビルドしない
+  --cn                  中国語バージョンをビルド
+  --no-cn               中国語バージョンをビルドしない（デフォルト）
+  --cn-both             `Maple Mono CN` と `Maple Mono NF CN` の両方をビルド。
+                        Nerd-Fontバージョンが有効である必要があります
+  --ttf-only            TTF形式のみをビルド
+  --least-styles        通常の / 太字 / 斜体 / 太字斜体スタイルのみを構築する
+  --cache               TTF、OTF、Woff2形式のフォントキャッシュを再利用
+  --cn-rebuild          CNベースフォントを再インスタンス化
+  --archive             設定とライセンスを含むフォントアーカイブをビルド。
+                        `--cache` フラグがある場合、Nerd-FontとCN形式のみをアーカイブ
 ```
 
 ## クレジット
