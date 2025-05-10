@@ -219,6 +219,7 @@ ll
 - [v7.1] cv61: Alternative `,` and `;` with straight tail
 - [v7.1] cv62: Alternative `?` with larger openings
 - [v7.1] cv63: Alternative `<=` in arrow style
+- [v7.3] cv64: Alternative `<=` and `>=` with horizen bottom bar
 - [v7.0] zero: Dot style `0`
 <!-- CV -->
 
