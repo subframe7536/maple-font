@@ -340,9 +340,8 @@ class FontConfig:
         except FileNotFoundError:
             print(f"🚨 Config file not found: {config_file_path}, use default config")
         except json.JSONDecodeError:
-            print(
-                f"❗ Error: Invalid JSON in config file: {config_file_path}, use default config"
-            )
+            print(f"❗ Error: Invalid JSON in config file: {config_file_path}")
+            exit(1)
         except Exception as e:
             print(f"❗ An unexpected error occurred: {e}")
             exit(1)
