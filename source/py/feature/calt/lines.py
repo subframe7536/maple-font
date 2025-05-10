@@ -1,5 +1,5 @@
 from source.py.feature import ast
-from source.py.feature.base.clazz import cls_comma
+from source.py.feature.base.clazz import cls_comma, cls_digit
 
 def get_lookup():
     return [
@@ -46,7 +46,7 @@ def get_lookup():
         ast.subst_liga(
             "|-",
             ign_prefix="|",
-            ign_suffix=ast.cls("-", ">"),
+            ign_suffix=ast.cls("-", ">", cls_digit),
         ),
         ast.subst_liga(
             "_|_",
@@ -56,6 +56,6 @@ def get_lookup():
         ast.subst_liga(
             "||-",
             ign_prefix="|",
-            ign_suffix="-",
+            ign_suffix=ast.cls("-", cls_digit),
         ),
     ]
