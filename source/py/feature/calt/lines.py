@@ -55,7 +55,7 @@ def get_lookup():
         ),
         ast.subst_liga(
             "||-",
-            ign_prefix="|",
+            ign_prefix=ast.cls("|", "-"),
             ign_suffix=ast.cls("-", cls_digit),
         ),
     ]

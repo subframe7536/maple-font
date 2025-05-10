@@ -1400,7 +1400,7 @@ feature calt {
 
   # ||-
   lookup bar_bar_hyphen.liga {
-    ignore sub bar bar' bar hyphen;
+    ignore sub [bar hyphen] bar' bar hyphen;
     ignore sub bar' bar hyphen [hyphen @Digit];
     sub SPC SPC hyphen' by bar_bar_hyphen.liga;
     sub SPC bar' hyphen by SPC;
