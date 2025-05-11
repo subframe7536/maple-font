@@ -2,6 +2,10 @@ from source.py.feature import ast
 
 
 def get_lookup():
+    left_start = ast.gly_var("{", "start")
+    left_end = ast.gly_var("{", "end")
+    right_start = ast.gly_var("}", "start")
+    right_end = ast.gly_var("}", "end")
     return [
         ast.Lookup(
             ast.gly("{{"),
@@ -9,10 +13,8 @@ def get_lookup():
             [
                 ast.ignore("{", "{", "{"),
                 ast.ignore(None, "{", ["{", ast.cls("{", "!", "-")]),
-                ast.subst(None, "{", "{", ast.gly_var("{", "start")),
-                ast.subst(
-                    ast.gly_var("{", "start"), "{", None, ast.gly_var("{", "end")
-                ),
+                ast.subst(None, "{", "{", left_start),
+                ast.subst(left_start, "{", None, left_end),
             ],
         ),
         ast.Lookup(
@@ -21,10 +23,8 @@ def get_lookup():
             [
                 ast.ignore(ast.cls("!", "}", "-"), "}", "}"),
                 ast.ignore(None, "}", ["}", "}"]),
-                ast.subst(None, "}", "}", ast.gly_var("}", "start")),
-                ast.subst(
-                    ast.gly_var("}", "start"), "}", None, ast.gly_var("}", "end")
-                ),
+                ast.subst(None, "}", "}", right_start),
+                ast.subst(right_start, "}", None, right_end),
             ],
         ),
         ast.subst_liga(
