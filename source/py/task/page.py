@@ -1,3 +1,4 @@
+import json
 import os
 import shutil
 import subprocess
@@ -100,6 +101,11 @@ def page(submodule_path: str, var_dir: str, commit: bool = False) -> None:
         joinPaths(feature_data_base, "features.ts"),
         get_total_feat_ts(),
     )
+    with open("config.json", "r+", encoding="utf-8") as file:
+        data = json.load(file)
+
+        del data["$schema"]
+    write_json(joinPaths(feature_data_base, "config.json"), data)
 
     font_dir = joinPaths(submodule_path, "public", "fonts")
     os.system("python build.py --ttf-only --no-nerd-font --least-styles")
