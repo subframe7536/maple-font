@@ -12,8 +12,8 @@ def get_lookup():
             "\\\\ \\' \\.",
             [
                 ast.cls_states(escape_cls),
-                ast.ignore(escape_liga, "\\", escape_cls),
-                ast.ignore(None, "\\", ["%", "%"]),
+                ast.ign(escape_liga, "\\", escape_cls),
+                ast.ign(None, "\\", ["%", "%"]),
                 ast.subst(None, "\\", escape_cls, escape_liga),
             ],
         )

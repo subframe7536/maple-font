@@ -26,8 +26,8 @@ def get_base_lookup():
             ign_prefix="!",
             ign_suffix="!",
             extra_rules=[
-                ast.ignore(["(", cls_question], "!", "!"),
-                ast.ignore(["(", cls_question, "<"], "!", "!"),
+                ast.ign(["(", cls_question], "!", "!"),
+                ast.ign(["(", cls_question, "<"], "!", "!"),
             ],
         ),
         ast.subst_liga(
@@ -47,8 +47,8 @@ def get_base_lookup():
             target=ast.gly("???"),
             desc="???",
             extra_rules=[
-                ast.ignore(cls_question, cls_question, [cls_question, cls_question]),
-                ast.ignore(None, cls_question, [cls_question, cls_question, cls_question]),
+                ast.ign(cls_question, cls_question, [cls_question, cls_question]),
+                ast.ign(None, cls_question, [cls_question, cls_question, cls_question]),
             ],
         ),
         ast.subst_liga(
@@ -101,8 +101,8 @@ def get_base_lookup():
             ign_prefix=ast.cls("<", "-"),
             ign_suffix=ast.cls("-", ">"),
             extra_rules=[
-                ast.ignore(["<", ast.cls("#", "!")], "-", "-"),
-                ast.ignore(
+                ast.ign(["<", ast.cls("#", "!")], "-", "-"),
+                ast.ign(
                     ["(", cls_question, "<", "!"],
                     "-",
                     "-",
@@ -114,7 +114,7 @@ def get_base_lookup():
             ign_prefix="-",
             ign_suffix="-",
             extra_rules=[
-                ast.ignore("<", "-", ["-", "-", ">"]),
+                ast.ign("<", "-", ["-", "-", ">"]),
             ],
         ),
         ast.subst_liga(

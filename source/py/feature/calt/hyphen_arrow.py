@@ -9,7 +9,7 @@ def get_lookup():
             ign_prefix="<",
             ign_suffix="-",
             extra_rules=[
-                ast.ignore(["(", cls_question], "<", ["!", "-", "-"]),
+                ast.ign(["(", cls_question], "<", ["!", "-", "-"]),
             ],
         ),
         ast.subst_liga(

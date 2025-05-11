@@ -464,9 +464,9 @@ def subst_liga(
 
     generated_ignores = []
     if ign_prefix:
-        generated_ignores.append(ignore(ign_prefix, source_arr[0], source_arr[1:]))
+        generated_ignores.append(ign(ign_prefix, source_arr[0], source_arr[1:]))
     if ign_suffix:
-        generated_ignores.append(ignore(None, source_arr[0], source_arr[1:] + [ign_suffix]))
+        generated_ignores.append(ign(None, source_arr[0], source_arr[1:] + [ign_suffix]))
 
     subst_rules = []
     if not surround:
@@ -492,7 +492,7 @@ def subst_liga(
     )
 
 
-def ignore(
+def ign(
     prefix: str | Clazz | Sequence[str | Clazz] | None,
     glyph: str | Clazz,
     suffix: str | Clazz | Sequence[str | Clazz] | None,

@@ -11,8 +11,8 @@ def get_lookup():
             ast.gly("{{"),
             "{{",
             [
-                ast.ignore("{", "{", "{"),
-                ast.ignore(None, "{", ["{", ast.cls("{", "!", "-")]),
+                ast.ign("{", "{", "{"),
+                ast.ign(None, "{", ["{", ast.cls("{", "!", "-")]),
                 ast.subst(None, "{", "{", left_start),
                 ast.subst(left_start, "{", None, left_end),
             ],
@@ -21,8 +21,8 @@ def get_lookup():
             ast.gly("}}"),
             "}}",
             [
-                ast.ignore(ast.cls("!", "}", "-"), "}", "}"),
-                ast.ignore(None, "}", ["}", "}"]),
+                ast.ign(ast.cls("!", "}", "-"), "}", "}"),
+                ast.ign(None, "}", ["}", "}"]),
                 ast.subst(None, "}", "}", right_start),
                 ast.subst(right_start, "}", None, right_end),
             ],

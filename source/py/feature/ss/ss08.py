@@ -76,7 +76,7 @@ def ss08_subst():
             ign_prefix="=",
             ign_suffix="<",
             extra_rules=[
-                ast.ignore(["(", cls_question], "=", ["<", "<"]),
+                ast.ign(["(", cls_question], "=", ["<", "<"]),
                 ast.subst(
                     [ast.SPC, ast.SPC],
                     ast.gly("<<"),
@@ -92,7 +92,7 @@ def ss08_subst():
             ign_prefix="=",
             ign_suffix=">",
             extra_rules=[
-                ast.ignore(["(", cls_question], "=", [">", ">"]),
+                ast.ign(["(", cls_question], "=", [">", ">"]),
                 ast.subst(
                     [ast.SPC, ast.SPC],
                     ast.gly(">>"),
