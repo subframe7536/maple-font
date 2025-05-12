@@ -180,7 +180,7 @@ def parse_args(args: list[str] | None = None):
     build_group.add_argument(
         "--least-styles",
         action="store_true",
-        help="Only build regular / bold / italic / bold italic style",
+        help="Only build Regular / Bold / Italic / BoldItalic style",
     )
     build_group.add_argument(
         "--cache",

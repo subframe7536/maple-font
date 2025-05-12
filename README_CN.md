@@ -648,7 +648,7 @@ Build Options:
   --cn-both             同时构建 `Maple Mono CN` 和 `Maple Mono NF CN`。必须启用
                         Nerd-Font 版本
   --ttf-only            仅构建 TTF 格式
-  --least-styles        仅构建常规 / 粗体 / 斜体 / 粗体斜体样式
+  --least-styles        仅构建 常规 / 粗体 / 斜体 / 粗斜体 样式
   --cache               重用 TTF、OTF 和 Woff2 格式的字体缓存
   --cn-rebuild          重新静态化可变的中文基字
   --archive             构建带有配置和许可的字体压缩包。如果带有 `--cache`

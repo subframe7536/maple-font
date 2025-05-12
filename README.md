@@ -647,7 +647,7 @@ Build Options:
   --cn-both             Build both `Maple Mono CN` and `Maple Mono NF CN`. Nerd-Font
                         version must be enabled
   --ttf-only            Only build TTF format
-  --least-styles        Only build regular / bold / italic / bold italic style
+  --least-styles        Only build Regular / Bold / Italic / BoldItalic style
   --cache               Reuse font cache of TTF, OTF and Woff2 formats
   --cn-rebuild          Reinstantiate variable CN base font
   --archive             Build font archives with config and license. If has `--cache`
