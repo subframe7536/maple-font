@@ -128,7 +128,7 @@ def parse_args(args: list[str] | None = None):
     feature_group.add_argument(
         "--cn-narrow",
         action="store_true",
-        help="Make CN characters narrow (experimental)",
+        help="Make CN characters narrow (And the font cannot be recogized as monospaced font)",
     )
     feature_group.add_argument(
         "--cn-scale-factor",
@@ -836,15 +836,20 @@ def change_glyph_width_or_scale(
             continue
 
         glyph.coordinates.scale((scale_factor, scale_factor))
-
-        xMin, yMin, xMax, yMax = glyph.coordinates.calcIntBounds()
-        delta = round(((glyph.xMax - glyph.xMin) - (xMax - xMin)) / 2)
-        glyph.coordinates.translate((delta, 0))
-
         glyph.xMin, glyph.yMin, glyph.xMax, glyph.yMax = (
             glyph.coordinates.calcIntBounds()
         )
-        font["hmtx"][name] = (width, lsb + delta)  # type: ignore
+
+        scaled_width = int(round(width * scale_factor))
+        delta = (target_width - scaled_width) / 2
+
+        glyph.coordinates.translate((delta, 0))
+        glyph.xMin, glyph.yMin, glyph.xMax, glyph.yMax = (
+            glyph.coordinates.calcIntBounds()
+        )
+
+        new_lsb = lsb + int(round(delta))
+        font["hmtx"][name] = (target_width, new_lsb)  # type: ignore
 
 
 def update_font_names(
@@ -1144,11 +1149,29 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
     )
     if target_width or scale_factor:
         match_width = 2 * font_config.glyph_width
+
+        # Change glyph width and keep monospace identifier will cause
+        # Intellij IDEA / Windows Notepad and other applications to
+        # render the font incorrectly. See details in #249
+        if target_width:
+            cn_font["post"].isFixedPitch = False  # type: ignore
+            cn_font["OS/2"].panose.bProportion = 0  # type: ignore
+            cn_font["OS/2"].panose.bSpacing = 0  # type: ignore
+            cn_font["hhea"].advanceWidthMax = target_width  # type: ignore
+            print("Changed CN glyph width, mark font file as not monospaced")
+        else:
+            target_width = match_width
+
+        if scale_factor:
+            print(f"Scale CN glyph to {scale_factor}x")
+        else:
+            scale_factor = 1
+
         change_glyph_width_or_scale(
             font=cn_font,
             match_width=match_width,
-            target_width=target_width or match_width,
-            scale_factor=scale_factor or 1,
+            target_width=target_width,
+            scale_factor=scale_factor,
         )
 
     # https://github.com/subframe7536/maple-font/issues/239

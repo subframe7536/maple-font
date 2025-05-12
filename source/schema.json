@@ -288,7 +288,7 @@
         },
         "narrow": {
           "type": "boolean",
-          "description": "[Experimental] Whether to narrow CN characters. THIS WILL BREAK THE 2:1 METRIC\nOnly supported in VSCode currently",
+          "description": "Whether to narrow CN characters. This option will make the font cannot be recogized as monospaced font",
           "default": false
         },
         "use_hinted": {

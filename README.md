@@ -598,7 +598,9 @@ If you want to build CN base fonts from variable (about 35 MB), setup `"cn.use_s
 
 #### Narrow spacing in CN glyphs
 
-If you think that CN glyphs spacing is **tooooo large**, there is a **EXPERIMENTAL** build option `cn.narrow` or flag `--cn-narrow` to narrow spacing in CN glyphs. You can see effect and track issues in [#249](https://github.com/subframe7536/maple-font/issues/249)
+If you think that **CN glyphs spacing is TOOOOOO large**, there is a build option `cn.narrow` or cli flag `--cn-narrow` to narrow spacing in CN glyphs, but this will make the font cannot be recogized as monospaced font.
+
+You can see effect in [#249](https://github.com/subframe7536/maple-font/issues/249#issuecomment-2871260476).
 
 #### GitHub Mirror
 
@@ -635,9 +637,10 @@ Feature Options:
   --no-hinted           Use unhinted font as base font in NF / CN / NF-CN
   --liga                Preserve all the ligatures (default)
   --no-liga             Remove all the ligatures
-  --cn-narrow           Make CN characters narrow (experimental)
+  --cn-narrow           Make CN / JP characters narrow (And the font cannot be recogized
+                        as monospaced font)
   --cn-scale-factor CN_SCALE_FACTOR
-                        Scale factor for CN glyphs (e.g. 1.1)
+                        Scale factor for CN / JP glyphs (e.g. 1.1)
 
 Build Options:
   --nerd-font           Build Nerd-Font version (default)
