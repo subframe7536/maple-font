@@ -2672,6 +2672,14 @@ feature ss11 {
     sub ampersand.cv01' equal by SPC;
   } ampersand_equal.liga.cv01.ss11;
 
+  # &= in cv65
+  lookup ampersand_equal.liga.cv65.ss11 {
+    ignore sub ampersand.cv65 ampersand.cv65' equal;
+    ignore sub ampersand.cv65' equal @IgnoreEqual;
+    sub SPC equal' by ampersand_equal.liga.cv65.ss11;
+    sub ampersand.cv65' equal by SPC;
+  } ampersand_equal.liga.cv65.ss11;
+
   # &&=
   lookup ampersand_ampersand_equal.liga.ss11 {
     ignore sub ampersand ampersand' ampersand equal;
@@ -2691,6 +2699,16 @@ feature ss11 {
     sub SPC ampersand.cv01' equal by SPC;
     sub ampersand.cv01' ampersand.cv01 equal by SPC;
   } ampersand_ampersand_equal.liga.cv01.ss11;
+
+  # &&= in cv65
+  lookup ampersand_ampersand_equal.liga.cv65.ss11 {
+    ignore sub ampersand.cv65 ampersand.cv65' ampersand.cv65 equal;
+    ignore sub ampersand.cv65' ampersand.cv65 equal @IgnoreEqual;
+    sub SPC ampersand_ampersand.liga.cv65' equal by SPC;
+    sub SPC SPC equal' by ampersand_ampersand_equal.liga.cv65.ss11;
+    sub SPC ampersand.cv65' equal by SPC;
+    sub ampersand.cv65' ampersand.cv65 equal by SPC;
+  } ampersand_ampersand_equal.liga.cv65.ss11;
 
   # ?=
   lookup question_equal.liga.ss11 {

@@ -3,8 +3,9 @@ from source.py.feature import ast
 
 def ss11_subst():
     cls_ign_equal = ast.Clazz("IgnoreEqual", [">", "=", ":"])
-    gly_cv01 = ast.gly("&", ".cv01")
-    gly_cv62 = ast.gly("?", ".cv62")
+    ampersand_cv01 = ast.gly("&", ".cv01")
+    question_cv62 = ast.gly("?", ".cv62")
+    ampersand_cv65 = ast.gly("&", ".cv65")
     return [
         ast.cls_states(cls_ign_equal),
         ast.Lookup(
@@ -38,10 +39,17 @@ def ss11_subst():
             ign_suffix=cls_ign_equal,
         ),
         ast.subst_liga(
-            [gly_cv01, "="],
+            [ampersand_cv01, "="],
             target=ast.gly("&=", ".cv01.ss11"),
             desc="&= in cv01",
-            ign_prefix=gly_cv01,
+            ign_prefix=ampersand_cv01,
+            ign_suffix=cls_ign_equal,
+        ),
+        ast.subst_liga(
+            [ampersand_cv65, "="],
+            target=ast.gly("&=", ".cv65.ss11"),
+            desc="&= in cv65",
+            ign_prefix=ampersand_cv65,
             ign_suffix=cls_ign_equal,
         ),
         ast.subst_liga(
@@ -52,15 +60,30 @@ def ss11_subst():
             extra_rules=[ast.subst(ast.SPC, ast.gly("&&"), "=", ast.SPC)],
         ),
         ast.subst_liga(
-            [gly_cv01, gly_cv01, "="],
+            [ampersand_cv01, ampersand_cv01, "="],
             target=ast.gly("&&=", ".cv01.ss11"),
             desc="&&= in cv01",
-            ign_prefix=gly_cv01,
+            ign_prefix=ampersand_cv01,
             ign_suffix=cls_ign_equal,
             extra_rules=[
                 ast.subst(
                     ast.SPC,
                     ast.gly("&&", ".cv01"),
+                    "=",
+                    ast.SPC,
+                )
+            ],
+        ),
+        ast.subst_liga(
+            [ampersand_cv65, ampersand_cv65, "="],
+            target=ast.gly("&&=", ".cv65.ss11"),
+            desc="&&= in cv65",
+            ign_prefix=ampersand_cv65,
+            ign_suffix=cls_ign_equal,
+            extra_rules=[
+                ast.subst(
+                    ast.SPC,
+                    ast.gly("&&", ".cv65"),
                     "=",
                     ast.SPC,
                 )
@@ -73,10 +96,10 @@ def ss11_subst():
             ign_suffix=cls_ign_equal,
         ),
         ast.subst_liga(
-            [gly_cv62, "="],
+            [question_cv62, "="],
             target=ast.gly("?=", ".cv62.ss11"),
             desc="?= in cv62",
-            ign_prefix=gly_cv62,
+            ign_prefix=question_cv62,
             ign_suffix=cls_ign_equal,
         ),
         ast.subst_liga(
@@ -87,10 +110,10 @@ def ss11_subst():
             extra_rules=[ast.subst(ast.SPC, ast.gly("??"), "=", ast.SPC)],
         ),
         ast.subst_liga(
-            [gly_cv62, gly_cv62, "="],
+            [question_cv62, question_cv62, "="],
             target=ast.gly("??=", ".cv62.ss11"),
             desc="??= in cv62",
-            ign_prefix=gly_cv62,
+            ign_prefix=question_cv62,
             ign_suffix=cls_ign_equal,
             extra_rules=[ast.subst(ast.SPC, ast.gly("??", ".cv62"), "=", ast.SPC)],
         ),
