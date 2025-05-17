@@ -723,7 +723,7 @@ feature calt {
   # ??
   lookup question_question.liga {
     ignore sub @Question @Question' @Question;
-    ignore sub @Question' @Question [@Question equal];
+    ignore sub @Question' @Question @Question;
     sub SPC @Question' by question_question.liga;
     sub @Question' @Question by SPC;
   } question_question.liga;
@@ -740,7 +740,7 @@ feature calt {
   # &&
   lookup ampersand_ampersand.liga {
     ignore sub ampersand ampersand' ampersand;
-    ignore sub ampersand' ampersand [ampersand equal];
+    ignore sub ampersand' ampersand ampersand;
     sub SPC ampersand' by ampersand_ampersand.liga;
     sub ampersand' ampersand by SPC;
   } ampersand_ampersand.liga;
@@ -757,7 +757,7 @@ feature calt {
   # //
   lookup slash_slash.liga {
     ignore sub slash slash' slash;
-    ignore sub slash' slash [slash equal];
+    ignore sub slash' slash slash;
     sub SPC slash' by slash_slash.liga;
     sub slash' slash by SPC;
   } slash_slash.liga;
@@ -2307,8 +2307,12 @@ feature ss11 {
   };
 
   @IgnoreEqual = [greater equal colon];
-  sub bar_equal.liga by bar_equal.liga.ss11;
-  sub bar_bar_equal.liga by bar_bar_equal.liga.ss11;
+
+  # |= ||=
+  lookup bars_equal {
+    sub bar_equal.liga by bar_equal.liga.ss11;
+    sub bar_bar_equal.liga by bar_bar_equal.liga.ss11;
+  } bars_equal;
 
   # /=
   lookup slash_equal.liga.ss11 {
@@ -2322,6 +2326,7 @@ feature ss11 {
   lookup slash_slash_equal.liga.ss11 {
     ignore sub [slash less] slash' slash equal;
     ignore sub slash' slash equal @IgnoreEqual;
+    sub SPC slash_slash.liga' equal by SPC;
     sub SPC SPC equal' by slash_slash_equal.liga.ss11;
     sub SPC slash' equal by SPC;
     sub slash' slash equal by SPC;
@@ -2343,7 +2348,7 @@ feature ss11 {
     sub ampersand' equal by SPC;
   } ampersand_equal.liga.ss11;
 
-  # ampersand_equal.liga.cv01.ss11
+  # &= in cv01
   lookup ampersand_equal.liga.cv01.ss11 {
     ignore sub ampersand.cv01 ampersand.cv01' equal;
     ignore sub ampersand.cv01' equal @IgnoreEqual;
@@ -2355,15 +2360,17 @@ feature ss11 {
   lookup ampersand_ampersand_equal.liga.ss11 {
     ignore sub ampersand ampersand' ampersand equal;
     ignore sub ampersand' ampersand equal @IgnoreEqual;
+    sub SPC ampersand_ampersand.liga' equal by SPC;
     sub SPC SPC equal' by ampersand_ampersand_equal.liga.ss11;
     sub SPC ampersand' equal by SPC;
     sub ampersand' ampersand equal by SPC;
   } ampersand_ampersand_equal.liga.ss11;
 
-  # ampersand_ampersand_equal.liga.cv01.ss11
+  # &&= in cv01
   lookup ampersand_ampersand_equal.liga.cv01.ss11 {
     ignore sub ampersand.cv01 ampersand.cv01' ampersand.cv01 equal;
     ignore sub ampersand.cv01' ampersand.cv01 equal @IgnoreEqual;
+    sub SPC ampersand_ampersand.liga.cv01' equal by SPC;
     sub SPC SPC equal' by ampersand_ampersand_equal.liga.cv01.ss11;
     sub SPC ampersand.cv01' equal by SPC;
     sub ampersand.cv01' ampersand.cv01 equal by SPC;
@@ -2377,7 +2384,7 @@ feature ss11 {
     sub question' equal by SPC;
   } question_equal.liga.ss11;
 
-  # question_equal.liga.cv62.ss11
+  # ?= in cv62
   lookup question_equal.liga.cv62.ss11 {
     ignore sub question.cv62 question.cv62' equal;
     ignore sub question.cv62' equal @IgnoreEqual;
@@ -2389,15 +2396,17 @@ feature ss11 {
   lookup question_question_equal.liga.ss11 {
     ignore sub question question' question equal;
     ignore sub question' question equal @IgnoreEqual;
+    sub SPC question_question.liga' equal by SPC;
     sub SPC SPC equal' by question_question_equal.liga.ss11;
     sub SPC question' equal by SPC;
     sub question' question equal by SPC;
   } question_question_equal.liga.ss11;
 
-  # question_question_equal.liga.cv62.ss11
+  # ??= in cv62
   lookup question_question_equal.liga.cv62.ss11 {
     ignore sub question.cv62 question.cv62' question.cv62 equal;
     ignore sub question.cv62' question.cv62 equal @IgnoreEqual;
+    sub SPC question_question.liga.cv62' equal by SPC;
     sub SPC SPC equal' by question_question_equal.liga.cv62.ss11;
     sub SPC question.cv62' equal by SPC;
     sub question.cv62' question.cv62 equal by SPC;
