@@ -2203,6 +2203,23 @@ feature cv64 {
 
 } cv64;
 
+feature cv65 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV65: Alternative & in handwriting style";
+    };
+  };
+
+  sub ampersand by ampersand.cv65;
+  sub ampersand_ampersand.liga by ampersand_ampersand.liga.cv65;
+  sub ampersand_ampersand_ampersand.liga by ampersand_ampersand_ampersand.liga.cv65;
+  sub ampersand.cv01 by ampersand.cv65;
+  sub ampersand_ampersand.liga.cv01 by ampersand_ampersand.liga.cv65;
+  sub ampersand_ampersand_ampersand.liga.cv01 by ampersand_ampersand_ampersand.liga.cv65;
+
+} cv65;
+
 feature ss01 {
 
   featureNames {
