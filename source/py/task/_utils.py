@@ -13,3 +13,13 @@ def write_text(file_path: str, content: str, mode: str = "w") -> None:
 def write_json(file_path: str, data: dict) -> None:
     with open(file_path, "w", encoding="utf-8", newline="\n") as file:
         json.dump(data, file, indent=2)
+
+
+def read_json(file_path: str) -> dict:
+    with open(file_path, "r", encoding="utf-8") as file:
+        return json.load(file)
+
+
+def read_text(file_path: str) -> str:
+    with open(file_path, "r", encoding="utf-8") as file:
+        return file.read()

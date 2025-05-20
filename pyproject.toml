@@ -7,4 +7,5 @@ requires-python = ">=3.10"
 dependencies = [
     "foundrytools-cli>=1.1.22",
     "glyphslib>=6.10.1",
+    "python-minifier>=2.11.3",
 ]

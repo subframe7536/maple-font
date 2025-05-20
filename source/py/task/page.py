@@ -1,4 +1,3 @@
-import json
 import os
 import shutil
 import subprocess
@@ -10,8 +9,9 @@ from source.py.feature import (
     get_ss_version_info,
     get_total_feat_ts,
 )
-from source.py.task._utils import write_json, write_text
+from source.py.task._utils import read_json, read_text, write_json, write_text
 from source.py.utils import joinPaths
+from python_minifier import minify
 
 
 def run_git_command(args: list, cwd=None, check=True):
@@ -40,7 +40,9 @@ def commit_and_push_submodule(submodule_path: str, commit_message: str) -> bool:
 
     # Check if submodule exists
     if not os.path.exists(abs_submodule_path):
-        print(f"Error: Submodule {submodule_path} does not exist, please run `git submodule update --init` first")
+        print(
+            f"Error: Submodule {submodule_path} does not exist, please run `git submodule update --init` first"
+        )
         sys.exit(1)
 
     # Check for uncommitted changes
@@ -55,7 +57,9 @@ def commit_and_push_submodule(submodule_path: str, commit_message: str) -> bool:
     run_git_command(["git", "add", "."], cwd=abs_submodule_path)
 
     # Commit changes
-    run_git_command(["git", "commit", "-m", commit_message], cwd=abs_submodule_path)
+    run_git_command(
+        ["git", "commit", "-m", "[skip-ci]" + commit_message], cwd=abs_submodule_path
+    )
 
     # Push to remote
     run_git_command(["git", "push", "origin", "main"], cwd=abs_submodule_path)
@@ -101,11 +105,13 @@ def page(submodule_path: str, var_dir: str, commit: bool = False) -> None:
         joinPaths(feature_data_base, "features.ts"),
         get_total_feat_ts(),
     )
-    with open("config.json", "r+", encoding="utf-8") as file:
-        data = json.load(file)
 
-        del data["$schema"]
+    data = read_json("config.json")
+    del data["$schema"]
     write_json(joinPaths(feature_data_base, "config.json"), data)
+
+    data = read_text(joinPaths("source", "py", "in_browser.py"))
+    write_text(joinPaths(submodule_path, "data", "script.py"), minify(data))
 
     font_dir = joinPaths(submodule_path, "public", "fonts")
     os.system("python build.py --ttf-only --no-nerd-font --least-styles")

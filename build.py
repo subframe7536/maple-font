@@ -1494,12 +1494,17 @@ def main(args: list[str] | None = None, version: str | None = None):
             if f == archive_dir_name or f.endswith(".json"):
                 continue
 
-            if should_use_cache and f not in ["CN", "NF", "NF-CN"]:
-                continue
+            suffix = ""
+            if f in ["CN", "NF", "NF-CN"]:
+                if not font_config.use_hinted:
+                    suffix = "-unhinted"
+            else:
+                if should_use_cache:
+                    continue
 
             sha256, zip_file_name_without_ext = compress_folder(
                 family_name_compact=font_config.family_name_compact,
-                suffix="-unhinted" if not font_config.use_hinted else "",
+                suffix=suffix,
                 source_file_or_dir_path=joinPaths(build_option.output_dir, f),
                 build_config_path=joinPaths(
                     build_option.output_dir, "build-config.json"
