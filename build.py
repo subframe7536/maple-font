@@ -351,9 +351,6 @@ class FontConfig:
         self.use_cn_both = args.cn_both
         self.debug = args.debug
 
-        if "font_forge_bin" not in self.nerd_font:
-            self.nerd_font["font_forge_bin"] = get_font_forge_bin()
-
         if args.normal:
             self.use_normal_preset = True
             for feat in normal_enabled_features:
@@ -538,14 +535,18 @@ class BuildOption:
         ):
             return False
 
-        if check_font_patcher(
+        if not check_font_patcher(
             version=config.nerd_font["version"],
             github_mirror=self.github_mirror,
-        ) and not path.exists(config.nerd_font["font_forge_bin"]):
+        ):
+            exit(1)
+
+        ff_bin = config.nerd_font["font_forge_bin"] or get_font_forge_bin() or "UNKOWN"
+        if not path.exists(ff_bin):
             print(
-                f"FontForge bin({config.nerd_font['font_forge_bin']}) not found. Use prebuild Nerd-Font base font instead."
+                f"FontForge bin ({ff_bin}) not found, cannot build with Nerd Font Patcher"
             )
-            return False
+            exit(1)
 
         return True
 

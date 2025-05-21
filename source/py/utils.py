@@ -133,7 +133,7 @@ def download_zip_and_extract(
             download_file(url, target_path=zip_path)
         except Exception as e:
             print(
-                f"\nFail to download {name}. Please check your internet connection or download it manually from {url}, then put downloaded zip into project's root and run this script again. \n    Error: {e}"
+                f"❗\nFail to download {name}. Please check your internet connection or download it manually from {url}, then put downloaded zip into project's root and run this script again. \n    Error: {e}"
             )
             return False
     try:
@@ -143,7 +143,7 @@ def download_zip_and_extract(
             remove(zip_path)
         return True
     except Exception as e:
-        print(f"Fail to extract {name}. Error: {e}")
+        print(f"❗Fail to extract {name}. Error: {e}")
         return False
 
 
@@ -170,7 +170,7 @@ def check_font_patcher(
         if f"# Nerd Fonts Version: {version}" in f.read():
             return True
 
-    print(f"FontPatcher version is not {version}, please download it from {url}")
+    print(f"❗FontPatcher version is not {version}, please download it from {url}")
     return False
 
 
