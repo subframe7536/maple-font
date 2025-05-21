@@ -76,6 +76,11 @@ jobs:
           if [ -n "${{ github.event.inputs.build_args }}" ]; then
             build_args="$build_args ${{ github.event.inputs.build_args }}"
           fi
+
+          if [[ $build_args == *"--font-patcher"* ]]; then
+            sudo apt install -y fontforge python3-fontforge
+          fi
+
           echo "BUILD_ARGS=$build_args" >> $GITHUB_ENV
           python build.py $build_args
         continue-on-error: true
