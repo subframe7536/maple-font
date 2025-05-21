@@ -619,8 +619,8 @@ By enabling `cv99`, all Chinese punctuation marks will be centred. See more deta
 usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--apply-fea-file]
                 [--hinted | --no-hinted] [--liga | --no-liga] [--cn-narrow]
                 [--cn-scale-factor CN_SCALE_FACTOR] [--nerd-font | --no-nerd-font]
-                [--cn | --no-cn] [--cn-both] [--ttf-only] [--least-styles] [--cache]
-                [--cn-rebuild] [--archive]
+                [--cn | --no-cn] [--cn-both] [--ttf-only] [--least-styles]
+                [--font-patcher] [--cache] [--cn-rebuild] [--archive]
 
 ✨ Builder and optimizer for Maple Mono
 
@@ -631,17 +631,18 @@ options:
   --debug               Add `Debug` suffix to family name and faster build
 
 Feature Options:
-  -n, --normal          Use normal preset, just like `JetBrains Mono` with slashed zero
+  -n, --normal          Use normal preset, just like `JetBrains Mono` with slashed
+                        zero
   --feat FEAT           Freeze font features, splited by `,` (e.g. `--feat
                         zero,cv01,ss07,ss08`). No effect on variable format
-  --apply-fea-file      Load feature file from `source/features/{regular,italic}.fea` to
-                        variable font
+  --apply-fea-file      Load feature file from `source/features/{regular,italic}.fea`
+                        to variable font
   --hinted              Use hinted font as base font in NF / CN / NF-CN (default)
   --no-hinted           Use unhinted font as base font in NF / CN / NF-CN
   --liga                Preserve all the ligatures (default)
   --no-liga             Remove all the ligatures
-  --cn-narrow           Make CN / JP characters narrow (And the font cannot be recogized
-                        as monospaced font)
+  --cn-narrow           Make CN / JP characters narrow (And the font cannot be
+                        recogized as monospaced font)
   --cn-scale-factor CN_SCALE_FACTOR
                         Scale factor for CN / JP glyphs (e.g. 1.1)
 
@@ -654,10 +655,11 @@ Build Options:
                         version must be enabled
   --ttf-only            Only build TTF format
   --least-styles        Only build Regular / Bold / Italic / BoldItalic style
+  --font-patcher        Force the use of Nerd Font Patcher to build NF format
   --cache               Reuse font cache of TTF, OTF and Woff2 formats
   --cn-rebuild          Reinstantiate variable CN base font
   --archive             Build font archives with config and license. If has `--cache`
-                        flag, only archive Nerd-Font and CN formats
+                        flag, only archive NF and CN formats
 ```
 
 ## Development

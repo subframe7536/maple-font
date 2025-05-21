@@ -128,12 +128,12 @@ def parse_args(args: list[str] | None = None):
     feature_group.add_argument(
         "--cn-narrow",
         action="store_true",
-        help="Make CN characters narrow (And the font cannot be recogized as monospaced font)",
+        help="Make CN / JP characters narrow (And the font cannot be recogized as monospaced font)",
     )
     feature_group.add_argument(
         "--cn-scale-factor",
         type=float,
-        help="Scale factor for CN glyphs (e.g. 1.1)",
+        help="Scale factor for CN / JP glyphs (e.g. 1.1)",
     )
 
     build_group = parser.add_argument_group("Build Options")
@@ -183,6 +183,11 @@ def parse_args(args: list[str] | None = None):
         help="Only build Regular / Bold / Italic / BoldItalic style",
     )
     build_group.add_argument(
+        "--font-patcher",
+        action="store_true",
+        help="Force the use of Nerd Font Patcher to build NF format",
+    )
+    build_group.add_argument(
         "--cache",
         action="store_true",
         help="Reuse font cache of TTF, OTF and Woff2 formats",
@@ -190,12 +195,12 @@ def parse_args(args: list[str] | None = None):
     build_group.add_argument(
         "--cn-rebuild",
         action="store_true",
-        help="Reinstantiate CN base font",
+        help="Reinstantiate variable CN base font",
     )
     build_group.add_argument(
         "--archive",
         action="store_true",
-        help="Build font archives with config and license. If has `--cache` flag, only archive Nerd-Font and CN formats",
+        help="Build font archives with config and license. If has `--cache` flag, only archive NF and CN formats",
     )
 
     return parser.parse_args(args)
@@ -384,6 +389,9 @@ class FontConfig:
 
         if args.apply_fea_file:
             self.apply_fea_file = True
+
+        if args.font_patcher:
+            self.nerd_font["use_font_patcher"] = True
 
         if args.cn_rebuild:
             self.cn["clean_cache"] = True

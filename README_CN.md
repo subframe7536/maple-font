@@ -620,8 +620,8 @@ OpenType Feature 可以控制字体的内置变体和连字。您可以通过修
 usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--apply-fea-file]
                 [--hinted | --no-hinted] [--liga | --no-liga] [--cn-narrow]
                 [--cn-scale-factor CN_SCALE_FACTOR] [--nerd-font | --no-nerd-font]
-                [--cn | --no-cn] [--cn-both] [--ttf-only] [--least-styles] [--cache]
-                [--cn-rebuild] [--archive]
+                [--cn | --no-cn] [--cn-both] [--ttf-only] [--least-styles]
+                [--font-patcher] [--cache] [--cn-rebuild] [--archive]
 
 ✨ Builder and optimizer for Maple Mono
 
@@ -654,10 +654,11 @@ Build Options:
                         Nerd-Font 版本
   --ttf-only            仅构建 TTF 格式
   --least-styles        仅构建 常规 / 粗体 / 斜体 / 粗斜体 样式
+  --font-patcher        强制使用 Nerd Font Patcher 构建 NF 格式
   --cache               重用 TTF、OTF 和 Woff2 格式的字体缓存
   --cn-rebuild          重新静态化可变的中文基字
   --archive             构建带有配置和许可的字体压缩包。如果带有 `--cache`
-                        标志，则仅打包 Nerd-Font 和 CN 格式
+                        标志，则仅打包 NF 和 CN 格式
 ```
 
 ## 我个人在用的其他中文字体资源

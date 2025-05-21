@@ -621,8 +621,8 @@ CN バージョンはデフォルトで無効になっています。`python bui
 usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--apply-fea-file]
                 [--hinted | --no-hinted] [--liga | --no-liga] [--cn-narrow]
                 [--cn-scale-factor CN_SCALE_FACTOR] [--nerd-font | --no-nerd-font]
-                [--cn | --no-cn] [--cn-both] [--ttf-only] [--least-styles] [--cache]
-                [--cn-rebuild] [--archive]
+                [--cn | --no-cn] [--cn-both] [--ttf-only] [--least-styles]
+                [--font-patcher] [--cache] [--cn-rebuild] [--archive]
 
 ✨ Builder and optimizer for Maple Mono
 
@@ -657,10 +657,11 @@ Build Options:
                         Nerd-Fontバージョンが有効である必要があります
   --ttf-only            TTF形式のみをビルド
   --least-styles        通常の / 太字 / 斜体 / 太字斜体スタイルのみを構築する
+  --font-patcher        NF形式を構築するためにNerd Font Patcherの使用を強制する
   --cache               TTF、OTF、Woff2形式のフォントキャッシュを再利用
   --cn-rebuild          CNベースフォントを再インスタンス化
   --archive             設定とライセンスを含むフォントアーカイブをビルド。
-                        `--cache` フラグがある場合、Nerd-FontとCN形式のみをアーカイブ
+                        `--cache` フラグがある場合、NFとCN形式のみをアーカイブ
 ```
 
 ## クレジット
