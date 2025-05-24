@@ -356,6 +356,9 @@ class FontConfig:
         self.use_cn_both = args.cn_both
         self.debug = args.debug
 
+        if "font_forge_bin" not in self.nerd_font:
+            self.nerd_font["font_forge_bin"] = get_font_forge_bin()
+
         if args.normal:
             self.use_normal_preset = True
             for feat in normal_enabled_features:
@@ -549,10 +552,9 @@ class BuildOption:
         ):
             exit(1)
 
-        ff_bin = config.nerd_font["font_forge_bin"] or get_font_forge_bin() or "UNKOWN"
-        if not path.exists(ff_bin):
+        if not path.exists(config.nerd_font["font_forge_bin"]):
             print(
-                f"FontForge bin ({ff_bin}) not found, cannot build with Nerd Font Patcher"
+                f"FontForge bin ({config.nerd_font['font_forge_bin']}) not found, cannot build with Nerd Font Patcher"
             )
             exit(1)
 
@@ -1023,7 +1025,7 @@ def build_nf_by_font_patcher(
 
     _nf_args += font_config.nerd_font["extra_args"]
 
-    run(_nf_args + [joinPaths(build_option.ttf_base_dir, font_basename)], log=True)
+    run(_nf_args + [joinPaths(build_option.ttf_base_dir, font_basename)])
     nf_file_name = "NerdFont"
     if font_config.nerd_font["mono"]:
         nf_file_name += "Mono"
@@ -1032,6 +1034,11 @@ def build_nf_by_font_patcher(
     )
     font = TTFont(_path)
     remove(_path)
+
+    # Check if the glyph 'nonmarkingreturn' exists in the font
+    extra_name = "nonmarkingreturn"
+    if extra_name in font.getGlyphNames():
+        font["hmtx"][extra_name] = (600, 0) # type: ignore
     return font
 
 
@@ -1280,6 +1287,9 @@ def main(args: list[str] | None = None, version: str | None = None):
     if parsed_args.dry:
         print("font_config:", json.dumps(font_config.__dict__, indent=4))
         if not is_ci():
+            print(
+                "use font patcher:", build_option.should_use_font_patcher(font_config)
+            )
             print("build_option:", json.dumps(build_option.__dict__, indent=4))
             print("parsed_args:", json.dumps(parsed_args.__dict__, indent=4))
         return

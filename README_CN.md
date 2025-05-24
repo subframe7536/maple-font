@@ -480,7 +480,7 @@ fonts.packages = with pkgs; [
 
 ## 使用方法 & 特性配置
 
-请参阅 [文档](./source/features/README_CN.md) 或者在 [这里](https://font.subf.dev/zh-cn/playground) 尝试。
+请参阅 [文档](./source/features/README_CN.md) 或者在 [特性测试页面](https://font.subf.dev/zh-cn/playground) 尝试。
 
 > [!note]
 > 用于自定义构建的 Web 工具仍在开发中。
@@ -519,6 +519,10 @@ fonts.packages = with pkgs; [
 [`config.json`](./config.json) 文件用于配置构建过程。查看 [schema](./source/schema.json) 或 [文档](./source/features/README.md) 了解更多详情。
 
 还有一些 [命令行选项](#构建脚本用法) 用于自定义构建过程。命令行选项的优先级高于 `config.json` 中的选项。
+
+### 浏览器中构建
+
+进入 [特性测试页面](https://font.subf.dev/zh-cn/playground)，点击左下角的 “自定义构建” 按钮
 
 ### 使用 Github Actions
 

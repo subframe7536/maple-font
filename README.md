@@ -481,9 +481,6 @@ fonts.packages = with pkgs; [
 
 See in [document](./source/features/README.md) or try it in [Playground](https://font.subf.dev/en/playground)
 
-> [!note]
-> The web tool for custom build is under development.
-
 ## Naming FAQ
 
 ### Features
@@ -512,12 +509,15 @@ See in [document](./source/features/README.md) or try it in [Playground](https:/
 - Why there exists `-AutoHint` and `-unhinted` suffix?
   - for backward compatibility, I keep the original naming scheme. `-AutoHint` is only used for `TTF` format.
 
-
 ## Custom Build
 
 The [`config.json`](./config.json) file is used to configure the build process. Checkout the [schema](./source/schema.json) or [document](./source/features/README.md) for more details.
 
 There also have some [command line options](#build-script-usage) for customizing the build process. Cli options have higher priority than options in `config.json`.
+
+### Build In Browser
+
+Go to [Playground](https://font.subf.dev/en/playground), and click "Custom Build" button in the bottom left corner
 
 ### Use Github Actions
 

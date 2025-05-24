@@ -482,9 +482,6 @@ fonts.packages = with pkgs; [
 
 [ドキュメント](./source/features/README.md)を参照するか、[プレイグラウンド](https://font.subf.dev/en/playground)で試してください。
 
-> [!note]
-> カスタムビルド用の Web ツールは開発中です。
-
 ## 命名に関する FAQ
 
 ### 特徴
@@ -513,12 +510,15 @@ fonts.packages = with pkgs; [
 - なぜ `-AutoHint` と `-unhinted` サフィックスが存在するのですか？
   - 後方互換性のために、元の命名スキームを保持しています。`-AutoHint` は `TTF` 形式にのみ使用されます。
 
-
 ## カスタムビルド
 
 [`config.json`](./config.json)ファイルはビルドプロセスを構成するために使用されます。詳細については、[スキーマ](./source/schema.json)または[ドキュメント](./source/features/README.md)を参照してください。
 
 ビルドプロセスをカスタマイズするための[コマンドラインオプション](#build-script-usage)もいくつかあります。CLI オプションは `config.json` のオプションよりも優先されます。
+
+### ブラウザで構築する
+
+[プレイグラウンド](https://font.subf.dev/en/playground)に行く，左下隅の「Custom Build」ボタンをクリックしてください
 
 ### Github Actions を使用する
 
@@ -539,7 +539,6 @@ git clone https://github.com/subframe7536/maple-font --depth 1 -b variable
 docker build -t maple-font .
 docker run -v "$(pwd)/fonts:/app/fonts" -e BUILD_ARGS="--normal" maple-font
 ```
-
 
 ### ローカルビルド
 
