@@ -94,8 +94,10 @@ def fea(output: str, cn: bool) -> None:
 
     script_path = joinPaths("source", "py", "in_browser.py")
     in_browser_script = read_text(script_path)
+    rules = get_freeze_moving_rules()
+    rules.sort()
     rule_arr_text = (
-        "[" + ", ".join([f'"{item}"' for item in get_freeze_moving_rules()]) + "]"
+        "[" + ", ".join([f'"{item}"' for item in rules]) + "]"
     )
     patched = re.sub(
         r"MOVING_RULES = .*",
