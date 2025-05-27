@@ -277,13 +277,12 @@ def gly(g: str | Clazz | Sequence[str | Clazz], suffix: str = "", overwrite=Fals
     return __gly(g) + suffix
 
 
-def gly_var(g: str, variant: str):
+def gly_seq(g: str | list[str], variant: str):
     """
-    Normalize glyph names with variant
-    >>> gly_var("{", "start")
-    "braceleft_start.liga"
+    >>> gly_seq("{", "sta")
+    "braceleft.sta.seq"
     """
-    return gly(g, f"_{variant}.liga", True)
+    return gly(g, f".{variant}.seq", True)
 
 
 def cls(glyphs: str | Clazz | Sequence[str | Clazz], *rest: str | Clazz) -> str:

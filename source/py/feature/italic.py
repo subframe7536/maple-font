@@ -32,6 +32,7 @@ from source.py.feature.ss import (
     ss09,
     ss10,
     ss11,
+    ss12,
 )
 from source.py.feature.base.clazz import get_base_class_list, cls_digit
 
@@ -151,4 +152,5 @@ ss_list_italic = [
     ss09.ss09_feat,
     ss10.ss10_feat,
     ss11.ss11_feat,
+    ss12.ss12_feat,
 ]

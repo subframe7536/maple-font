@@ -2,9 +2,9 @@ from source.py.feature import ast
 from source.py.feature.base.clazz import cls_question
 
 def get_lookup():
-    start = ast.gly_var("#", "start")
-    mid = ast.gly_var("#", "middle")
-    end = ast.gly_var("#", "end")
+    start = ast.gly_seq("#", "sta")
+    mid = ast.gly_seq("#", "mid")
+    end = ast.gly_seq("#", "end")
     return [
         ast.subst_liga(
             "__",

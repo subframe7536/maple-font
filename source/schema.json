@@ -199,6 +199,10 @@
           "description": "[v7.1] Equal and extra punctuation ligatures ('|=', '/=', '?=', '&=', ...)",
           "$ref": "#/definitions/freeze_options"
         },
+        "ss12": {
+          "description": "[v7.3] Infinite hyphens and equals ('----', '====')",
+          "$ref": "#/definitions/freeze_options"
+        },
         "zero": {
           "description": "[v7.0] Dot style '0'",
           "$ref": "#/definitions/freeze_options"

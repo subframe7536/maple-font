@@ -1038,7 +1038,7 @@ def build_nf_by_font_patcher(
     # Check if the glyph 'nonmarkingreturn' exists in the font
     extra_name = "nonmarkingreturn"
     if extra_name in font.getGlyphNames():
-        font["hmtx"][extra_name] = (600, 0) # type: ignore
+        font["hmtx"][extra_name] = (600, 0)  # type: ignore
     return font
 
 

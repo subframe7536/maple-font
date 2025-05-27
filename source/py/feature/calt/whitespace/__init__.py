@@ -96,8 +96,8 @@ def get_base_lookup():
         ),
         ast.subst_liga(
             "--",
-            ign_prefix=ast.cls("<", "-"),
-            ign_suffix=ast.cls("-", ">"),
+            ign_prefix=ast.cls("<", "-", "|"),
+            ign_suffix=ast.cls(">", "-", "|"),
             extra_rules=[
                 ast.ign(["<", ast.cls("#", "!")], "-", "-"),
                 ast.ign(
@@ -109,8 +109,8 @@ def get_base_lookup():
         ),
         ast.subst_liga(
             "---",
-            ign_prefix="-",
-            ign_suffix="-",
+            ign_prefix=ast.cls("<", "-", "|", ast.SPC),
+            ign_suffix=ast.cls(">", "-", "|", ast.SPC),
             extra_rules=[
                 ast.ign("<", "-", ["-", "-", ">"]),
             ],

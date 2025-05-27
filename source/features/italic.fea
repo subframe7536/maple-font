@@ -549,9 +549,9 @@ feature calt {
 
   # #######
   lookup infinity_numbersigns {
-    sub [numbersign_start.liga numbersign_middle.liga] numbersign' numbersign by numbersign_middle.liga;
-    sub [numbersign_start.liga numbersign_middle.liga] numbersign' by numbersign_end.liga;
-    sub numbersign' numbersign by numbersign_start.liga;
+    sub [numbersign.sta.seq numbersign.mid.seq] numbersign' numbersign by numbersign.mid.seq;
+    sub [numbersign.sta.seq numbersign.mid.seq] numbersign' by numbersign.end.seq;
+    sub numbersign' numbersign by numbersign.sta.seq;
   } infinity_numbersigns;
 
   # <<
@@ -628,16 +628,16 @@ feature calt {
   lookup braceleft_braceleft.liga {
     ignore sub braceleft braceleft' braceleft;
     ignore sub braceleft' braceleft [braceleft exclam hyphen];
-    sub braceleft' braceleft by braceleft_start.liga;
-    sub braceleft_start.liga braceleft' by braceleft_end.liga;
+    sub braceleft' braceleft by braceleft.sta.seq;
+    sub braceleft.sta.seq braceleft' by braceleft.end.seq;
   } braceleft_braceleft.liga;
 
   # }}
   lookup braceright_braceright.liga {
     ignore sub [exclam braceright hyphen] braceright' braceright;
     ignore sub braceright' braceright braceright;
-    sub braceright' braceright by braceright_start.liga;
-    sub braceright_start.liga braceright' by braceright_end.liga;
+    sub braceright' braceright by braceright.sta.seq;
+    sub braceright.sta.seq braceright' by braceright.end.seq;
   } braceright_braceright.liga;
 
   # {|
@@ -816,8 +816,8 @@ feature calt {
 
   # --
   lookup hyphen_hyphen.liga {
-    ignore sub [less hyphen] hyphen' hyphen;
-    ignore sub hyphen' hyphen [hyphen greater];
+    ignore sub [less hyphen bar] hyphen' hyphen;
+    ignore sub hyphen' hyphen [greater hyphen bar];
     ignore sub less [numbersign exclam] hyphen' hyphen;
     ignore sub parenleft @Question less exclam hyphen' hyphen;
     sub SPC hyphen' by hyphen_hyphen.liga;
@@ -826,8 +826,8 @@ feature calt {
 
   # ---
   lookup hyphen_hyphen_hyphen.liga {
-    ignore sub hyphen hyphen' hyphen hyphen;
-    ignore sub hyphen' hyphen hyphen hyphen;
+    ignore sub [less hyphen bar SPC] hyphen' hyphen hyphen;
+    ignore sub hyphen' hyphen hyphen [greater hyphen bar SPC];
     ignore sub less hyphen' hyphen hyphen greater;
     sub SPC SPC hyphen' by hyphen_hyphen_hyphen.liga;
     sub SPC hyphen' hyphen by SPC;
@@ -1022,8 +1022,8 @@ feature calt {
 
   # <==
   lookup less_equal_equal.liga {
-    ignore sub less less' equal equal;
-    ignore sub less' equal equal [equal greater];
+    ignore sub [less equal] less' equal equal;
+    ignore sub less' equal equal [equal greater less];
     ignore sub parenleft @Question less' equal equal;
     sub SPC SPC equal' by less_equal_equal.liga;
     sub SPC equal' equal by SPC;
@@ -1032,8 +1032,8 @@ feature calt {
 
   # ==>
   lookup equal_equal_greater.liga {
-    ignore sub [bracketleft equal] equal' equal greater;
-    ignore sub equal' equal greater greater;
+    ignore sub [bracketleft equal greater less] equal' equal greater;
+    ignore sub equal' equal greater [greater equal];
     ignore sub parenleft @Question less equal' equal greater;
     ignore sub parenleft @Question equal' equal greater;
     sub SPC SPC greater' by equal_equal_greater.liga;
@@ -1091,8 +1091,8 @@ feature calt {
 
   # ==
   lookup equal_equal.liga {
-    ignore sub [equal exclam] equal' equal;
-    ignore sub equal' equal [equal greater];
+    ignore sub [equal exclam less greater] equal' equal;
+    ignore sub equal' equal [equal less greater];
     ignore sub parenleft @Question equal' equal;
     ignore sub parenleft @Question less equal' equal;
     sub SPC equal' by equal_equal.liga;
@@ -1101,8 +1101,8 @@ feature calt {
 
   # ===
   lookup equal_equal_equal.liga {
-    ignore sub equal equal' equal equal;
-    ignore sub equal' equal equal [equal greater];
+    ignore sub [equal less greater bar SPC] equal' equal equal;
+    ignore sub equal' equal equal [equal less greater bar SPC];
     ignore sub parenleft @Question equal' equal equal;
     ignore sub parenleft @Question less equal' equal equal;
     sub SPC SPC equal' by equal_equal_equal.liga;
@@ -2747,3 +2747,26 @@ feature ss11 {
   } question_question_equal.liga.cv62.ss11;
 
 } ss11;
+
+feature ss12 {
+
+  featureNames {
+    name "SS12: Infinite hyphens and equals";
+  };
+
+  # ====
+  lookup infinity_equal {
+    sub less' equal equal by less_equal.sta.seq;
+    sub less_equal.sta.seq equal' equal by equal.mid.seq;
+    sub [equal.sta.seq equal.mid.seq] equal' less by equal.mid.seq;
+    sub [equal.sta.seq equal.mid.seq] equal.mid.seq less' by less_equal.end.seq;
+    sub equal.mid.seq less' equal by less_equal.mid.seq;
+    sub equal' less equal by equal.sta.seq;
+    sub [equal.sta.seq equal.mid.seq] [less less_equal.sta.seq]' equal by less_equal.mid.seq;
+    sub less_equal.mid.seq equal' equal by equal.mid.seq;
+    sub [equal.sta.seq equal.mid.seq] equal' equal by equal.mid.seq;
+    sub [equal.sta.seq equal.mid.seq] equal' by equal.end.seq;
+    sub equal' equal by equal.sta.seq;
+  } infinity_equal;
+
+} ss12;

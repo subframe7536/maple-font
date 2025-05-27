@@ -2,10 +2,10 @@ from source.py.feature import ast
 
 
 def get_lookup():
-    left_start = ast.gly_var("{", "start")
-    left_end = ast.gly_var("{", "end")
-    right_start = ast.gly_var("}", "start")
-    right_end = ast.gly_var("}", "end")
+    left_start = ast.gly_seq("{", "sta")
+    left_end = ast.gly_seq("{", "end")
+    right_start = ast.gly_seq("}", "sta")
+    right_end = ast.gly_seq("}", "end")
     return [
         ast.Lookup(
             ast.gly("{{"),
