@@ -74,7 +74,7 @@ def fea(output: str, cn: bool) -> None:
     # Update README sections
     md_path = joinPaths(output, "README.md")
     sections = {
-        "<!-- CALT -->": f"```\n{get_all_calt_text()}\n```",
+        "<!-- CALT -->": get_all_calt_text(),
         "<!-- CV -->": get_cv_desc(),
         "<!-- CV-IT -->": get_cv_italic_desc(),
         "<!-- CV-CN -->": get_cv_cn_desc(),

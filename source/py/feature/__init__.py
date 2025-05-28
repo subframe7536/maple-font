@@ -1,4 +1,5 @@
 from copy import deepcopy
+from html import escape
 import json
 from source.py.feature import ast
 from source.py.feature.base import get_base_feature_cn_only, get_base_features
@@ -128,7 +129,7 @@ def generate_fea_string_cn_only():
 
 
 def get_all_calt_text():
-    result = []
+    result: list[str] = []
 
     for item in ast.recursive_iterate(get_calt_lookup(cls_var, cls_hex_letter, True)):
         if isinstance(item, ast.Lookup) and item.desc:
@@ -138,18 +139,18 @@ def get_all_calt_text():
                 result.append(item.desc)
 
     # Split into two columns
-    max_length = max(len(x) for x in result)
-    padding = 8  # Space between columns
     half = (len(result) + 1) // 2  # Round up for odd numbers
 
-    # Create paired rows
-    aligned_rows = []
-    for i in range(half):
-        left = result[i].ljust(max_length)
-        right = result[i + half] if i + half < len(result) else ""
-        aligned_rows.append(left + " " * padding + right)
+    # Create HTML table
+    html_rows = ['<table style="width:100%">']
 
-    return "\n".join(aligned_rows)
+    for i in range(half):
+        left = escape(result[i])
+        right = escape(result[i + half]) if i + half < len(result) else ""
+        html_rows.append(f'<tr><td><code>{left}</code></td><td><code>{right}</code></td></tr>')
+
+    html_rows.append('</table>')
+    return '\n'.join(html_rows)
 
 
 zero_desc = "Dot style `0`"
