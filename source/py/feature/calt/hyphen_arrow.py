@@ -32,6 +32,27 @@ def infinite_hyphens(cls_var: ast.Clazz):
 def get_lookup(cls_var: ast.Clazz):
     return [
         ast.subst_liga(
+            "--",
+            ign_prefix=ast.cls("<", ">", "-", "|"),
+            ign_suffix=ast.cls("<", ">", "-", "|"),
+            extra_rules=[
+                ast.ign(["<", ast.cls("#", "!")], "-", "-"),
+                ast.ign(
+                    ["(", cls_question, "<", "!"],
+                    "-",
+                    "-",
+                ),
+            ],
+        ),
+        ast.subst_liga(
+            "---",
+            ign_prefix=ast.cls("<", ">", "-", "|", ast.SPC),
+            ign_suffix=ast.cls("<", ">", "-", "|", ast.SPC),
+            extra_rules=[
+                ast.ign("<", "-", ["-", "-", ">"]),
+            ],
+        ),
+        ast.subst_liga(
             "<!--",
             ign_prefix="<",
             ign_suffix="-",
@@ -47,48 +68,48 @@ def get_lookup(cls_var: ast.Clazz):
         ast.subst_liga("<!---->", target="xml_empty_comment.liga"),
         ast.subst_liga(
             "<->",
-            ign_prefix="<",
-            ign_suffix=">",
+            ign_prefix=ast.cls("<", "-"),
+            ign_suffix=ast.cls(">", "-"),
         ),
         ast.subst_liga(
             "->",
             ign_prefix=ast.cls("-", "<", ">", "|", "+"),
-            ign_suffix=">",
+            ign_suffix=ast.cls(">", "-"),
         ),
         ast.subst_liga(
             "<-",
-            ign_prefix="<",
+            ign_prefix=ast.cls("<", "-"),
             ign_suffix=ast.cls("-", "<", ">", "|", "+", "/", cls_digit),
         ),
         ast.subst_liga(
             "-->",
-            ign_prefix="-",
-            ign_suffix=">",
+            ign_prefix=ast.cls("-", "<", ">", "|"),
+            ign_suffix=ast.cls(">", "-"),
         ),
         ast.subst_liga(
             "<--",
-            ign_prefix="<",
-            ign_suffix="-",
+            ign_prefix=ast.cls("<", "|"),
+            ign_suffix=ast.cls("-", "<", ">", "|"),
         ),
         ast.subst_liga(
             "<-<",
-            ign_prefix="<",
-            ign_suffix="<",
+            ign_prefix=ast.cls("<", "|", "-"),
+            ign_suffix=ast.cls("<", "|", "-"),
         ),
         ast.subst_liga(
             ">->",
-            ign_prefix=">",
-            ign_suffix=">",
+            ign_prefix=ast.cls(">", "|", "-"),
+            ign_suffix=ast.cls(">", "|", "-"),
         ),
         ast.subst_liga(
             "<-|",
-            ign_prefix="<",
-            ign_suffix="|",
+            ign_prefix=ast.cls("<", "-"),
+            ign_suffix=ast.cls("|", "-"),
         ),
         ast.subst_liga(
             "|->",
-            ign_prefix="|",
-            ign_suffix=">",
+            ign_prefix=ast.cls("|", "-"),
+            ign_suffix=ast.cls(">", "-"),
         ),
-        infinite_hyphens(cls_var)
+        infinite_hyphens(cls_var),
     ]

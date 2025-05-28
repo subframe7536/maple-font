@@ -813,26 +813,6 @@ feature calt {
     sub plus' plus plus by SPC;
   } plus_plus_plus.liga;
 
-  # --
-  lookup hyphen_hyphen.liga {
-    ignore sub [less hyphen bar] hyphen' hyphen;
-    ignore sub hyphen' hyphen [greater hyphen bar];
-    ignore sub less [numbersign exclam] hyphen' hyphen;
-    ignore sub parenleft @Question less exclam hyphen' hyphen;
-    sub SPC hyphen' by hyphen_hyphen.liga;
-    sub hyphen' hyphen by SPC;
-  } hyphen_hyphen.liga;
-
-  # ---
-  lookup hyphen_hyphen_hyphen.liga {
-    ignore sub [less hyphen bar SPC] hyphen' hyphen hyphen;
-    ignore sub hyphen' hyphen hyphen [greater hyphen bar SPC];
-    ignore sub less hyphen' hyphen hyphen greater;
-    sub SPC SPC hyphen' by hyphen_hyphen_hyphen.liga;
-    sub SPC hyphen' hyphen by SPC;
-    sub hyphen' hyphen hyphen by SPC;
-  } hyphen_hyphen_hyphen.liga;
-
   # ;;
   lookup semicolon_semicolon.liga {
     ignore sub semicolon semicolon' semicolon;
@@ -1313,6 +1293,26 @@ feature calt {
     sub backslash' @Escape by backslash.liga;
   } escape;
 
+  # --
+  lookup hyphen_hyphen.liga {
+    ignore sub [less greater hyphen bar] hyphen' hyphen;
+    ignore sub hyphen' hyphen [less greater hyphen bar];
+    ignore sub less [numbersign exclam] hyphen' hyphen;
+    ignore sub parenleft @Question less exclam hyphen' hyphen;
+    sub SPC hyphen' by hyphen_hyphen.liga;
+    sub hyphen' hyphen by SPC;
+  } hyphen_hyphen.liga;
+
+  # ---
+  lookup hyphen_hyphen_hyphen.liga {
+    ignore sub [less greater hyphen bar SPC] hyphen' hyphen hyphen;
+    ignore sub hyphen' hyphen hyphen [less greater hyphen bar SPC];
+    ignore sub less hyphen' hyphen hyphen greater;
+    sub SPC SPC hyphen' by hyphen_hyphen_hyphen.liga;
+    sub SPC hyphen' hyphen by SPC;
+    sub hyphen' hyphen hyphen by SPC;
+  } hyphen_hyphen_hyphen.liga;
+
   # <!--
   lookup less_exclam_hyphen_hyphen.liga {
     ignore sub less less' exclam hyphen hyphen;
@@ -1347,8 +1347,8 @@ feature calt {
 
   # <->
   lookup less_hyphen_greater.liga {
-    ignore sub less less' hyphen greater;
-    ignore sub less' hyphen greater greater;
+    ignore sub [less hyphen] less' hyphen greater;
+    ignore sub less' hyphen greater [greater hyphen];
     sub SPC SPC greater' by less_hyphen_greater.liga;
     sub SPC hyphen' greater by SPC;
     sub less' hyphen greater by SPC;
@@ -1357,14 +1357,14 @@ feature calt {
   # ->
   lookup hyphen_greater.liga {
     ignore sub [hyphen less greater bar plus] hyphen' greater;
-    ignore sub hyphen' greater greater;
+    ignore sub hyphen' greater [greater hyphen];
     sub SPC greater' by hyphen_greater.liga;
     sub hyphen' greater by SPC;
   } hyphen_greater.liga;
 
   # <-
   lookup less_hyphen.liga {
-    ignore sub less less' hyphen;
+    ignore sub [less hyphen] less' hyphen;
     ignore sub less' hyphen [hyphen less greater bar plus slash @Digit];
     sub SPC hyphen' by less_hyphen.liga;
     sub less' hyphen by SPC;
@@ -1372,8 +1372,8 @@ feature calt {
 
   # -->
   lookup hyphen_hyphen_greater.liga {
-    ignore sub hyphen hyphen' hyphen greater;
-    ignore sub hyphen' hyphen greater greater;
+    ignore sub [hyphen less greater bar] hyphen' hyphen greater;
+    ignore sub hyphen' hyphen greater [greater hyphen];
     sub SPC SPC greater' by hyphen_hyphen_greater.liga;
     sub SPC hyphen' greater by SPC;
     sub hyphen' hyphen greater by SPC;
@@ -1381,8 +1381,8 @@ feature calt {
 
   # <--
   lookup less_hyphen_hyphen.liga {
-    ignore sub less less' hyphen hyphen;
-    ignore sub less' hyphen hyphen hyphen;
+    ignore sub [less bar] less' hyphen hyphen;
+    ignore sub less' hyphen hyphen [hyphen less greater bar];
     sub SPC SPC hyphen' by less_hyphen_hyphen.liga;
     sub SPC hyphen' hyphen by SPC;
     sub less' hyphen hyphen by SPC;
@@ -1390,8 +1390,8 @@ feature calt {
 
   # <-<
   lookup less_hyphen_less.liga {
-    ignore sub less less' hyphen less;
-    ignore sub less' hyphen less less;
+    ignore sub [less bar hyphen] less' hyphen less;
+    ignore sub less' hyphen less [less bar hyphen];
     sub SPC SPC less' by less_hyphen_less.liga;
     sub SPC hyphen' less by SPC;
     sub less' hyphen less by SPC;
@@ -1399,8 +1399,8 @@ feature calt {
 
   # >->
   lookup greater_hyphen_greater.liga {
-    ignore sub greater greater' hyphen greater;
-    ignore sub greater' hyphen greater greater;
+    ignore sub [greater bar hyphen] greater' hyphen greater;
+    ignore sub greater' hyphen greater [greater bar hyphen];
     sub SPC SPC greater' by greater_hyphen_greater.liga;
     sub SPC hyphen' greater by SPC;
     sub greater' hyphen greater by SPC;
@@ -1408,8 +1408,8 @@ feature calt {
 
   # <-|
   lookup less_hyphen_bar.liga {
-    ignore sub less less' hyphen bar;
-    ignore sub less' hyphen bar bar;
+    ignore sub [less hyphen] less' hyphen bar;
+    ignore sub less' hyphen bar [bar hyphen];
     sub SPC SPC bar' by less_hyphen_bar.liga;
     sub SPC hyphen' bar by SPC;
     sub less' hyphen bar by SPC;
@@ -1417,8 +1417,8 @@ feature calt {
 
   # |->
   lookup bar_hyphen_greater.liga {
-    ignore sub bar bar' hyphen greater;
-    ignore sub bar' hyphen greater greater;
+    ignore sub [bar hyphen] bar' hyphen greater;
+    ignore sub bar' hyphen greater [greater hyphen];
     sub SPC SPC greater' by bar_hyphen_greater.liga;
     sub SPC hyphen' greater by SPC;
     sub bar' hyphen greater by SPC;

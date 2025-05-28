@@ -95,27 +95,6 @@ def get_base_lookup():
             ign_suffix="+",
         ),
         ast.subst_liga(
-            "--",
-            ign_prefix=ast.cls("<", "-", "|"),
-            ign_suffix=ast.cls(">", "-", "|"),
-            extra_rules=[
-                ast.ign(["<", ast.cls("#", "!")], "-", "-"),
-                ast.ign(
-                    ["(", cls_question, "<", "!"],
-                    "-",
-                    "-",
-                ),
-            ],
-        ),
-        ast.subst_liga(
-            "---",
-            ign_prefix=ast.cls("<", "-", "|", ast.SPC),
-            ign_suffix=ast.cls(">", "-", "|", ast.SPC),
-            extra_rules=[
-                ast.ign("<", "-", ["-", "-", ">"]),
-            ],
-        ),
-        ast.subst_liga(
             ";;",
             ign_prefix=";",
             ign_suffix=";",
