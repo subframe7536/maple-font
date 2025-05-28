@@ -1,13 +1,6 @@
 from source.py.feature import ast
 
 
-class Seq:
-    def __init__(self, g: str | list[str]) -> None:
-        self.sta = ast.gly_seq(g, "sta")
-        self.mid = ast.gly_seq(g, "mid")
-        self.end = ast.gly_seq(g, "end")
-
-
 def main_rules(g: str, cls_start: ast.Clazz, symbols: list[str]):
     prefix = []
 
@@ -36,6 +29,7 @@ def main_rules(g: str, cls_start: ast.Clazz, symbols: list[str]):
 def lookup_equals():
     eq_start = ast.gly_seq("=", "sta")
     eq_middle = ast.gly_seq("=", "mid")
+    eq_end = ast.gly_seq("=", "end")
     cls_start = ast.Clazz("EqualStart", [eq_start, eq_middle])
 
     return (
@@ -44,19 +38,14 @@ def lookup_equals():
             "====",
             [
                 cls_start.state(),
-                # Disable |||
-                ast.ign("|", "|", ["|", "="]),
-                ast.ign("|", "|", "="),
-                ast.ign(cls_start, "|", ["|", "|"]),
                 # Main rules
                 *main_rules("=", cls_start, ["<", ">"]),
+                ast.subst(eq_end, ":", "=", ast.gly(":", ".case", True)),
                 # Disable >=<
                 ast.subst(">", "=", ["<", ast.cls("=", "<")], ast.gly_seq(">=", "sta")),
                 ast.ign(">", "=", "<"),
                 # Disable =<
                 ast.subst(None, "=", ["<", ast.cls("=", "<")], eq_start),
-                # Disable =/
-                ast.subst(None, "=", ["/", ast.cls("=", "/")], eq_middle),
             ],
         ),
     )
