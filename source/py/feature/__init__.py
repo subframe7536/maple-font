@@ -137,7 +137,19 @@ def get_all_calt_text():
             else:
                 result.append(item.desc)
 
-    return "\n".join(result)
+    # Split into two columns
+    max_length = max(len(x) for x in result)
+    padding = 4  # Space between columns
+    half = (len(result) + 1) // 2  # Round up for odd numbers
+
+    # Create paired rows
+    aligned_rows = []
+    for i in range(half):
+        left = result[i].ljust(max_length)
+        right = result[i + half] if i + half < len(result) else ""
+        aligned_rows.append(left + " " * padding + right)
+
+    return "\n".join(aligned_rows)
 
 
 zero_desc = "Dot style `0`"
