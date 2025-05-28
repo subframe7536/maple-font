@@ -36,87 +36,61 @@ OpenType Features are not supported, you need to custom build to freeze features
 "Enable ligature", is same as "enable `calt` feature":
 
 <!-- CALT -->
-<table>
-<tr><td><code>::</code></td><td><code>==&gt;</code></td></tr>
-<tr><td><code>:::</code></td><td><code>=&gt;</code></td></tr>
-<tr><td><code>?:</code></td><td><code>&lt;=&lt;</code></td></tr>
-<tr><td><code>:?</code></td><td><code>&gt;=&gt;</code></td></tr>
-<tr><td><code>:?&gt;</code></td><td><code>&lt;=|</code></td></tr>
-<tr><td><code>:=</code></td><td><code>|=&gt;</code></td></tr>
-<tr><td><code>=:</code></td><td><code>==</code></td></tr>
-<tr><td><code>:=:</code></td><td><code>===</code></td></tr>
-<tr><td><code>=:=</code></td><td><code>!=</code></td></tr>
-<tr><td><code>&lt;:</code></td><td><code>!==</code></td></tr>
-<tr><td><code>:&gt;</code></td><td><code>=/=</code></td></tr>
-<tr><td><code>:&lt;</code></td><td><code>=!=</code></td></tr>
-<tr><td><code>&lt;:&lt;</code></td><td><code>=&lt;=</code></td></tr>
-<tr><td><code>&gt;:&gt;</code></td><td><code>=&gt;=</code></td></tr>
-<tr><td><code>::=</code></td><td><code>|=</code></td></tr>
-<tr><td><code>__</code></td><td><code>||=</code></td></tr>
-<tr><td><code>#{</code></td><td><code>=======</code></td></tr>
-<tr><td><code>#[</code></td><td><code>\\ \&#x27; \.</code></td></tr>
-<tr><td><code>#(</code></td><td><code>&lt;!--</code></td></tr>
-<tr><td><code>#?</code></td><td><code>&lt;#--</code></td></tr>
-<tr><td><code>#!</code></td><td><code>&lt;!----&gt;</code></td></tr>
-<tr><td><code>#:</code></td><td><code>&lt;-&gt;</code></td></tr>
-<tr><td><code>#=</code></td><td><code>-&gt;</code></td></tr>
-<tr><td><code>#_</code></td><td><code>&lt;-</code></td></tr>
-<tr><td><code>#__</code></td><td><code>--&gt;</code></td></tr>
-<tr><td><code>#_(</code></td><td><code>&lt;--</code></td></tr>
-<tr><td><code>]#</code></td><td><code>&lt;-&lt;</code></td></tr>
-<tr><td><code>#######</code></td><td><code>&gt;-&gt;</code></td></tr>
-<tr><td><code>&lt;&lt;</code></td><td><code>&lt;-|</code></td></tr>
-<tr><td><code>&lt;&lt;&lt;</code></td><td><code>|-&gt;</code></td></tr>
-<tr><td><code>&gt;&gt;</code></td><td><code>-------</code></td></tr>
-<tr><td><code>&gt;&gt;&gt;</code></td><td><code>&lt;|||</code></td></tr>
-<tr><td><code>{{</code></td><td><code>|||&gt;</code></td></tr>
-<tr><td><code>}}</code></td><td><code>&lt;||</code></td></tr>
-<tr><td><code>{|</code></td><td><code>||&gt;</code></td></tr>
-<tr><td><code>|}</code></td><td><code>&lt;|</code></td></tr>
-<tr><td><code>{{--</code></td><td><code>|&gt;</code></td></tr>
-<tr><td><code>{{!--</code></td><td><code>&lt;|&gt;</code></td></tr>
-<tr><td><code>--}}</code></td><td><code>_|_</code></td></tr>
-<tr><td><code>[|</code></td><td><code>||-</code></td></tr>
-<tr><td><code>|]</code></td><td><code>&lt;&gt;</code></td></tr>
-<tr><td><code>!!</code></td><td><code>&lt;/</code></td></tr>
-<tr><td><code>||</code></td><td><code>/&gt;</code></td></tr>
-<tr><td><code>??</code></td><td><code>&lt;/&gt;</code></td></tr>
-<tr><td><code>???</code></td><td><code>&lt;+</code></td></tr>
-<tr><td><code>&amp;&amp;</code></td><td><code>+&gt;</code></td></tr>
-<tr><td><code>&amp;&amp;&amp;</code></td><td><code>&lt;+&gt;</code></td></tr>
-<tr><td><code>//</code></td><td><code>&lt;*</code></td></tr>
-<tr><td><code>///</code></td><td><code>*&gt;</code></td></tr>
-<tr><td><code>/*</code></td><td><code>&lt;*&gt;</code></td></tr>
-<tr><td><code>/**</code></td><td><code>[TRACE]</code></td></tr>
-<tr><td><code>*/</code></td><td><code>[DEBUG]</code></td></tr>
-<tr><td><code>++</code></td><td><code>[INFO]</code></td></tr>
-<tr><td><code>+++</code></td><td><code>[WARN]</code></td></tr>
-<tr><td><code>--</code></td><td><code>[ERROR]</code></td></tr>
-<tr><td><code>---</code></td><td><code>[FATAL]</code></td></tr>
-<tr><td><code>;;</code></td><td><code>[TODO]</code></td></tr>
-<tr><td><code>;;;</code></td><td><code>[FIXME]</code></td></tr>
-<tr><td><code>..</code></td><td><code>[NOTE]</code></td></tr>
-<tr><td><code>...</code></td><td><code>[HACK]</code></td></tr>
-<tr><td><code>.?</code></td><td><code>[MARK]</code></td></tr>
-<tr><td><code>?.</code></td><td><code>[EROR]</code></td></tr>
-<tr><td><code>..&lt;</code></td><td><code>[WARNING]</code></td></tr>
-<tr><td><code>.=</code></td><td><code>todo))</code></td></tr>
-<tr><td><code>&lt;~</code></td><td><code>fixme))</code></td></tr>
-<tr><td><code>~&gt;</code></td><td><code>Cl</code></td></tr>
-<tr><td><code>~~</code></td><td><code>al</code></td></tr>
-<tr><td><code>&lt;~&gt;</code></td><td><code>cl</code></td></tr>
-<tr><td><code>&lt;~~</code></td><td><code>el</code></td></tr>
-<tr><td><code>~~&gt;</code></td><td><code>il</code></td></tr>
-<tr><td><code>-~</code></td><td><code>tl</code></td></tr>
-<tr><td><code>~-</code></td><td><code>ul</code></td></tr>
-<tr><td><code>~@</code></td><td><code>xl</code></td></tr>
-<tr><td><code>~~~~~~~</code></td><td><code>ff</code></td></tr>
-<tr><td><code>0xA12 0x56 1920x1080</code></td><td><code>tt</code></td></tr>
-<tr><td><code>&lt;=&gt;</code></td><td><code>all</code></td></tr>
-<tr><td><code>&lt;==&gt;</code></td><td><code>ell</code></td></tr>
-<tr><td><code>&gt;=</code></td><td><code>ill</code></td></tr>
-<tr><td><code>&lt;=</code></td><td><code>ull</code></td></tr>
-<tr><td><code>&lt;==</code></td><td><code>ll</code></td></tr>
+<table style="width:100%; table-layout:fixed;">
+<tr><td style="width:33.33%"><code>::</code></td><td style="width:33.33%"><code>--</code></td><td style="width:33.33%"><code>&lt;-|</code></td></tr>
+<tr><td style="width:33.33%"><code>:::</code></td><td style="width:33.33%"><code>---</code></td><td style="width:33.33%"><code>|-&gt;</code></td></tr>
+<tr><td style="width:33.33%"><code>?:</code></td><td style="width:33.33%"><code>;;</code></td><td style="width:33.33%"><code>-------</code></td></tr>
+<tr><td style="width:33.33%"><code>:?</code></td><td style="width:33.33%"><code>;;;</code></td><td style="width:33.33%"><code>&lt;|||</code></td></tr>
+<tr><td style="width:33.33%"><code>:?&gt;</code></td><td style="width:33.33%"><code>..</code></td><td style="width:33.33%"><code>|||&gt;</code></td></tr>
+<tr><td style="width:33.33%"><code>:=</code></td><td style="width:33.33%"><code>...</code></td><td style="width:33.33%"><code>&lt;||</code></td></tr>
+<tr><td style="width:33.33%"><code>=:</code></td><td style="width:33.33%"><code>.?</code></td><td style="width:33.33%"><code>||&gt;</code></td></tr>
+<tr><td style="width:33.33%"><code>:=:</code></td><td style="width:33.33%"><code>?.</code></td><td style="width:33.33%"><code>&lt;|</code></td></tr>
+<tr><td style="width:33.33%"><code>=:=</code></td><td style="width:33.33%"><code>..&lt;</code></td><td style="width:33.33%"><code>|&gt;</code></td></tr>
+<tr><td style="width:33.33%"><code>&lt;:</code></td><td style="width:33.33%"><code>.=</code></td><td style="width:33.33%"><code>&lt;|&gt;</code></td></tr>
+<tr><td style="width:33.33%"><code>:&gt;</code></td><td style="width:33.33%"><code>&lt;~</code></td><td style="width:33.33%"><code>_|_</code></td></tr>
+<tr><td style="width:33.33%"><code>:&lt;</code></td><td style="width:33.33%"><code>~&gt;</code></td><td style="width:33.33%"><code>||-</code></td></tr>
+<tr><td style="width:33.33%"><code>&lt;:&lt;</code></td><td style="width:33.33%"><code>~~</code></td><td style="width:33.33%"><code>&lt;&gt;</code></td></tr>
+<tr><td style="width:33.33%"><code>&gt;:&gt;</code></td><td style="width:33.33%"><code>&lt;~&gt;</code></td><td style="width:33.33%"><code>&lt;/</code></td></tr>
+<tr><td style="width:33.33%"><code>::=</code></td><td style="width:33.33%"><code>&lt;~~</code></td><td style="width:33.33%"><code>/&gt;</code></td></tr>
+<tr><td style="width:33.33%"><code>__</code></td><td style="width:33.33%"><code>~~&gt;</code></td><td style="width:33.33%"><code>&lt;/&gt;</code></td></tr>
+<tr><td style="width:33.33%"><code>#{</code></td><td style="width:33.33%"><code>-~</code></td><td style="width:33.33%"><code>&lt;+</code></td></tr>
+<tr><td style="width:33.33%"><code>#[</code></td><td style="width:33.33%"><code>~-</code></td><td style="width:33.33%"><code>+&gt;</code></td></tr>
+<tr><td style="width:33.33%"><code>#(</code></td><td style="width:33.33%"><code>~@</code></td><td style="width:33.33%"><code>&lt;+&gt;</code></td></tr>
+<tr><td style="width:33.33%"><code>#?</code></td><td style="width:33.33%"><code>~~~~~~~</code></td><td style="width:33.33%"><code>&lt;*</code></td></tr>
+<tr><td style="width:33.33%"><code>#!</code></td><td style="width:33.33%"><code>0xA12 0x56 1920x1080</code></td><td style="width:33.33%"><code>*&gt;</code></td></tr>
+<tr><td style="width:33.33%"><code>#:</code></td><td style="width:33.33%"><code>&lt;=&gt;</code></td><td style="width:33.33%"><code>&lt;*&gt;</code></td></tr>
+<tr><td style="width:33.33%"><code>#=</code></td><td style="width:33.33%"><code>&lt;==&gt;</code></td><td style="width:33.33%"><code>[TRACE]</code></td></tr>
+<tr><td style="width:33.33%"><code>#_</code></td><td style="width:33.33%"><code>&gt;=</code></td><td style="width:33.33%"><code>[DEBUG]</code></td></tr>
+<tr><td style="width:33.33%"><code>#__</code></td><td style="width:33.33%"><code>&lt;=</code></td><td style="width:33.33%"><code>[INFO]</code></td></tr>
+<tr><td style="width:33.33%"><code>#_(</code></td><td style="width:33.33%"><code>&lt;==</code></td><td style="width:33.33%"><code>[WARN]</code></td></tr>
+<tr><td style="width:33.33%"><code>]#</code></td><td style="width:33.33%"><code>==&gt;</code></td><td style="width:33.33%"><code>[ERROR]</code></td></tr>
+<tr><td style="width:33.33%"><code>#######</code></td><td style="width:33.33%"><code>=&gt;</code></td><td style="width:33.33%"><code>[FATAL]</code></td></tr>
+<tr><td style="width:33.33%"><code>&lt;&lt;</code></td><td style="width:33.33%"><code>&lt;=&lt;</code></td><td style="width:33.33%"><code>[TODO]</code></td></tr>
+<tr><td style="width:33.33%"><code>&lt;&lt;&lt;</code></td><td style="width:33.33%"><code>&gt;=&gt;</code></td><td style="width:33.33%"><code>[FIXME]</code></td></tr>
+<tr><td style="width:33.33%"><code>&gt;&gt;</code></td><td style="width:33.33%"><code>&lt;=|</code></td><td style="width:33.33%"><code>[NOTE]</code></td></tr>
+<tr><td style="width:33.33%"><code>&gt;&gt;&gt;</code></td><td style="width:33.33%"><code>|=&gt;</code></td><td style="width:33.33%"><code>[HACK]</code></td></tr>
+<tr><td style="width:33.33%"><code>{{</code></td><td style="width:33.33%"><code>==</code></td><td style="width:33.33%"><code>[MARK]</code></td></tr>
+<tr><td style="width:33.33%"><code>}}</code></td><td style="width:33.33%"><code>===</code></td><td style="width:33.33%"><code>[EROR]</code></td></tr>
+<tr><td style="width:33.33%"><code>{|</code></td><td style="width:33.33%"><code>!=</code></td><td style="width:33.33%"><code>[WARNING]</code></td></tr>
+<tr><td style="width:33.33%"><code>|}</code></td><td style="width:33.33%"><code>!==</code></td><td style="width:33.33%"><code>todo))</code></td></tr>
+<tr><td style="width:33.33%"><code>{{--</code></td><td style="width:33.33%"><code>=/=</code></td><td style="width:33.33%"><code>fixme))</code></td></tr>
+<tr><td style="width:33.33%"><code>{{!--</code></td><td style="width:33.33%"><code>=!=</code></td><td style="width:33.33%"><code>Cl</code></td></tr>
+<tr><td style="width:33.33%"><code>--}}</code></td><td style="width:33.33%"><code>=&lt;=</code></td><td style="width:33.33%"><code>al</code></td></tr>
+<tr><td style="width:33.33%"><code>[|</code></td><td style="width:33.33%"><code>=&gt;=</code></td><td style="width:33.33%"><code>cl</code></td></tr>
+<tr><td style="width:33.33%"><code>|]</code></td><td style="width:33.33%"><code>|=</code></td><td style="width:33.33%"><code>el</code></td></tr>
+<tr><td style="width:33.33%"><code>!!</code></td><td style="width:33.33%"><code>||=</code></td><td style="width:33.33%"><code>il</code></td></tr>
+<tr><td style="width:33.33%"><code>||</code></td><td style="width:33.33%"><code>=======</code></td><td style="width:33.33%"><code>tl</code></td></tr>
+<tr><td style="width:33.33%"><code>??</code></td><td style="width:33.33%"><code>\\ \&#x27; \.</code></td><td style="width:33.33%"><code>ul</code></td></tr>
+<tr><td style="width:33.33%"><code>???</code></td><td style="width:33.33%"><code>&lt;!--</code></td><td style="width:33.33%"><code>xl</code></td></tr>
+<tr><td style="width:33.33%"><code>&amp;&amp;</code></td><td style="width:33.33%"><code>&lt;#--</code></td><td style="width:33.33%"><code>ff</code></td></tr>
+<tr><td style="width:33.33%"><code>&amp;&amp;&amp;</code></td><td style="width:33.33%"><code>&lt;!----&gt;</code></td><td style="width:33.33%"><code>tt</code></td></tr>
+<tr><td style="width:33.33%"><code>//</code></td><td style="width:33.33%"><code>&lt;-&gt;</code></td><td style="width:33.33%"><code>all</code></td></tr>
+<tr><td style="width:33.33%"><code>///</code></td><td style="width:33.33%"><code>-&gt;</code></td><td style="width:33.33%"><code>ell</code></td></tr>
+<tr><td style="width:33.33%"><code>/*</code></td><td style="width:33.33%"><code>&lt;-</code></td><td style="width:33.33%"><code>ill</code></td></tr>
+<tr><td style="width:33.33%"><code>/**</code></td><td style="width:33.33%"><code>--&gt;</code></td><td style="width:33.33%"><code>ull</code></td></tr>
+<tr><td style="width:33.33%"><code>*/</code></td><td style="width:33.33%"><code>&lt;--</code></td><td style="width:33.33%"><code>ll</code></td></tr>
+<tr><td style="width:33.33%"><code>++</code></td><td style="width:33.33%"><code>&lt;-&lt;</code></td><td style="width:33.33%"><code></code></td></tr>
+<tr><td style="width:33.33%"><code>+++</code></td><td style="width:33.33%"><code>&gt;-&gt;</code></td><td style="width:33.33%"><code></code></td></tr>
 </table>
 <!-- CALT -->
 

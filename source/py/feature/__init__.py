@@ -138,16 +138,23 @@ def get_all_calt_text():
             else:
                 result.append(item.desc)
 
-    # Split into two columns
-    half = (len(result) + 1) // 2  # Round up for odd numbers
+    # Split into three columns
+    third = (len(result) + 2) // 3  # Round up for numbers not divisible by 3
 
-    # Create HTML table
-    html_rows = ['<table style="width:100%">']
+    # Create HTML table with three equal columns
+    html_rows = ['<table style="width:100%; table-layout:fixed;">']
 
-    for i in range(half):
-        left = escape(result[i])
-        right = escape(result[i + half]) if i + half < len(result) else ""
-        html_rows.append(f'<tr><td><code>{left}</code></td><td><code>{right}</code></td></tr>')
+    for i in range(third):
+        col1 = escape(result[i])
+        col2 = escape(result[i + third]) if i + third < len(result) else ""
+        col3 = escape(result[i + 2 * third]) if i + 2 * third < len(result) else ""
+        html_rows.append(
+            f'<tr>'
+            f'<td style="width:33.33%"><code>{col1}</code></td>'
+            f'<td style="width:33.33%"><code>{col2}</code></td>'
+            f'<td style="width:33.33%"><code>{col3}</code></td>'
+            f'</tr>'
+        )
 
     html_rows.append('</table>')
     return '\n'.join(html_rows)
