@@ -7,8 +7,8 @@ def ss08_subst():
         ast.subst_liga(
             "<<-",
             target=ast.gly("<<-", ".ss08"),
-            ign_prefix="<",
-            ign_suffix="-",
+            ign_prefix=ast.cls("<", "-"),
+            ign_suffix=ast.cls("<", ">", "-"),
             extra_rules=[
                 ast.subst(ast.SPC, ast.gly("<<"), "-", ast.SPC),
             ],
@@ -16,8 +16,8 @@ def ss08_subst():
         ast.subst_liga(
             ">>-",
             target=ast.gly(">>-", ".ss08"),
-            ign_prefix=">",
-            ign_suffix="-",
+            ign_prefix=ast.cls(">", "-"),
+            ign_suffix=ast.cls("-", ">", "<"),
             extra_rules=[
                 ast.subst(ast.SPC, ast.gly(">>"), "-", ast.SPC),
             ],
@@ -25,8 +25,8 @@ def ss08_subst():
         ast.subst_liga(
             "<<=",
             target=ast.gly("<<=", ".ss08"),
-            ign_prefix="<",
-            ign_suffix="=",
+            ign_prefix=ast.cls("=", "<"),
+            ign_suffix=ast.cls("=", ">", "<"),
             extra_rules=[
                 ast.subst(ast.SPC, ast.gly("<<"), "=", ast.SPC),
             ],
@@ -34,8 +34,8 @@ def ss08_subst():
         ast.subst_liga(
             ">>=",
             target=ast.gly(">>=", ".ss08"),
-            ign_prefix=">",
-            ign_suffix="=",
+            ign_prefix=ast.cls(">", "="),
+            ign_suffix=ast.cls("=", ">", "<"),
             extra_rules=[
                 ast.subst(ast.SPC, ast.gly(">>"), "=", ast.SPC),
             ],
@@ -43,8 +43,8 @@ def ss08_subst():
         ast.subst_liga(
             "-<<",
             target=ast.gly("-<<", ".ss08"),
-            ign_prefix="-",
-            ign_suffix="<",
+            ign_prefix=ast.cls("-", "<", ">"),
+            ign_suffix=ast.cls("<", "-"),
             extra_rules=[
                 ast.subst(
                     [ast.SPC, ast.SPC],
@@ -58,8 +58,8 @@ def ss08_subst():
         ast.subst_liga(
             "->>",
             target=ast.gly("->>", ".ss08"),
-            ign_prefix="-",
-            ign_suffix=">",
+            ign_prefix=ast.cls("-", ">", "<"),
+            ign_suffix=ast.cls(">", "-"),
             extra_rules=[
                 ast.subst(
                     [ast.SPC, ast.SPC],
@@ -73,8 +73,8 @@ def ss08_subst():
         ast.subst_liga(
             "=<<",
             target=ast.gly("=<<", ".ss08"),
-            ign_prefix="=",
-            ign_suffix="<",
+            ign_prefix=ast.cls("=", "<", ">"),
+            ign_suffix=ast.cls("<", "="),
             extra_rules=[
                 ast.ign(["(", cls_question], "=", ["<", "<"]),
                 ast.subst(
@@ -89,8 +89,8 @@ def ss08_subst():
         ast.subst_liga(
             "=>>",
             target=ast.gly("=>>", ".ss08"),
-            ign_prefix="=",
-            ign_suffix=">",
+            ign_prefix=ast.cls("=", ">", "<"),
+            ign_suffix=ast.cls(">", "="),
             extra_rules=[
                 ast.ign(["(", cls_question], "=", [">", ">"]),
                 ast.subst(
