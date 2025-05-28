@@ -139,7 +139,7 @@ def get_all_calt_text():
 
     # Split into two columns
     max_length = max(len(x) for x in result)
-    padding = 4  # Space between columns
+    padding = 8  # Space between columns
     half = (len(result) + 1) // 2  # Round up for odd numbers
 
     # Create paired rows
