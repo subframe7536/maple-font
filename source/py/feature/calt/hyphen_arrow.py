@@ -2,7 +2,8 @@ from source.py.feature import ast
 from source.py.feature.base.clazz import cls_digit, cls_question
 from source.py.feature.calt._common import infinite_rules
 
-
+# Inspirde by Fira Code, source:
+# https://github.com/tonsky/FiraCode/blob/master/features/calt/hyphen_arrows.fea
 def infinite_hyphens(cls_var: ast.Clazz):
     hy_start = ast.gly_seq("-", "sta")
     hy_middle = ast.gly_seq("-", "mid")

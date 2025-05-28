@@ -2,7 +2,8 @@ from source.py.feature import ast
 from source.py.feature.base.clazz import cls_normal_separator, cls_question
 from source.py.feature.calt._common import infinite_rules
 
-
+# Inspired by Fira Code, source:
+# https://github.com/tonsky/FiraCode/blob/master/features/calt/equal_arrows.fea
 def infinite_equals(cls_var: ast.Clazz):
     eq_start = ast.gly_seq("=", "sta")
     eq_middle = ast.gly_seq("=", "mid")
