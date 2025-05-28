@@ -975,6 +975,13 @@ feature calt {
     sub asciitilde' at by SPC;
   } asciitilde_at.liga;
 
+  # ~~~~~~~
+  lookup infinity_asciitilde {
+    sub [asciitilde.sta.seq asciitilde.mid.seq] asciitilde' asciitilde by asciitilde.mid.seq;
+    sub [asciitilde.sta.seq asciitilde.mid.seq] asciitilde' by asciitilde.end.seq;
+    sub asciitilde' asciitilde by asciitilde.sta.seq;
+  } infinity_asciitilde;
+
   # 0xA12 0x56 1920x1080
   lookup cross {
     sub @Zero x' [@Digit @HexLetter] by multiply;

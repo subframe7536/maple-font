@@ -2,6 +2,9 @@ from source.py.feature import ast
 
 
 def get_lookup():
+    start = ast.gly_seq("~", "sta")
+    mid = ast.gly_seq("~", "mid")
+    end = ast.gly_seq("~", "end")
     return [
         ast.subst_liga(
             "<~",
@@ -47,5 +50,14 @@ def get_lookup():
             "~@",  # Cloujure
             ign_prefix="~",
             ign_suffix="@",
+        ),
+        ast.Lookup(
+            "infinity_asciitilde",
+            "~~~~~~~",
+            [
+                ast.subst(ast.cls(start, mid), "~", "~", mid),
+                ast.subst(ast.cls(start, mid), "~", None, end),
+                ast.subst(None, "~", "~", start),
+            ],
         ),
     ]
