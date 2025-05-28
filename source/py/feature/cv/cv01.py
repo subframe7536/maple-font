@@ -49,6 +49,8 @@ def cv01_subst():
                 "<!--",
                 "<#--",
                 "xml_empty_comment.liga",  # <!---->
+                ast.gly_seq("<=", "sta"),
+                ast.gly_seq(">=", "end"),
             ],
             target_suffix=sfx,
         ),

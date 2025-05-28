@@ -1,5 +1,5 @@
 import source.py.feature.ast as ast
-from source.py.feature.cv.const import GLYPHS_J_UPPER
+from source.py.feature.cv._common import GLYPHS_J_UPPER
 
 
 # https://github.com/subframe7536/maple-font/issues/324

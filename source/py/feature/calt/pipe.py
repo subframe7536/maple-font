@@ -39,16 +39,6 @@ def get_lookup():
             ign_suffix=">",
         ),
         ast.subst_liga(
-            "-|",
-            ign_prefix=ast.cls("-", "<"),
-            ign_suffix="|",
-        ),
-        ast.subst_liga(
-            "|-",
-            ign_prefix="|",
-            ign_suffix=ast.cls("-", ">", cls_digit),
-        ),
-        ast.subst_liga(
             "_|_",
             ign_prefix=ast.cls("_", "[", cls_comma),
             ign_suffix="_",

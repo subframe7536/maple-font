@@ -3,7 +3,7 @@ import json
 from zipfile import ZipFile
 from fontTools.ttLib import TTFont
 
-MOVING_RULES = ["ss03", "ss07", "ss08", "ss09", "ss10", "ss11", "ss12"]
+MOVING_RULES = ["ss03", "ss07", "ss08", "ss09", "ss10", "ss11"]
 
 
 def get_freeze_config_str(config):

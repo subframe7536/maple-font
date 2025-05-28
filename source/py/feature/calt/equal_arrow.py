@@ -1,5 +1,40 @@
 from source.py.feature import ast
 from source.py.feature.base.clazz import cls_normal_separator, cls_question
+from source.py.feature.calt._common import infinite_rules
+
+
+def infinite_equals():
+    eq_start = ast.gly_seq("=", "sta")
+    eq_middle = ast.gly_seq("=", "mid")
+    eq_end = ast.gly_seq("=", "end")
+    cls_start = ast.Clazz("EqualStart", [eq_start, eq_middle])
+
+    return ast.Lookup(
+        "infinity_equal",
+        "=======",
+        [
+            cls_start.state(),
+            ast.ign(None, "!", ["=", "="]),
+            ast.ign("|", "|", "="),
+            ast.ign("=", "|", "|"),
+            # Main rules
+            *infinite_rules(
+                g="=",
+                cls_start=cls_start,
+                symbols=["<", ">", "|"],
+                extra_rules=[
+                    ast.subst(eq_end, ":", "=", ast.gly(":", ".case", True)),
+                    # Disable >=<
+                    ast.subst(
+                        ">", "=", ["<", ast.cls("=", "<")], ast.gly_seq(">=", "sta")
+                    ),
+                    ast.ign(">", "=", "<"),
+                    # Disable =<
+                    ast.subst(None, "=", ["<", ast.cls("=", "<")], eq_start),
+                ],
+            ),
+        ],
+    )
 
 
 def get_lookup(cls_var: ast.Clazz):
@@ -90,4 +125,85 @@ def get_lookup(cls_var: ast.Clazz):
             ign_prefix=ast.cls("<", ">", "=", cls_normal_separator),
             ign_suffix=">",
         ),
+        ast.subst_liga(
+            "==",
+            ign_prefix=ast.cls(":", "=", "!", "<", ">", "|"),
+            ign_suffix=ast.cls(":", "=", "<", ">", "|"),
+            extra_rules=[
+                ast.ign(["(", cls_question], "=", "="),
+                ast.ign(["(", cls_question, "<"], "=", "="),
+            ],
+        ),
+        ast.subst_liga(
+            "===",
+            ign_prefix=ast.cls("=", "<", ">", "|", ":", ast.SPC),
+            ign_suffix=ast.cls("=", "<", ">", "|", ":", ast.SPC),
+            extra_rules=[
+                ast.ign(["(", cls_question], "=", ["=", "="]),
+                ast.ign(["(", cls_question, "<"], "=", ["=", "="]),
+            ],
+        ),
+        ast.subst_liga(
+            "!=",
+            ign_prefix=ast.cls("!", "="),
+            ign_suffix="=",
+            extra_rules=[
+                ast.ign(["(", cls_question], "!", "="),
+                ast.ign(["(", cls_question, "<"], "!", "="),
+            ],
+        ),
+        ast.subst_liga(
+            "!==",
+            ign_prefix=ast.cls("!", "="),
+            ign_suffix=ast.cls("!", "="),
+            extra_rules=[
+                ast.ign(["(", cls_question], "!", ["=", "="]),
+                ast.ign(["(", cls_question, "<"], "!", ["=", "="]),
+            ],
+        ),
+        ast.subst_liga(
+            "=/=",
+            ign_prefix="=",
+            ign_suffix="=",
+            extra_rules=[
+                ast.ign(["(", cls_question], "=", ["/", "="]),
+                ast.ign(["(", cls_question, "<"], "=", ["/", "="]),
+            ],
+        ),
+        ast.subst_liga(
+            "=!=",
+            ign_prefix="=",
+            ign_suffix="=",
+            extra_rules=[
+                ast.ign(["(", cls_question], "=", ["!", "="]),
+                ast.ign(["(", cls_question, "<"], "=", ["!", "="]),
+            ],
+        ),
+        ast.subst_liga(
+            "=<=",
+            ign_prefix=ast.cls("=", ">", "<", "|"),
+            ign_suffix=ast.cls("=", "<", ">"),
+            extra_rules=[
+                ast.ign(["(", cls_question], "=", [">", "="]),
+            ],
+        ),
+        ast.subst_liga(
+            "=>=",
+            ign_prefix=ast.cls("=", ">", "<", "|"),
+            ign_suffix=ast.cls("=", "<", ">", "|"),
+            extra_rules=[
+                ast.ign(["(", cls_question], "=", [">", "="]),
+            ],
+        ),
+        ast.subst_liga(
+            "|=",
+            ign_prefix=ast.cls("|", "="),
+            ign_suffix=ast.cls(">", "|", "="),
+        ),
+        ast.subst_liga(
+            "||=",
+            ign_prefix=ast.cls("|", "="),
+            ign_suffix=ast.cls("|", "="),
+        ),
+        infinite_equals(),
     ]

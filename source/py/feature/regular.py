@@ -26,7 +26,6 @@ from source.py.feature.ss import (
     ss09,
     ss10,
     ss11,
-    ss12,
 )
 
 cls_a = ast.Clazz("A", ["A", "a", "a.cv02"])
@@ -123,5 +122,4 @@ ss_list_regular = [
     ss09.ss09_feat,
     ss10.ss10_feat,
     ss11.ss11_feat,
-    ss12.ss12_feat,
 ]

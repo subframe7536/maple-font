@@ -1,5 +1,5 @@
 from source.py.feature import ast
-from source.py.feature.cv.const import GLYPHS_L, GLYPHS_ONE
+from source.py.feature.cv._common import GLYPHS_L, GLYPHS_ONE
 
 
 def cv04_subst_regular():

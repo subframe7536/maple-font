@@ -132,6 +132,7 @@ __
 =>=
 |=
 ||=
+=======
 \\ \' \.
 <!--
 <#--
@@ -145,6 +146,7 @@ __
 >->
 <-|
 |->
+-------
 <|||
 |||>
 <||
@@ -152,8 +154,6 @@ __
 <|
 |>
 <|>
--|
-|-
 _|_
 ||-
 <>
@@ -263,5 +263,4 @@ ll
 - [v7.1] ss09: Asciitilde equal as not equal to ligature (`~=`)
 - [v7.1] ss10: Approximately equal to and approximately not equal to ligatures (`=~`, `!~`)
 - [v7.1] ss11: Equal and extra punctuation ligatures (`|=`, `/=`, `?=`, `&=`, ...)
-- [v7.3] ss12: Infinite hyphens and equals (`----`, `====`)
 <!-- SS -->

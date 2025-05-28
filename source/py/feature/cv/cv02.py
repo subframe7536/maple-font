@@ -1,5 +1,5 @@
 import source.py.feature.ast as ast
-from source.py.feature.cv.const import GLYPHS_A
+from source.py.feature.cv._common import GLYPHS_A
 
 
 def cv02_subst():
