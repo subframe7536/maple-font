@@ -20,11 +20,11 @@ def get_calt_lookup(
         whitespace.get_lookup(cls_var),
         asciitilde.get_lookup(),
         cross.get_lookup(cls_hex_letter),
+        markup_like.get_lookup(),
         equal_arrow.get_lookup(cls_var),
         escape.get_lookup(),
-        hyphen_arrow.get_lookup(),
+        hyphen_arrow.get_lookup(cls_var),
         pipe.get_lookup(),
-        markup_like.get_lookup(),
         tag.get_lookup(cls_var),
     ]
 

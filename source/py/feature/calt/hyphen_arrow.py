@@ -3,7 +3,7 @@ from source.py.feature.base.clazz import cls_digit, cls_question
 from source.py.feature.calt._common import infinite_rules
 
 
-def infinite_hyphens():
+def infinite_hyphens(cls_var: ast.Clazz):
     hy_start = ast.gly_seq("-", "sta")
     hy_middle = ast.gly_seq("-", "mid")
     cls_start = ast.Clazz("HyphenStart", [hy_start, hy_middle])
@@ -17,6 +17,7 @@ def infinite_hyphens():
             ast.ign("|", "|", "-"),
             ast.ign("-", "|", "|"),
             ast.ign(">", "-", "<"),
+            ast.ign(cls_var, ">", "-"),
             # Main rules
             *infinite_rules("-", cls_start, ["<", ">", "|"]),
             # Disable >-<
@@ -27,7 +28,7 @@ def infinite_hyphens():
     )
 
 
-def get_lookup():
+def get_lookup(cls_var: ast.Clazz):
     return [
         ast.subst_liga(
             "<!--",
@@ -88,5 +89,5 @@ def get_lookup():
             ign_prefix="|",
             ign_suffix=">",
         ),
-        infinite_hyphens()
+        infinite_hyphens(cls_var)
     ]
