@@ -984,8 +984,8 @@ feature calt {
 
   # <=>
   lookup less_equal_greater.liga {
-    ignore sub less less' equal greater;
-    ignore sub less' equal greater greater;
+    ignore sub [less equal] less' equal greater;
+    ignore sub less' equal greater [greater equal];
     ignore sub parenleft @Question less' equal greater;
     sub SPC SPC greater' by less_equal_greater.liga;
     sub SPC equal' greater by SPC;
@@ -994,8 +994,8 @@ feature calt {
 
   # <==>
   lookup less_equal_equal_greater.liga {
-    ignore sub less less' equal equal greater;
-    ignore sub less' equal equal greater greater;
+    ignore sub [less equal] less' equal equal greater;
+    ignore sub less' equal equal greater [greater equal];
     ignore sub parenleft @Question less' equal equal greater;
     sub SPC SPC SPC greater' by less_equal_equal_greater.liga;
     sub SPC SPC equal' greater by SPC;
@@ -1091,8 +1091,8 @@ feature calt {
 
   # ==
   lookup equal_equal.liga {
-    ignore sub [equal exclam less greater] equal' equal;
-    ignore sub equal' equal [equal less greater];
+    ignore sub [colon equal exclam less greater] equal' equal;
+    ignore sub equal' equal [colon equal less greater];
     ignore sub parenleft @Question equal' equal;
     ignore sub parenleft @Question less equal' equal;
     sub SPC equal' by equal_equal.liga;
@@ -1101,8 +1101,8 @@ feature calt {
 
   # ===
   lookup equal_equal_equal.liga {
-    ignore sub [equal less greater bar SPC] equal' equal equal;
-    ignore sub equal' equal equal [equal less greater bar SPC];
+    ignore sub [equal less greater bar colon SPC] equal' equal equal;
+    ignore sub equal' equal equal [equal less greater bar colon SPC];
     ignore sub parenleft @Question equal' equal equal;
     ignore sub parenleft @Question less equal' equal equal;
     sub SPC SPC equal' by equal_equal_equal.liga;
@@ -1123,7 +1123,7 @@ feature calt {
   # !==
   lookup exclam_equal_equal.liga {
     ignore sub [exclam equal] exclam' equal equal;
-    ignore sub exclam' equal equal equal;
+    ignore sub exclam' equal equal [exclam equal];
     ignore sub parenleft @Question exclam' equal equal;
     ignore sub parenleft @Question less exclam' equal equal;
     sub SPC SPC equal' by exclam_equal_equal.liga;
@@ -2756,17 +2756,23 @@ feature ss12 {
 
   # ====
   lookup infinity_equal {
-    sub less' equal equal by less_equal.sta.seq;
-    sub less_equal.sta.seq equal' equal by equal.mid.seq;
-    sub [equal.sta.seq equal.mid.seq] equal' less by equal.mid.seq;
-    sub [equal.sta.seq equal.mid.seq] equal.mid.seq less' by less_equal.end.seq;
-    sub equal.mid.seq less' equal by less_equal.mid.seq;
-    sub equal' less equal by equal.sta.seq;
-    sub [equal.sta.seq equal.mid.seq] [less less_equal.sta.seq]' equal by less_equal.mid.seq;
-    sub less_equal.mid.seq equal' equal by equal.mid.seq;
-    sub [equal.sta.seq equal.mid.seq] equal' equal by equal.mid.seq;
-    sub [equal.sta.seq equal.mid.seq] equal' by equal.end.seq;
-    sub equal' equal by equal.sta.seq;
+    @EqualStart = [equal.sta.seq equal.mid.seq];
+    ignore sub bar bar' bar equal;
+    ignore sub bar bar' equal;
+    ignore sub @EqualStart bar' bar bar;
+    sub [less_equal.sta.seq less_equal.mid.seq greater_equal.sta.seq greater_equal.mid.seq @EqualStart] equal' [less greater equal] by equal.mid.seq;
+    sub [less_equal.sta.seq less_equal.mid.seq greater_equal.sta.seq greater_equal.mid.seq @EqualStart] equal' by equal.end.seq;
+    sub @EqualStart less' equal by less_equal.mid.seq;
+    sub @EqualStart less' by less_equal.end.seq;
+    sub less' equal by less_equal.sta.seq;
+    sub @EqualStart greater' equal by greater_equal.mid.seq;
+    sub @EqualStart greater' by greater_equal.end.seq;
+    sub greater' equal by greater_equal.sta.seq;
+    sub equal' [less greater equal] by equal.sta.seq;
+    sub greater equal' less [equal less] by greater_equal.sta.seq;
+    ignore sub greater equal' less;
+    sub equal' less [equal less] by equal.sta.seq;
+    sub equal' slash [equal slash] by equal.mid.seq;
   } infinity_equal;
 
 } ss12;
