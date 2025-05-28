@@ -1846,6 +1846,8 @@ feature cv01 {
   sub xml_empty_comment.liga by xml_empty_comment.liga.cv01;
   sub less_equal.sta.seq by less_equal.sta.seq.cv01;
   sub greater_equal.end.seq by greater_equal.end.seq.cv01;
+  sub less_hyphen.sta.seq by less_hyphen.sta.seq.cv01;
+  sub greater_hyphen.end.seq by greater_hyphen.end.seq.cv01;
 
 } cv01;
 
