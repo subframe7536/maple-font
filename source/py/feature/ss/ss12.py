@@ -39,7 +39,7 @@ def lookup_equals():
             [
                 cls_start.state(),
                 # Main rules
-                *main_rules("=", cls_start, ["<", ">"]),
+                *main_rules("=", cls_start, ["<", ">", "|"]),
                 ast.subst(eq_end, ":", "=", ast.gly(":", ".case", True)),
                 # Disable >=<
                 ast.subst(">", "=", ["<", ast.cls("=", "<")], ast.gly_seq(">=", "sta")),

@@ -6,8 +6,8 @@ def get_lookup():
     return [
         ast.subst_liga(
             "==",
-            ign_prefix=ast.cls(":", "=", "!", "<", ">"),
-            ign_suffix=ast.cls(":", "=", "<", ">"),
+            ign_prefix=ast.cls(":", "=", "!", "<", ">", "|"),
+            ign_suffix=ast.cls(":", "=", "<", ">", "|"),
             extra_rules=[
                 ast.ign(["(", cls_question], "=", "="),
                 ast.ign(["(", cls_question, "<"], "=", "="),
@@ -69,19 +69,19 @@ def get_lookup():
         ast.subst_liga(
             "=>=",
             ign_prefix=ast.cls("=", ">", "<", "|"),
-            ign_suffix=ast.cls("=", "<", ">"),
+            ign_suffix=ast.cls("=", "<", ">", "|"),
             extra_rules=[
                 ast.ign(["(", cls_question], "=", [">", "="]),
             ],
         ),
         ast.subst_liga(
             "|=",
-            ign_prefix="|",
-            ign_suffix=ast.cls(">", "="),
+            ign_prefix=ast.cls("|", "="),
+            ign_suffix=ast.cls(">", "|", "="),
         ),
         ast.subst_liga(
             "||=",
-            ign_prefix="|",
-            ign_suffix="=",
+            ign_prefix=ast.cls("|", "="),
+            ign_suffix=ast.cls("|", "="),
         ),
     ]

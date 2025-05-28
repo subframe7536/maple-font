@@ -1090,8 +1090,8 @@ feature calt {
 
   # ==
   lookup equal_equal.liga {
-    ignore sub [colon equal exclam less greater] equal' equal;
-    ignore sub equal' equal [colon equal less greater];
+    ignore sub [colon equal exclam less greater bar] equal' equal;
+    ignore sub equal' equal [colon equal less greater bar];
     ignore sub parenleft @Question equal' equal;
     ignore sub parenleft @Question less equal' equal;
     sub SPC equal' by equal_equal.liga;
@@ -1165,7 +1165,7 @@ feature calt {
   # =>=
   lookup equal_greater_equal.liga {
     ignore sub [equal greater less bar] equal' greater equal;
-    ignore sub equal' greater equal [equal less greater];
+    ignore sub equal' greater equal [equal less greater bar];
     ignore sub parenleft @Question equal' greater equal;
     sub SPC SPC equal' by equal_greater_equal.liga;
     sub SPC greater' equal by SPC;
@@ -1174,16 +1174,16 @@ feature calt {
 
   # |=
   lookup bar_equal.liga {
-    ignore sub bar bar' equal;
-    ignore sub bar' equal [greater equal];
+    ignore sub [bar equal] bar' equal;
+    ignore sub bar' equal [greater bar equal];
     sub SPC equal' by bar_equal.liga;
     sub bar' equal by SPC;
   } bar_equal.liga;
 
   # ||=
   lookup bar_bar_equal.liga {
-    ignore sub bar bar' bar equal;
-    ignore sub bar' bar equal equal;
+    ignore sub [bar equal] bar' bar equal;
+    ignore sub bar' bar equal [bar equal];
     sub SPC SPC equal' by bar_bar_equal.liga;
     sub SPC bar' equal by SPC;
     sub bar' bar equal by SPC;
@@ -2175,8 +2175,8 @@ feature ss08 {
 
   # <<-
   lookup less_less_hyphen.liga.ss08 {
-    ignore sub less less' less hyphen;
-    ignore sub less' less hyphen hyphen;
+    ignore sub [less hyphen] less' less hyphen;
+    ignore sub less' less hyphen [less greater hyphen];
     sub SPC less_less.liga' hyphen by SPC;
     sub SPC SPC hyphen' by less_less_hyphen.liga.ss08;
     sub SPC less' hyphen by SPC;
@@ -2185,8 +2185,8 @@ feature ss08 {
 
   # >>-
   lookup greater_greater_hyphen.liga.ss08 {
-    ignore sub greater greater' greater hyphen;
-    ignore sub greater' greater hyphen hyphen;
+    ignore sub [greater hyphen] greater' greater hyphen;
+    ignore sub greater' greater hyphen [hyphen greater less];
     sub SPC greater_greater.liga' hyphen by SPC;
     sub SPC SPC hyphen' by greater_greater_hyphen.liga.ss08;
     sub SPC greater' hyphen by SPC;
@@ -2195,8 +2195,8 @@ feature ss08 {
 
   # <<=
   lookup less_less_equal.liga.ss08 {
-    ignore sub less less' less equal;
-    ignore sub less' less equal equal;
+    ignore sub [equal less] less' less equal;
+    ignore sub less' less equal [equal greater less];
     sub SPC less_less.liga' equal by SPC;
     sub SPC SPC equal' by less_less_equal.liga.ss08;
     sub SPC less' equal by SPC;
@@ -2205,8 +2205,8 @@ feature ss08 {
 
   # >>=
   lookup greater_greater_equal.liga.ss08 {
-    ignore sub greater greater' greater equal;
-    ignore sub greater' greater equal equal;
+    ignore sub [greater equal] greater' greater equal;
+    ignore sub greater' greater equal [equal greater less];
     sub SPC greater_greater.liga' equal by SPC;
     sub SPC SPC equal' by greater_greater_equal.liga.ss08;
     sub SPC greater' equal by SPC;
@@ -2215,8 +2215,8 @@ feature ss08 {
 
   # -<<
   lookup hyphen_less_less.liga.ss08 {
-    ignore sub hyphen hyphen' less less;
-    ignore sub hyphen' less less less;
+    ignore sub [hyphen less greater] hyphen' less less;
+    ignore sub hyphen' less less [less hyphen];
     sub SPC SPC less_less.liga' by hyphen_less_less.liga.ss08;
     sub hyphen' SPC less_less.liga by SPC;
     sub SPC SPC less' by hyphen_less_less.liga.ss08;
@@ -2226,8 +2226,8 @@ feature ss08 {
 
   # ->>
   lookup hyphen_greater_greater.liga.ss08 {
-    ignore sub hyphen hyphen' greater greater;
-    ignore sub hyphen' greater greater greater;
+    ignore sub [hyphen greater less] hyphen' greater greater;
+    ignore sub hyphen' greater greater [greater hyphen];
     sub SPC SPC greater_greater.liga' by hyphen_greater_greater.liga.ss08;
     sub hyphen' SPC greater_greater.liga by SPC;
     sub SPC SPC greater' by hyphen_greater_greater.liga.ss08;
@@ -2237,8 +2237,8 @@ feature ss08 {
 
   # =<<
   lookup equal_less_less.liga.ss08 {
-    ignore sub equal equal' less less;
-    ignore sub equal' less less less;
+    ignore sub [equal less greater] equal' less less;
+    ignore sub equal' less less [less equal];
     ignore sub parenleft @Question equal' less less;
     sub SPC SPC less_less.liga' by equal_less_less.liga.ss08;
     sub equal' SPC less_less.liga by SPC;
@@ -2249,8 +2249,8 @@ feature ss08 {
 
   # =>>
   lookup equal_greater_greater.liga.ss08 {
-    ignore sub equal equal' greater greater;
-    ignore sub equal' greater greater greater;
+    ignore sub [equal greater less] equal' greater greater;
+    ignore sub equal' greater greater [greater equal];
     ignore sub parenleft @Question equal' greater greater;
     sub SPC SPC greater_greater.liga' by equal_greater_greater.liga.ss08;
     sub equal' SPC greater_greater.liga by SPC;
@@ -2458,22 +2458,22 @@ feature ss12 {
   # ====
   lookup infinity_equal {
     @EqualStart = [equal.sta.seq equal.mid.seq];
-    ignore sub bar bar' bar equal;
-    ignore sub bar bar' equal;
-    ignore sub @EqualStart bar' bar bar;
-    sub [less_equal.sta.seq less_equal.mid.seq greater_equal.sta.seq greater_equal.mid.seq @EqualStart] equal' [less greater equal] by equal.mid.seq;
-    sub [less_equal.sta.seq less_equal.mid.seq greater_equal.sta.seq greater_equal.mid.seq @EqualStart] equal' by equal.end.seq;
+    sub [less_equal.sta.seq less_equal.mid.seq greater_equal.sta.seq greater_equal.mid.seq bar_equal.sta.seq bar_equal.mid.seq @EqualStart] equal' [less greater bar equal] by equal.mid.seq;
+    sub [less_equal.sta.seq less_equal.mid.seq greater_equal.sta.seq greater_equal.mid.seq bar_equal.sta.seq bar_equal.mid.seq @EqualStart] equal' by equal.end.seq;
     sub @EqualStart less' equal by less_equal.mid.seq;
     sub @EqualStart less' by less_equal.end.seq;
     sub less' equal by less_equal.sta.seq;
     sub @EqualStart greater' equal by greater_equal.mid.seq;
     sub @EqualStart greater' by greater_equal.end.seq;
     sub greater' equal by greater_equal.sta.seq;
-    sub equal' [less greater equal] by equal.sta.seq;
+    sub @EqualStart bar' equal by bar_equal.mid.seq;
+    sub @EqualStart bar' by bar_equal.end.seq;
+    sub bar' equal by bar_equal.sta.seq;
+    sub equal' [less greater bar equal] by equal.sta.seq;
+    sub equal.end.seq colon' equal by colon.case;
     sub greater equal' less [equal less] by greater_equal.sta.seq;
     ignore sub greater equal' less;
     sub equal' less [equal less] by equal.sta.seq;
-    sub equal' slash [equal slash] by equal.mid.seq;
   } infinity_equal;
 
 } ss12;
