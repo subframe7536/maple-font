@@ -202,10 +202,5 @@ def get_lookup(cls_var: ast.Clazz):
             ign_prefix=ast.cls("|", "="),
             ign_suffix=ast.cls(">", "|", "="),
         ),
-        ast.subst_liga(
-            "||=",
-            ign_prefix=ast.cls("|", "="),
-            ign_suffix=ast.cls("|", "="),
-        ),
         infinite_equals(cls_var),
     ]

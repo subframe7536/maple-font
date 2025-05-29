@@ -714,8 +714,8 @@ feature calt {
 
   # ||
   lookup bar_bar.liga {
-    ignore sub [hyphen bar bracketleft less] bar' bar;
-    ignore sub bar' bar [bar bracketright greater hyphen equal];
+    ignore sub [bar bracketleft less] bar' bar;
+    ignore sub bar' bar [bar bracketright greater];
     sub SPC bar' by bar_bar.liga;
     sub bar' bar by SPC;
   } bar_bar.liga;
@@ -1250,15 +1250,6 @@ feature calt {
     sub bar' equal by SPC;
   } bar_equal.liga;
 
-  # ||=
-  lookup bar_bar_equal.liga {
-    ignore sub [bar equal] bar' bar equal;
-    ignore sub bar' bar equal [bar equal];
-    sub SPC SPC equal' by bar_bar_equal.liga;
-    sub SPC bar' equal by SPC;
-    sub bar' bar equal by SPC;
-  } bar_bar_equal.liga;
-
   # =======
   lookup infinity_equal {
     @EqualStart = [equal.sta.seq equal.mid.seq];
@@ -1430,6 +1421,7 @@ feature calt {
     ignore sub less' [exclam numbersign] hyphen hyphen;
     ignore sub bar bar' hyphen;
     ignore sub hyphen bar' bar;
+    ignore sub hyphen hyphen' bar;
     ignore sub greater hyphen' less;
     ignore sub @Var greater' hyphen;
     sub [less_hyphen.sta.seq less_hyphen.mid.seq greater_hyphen.sta.seq greater_hyphen.mid.seq bar_hyphen.sta.seq bar_hyphen.mid.seq @HyphenStart] hyphen' [less greater bar hyphen] by hyphen.mid.seq;
@@ -1519,15 +1511,6 @@ feature calt {
     sub SPC bar' underscore by SPC;
     sub underscore' bar underscore by SPC;
   } underscore_bar_underscore.liga;
-
-  # ||-
-  lookup bar_bar_hyphen.liga {
-    ignore sub [bar hyphen] bar' bar hyphen;
-    ignore sub bar' bar hyphen [hyphen @Digit];
-    sub SPC SPC hyphen' by bar_bar_hyphen.liga;
-    sub SPC bar' hyphen by SPC;
-    sub bar' bar hyphen by SPC;
-  } bar_bar_hyphen.liga;
 
   @BgJ = [J.bg J.bg.cv07];
   @BgQ = [Q.bg Q.bg.cv01];
@@ -2369,11 +2352,20 @@ feature ss11 {
 
   @IgnoreEqual = [greater equal colon];
 
-  # |= ||=
+  # |=
   lookup bars_equal {
     sub bar_equal.liga by bar_equal.liga.ss11;
-    sub bar_bar_equal.liga by bar_bar_equal.liga.ss11;
   } bars_equal;
+
+  # ||=
+  lookup bar_bar_equal.liga.ss11 {
+    ignore sub bar bar' bar equal;
+    ignore sub bar' bar equal bar;
+    sub SPC bar_bar.liga' equal by SPC;
+    sub SPC SPC equal' by bar_bar_equal.liga.ss11;
+    sub SPC bar' equal by SPC;
+    sub bar' bar equal by SPC;
+  } bar_bar_equal.liga.ss11;
 
   # /=
   lookup slash_equal.liga.ss11 {

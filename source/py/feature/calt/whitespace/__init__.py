@@ -32,8 +32,8 @@ def get_base_lookup():
         ),
         ast.subst_liga(
             "||",
-            ign_prefix=ast.cls("-", "|", "[", "<"),
-            ign_suffix=ast.cls("|", "]", ">", "-", "="),
+            ign_prefix=ast.cls("|", "[", "<"),
+            ign_suffix=ast.cls("|", "]", ">"),
         ),
         ast.subst_liga(
             2 * [cls_question.use()],

@@ -10,8 +10,17 @@ def ss11_subst():
         ast.cls_states(cls_ign_equal),
         ast.Lookup(
             "bars_equal",
-            "|= ||=",
-            ast.subst_map(["|=", "||="], target_suffix=".ss11"),
+            "|=",
+            ast.subst_map(["|="], target_suffix=".ss11"),
+        ),
+        ast.subst_liga(
+            "||=",
+            target=ast.gly("||=", ".ss11"),
+            ign_prefix="|",
+            ign_suffix="|",
+            extra_rules=[
+                ast.subst(ast.SPC, ast.gly("||"), "=", ast.SPC)
+            ]
         ),
         ast.subst_liga(
             "/=",
