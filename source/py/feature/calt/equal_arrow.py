@@ -19,6 +19,7 @@ def infinite_equals(cls_var: ast.Clazz):
             ast.ign("|", "|", "="),
             ast.ign("=", "|", "|"),
             ast.ign(cls_var, ">", "="),
+            ast.ign(None, ">", ["=", ast.cls(ast.SPC, cls_var)]),
             # Main rules
             *infinite_rules(
                 g="=",
@@ -60,12 +61,12 @@ def get_lookup(cls_var: ast.Clazz):
         ast.subst_liga(
             ">=",
             ign_prefix=ast.cls(">", "="),
-            ign_suffix=ast.cls("<", ">", "=", "!", cls_normal_separator),
+            ign_suffix=ast.cls("<", ">", "=", "!", ast.SPC, cls_normal_separator),
         ),
         ast.subst_liga(
             "<=",
             ign_prefix=ast.cls("<", "="),
-            ign_suffix=ast.cls("<", ">", "=", "!", cls_normal_separator),
+            ign_suffix=ast.cls("<", ">", "=", "!", ast.SPC, cls_normal_separator),
             extra_rules=[
                 ast.ign(["(", cls_question], "<", "="),
             ],

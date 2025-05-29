@@ -20,6 +20,7 @@ def infinite_hyphens(cls_var: ast.Clazz):
             ast.ign("-", "-", "|"),
             ast.ign(">", "-", "<"),
             ast.ign(cls_var, ">", "-"),
+            ast.ign(None, ">", ["-", ast.cls(ast.SPC, cls_var)]),
             # Main rules
             *infinite_rules("-", cls_start, ["<", ">", "|"]),
             # Disable >-<

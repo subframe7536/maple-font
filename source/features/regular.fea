@@ -1075,7 +1075,7 @@ feature calt {
   # >=
   lookup greater_equal.liga {
     ignore sub [greater equal] greater' equal;
-    ignore sub greater' equal [less greater equal exclam @NormalSeparator];
+    ignore sub greater' equal [less greater equal exclam SPC @NormalSeparator];
     sub SPC equal' by greater_equal.liga;
     sub greater' equal by SPC;
   } greater_equal.liga;
@@ -1083,7 +1083,7 @@ feature calt {
   # <=
   lookup less_equal.liga {
     ignore sub [less equal] less' equal;
-    ignore sub less' equal [less greater equal exclam @NormalSeparator];
+    ignore sub less' equal [less greater equal exclam SPC @NormalSeparator];
     ignore sub parenleft @Question less' equal;
     sub SPC equal' by less_equal.liga;
     sub less' equal by SPC;
@@ -1257,6 +1257,7 @@ feature calt {
     ignore sub bar bar' equal;
     ignore sub equal bar' bar;
     ignore sub @Var greater' equal;
+    ignore sub greater' equal [SPC @Var];
     sub [less_equal.sta.seq less_equal.mid.seq greater_equal.sta.seq greater_equal.mid.seq bar_equal.sta.seq bar_equal.mid.seq @EqualStart] equal' [less greater bar equal] by equal.mid.seq;
     sub [less_equal.sta.seq less_equal.mid.seq greater_equal.sta.seq greater_equal.mid.seq bar_equal.sta.seq bar_equal.mid.seq @EqualStart] equal' by equal.end.seq;
     sub @EqualStart less' equal by less_equal.mid.seq;
@@ -1424,6 +1425,7 @@ feature calt {
     ignore sub hyphen hyphen' bar;
     ignore sub greater hyphen' less;
     ignore sub @Var greater' hyphen;
+    ignore sub greater' hyphen [SPC @Var];
     sub [less_hyphen.sta.seq less_hyphen.mid.seq greater_hyphen.sta.seq greater_hyphen.mid.seq bar_hyphen.sta.seq bar_hyphen.mid.seq @HyphenStart] hyphen' [less greater bar hyphen] by hyphen.mid.seq;
     sub [less_hyphen.sta.seq less_hyphen.mid.seq greater_hyphen.sta.seq greater_hyphen.mid.seq bar_hyphen.sta.seq bar_hyphen.mid.seq @HyphenStart] hyphen' by hyphen.end.seq;
     sub @HyphenStart less' hyphen by less_hyphen.mid.seq;
