@@ -142,22 +142,22 @@ def get_all_calt_text():
     third = (len(result) + 2) // 3  # Round up for numbers not divisible by 3
 
     # Create HTML table with three equal columns
-    html_rows = ['<table style="width:100%; table-layout:fixed;">']
+    html_rows = ["<table>"]
 
     for i in range(third):
         col1 = escape(result[i])
         col2 = escape(result[i + third]) if i + third < len(result) else ""
         col3 = escape(result[i + 2 * third]) if i + 2 * third < len(result) else ""
         html_rows.append(
-            f'<tr>'
-            f'<td style="width:33.33%"><code>{col1}</code></td>'
-            f'<td style="width:33.33%"><code>{col2}</code></td>'
-            f'<td style="width:33.33%"><code>{col3}</code></td>'
-            f'</tr>'
+            f"<tr>"
+            f"<td><code>{col1}</code></td>"
+            f"<td><code>{col2}</code></td>"
+            f"<td><code>{col3}</code></td>"
+            f"</tr>"
         )
 
-    html_rows.append('</table>')
-    return '\n'.join(html_rows)
+    html_rows.append("</table>")
+    return "\n".join(html_rows)
 
 
 zero_desc = "Dot style `0`"
