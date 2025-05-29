@@ -52,7 +52,7 @@ def get_lookup():
             ign_suffix="@",
         ),
         ast.Lookup(
-            "infinity_asciitilde",
+            "infinite_asciitilde",
             "~~~~~~~",
             [
                 ast.subst(ast.cls(start, mid), "~", "~", mid),

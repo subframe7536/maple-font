@@ -547,11 +547,11 @@ feature calt {
   } bracketright_numbersign.liga;
 
   # #######
-  lookup infinity_numbersigns {
+  lookup infinite_numbersigns {
     sub [numbersign.sta.seq numbersign.mid.seq] numbersign' numbersign by numbersign.mid.seq;
     sub [numbersign.sta.seq numbersign.mid.seq] numbersign' by numbersign.end.seq;
     sub numbersign' numbersign by numbersign.sta.seq;
-  } infinity_numbersigns;
+  } infinite_numbersigns;
 
   # <<
   lookup less_less.liga {
@@ -956,11 +956,11 @@ feature calt {
   } asciitilde_at.liga;
 
   # ~~~~~~~
-  lookup infinity_asciitilde {
+  lookup infinite_asciitilde {
     sub [asciitilde.sta.seq asciitilde.mid.seq] asciitilde' asciitilde by asciitilde.mid.seq;
     sub [asciitilde.sta.seq asciitilde.mid.seq] asciitilde' by asciitilde.end.seq;
     sub asciitilde' asciitilde by asciitilde.sta.seq;
-  } infinity_asciitilde;
+  } infinite_asciitilde;
 
   # 0xA12 0x56 1920x1080
   lookup cross {
@@ -1250,14 +1250,14 @@ feature calt {
     sub bar' equal by SPC;
   } bar_equal.liga;
 
-  # =======
-  lookup infinity_equal {
+  # ======= >=<
+  lookup infinite_equal {
     @EqualStart = [equal.sta.seq equal.mid.seq];
     ignore sub exclam' equal equal;
     ignore sub bar bar' equal;
     ignore sub equal bar' bar;
     ignore sub @Var greater' equal;
-    ignore sub greater' equal [SPC @Var];
+    ignore sub greater' equal [SPC greater @Var];
     sub [less_equal.sta.seq less_equal.mid.seq greater_equal.sta.seq greater_equal.mid.seq bar_equal.sta.seq bar_equal.mid.seq @EqualStart] equal' [less greater bar equal] by equal.mid.seq;
     sub [less_equal.sta.seq less_equal.mid.seq greater_equal.sta.seq greater_equal.mid.seq bar_equal.sta.seq bar_equal.mid.seq @EqualStart] equal' by equal.end.seq;
     sub @EqualStart less' equal by less_equal.mid.seq;
@@ -1274,7 +1274,7 @@ feature calt {
     ignore sub greater equal' less;
     sub equal' less [equal less] by equal.sta.seq;
     sub equal' [less greater bar equal] by equal.sta.seq;
-  } infinity_equal;
+  } infinite_equal;
 
   # \\ \' \.
   lookup escape {
@@ -1416,16 +1416,15 @@ feature calt {
     sub bar' hyphen greater by SPC;
   } bar_hyphen_greater.liga;
 
-  # -------
-  lookup infinity_hyphen {
+  # ------- >- >-<
+  lookup infinite_hyphen {
     @HyphenStart = [hyphen.sta.seq hyphen.mid.seq];
     ignore sub less' [exclam numbersign] hyphen hyphen;
     ignore sub bar bar' hyphen;
     ignore sub hyphen bar' bar;
     ignore sub hyphen hyphen' bar;
     ignore sub greater hyphen' less;
-    ignore sub @Var greater' hyphen;
-    ignore sub greater' hyphen [SPC @Var];
+    ignore sub greater' hyphen SPC;
     sub [less_hyphen.sta.seq less_hyphen.mid.seq greater_hyphen.sta.seq greater_hyphen.mid.seq bar_hyphen.sta.seq bar_hyphen.mid.seq @HyphenStart] hyphen' [less greater bar hyphen] by hyphen.mid.seq;
     sub [less_hyphen.sta.seq less_hyphen.mid.seq greater_hyphen.sta.seq greater_hyphen.mid.seq bar_hyphen.sta.seq bar_hyphen.mid.seq @HyphenStart] hyphen' by hyphen.end.seq;
     sub @HyphenStart less' hyphen by less_hyphen.mid.seq;
@@ -1438,9 +1437,7 @@ feature calt {
     sub @HyphenStart bar' by bar_hyphen.end.seq;
     sub bar' hyphen by bar_hyphen.sta.seq;
     sub hyphen' [less greater bar hyphen] by hyphen.sta.seq;
-    sub greater hyphen' less [hyphen less] by greater_hyphen.sta.seq;
-    sub hyphen' less [hyphen less] by hyphen.sta.seq;
-  } infinity_hyphen;
+  } infinite_hyphen;
 
   # <|||
   lookup less_bar_bar_bar.liga {
@@ -2287,22 +2284,6 @@ feature ss08 {
     sub SPC greater' greater by SPC;
     sub equal' greater greater by SPC;
   } equal_greater_greater.liga.ss08;
-
-  # -<
-  lookup hyphen_less.liga.ss08 {
-    ignore sub [greater less hyphen] hyphen' less;
-    ignore sub hyphen' less [less slash @Question];
-    sub SPC less' by hyphen_less.liga.ss08;
-    sub hyphen' less by SPC;
-  } hyphen_less.liga.ss08;
-
-  # >-
-  lookup greater_hyphen.liga.ss08 {
-    ignore sub greater greater' hyphen;
-    ignore sub greater' hyphen [hyphen greater less];
-    sub SPC hyphen' by greater_hyphen.liga.ss08;
-    sub greater' hyphen by SPC;
-  } greater_hyphen.liga.ss08;
 
 } ss08;
 

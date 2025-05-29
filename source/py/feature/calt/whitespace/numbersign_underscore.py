@@ -66,7 +66,7 @@ def get_lookup():
             ign_suffix="#",
         ),
         ast.Lookup(
-            "infinity_numbersigns",
+            "infinite_numbersigns",
             "#######",
             [
                 ast.subst(ast.cls(start, mid), "#", "#", mid),

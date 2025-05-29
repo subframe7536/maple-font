@@ -135,6 +135,8 @@ def get_all_calt_text():
         if isinstance(item, ast.Lookup) and item.desc:
             if item.name == "escape":
                 result.append(item.desc.replace("\\ ", "\\\\ "))
+            elif item.name.startswith('infinite'):
+                result.extend(item.desc.split(' '))
             else:
                 result.append(item.desc)
 

@@ -11,16 +11,15 @@ def infinite_equals(cls_var: ast.Clazz):
     cls_start = ast.Clazz("EqualStart", [eq_start, eq_middle])
 
     return ast.Lookup(
-        "infinity_equal",
-        "=======",
+        "infinite_equal",
+        "======= >=<",
         [
             cls_start.state(),
             ast.ign(None, "!", ["=", "="]),
             ast.ign("|", "|", "="),
             ast.ign("=", "|", "|"),
             ast.ign(cls_var, ">", "="),
-            ast.ign(None, ">", ["=", ast.cls(ast.SPC, cls_var)]),
-            # Main rules
+            ast.ign(None, ">", ["=", ast.cls(ast.SPC, ">", cls_var)]),
             *infinite_rules(
                 g="=",
                 cls_start=cls_start,

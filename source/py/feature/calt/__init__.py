@@ -23,7 +23,7 @@ def get_calt_lookup(
         markup_like.get_lookup(),
         equal_arrow.get_lookup(cls_var),
         escape.get_lookup(),
-        hyphen_arrow.get_lookup(cls_var),
+        hyphen_arrow.get_lookup(),
         pipe.get_lookup(),
         tag.get_lookup(cls_var),
     ]

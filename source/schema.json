@@ -184,7 +184,7 @@
           "$ref": "#/definitions/freeze_options"
         },
         "ss08": {
-          "description": "[v7.0] Double headed arrows and reverse arrows ligatures ('>>=', '-<<', '->>', '>-' ...)",
+          "description": "[v7.0] Double headed arrows and reverse arrows ligatures ('>>=', '-<<', '->>', '>>-' ...)",
           "$ref": "#/definitions/freeze_options"
         },
         "ss09": {

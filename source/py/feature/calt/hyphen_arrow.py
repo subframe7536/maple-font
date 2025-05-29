@@ -4,14 +4,14 @@ from source.py.feature.calt._common import infinite_rules
 
 # Inspirde by Fira Code, source:
 # https://github.com/tonsky/FiraCode/blob/master/features/calt/hyphen_arrows.fea
-def infinite_hyphens(cls_var: ast.Clazz):
+def infinite_hyphens():
     hy_start = ast.gly_seq("-", "sta")
     hy_middle = ast.gly_seq("-", "mid")
     cls_start = ast.Clazz("HyphenStart", [hy_start, hy_middle])
 
     return ast.Lookup(
-        "infinity_hyphen",
-        "-------",
+        "infinite_hyphen",
+        "------- >- >-<",
         [
             cls_start.state(),
             ast.ign(None, "<", [ast.cls("!", "#"), "-", "-"]),
@@ -19,19 +19,13 @@ def infinite_hyphens(cls_var: ast.Clazz):
             ast.ign("-", "|", "|"),
             ast.ign("-", "-", "|"),
             ast.ign(">", "-", "<"),
-            ast.ign(cls_var, ">", "-"),
-            ast.ign(None, ">", ["-", ast.cls(ast.SPC, cls_var)]),
-            # Main rules
+            ast.ign(None, ">", ["-", ast.SPC]),
             *infinite_rules("-", cls_start, ["<", ">", "|"]),
-            # Disable >-<
-            ast.subst(">", "-", ["<", ast.cls("-", "<")], ast.gly_seq(">-", "sta")),
-            # Disable -<
-            ast.subst(None, "-", ["<", ast.cls("-", "<")], hy_start),
         ],
     )
 
 
-def get_lookup(cls_var: ast.Clazz):
+def get_lookup():
     return [
         ast.subst_liga(
             "--",
@@ -113,5 +107,5 @@ def get_lookup(cls_var: ast.Clazz):
             ign_prefix=ast.cls("|", "-"),
             ign_suffix=ast.cls(">", "-"),
         ),
-        infinite_hyphens(cls_var),
+        infinite_hyphens(),
     ]
