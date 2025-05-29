@@ -89,8 +89,8 @@ OpenType Features are not supported, you need to custom build to freeze features
 <tr><td><code>/*</code></td><td><code>||=</code></td><td><code>ill</code></td></tr>
 <tr><td><code>/**</code></td><td><code>=======</code></td><td><code>ull</code></td></tr>
 <tr><td><code>*/</code></td><td><code>\\ \&#x27; \.</code></td><td><code>ll</code></td></tr>
-<tr><td><code>++</code></td><td><code>--</code></td><td><code></code></td></tr>
-<tr><td><code>+++</code></td><td><code>---</code></td><td><code></code></td></tr>
+<tr><td><code>++</code></td><td><code>--</code></td><td></td></tr>
+<tr><td><code>+++</code></td><td><code>---</code></td><td></td></tr>
 </table>
 <!-- CALT -->
 

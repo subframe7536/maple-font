@@ -144,17 +144,14 @@ def get_all_calt_text():
     # Create HTML table with three equal columns
     html_rows = ["<table>"]
 
+    def wrap(str):
+        return f"<td><code>{escape(str)}</code></td>" if str else "<td></td>"
+
     for i in range(third):
-        col1 = escape(result[i])
-        col2 = escape(result[i + third]) if i + third < len(result) else ""
-        col3 = escape(result[i + 2 * third]) if i + 2 * third < len(result) else ""
-        html_rows.append(
-            f"<tr>"
-            f"<td><code>{col1}</code></td>"
-            f"<td><code>{col2}</code></td>"
-            f"<td><code>{col3}</code></td>"
-            f"</tr>"
-        )
+        col1 = wrap(result[i])
+        col2 = wrap(result[i + third] if i + third < len(result) else "")
+        col3 = wrap(result[i + 2 * third] if i + 2 * third < len(result) else "")
+        html_rows.append(f"<tr>{col1}{col2}{col3}</tr>")
 
     html_rows.append("</table>")
     return "\n".join(html_rows)
