@@ -1172,7 +1172,6 @@ feature calt {
     ignore sub greater' equal [SPC greater];
     ignore sub greater' equal equal SPC;
     ignore sub greater' equal equal equal SPC;
-    ignore sub equal' less slash;
     sub [less_equal.sta.seq less_equal.mid.seq greater_equal.sta.seq greater_equal.mid.seq bar_equal.sta.seq bar_equal.mid.seq @EqualStart] equal' [less greater bar equal] by equal.mid.seq;
     sub [less_equal.sta.seq less_equal.mid.seq greater_equal.sta.seq greater_equal.mid.seq bar_equal.sta.seq bar_equal.mid.seq @EqualStart] equal' by equal.end.seq;
     sub @EqualStart less' equal by less_equal.mid.seq;

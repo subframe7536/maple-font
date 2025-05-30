@@ -46,7 +46,6 @@ def infinite_equals():
             ast.ign(None, ">", ["=", "=", ast.SPC]),
             # Disable >===</
             ast.ign(None, ">", ["=", "=", "=", ast.SPC]),
-            ast.ign(None, "=", ["<", "/"]),
             *infinite_rules(
                 g="=",
                 cls_start=cls_start,
