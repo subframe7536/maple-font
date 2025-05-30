@@ -520,11 +520,9 @@ class BuildOption:
         self.is_nf_built = False
         self.is_cn_built = False
         self.has_cache = (
-            self.__check_file_count(self.output_variable, count=2)
-            and self.__check_file_count(self.output_otf)
-            and self.__check_file_count(self.output_ttf)
-            and self.__check_file_count(self.output_ttf_hinted)
-            and self.__check_file_count(self.output_woff2)
+            self.__check_file_count(self.output_variable, minCount=2, end=".ttf")
+            and self.__check_file_count(self.output_ttf, minCount=4, end=".ttf")
+            and self.__check_file_count(self.output_ttf_hinted, minCount=4, end=".ttf")
         )
         self.github_mirror = environ.get("GITHUB", "github.com")
 
@@ -666,11 +664,11 @@ class BuildOption:
         print(f"Update {self.cn_static_dir}.sha256")
 
     def __check_file_count(
-        self, dir: str, count: int = 16, end: str | None = None
+        self, dir: str, minCount: int = 16, end: str | None = None
     ) -> bool:
         if not path.isdir(dir):
             return False
-        return len([f for f in listdir(dir) if end is None or f.endswith(end)]) == count
+        return len([f for f in listdir(dir) if end is None or f.endswith(end)]) >= minCount
 
 
 def handle_ligatures(
