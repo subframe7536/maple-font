@@ -1,11 +1,14 @@
 import source.py.feature.ast as ast
 
 
-USE_INFINITE = True
+__USE_INFINITE = True
 
+
+def use_infinite():
+    return __USE_INFINITE
 
 def ignore_when_using_infinite(*items: ast.Lookup):
-    if USE_INFINITE:
+    if __USE_INFINITE:
         return None
     return items
 

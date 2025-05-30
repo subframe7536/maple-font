@@ -1,7 +1,7 @@
 from source.py.feature import ast
 from source.py.feature.base.clazz import cls_normal_separator, cls_question
 from source.py.feature.calt._infinite_utils import (
-    USE_INFINITE,
+    use_infinite,
     ignore_when_using_infinite,
     infinite_rules,
 )
@@ -236,5 +236,5 @@ def get_lookup(cls_var: ast.Clazz):
             ign_prefix=ast.cls("|", "="),
             ign_suffix=ast.cls(">", "|", "="),
         ),
-        infinite_equals() if USE_INFINITE else None,
+        infinite_equals() if use_infinite() else None,
     ]

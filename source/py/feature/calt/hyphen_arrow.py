@@ -1,7 +1,7 @@
 from source.py.feature import ast
 from source.py.feature.base.clazz import cls_digit, cls_question
 from source.py.feature.calt._infinite_utils import (
-    USE_INFINITE,
+    use_infinite,
     ignore_when_using_infinite,
     infinite_rules,
 )
@@ -134,5 +134,5 @@ def get_lookup():
                 ign_suffix=ast.cls(">", "-"),
             ),
         ),
-        infinite_hyphens() if USE_INFINITE else None,
+        infinite_hyphens() if use_infinite() else None,
     ]
