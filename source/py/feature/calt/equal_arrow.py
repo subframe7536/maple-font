@@ -1,6 +1,10 @@
 from source.py.feature import ast
 from source.py.feature.base.clazz import cls_normal_separator, cls_question
-from source.py.feature.calt._common import infinite_rules
+from source.py.feature.calt._infinite_utils import (
+    USE_INFINITE,
+    ignore_when_using_infinite,
+    infinite_rules,
+)
 
 
 # Inspired by Fira Code, source:
@@ -63,22 +67,24 @@ def infinite_equals():
 
 def get_lookup(cls_var: ast.Clazz):
     return [
-        # ast.subst_liga(
-        #     "<=>",
-        #     ign_prefix=ast.cls("<", "="),
-        #     ign_suffix=ast.cls(">", "="),
-        #     extra_rules=[
-        #         ast.ign(["(", cls_question], "<", ["=", ">"]),
-        #     ],
-        # ),
-        # ast.subst_liga(
-        #     "<==>",
-        #     ign_prefix=ast.cls("<", "="),
-        #     ign_suffix=ast.cls(">", "="),
-        #     extra_rules=[
-        #         ast.ign(["(", cls_question], "<", ["=", "=", ">"]),
-        #     ],
-        # ),
+        ignore_when_using_infinite(
+            ast.subst_liga(
+                "<=>",
+                ign_prefix=ast.cls("<", "="),
+                ign_suffix=ast.cls(">", "="),
+                extra_rules=[
+                    ast.ign(["(", cls_question], "<", ["=", ">"]),
+                ],
+            ),
+            ast.subst_liga(
+                "<==>",
+                ign_prefix=ast.cls("<", "="),
+                ign_suffix=ast.cls(">", "="),
+                extra_rules=[
+                    ast.ign(["(", cls_question], "<", ["=", "=", ">"]),
+                ],
+            ),
+        ),
         ast.subst_liga(
             ">=",
             ign_prefix=ast.cls(">", "="),
@@ -92,32 +98,34 @@ def get_lookup(cls_var: ast.Clazz):
                 ast.ign(["(", cls_question], "<", "="),
             ],
         ),
-        # ast.subst_liga(
-        #     "<==",
-        #     ign_prefix=ast.cls("<", "="),
-        #     ign_suffix=ast.cls("=", ">", "<"),
-        #     extra_rules=[
-        #         ast.ign(["(", cls_question], "<", ["=", "="]),
-        #     ],
-        # ),
-        # ast.subst_liga(
-        #     "==>",
-        #     ign_prefix=ast.cls("[", "=", ">", "<"),
-        #     ign_suffix=ast.cls(">", "="),
-        #     extra_rules=[
-        #         ast.ign(["(", cls_question, "<"], "=", ["=", ">"]),
-        #         ast.ign(["(", cls_question], "=", ["=", ">"]),
-        #     ],
-        # ),
-        # ast.subst_liga(
-        #     "=>",
-        #     ign_prefix=ast.cls("[", "=", ">", "|"),
-        #     ign_suffix=ast.cls("=", ">"),
-        #     extra_rules=[
-        #         ast.ign(["(", cls_question, "<"], "=", ">"),
-        #         ast.ign(["(", cls_question], "=", ">"),
-        #     ],
-        # ),
+        ignore_when_using_infinite(
+            ast.subst_liga(
+                "<==",
+                ign_prefix=ast.cls("<", "="),
+                ign_suffix=ast.cls("=", ">", "<"),
+                extra_rules=[
+                    ast.ign(["(", cls_question], "<", ["=", "="]),
+                ],
+            ),
+            ast.subst_liga(
+                "==>",
+                ign_prefix=ast.cls("[", "=", ">", "<"),
+                ign_suffix=ast.cls(">", "="),
+                extra_rules=[
+                    ast.ign(["(", cls_question, "<"], "=", ["=", ">"]),
+                    ast.ign(["(", cls_question], "=", ["=", ">"]),
+                ],
+            ),
+            ast.subst_liga(
+                "=>",
+                ign_prefix=ast.cls("[", "=", ">", "|"),
+                ign_suffix=ast.cls("=", ">"),
+                extra_rules=[
+                    ast.ign(["(", cls_question, "<"], "=", ">"),
+                    ast.ign(["(", cls_question], "=", ">"),
+                ],
+            ),
+        ),
         ast.subst_liga(
             "<=<",
             ign_prefix=ast.cls("<", "="),
@@ -136,19 +144,21 @@ def get_lookup(cls_var: ast.Clazz):
             ign_prefix=ast.cls(">", "="),
             ign_suffix=ast.cls(">", "="),
         ),
-        # ast.subst_liga(
-        #     "<=|",
-        #     ign_prefix="<",
-        #     ign_suffix=ast.cls("<", ">", "=", cls_normal_separator),
-        #     extra_rules=[
-        #         ast.ign(["(", cls_question], "<", ["=", "|"]),
-        #     ],
-        # ),
-        # ast.subst_liga(
-        #     "|=>",
-        #     ign_prefix=ast.cls("<", ">", "=", cls_normal_separator),
-        #     ign_suffix=">",
-        # ),
+        ignore_when_using_infinite(
+            ast.subst_liga(
+                "<=|",
+                ign_prefix="<",
+                ign_suffix=ast.cls("<", ">", "=", cls_normal_separator),
+                extra_rules=[
+                    ast.ign(["(", cls_question], "<", ["=", "|"]),
+                ],
+            ),
+            ast.subst_liga(
+                "|=>",
+                ign_prefix=ast.cls("<", ">", "=", cls_normal_separator),
+                ign_suffix=">",
+            ),
+        ),
         ast.subst_liga(
             "==",
             ign_prefix=ast.cls(":", "=", "!", "<", ">", "|"),
@@ -203,26 +213,28 @@ def get_lookup(cls_var: ast.Clazz):
                 ast.ign(["(", cls_question, "<"], "=", ["!", "="]),
             ],
         ),
-        # ast.subst_liga(
-        #     "=<=",
-        #     ign_prefix=ast.cls("=", ">", "<", "|"),
-        #     ign_suffix=ast.cls("=", "<", ">"),
-        #     extra_rules=[
-        #         ast.ign(["(", cls_question], "=", [">", "="]),
-        #     ],
-        # ),
-        # ast.subst_liga(
-        #     "=>=",
-        #     ign_prefix=ast.cls("=", ">", "<", "|"),
-        #     ign_suffix=ast.cls("=", "<", ">", "|"),
-        #     extra_rules=[
-        #         ast.ign(["(", cls_question], "=", [">", "="]),
-        #     ],
-        # ),
+        ignore_when_using_infinite(
+            ast.subst_liga(
+                "=<=",
+                ign_prefix=ast.cls("=", ">", "<", "|"),
+                ign_suffix=ast.cls("=", "<", ">"),
+                extra_rules=[
+                    ast.ign(["(", cls_question], "=", [">", "="]),
+                ],
+            ),
+            ast.subst_liga(
+                "=>=",
+                ign_prefix=ast.cls("=", ">", "<", "|"),
+                ign_suffix=ast.cls("=", "<", ">", "|"),
+                extra_rules=[
+                    ast.ign(["(", cls_question], "=", [">", "="]),
+                ],
+            ),
+        ),
         ast.subst_liga(
             "|=",
             ign_prefix=ast.cls("|", "="),
             ign_suffix=ast.cls(">", "|", "="),
         ),
-        infinite_equals(),
+        infinite_equals() if USE_INFINITE else None,
     ]
