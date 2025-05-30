@@ -59,6 +59,10 @@ into a styled tag:
 2. Tags may split if letter spacing > 0. See [#381](https://github.com/subframe7536/maple-font/issues/381#issuecomment-2808022878).
 3. Tags inherit the original text color. See [#381](https://github.com/subframe7536/maple-font/issues/381#issuecomment-2809622541).
 
+### Remove Infinite Ligatures
+
+Like Fira Code, glyphs of multiple `=` / `-` / `~` / `#` will be combined into one glyphs in default ligature. If you don't want these ligatures, please setup `__USE_INFINITE = False` in [calt/_infinite_utils.py](./calt/_infinite_utils.py) and rebuild.
+
 ## Freeze Feature in Variable Format
 
 There are two strategies to freeze a feature:
@@ -72,11 +76,11 @@ Since the feature-loading logic was refactored to Python, features are loaded dy
 
 So, please **ENABLE FONT LIGATURE** to make all features work if you are using variable font (NOT recommended).
 
-### AST Utilities
+## AST Utilities
 
 The `ast.py` file provides classes and functions to define OpenType features. Below are some key utilities:
 
-#### `Clazz`
+### `Clazz`
 
 Represents a class of glyphs.
 
@@ -95,7 +99,7 @@ Generated fea string:
 sub @Digit a' b by c;
 ```
 
-#### `Lookup`
+### `Lookup`
 
 Defines a lookup block for substitutions.
 
@@ -120,7 +124,7 @@ lookup example_lookup {
 } example_lookup;
 ```
 
-#### `Feature`
+### `Feature`
 
 Represents an OpenType feature.
 
@@ -148,7 +152,7 @@ feature calt {
 }
 ```
 
-#### Create
+### Create
 
 Generates the final OpenType feature file content.
 
@@ -159,7 +163,7 @@ fea_content = create([feature_example])
 print(fea_content)
 ```
 
-### Generating Features
+## Generating Features
 
 In most of time, you don't need to update the fea files. The generated fea string will be automatically applied at build time without using `--apply-fea-file` flag.
 
