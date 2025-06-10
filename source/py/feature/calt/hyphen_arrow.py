@@ -1,17 +1,12 @@
 from source.py.feature import ast
 from source.py.feature.base.clazz import cls_digit, cls_question
-from source.py.feature.calt._infinite_utils import (
-    ignore_when_not_using_infinite,
-    use_infinite,
-    ignore_when_using_infinite,
-    infinite_rules,
-)
+from source.py.feature.calt._infinite_utils import infinite_helper, infinite_rules
 
 
 # Inspirde by Fira Code, source:
 # https://github.com/tonsky/FiraCode/blob/master/features/calt/hyphen_arrows.fea
 def infinite_hyphens():
-    if not use_infinite():
+    if not infinite_helper.get():
         return None
 
     hy_start = ast.gly_seq("-", "sta")
@@ -110,7 +105,7 @@ def get_lookup():
                 ),
             ],
         ),
-        ignore_when_not_using_infinite(
+        infinite_helper.ignore_when_not_using(
             ast.subst_liga(
                 "--",
                 lookup_name=ast.gly("--", "__ALT__"),
@@ -129,7 +124,7 @@ def get_lookup():
                 ast.ign("<", "-", ["-", "-", ">"]),
             ],
         ),
-        ignore_when_not_using_infinite(
+        infinite_helper.ignore_when_not_using(
             ast.subst_liga(
                 "---",
                 lookup_name=ast.gly("---", "__ALT__"),
@@ -154,7 +149,7 @@ def get_lookup():
             ign_suffix="-",
         ),
         ast.subst_liga("<!---->", target="xml_empty_comment.liga"),
-        ignore_when_using_infinite(
+        infinite_helper.ignore_when_using(
             ast.subst_liga(
                 "<->",
                 ign_prefix=ast.cls("<", "-"),

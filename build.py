@@ -147,6 +147,12 @@ def parse_args(args: list[str] | None = None):
         help="Remove all the ligatures",
     )
     feature_group.add_argument(
+        "--keep-infinite-arrow",
+        default=None,
+        action="store_true",
+        help="Keep infinite arrow ligatures in hinted font (Removed by default)",
+    )
+    feature_group.add_argument(
         "--nf-mono",
         action="store_true",
         help="Fixed Nerd Font icons' width",
@@ -256,6 +262,8 @@ class FontConfig:
         self.use_hinted = True
         # whether to enable ligature
         self.enable_liga = True
+        # whether to enable infinite arrow ligatures in hinted font
+        self.keep_infinite_arrow = False
         self.feature_freeze = {
             "cv01": "ignore",
             "cv02": "ignore",
@@ -352,6 +360,7 @@ class FontConfig:
                     "family_name",
                     "use_hinted",
                     "enable_liga",
+                    "keep_infinite_arrow",
                     "pool_size",
                     "github_mirror",
                     "feature_freeze",
@@ -405,6 +414,9 @@ class FontConfig:
 
         if args.nerd_font is not None:
             self.nerd_font["enable"] = args.nerd_font
+
+        if args.keep_infinite_arrow:
+            self.keep_infinite_arrow = True
 
         if args.nf_mono:
             self.nerd_font["mono"] = args.nf_mono
@@ -479,6 +491,7 @@ class FontConfig:
         is_italic: bool,
         is_cn: bool,
         is_variable: bool,
+        is_hinted: bool | None = None,
         fea_path: str | None = None,
     ):
         if self.apply_fea_file:
@@ -490,11 +503,15 @@ class FontConfig:
                 )
             return
 
+        if is_hinted and self.keep_infinite_arrow:
+            return
+
         fea_str = generate_fea_string(
             is_italic=is_italic,
             is_cn=is_cn,
             is_normal=self.use_normal_preset,
             is_calt=self.enable_liga,
+            enable_infinite=True if is_hinted is None else self.keep_infinite_arrow,
             variable_enabled_feature_list=[
                 key for key, val in self.feature_freeze.items() if is_enable(val)
             ]
@@ -1006,11 +1023,25 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
     remove(source_path)
     target_path = joinPaths(build_option.output_ttf, f"{postscript_name}.ttf")
     font.save(target_path)
-    font.close()
 
     # Autohint version
     print(f"Auto hint {postscript_name}.ttf")
-    run(f"ftcli ttf autohint {target_path} -out {build_option.output_ttf_hinted}")
+
+    font_config.patch_fea_string(
+        font=font,
+        issue_fea_dir=build_option.output_dir,
+        is_italic=is_italic,
+        is_cn=False,
+        is_variable=False,
+        is_hinted=True,
+    )
+    target_hinted_path = joinPaths(
+        build_option.output_ttf_hinted, f"{postscript_name}.ttf"
+    )
+    font.save(target_hinted_path)
+    font.close()
+
+    run(f"ftcli ttf autohint {target_hinted_path}")
 
     if font_config.ttf_only:
         return
@@ -1360,6 +1391,8 @@ def main(args: list[str] | None = None, version: str | None = None):
 
     makedirs(build_option.output_dir, exist_ok=True)
     makedirs(build_option.output_variable, exist_ok=True)
+    makedirs(build_option.output_ttf, exist_ok=True)
+    makedirs(build_option.output_ttf_hinted, exist_ok=True)
 
     start_time = time.time()
     print(

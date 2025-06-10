@@ -1,6 +1,5 @@
 from source.py.feature import ast
 from source.py.feature.base.clazz import cls_question
-from source.py.feature.calt._infinite_utils import use_infinite
 
 
 def get_lookup():
@@ -75,7 +74,5 @@ def get_lookup():
                 ast.subst(ast.cls(start, mid), "#", None, end),
                 ast.subst(None, "#", "#", start),
             ],
-        )
-        if use_infinite()
-        else None,
+        ),
     ]

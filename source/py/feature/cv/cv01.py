@@ -1,5 +1,5 @@
 import source.py.feature.ast as ast
-from source.py.feature.calt._infinite_utils import ignore_when_using_infinite
+from source.py.feature.calt._infinite_utils import infinite_helper
 
 
 sfx = ".cv01"
@@ -34,7 +34,7 @@ def cv01_subst():
                 "<!--",
                 "<#--",
                 "xml_empty_comment.liga",  # <!---->
-                *ignore_when_using_infinite(
+                *infinite_helper.ignore_when_using(
                     "=>",
                     "<==",
                     "==>",

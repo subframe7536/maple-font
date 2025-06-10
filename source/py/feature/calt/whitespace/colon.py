@@ -1,6 +1,6 @@
 from source.py.feature import ast
 from source.py.feature.base.clazz import cls_question
-from source.py.feature.calt._infinite_utils import ignore_when_using_infinite
+from source.py.feature.calt._infinite_utils import infinite_helper
 
 
 def get_lookup():
@@ -43,7 +43,7 @@ def get_lookup():
             cls_ign_colon,
             cls_ign_markup,
         ),
-        ignore_when_using_infinite(
+        infinite_helper.ignore_when_using(
             ast.subst_liga(
                 ":=",
                 ign_prefix=ast.cls(cls_ign_colon, cls_question),

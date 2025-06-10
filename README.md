@@ -595,6 +595,10 @@ By default, the Python module in [`source/py/feature/`](./source/py/feature) wil
 
 If you would like to modify the feature file instead, run `build.py` with `--apply-fea-file` flag, the feature file from [`source/features/{regular,italic}.fea`](./source/features) will be loaded.
 
+#### Infinite Arrow Ligatures
+
+Inspired by Fira Code, the font enables infinite arrow ligatures by default from v7.3. For some reason, [the ligatures are misaligned when using hinted font](https://github.com/subframe7536/maple-font/issues/508), so they are removed in hinted version by default from v7.4. You can setup `"keep_infinite_arrow": true` in `config.json` or add `--keep-infinite-arrow` in cli flag.
+
 ### Chinese version
 
 CN version is disabled by default. Run `python build.py` with `--cn` flag, the CN base fonts (about 130 MB) will download from GitHub.
@@ -619,11 +623,11 @@ By enabling `cv99`, all Chinese punctuation marks will be centred. See more deta
 
 ```
 usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--apply-fea-file]
-                [--hinted | --no-hinted] [--liga | --no-liga] [--nf-mono]
-                [--cn-narrow] [--cn-scale-factor CN_SCALE_FACTOR] [--nerd-font |
-                --no-nerd-font] [--cn | --no-cn] [--cn-both] [--ttf-only]
-                [--least-styles] [--font-patcher] [--cache] [--cn-rebuild]
-                [--archive]
+                [--hinted | --no-hinted] [--liga | --no-liga]
+                [--keep-infinite-arrow] [--nf-mono] [--cn-narrow]
+                [--cn-scale-factor CN_SCALE_FACTOR] [--nerd-font | --no-nerd-font]
+                [--cn | --no-cn] [--cn-both] [--ttf-only] [--least-styles]
+                [--font-patcher] [--cache] [--cn-rebuild] [--archive]
 
 ✨ Builder and optimizer for Maple Mono
 
@@ -644,6 +648,9 @@ Feature Options:
   --no-hinted           Use unhinted font as base font in NF / CN / NF-CN
   --liga                Preserve all the ligatures (default)
   --no-liga             Remove all the ligatures
+  --keep-infinite-arrow
+                        Keep infinite arrow ligatures in hinted font (Removed by
+                        default)
   --nf-mono             Fixed Nerd Font icons' width
   --cn-narrow           Make CN / JP characters narrow (And the font cannot be
                         recogized as monospaced font)

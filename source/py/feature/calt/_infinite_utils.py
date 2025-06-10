@@ -1,23 +1,30 @@
 import source.py.feature.ast as ast
 
 
-__USE_INFINITE = True
+class InfiniteHelper:
+    __USE_INFINITE_ARROW: bool
+
+    def __init__(self) -> None:
+        self.__USE_INFINITE_ARROW = True
+
+    def get(self):
+        return self.__USE_INFINITE_ARROW
+
+    def set(self, val: bool):
+        self.__USE_INFINITE_ARROW = val
+
+    def ignore_when_using(self, *items: str | ast.Lookup) -> list:
+        if self.__USE_INFINITE_ARROW:
+            return []
+        return items  # type: ignore
+
+    def ignore_when_not_using(self, *items: str | ast.Lookup) -> list:
+        if not self.__USE_INFINITE_ARROW:
+            return []
+        return items  # type: ignore
 
 
-def use_infinite():
-    return __USE_INFINITE
-
-
-def ignore_when_using_infinite(*items: str | ast.Lookup) -> list:
-    if __USE_INFINITE:
-        return []
-    return items  # type: ignore
-
-
-def ignore_when_not_using_infinite(*items: str | ast.Lookup) -> list:
-    if not __USE_INFINITE:
-        return []
-    return items  # type: ignore
+infinite_helper = InfiniteHelper()
 
 
 def infinite_rules(

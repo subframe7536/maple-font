@@ -44,6 +44,11 @@
       "description": "Alias of \"ligature\"",
       "default": true
     },
+    "keep_infinite_arrow": {
+      "type": "boolean",
+      "description": "Keep infinite arrow ligatures in hinted font (Removed by default)",
+      "default": false
+    },
     "feature_freeze": {
       "type": "object",
       "description": "Freeze some font features (No effect on Variable font) \n enable: Move ligature rules to `calt`, which will enable the ligatures without setting up `cvXX` / `ssXX` / `zero` in font features config, just as default ligatures \n disable: Remove the ligature rules in `cvXX` / `ssXX` / `zero`, which will no longer effect, even if you enable it manually \n ignore: Do nothing",

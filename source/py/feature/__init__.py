@@ -5,6 +5,7 @@ from source.py.feature import ast
 from source.py.feature.base import get_base_feature_cn_only, get_base_features
 from source.py.feature.base.lang import get_lang_list
 from source.py.feature.calt import get_calt, get_calt_lookup
+from source.py.feature.calt._infinite_utils import infinite_helper
 from source.py.feature.cv import cv96, cv97, cv98, cv99
 from source.py.feature.regular import (
     cls_var,
@@ -48,6 +49,7 @@ def generate_fea_string(
     is_cn: bool,
     is_normal: bool = False,
     is_calt: bool = True,
+    enable_infinite: bool = True,
     variable_enabled_feature_list: list[str] | None = None,
 ):
     """
@@ -63,10 +65,12 @@ def generate_fea_string(
         is_calt (bool): Whether to enable calt
         variable_enabled_feature_list (list[str]): List of features that
             be enabled in variable format
+        infinite (bool): Whether to add infinite arrow ligatures
     """
     print(
-        f"Generating feature string with italic={is_italic}, cn={is_cn}, normal={is_normal}, calt={is_calt}, variable={bool(variable_enabled_feature_list)}"
+        f"Generating feature string with italic={is_italic}, cn={is_cn}, normal={is_normal}, calt={is_calt}, variable={bool(variable_enabled_feature_list)}, infinite={enable_infinite}"
     )
+    infinite_helper.set(enable_infinite)
 
     class_list = class_list_italic if is_italic else class_list_regular
     cv_list = cv_list_italic if is_italic else cv_list_regular
@@ -108,6 +112,7 @@ def generate_fea_string(
     # remove calt if empty, to prevent fonttools warning
     if not calt_feat.content:
         calt_feat = None
+
 
     return ast.create(
         [
