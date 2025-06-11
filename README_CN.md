@@ -628,8 +628,8 @@ OpenType Feature 可以控制字体的内置变体和连字。您可以通过修
 
 ```
 usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--apply-fea-file]
-                [--hinted | --no-hinted] [--liga | --no-liga]
-                [--keep-infinite-arrow] [--nf-mono] [--cn-narrow]
+                [--hinted | --no-hinted] [--liga | --no-liga] [--keep-infinite-arrow]
+                [--remove-tag-liga] [--nf-mono] [--cn-narrow]
                 [--cn-scale-factor CN_SCALE_FACTOR] [--nerd-font | --no-nerd-font]
                 [--cn | --no-cn] [--cn-both] [--ttf-only] [--least-styles]
                 [--font-patcher] [--cache] [--cn-rebuild] [--archive]
@@ -654,6 +654,7 @@ Feature Options:
   --no-liga             删除所有连字
   --keep-infinite-arrow
                         在 hinted 字体中保留无限箭头连字（默认删除）
+  --remove-tag-liga     移除纯文本标签连字，例如 `[TODO]`
   --nf_mono             固定 Nerd Font 图标的宽度
   --cn-narrow           减小中文/日文字形间距（同时会让系统无法识别为等宽字体）
   --cn-scale-factor CN_SCALE_FACTOR

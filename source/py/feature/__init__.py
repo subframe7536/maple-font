@@ -50,6 +50,7 @@ def generate_fea_string(
     is_normal: bool = False,
     is_calt: bool = True,
     enable_infinite: bool = True,
+    enable_tag: bool = True,
     variable_enabled_feature_list: list[str] | None = None,
 ):
     """
@@ -68,7 +69,7 @@ def generate_fea_string(
         infinite (bool): Whether to add infinite arrow ligatures
     """
     print(
-        f"Generating feature string with italic={is_italic}, cn={is_cn}, normal={is_normal}, calt={is_calt}, variable={bool(variable_enabled_feature_list)}, infinite={enable_infinite}"
+        f"Generating feature string with italic={is_italic}, cn={is_cn}, normal={is_normal}, calt={is_calt}, variable={bool(variable_enabled_feature_list)}, infinite={enable_infinite}, tag={enable_tag}"
     )
     infinite_helper.set(enable_infinite)
 
@@ -80,7 +81,7 @@ def generate_fea_string(
         raise TypeError("Invalid class_list, must ends with [@Var, @HexLetter]")
 
     calt_feat = get_calt(
-        class_list[-2], class_list[-1], is_italic=is_italic, is_normal=is_normal
+        class_list[-2], class_list[-1], is_italic=is_italic, is_normal=is_normal, enable_tag=enable_tag
     )
 
     # clear calt for no ligature

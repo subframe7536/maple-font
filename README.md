@@ -623,8 +623,8 @@ By enabling `cv99`, all Chinese punctuation marks will be centred. See more deta
 
 ```
 usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--apply-fea-file]
-                [--hinted | --no-hinted] [--liga | --no-liga]
-                [--keep-infinite-arrow] [--nf-mono] [--cn-narrow]
+                [--hinted | --no-hinted] [--liga | --no-liga] [--keep-infinite-arrow]
+                [--remove-tag-liga] [--nf-mono] [--cn-narrow]
                 [--cn-scale-factor CN_SCALE_FACTOR] [--nerd-font | --no-nerd-font]
                 [--cn | --no-cn] [--cn-both] [--ttf-only] [--least-styles]
                 [--font-patcher] [--cache] [--cn-rebuild] [--archive]
@@ -651,6 +651,7 @@ Feature Options:
   --keep-infinite-arrow
                         Keep infinite arrow ligatures in hinted font (Removed by
                         default)
+  --remove-tag-liga     Remove plain text tag ligatures like `[TODO]`
   --nf-mono             Fixed Nerd Font icons' width
   --cn-narrow           Make CN / JP characters narrow (And the font cannot be
                         recogized as monospaced font)

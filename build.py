@@ -153,6 +153,12 @@ def parse_args(args: list[str] | None = None):
         help="Keep infinite arrow ligatures in hinted font (Removed by default)",
     )
     feature_group.add_argument(
+        "--remove-tag-liga",
+        default=None,
+        action="store_true",
+        help="Remove plain text tag ligatures like `[TODO]`",
+    )
+    feature_group.add_argument(
         "--nf-mono",
         action="store_true",
         help="Fixed Nerd Font icons' width",
@@ -264,6 +270,8 @@ class FontConfig:
         self.enable_liga = True
         # whether to enable infinite arrow ligatures in hinted font
         self.keep_infinite_arrow = False
+        # whether to remove plain text ligatures like `[TODO]`
+        self.remove_tag_liga = False
         self.feature_freeze = {
             "cv01": "ignore",
             "cv02": "ignore",
@@ -418,6 +426,9 @@ class FontConfig:
         if args.keep_infinite_arrow:
             self.keep_infinite_arrow = True
 
+        if args.remove_tag_liga:
+            self.remove_tag_liga = True
+
         if args.nf_mono:
             self.nerd_font["mono"] = args.nf_mono
 
@@ -512,6 +523,7 @@ class FontConfig:
             is_normal=self.use_normal_preset,
             is_calt=self.enable_liga,
             enable_infinite=True if is_hinted is None else self.keep_infinite_arrow,
+            enable_tag=not self.remove_tag_liga,
             variable_enabled_feature_list=[
                 key for key, val in self.feature_freeze.items() if is_enable(val)
             ]

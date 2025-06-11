@@ -14,7 +14,11 @@ from source.py.feature.calt import (
 
 
 def get_calt_lookup(
-    cls_var: ast.Clazz, cls_hex_letter: ast.Clazz, is_italic: bool, normal: bool = False
+    cls_var: ast.Clazz,
+    cls_hex_letter: ast.Clazz,
+    is_italic: bool,
+    normal: bool = False,
+    enable_tag: bool = True,
 ) -> list[list[ast.Lookup]]:
     lookup = [
         whitespace.get_lookup(cls_var),
@@ -25,8 +29,10 @@ def get_calt_lookup(
         escape.get_lookup(),
         hyphen_arrow.get_lookup(),
         pipe.get_lookup(),
-        tag.get_lookup(cls_var),
     ]
+
+    if enable_tag:
+        lookup.append(tag.get_lookup(cls_var))
 
     if is_italic and not normal:
         lookup += [italic.get_lookup()]
@@ -35,8 +41,16 @@ def get_calt_lookup(
 
 
 def get_calt(
-    cls_var: ast.Clazz, cls_hex_letter: ast.Clazz, is_italic: bool, is_normal: bool = False
+    cls_var: ast.Clazz,
+    cls_hex_letter: ast.Clazz,
+    is_italic: bool,
+    is_normal: bool = False,
+    enable_tag: bool = True,
 ) -> ast.Feature:
     return ast.Feature(
-        "calt", get_calt_lookup(cls_var, cls_hex_letter, is_italic, is_normal), "7.0"
+        "calt",
+        get_calt_lookup(
+            cls_var, cls_hex_letter, is_italic, is_normal, enable_tag=enable_tag
+        ),
+        "7.0",
     )
