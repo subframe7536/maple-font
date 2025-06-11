@@ -598,7 +598,7 @@ OpenType Feature ファイルを直接編集して実現したい場合、`build
 
 #### 無限矢印リガチャ
 
-Fira Code に触発されて、v7.3 からこのフォントはデフォルトで無限矢印リガチャを有効にします。ただし、[ヒンティングフォントを使用するとリガチャが不揃いになります](https://github.com/subframe7536/maple-font/issues/508)ので、v7.4 のヒンティングバージョンではデフォルトで削除されます。`config.json` に `"keep_infinite_arrow": true` を設定するか、CLI フラグに `--keep-infinite-arrow` を追加してください。
+Fira Codeに着想を得て、このフォントはv7.3からデフォルトで無限の矢印リガチャを有効にします。何らかの理由で、hintedフォントを使用するとリガチャがずれてしまうため、v7.4のhintedバージョンではデフォルトでそれを削除しました。`config.json` に `"keep_infinite_arrow": true` を設定するか、CLI フラグに `--keep-infinite-arrow` を追加してください。詳細は [#508](https://github.com/subframe7536/maple-font/issues/508) を参照してください
 
 ### 中国語バージョン
 

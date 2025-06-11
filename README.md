@@ -597,7 +597,7 @@ If you would like to modify the feature file instead, run `build.py` with `--app
 
 #### Infinite Arrow Ligatures
 
-Inspired by Fira Code, the font enables infinite arrow ligatures by default from v7.3. For some reason, [the ligatures are misaligned when using hinted font](https://github.com/subframe7536/maple-font/issues/508), so they are removed in hinted version by default from v7.4. You can setup `"keep_infinite_arrow": true` in `config.json` or add `--keep-infinite-arrow` in cli flag.
+Inspired by Fira Code, the font enables infinite arrow ligatures by default from v7.3. For some reason, the ligatures are misaligned when using hinted font, so they are removed in hinted version by default from v7.4. You can setup `"keep_infinite_arrow": true` in `config.json` or add `--keep-infinite-arrow` in cli flag. See more details in [#508](https://github.com/subframe7536/maple-font/issues/508)
 
 ### Chinese version
 

@@ -602,7 +602,7 @@ OpenType Feature 可以控制字体的内置变体和连字。您可以通过修
 
 #### 无限箭头连字
 
-受 Fira Code 的启发，从 v7.3 开始，该字体默认启用无限箭头连字。由于某种原因，[在使用提示字体时连字会错位](https://github.com/subframe7536/maple-font/issues/508)，因此在 v7.4 的提示版本中默认将其移除。您可以在 `config.json` 中设置 `"keep_infinite_arrow": true`，或在命令行标志中添加 `--keep-infinite-arrow`。
+受 Fira Code 的启发，从 v7.3 开始，该字体默认启用无限箭头连字。由于某种原因，在使用 Hinted 字体时连字会错位，因此在 v7.4 的 Hinted 版本中默认将其移除。您可以在 `config.json` 中设置 `"keep_infinite_arrow": true`，或在命令行标志中添加 `--keep-infinite-arrow`。详情见 [#508](https://github.com/subframe7536/maple-font/issues/508)
 
 ### 中文版本
 
