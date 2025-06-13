@@ -1,4 +1,5 @@
 import hashlib
+from io import BytesIO
 from os import environ, path, remove, walk
 import sys
 import shutil
@@ -8,6 +9,7 @@ from zipfile import ZIP_DEFLATED, ZipFile
 from fontTools.ttLib import TTFont
 from fontTools.merge import Merger
 from glyphsLib import GSFont
+from ttfautohint import StemWidthMode, ttfautohint
 
 
 def is_ci():
@@ -377,3 +379,28 @@ def merge_ttfonts(
     except Exception as e:
         print(f"Error merging fonts: {str(e)}")
         raise
+
+
+def hint_font(font: TTFont) -> TTFont:
+    buf = BytesIO()
+    font.save(buf)
+    date = font["head"].modified  # type: ignore
+    font.close()
+
+    # https://freetype.org/ttfautohint/doc/ttfautohint.html#options
+    data = ttfautohint(
+        in_buffer=buf.getvalue(),
+        hinting_limit=50,  # default: 50
+        hinting_range_min=8,  # default: 8
+        hinting_range_max=50,  # default: 50
+        increase_x_height=14,  # default: 14
+        windows_compatibility=True,
+        gray_stem_width_mode=StemWidthMode.QUANTIZED,  # default: StemWidthMode.QUANTIZED,
+        gdi_cleartype_stem_width_mode=StemWidthMode.STRONG,  # default: StemWidthMode.STRONG,
+        dw_cleartype_stem_width_mode=StemWidthMode.QUANTIZED,  # default: StemWidthMode.QUANTIZED,
+        no_info=True,
+    )
+    hinted_font = TTFont(BytesIO(data))  # type: ignore
+    hinted_font["head"].modified = date  # type: ignore
+
+    return hinted_font

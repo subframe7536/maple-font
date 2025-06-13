@@ -16,6 +16,7 @@ from source.py.utils import (
     check_font_patcher,
     check_directory_hash,
     get_directory_hash,
+    hint_font,
     verify_glyph_width,
     compress_folder,
     download_cn_base_font,
@@ -1047,13 +1048,12 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
         is_variable=False,
         is_hinted=True,
     )
+
     target_hinted_path = joinPaths(
         build_option.output_ttf_hinted, f"{postscript_name}.ttf"
     )
-    font.save(target_hinted_path)
+    hint_font(font).save(target_hinted_path)
     font.close()
-
-    run(f"ftcli ttf autohint {target_hinted_path}")
 
     if font_config.ttf_only:
         return
