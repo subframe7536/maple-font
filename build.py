@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import importlib.util
+from io import BytesIO
 import json
 import multiprocessing
 import re
@@ -12,11 +13,11 @@ from os import environ, getcwd, getpid, kill, listdir, makedirs, path, remove, g
 from typing import Callable
 from fontTools.ttLib import TTFont, newTable
 from fontTools.feaLib.builder import addOpenTypeFeatures, addOpenTypeFeaturesFromString
+from ttfautohint import StemWidthMode, ttfautohint
 from source.py.utils import (
     check_font_patcher,
     check_directory_hash,
     get_directory_hash,
-    hint_font,
     verify_glyph_width,
     compress_folder,
     download_cn_base_font,
@@ -344,6 +345,8 @@ class FontConfig:
         self.glyph_width = 600
         self.glyph_width_cn_narrow = 1000
         self.use_normal_preset = False
+        self.ttfautohint_param = {}
+
         self.__load_config()
         self.__load_args(args)
 
@@ -369,6 +372,7 @@ class FontConfig:
                     "family_name",
                     "use_hinted",
                     "enable_liga",
+                    "ttfautohint_param",
                     "keep_infinite_arrow",
                     "pool_size",
                     "github_mirror",
@@ -394,7 +398,7 @@ class FontConfig:
             print(f"❗ Error: Invalid JSON in config file: {config_file_path}")
             exit(1)
         except Exception as e:
-            print(f"❗ An unexpected error occurred: {e}")
+            print(f"❗ An unexpected error occurred while parsing config file: {e}")
             exit(1)
 
     def __load_args(self, args):
@@ -1037,24 +1041,6 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
     target_path = joinPaths(build_option.output_ttf, f"{postscript_name}.ttf")
     font.save(target_path)
 
-    # Autohint version
-    print(f"Auto hint {postscript_name}.ttf")
-
-    font_config.patch_fea_string(
-        font=font,
-        issue_fea_dir=build_option.output_dir,
-        is_italic=is_italic,
-        is_cn=False,
-        is_variable=False,
-        is_hinted=True,
-    )
-
-    target_hinted_path = joinPaths(
-        build_option.output_ttf_hinted, f"{postscript_name}.ttf"
-    )
-    hint_font(font).save(target_hinted_path)
-    font.close()
-
     if font_config.ttf_only:
         return
 
@@ -1076,6 +1062,67 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
         print(f"Optimize {postscript_name}.otf")
         run(f"ftcli otf fix-contours --silent {_otf_path}")
         run(f"ftcli otf fix-version {_otf_path}")
+
+
+def build_mono_autohint(f: str, font_config: FontConfig, build_option: BuildOption):
+    style_compact = f.split("-")[-1].split(".")[0]
+    postscript_name = f"{font_config.family_name_compact}-{style_compact}"
+    print(f"👉 Auto hint {postscript_name}.ttf")
+
+    source_path = joinPaths(build_option.output_ttf, f)
+    font = TTFont(source_path)
+    font_config.patch_fea_string(
+        font=font,
+        issue_fea_dir=build_option.output_dir,
+        is_italic="Italic" in style_compact,
+        is_cn=False,
+        is_variable=False,
+        is_hinted=True,
+    )
+    param: dict | None = font_config.ttfautohint_param
+
+    buf = BytesIO()
+    font.save(buf)
+    font.close()
+
+    # https://freetype.org/ttfautohint/doc/ttfautohint.html#options
+    # Also see `ttfautohint.options.USER_OPTIONS`
+    options = {
+        "in_buffer": buf.getvalue(),
+        "reference_file": joinPaths(
+            build_option.output_ttf, f"{font_config.family_name_compact}-Regular.ttf"
+        ),
+        "out_file": joinPaths(build_option.output_ttf_hinted, f"{postscript_name}.ttf"),
+    }
+
+    def parse_stem_width_mode(mode: str) -> StemWidthMode:
+        if mode == "natural":
+            return StemWidthMode.NATURAL
+        elif mode == "strong":
+            return StemWidthMode.STRONG
+        elif mode == "quantized":
+            return StemWidthMode.QUANTIZED
+        else:
+            raise ValueError(f"Unknown stem width mode: {mode}")
+
+    if param:
+        options.update(param)
+        if "stem_width_mode" in param:
+            del options["stem_width_mode"]
+            if "gray" in param:
+                options["gray_stem_width_mode"] = parse_stem_width_mode(
+                    param["stem_width_mode"]["gray"]
+                )
+            if "gdi_cleartype" in param:
+                options["gdi_cleartype_stem_width_mode"] = parse_stem_width_mode(
+                    param["stem_width_mode"]["gdi_cleartype"]
+                )
+            if "dw_cleartype" in param:
+                options["dw_cleartype_stem_width_mode"] = parse_stem_width_mode(
+                    param["stem_width_mode"]["dw_cleartype"]
+                )
+
+    ttfautohint(**options)
 
 
 def build_nf_by_prebuild_nerd_font(
@@ -1491,19 +1538,33 @@ def main(args: list[str] | None = None, version: str | None = None):
             f"ftcli converter vf2i -out {build_option.output_ttf} {build_option.output_variable}"
         )
 
-        _build_mono = partial(
-            build_mono, font_config=font_config, build_option=build_option
+        run_build(
+            font_config.pool_size,
+            partial(
+                build_mono,
+                font_config=font_config,
+                build_option=build_option,
+            ),
+            build_option.output_ttf,
+            target_styles,
         )
 
         run_build(
-            font_config.pool_size, _build_mono, build_option.output_ttf, target_styles
+            font_config.pool_size,
+            partial(
+                build_mono_autohint,
+                font_config=font_config,
+                build_option=build_option,
+            ),
+            build_option.output_ttf,
+            target_styles,
         )
 
         drop_mac_names(build_option.output_variable)
         drop_mac_names(build_option.output_ttf)
+        drop_mac_names(build_option.output_ttf_hinted)
 
         if not font_config.ttf_only:
-            drop_mac_names(build_option.output_ttf_hinted)
             drop_mac_names(build_option.output_otf)
             drop_mac_names(build_option.output_woff2)
 
@@ -1521,19 +1582,21 @@ def main(args: list[str] | None = None, version: str | None = None):
             else build_nf_by_prebuild_nerd_font
         )
 
-        _build_fn = partial(
-            build_nf,
-            get_ttfont=get_ttfont,
-            font_config=font_config,
-            build_option=build_option,
-        )
         _version = font_config.nerd_font["version"]
         print(
             f"\n🔧 Patch Nerd-Font v{_version} using {'Font Patcher' if use_font_patcher else 'prebuild base font'}...\n"
         )
 
         run_build(
-            font_config.pool_size, _build_fn, build_option.output_ttf, target_styles
+            font_config.pool_size,
+            partial(
+                build_nf,
+                get_ttfont=get_ttfont,
+                font_config=font_config,
+                build_option=build_option,
+            ),
+            build_option.output_ttf,
+            target_styles,
         )
         drop_mac_names(build_option.output_ttf)
         build_option.is_nf_built = True
@@ -1549,10 +1612,16 @@ def main(args: list[str] | None = None, version: str | None = None):
                 f"\n🔎 Build CN fonts {'with Nerd-Font' if font_config.should_build_nf_cn() else ''}...\n"
             )
             makedirs(build_option.output_cn, exist_ok=True)
-            fn = partial(build_cn, font_config=font_config, build_option=build_option)
 
             run_build(
-                font_config.pool_size, fn, build_option.cn_base_font_dir, target_styles
+                font_config.pool_size,
+                partial(
+                    build_cn,
+                    font_config=font_config,
+                    build_option=build_option,
+                ),
+                build_option.cn_base_font_dir,
+                target_styles,
             )
 
             if font_config.cn["use_hinted"]:

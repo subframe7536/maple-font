@@ -16,6 +16,19 @@
         "Remove the features from font file",
         "Enable the features as default ligatures"
       ]
+    },
+    "stem_width_mode": {
+      "type": "string",
+      "enum": [
+        "strong",
+        "quantized",
+        "natural"
+      ],
+      "enumDescriptions": [
+        "If active, stem widths and blue zones are snapped and positioned to integer pixel values as much as possible. This gives high contrast, but glyph shape distortion can be significant.",
+        "Both stem widths and blue zone positions are slightly quantized to take discrete values. For example, stem values 50, 51, 72, 76, and 100 would become 50, 74, and 100 (or something similar). More glyph shape distortion but increased contrast.",
+        "No adjustments to stem widths, discrete blue zone positioning. This is what FreeType uses for its ‘light’ (auto-)hinting mode. Essentially no glyph shape distortion, low contrast."
+      ]
     }
   },
   "properties": {
@@ -36,12 +49,12 @@
     },
     "ligature": {
       "type": "boolean",
-      "description": "Whether to enable ligature.\nIf set to false, all the ligatures will be removed and 'ssXX' options in 'feature_freeze' will no longer effect",
+      "description": "Alias of \"enable_ligature\"",
       "default": true
     },
     "enable_ligature": {
       "type": "boolean",
-      "description": "Alias of \"ligature\"",
+      "description": "Whether to enable ligature.\nIf set to false, all the ligatures will be removed and 'ssXX' options in 'feature_freeze' will no longer effect",
       "default": true
     },
     "keep_infinite_arrow": {
@@ -53,6 +66,51 @@
       "type": "boolean",
       "description": "Remove plain text tag ligatures like `[TODO]`",
       "default": false
+    },
+    "ttfautohint_param": {
+      "type": "object",
+      "description": "Parameters for ttfautohint, see details in https://freetype.org/ttfautohint/doc/ttfautohint.html#options",
+      "properties": {
+        "hinting_limit": {
+          "type": "integer",
+          "description": "The PPEM value (in pixels) where hinting gets switched off",
+          "default": 200
+        },
+        "hinting_range_min": {
+          "type": "integer",
+          "description": "The minimum PPEM value (in pixels) at which hint sets are created",
+          "default": 8
+        },
+        "hinting_range_max": {
+          "type": "integer",
+          "description": "The maximum PPEM value (in pixels) at which hint sets are created",
+          "default": 50
+        },
+        "increase_x_height": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 14,
+          "description": "Maximum PPEM (6 to n) for x-height rounding up to improve legibility. Set to 0 to disable."
+        },
+        "stem_width_mode": {
+          "type": "object",
+          "description": "Algorithms for computing horizontal stem widths and the positioning of blue zones.",
+          "properties": {
+            "gray": {
+              "description": "Grayscale rendering, with or without optimization for subpixel positioning (e.g., Android).",
+              "$ref": "#/definitions/stem_width_mode"
+            },
+            "gdi_cleartype": {
+              "description": "‘GDI ClearType’ rendering: the rasterizer version, as returned by the GETINFO bytecode instruction, is in the range 36 <= version <= 38 and ClearType is enabled (e.g., Windows XP).",
+              "$ref": "#/definitions/stem_width_mode"
+            },
+            "dw_cleartype": {
+              "description": "‘DirectWrite ClearType’ rendering: the rasterizer version, as returned by the GETINFO bytecode instruction, is >= 39, ClearType is enabled, and subpixel positioning is enabled also (e.g., Internet Explorer 9 running on Windows 7).",
+              "$ref": "#/definitions/stem_width_mode"
+            }
+          }
+        }
+      }
     },
     "feature_freeze": {
       "type": "object",
@@ -343,7 +401,6 @@
   "required": [
     "family_name",
     "use_hinted",
-    "ligature",
     "nerd_font",
     "cn"
   ]
