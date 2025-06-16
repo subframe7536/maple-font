@@ -42,12 +42,12 @@ FONT_VERSION = "v7.4-dev"
 
 
 def check_ftcli():
-    package_name = "foundryToolsCLI"
+    package_name = "foundrytools_cli"
     package_installed = importlib.util.find_spec(package_name) is not None
 
     if not package_installed:
         print(
-            f"❗ {package_name} is not found. Please run `pip install foundrytools-cli==1.1.22`"
+            f"❗ {package_name} is not found. Please run `pip install foundrytools-cli`"
         )
         exit(1)
 
@@ -361,6 +361,7 @@ class FontConfig:
         if major.startswith("v"):
             major = major[1:]
 
+        self.version = f"{major}.{minor}"
         self.version_str = f"Version {major}.{minor:03}"
 
     def __load_config(self):
@@ -389,7 +390,7 @@ class FontConfig:
                             if type(val) is not dict
                             else {**getattr(self, prop), **val},
                         )
-                if data["ligature"] is not None:
+                if "ligature" in data and data["ligature"] is not None:
                     self.enable_liga = data["ligature"]
 
         except FileNotFoundError:
@@ -731,6 +732,7 @@ class BuildOption:
             fn=partial(optimize_cn_base, base_dir=cn_static_dir),
             dir=cn_static_dir,
         )
+        run(f"ftcli name del-mac-names -r {cn_static_dir}")
         with open(f"{self.cn_static_dir}.sha256", "w") as f:
             f.write(get_directory_hash(self.cn_static_dir))
             f.flush()
@@ -763,7 +765,7 @@ def handle_ligatures(
 
 def instantiate_cn_var(f: str, base_dir: str, output_dir: str):
     run(
-        f"ftcli converter vf2i -out {output_dir} {joinPaths(base_dir, f)}",
+        f"ftcli converter var2static -out {output_dir} {joinPaths(base_dir, f)}",
         log=True,
     )
 
@@ -771,10 +773,9 @@ def instantiate_cn_var(f: str, base_dir: str, output_dir: str):
 def optimize_cn_base(f: str, base_dir: str):
     font_path = joinPaths(base_dir, f)
     print(f"✨ Optimize {font_path}")
-    run(f"ftcli ttf fix-contours {font_path}")
-    run(f"ftcli ttf remove-overlaps {font_path}")
+    run(f"ftcli font correct-contours {font_path}")
     run(
-        f"ftcli utils del-table -t kern -t GPOS {font_path}",
+        f"ftcli font del-table -t kern -t GPOS {font_path}",
     )
 
 
@@ -827,10 +828,6 @@ def parse_style_name(style_name_compact: str, skip_subfamily_list: list[str]):
 
 #     for feature in features_to_remove:
 #         gsub.table.FeatureList.FeatureRecord.remove(feature)
-
-
-def drop_mac_names(dir: str):
-    run(f"ftcli name del-mac-names -r {dir}")
 
 
 def rename_glyph_name(
@@ -974,13 +971,13 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
 
     run(f"ftcli fix italic-angle {source_path}")
     run(f"ftcli fix monospace {source_path}")
-    run(f"ftcli fix strip-names {source_path}")
+    run(f"ftcli name strip-names {source_path}")
+    run(f"ftcli font correct-contours {source_path}")
 
-    if font_config.debug:
+    if not font_config.debug:
         run(f"ftcli ttf dehint {source_path}")
-    else:
-        # dehint, remove overlap and fix contours
-        run(f"ftcli ttf fix-contours --silent {source_path}")
+        run(f"ftcli fix transformed-components {source_path}")
+
 
     font = TTFont(source_path)
 
@@ -1056,12 +1053,12 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
     )
     print(f"Convert {postscript_name}.ttf to OTF")
     run(
-        f"ftcli converter ttf2otf --silent {target_path} -out {build_option.output_otf}"
+        f"ftcli converter ttf2otf {target_path} -out {build_option.output_otf}"
     )
     if not font_config.debug:
         print(f"Optimize {postscript_name}.otf")
-        run(f"ftcli otf fix-contours --silent {_otf_path}")
-        run(f"ftcli otf fix-version {_otf_path}")
+        run(f"ftcli font correct-contours {_otf_path}")
+        run(f"ftcli cff set-names --version {font_config.version} {_otf_path}")
 
 
 def build_mono_autohint(f: str, font_config: FontConfig, build_option: BuildOption):
@@ -1528,14 +1525,14 @@ def main(args: list[str] | None = None, version: str | None = None):
         print("\n✨ Instatiate and optimize fonts...\n")
 
         print("Check and optimize variable fonts")
-        if not font_config.debug:
-            run(f"ftcli fix decompose-transformed {build_option.output_variable}")
-
         run(f"ftcli fix italic-angle {build_option.output_variable}")
         run(f"ftcli fix monospace {build_option.output_variable}")
+        run(f"ftcli fix vertical-metrics {build_option.output_variable}")
+        run(f"ftcli name del-mac-names -r {build_option.output_variable}")
+
         print("Instantiate TTF")
         run(
-            f"ftcli converter vf2i -out {build_option.output_ttf} {build_option.output_variable}"
+            f"ftcli converter var2static -out {build_option.output_ttf} {build_option.output_variable}"
         )
 
         run_build(
@@ -1559,14 +1556,6 @@ def main(args: list[str] | None = None, version: str | None = None):
             build_option.output_ttf,
             target_styles,
         )
-
-        drop_mac_names(build_option.output_variable)
-        drop_mac_names(build_option.output_ttf)
-        drop_mac_names(build_option.output_ttf_hinted)
-
-        if not font_config.ttf_only:
-            drop_mac_names(build_option.output_otf)
-            drop_mac_names(build_option.output_woff2)
 
     # =========================================================================================
     # ====================================   Build NF   =======================================
@@ -1598,7 +1587,6 @@ def main(args: list[str] | None = None, version: str | None = None):
             build_option.output_ttf,
             target_styles,
         )
-        drop_mac_names(build_option.output_ttf)
         build_option.is_nf_built = True
 
     # =========================================================================================
@@ -1627,8 +1615,6 @@ def main(args: list[str] | None = None, version: str | None = None):
             if font_config.cn["use_hinted"]:
                 print("Auto hinting all glyphs")
                 run(f"ftcli ttf autohint {build_option.output_cn}")
-
-            drop_mac_names(build_option.cn_base_font_dir)
 
         _build_cn()
 
