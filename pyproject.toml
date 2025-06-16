@@ -6,7 +6,8 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "foundrytools-cli==2.0.2",
+    "gftools>=0.9.85",
     "glyphslib>=6.10.1",
     "python-minifier>=2.11.3",
-    "setuptools==80.0.0"
+    "setuptools==80.0.0",
 ]

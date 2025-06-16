@@ -11,3 +11,5 @@ __pycache__
 .vscode
 uv.lock
 *.backup
+*ninja*
+instance_ufos

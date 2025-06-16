@@ -1,6 +1,6 @@
 sources:
-  - MapleMono[wght].glyphs
-  - MapleMono-Italic[wght].glyphs
+  - MapleMono.glyphs
+  - MapleMono-Italic.glyphs
 axisOrder:
   - wght
 familyName: Maple Mono
