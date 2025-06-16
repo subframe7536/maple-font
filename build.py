@@ -15,6 +15,7 @@ from fontTools.ttLib import TTFont, newTable
 from fontTools.feaLib.builder import addOpenTypeFeatures, addOpenTypeFeaturesFromString
 from ttfautohint import StemWidthMode, ttfautohint
 from source.py.utils import (
+    add_ital_axis_to_stat,
     check_font_patcher,
     check_directory_hash,
     get_directory_hash,
@@ -1508,6 +1509,10 @@ def main(args: list[str] | None = None, version: str | None = None):
                 ),
                 is_skip_subfamily=True,
             )
+
+            if is_italic:
+                add_ital_axis_to_stat(font)
+
             verify_glyph_width(
                 font=font,
                 expect_widths=font_config.get_valid_glyph_width_list(),

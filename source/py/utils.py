@@ -42,9 +42,10 @@ def run(command, extra_args=None, log=not is_ci()):
     )
 
 
-def set_font_name(font: TTFont, name: str, id: int):
-    font["name"].setName(name, nameID=id, platformID=1, platEncID=0, langID=0x0)  # type: ignore
+def set_font_name(font: TTFont, name: str, id: int, mac: bool | None = None):
     font["name"].setName(name, nameID=id, platformID=3, platEncID=1, langID=0x409)  # type: ignore
+    if mac:
+        font["name"].setName(name, nameID=id, platformID=1, platEncID=0, langID=0x0)  # type: ignore
 
 
 def get_font_name(font: TTFont, id: int) -> str:
@@ -377,3 +378,29 @@ def merge_ttfonts(
     except Exception as e:
         print(f"Error merging fonts: {str(e)}")
         raise
+
+
+def add_ital_axis_to_stat(font: TTFont):
+    from fontTools.ttLib.tables import otTables as ot
+
+    name = font["name"]
+    stat_table = font["STAT"].table  # type: ignore
+    axis = ot.AxisRecord()  # type: ignore
+    axis.AxisTag = "ital"
+    axis.AxisOrdering = len(stat_table.DesignAxisRecord.Axis)
+    id = name._findUnusedNameID()  # type: ignore
+    set_font_name(font, "Italic", id, True)
+    axis.AxisNameID = id
+    stat_table.DesignAxisRecord.Axis.append(axis)
+    stat_table.DesignAxisCount += 1
+
+    axisValRec = ot.AxisValue()  # type: ignore
+    axisValRec.AxisIndex = axis.AxisOrdering
+    axisValRec.Flags = 0
+    axisValRec.Format = 1
+    id2 = name._findUnusedNameID()  # type: ignore
+    set_font_name(font, "Italic", id2, True)
+    axisValRec.ValueNameID = id2
+    axisValRec.Value = 1.0
+    stat_table.AxisValueArray.AxisValue.append(axisValRec)
+    stat_table.AxisValueCount += 1
