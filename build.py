@@ -38,18 +38,31 @@ from source.py.feature import (
     normal_enabled_features,
 )
 
+
 FONT_VERSION = "v7.4-dev"
 # =========================================================================================
 
 
 def check_ftcli():
     package_name = "foundrytools_cli"
-    package_installed = importlib.util.find_spec(package_name) is not None
+    package_spec = importlib.util.find_spec(package_name)
 
-    if not package_installed:
+    if not package_spec:
         print(
             f"❗ {package_name} is not found. Please run `pip install foundrytools-cli`"
         )
+        exit(1)
+
+    try:
+        package = importlib.import_module(package_name)
+        version = getattr(package, '__version__', None)
+        if version and version < '2':
+            print(
+                f"❗ {package_name} version {version} is too old. Please run `pip install --upgrade foundrytools-cli`"
+            )
+            exit(1)
+    except Exception as e:
+        print(f"❗ Error checking {package_name} version: {e}")
         exit(1)
 
 
