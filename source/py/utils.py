@@ -398,9 +398,7 @@ def add_ital_axis_to_stat(font: TTFont):
     axisValRec.AxisIndex = axis.AxisOrdering
     axisValRec.Flags = 0
     axisValRec.Format = 1
-    id2 = name._findUnusedNameID()  # type: ignore
-    set_font_name(font, "Italic", id2, True)
-    axisValRec.ValueNameID = id2
+    axisValRec.ValueNameID = id
     axisValRec.Value = 1.0
     stat_table.AxisValueArray.AxisValue.append(axisValRec)
     stat_table.AxisValueCount += 1
