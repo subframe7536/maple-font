@@ -381,19 +381,27 @@ def merge_ttfonts(
 
 
 def add_ital_axis_to_stat(font: TTFont):
+    """
+    Add fake ``ital`` axis to append "italic" to subfamily name in italic variable font
+    """
     from fontTools.ttLib.tables import otTables as ot
 
     name = font["name"]
     stat_table = font["STAT"].table  # type: ignore
+
+    # Add fake axis name
+    id = name._findUnusedNameID()  # type: ignore
+    set_font_name(font, "Italic", id, True)
+
+    # Add AxisRecord
     axis = ot.AxisRecord()  # type: ignore
     axis.AxisTag = "ital"
     axis.AxisOrdering = len(stat_table.DesignAxisRecord.Axis)
-    id = name._findUnusedNameID()  # type: ignore
-    set_font_name(font, "Italic", id, True)
     axis.AxisNameID = id
     stat_table.DesignAxisRecord.Axis.append(axis)
     stat_table.DesignAxisCount += 1
 
+    # Add AxisValue
     axisValRec = ot.AxisValue()  # type: ignore
     axisValRec.AxisIndex = axis.AxisOrdering
     axisValRec.Flags = 0
