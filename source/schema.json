@@ -27,7 +27,7 @@
       "enumDescriptions": [
         "If active, stem widths and blue zones are snapped and positioned to integer pixel values as much as possible. This gives high contrast, but glyph shape distortion can be significant.",
         "Both stem widths and blue zone positions are slightly quantized to take discrete values. For example, stem values 50, 51, 72, 76, and 100 would become 50, 74, and 100 (or something similar). More glyph shape distortion but increased contrast.",
-        "No adjustments to stem widths, discrete blue zone positioning. This is what FreeType uses for its ‘light’ (auto-)hinting mode. Essentially no glyph shape distortion, low contrast."
+        "No adjustments to stem widths, discrete blue zone positioning. This is what FreeType uses for its \u2018light\u2019 (auto-)hinting mode. Essentially no glyph shape distortion, low contrast."
       ]
     }
   },
@@ -101,11 +101,11 @@
               "$ref": "#/definitions/stem_width_mode"
             },
             "gdi_cleartype": {
-              "description": "‘GDI ClearType’ rendering: the rasterizer version, as returned by the GETINFO bytecode instruction, is in the range 36 <= version <= 38 and ClearType is enabled (e.g., Windows XP).",
+              "description": "\u2018GDI ClearType\u2019 rendering: the rasterizer version, as returned by the GETINFO bytecode instruction, is in the range 36 <= version <= 38 and ClearType is enabled (e.g., Windows XP).",
               "$ref": "#/definitions/stem_width_mode"
             },
             "dw_cleartype": {
-              "description": "‘DirectWrite ClearType’ rendering: the rasterizer version, as returned by the GETINFO bytecode instruction, is >= 39, ClearType is enabled, and subpixel positioning is enabled also (e.g., Internet Explorer 9 running on Windows 7).",
+              "description": "\u2018DirectWrite ClearType\u2019 rendering: the rasterizer version, as returned by the GETINFO bytecode instruction, is >= 39, ClearType is enabled, and subpixel positioning is enabled also (e.g., Internet Explorer 9 running on Windows 7).",
               "$ref": "#/definitions/stem_width_mode"
             }
           }

@@ -122,17 +122,17 @@ OpenType Features are not supported, you need to custom build to freeze features
 #### Italic Only
 
 <!-- CV-IT -->
-- [v7.0] cv31: Alternative italic `a` with top arm
-- [v7.0] cv32: Alternative Italic `f` without bottom tail
-- [v7.0] cv33: Alternative Italic `i` and `j` with left bottom bar and horizen top bar
-- [v7.0] cv34: Alternative Italic `k` without center circle
-- [v7.0] cv35: Alternative Italic `l` without center tail
-- [v7.0] cv36: Alternative Italic `x` without top and bottom tails
-- [v7.0] cv37: Alternative Italic `y` with straight intersection
-- [v7.1] cv38: Alternative italic `g` in double story style
-- [v7.1] cv39: Alternative Italic `i` without bottom bar
-- [v7.1] cv40: Alternative italic `J` without top bar
-- [v7.1] cv41: Alternative italic `r` with bottom bar
+- [v7.0] cv31: Alternative italic _`a`_ with top arm
+- [v7.0] cv32: Alternative Italic _`f`_ without bottom tail
+- [v7.0] cv33: Alternative Italic _`i`_ and _`j`_ with left bottom bar and horizen top bar
+- [v7.0] cv34: Alternative Italic _`k`_ without center circle
+- [v7.0] cv35: Alternative Italic _`l`_ without center tail
+- [v7.0] cv36: Alternative Italic _`x`_ without top and bottom tails
+- [v7.0] cv37: Alternative Italic _`y`_ with straight intersection
+- [v7.1] cv38: Alternative italic _`g`_ in double story style
+- [v7.1] cv39: Alternative Italic _`i`_ without bottom bar
+- [v7.1] cv40: Alternative italic _`J`_ without top bar
+- [v7.1] cv41: Alternative italic _`r`_ with bottom bar
 <!-- CV-IT -->
 
 #### CN Only
@@ -152,7 +152,7 @@ OpenType Features are not supported, you need to custom build to freeze features
 - [v7.0] ss03: Allow to use any case in all tags
 - [v7.0] ss04: Broken multiple underscores ligatures (`__`, `#__`)
 - [v7.0] ss05: Revert thin backslash in escape symbols (`\\`, `\"`, `\.` ...)
-- [v7.0] ss06: Break connected strokes between italic letters (`al`, `il`, `ull` ...)
+- [v7.0] ss06: Break connected strokes between italic letters (_`al`_, _`il`_, _`ull`_ ...)
 - [v7.0] ss07: Relax the conditions for multiple greaters ligatures (`>>` or `>>>`)
 - [v7.0] ss08: Double headed arrows and reverse arrows ligatures (`>>=`, `-<<`, `->>`, `>>-` ...)
 - [v7.1] ss09: Asciitilde equal as not equal to ligature (`~=`)

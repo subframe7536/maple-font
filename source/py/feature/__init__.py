@@ -1,6 +1,7 @@
 from copy import deepcopy
 from html import escape
 import json
+import re
 from source.py.feature import ast
 from source.py.feature.base import get_base_feature_cn_only, get_base_features
 from source.py.feature.base.lang import get_lang_list
@@ -189,9 +190,15 @@ def get_cv_version_info() -> dict[str, dict[str, str]]:
     return get_version_info(cv_list_regular)
 
 
+italic_code_pattern = re.compile(r"`([^`]+)`")
+
 def get_cv_italic_desc():
     return "\n".join(
-        [cv.desc_item() for cv in cv_list_italic if cv.id > 30 and cv.id < 61]
+        [
+            italic_code_pattern.sub(r"_`\1`_", cv.desc_item())
+            for cv in cv_list_italic
+            if cv.id > 30 and cv.id < 61
+        ]
     )
 
 
@@ -215,6 +222,8 @@ def get_ss_desc():
 
             if ss.id == 5:
                 desc = desc.replace("`\\\\`", "`\\\\\\\\`")
+            elif ss.id == 6:
+                desc = italic_code_pattern.sub(r"_`\1`_", desc)
 
             result[ss.id] = desc
 
