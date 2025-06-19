@@ -75,21 +75,21 @@ OpenType Features are not supported, you need to custom build to freeze features
 <tr><td><code>|]</code></td><td><code>&lt;=&gt;</code></td><td><code>[WARNING]</code></td></tr>
 <tr><td><code>!!</code></td><td><code>&lt;==&gt;</code></td><td><code>todo))</code></td></tr>
 <tr><td><code>||</code></td><td><code>&lt;==</code></td><td><code>fixme))</code></td></tr>
-<tr><td><code>??</code></td><td><code>==&gt;</code></td><td><code>Cl</code></td></tr>
-<tr><td><code>???</code></td><td><code>=&gt;</code></td><td><code>al</code></td></tr>
-<tr><td><code>&amp;&amp;</code></td><td><code>&lt;=|</code></td><td><code>cl</code></td></tr>
-<tr><td><code>&amp;&amp;&amp;</code></td><td><code>|=&gt;</code></td><td><code>el</code></td></tr>
-<tr><td><code>//</code></td><td><code>=&lt;=</code></td><td><code>il</code></td></tr>
-<tr><td><code>///</code></td><td><code>=&gt;=</code></td><td><code>tl</code></td></tr>
-<tr><td><code>/*</code></td><td><code>=======</code></td><td><code>ul</code></td></tr>
-<tr><td><code>/**</code></td><td><code>&gt;=&lt;</code></td><td><code>xl</code></td></tr>
-<tr><td><code>*/</code></td><td><code>:=</code></td><td><code>ff</code></td></tr>
-<tr><td><code>++</code></td><td><code>=:</code></td><td><code>tt</code></td></tr>
-<tr><td><code>+++</code></td><td><code>:=:</code></td><td><code>all</code></td></tr>
-<tr><td><code>;;</code></td><td><code>=:=</code></td><td><code>ell</code></td></tr>
-<tr><td><code>;;;</code></td><td><code>\\ \&#x27; \.</code></td><td><code>ill</code></td></tr>
-<tr><td><code>..</code></td><td><code>--</code></td><td><code>ull</code></td></tr>
-<tr><td><code>...</code></td><td><code>---</code></td><td><code>ll</code></td></tr>
+<tr><td><code>??</code></td><td><code>==&gt;</code></td><td><code><em>Cl</em></code></td></tr>
+<tr><td><code>???</code></td><td><code>=&gt;</code></td><td><code><em>al</em></code></td></tr>
+<tr><td><code>&amp;&amp;</code></td><td><code>&lt;=|</code></td><td><code><em>cl</em></code></td></tr>
+<tr><td><code>&amp;&amp;&amp;</code></td><td><code>|=&gt;</code></td><td><code><em>el</em></code></td></tr>
+<tr><td><code>//</code></td><td><code>=&lt;=</code></td><td><code><em>il</em></code></td></tr>
+<tr><td><code>///</code></td><td><code>=&gt;=</code></td><td><code><em>tl</em></code></td></tr>
+<tr><td><code>/*</code></td><td><code>=======</code></td><td><code><em>ul</em></code></td></tr>
+<tr><td><code>/**</code></td><td><code>&gt;=&lt;</code></td><td><code><em>xl</em></code></td></tr>
+<tr><td><code>*/</code></td><td><code>:=</code></td><td><code><em>ff</em></code></td></tr>
+<tr><td><code>++</code></td><td><code>=:</code></td><td><code><em>tt</em></code></td></tr>
+<tr><td><code>+++</code></td><td><code>:=:</code></td><td><code><em>all</em></code></td></tr>
+<tr><td><code>;;</code></td><td><code>=:=</code></td><td><code><em>ell</em></code></td></tr>
+<tr><td><code>;;;</code></td><td><code>\\ \&#x27; \.</code></td><td><code><em>ill</em></code></td></tr>
+<tr><td><code>..</code></td><td><code>--</code></td><td><code><em>ull</em></code></td></tr>
+<tr><td><code>...</code></td><td><code>---</code></td><td><code><em>ll</em></code></td></tr>
 <tr><td><code>.?</code></td><td><code>&lt;!--</code></td><td></td></tr>
 </table>
 <!-- CALT -->

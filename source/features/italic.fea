@@ -1523,63 +1523,63 @@ feature calt {
     sub @F' @I @X @M @E parenright parenright by SPC;
   } tag_fixme_alt;
 
-  # Cl
+  # italic Cl
   lookup C_l.liga {
     ignore sub C' l l;
     sub SPC l' by C_l.liga;
     sub C' l by SPC;
   } C_l.liga;
 
-  # al
+  # italic al
   lookup a_l.liga {
     ignore sub a' l l;
     sub SPC l' by a_l.liga;
     sub a' l by SPC;
   } a_l.liga;
 
-  # cl
+  # italic cl
   lookup c_l.liga {
     ignore sub c' l l;
     sub SPC l' by c_l.liga;
     sub c' l by SPC;
   } c_l.liga;
 
-  # el
+  # italic el
   lookup e_l.liga {
     ignore sub e' l l;
     sub SPC l' by e_l.liga;
     sub e' l by SPC;
   } e_l.liga;
 
-  # il
+  # italic il
   lookup i_l.liga {
     ignore sub i' l l;
     sub SPC l' by i_l.liga;
     sub i' l by SPC;
   } i_l.liga;
 
-  # tl
+  # italic tl
   lookup t_l.liga {
     ignore sub t' l l;
     sub SPC l' by t_l.liga;
     sub t' l by SPC;
   } t_l.liga;
 
-  # ul
+  # italic ul
   lookup u_l.liga {
     ignore sub u' l l;
     sub SPC l' by u_l.liga;
     sub u' l by SPC;
   } u_l.liga;
 
-  # xl
+  # italic xl
   lookup x_l.liga {
     ignore sub x' l l;
     sub SPC l' by x_l.liga;
     sub x' l by SPC;
   } x_l.liga;
 
-  # ff
+  # italic ff
   lookup f_f.liga {
     ignore sub f f' f;
     ignore sub f' f f;
@@ -1587,7 +1587,7 @@ feature calt {
     sub f' f by SPC;
   } f_f.liga;
 
-  # tt
+  # italic tt
   lookup t_t.liga {
     ignore sub t t' t;
     ignore sub t' t [t l];
@@ -1595,7 +1595,7 @@ feature calt {
     sub t' t by SPC;
   } t_t.liga;
 
-  # all
+  # italic all
   lookup a_l_l.liga {
     ignore sub a' l l l;
     sub SPC SPC l' by a_l_l.liga;
@@ -1603,7 +1603,7 @@ feature calt {
     sub a' l l by SPC;
   } a_l_l.liga;
 
-  # ell
+  # italic ell
   lookup e_l_l.liga {
     ignore sub e' l l l;
     sub SPC SPC l' by e_l_l.liga;
@@ -1611,7 +1611,7 @@ feature calt {
     sub e' l l by SPC;
   } e_l_l.liga;
 
-  # ill
+  # italic ill
   lookup i_l_l.liga {
     ignore sub i' l l l;
     sub SPC SPC l' by i_l_l.liga;
@@ -1619,7 +1619,7 @@ feature calt {
     sub i' l l by SPC;
   } i_l_l.liga;
 
-  # ull
+  # italic ull
   lookup u_l_l.liga {
     ignore sub u' l l l;
     sub SPC SPC l' by u_l_l.liga;
@@ -1627,7 +1627,7 @@ feature calt {
     sub u' l l by SPC;
   } u_l_l.liga;
 
-  # ll
+  # italic ll
   lookup l_l.liga {
     ignore sub [C a c e i t u x] l' l;
     ignore sub l' l l;

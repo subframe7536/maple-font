@@ -153,8 +153,14 @@ def get_all_calt_text():
     # Create HTML table with three equal columns
     html_rows = ["<table>"]
 
-    def wrap(str):
-        return f"<td><code>{escape(str)}</code></td>" if str else "<td></td>"
+    def wrap(desc: str):
+        if not desc:
+            return "<td></td>"
+        _desc = escape(desc)
+        italic_prefix = "italic "
+        if _desc.startswith(italic_prefix):
+            _desc = f"<em>{_desc.replace(italic_prefix, '')}</em>"
+        return f"<td><code>{_desc}</code></td>"
 
     for i in range(third):
         col1 = wrap(result[i])
