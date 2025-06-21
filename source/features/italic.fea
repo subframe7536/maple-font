@@ -1875,6 +1875,10 @@ feature cv36 {
   };
 
   sub x by x.cv36;
+  sub ha-cy by ha-cy.cv36;
+  sub hadescender-cy by hadescender-cy.cv36;
+  sub hahook-cy by hahook-cy.cv36;
+  sub hastroke-cy by hastroke-cy.cv36;
   sub x_l.liga by x_l.liga.cv36;
   sub x_l.liga.cv04 by x_l.liga.cv04.cv36;
   sub x_l.liga.cv35 by x_l.liga.cv35.cv36;
