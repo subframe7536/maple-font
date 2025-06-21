@@ -43,6 +43,8 @@ GLYPHS_I = [
     "itilde",
     "idotbelowdotless",
     "iogonekdotless",
+    "i-cy",
+    "yi-cy",
 ]
 
 GLYPHS_L = [
@@ -75,7 +77,8 @@ GLYPHS_G = [
 GLYPHS_J_UPPER = [
     "J",
     "Jcircumflex",
-    "J.bg"
+    "Je-cy",
+    "J.bg",
 ]
 
 GLYPHS_R = [

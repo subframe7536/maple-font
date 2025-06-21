@@ -1613,6 +1613,8 @@ feature cv03 {
   sub itilde by itilde.cv03;
   sub idotbelowdotless by idotbelowdotless.cv03;
   sub iogonekdotless by iogonekdotless.cv03;
+  sub i-cy by i-cy.cv03;
+  sub yi-cy by yi-cy.cv03;
 
 } cv03;
 
@@ -1680,6 +1682,8 @@ feature cv06 {
   sub itilde by itilde.cv06;
   sub idotbelowdotless by idotbelowdotless.cv06;
   sub iogonekdotless by iogonekdotless.cv06;
+  sub i-cy by i-cy.cv06;
+  sub yi-cy by yi-cy.cv06;
   sub i.cv03 by i.cv06;
   sub iacute.cv03 by iacute.cv06;
   sub ibreve.cv03 by ibreve.cv06;
@@ -1696,6 +1700,8 @@ feature cv06 {
   sub itilde.cv03 by itilde.cv06;
   sub idotbelowdotless.cv03 by idotbelowdotless.cv06;
   sub iogonekdotless.cv03 by iogonekdotless.cv06;
+  sub i-cy.cv03 by i-cy.cv06;
+  sub yi-cy.cv03 by yi-cy.cv06;
 
 } cv06;
 
@@ -1709,6 +1715,7 @@ feature cv07 {
 
   sub J by J.cv07;
   sub Jcircumflex by Jcircumflex.cv07;
+  sub Je-cy by Je-cy.cv07;
   sub J.bg by J.bg.cv07;
 
 } cv07;

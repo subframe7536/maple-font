@@ -13,6 +13,11 @@ def cv37_subst():
             "yhookabove",
             "ymacron",
             "ytilde",
+            "u-cy",
+            "ushort-cy",
+            "umacron-cy",
+            "udieresis-cy",
+            "uacutedbl-cy",
         ],
         target_suffix=".cv37",
     )

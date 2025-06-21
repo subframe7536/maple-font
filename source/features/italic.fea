@@ -1778,9 +1778,12 @@ feature cv33 {
   sub itilde by itilde.cv33;
   sub idotbelowdotless by idotbelowdotless.cv33;
   sub iogonekdotless by iogonekdotless.cv33;
+  sub i-cy by i-cy.cv33;
+  sub yi-cy by yi-cy.cv33;
   sub j by j.cv33;
   sub jcircumflex by jcircumflex.cv33;
   sub jdotless by jdotless.cv33;
+  sub je-cy by je-cy.cv33;
   sub i_l.liga by i_l.liga.cv33;
   sub i_l_l.liga by i_l_l.liga.cv33;
   sub i_l.liga.cv04 by i_l.liga.cv04.cv33;
@@ -1895,6 +1898,11 @@ feature cv37 {
   sub yhookabove by yhookabove.cv37;
   sub ymacron by ymacron.cv37;
   sub ytilde by ytilde.cv37;
+  sub u-cy by u-cy.cv37;
+  sub ushort-cy by ushort-cy.cv37;
+  sub umacron-cy by umacron-cy.cv37;
+  sub udieresis-cy by udieresis-cy.cv37;
+  sub uacutedbl-cy by uacutedbl-cy.cv37;
 
 } cv37;
 
@@ -1940,6 +1948,8 @@ feature cv39 {
   sub itilde by itilde.cv39;
   sub idotbelowdotless by idotbelowdotless.cv39;
   sub iogonekdotless by iogonekdotless.cv39;
+  sub i-cy by i-cy.cv39;
+  sub yi-cy by yi-cy.cv39;
   sub i.cv33 by i.cv39;
   sub iacute.cv33 by iacute.cv39;
   sub ibreve.cv33 by ibreve.cv39;
@@ -1956,6 +1966,8 @@ feature cv39 {
   sub itilde.cv33 by itilde.cv39;
   sub idotbelowdotless.cv33 by idotbelowdotless.cv39;
   sub iogonekdotless.cv33 by iogonekdotless.cv39;
+  sub i-cy.cv33 by i-cy.cv39;
+  sub yi-cy.cv33 by yi-cy.cv39;
   sub i_l.liga by i_l.liga.cv39;
   sub i_l_l.liga by i_l_l.liga.cv39;
   sub i_l.liga.cv04 by i_l.liga.cv04.cv39;
@@ -1979,6 +1991,7 @@ feature cv40 {
 
   sub J by J.cv40;
   sub Jcircumflex by Jcircumflex.cv40;
+  sub Je-cy by Je-cy.cv40;
   sub J.bg by J.bg.cv40;
 
 } cv40;

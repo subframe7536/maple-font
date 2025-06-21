@@ -17,6 +17,7 @@ def cv33_subst():
             "j",
             "jcircumflex",
             "jdotless",
+            "je-cy",
             *gen("", ".cv04"),
         ],
         target_suffix=".cv33",
