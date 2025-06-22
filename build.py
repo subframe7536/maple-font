@@ -1545,7 +1545,7 @@ def main(args: list[str] | None = None, version: str | None = None):
         print("Check and optimize variable fonts")
         run(f"ftcli fix italic-angle {build_option.output_variable}")
         run(f"ftcli fix monospace {build_option.output_variable}")
-        run(f"ftcli fix vertical-metrics {build_option.output_variable}")
+        # run(f"ftcli fix vertical-metrics {build_option.output_variable}")
         run(f"ftcli name del-mac-names -r {build_option.output_variable}")
 
         print("Instantiate TTF")
