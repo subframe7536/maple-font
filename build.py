@@ -44,25 +44,27 @@ FONT_VERSION = "v7.4-dev"
 
 
 def check_ftcli():
-    package_name = "foundrytools_cli"
-    package_spec = importlib.util.find_spec(package_name)
+    package_name_v1 = "foundryToolsCLI"
+    package_spec_v1 = importlib.util.find_spec(package_name_v1)
+    package_name_v2 = "foundrytools_cli"
+    package_spec_v2 = importlib.util.find_spec(package_name_v2)
 
-    if not package_spec:
+    if not package_spec_v1 and not package_spec_v2:
         print(
-            f"❗ {package_name} is not found. Please run `pip install foundrytools-cli`"
+            f"❗ foundrytools-cli is not found. Please run `pip install foundrytools-cli`"
         )
         exit(1)
 
     try:
-        package = importlib.import_module(package_name)
-        version = getattr(package, '__version__', None)
+        installed_package = importlib.import_module(package_name_v2 if package_spec_v2 else package_name_v1)
+        version = getattr(installed_package, '__version__', None)
         if version and version < '2':
             print(
-                f"❗ {package_name} version {version} is too old. Please run `pip install --upgrade foundrytools-cli`"
+                f"❗ foundrytools-cli version {version} is too old. Please run `pip install --upgrade foundrytools-cli`"
             )
             exit(1)
     except Exception as e:
-        print(f"❗ Error checking {package_name} version: {e}")
+        print(f"❗ Error checking foundrytools-cli version: {e}")
         exit(1)
 
 
