@@ -1,12 +1,12 @@
 {
   "$schema": "./source/schema.json",
-  "family_name": "Maple Mono",
+  "family_name": "Maple Mono NF CN FHT",
   "use_hinted": true,
   "pool_size": 4,
   "enable_ligature": true,
   "ttfautohint_param": {},
   "feature_freeze": {
-    "cv01": "ignore",
+    "cv01": "enable",
     "cv02": "ignore",
     "cv03": "ignore",
     "cv04": "ignore",
@@ -45,12 +45,12 @@
     "ss09": "ignore",
     "ss10": "ignore",
     "ss11": "ignore",
-    "zero": "ignore"
+    "zero": "enable"
   },
   "nerd_font": {
     "enable": true,
     "version": "3.4.0",
-    "mono": false,
+    "mono": true,
     "use_font_patcher": false,
     "glyphs": [
       "--complete"
@@ -58,12 +58,12 @@
     "extra_args": []
   },
   "cn": {
-    "enable": false,
+    "enable": enable,
     "with_nerd_font": true,
     "fix_meta_table": true,
     "clean_cache": false,
     "narrow": false,
-    "use_hinted": false,
+    "use_hinted": true,
     "use_static_base_font": true,
     "scale_factor": 1.0
   }
