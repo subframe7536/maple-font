@@ -153,6 +153,14 @@
           "description": "[v7.1] Alternative 'r' with bottom bar, no effect in italic style",
           "$ref": "#/definitions/freeze_options"
         },
+        "cv09": {
+          "description": "[v7.5] Alternative '7' with middle bar, no effect in italic style",
+          "$ref": "#/definitions/freeze_options"
+        },
+        "cv10": {
+          "description": "[v7.5] Alternative 'Z' and 'z' with middle bar, no effect in italic style",
+          "$ref": "#/definitions/freeze_options"
+        },
         "cv31": {
           "description": "[v7.0] Alternative italic 'a' with top arm",
           "$ref": "#/definitions/freeze_options"
@@ -195,6 +203,14 @@
         },
         "cv41": {
           "description": "[v7.1] Alternative italic 'r' with bottom bar",
+          "$ref": "#/definitions/freeze_options"
+        },
+        "cv42": {
+          "description": "[v7.5] Alternative italic '7' with middle bar",
+          "$ref": "#/definitions/freeze_options"
+        },
+        "cv43": {
+          "description": "[v7.5] Alternative italic 'Z' and 'z' with middle bar",
           "$ref": "#/definitions/freeze_options"
         },
         "cv61": {

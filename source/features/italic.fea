@@ -2035,6 +2035,41 @@ feature cv41 {
 
 } cv41;
 
+feature cv42 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV42: Alternative italic 7 with middle bar";
+    };
+  };
+
+  sub seven by seven.cv42;
+  sub seven.dnom by seven.dnom.cv42;
+  sub seven.numr by seven.numr.cv42;
+  sub seveninferior by seveninferior.cv42;
+  sub sevensuperior by sevensuperior.cv42;
+
+} cv42;
+
+feature cv43 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV43: Alternative italic Z and z with middle bar";
+    };
+  };
+
+  sub Z by Z.cv43;
+  sub Zacute by Zacute.cv43;
+  sub Zcaron by Zcaron.cv43;
+  sub Zdotaccent by Zdotaccent.cv43;
+  sub z by z.cv43;
+  sub zacute by zacute.cv43;
+  sub zcaron by zcaron.cv43;
+  sub zdotaccent by zdotaccent.cv43;
+
+} cv43;
+
 feature cv61 {
 
   cvParameters {
