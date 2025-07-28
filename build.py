@@ -504,6 +504,7 @@ class FontConfig:
             self.nerd_font["use_font_patcher"] = True
 
         if args.cn_rebuild:
+            self.cn["enable"] = True
             self.cn["clean_cache"] = True
             self.cn["use_static_base_font"] = False
 
@@ -789,6 +790,18 @@ class BuildOption:
             ),
             dir=cn_variable_dir,
         )
+
+        italic_tmp_dir = joinPaths(cn_static_dir, "italic")
+        for f in listdir(italic_tmp_dir):
+            shutil.move(
+                joinPaths(italic_tmp_dir, f),
+                joinPaths(
+                    cn_static_dir,
+                    f if "Italic" in f else f.replace(".ttf", "Italic.ttf"),
+                ),
+            )
+        shutil.rmtree(italic_tmp_dir)
+
         run_build(
             pool_size=pool_size,
             fn=partial(optimize_cn_base, base_dir=cn_static_dir),
@@ -826,6 +839,8 @@ def handle_ligatures(
 
 
 def instantiate_cn_var(f: str, base_dir: str, output_dir: str):
+    if "Italic" in f:
+        output_dir = joinPaths(output_dir, "italic")
     run(
         f"ftcli converter var2static -out {output_dir} {joinPaths(base_dir, f)}",
         log=True,
