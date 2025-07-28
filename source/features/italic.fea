@@ -1259,7 +1259,7 @@ feature calt {
   lookup infinite_hyphen {
     @HyphenStart = [hyphen.sta.seq hyphen.mid.seq];
     ignore sub less' [exclam numbersign] hyphen hyphen;
-    ignore sub bar bar' hyphen;
+    ignore sub [bar plus] bar' hyphen;
     ignore sub bar' hyphen hyphen @Var;
     ignore sub bar hyphen' hyphen @Var;
     ignore sub bar' hyphen hyphen less @Var;

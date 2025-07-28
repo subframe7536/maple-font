@@ -37,7 +37,7 @@ def infinite_hyphens(cls_var: ast.Clazz):
         [
             cls_start.state(),
             ast.ign(None, "<", [ast.cls("!", "#"), "-", "-"]),
-            ast.ign("|", "|", "-"),
+            ast.ign(ast.cls("|", "+"), "|", "-"),
             ast.ign(None, "|", ["-", "-", cls_var]),
             ast.ign("|", "-", ["-", cls_var]),
             ast.ign(None, "|", ["-", "-", "<", cls_var]),
@@ -67,7 +67,6 @@ def infinite_hyphens(cls_var: ast.Clazz):
             ast.subst(None, ">", ["-", ast.cls("-", "|", ">")], ghy_start),
             ast.subst(None, ">", ["-", "<", "-"], ghy_start),
             ast.ign(None, ">", "-"),
-            # ast.ign(None, ">", ["-", ast.cls(ast.SPC, cls_digit)]),
             # Disable -<
             ast.subst(
                 ast.cls(
