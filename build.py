@@ -503,9 +503,10 @@ class FontConfig:
             self.nerd_font["use_font_patcher"] = True
 
         if args.cn_rebuild:
+            print("⚠️ `--cn-rebuild` is deprecated. Run `python task.py cn-rebuild` instead")
             self.cn["enable"] = True
-            self.cn["clean_cache"] = True
-            self.cn["use_static_base_font"] = False
+            # self.cn["clean_cache"] = True
+            # self.cn["use_static_base_font"] = False
 
         name_arr = [word.capitalize() for word in self.family_name.split(" ")]
         if self.use_normal_preset:
