@@ -252,8 +252,10 @@ def get_lookup(cls_var: ast.Clazz):
         # ---------------------------------------------------------
         tag_custom(
             [
-                # ("_bug_", "[bug]"),
-                # ("_noqa_", "(noqa)"),
+                ("_bug_", "[bug]"),
+                ("_noqa_", "(noqa)"),
+                ("_done_", "(done)"),
+                ("_doing_", "(doing)")
             ],
             bg_cls_dict,
         ),
