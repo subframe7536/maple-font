@@ -19,9 +19,8 @@ from source.py.utils import (
     adjust_line_height,
     check_font_patcher,
     check_directory_hash,
-    get_directory_hash,
     verify_glyph_width,
-    compress_folder,
+    archive_fonts,
     download_cn_base_font,
     get_font_forge_bin,
     is_ci,
@@ -371,7 +370,7 @@ class FontConfig:
             # whether to hint CN font (will increase about 33% size)
             "use_hinted": False,
             # whether to use pre-instantiated static CN font as base font
-            "use_static_base_font": True,
+            "use_static_base_font": True,  # Deprecated. Always `True`
             # scale factor for CN glyphs
             "scale_factor": (1.0, 1.0),
         }
@@ -698,120 +697,106 @@ class BuildOption:
     def should_build_cn(self, config: FontConfig) -> bool:
         if not config.cn["enable"] and not config.use_cn_both:
             print(
-                '\nNo `"cn.enable": true` in config.json or no `--cn` / `--cn-both` in argv. Skip CN build.'
+                '\nNo `"cn.enable": true` in config.json or `--cn` / `--cn-both` in argv. Skip CN build.'
             )
             return False
-        return self.__ensure_cn_static_fonts(
-            clean_cache=config.cn["clean_cache"],
-            use_static=config.cn["use_static_base_font"],
-            pool_size=config.pool_size,
-        )
+        return self.__ensure_cn_static_fonts(clean_cache=config.cn["clean_cache"])
 
-    def __ensure_cn_static_fonts(
-        self, clean_cache: bool, use_static: bool, pool_size: int
-    ) -> bool:
+    def __ensure_cn_static_fonts(self, clean_cache: bool) -> bool:
         if clean_cache:
             print("Clean CN static fonts")
             shutil.rmtree(self.cn_static_dir, ignore_errors=True)
 
-        if use_static and self.__check_cn_exists():
+        if self.__check_cn_exists():
             return True
 
         tag = "cn-base"
-        if is_ci() or use_static:
-            zip_path = "cn-base-static.zip"
-            if download_cn_base_font(
-                tag=tag,
-                zip_path=zip_path,
-                target_dir=self.cn_static_dir,
-                github_mirror=self.github_mirror,
-            ):
-                if self.__check_cn_exists():
-                    return True
-                else:
-                    print(
-                        f"❗Invalid CN static fonts hash, please delete {zip_path} in root dir and rerun the script"
-                    )
-                    return False
-
-        # Try using variable fonts if static fonts aren't available
-        if path.exists(self.cn_variable_dir) and self.__check_file_count(
-            self.cn_variable_dir, 2, "-VF.ttf"
-        ):
-            print(
-                "No static CN fonts but detect variable version, start instantiating..."
-            )
-            self.__instantiate_cn_base(
-                cn_variable_dir=self.cn_variable_dir,
-                cn_static_dir=self.cn_static_dir,
-                pool_size=pool_size,
-            )
-            return True
-
-        # Download variable fonts and instantiate if necessary
+        zip_path = "cn-base-static.zip"
         if download_cn_base_font(
             tag=tag,
-            zip_path="cn-base-variable.zip",
-            target_dir=self.cn_variable_dir,
+            zip_path=zip_path,
+            target_dir=self.cn_static_dir,
             github_mirror=self.github_mirror,
         ):
-            self.__instantiate_cn_base(
-                cn_variable_dir=self.cn_variable_dir,
-                cn_static_dir=self.cn_static_dir,
-                pool_size=pool_size,
+            if self.__check_cn_exists():
+                return True
+
+            print(
+                f"❗Invalid CN static fonts hash, please delete {zip_path} in root dir and rerun the script"
             )
-            return True
+            return False
+
+        # # Try using variable fonts if static fonts aren't available
+        # if path.exists(self.cn_variable_dir) and self.__check_file_count(
+        #     self.cn_variable_dir, 2, "-VF.ttf"
+        # ):
+        #     print(
+        #         "No static CN fonts but detect variable version, start instantiating..."
+        #     )
+        #     self.__instantiate_cn_base(
+        #         cn_variable_dir=self.cn_variable_dir,
+        #         cn_static_dir=self.cn_static_dir,
+        #         pool_size=pool_size,
+        #     )
+        #     return True
+
+        # # Download variable fonts and instantiate if necessary
+        # if download_cn_base_font(
+        #     tag=tag,
+        #     zip_path="cn-base-variable.zip",
+        #     target_dir=self.cn_variable_dir,
+        #     github_mirror=self.github_mirror,
+        # ):
+        #     self.__instantiate_cn_base(
+        #         cn_variable_dir=self.cn_variable_dir,
+        #         cn_static_dir=self.cn_static_dir,
+        #         pool_size=pool_size,
+        #     )
+        #     return True
 
         print("\nCN base fonts don't exist. Skip CN build.")
         return False
 
     def __check_cn_exists(self) -> bool:
         static_path = self.cn_static_dir
+        print(f"\nChecking CN static font directory {static_path}")
         if not path.exists(static_path):
+            print("🔎 Does not exist")
             return False
         if not self.__check_file_count(static_path):
+            print("🔎 Exists but not enough font files")
             return False
 
         if check_directory_hash(static_path):
+            print("✅ Hash verified")
             return True
+        print("❌ Hash mismatch, removing directory")
         shutil.rmtree(static_path)
         return False
 
-    def __instantiate_cn_base(
-        self, cn_variable_dir: str, cn_static_dir: str, pool_size: int
-    ):
-        print("=========================================")
-        print("Instantiating CN Base font, be patient...")
-        print("=========================================")
-        run_build(
-            pool_size=pool_size,
-            fn=partial(
-                instantiate_cn_var, base_dir=cn_variable_dir, output_dir=cn_static_dir
-            ),
-            dir=cn_variable_dir,
-        )
-
-        italic_tmp_dir = joinPaths(cn_static_dir, "italic")
-        for f in listdir(italic_tmp_dir):
-            shutil.move(
-                joinPaths(italic_tmp_dir, f),
-                joinPaths(
-                    cn_static_dir,
-                    f if "Italic" in f else f.replace(".ttf", "Italic.ttf"),
-                ),
-            )
-        shutil.rmtree(italic_tmp_dir)
-
-        run_build(
-            pool_size=pool_size,
-            fn=partial(optimize_cn_base, base_dir=cn_static_dir),
-            dir=cn_static_dir,
-        )
-        run(f"ftcli name del-mac-names -r {cn_static_dir}")
-        with open(f"{self.cn_static_dir}.sha256", "w") as f:
-            f.write(get_directory_hash(self.cn_static_dir))
-            f.flush()
-        print(f"Update {self.cn_static_dir}.sha256")
+    # def __instantiate_cn_base(
+    #     self, cn_variable_dir: str, cn_static_dir: str, pool_size: int
+    # ):
+    #     print("=========================================")
+    #     print("Instantiating CN Base font, be patient...")
+    #     print("=========================================")
+    #     run_build(
+    #         pool_size=pool_size,
+    #         fn=partial(
+    #             instantiate_cn_var, base_dir=cn_variable_dir, output_dir=cn_static_dir
+    #         ),
+    #         dir=cn_variable_dir,
+    #     )
+    #     run_build(
+    #         pool_size=pool_size,
+    #         fn=partial(optimize_cn_base, base_dir=cn_static_dir),
+    #         dir=cn_static_dir,
+    #     )
+    #     run(f"ftcli name del-mac-names -r {cn_static_dir}")
+    #     with open(f"{self.cn_static_dir}.sha256", "w") as f:
+    #         f.write(get_directory_hash(self.cn_static_dir))
+    #         f.flush()
+    #     print(f"Update {self.cn_static_dir}.sha256")
 
     def __check_file_count(
         self, dir: str, minCount: int = 16, end: str | None = None
@@ -838,22 +823,20 @@ def handle_ligatures(
     )
 
 
-def instantiate_cn_var(f: str, base_dir: str, output_dir: str):
-    if "Italic" in f:
-        output_dir = joinPaths(output_dir, "italic")
-    run(
-        f"ftcli converter var2static -out {output_dir} {joinPaths(base_dir, f)}",
-        log=True,
-    )
+# def instantiate_cn_var(f: str, base_dir: str, output_dir: str):
+#     run(
+#         f"ftcli converter var2static -out {output_dir} {joinPaths(base_dir, f)}",
+#         log=True,
+#     )
 
 
-def optimize_cn_base(f: str, base_dir: str):
-    font_path = joinPaths(base_dir, f)
-    print(f"✨ Optimize {font_path}")
-    run(f"ftcli font correct-contours {font_path}")
-    run(
-        f"ftcli font del-table -t kern -t GPOS {font_path}",
-    )
+# def optimize_cn_base(f: str, base_dir: str):
+#     font_path = joinPaths(base_dir, f)
+#     print(f"✨ Optimize {font_path}")
+#     run(f"ftcli font correct-contours {font_path}")
+#     run(
+#         f"ftcli font del-table -t kern -t GPOS {font_path}",
+#     )
 
 
 def parse_style_name(style_name_compact: str, skip_subfamily_list: list[str]):
@@ -1766,7 +1749,7 @@ def main(args: list[str] | None = None, version: str | None = None):
                 if should_use_cache:
                     continue
 
-            sha256, zip_file_name_without_ext = compress_folder(
+            sha256, zip_file_name_without_ext = archive_fonts(
                 family_name_compact=font_config.family_name_compact,
                 suffix=suffix,
                 source_file_or_dir_path=joinPaths(build_option.output_dir, f),

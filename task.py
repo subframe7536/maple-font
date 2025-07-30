@@ -42,6 +42,8 @@ def main():
     page_parser.add_argument("--woff2", action="store_true", help="Generate new woff2 fonts")
     page_parser.add_argument("--commit", action="store_true", help="Commit changes")
 
+    command.add_parser("cn-rebuild", help="Rebuild CN static font")
+
     args = parser.parse_args()
     if args.command == "nf":
         from source.py.task.nerdfont import nerd_font
@@ -61,6 +63,10 @@ def main():
         from source.py.task.page import page
 
         page("./maple-font-page", "./fonts/Variable", args.woff2, args.commit)
+    elif args.command == "cn-rebuild":
+        from source.py.task.cn_rebuild import cn_rebuild
+
+        cn_rebuild("./source/cn")
     else:
         print("Test only")
         from source.py.in_browser import main

@@ -212,24 +212,26 @@ def match_unicode_names(file_path: str) -> dict[str, str]:
 def verify_glyph_width(
     font: TTFont, expect_widths: list[int], file_name: str | None = None
 ):
-    print("Verify glyph width")
     result = []
     for name in font.getGlyphNames():
         width, _ = font["hmtx"][name]  # type: ignore
         if width not in expect_widths:
             result.append([name, width])
 
-    if result.__len__() > 0:
-        print(f"Every glyph's width should be in {expect_widths}, but these are not:")
-        for item in result:
-            print(f"{item[0]}  =>  {item[1]}")
+    if result.__len__() == 0:
+        print(f"✅ Verified glyph width in {file_name}")
+        return
 
-        raise Exception(
-            f"{file_name or 'The font'} may contain glyphs that width is not in {expect_widths}, which may broke monospace rule."
-        )
+    print(f"Every glyph's width should be in {expect_widths}, but these are not:")
+    for item in result:
+        print(f"{item[0]}  =>  {item[1]}")
+
+    raise Exception(
+        f"{file_name or 'The font'} may contain glyphs that width is not in {expect_widths}, which may broke monospace rule."
+    )
 
 
-def compress_folder(
+def archive_fonts(
     source_file_or_dir_path: str,
     target_parent_dir_path: str,
     family_name_compact: str,
