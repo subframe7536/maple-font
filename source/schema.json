@@ -58,7 +58,10 @@
       "default": true
     },
     "infinite_arrow": {
-      "type": ["boolean", "null"],
+      "type": [
+        "boolean",
+        "null"
+      ],
       "description": "Enable infinite arrow ligatures (Disabled in hinted font by default)",
       "default": null
     },

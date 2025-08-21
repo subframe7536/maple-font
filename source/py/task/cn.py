@@ -76,7 +76,7 @@ def cn(cn_root: str, pull: bool = False, rebuild: bool = False):
             url=f"https://{github_mirror}/subframe7536/maple-font/releases/download/cn-base/vfc.zip",
             zip_path="vfc.zip",
             output_dir=cn_root,
-            remove_zip=True
+            remove_zip=True,
         )
         return
 

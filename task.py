@@ -45,7 +45,9 @@ def main():
     page_parser.add_argument("--commit", action="store_true", help="Commit changes")
 
     cn = command.add_parser("cn", help="Rebuild CN static font")
-    cn.add_argument("--pull", action="store_true", help="pull the latest CN source files")
+    cn.add_argument(
+        "--pull", action="store_true", help="pull the latest CN source files"
+    )
     cn.add_argument("--rebuild", action="store_true", help="rebuild the CN static font")
 
     publish_parser = command.add_parser(

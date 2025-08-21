@@ -101,7 +101,7 @@ def main(zip_path: str, target_path: str, config: dict):
                     zip_out.writestr(file_info, output_io.read())
                     font.close()
             else:
-                print(f'Skip:  {file_name}')
+                print(f"Skip:  {file_name}")
                 zip_out.writestr(file_info, zip_in.read(file_info))
 
         zip_out.writestr(

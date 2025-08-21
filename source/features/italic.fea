@@ -1686,6 +1686,32 @@ feature cv01 {
 
 } cv01;
 
+feature cv02 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV02: [Regular Only] Alternative a with top arm, no effect in italic style";
+    };
+  };
+
+  # Placeholder
+  sub EMquad by SPC;
+
+} cv02;
+
+feature cv03 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV03: [Regular Only] Alternative i without left bottom bar";
+    };
+  };
+
+  # Placeholder
+  sub EMquad by SPC;
+
+} cv03;
+
 feature cv04 {
 
   cvParameters {
@@ -1720,6 +1746,84 @@ feature cv04 {
   sub u_l_l.liga by u_l_l.liga.cv04;
 
 } cv04;
+
+feature cv05 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV05: [Regular Only] Alternative g in double story style, no effect in italic style";
+    };
+  };
+
+  # Placeholder
+  sub EMquad by SPC;
+
+} cv05;
+
+feature cv06 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV06: [Regular Only] Alternative i without bottom bar, no effect in italic style";
+    };
+  };
+
+  # Placeholder
+  sub EMquad by SPC;
+
+} cv06;
+
+feature cv07 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV07: [Regular Only] Alternative J without top bar, no effect in italic style";
+    };
+  };
+
+  # Placeholder
+  sub EMquad by SPC;
+
+} cv07;
+
+feature cv08 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV08: [Regular Only] Alternative r with bottom bar, no effect in italic style";
+    };
+  };
+
+  # Placeholder
+  sub EMquad by SPC;
+
+} cv08;
+
+feature cv09 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV09: [Regular Only] Alternative 7 with middle bar, no effect in italic style";
+    };
+  };
+
+  # Placeholder
+  sub EMquad by SPC;
+
+} cv09;
+
+feature cv10 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV10: [Regular Only] Alternative Z and z with middle bar, no effect in italic style";
+    };
+  };
+
+  # Placeholder
+  sub EMquad by SPC;
+
+} cv10;
 
 feature cv31 {
 

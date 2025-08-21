@@ -1,7 +1,15 @@
 import source.py.feature.ast as ast
 from source.py.feature.cv import (
     cv01,
+    cv02,
+    cv03,
     cv04,
+    cv05,
+    cv06,
+    cv07,
+    cv08,
+    cv09,
+    cv10,
     cv31,
     cv32,
     cv33,
@@ -117,42 +125,59 @@ class_list_italic = [
 ]
 
 
-def cv_list_italic():
-    return [
-        cv01.cv01_feat(),
-        cv04.cv04_feat_italic,
-        cv31.cv31_feat_italic,
-        cv32.cv32_feat_italic,
-        cv33.cv33_feat_italic,
-        cv34.cv34_feat_italic,
-        cv35.cv35_feat_italic,
-        cv36.cv36_feat_italic,
-        cv37.cv37_feat_italic,
-        cv38.cv38_feat_italic,
-        cv39.cv39_feat_italic,
-        cv40.cv40_feat_italic,
-        cv41.cv41_feat_italic,
-        cv42.cv42_feat_italic,
-        cv43.cv43_feat_italic,
-        cv61.cv61_feat,
-        cv62.cv62_feat,
-        cv63.cv63_feat,
-        cv64.cv64_feat,
-        cv65.cv65_feat,
-    ]
+regular_prefix = "[Regular Only]"
 
 
-def ss_list_italic():
-    return [
-        ss01.ss01_feat,
-        ss02.ss02_feat,
-        ss03.ss03_feat,
-        ss04.ss04_feat,
-        ss05.ss05_feat,
-        ss06.ss06_feat,
-        ss07.ss07_feat,
-        ss08.ss08_feat,
-        ss09.ss09_feat,
-        ss10.ss10_feat,
-        ss11.ss11_feat,
-    ]
+def cv_list_italic(full: bool = False):
+    return ast.filter_empty(
+        [
+            cv01.cv01_feat(),
+            ast.clone_empty(cv02.cv02_feat_regular, regular_prefix),
+            ast.clone_empty(cv03.cv03_feat_regular, regular_prefix),
+            cv04.cv04_feat_italic,
+            ast.clone_empty(cv05.cv05_feat_regular, regular_prefix),
+            ast.clone_empty(cv06.cv06_feat_regular, regular_prefix),
+            ast.clone_empty(cv07.cv07_feat_regular, regular_prefix),
+            ast.clone_empty(cv08.cv08_feat_regular, regular_prefix),
+            ast.clone_empty(cv09.cv09_feat_regular, regular_prefix),
+            ast.clone_empty(cv10.cv10_feat_regular, regular_prefix),
+            cv31.cv31_feat_italic,
+            cv32.cv32_feat_italic,
+            cv33.cv33_feat_italic,
+            cv34.cv34_feat_italic,
+            cv35.cv35_feat_italic,
+            cv36.cv36_feat_italic,
+            cv37.cv37_feat_italic,
+            cv38.cv38_feat_italic,
+            cv39.cv39_feat_italic,
+            cv40.cv40_feat_italic,
+            cv41.cv41_feat_italic,
+            cv42.cv42_feat_italic,
+            cv43.cv43_feat_italic,
+            cv61.cv61_feat,
+            cv62.cv62_feat,
+            cv63.cv63_feat,
+            cv64.cv64_feat,
+            cv65.cv65_feat,
+        ],
+        full,
+    )
+
+
+def ss_list_italic(full: bool = False):
+    return ast.filter_empty(
+        [
+            ss01.ss01_feat,
+            ss02.ss02_feat,
+            ss03.ss03_feat,
+            ss04.ss04_feat,
+            ss05.ss05_feat,
+            ss06.ss06_feat,
+            ss07.ss07_feat,
+            ss08.ss08_feat,
+            ss09.ss09_feat,
+            ss10.ss10_feat,
+            ss11.ss11_feat,
+        ],
+        full,
+    )

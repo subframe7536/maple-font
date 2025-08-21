@@ -226,7 +226,9 @@ def tag_suffix_colon(text_list: list[str]):
     for text in text_list:
         text = text.lower()
         if text not in built_in_tag_text:
-            raise Exception(f"tag with suffix `:` must be in {built_in_tag_text}, but '{text}' is not")
+            raise Exception(
+                f"tag with suffix `:` must be in {built_in_tag_text}, but '{text}' is not"
+            )
 
         result.append(
             ast.subst_liga(
@@ -280,9 +282,11 @@ def get_lookup(cls_var: ast.Clazz):
         #             example: `// TODO: code review`
         #   Limitation: the first glyph before will be overlapped
         # ---------------------------------------------------------
-        tag_suffix_colon([
-            # "todo",
-            # "mark",
-        ])
+        tag_suffix_colon(
+            [
+                # "todo",
+                # "mark",
+            ]
+        ),
         # =========================================================
     ]

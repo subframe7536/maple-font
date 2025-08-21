@@ -7,5 +7,5 @@ def ss05_subst():
 
 ss05_name = 'Revert thin backslash in escape symbols (`\\\\`, `\\"`, `\\.` ...)'
 ss05_feat = ast.StylisticSet(
-    id=5, desc=ss05_name, content=ss05_subst(), version="7.0", sample="\\\\"
+    id=5, desc=ss05_name, content=ss05_subst(), version="7.0", example="\\\\"
 )

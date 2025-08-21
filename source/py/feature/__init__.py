@@ -37,7 +37,7 @@ normal_enabled_features = [
 ]
 
 
-cv_list_cn = [
+cv_list_cn: list[ast.FeatureWithDocs] = [
     cv96.cv96_feat_cn,
     cv97.cv97_feat_cn,
     cv98.cv98_feat_cn,
@@ -75,14 +75,18 @@ def generate_fea_string(
     infinite_helper.set(enable_infinite)
 
     class_list = class_list_italic if is_italic else class_list_regular
-    cv_list = cv_list_italic() if is_italic else cv_list_regular()
-    ss_list = ss_list_italic() if is_italic else ss_list_regular()
+    cv_list = cv_list_italic(True) if is_italic else cv_list_regular(True)
+    ss_list = ss_list_italic(True) if is_italic else ss_list_regular(True)
 
     if class_list[-2].name != "Var" or class_list[-1].name != "HexLetter":
         raise TypeError("Invalid class_list, must ends with [@Var, @HexLetter]")
 
     calt_feat = get_calt(
-        class_list[-2], class_list[-1], is_italic=is_italic, is_normal=is_normal, enable_tag=enable_tag
+        class_list[-2],
+        class_list[-1],
+        is_italic=is_italic,
+        is_normal=is_normal,
+        enable_tag=enable_tag,
     )
 
     # clear calt for no ligature
@@ -115,7 +119,6 @@ def generate_fea_string(
     if not calt_feat.content:
         calt_feat = None
 
-
     return ast.create(
         [
             class_list,
@@ -142,8 +145,8 @@ def get_all_calt_text():
         if isinstance(item, ast.Lookup) and item.desc:
             if item.name == "escape":
                 result.append(item.desc.replace("\\ ", "\\\\ "))
-            elif item.name.startswith('infinite'):
-                result.extend(item.desc.split(' '))
+            elif item.name.startswith("infinite"):
+                result.extend(item.desc.split(" "))
             elif not item.name.endswith("__"):
                 result.append(item.desc)
 
@@ -176,13 +179,13 @@ zero_desc = "Dot style `0`"
 
 
 def get_version_info(
-    features: list[ast.CharacterVariant] | list[ast.StylisticSet],
+    features: list[ast.FeatureWithDocs],
 ) -> dict[str, dict[str, str]]:
     result = {}
     for item in features:
         if item.version not in result:
             result[item.version] = {}
-        result[item.version][item.tag] = item.sample
+        result[item.version][item.tag] = item.example
     return dict(sorted(result.items()))
 
 
@@ -198,6 +201,7 @@ def get_cv_version_info() -> dict[str, dict[str, str]]:
 
 italic_code_pattern = re.compile(r"`([^`]+)`")
 
+
 def get_cv_italic_desc():
     return "\n".join(
         [
@@ -209,7 +213,9 @@ def get_cv_italic_desc():
 
 
 def get_cv_italic_version_info() -> dict[str, dict[str, str]]:
-    return get_version_info([cv for cv in cv_list_italic() if cv.id > 30 and cv.id < 61])
+    return get_version_info(
+        [cv for cv in cv_list_italic() if cv.id > 30 and cv.id < 61]
+    )
 
 
 def get_cv_cn_desc():
@@ -242,7 +248,11 @@ def get_ss_version_info() -> dict[str, dict[str, str]]:
 
 
 __total_feat_list = (
-    cv_list_regular() + cv_list_italic() + cv_list_cn + ss_list_regular() + ss_list_italic()
+    cv_list_regular()
+    + cv_list_italic()
+    + cv_list_cn
+    + ss_list_regular()
+    + ss_list_italic()
 )
 
 
