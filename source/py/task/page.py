@@ -28,7 +28,9 @@ def run_git_command(args: list, cwd=None, check=True):
         sys.exit(1)
 
 
-def page(submodule_path: str, var_dir: str, woff2: bool = False, commit: bool = False) -> None:
+def page(
+    submodule_path: str, var_dir: str, woff2: bool = False, commit: bool = False
+) -> None:
     # Switch to main branch
     abs_submodule_path = os.path.abspath(submodule_path)
     if commit:
@@ -62,7 +64,7 @@ def page(submodule_path: str, var_dir: str, woff2: bool = False, commit: bool = 
     print("Update config")
     data = read_json("config.json")
     del data["$schema"]
-    write_json(joinPaths(feature_data_base, "config.json"), data)
+    write_json(joinPaths(submodule_path, "data", "config.json"), data)
 
     print("Update script")
     data = read_text(joinPaths("source", "py", "in_browser.py"))

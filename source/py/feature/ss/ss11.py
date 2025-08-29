@@ -18,9 +18,7 @@ def ss11_subst():
             target=ast.gly("||=", ".ss11"),
             ign_prefix="|",
             ign_suffix="|",
-            extra_rules=[
-                ast.subst(ast.SPC, ast.gly("||"), "=", ast.SPC)
-            ]
+            extra_rules=[ast.subst(ast.SPC, ast.gly("||"), "=", ast.SPC)],
         ),
         ast.subst_liga(
             "/=",
@@ -131,5 +129,5 @@ def ss11_subst():
 
 ss11_name = "Equal and extra punctuation ligatures (`|=`, `/=`, `?=`, `&=`, ...)"
 ss11_feat = ast.StylisticSet(
-    id=11, desc=ss11_name, content=ss11_subst(), version="7.1", sample="|="
+    id=11, desc=ss11_name, content=ss11_subst(), version="7.1", example="|="
 )

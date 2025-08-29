@@ -603,6 +603,27 @@ OpenType Feature ファイルを直接編集して実現したい場合、`build
 
 Fira Codeに着想を得て、このフォントはv7.3からデフォルトで無限の矢印リガチャを有効にします。何らかの理由で、hintedフォントを使用するとリガチャがずれてしまうため、v7.4のhintedバージョンではデフォルトでそれを削除しました。`config.json` に `"keep_infinite_arrow": true` を設定するか、CLI フラグに `--keep-infinite-arrow` を追加してください。詳細は [#508](https://github.com/subframe7536/maple-font/issues/508) を参照してください
 
+#### カスタムフォントウェイトマッピング
+
+`config.json` の `"weight_mapping"` 項目を通じて、静的なフォントのウェイトを変更できます。
+
+たとえば、通常のフォントウェイトを少し軽くしたい場合は、`"weight_mapping.regular"` の数値を下げるだけです（この例では 400 から 350 に変更）：
+
+```json
+{
+  "weight_mapping": {
+    "thin": 100,
+    "extralight": 200,
+    "light": 300,
+    "regular": 350,
+    "semibold": 500,
+    "medium": 600,
+    "bold": 700,
+    "extrabold": 800
+  }
+}
+```
+
 ### 中国語バージョン
 
 CN バージョンはデフォルトで無効になっています。`python build.py` を `--cn` フラグで実行すると、CN ベースフォント（約 111 MB）が GitHub からダウンロードされます。
@@ -627,12 +648,12 @@ CN バージョンはデフォルトで無効になっています。`python bui
 
 ```
 usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--apply-fea-file]
-                [--hinted | --no-hinted] [--liga | --no-liga]
-                [--keep-infinite-arrow] [--remove-tag-liga]
-                [--line-height LINE_HEIGHT] [--nf-mono] [--nf-propo] [--cn-narrow]
-                [--cn-scale-factor CN_SCALE_FACTOR] [--nf | --no-nf] [--cn |
-                --no-cn] [--cn-both] [--ttf-only] [--least-styles] [--font-patcher]
-                [--cache] [--cn-rebuild] [--archive]
+                [--hinted | --no-hinted] [--liga | --no-liga] [--keep-infinite-arrow]
+                [--infinite-arrow] [--remove-tag-liga] [--line-height LINE_HEIGHT]
+                [--nf-mono] [--nf-propo] [--cn-narrow]
+                [--cn-scale-factor CN_SCALE_FACTOR] [--nf | --no-nf] [--cn | --no-cn]
+                [--cn-both] [--ttf-only] [--least-styles] [--font-patcher] [--cache]
+                [--cn-rebuild] [--archive]
 
 ✨ Builder and optimizer for Maple Mono
 
@@ -654,7 +675,10 @@ Feature Options:
   --liga                すべてのリガチャを保持（デフォルト）
   --no-liga             すべてのリガチャを削除
   --keep-infinite-arrow
-                        ヒンテッドフォントで無限矢印リガチャを保持します（デフォルトで削除）
+                        （非推奨）ヒンテッドフォントで無限矢印リガチャを保持します
+                        （デフォルトで削除）
+  --infinite-arrow      無限アローリガチャを有効にする（hinted フォントではデフォルト
+                        で無効）
   --remove-tag-liga     純テキストタグのリガチャ、例えば `[TODO]` を削除する。
   --line-height LINE_HEIGHT
                         行の高さのスケールファクター（例：1.1）

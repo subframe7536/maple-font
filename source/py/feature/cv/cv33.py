@@ -11,6 +11,7 @@ def cv33_subst():
             result.append(ast.gly("ill", suf))
 
         return result
+
     return ast.subst_map(
         [
             *GLYPHS_I,

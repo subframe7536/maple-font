@@ -1,4 +1,16 @@
 import json
+from os import environ
+
+default_weight_map = {
+    "thin": 100,
+    "extralight": 200,
+    "light": 300,
+    "regular": 400,
+    "semibold": 500,
+    "medium": 600,
+    "bold": 700,
+    "extrabold": 800,
+}
 
 
 def write_text(file_path: str, content: str, mode: str = "w") -> None:
@@ -23,3 +35,20 @@ def read_json(file_path: str) -> dict:
 def read_text(file_path: str) -> str:
     with open(file_path, "r", encoding="utf-8") as file:
         return file.read()
+
+
+def is_ci():
+    ci_envs = [
+        "JENKINS_HOME",
+        "TRAVIS",
+        "CIRCLECI",
+        "GITHUB_ACTIONS",
+        "GITLAB_CI",
+        "TF_BUILD",
+    ]
+
+    for env in ci_envs:
+        if environ.get(env):
+            return True
+
+    return False

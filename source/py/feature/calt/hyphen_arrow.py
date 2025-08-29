@@ -111,18 +111,16 @@ def get_lookup(cls_var: ast.Clazz):
                 (None, None),
                 ("|", [cls_var]),
                 ("|", ["<", cls_var]),
-            ]
+            ],
         ),
         ast.subst_liga(
             "--",
             lookup_name=ast.gly("--", "__REGEX__"),
-            extra_rules=[
-                ast.ign(ast.cls("<", ">", "-", "!"), "-", ["-", "<"])
-            ],
+            extra_rules=[ast.ign(ast.cls("<", ">", "-", "!"), "-", ["-", "<"])],
             surround=[
                 ("|", [cls_var]),
                 (None, ["<", cls_var]),
-            ]
+            ],
         ),
         infinite_helper.ignore_when_disabled(
             ast.subst_liga(

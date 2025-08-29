@@ -1,6 +1,7 @@
 from source.py.feature import ast
 from source.py.feature.base.clazz import cls_comma
 
+
 def get_lookup():
     return [
         ast.subst_liga(

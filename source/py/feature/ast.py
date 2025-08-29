@@ -96,9 +96,28 @@ class Feature:
 REGEXP = r"\(.*\)"
 
 
-class CharacterVariant(Feature):
-    __slots__ = ("id", "desc", "sample")
+class FeatureWithDocs(Feature):
+    __slots__ = ("id", "desc", "example")
 
+    def __init__(
+        self,
+        id: int,
+        tag: str,
+        desc: str,
+        content: Clazz | Lookup | Line | list,
+        version: str,
+        example: str,
+    ):
+        self.id = id
+        self.desc = desc
+        self.example = example
+        Feature.__init__(self, tag, content, version)
+
+    def desc_item(self):
+        return f"- [v{self.version}] {self.tag}: {self.desc}"
+
+
+class CharacterVariant(FeatureWithDocs):
     def __init__(
         self,
         id: int,
@@ -111,13 +130,20 @@ class CharacterVariant(Feature):
             raise TypeError(
                 f"id should > 0 and < 100 in Character Variants, current is {id}"
             )
-        self.id = id
-        self.desc = desc
-        self.sample = example
-        Feature.__init__(self, f"cv{id:02d}", content, version)
+        FeatureWithDocs.__init__(
+            self,
+            id=id,
+            tag=f"cv{id:02d}",
+            desc=desc,
+            content=content,
+            version=version,
+            example=example,
+        )
 
     def get_name_lines(self) -> list[Line]:
-        _name = re.sub(REGEXP, "", self.desc.replace("`", "")).strip()
+        _name = re.sub(
+            REGEXP, "", self.desc.replace("`", "").replace(EMPTY_FEAT_SYMBOL, " ")
+        ).strip()
         return [
             Line("cvParameters {"),
             Line("FeatUILabelNameID {", 1),
@@ -127,33 +153,33 @@ class CharacterVariant(Feature):
             Line(""),
         ]
 
-    def desc_item(self) -> str:
-        return f"- [v{self.version}] {self.tag}: {self.desc}"
 
-
-class StylisticSet(Feature):
-    __slots__ = ("id", "desc", "sample")
-
+class StylisticSet(FeatureWithDocs):
     def __init__(
         self,
         id: int,
         desc: str,
         content: Clazz | Lookup | Line | list,
         version: str,
-        sample: str,
+        example: str,
     ):
         if id < 1 or id > 20:
             raise TypeError(
                 f"id should > 0 and < 20 in Stylistic Sets, current is {id}"
             )
 
-        self.id = id
-        self.desc = desc
-        self.sample = sample
-        Feature.__init__(self, f"ss{id:02d}", content, version)
+        FeatureWithDocs.__init__(
+            self,
+            id=id,
+            tag=f"ss{id:02d}",
+            desc=desc,
+            content=content,
+            version=version,
+            example=example,
+        )
 
     def get_name_lines(self) -> list[Line]:
-        _name = re.sub(REGEXP, "", self.desc.replace("`", "")).strip()
+        _name = re.sub(REGEXP, "", self.desc.replace("`", " ")).strip()
         return [
             Line("featureNames {"),
             Line(f'name "{self.tag.upper()}: {_name}";', 1),
@@ -161,9 +187,9 @@ class StylisticSet(Feature):
             Line(""),
         ]
 
-    def desc_item(self):
-        return f"- [v{self.version}] {self.tag}: {self.desc}"
 
+# Symbol for empty feature in its desc
+EMPTY_FEAT_SYMBOL = "$$$"
 
 __PUNCTUATION_MAP = {
     "{": "braceleft",
@@ -533,3 +559,31 @@ def flatten_to_lines(
             raise TypeError(f"Invalid item to flatten: {item}")
 
     return result
+
+
+def clone_empty(feature: FeatureWithDocs, desc_prefix: str = ""):
+    content = [Line("# Placeholder"), subst(None, "EMquad", None, SPC)]
+    if isinstance(feature, CharacterVariant):
+        return CharacterVariant(
+            id=feature.id,
+            desc=desc_prefix + EMPTY_FEAT_SYMBOL + feature.desc,
+            content=content,
+            version=feature.version,
+            example=feature.example,
+        )
+    if isinstance(feature, StylisticSet):
+        return StylisticSet(
+            id=feature.id,
+            desc=desc_prefix + EMPTY_FEAT_SYMBOL + feature.desc,
+            content=content,
+            version=feature.version,
+            example=feature.example,
+        )
+    raise Exception(f"Unkown feature: {feature.tag}")
+
+
+def filter_empty(features: list[FeatureWithDocs], full: bool):
+    if full:
+        return features
+
+    return list(filter(lambda x: EMPTY_FEAT_SYMBOL not in x.desc, features))

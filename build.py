@@ -19,6 +19,7 @@ from source.py.utils import (
     adjust_line_height,
     check_font_patcher,
     check_directory_hash,
+    patch_instance,
     verify_glyph_width,
     archive_fonts,
     download_cn_base_font,
@@ -30,6 +31,7 @@ from source.py.utils import (
     set_font_name,
     joinPaths,
     merge_ttfonts,
+    default_weight_map
 )
 from source.py.freeze import freeze_feature, get_freeze_config_str, is_enable
 from source.py.feature import (
@@ -39,7 +41,7 @@ from source.py.feature import (
 )
 
 
-FONT_VERSION = "v7.4"
+FONT_VERSION = "v7.6"
 # =========================================================================================
 
 
@@ -170,7 +172,14 @@ def parse_args(args: list[str] | None = None):
         "--keep-infinite-arrow",
         default=None,
         action="store_true",
-        help="Keep infinite arrow ligatures in hinted font (Removed by default)",
+        help="(Deprecated) Keep infinite arrow ligatures in hinted font (Removed by default)",
+    )
+    feature_group.add_argument(
+        "--infinite-arrow",
+        default=None,
+        action="store_true",
+        dest="infinite_arrow",
+        help="Enable infinite arrow ligatures (Disabled in hinted font by default)",
     )
     feature_group.add_argument(
         "--remove-tag-liga",
@@ -301,9 +310,10 @@ class FontConfig:
         # whether to enable ligature
         self.enable_liga = True
         # whether to enable infinite arrow ligatures in hinted font
-        self.keep_infinite_arrow = False
+        self.infinite_arrow = None
         # whether to remove plain text ligatures like `[TODO]`
         self.remove_tag_liga = False
+        self.weight_mapping = default_weight_map
         self.feature_freeze = {
             "cv01": "ignore",
             "cv02": "ignore",
@@ -408,9 +418,10 @@ class FontConfig:
                     "use_hinted",
                     "enable_liga",
                     "ttfautohint_param",
-                    "keep_infinite_arrow",
+                    "infinite_arrow",
                     "line_height",
                     "github_mirror",
+                    "weight_mapping",
                     "feature_freeze",
                     "nerd_font",
                     "cn",
@@ -465,8 +476,8 @@ class FontConfig:
         if args.nerd_font is not None:
             self.nerd_font["enable"] = args.nerd_font
 
-        if args.keep_infinite_arrow:
-            self.keep_infinite_arrow = True
+        if args.infinite_arrow:
+            self.infinite_arrow = True
 
         if args.remove_tag_liga:
             self.remove_tag_liga = True
@@ -501,6 +512,14 @@ class FontConfig:
 
         if args.font_patcher:
             self.nerd_font["use_font_patcher"] = True
+
+        if args.cn_rebuild:
+            print(
+                "⚠️ `--cn-rebuild` is deprecated. Run `python task.py cn-rebuild` instead"
+            )
+            self.cn["enable"] = True
+            # self.cn["clean_cache"] = True
+            # self.cn["use_static_base_font"] = False
 
         name_arr = [word.capitalize() for word in self.family_name.split(" ")]
         if self.use_normal_preset:
@@ -573,15 +592,31 @@ class FontConfig:
                 )
             return
 
-        if is_hinted and self.keep_infinite_arrow:
+        # If is hinted and keep inf liga, skip patching feature
+        if is_hinted and self.infinite_arrow:
             return
+
+        # If `keep` is None
+        # - hinted font will disable inf
+        # - unhinted font will enable inf
+        # If `keep` is True
+        # - hinted font will enable inf
+        # - unhinted font will enable inf
+        # If `keep` is False
+        # - hinted font will disable inf
+        # - unhinted font will disable inf
+        enable_infinite = (
+            bool(self.infinite_arrow)
+            if self.infinite_arrow is not None
+            else not is_hinted
+        )
 
         fea_str = generate_fea_string(
             is_italic=is_italic,
             is_cn=is_cn,
             is_normal=self.use_normal_preset,
             is_calt=self.enable_liga,
-            enable_infinite=True if is_hinted is None else self.keep_infinite_arrow,
+            enable_infinite=enable_infinite,
             enable_tag=not self.remove_tag_liga,
             variable_enabled_feature_list=[
                 key for key, val in self.feature_freeze.items() if is_enable(val)
@@ -1001,6 +1036,12 @@ def update_font_names(
     preferred_family_name: str | None = None,  # NameID 16
     preferred_style_name: str | None = None,  # NameID 17
 ):
+    # Reported in #598
+    # Why: https://github.com/ryanoasis/nerd-fonts/discussions/891#discussioncomment-3471991
+    if len(family_name) > 31:
+        print(
+            f"⚠️ The family name [{family_name}] is too long (> 31) for some old Windows softwares"
+        )
     set_font_name(font, family_name, 1)
     set_font_name(font, style_name, 2)
     set_font_name(font, unique_identifier, 3)
@@ -1028,10 +1069,8 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
     run(f"ftcli fix monospace {source_path}")
     run(f"ftcli name strip-names {source_path}")
     run(f"ftcli font correct-contours {source_path}")
-
-    if not font_config.debug:
-        run(f"ftcli ttf dehint {source_path}")
-        run(f"ftcli fix transformed-components {source_path}")
+    run(f"ftcli ttf dehint {source_path}")
+    run(f"ftcli fix transformed-components {source_path}")
 
     font = TTFont(source_path)
 
@@ -1094,7 +1133,7 @@ def build_mono(f: str, font_config: FontConfig, build_option: BuildOption):
     target_path = joinPaths(build_option.output_ttf, f"{postscript_name}.ttf")
     font.save(target_path)
 
-    if font_config.ttf_only:
+    if font_config.ttf_only or font_config.debug:
         return
 
     # Woff2 version
@@ -1579,6 +1618,8 @@ def main(args: list[str] | None = None, version: str | None = None):
             if is_italic:
                 add_ital_axis_to_stat(font)
 
+            patch_instance(font, font_config.weight_mapping)
+
             verify_glyph_width(
                 font=font,
                 expect_widths=font_config.get_valid_glyph_width_list(),
@@ -1704,6 +1745,7 @@ def main(args: list[str] | None = None, version: str | None = None):
         result = {
             "version": FONT_VERSION,
             "family_name": font_config.family_name,
+            "weight_mapping": font_config.weight_mapping,
             "use_hinted": font_config.use_hinted,
             "ligature": font_config.enable_liga,
             "feature_freeze": font_config.feature_freeze,

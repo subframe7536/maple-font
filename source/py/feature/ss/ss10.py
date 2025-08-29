@@ -22,5 +22,5 @@ ss10_name = (
     "Approximately equal to and approximately not equal to ligatures (`=~`, `!~`)"
 )
 ss10_feat = ast.StylisticSet(
-    id=10, desc=ss10_name, content=ss10_subst(), version="7.1", sample="=~"
+    id=10, desc=ss10_name, content=ss10_subst(), version="7.1", example="=~"
 )

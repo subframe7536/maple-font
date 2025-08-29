@@ -124,7 +124,7 @@ typing-extensions==4.14.0 ; python_full_version < '3.11'
     # via rich
 ufo-extractor==0.8.1
     # via foundrytools
-ufo2ft==3.5.0
+ufo2ft==3.5.1
     # via foundrytools
 ufolib2==0.17.1
     # via glyphslib
@@ -138,7 +138,7 @@ win32-setctime==1.2.0 ; sys_platform >= 'win32'
     # via
     #   foundrytools-cli
     #   loguru
-xattr==1.1.4 ; sys_platform == 'darwin'
+xattr==1.2.0 ; sys_platform == 'darwin'
     # via fonttools
 zopfli==0.2.3.post1
     # via fonttools

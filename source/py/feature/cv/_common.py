@@ -56,12 +56,20 @@ GLYPHS_L = [
     "lslash",
 ]
 
-GLYPHS_ONE = [
+GLYPHS_1 = [
     "one",
     "one.dnom",
     "one.numr",
     "oneinferior",
     "onesuperior",
+]
+
+GLYPHS_7 = [
+    "seven",
+    "seven.dnom",
+    "seven.numr",
+    "seveninferior",
+    "sevensuperior",
 ]
 
 GLYPHS_G = [
@@ -86,4 +94,15 @@ GLYPHS_R = [
     "racute",
     "rcaron",
     "rcommaaccent",
+]
+
+GLYPHS_Z_z = [
+    "Z",
+    "Zacute",
+    "Zcaron",
+    "Zdotaccent",
+    "z",
+    "zacute",
+    "zcaron",
+    "zdotaccent",
 ]

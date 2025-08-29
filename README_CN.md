@@ -609,6 +609,27 @@ OpenType Feature 可以控制字体的内置变体和连字。您可以通过修
 
 受 Fira Code 的启发，从 v7.3 开始，该字体默认启用无限箭头连字。由于某种原因，在使用 Hinted 字体时连字会错位，因此在 v7.4 的 Hinted 版本中默认将其移除。您可以在 `config.json` 中设置 `"keep_infinite_arrow": true`，或在命令行标志中添加 `--keep-infinite-arrow`。详情见 [#508](https://github.com/subframe7536/maple-font/issues/508)
 
+#### 自定义字重映射
+
+您可以通过 `config.json` 中的 `"weight_mapping"` 项修改静态字体粗细。
+
+例如，如果您想让常规字重稍微细一些，只需将 `"weight_mapping.regular"` 的数值降低（在此示例中从 400 降到 350）：
+
+```json
+{
+  "weight_mapping": {
+    "thin": 100,
+    "extralight": 200,
+    "light": 300,
+    "regular": 350,
+    "semibold": 500,
+    "medium": 600,
+    "bold": 700,
+    "extrabold": 800
+  }
+}
+```
+
 ### 中文版本
 
 默认情况下不会生成中文字体，运行 `python build.py` 时添加 `--cn` 参数，中文基字（约 111 MB）将从 GitHub 下载。
@@ -633,12 +654,12 @@ OpenType Feature 可以控制字体的内置变体和连字。您可以通过修
 
 ```
 usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--apply-fea-file]
-                [--hinted | --no-hinted] [--liga | --no-liga]
-                [--keep-infinite-arrow] [--remove-tag-liga]
-                [--line-height LINE_HEIGHT] [--nf-mono] [--nf-propo] [--cn-narrow]
-                [--cn-scale-factor CN_SCALE_FACTOR] [--nf | --no-nf] [--cn |
-                --no-cn] [--cn-both] [--ttf-only] [--least-styles] [--font-patcher]
-                [--cache] [--cn-rebuild] [--archive]
+                [--hinted | --no-hinted] [--liga | --no-liga] [--keep-infinite-arrow]
+                [--infinite-arrow] [--remove-tag-liga] [--line-height LINE_HEIGHT]
+                [--nf-mono] [--nf-propo] [--cn-narrow]
+                [--cn-scale-factor CN_SCALE_FACTOR] [--nf | --no-nf] [--cn | --no-cn]
+                [--cn-both] [--ttf-only] [--least-styles] [--font-patcher] [--cache]
+                [--cn-rebuild] [--archive]
 
 ✨ Builder and optimizer for Maple Mono
 
@@ -659,7 +680,8 @@ Feature Options:
   --liga                保留所有连字（默认）
   --no-liga             删除所有连字
   --keep-infinite-arrow
-                        在 hinted 字体中保留无限箭头连字（默认删除）
+                        （弃用）在 hinted 字体中保留无限箭头连字（默认删除）
+  --infinite-arrow      开启无限箭头连字 (默认在 hinted 格式中禁用)
   --remove-tag-liga     移除纯文本标签连字，例如 `[TODO]`
   --line-height LINE_HEIGHT
                         行高的缩放因子 (例如 1.1)

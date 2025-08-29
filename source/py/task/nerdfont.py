@@ -17,7 +17,9 @@ family_name = "Maple Mono"
 font_forge_bin = get_font_forge_bin()
 
 if not path.exists(base_font_path):
-    print("font not exist, please run this command first:\n\n    python build.py --ttf-only --no-nerd-font --least-styles\n")
+    print(
+        "font not exist, please run this command first:\n\n    python build.py --ttf-only --no-nerd-font --least-styles\n"
+    )
     exit(1)
 
 
@@ -100,15 +102,19 @@ def get_nerd_font_patcher_args(mono: bool, propo: bool = False):
 
     return _nf_args
 
+
 def get_font_suffix(mono: bool, propo: bool) -> str:
     """Determine the suffix for the font name and file path."""
     if mono and propo:
-        raise ValueError("Cannot build both `mono` and `propo` glyphs versions simultaneously.")
+        raise ValueError(
+            "Cannot build both `mono` and `propo` glyphs versions simultaneously."
+        )
     if mono:
         return "Mono"
     elif propo:
         return "Propo"
     return ""
+
 
 def build_nf(mono: bool, propo: bool = False):
     suffix = get_font_suffix(mono, propo)
