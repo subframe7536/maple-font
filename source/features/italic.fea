@@ -1941,7 +1941,6 @@ feature cv35 {
   sub lcaron by lcaron.cv35;
   sub lcommaaccent by lcommaaccent.cv35;
   sub ldot by ldot.cv35;
-  sub lslash by lslash.cv35;
   sub C_l.liga by C_l.liga.cv35;
   sub a_l.liga by a_l.liga.cv35;
   sub c_l.liga by c_l.liga.cv35;
@@ -1960,7 +1959,6 @@ feature cv35 {
   sub lcaron.cv04 by lcaron.cv35;
   sub lcommaaccent.cv04 by lcommaaccent.cv35;
   sub ldot.cv04 by ldot.cv35;
-  sub lslash.cv04 by lslash.cv35;
   sub C_l.liga.cv04 by C_l.liga.cv35;
   sub a_l.liga.cv04 by a_l.liga.cv35;
   sub c_l.liga.cv04 by c_l.liga.cv35;
