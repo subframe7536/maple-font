@@ -113,6 +113,7 @@ OpenType Features are not supported, you need to custom build to freeze features
 - [v7.1] cv08: Alternative `r` with bottom bar, no effect in italic style
 - [v7.5] cv09: Alternative `7` with middle bar, no effect in italic style
 - [v7.5] cv10: Alternative `Z` and `z` with middle bar, no effect in italic style
+- [v7.7] cv11: Alternative `f` with bottom bar
 - [v7.1] cv61: Alternative `,` and `;` with straight tail
 - [v7.1] cv62: Alternative `?` with larger openings
 - [v7.1] cv63: Alternative `<=` in arrow style
@@ -137,6 +138,7 @@ OpenType Features are not supported, you need to custom build to freeze features
 - [v7.1] cv41: Alternative italic _`r`_ with bottom bar
 - [v7.5] cv42: Alternative italic _`7`_ with middle bar
 - [v7.5] cv43: Alternative italic _`Z`_ and _`z`_ with middle bar
+- [v7.7] cv44: Alternative Italic _`f`_ with bottom bar
 <!-- CV-IT -->
 
 #### CN Only

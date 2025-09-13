@@ -214,6 +214,10 @@
           "description": "[v7.5] Alternative 'Z' and 'z' with middle bar, no effect in italic style",
           "$ref": "#/definitions/freeze_options"
         },
+        "cv11": {
+          "description": "[v7.7] Alternative 'f' with bottom bar",
+          "$ref": "#/definitions/freeze_options"
+        },
         "cv31": {
           "description": "[v7.0] Alternative italic 'a' with top arm",
           "$ref": "#/definitions/freeze_options"
@@ -264,6 +268,10 @@
         },
         "cv43": {
           "description": "[v7.5] Alternative italic 'Z' and 'z' with middle bar",
+          "$ref": "#/definitions/freeze_options"
+        },
+        "cv44": {
+          "description": "[v7.7] Alternative Italic 'f' with bottom bar",
           "$ref": "#/definitions/freeze_options"
         },
         "cv61": {

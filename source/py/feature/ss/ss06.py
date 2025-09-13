@@ -28,6 +28,7 @@ def ss06_subst():
             ast.gly("ull"),
             ast.gly("ff"),
             ast.gly("ff", ".cv32"),
+            ast.gly("ff", ".cv44"),
             ast.gly("tt"),
         ],
         target_suffix=".ss06",

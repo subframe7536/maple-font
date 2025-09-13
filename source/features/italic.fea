@@ -1827,6 +1827,19 @@ feature cv10 {
 
 } cv10;
 
+feature cv11 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV11: [Regular Only] Alternative f with bottom bar";
+    };
+  };
+
+  # Placeholder
+  sub EMquad by space;
+
+} cv11;
+
 feature cv31 {
 
   cvParameters {
@@ -2174,6 +2187,21 @@ feature cv43 {
 
 } cv43;
 
+feature cv44 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV44: Alternative Italic f with bottom bar";
+    };
+  };
+
+  sub f by f.cv44;
+  sub f_f.liga by f_f.liga.cv44;
+  sub f.cv32 by f.cv44;
+  sub f_f.liga.cv32 by f_f.liga.cv44;
+
+} cv44;
+
 feature cv61 {
 
   cvParameters {
@@ -2470,6 +2498,7 @@ feature ss06 {
   sub u_l_l.liga by u_l_l.liga.ss06;
   sub f_f.liga by f_f.liga.ss06;
   sub f_f.liga.cv32 by f_f.liga.cv32.ss06;
+  sub f_f.liga.cv44 by f_f.liga.cv44.ss06;
   sub t_t.liga by t_t.liga.ss06;
 
 } ss06;
