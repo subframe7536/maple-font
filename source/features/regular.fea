@@ -533,6 +533,8 @@ feature calt {
   lookup greater_greater.liga {
     ignore sub [less slash greater] greater' greater;
     ignore sub greater' greater greater;
+    sub greater' greater dollar by SPC;
+    sub SPC greater' by greater_greater.liga;
     sub @QuoteLike SPC greater' @QuoteLike by greater_greater.liga;
     sub @QuoteLike greater' greater @QuoteLike by SPC;
     sub SPC greater' [slash @Number @EqualHyphen] by greater_greater.liga;

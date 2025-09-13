@@ -42,6 +42,10 @@ def get_lookup(cls_var: ast.Clazz):
         ),
         ast.subst_liga(
             ">>",
+            extra_rules=[
+                ast.subst(None, ">", [">", "$"], ast.SPC),
+                ast.subst(ast.SPC, ">", None, ast.gly(">>")),
+            ],
             ign_prefix=ast.cls("<", "/", ">"),
             ign_suffix=">",
             surround=surround,
