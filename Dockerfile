@@ -21,7 +21,7 @@ COPY . .
 VOLUME /app/fonts
 
 # Default build arguments
-ENV BUILD_ARGS=""
+ENV BUILD_ARGS="--cn"
 
 # Run the build script with optional arguments
 ENTRYPOINT ["sh", "-c", "python build.py $BUILD_ARGS"]
