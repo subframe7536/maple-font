@@ -31,6 +31,7 @@ from source.py.feature.cv import (
     cv63,
     cv64,
     cv65,
+    cv66,
 )
 from source.py.feature.ss import (
     ss01,
@@ -148,6 +149,7 @@ def cv_list_regular(full: bool = False):
             cv63.cv63_feat,
             cv64.cv64_feat,
             cv65.cv65_feat,
+            cv66.cv66_feat,
         ],
         full,
     )

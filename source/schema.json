@@ -294,6 +294,10 @@
           "description": "[v7.3] Alternative '&' in handwriting style",
           "$ref": "#/definitions/freeze_options"
         },
+        "cv66": {
+          "description": "[v7.8] Alternative pipe arrows",
+          "$ref": "#/definitions/freeze_options"
+        },
         "cv96": {
           "description": "[v7.0] Full width quotes ('\u201c' / '\u201d' / '\u2018' / '\u2019')",
           "$ref": "#/definitions/freeze_options"
