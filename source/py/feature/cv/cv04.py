@@ -1,10 +1,10 @@
 from source.py.feature import ast
-from source.py.feature.cv._common import GLYPHS_L, GLYPHS_ONE
+from source.py.feature.cv._common import GLYPHS_L, GLYPHS_1
 
 
 def cv04_subst_regular():
     return ast.subst_map(
-        GLYPHS_L + GLYPHS_ONE,
+        GLYPHS_L + GLYPHS_1,
         target_suffix=".cv04",
     )
 
@@ -13,7 +13,7 @@ def cv04_subst_italic():
     return ast.subst_map(
         [
             *GLYPHS_L,
-            *GLYPHS_ONE,
+            *GLYPHS_1,
             ast.gly("Cl"),
             ast.gly("al"),
             ast.gly("cl"),

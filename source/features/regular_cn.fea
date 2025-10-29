@@ -7,18 +7,18 @@
 @Question = [question question.cv62];
 @Uppercase = [A Aacute Abreve Abreveacute Abrevedotbelow Abrevegrave Abrevehookabove Abrevetilde Acaron Acircumflex Acircumflexacute Acircumflexdotbelow Acircumflexgrave Acircumflexhookabove Acircumflextilde Adieresis Adotbelow Agrave Ahookabove Amacron Aogonek Aring Atilde AE AEacute B C Cacute Ccaron Ccedilla Ccircumflex Cdotaccent D Eth Dcaron Dcroat E Eacute Ebreve Ecaron Ecircumflex Ecircumflexacute Ecircumflexdotbelow Ecircumflexgrave Ecircumflexhookabove Ecircumflextilde Edieresis Edotaccent Edotbelow Egrave Ehookabove Emacron Eogonek Eopen Etilde Schwa F G Gacute Gbreve Gcaron Gcircumflex Gcommaaccent Gdotaccent H Hbar Hcircumflex I IJ IJ_acute Iacute Ibreve Icircumflex Idieresis Idotaccent Idotbelow Igrave Ihookabove Imacron Iogonek Itilde J Jcircumflex K Kcommaaccent L Lacute Lcaron Lcommaaccent Ldot Lslash M N Nacute Ncaron Ncommaaccent Ntilde Eng O Oacute Obreve Ocircumflex Ocircumflexacute Ocircumflexdotbelow Ocircumflexgrave Ocircumflexhookabove Ocircumflextilde Odieresis Odotbelow Ograve Ohookabove Ohorn Ohornacute Ohorndotbelow Ohorngrave Ohornhookabove Ohorntilde Ohungarumlaut Omacron Oogonek Oslash Oslashacute Otilde OE P Thorn Q R Racute Rcaron Rcommaaccent S Sacute Scaron Scedilla Scircumflex Scommaaccent Germandbls T Tbar Tcaron Tcedilla Tcommaaccent U Uacute Ubreve Ucircumflex Udieresis Udotbelow Ugrave Uhookabove Uhorn Uhornacute Uhorndotbelow Uhorngrave Uhornhookabove Uhorntilde Uhungarumlaut Umacron Uogonek Uring Utilde V W Wacute Wcircumflex Wdieresis Wgrave X Y Yacute Ycircumflex Ydieresis Ydotbelow Ygrave Yhookabove Ymacron Ytilde Z Zacute Zcaron Zdotaccent A-cy Be-cy Ve-cy Ge-cy Gje-cy Gheupturn-cy Ghestroke-cy De-cy Ie-cy Io-cy Zhe-cy Ze-cy Ii-cy Iishort-cy Ka-cy Kje-cy El-cy Em-cy En-cy O-cy Pe-cy Er-cy Es-cy Te-cy U-cy Ushort-cy Ef-cy Ha-cy Che-cy Tse-cy Sha-cy Shcha-cy Dzhe-cy Softsign-cy Yeru-cy Hardsign-cy Lje-cy Nje-cy Dze-cy E-cy Ereversed-cy I-cy Yi-cy Je-cy Tshe-cy Iu-cy Ia-cy Dje-cy Kadescender-cy Endescender-cy Ustraight-cy Ustraightstroke-cy Chedescender-cy Shha-cy Schwa-cy Zhedieresis-cy Zedieresis-cy Idieresis-cy Odieresis-cy Obarred-cy Chedieresis-cy Alpha Beta Gamma Delta Epsilon Zeta Eta Theta Iota Kappa Lambda Mu Nu Xi Omicron Pi Rho Sigma Tau Upsilon Phi Chi Psi Omega Alphatonos Epsilontonos Etatonos Iotatonos Omicrontonos Upsilontonos Omegatonos Iotadieresis Upsilondieresis KaiSymbol];
 @Space = [space nbspace];
-@A = [A a a.cv31];
+@A = [A a a.cv02];
 @B = [B b];
 @C = [C c];
 @D = [D d];
 @E = [E e];
-@F = [F f f.cv32];
-@G = [G g g.cv38];
+@F = [F f];
+@G = [G g g.cv05];
 @H = [H h];
-@I = [I i i.cv33 i.cv39];
-@J = [J j j.cv33 J.cv40];
-@K = [K k k.cv34];
-@L = [L l l.cv35];
+@I = [I i i.cv03 i.cv06];
+@J = [J j J.cv07];
+@K = [K k];
+@L = [L l l.cv04];
 @M = [M m];
 @N = [N n];
 @O = [O o];
@@ -30,10 +30,9 @@
 @U = [U u];
 @V = [V v];
 @W = [W w];
-@X = [X x x.cv36];
-@Y = [Y y y.cv37];
+@X = [X x];
+@Y = [Y y];
 @Z = [Z z];
-@AL = [a_l.liga a_l.liga.cv31 a_l.liga.cv35 a_l.liga.cv31.cv35 a_l.liga.cv04 a_l.liga.cv04.cv31 a_l.liga.ss06];
 @Var = [underscore underscore_underscore.liga @A @B @C @D @E @F @G @H @I @J @K @L @M @N @O @P @Q @R @S @T @U @V @W @X @Y @Z @Digit];
 @HexLetter = [@A @B @C @D @E @F];
 
@@ -103,7 +102,44 @@ feature ccmp {
   script latn;
   lookup ccmp_other;
 
+  lookup ccmp_jp {
+    sub uni3042 uni3042 by uni30423099;
+    sub uni3044 uni3044 by uni30443099;
+    sub uni3048 uni3048 by uni30483099;
+    sub uni304A uni304A by uni304A3099;
+    sub uni304B uni304B by uni304B309A;
+    sub uni304D uni304D by uni304D309A;
+    sub uni304F uni304F by uni304F309A;
+    sub uni3051 uni3051 by uni3051309A;
+    sub uni3053 uni3053 by uni3053309A;
+    sub uni3093 uni3093 by uni30933099;
+    sub uni30A2 uni30A2 by uni30A23099;
+    sub uni30A4 uni30A4 by uni30A43099;
+    sub uni30A8 uni30A8 by uni30A83099;
+    sub uni30AA uni30AA by uni30AA3099;
+    sub uni30AB uni30AB by uni30AB309A;
+    sub uni30AD uni30AD by uni30AD309A;
+    sub uni30AF uni30AF by uni30AF309A;
+    sub uni30B1 uni30B1 by uni30B1309A;
+    sub uni30B3 uni30B3 by uni30B3309A;
+    sub uni30BB uni30BB by uni30BB309A;
+    sub uni30C4 uni30C4 by uni30C4309A;
+    sub uni30C8 uni30C8 by uni30C8309A;
+    sub uni30F3 uni30F3 by uni30F33099;
+  } ccmp_jp;
+
 } ccmp;
+
+# Centered punctuations
+lookup PunctuationTW {
+  sub uni3001 by uni3001.tw;
+  sub uni3002 by uni3002.tw;
+  sub uniFF01 by uniFF01.tw;
+  sub uniFF0C by uniFF0C.tw;
+  sub uniFF1A by uniFF1A.tw;
+  sub uniFF1B by uniFF1B.tw;
+  sub uniFF1F by uniFF1F.tw;
+} PunctuationTW;
 
 feature locl {
 
@@ -148,6 +184,10 @@ feature locl {
     sub ij acutecomb by ij_acute;
     sub IJ acutecomb by IJ_acute;
   } locl_latn_3;
+  language ZHH;
+  lookup PunctuationTW;
+  language ZHT;
+  lookup PunctuationTW;
 
 } locl;
 
@@ -1377,7 +1417,7 @@ feature calt {
     sub underscore' bar underscore by SPC;
   } underscore_bar_underscore.liga;
 
-  @BgJ = [J.bg J.bg.cv40];
+  @BgJ = [J.bg J.bg.cv07];
   @BgQ = [Q.bg Q.bg.cv01];
 
   # [TRACE]
@@ -1545,118 +1585,6 @@ feature calt {
     sub @F' @I @X @M @E parenright parenright by SPC;
   } tag_fixme_alt;
 
-  # italic Cl
-  lookup C_l.liga {
-    ignore sub C' l l;
-    sub SPC l' by C_l.liga;
-    sub C' l by SPC;
-  } C_l.liga;
-
-  # italic al
-  lookup a_l.liga {
-    ignore sub a' l l;
-    sub SPC l' by a_l.liga;
-    sub a' l by SPC;
-  } a_l.liga;
-
-  # italic cl
-  lookup c_l.liga {
-    ignore sub c' l l;
-    sub SPC l' by c_l.liga;
-    sub c' l by SPC;
-  } c_l.liga;
-
-  # italic el
-  lookup e_l.liga {
-    ignore sub e' l l;
-    sub SPC l' by e_l.liga;
-    sub e' l by SPC;
-  } e_l.liga;
-
-  # italic il
-  lookup i_l.liga {
-    ignore sub i' l l;
-    sub SPC l' by i_l.liga;
-    sub i' l by SPC;
-  } i_l.liga;
-
-  # italic tl
-  lookup t_l.liga {
-    ignore sub t' l l;
-    sub SPC l' by t_l.liga;
-    sub t' l by SPC;
-  } t_l.liga;
-
-  # italic ul
-  lookup u_l.liga {
-    ignore sub u' l l;
-    sub SPC l' by u_l.liga;
-    sub u' l by SPC;
-  } u_l.liga;
-
-  # italic xl
-  lookup x_l.liga {
-    ignore sub x' l l;
-    sub SPC l' by x_l.liga;
-    sub x' l by SPC;
-  } x_l.liga;
-
-  # italic ff
-  lookup f_f.liga {
-    ignore sub f f' f;
-    ignore sub f' f f;
-    sub SPC f' by f_f.liga;
-    sub f' f by SPC;
-  } f_f.liga;
-
-  # italic tt
-  lookup t_t.liga {
-    ignore sub t t' t;
-    ignore sub t' t [t l];
-    sub SPC t' by t_t.liga;
-    sub t' t by SPC;
-  } t_t.liga;
-
-  # italic all
-  lookup a_l_l.liga {
-    ignore sub a' l l l;
-    sub SPC SPC l' by a_l_l.liga;
-    sub SPC l' l by SPC;
-    sub a' l l by SPC;
-  } a_l_l.liga;
-
-  # italic ell
-  lookup e_l_l.liga {
-    ignore sub e' l l l;
-    sub SPC SPC l' by e_l_l.liga;
-    sub SPC l' l by SPC;
-    sub e' l l by SPC;
-  } e_l_l.liga;
-
-  # italic ill
-  lookup i_l_l.liga {
-    ignore sub i' l l l;
-    sub SPC SPC l' by i_l_l.liga;
-    sub SPC l' l by SPC;
-    sub i' l l by SPC;
-  } i_l_l.liga;
-
-  # italic ull
-  lookup u_l_l.liga {
-    ignore sub u' l l l;
-    sub SPC SPC l' by u_l_l.liga;
-    sub SPC l' l by SPC;
-    sub u' l l by SPC;
-  } u_l_l.liga;
-
-  # italic ll
-  lookup l_l.liga {
-    ignore sub [C a c e i t u x] l' l;
-    ignore sub l' l l;
-    sub SPC l' by l_l.liga;
-    sub l' l by SPC;
-  } l_l.liga;
-
 } calt;
 
 feature cv01 {
@@ -1692,12 +1620,35 @@ feature cv02 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV02: [Regular Only] Alternative a with top arm, no effect in italic style";
+      name "CV02: Alternative a with top arm, no effect in italic style";
     };
   };
 
-  # Placeholder
-  sub EMquad by space;
+  sub a by a.cv02;
+  sub aacute by aacute.cv02;
+  sub abreve by abreve.cv02;
+  sub abreveacute by abreveacute.cv02;
+  sub abrevedotbelow by abrevedotbelow.cv02;
+  sub abrevegrave by abrevegrave.cv02;
+  sub abrevehookabove by abrevehookabove.cv02;
+  sub abrevetilde by abrevetilde.cv02;
+  sub acaron by acaron.cv02;
+  sub acircumflex by acircumflex.cv02;
+  sub acircumflexacute by acircumflexacute.cv02;
+  sub acircumflexdotbelow by acircumflexdotbelow.cv02;
+  sub acircumflexgrave by acircumflexgrave.cv02;
+  sub acircumflexhookabove by acircumflexhookabove.cv02;
+  sub acircumflextilde by acircumflextilde.cv02;
+  sub adieresis by adieresis.cv02;
+  sub adotbelow by adotbelow.cv02;
+  sub agrave by agrave.cv02;
+  sub ahookabove by ahookabove.cv02;
+  sub amacron by amacron.cv02;
+  sub aogonek by aogonek.cv02;
+  sub aring by aring.cv02;
+  sub atilde by atilde.cv02;
+  sub a-cy by a-cy.cv02;
+  sub ordfeminine by ordfeminine.cv02;
 
 } cv02;
 
@@ -1705,12 +1656,28 @@ feature cv03 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV03: [Regular Only] Alternative i without left bottom bar";
+      name "CV03: Alternative i without left bottom bar";
     };
   };
 
-  # Placeholder
-  sub EMquad by space;
+  sub i by i.cv03;
+  sub iacute by iacute.cv03;
+  sub ibreve by ibreve.cv03;
+  sub icaron by icaron.cv03;
+  sub icircumflex by icircumflex.cv03;
+  sub idieresis by idieresis.cv03;
+  sub idotaccent by idotaccent.cv03;
+  sub idotbelow by idotbelow.cv03;
+  sub idotless by idotless.cv03;
+  sub igrave by igrave.cv03;
+  sub ihookabove by ihookabove.cv03;
+  sub imacron by imacron.cv03;
+  sub iogonek by iogonek.cv03;
+  sub itilde by itilde.cv03;
+  sub idotbelowdotless by idotbelowdotless.cv03;
+  sub iogonekdotless by iogonekdotless.cv03;
+  sub i-cy by i-cy.cv03;
+  sub yi-cy by yi-cy.cv03;
 
 } cv03;
 
@@ -1733,19 +1700,6 @@ feature cv04 {
   sub one.numr by one.numr.cv04;
   sub oneinferior by oneinferior.cv04;
   sub onesuperior by onesuperior.cv04;
-  sub C_l.liga by C_l.liga.cv04;
-  sub a_l.liga by a_l.liga.cv04;
-  sub c_l.liga by c_l.liga.cv04;
-  sub e_l.liga by e_l.liga.cv04;
-  sub i_l.liga by i_l.liga.cv04;
-  sub l_l.liga by l_l.liga.cv04;
-  sub t_l.liga by t_l.liga.cv04;
-  sub u_l.liga by u_l.liga.cv04;
-  sub x_l.liga by x_l.liga.cv04;
-  sub a_l_l.liga by a_l_l.liga.cv04;
-  sub e_l_l.liga by e_l_l.liga.cv04;
-  sub i_l_l.liga by i_l_l.liga.cv04;
-  sub u_l_l.liga by u_l_l.liga.cv04;
 
 } cv04;
 
@@ -1753,12 +1707,17 @@ feature cv05 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV05: [Regular Only] Alternative g in double story style, no effect in italic style";
+      name "CV05: Alternative g in double story style, no effect in italic style";
     };
   };
 
-  # Placeholder
-  sub EMquad by space;
+  sub g by g.cv05;
+  sub gacute by gacute.cv05;
+  sub gbreve by gbreve.cv05;
+  sub gcaron by gcaron.cv05;
+  sub gcircumflex by gcircumflex.cv05;
+  sub gcommaaccent by gcommaaccent.cv05;
+  sub gdotaccent by gdotaccent.cv05;
 
 } cv05;
 
@@ -1766,12 +1725,46 @@ feature cv06 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV06: [Regular Only] Alternative i without bottom bar, no effect in italic style";
+      name "CV06: Alternative i without bottom bar, no effect in italic style";
     };
   };
 
-  # Placeholder
-  sub EMquad by space;
+  sub i by i.cv06;
+  sub iacute by iacute.cv06;
+  sub ibreve by ibreve.cv06;
+  sub icaron by icaron.cv06;
+  sub icircumflex by icircumflex.cv06;
+  sub idieresis by idieresis.cv06;
+  sub idotaccent by idotaccent.cv06;
+  sub idotbelow by idotbelow.cv06;
+  sub idotless by idotless.cv06;
+  sub igrave by igrave.cv06;
+  sub ihookabove by ihookabove.cv06;
+  sub imacron by imacron.cv06;
+  sub iogonek by iogonek.cv06;
+  sub itilde by itilde.cv06;
+  sub idotbelowdotless by idotbelowdotless.cv06;
+  sub iogonekdotless by iogonekdotless.cv06;
+  sub i-cy by i-cy.cv06;
+  sub yi-cy by yi-cy.cv06;
+  sub i.cv03 by i.cv06;
+  sub iacute.cv03 by iacute.cv06;
+  sub ibreve.cv03 by ibreve.cv06;
+  sub icaron.cv03 by icaron.cv06;
+  sub icircumflex.cv03 by icircumflex.cv06;
+  sub idieresis.cv03 by idieresis.cv06;
+  sub idotaccent.cv03 by idotaccent.cv06;
+  sub idotbelow.cv03 by idotbelow.cv06;
+  sub idotless.cv03 by idotless.cv06;
+  sub igrave.cv03 by igrave.cv06;
+  sub ihookabove.cv03 by ihookabove.cv06;
+  sub imacron.cv03 by imacron.cv06;
+  sub iogonek.cv03 by iogonek.cv06;
+  sub itilde.cv03 by itilde.cv06;
+  sub idotbelowdotless.cv03 by idotbelowdotless.cv06;
+  sub iogonekdotless.cv03 by iogonekdotless.cv06;
+  sub i-cy.cv03 by i-cy.cv06;
+  sub yi-cy.cv03 by yi-cy.cv06;
 
 } cv06;
 
@@ -1779,12 +1772,14 @@ feature cv07 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV07: [Regular Only] Alternative J without top bar, no effect in italic style";
+      name "CV07: Alternative J without top bar, no effect in italic style";
     };
   };
 
-  # Placeholder
-  sub EMquad by space;
+  sub J by J.cv07;
+  sub Jcircumflex by Jcircumflex.cv07;
+  sub Je-cy by Je-cy.cv07;
+  sub J.bg by J.bg.cv07;
 
 } cv07;
 
@@ -1792,12 +1787,14 @@ feature cv08 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV08: [Regular Only] Alternative r with bottom bar, no effect in italic style";
+      name "CV08: Alternative r with bottom bar, no effect in italic style";
     };
   };
 
-  # Placeholder
-  sub EMquad by space;
+  sub r by r.cv08;
+  sub racute by racute.cv08;
+  sub rcaron by rcaron.cv08;
+  sub rcommaaccent by rcommaaccent.cv08;
 
 } cv08;
 
@@ -1805,12 +1802,15 @@ feature cv09 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV09: [Regular Only] Alternative 7 with middle bar, no effect in italic style";
+      name "CV09: Alternative 7 with middle bar, no effect in italic style";
     };
   };
 
-  # Placeholder
-  sub EMquad by space;
+  sub seven by seven.cv09;
+  sub seven.dnom by seven.dnom.cv09;
+  sub seven.numr by seven.numr.cv09;
+  sub seveninferior by seveninferior.cv09;
+  sub sevensuperior by sevensuperior.cv09;
 
 } cv09;
 
@@ -1818,12 +1818,18 @@ feature cv10 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV10: [Regular Only] Alternative Z and z with middle bar, no effect in italic style";
+      name "CV10: Alternative Z and z with middle bar, no effect in italic style";
     };
   };
 
-  # Placeholder
-  sub EMquad by space;
+  sub Z by Z.cv10;
+  sub Zacute by Zacute.cv10;
+  sub Zcaron by Zcaron.cv10;
+  sub Zdotaccent by Zdotaccent.cv10;
+  sub z by z.cv10;
+  sub zacute by zacute.cv10;
+  sub zcaron by zcaron.cv10;
+  sub zdotaccent by zdotaccent.cv10;
 
 } cv10;
 
@@ -1831,12 +1837,11 @@ feature cv11 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV11: [Regular Only] Alternative f with bottom bar";
+      name "CV11: Alternative f with bottom bar";
     };
   };
 
-  # Placeholder
-  sub EMquad by space;
+  sub f by f.cv11;
 
 } cv11;
 
@@ -1844,39 +1849,12 @@ feature cv31 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV31: Alternative italic a with top arm";
+      name "CV31: [Italic Only] Alternative italic a with top arm";
     };
   };
 
-  sub a by a.cv31;
-  sub aacute by aacute.cv31;
-  sub abreve by abreve.cv31;
-  sub abreveacute by abreveacute.cv31;
-  sub abrevedotbelow by abrevedotbelow.cv31;
-  sub abrevegrave by abrevegrave.cv31;
-  sub abrevehookabove by abrevehookabove.cv31;
-  sub abrevetilde by abrevetilde.cv31;
-  sub acaron by acaron.cv31;
-  sub acircumflex by acircumflex.cv31;
-  sub acircumflexacute by acircumflexacute.cv31;
-  sub acircumflexdotbelow by acircumflexdotbelow.cv31;
-  sub acircumflexgrave by acircumflexgrave.cv31;
-  sub acircumflexhookabove by acircumflexhookabove.cv31;
-  sub acircumflextilde by acircumflextilde.cv31;
-  sub adieresis by adieresis.cv31;
-  sub adotbelow by adotbelow.cv31;
-  sub agrave by agrave.cv31;
-  sub ahookabove by ahookabove.cv31;
-  sub amacron by amacron.cv31;
-  sub aogonek by aogonek.cv31;
-  sub aring by aring.cv31;
-  sub atilde by atilde.cv31;
-  sub a-cy by a-cy.cv31;
-  sub ordfeminine by ordfeminine.cv31;
-  sub a_l.liga by a_l.liga.cv31;
-  sub a_l_l.liga by a_l_l.liga.cv31;
-  sub a_l.liga.cv04 by a_l.liga.cv04.cv31;
-  sub a_l_l.liga.cv04 by a_l_l.liga.cv04.cv31;
+  # Placeholder
+  sub EMquad by space;
 
 } cv31;
 
@@ -1884,12 +1862,12 @@ feature cv32 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV32: Alternative Italic f without bottom tail";
+      name "CV32: [Italic Only] Alternative Italic f without bottom tail";
     };
   };
 
-  sub f by f.cv32;
-  sub f_f.liga by f_f.liga.cv32;
+  # Placeholder
+  sub EMquad by space;
 
 } cv32;
 
@@ -1897,36 +1875,12 @@ feature cv33 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV33: Alternative Italic i and j with left bottom bar and horizen top bar";
+      name "CV33: [Italic Only] Alternative Italic i and j with left bottom bar and horizen top bar";
     };
   };
 
-  sub i by i.cv33;
-  sub iacute by iacute.cv33;
-  sub ibreve by ibreve.cv33;
-  sub icaron by icaron.cv33;
-  sub icircumflex by icircumflex.cv33;
-  sub idieresis by idieresis.cv33;
-  sub idotaccent by idotaccent.cv33;
-  sub idotbelow by idotbelow.cv33;
-  sub idotless by idotless.cv33;
-  sub igrave by igrave.cv33;
-  sub ihookabove by ihookabove.cv33;
-  sub imacron by imacron.cv33;
-  sub iogonek by iogonek.cv33;
-  sub itilde by itilde.cv33;
-  sub idotbelowdotless by idotbelowdotless.cv33;
-  sub iogonekdotless by iogonekdotless.cv33;
-  sub i-cy by i-cy.cv33;
-  sub yi-cy by yi-cy.cv33;
-  sub j by j.cv33;
-  sub jcircumflex by jcircumflex.cv33;
-  sub jdotless by jdotless.cv33;
-  sub je-cy by je-cy.cv33;
-  sub i_l.liga by i_l.liga.cv33;
-  sub i_l_l.liga by i_l_l.liga.cv33;
-  sub i_l.liga.cv04 by i_l.liga.cv04.cv33;
-  sub i_l_l.liga.cv04 by i_l_l.liga.cv04.cv33;
+  # Placeholder
+  sub EMquad by space;
 
 } cv33;
 
@@ -1934,12 +1888,12 @@ feature cv34 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV34: Alternative Italic k without center circle";
+      name "CV34: [Italic Only] Alternative Italic k without center circle";
     };
   };
 
-  sub k by k.cv34;
-  sub kcommaaccent by kcommaaccent.cv34;
+  # Placeholder
+  sub EMquad by space;
 
 } cv34;
 
@@ -1947,59 +1901,12 @@ feature cv35 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV35: Alternative Italic l without center tail";
+      name "CV35: [Italic Only] Alternative Italic l without center tail";
     };
   };
 
-  sub l by l.cv35;
-  sub lacute by lacute.cv35;
-  sub lcaron by lcaron.cv35;
-  sub lcommaaccent by lcommaaccent.cv35;
-  sub ldot by ldot.cv35;
-  sub C_l.liga by C_l.liga.cv35;
-  sub a_l.liga by a_l.liga.cv35;
-  sub c_l.liga by c_l.liga.cv35;
-  sub e_l.liga by e_l.liga.cv35;
-  sub i_l.liga by i_l.liga.cv35;
-  sub l_l.liga by l_l.liga.cv35;
-  sub t_l.liga by t_l.liga.cv35;
-  sub u_l.liga by u_l.liga.cv35;
-  sub x_l.liga by x_l.liga.cv35;
-  sub a_l_l.liga by a_l_l.liga.cv35;
-  sub e_l_l.liga by e_l_l.liga.cv35;
-  sub i_l_l.liga by i_l_l.liga.cv35;
-  sub u_l_l.liga by u_l_l.liga.cv35;
-  sub l.cv04 by l.cv35;
-  sub lacute.cv04 by lacute.cv35;
-  sub lcaron.cv04 by lcaron.cv35;
-  sub lcommaaccent.cv04 by lcommaaccent.cv35;
-  sub ldot.cv04 by ldot.cv35;
-  sub C_l.liga.cv04 by C_l.liga.cv35;
-  sub a_l.liga.cv04 by a_l.liga.cv35;
-  sub c_l.liga.cv04 by c_l.liga.cv35;
-  sub e_l.liga.cv04 by e_l.liga.cv35;
-  sub i_l.liga.cv04 by i_l.liga.cv35;
-  sub l_l.liga.cv04 by l_l.liga.cv35;
-  sub t_l.liga.cv04 by t_l.liga.cv35;
-  sub u_l.liga.cv04 by u_l.liga.cv35;
-  sub x_l.liga.cv04 by x_l.liga.cv35;
-  sub a_l_l.liga.cv04 by a_l_l.liga.cv35;
-  sub e_l_l.liga.cv04 by e_l_l.liga.cv35;
-  sub i_l_l.liga.cv04 by i_l_l.liga.cv35;
-  sub u_l_l.liga.cv04 by u_l_l.liga.cv35;
-  sub a_l.liga.cv31 by a_l.liga.cv31.cv35;
-  sub a_l.liga.cv04.cv31 by a_l.liga.cv31.cv35;
-  sub a_l_l.liga.cv31 by a_l_l.liga.cv31.cv35;
-  sub a_l_l.liga.cv04.cv31 by a_l_l.liga.cv31.cv35;
-  sub i_l.liga.cv33 by i_l.liga.cv33.cv35;
-  sub i_l.liga.cv04.cv33 by i_l.liga.cv33.cv35;
-  sub i_l_l.liga.cv33 by i_l_l.liga.cv33.cv35;
-  sub i_l_l.liga.cv04.cv33 by i_l_l.liga.cv33.cv35;
-  sub one.cv04 by one;
-  sub one.dnom.cv04 by one.dnom;
-  sub one.numr.cv04 by one.numr;
-  sub oneinferior.cv04 by oneinferior;
-  sub onesuperior.cv04 by onesuperior;
+  # Placeholder
+  sub EMquad by space;
 
 } cv35;
 
@@ -2007,18 +1914,12 @@ feature cv36 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV36: Alternative Italic x without top and bottom tails";
+      name "CV36: [Italic Only] Alternative Italic x without top and bottom tails";
     };
   };
 
-  sub x by x.cv36;
-  sub ha-cy by ha-cy.cv36;
-  sub hadescender-cy by hadescender-cy.cv36;
-  sub hahook-cy by hahook-cy.cv36;
-  sub hastroke-cy by hastroke-cy.cv36;
-  sub x_l.liga by x_l.liga.cv36;
-  sub x_l.liga.cv04 by x_l.liga.cv04.cv36;
-  sub x_l.liga.cv35 by x_l.liga.cv35.cv36;
+  # Placeholder
+  sub EMquad by space;
 
 } cv36;
 
@@ -2026,24 +1927,12 @@ feature cv37 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV37: Alternative Italic y with straight intersection";
+      name "CV37: [Italic Only] Alternative Italic y with straight intersection";
     };
   };
 
-  sub y by y.cv37;
-  sub yacute by yacute.cv37;
-  sub ycircumflex by ycircumflex.cv37;
-  sub ydieresis by ydieresis.cv37;
-  sub ydotbelow by ydotbelow.cv37;
-  sub ygrave by ygrave.cv37;
-  sub yhookabove by yhookabove.cv37;
-  sub ymacron by ymacron.cv37;
-  sub ytilde by ytilde.cv37;
-  sub u-cy by u-cy.cv37;
-  sub ushort-cy by ushort-cy.cv37;
-  sub umacron-cy by umacron-cy.cv37;
-  sub udieresis-cy by udieresis-cy.cv37;
-  sub uacutedbl-cy by uacutedbl-cy.cv37;
+  # Placeholder
+  sub EMquad by space;
 
 } cv37;
 
@@ -2051,17 +1940,12 @@ feature cv38 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV38: Alternative italic g in double story style";
+      name "CV38: [Italic Only] Alternative italic g in double story style";
     };
   };
 
-  sub g by g.cv38;
-  sub gacute by gacute.cv38;
-  sub gbreve by gbreve.cv38;
-  sub gcaron by gcaron.cv38;
-  sub gcircumflex by gcircumflex.cv38;
-  sub gcommaaccent by gcommaaccent.cv38;
-  sub gdotaccent by gdotaccent.cv38;
+  # Placeholder
+  sub EMquad by space;
 
 } cv38;
 
@@ -2069,56 +1953,12 @@ feature cv39 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV39: Alternative Italic i without bottom bar";
+      name "CV39: [Italic Only] Alternative Italic i without bottom bar";
     };
   };
 
-  sub i by i.cv39;
-  sub iacute by iacute.cv39;
-  sub ibreve by ibreve.cv39;
-  sub icaron by icaron.cv39;
-  sub icircumflex by icircumflex.cv39;
-  sub idieresis by idieresis.cv39;
-  sub idotaccent by idotaccent.cv39;
-  sub idotbelow by idotbelow.cv39;
-  sub idotless by idotless.cv39;
-  sub igrave by igrave.cv39;
-  sub ihookabove by ihookabove.cv39;
-  sub imacron by imacron.cv39;
-  sub iogonek by iogonek.cv39;
-  sub itilde by itilde.cv39;
-  sub idotbelowdotless by idotbelowdotless.cv39;
-  sub iogonekdotless by iogonekdotless.cv39;
-  sub i-cy by i-cy.cv39;
-  sub yi-cy by yi-cy.cv39;
-  sub i.cv33 by i.cv39;
-  sub iacute.cv33 by iacute.cv39;
-  sub ibreve.cv33 by ibreve.cv39;
-  sub icaron.cv33 by icaron.cv39;
-  sub icircumflex.cv33 by icircumflex.cv39;
-  sub idieresis.cv33 by idieresis.cv39;
-  sub idotaccent.cv33 by idotaccent.cv39;
-  sub idotbelow.cv33 by idotbelow.cv39;
-  sub idotless.cv33 by idotless.cv39;
-  sub igrave.cv33 by igrave.cv39;
-  sub ihookabove.cv33 by ihookabove.cv39;
-  sub imacron.cv33 by imacron.cv39;
-  sub iogonek.cv33 by iogonek.cv39;
-  sub itilde.cv33 by itilde.cv39;
-  sub idotbelowdotless.cv33 by idotbelowdotless.cv39;
-  sub iogonekdotless.cv33 by iogonekdotless.cv39;
-  sub i-cy.cv33 by i-cy.cv39;
-  sub yi-cy.cv33 by yi-cy.cv39;
-  sub i_l.liga by i_l.liga.cv39;
-  sub i_l_l.liga by i_l_l.liga.cv39;
-  sub i_l.liga.cv04 by i_l.liga.cv04.cv39;
-  sub i_l_l.liga.cv04 by i_l_l.liga.cv04.cv39;
-  sub i_l.liga.cv33 by i_l.liga.cv33.cv39;
-  sub i_l_l.liga.cv33 by i_l_l.liga.cv33.cv39;
-  sub i_l.liga.cv04.cv33 by i_l.liga.cv04.cv33.cv39;
-  sub i_l_l.liga.cv04.cv33 by i_l_l.liga.cv04.cv33.cv39;
-  sub i_l.liga.cv33.cv35 by i_l.liga.cv33.cv35.cv39;
-  sub i_l_l.liga.cv33.cv35 by i_l_l.liga.cv33.cv35.cv39;
+  # Placeholder
+  sub EMquad by space;
 
 } cv39;
 
@@ -2126,14 +1966,12 @@ feature cv40 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV40: Alternative italic J without top bar";
+      name "CV40: [Italic Only] Alternative italic J without top bar";
     };
   };
 
-  sub J by J.cv40;
-  sub Jcircumflex by Jcircumflex.cv40;
-  sub Je-cy by Je-cy.cv40;
-  sub J.bg by J.bg.cv40;
+  # Placeholder
+  sub EMquad by space;
 
 } cv40;
 
@@ -2141,14 +1979,12 @@ feature cv41 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV41: Alternative italic r with bottom bar";
+      name "CV41: [Italic Only] Alternative italic r with bottom bar";
     };
   };
 
-  sub r by r.cv41;
-  sub racute by racute.cv41;
-  sub rcaron by rcaron.cv41;
-  sub rcommaaccent by rcommaaccent.cv41;
+  # Placeholder
+  sub EMquad by space;
 
 } cv41;
 
@@ -2156,15 +1992,12 @@ feature cv42 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV42: Alternative italic 7 with middle bar";
+      name "CV42: [Italic Only] Alternative italic 7 with middle bar";
     };
   };
 
-  sub seven by seven.cv42;
-  sub seven.dnom by seven.dnom.cv42;
-  sub seven.numr by seven.numr.cv42;
-  sub seveninferior by seveninferior.cv42;
-  sub sevensuperior by sevensuperior.cv42;
+  # Placeholder
+  sub EMquad by space;
 
 } cv42;
 
@@ -2172,18 +2005,12 @@ feature cv43 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV43: Alternative italic Z and z with middle bar";
+      name "CV43: [Italic Only] Alternative italic Z and z with middle bar";
     };
   };
 
-  sub Z by Z.cv43;
-  sub Zacute by Zacute.cv43;
-  sub Zcaron by Zcaron.cv43;
-  sub Zdotaccent by Zdotaccent.cv43;
-  sub z by z.cv43;
-  sub zacute by zacute.cv43;
-  sub zcaron by zcaron.cv43;
-  sub zdotaccent by zdotaccent.cv43;
+  # Placeholder
+  sub EMquad by space;
 
 } cv43;
 
@@ -2191,14 +2018,12 @@ feature cv44 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV44: Alternative Italic f with bottom bar";
+      name "CV44: [Italic Only] Alternative Italic f with bottom bar";
     };
   };
 
-  sub f by f.cv44;
-  sub f_f.liga by f_f.liga.cv44;
-  sub f.cv32 by f.cv44;
-  sub f_f.liga.cv32 by f_f.liga.cv44;
+  # Placeholder
+  sub EMquad by space;
 
 } cv44;
 
@@ -2298,6 +2123,57 @@ feature cv66 {
   sub less_bar_bar_bar.liga by less_bar_bar_bar.liga.cv66;
 
 } cv66;
+
+feature cv96 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV96: Full width quotes";
+    };
+  };
+
+  sub quotedblleft by quotedblleft.full;
+  sub quotedblright by quotedblright.full;
+  sub quoteleft by quoteleft.full;
+  sub quoteright by quoteright.full;
+
+} cv96;
+
+feature cv97 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV97: Full width ellipsis";
+    };
+  };
+
+  sub ellipsis by ellipsis.full;
+
+} cv97;
+
+feature cv98 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV98: Full width emdash";
+    };
+  };
+
+  sub emdash by emdash.full;
+
+} cv98;
+
+feature cv99 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV99: Traditional centered punctuations";
+    };
+  };
+
+  lookup PunctuationTW;
+
+} cv99;
 
 feature ss01 {
 
@@ -2494,30 +2370,11 @@ feature ss05 {
 feature ss06 {
 
   featureNames {
-    name "SS06: Break connected strokes between italic letters";
+    name "SS06: [Italic Only]$$$Break connected strokes between italic letters";
   };
 
-  sub C_l.liga by C_l.liga.ss06;
-  sub a_l.liga by a_l.liga.ss06;
-  sub c_l.liga by c_l.liga.ss06;
-  sub e_l.liga by e_l.liga.ss06;
-  sub i_l.liga by i_l.liga.ss06;
-  sub l_l.liga by l_l.liga.ss06;
-  sub t_l.liga by t_l.liga.ss06;
-  sub u_l.liga by u_l.liga.ss06;
-  sub x_l.liga by x_l.liga.ss06;
-  sub a_l_l.liga by a_l_l.liga.ss06;
-  sub a_l_l.liga.cv31 by a_l_l.liga.cv31.ss06;
-  sub e_l_l.liga by e_l_l.liga.ss06;
-  sub i_l_l.liga by i_l_l.liga.ss06;
-  sub i_l_l.liga.cv33 by i_l_l.liga.cv33.ss06;
-  sub i_l_l.liga.cv39 by i_l_l.liga.cv39.ss06;
-  sub i_l_l.liga.cv33.cv39 by i_l_l.liga.cv33.cv39.ss06;
-  sub u_l_l.liga by u_l_l.liga.ss06;
-  sub f_f.liga by f_f.liga.ss06;
-  sub f_f.liga.cv32 by f_f.liga.cv32.ss06;
-  sub f_f.liga.cv44 by f_f.liga.cv44.ss06;
-  sub t_t.liga by t_t.liga.ss06;
+  # Placeholder
+  sub EMquad by space;
 
 } ss06;
 

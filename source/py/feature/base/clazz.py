@@ -18,20 +18,6 @@ cls_digit = ast.Clazz(
     ],
 )
 cls_space = ast.Clazz("Space", ["space", "nbspace"])
-cls_normal_separator = ast.Clazz(
-    "NormalSeparator",
-    [
-        "{",
-        "}",
-        "[",
-        "]",
-        "(",
-        ")",
-        "|",
-        "/",
-        "\\",
-    ],
-)
 cls_comma = ast.Clazz("Comma", [",", ast.gly(",", ".cv61")])
 cls_question = ast.Clazz("Question", ["?", ast.gly("?", ".cv62")])
 
@@ -326,6 +312,5 @@ base_class_list = [
     cls_comma,
     cls_question,
     cls_uppercase,
-    cls_normal_separator,
     cls_space,
 ]

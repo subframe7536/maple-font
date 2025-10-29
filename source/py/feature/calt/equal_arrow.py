@@ -1,5 +1,5 @@
 from source.py.feature import ast
-from source.py.feature.base.clazz import cls_normal_separator, cls_question
+from source.py.feature.base.clazz import cls_question
 from source.py.feature.calt._infinite_utils import infinite_helper, infinite_rules
 
 
@@ -98,13 +98,13 @@ def get_lookup(cls_var: ast.Clazz):
         ),
         ast.subst_liga(
             ">=",
-            ign_prefix=ast.cls(">", "="),
-            ign_suffix=ast.cls("<", ">", "=", "!", ast.SPC, cls_normal_separator),
+            ign_prefix=ast.cls(">", "=", "|"),
+            ign_suffix=ast.cls("<", ">", "=", "!", ast.SPC),
         ),
         ast.subst_liga(
             "<=",
             ign_prefix=ast.cls("<", "="),
-            ign_suffix=ast.cls("<", ">", "=", "!", ast.SPC, cls_normal_separator),
+            ign_suffix=ast.cls("<", ">", "=", "!", "|", ast.SPC),
             extra_rules=[
                 ast.ign(["(", cls_question], "<", "="),
             ],
@@ -159,14 +159,14 @@ def get_lookup(cls_var: ast.Clazz):
             ast.subst_liga(
                 "<=|",
                 ign_prefix="<",
-                ign_suffix=ast.cls("<", ">", "=", cls_normal_separator),
+                ign_suffix=ast.cls("<", ">", "=", "|"),
                 extra_rules=[
                     ast.ign(["(", cls_question], "<", ["=", "|"]),
                 ],
             ),
             ast.subst_liga(
                 "|=>",
-                ign_prefix=ast.cls("<", ">", "=", cls_normal_separator),
+                ign_prefix=ast.cls("<", ">", "=", "|"),
                 ign_suffix=">",
             ),
         ),

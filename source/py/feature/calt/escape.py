@@ -1,9 +1,32 @@
 from source.py.feature import ast
-from source.py.feature.base.clazz import cls_comma, cls_question
+from source.py.feature.base.clazz import cls_question
 
 
 def get_lookup():
-    escape_cls = ast.Clazz("Escape", ast.LATIN_PUNCTUATIONS + [cls_comma, cls_question])
+    escape_cls = ast.Clazz(
+        "Escape",
+        # Reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Regular_expressions/Character_escape
+        [
+            "^",
+            "$",
+            '"',
+            "'",
+            "`",
+            ".",
+            "*",
+            "+",
+            "(",
+            ")",
+            "[",
+            "]",
+            "{",
+            "}",
+            "|",
+            "/",
+            "\\",
+            cls_question,
+        ],
+    )
     escape_liga = ast.gly("\\", ".liga")
     return [
         # Thin backslash (\\) to better distingish escape chars

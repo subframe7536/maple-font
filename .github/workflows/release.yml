@@ -56,23 +56,6 @@ jobs:
         path: release
 
     - name: Release artifacts
-      run: |
-        TAG="${{ github.ref_name }}"
-        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-          TAG="v$(date +%s)"
-          PREV=$(git tag --list --sort=committerdate | tail -n 1)
-          CHANGELOG=$(git log --pretty=format:"- %s" "$PREV"..HEAD | awk '1; END {print ""}' | tac)
-        else
-          PREV=$(git tag --list --sort=committerdate | tail -n 2 | head -n 1)
-          CHANGELOG=$(git log --pretty=format:"- %s" "$PREV".."$TAG" | sed '1d' | awk '1; END {print ""}' | tac)
-        fi
-        sed -i 's|<!-- changelog -->|'"${CHANGELOG//$'\n'/\\n}"'|' .github/release_template.md
-
-        sed -i "s|https://<url>|https://github.com/subframe7536/maple-font/releases/download/${TAG//\//\\/}|g" .github/release_template.md
-
-
-        TITLE=$(python3 -c "print(' '.join(part.capitalize() for part in '$TAG'.split('-')))")
-
-        gh release create "$TAG" release/**/*.* --notes-file .github/release_template.md --draft -t "$TITLE"
+      run: python task.py publish
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

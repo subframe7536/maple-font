@@ -554,18 +554,24 @@ pip install -r requirements.txt
 python build.py
 ```
 
-- 对于 `Ubuntu` 或 `Debian`，可能还需要 `python-is-python3`
-
-如果您在安装依赖项时遇到问题，只需创建一个新的 GitHub Codespace 并在那里运行命令
+> [!TIP]
+> 对于 `Ubuntu` 或 `Debian`，可能还需要 `python-is-python3`
+>
+> 如果您在安装依赖项时遇到问题，只需创建一个新的 GitHub Codespace 并在那里运行命令
 
 #### 自定义 Nerd-Font
 
-对于自定义 `font-patcher` 参数，需要安装 `font-forge`（可能还需要 `python3-fontforge`）。
+如果您想获得固定宽度的图标，请在 `config.json` 中设置 `"nerd_font.mono": true` 或在构建脚本参数中添加 `--nf-mono` 标志。
 
-也许您还应该更改 [config.json](./config.json) 中的 `"nerd_font.extra_args"`
+如果您想获得可变宽度的图标，请在 `config.json` 中设置 `"nerd_font.propo": true` 或在构建脚本参数中添加 `--nf-propo` 标志。
 
-默认参数：`-l --careful --outputdir dir`
-- 如果 `"nerd_font.mono"` 设置为 `true`，则增加 `--mono`
+对于自定义的 `font-patcher` 参数，需要 `font-forge`（也可能需要 `python3-fontforge`）。
+
+您可能还应该在 [config.json](./config.json) 中更改 `"nerd_font.extra_args"`。
+
+默认参数： `-l --careful --outputdir dir`
+- 如果 `"nerd_font.propo"` 为 `true`，则添加 `--variable-width-glyphs`
+- 否则，如果 `"nerd_font.mono"` 为 `true`，则添加 `--mono`
 
 #### 预设
 
@@ -598,17 +604,40 @@ OpenType Feature 可以控制字体的内置变体和连字。您可以通过修
 
 默认情况下，[`source/py/feature/`](./source/py/feature) 中的 Python 模块会生成 OpenType Feature 字符串并在构建时加载。您可以在此处修改功能或自定义标签。
 
-如果你想通过修改 OpenType Feature 文件实现，运行 `build.py` 时添加 `--apply-fea-file` 参数，会读取 [`source/features/{regular,italic}.fea`](./source/features) 的特性文件并加载。
+如果你想通过修改 OpenType Feature 文件实现，运行 `build.py` 时添加 `--apply-fea-file` 参数，会读取 [`source/features/{regular,italic}{_cn,}.fea`](./source/features) 的特性文件并加载。
 
 #### 无限箭头连字
 
-受 Fira Code 的启发，从 v7.3 开始，该字体默认启用无限箭头连字。由于某种原因，在使用 Hinted 字体时连字会错位，因此在 v7.4 的 Hinted 版本中默认将其移除。您可以在 `config.json` 中设置 `"keep_infinite_arrow": true`，或在命令行标志中添加 `--keep-infinite-arrow`。详情见 [#508](https://github.com/subframe7536/maple-font/issues/508)
+受 Fira Code 的启发，从 v7.3 开始，该字体默认启用无限箭头连字。由于某种原因，在使用 Hinted 字体时连字会错位，因此在 v7.4 的 Hinted 版本中默认将其移除。
+
+您可以在 `config.json` 中设置 `"infinite_arrow": true`，或在命令行标志中添加 `--infinite-arrow`。详情见 [#508](https://github.com/subframe7536/maple-font/issues/508)
+
+#### 自定义字重映射
+
+您可以通过 `config.json` 中的 `"weight_mapping"` 项修改静态字体粗细。
+
+例如，如果您想让常规字重稍微细一些，只需将 `"weight_mapping.regular"` 的数值降低（在此示例中从 400 降到 350）：
+
+```json
+{
+  "weight_mapping": {
+    "thin": 100,
+    "extralight": 200,
+    "light": 300,
+    "regular": 350,
+    "semibold": 500,
+    "medium": 600,
+    "bold": 700,
+    "extrabold": 800
+  }
+}
+```
 
 ### 中文版本
 
-默认情况下不会生成中文字体，运行 `python build.py` 时添加 `--cn` 参数，中文基字（约 130 MB）将从 GitHub 下载。
+默认情况下不会生成中文字体，运行 `python build.py` 时添加 `--cn` 参数，中文基字（约 111 MB）将从 GitHub 下载。
 
-如果您想从可变字体（约 35 MB）构建中文基字，请在 [config.json](./config.json) 中设置 `"cn.use_static_base_font": false` 并且**耐心等待**，可变字体静态化将花费大约 20-30 分钟。
+如果您想从可变字体（约 27 MB）构建中文基字，请在 [config.json](./config.json) 中设置 `"cn.use_static_base_font": false` 并且**耐心等待**，可变字体静态化将花费大约 10-30 分钟。
 
 #### 缩小中文字体的间距
 
@@ -629,11 +658,11 @@ OpenType Feature 可以控制字体的内置变体和连字。您可以通过修
 ```
 usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--apply-fea-file]
                 [--hinted | --no-hinted] [--liga | --no-liga] [--keep-infinite-arrow]
-                [--remove-tag-liga] [--line-height LINE_HEIGHT] [--nf-mono]
-                [--cn-narrow] [--cn-scale-factor CN_SCALE_FACTOR] [--nerd-font |
-                --no-nerd-font] [--cn | --no-cn] [--cn-both] [--ttf-only]
-                [--least-styles] [--font-patcher] [--cache] [--cn-rebuild]
-                [--archive]
+                [--infinite-arrow] [--remove-tag-liga] [--line-height LINE_HEIGHT]
+                [--nf-mono] [--nf-propo] [--cn-narrow]
+                [--cn-scale-factor CN_SCALE_FACTOR] [--nf | --no-nf] [--cn | --no-cn]
+                [--cn-both] [--ttf-only] [--least-styles] [--font-patcher] [--cache]
+                [--cn-rebuild] [--archive]
 
 ✨ Builder and optimizer for Maple Mono
 
@@ -653,20 +682,21 @@ Feature Options:
   --no-hinted           在 NF / CN / NF-CN 中使用 unhinted 字体作为基础字体
   --liga                保留所有连字（默认）
   --no-liga             删除所有连字
-  --keep-infinite-arrow
-                        在 hinted 字体中保留无限箭头连字（默认删除）
+  --infinite-arrow      开启无限箭头连字 (默认在 hinted 格式中禁用)
   --remove-tag-liga     移除纯文本标签连字，例如 `[TODO]`
   --line-height LINE_HEIGHT
                         行高的缩放因子 (例如 1.1)
-  --nf_mono             固定 Nerd Font 图标的宽度
+  --nf-mono             使 Nerd Font 图标的宽度固定
+  --nf-propo            使 Nerd Font 图标的宽度不固定，覆盖 `--nf-mono`
   --cn-narrow           减小中文/日文字形间距（同时会让系统无法识别为等宽字体）
   --cn-scale-factor CN_SCALE_FACTOR
                         中文/日文字形的缩放因子。格式：<因子> 或
                         <宽度因子>,<高度因子> (例如 1.1 或 1.2,1.1)
 
 Build Options:
-  --nerd-font           构建 Nerd-Font 版本（默认）
-  --no-nerd-font        不构建 Nerd-Font 版本
+  --nf, --nerd-font     构建 Nerd-Font 版本（默认）
+  --no-nf, --no-nerd-font
+                        不构建 Nerd-Font 版本
   --cn                  构建中文版本
   --no-cn               不构建中文版本（默认）
   --cn-both             同时构建 `Maple Mono CN` 和 `Maple Mono NF CN`。必须启用

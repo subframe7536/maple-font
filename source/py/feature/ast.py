@@ -96,9 +96,28 @@ class Feature:
 REGEXP = r"\(.*\)"
 
 
-class CharacterVariant(Feature):
-    __slots__ = ("id", "desc", "sample")
+class FeatureWithDocs(Feature):
+    __slots__ = ("id", "desc", "example")
 
+    def __init__(
+        self,
+        id: int,
+        tag: str,
+        desc: str,
+        content: Clazz | Lookup | Line | list,
+        version: str,
+        example: str,
+    ):
+        self.id = id
+        self.desc = desc
+        self.example = example
+        Feature.__init__(self, tag, content, version)
+
+    def desc_item(self):
+        return f"- [v{self.version}] {self.tag}: {self.desc}"
+
+
+class CharacterVariant(FeatureWithDocs):
     def __init__(
         self,
         id: int,
@@ -111,13 +130,20 @@ class CharacterVariant(Feature):
             raise TypeError(
                 f"id should > 0 and < 100 in Character Variants, current is {id}"
             )
-        self.id = id
-        self.desc = desc
-        self.sample = example
-        Feature.__init__(self, f"cv{id:02d}", content, version)
+        FeatureWithDocs.__init__(
+            self,
+            id=id,
+            tag=f"cv{id:02d}",
+            desc=desc,
+            content=content,
+            version=version,
+            example=example,
+        )
 
     def get_name_lines(self) -> list[Line]:
-        _name = re.sub(REGEXP, "", self.desc.replace("`", "")).strip()
+        _name = re.sub(
+            REGEXP, "", self.desc.replace("`", "").replace(EMPTY_FEAT_SYMBOL, " ")
+        ).strip()
         return [
             Line("cvParameters {"),
             Line("FeatUILabelNameID {", 1),
@@ -127,33 +153,33 @@ class CharacterVariant(Feature):
             Line(""),
         ]
 
-    def desc_item(self) -> str:
-        return f"- [v{self.version}] {self.tag}: {self.desc}"
 
-
-class StylisticSet(Feature):
-    __slots__ = ("id", "desc", "sample")
-
+class StylisticSet(FeatureWithDocs):
     def __init__(
         self,
         id: int,
         desc: str,
         content: Clazz | Lookup | Line | list,
         version: str,
-        sample: str,
+        example: str,
     ):
         if id < 1 or id > 20:
             raise TypeError(
                 f"id should > 0 and < 20 in Stylistic Sets, current is {id}"
             )
 
-        self.id = id
-        self.desc = desc
-        self.sample = sample
-        Feature.__init__(self, f"ss{id:02d}", content, version)
+        FeatureWithDocs.__init__(
+            self,
+            id=id,
+            tag=f"ss{id:02d}",
+            desc=desc,
+            content=content,
+            version=version,
+            example=example,
+        )
 
     def get_name_lines(self) -> list[Line]:
-        _name = re.sub(REGEXP, "", self.desc.replace("`", "")).strip()
+        _name = re.sub(REGEXP, "", self.desc.replace("`", " ")).strip()
         return [
             Line("featureNames {"),
             Line(f'name "{self.tag.upper()}: {_name}";', 1),
@@ -161,9 +187,9 @@ class StylisticSet(Feature):
             Line(""),
         ]
 
-    def desc_item(self):
-        return f"- [v{self.version}] {self.tag}: {self.desc}"
 
+# Symbol for empty feature in its desc
+EMPTY_FEAT_SYMBOL = "$$$"
 
 __PUNCTUATION_MAP = {
     "{": "braceleft",
@@ -208,8 +234,6 @@ __PUNCTUATION_CN_MAP = {
     "…": "ellipsis",
     "—": "emdash",
 }
-
-LATIN_PUNCTUATIONS = list(__PUNCTUATION_MAP.keys())
 
 
 def __gly(g: str | Clazz | Sequence[str | Clazz] | None) -> str:
@@ -278,7 +302,7 @@ def gly(g: str | Clazz | Sequence[str | Clazz], suffix: str = "", overwrite=Fals
     return __gly(g) + suffix
 
 
-def gly_seq(g: str | list[str], variant: Literal['sta', 'mid', 'end']):
+def gly_seq(g: str | list[str], variant: Literal["sta", "mid", "end"]):
     """
     >>> gly_seq("{", "sta")
     "braceleft.sta.seq"
@@ -368,7 +392,7 @@ def subst_map(
     """
     Generate substitution lines for a list of glyphs with a specified suffix.
 
-    >>> subst_map(["Q", "all", "{{"], target_suffix=".cv01")
+    >>> subst_map(["Q", "all", gly("{{")], target_suffix=".cv01")
     [
         Line("sub Q by Q.cv01;"),
         Line("sub all by all.cv01;"),
@@ -453,7 +477,6 @@ def subst_liga(
     if extra_rules is None:
         extra_rules = []
 
-
     def to_list(item):
         if item is None:
             return []
@@ -466,7 +489,9 @@ def subst_liga(
     if ign_prefix:
         generated_ignores.append(ign(ign_prefix, source_arr[0], source_arr[1:]))
     if ign_suffix:
-        generated_ignores.append(ign(None, source_arr[0], source_arr[1:] + [ign_suffix]))
+        generated_ignores.append(
+            ign(None, source_arr[0], source_arr[1:] + [ign_suffix])
+        )
 
     subst_rules = []
     if not surround:
@@ -534,3 +559,33 @@ def flatten_to_lines(
             raise TypeError(f"Invalid item to flatten: {item}")
 
     return result
+
+
+EMPTY_FEAT_CONTENT = [Line("# Placeholder"), subst(None, "EMquad", None, "space")]
+
+
+def clone_empty(feature: FeatureWithDocs, desc_prefix: str = ""):
+    if isinstance(feature, CharacterVariant):
+        return CharacterVariant(
+            id=feature.id,
+            desc=desc_prefix + EMPTY_FEAT_SYMBOL + feature.desc,
+            content=EMPTY_FEAT_CONTENT,
+            version=feature.version,
+            example=feature.example,
+        )
+    if isinstance(feature, StylisticSet):
+        return StylisticSet(
+            id=feature.id,
+            desc=desc_prefix + EMPTY_FEAT_SYMBOL + feature.desc,
+            content=EMPTY_FEAT_CONTENT,
+            version=feature.version,
+            example=feature.example,
+        )
+    raise Exception(f"Unkown feature: {feature.tag}")
+
+
+def filter_empty(features: list[FeatureWithDocs], full: bool):
+    if full:
+        return features
+
+    return list(filter(lambda x: EMPTY_FEAT_SYMBOL not in x.desc, features))

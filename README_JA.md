@@ -550,20 +550,24 @@ pip install -r requirements.txt
 python build.py
 ```
 
-- `Ubuntu` または `Debian` の場合、`python-is-python3` も必要な場合があります。
-
-依存関係のインストールに問題がある場合は、新しい GitHub Codespace を作成し、そこでコマンドを実行してください。
+> [!TIP]
+> `Ubuntu` または `Debian` の場合、`python-is-python3` も必要な場合があります。
+>
+> 依存関係のインストールに問題がある場合は、新しい GitHub Codespace を作成し、そこでコマンドを実行してください。
 
 #### カスタム Nerd-Font
 
-固定幅の Nerd Font アイコンを取得したい場合は、`config.json` に `"nerd_font.mono": true` と設定するか、ビルドスクリプトに `--nf-mono` パラメータを追加するだけです。
+固定幅のアイコンを取得したいだけの場合は、`config.json` に `"nerd_font.mono": true` を設定するか、ビルドスクリプト引数に `--nf-mono` フラグを追加してください。
 
-カスタム `font-patcher` 引数の場合、`font-forge`（おそらく `python3-fontforge` も）が必要です。
+可変幅のアイコンを取得したいだけの場合は、`config.json` に `"nerd_font.propo": true` を設定するか、ビルドスクリプト引数に `--nf-propo` フラグを追加してください。
 
-おそらく[config.json](./config.json)の `"nerd_font.extra_args"` も変更する必要があります。
+カスタム `font-patcher` 引数には、`font-forge`（おそらく `python3-fontforge` も必要です）が必要です。
 
-デフォルトの引数：`-l --careful --outputdir dir`
-- `"nerd_font.mono"` が `true` の場合、`--mono` が追加されます。
+[config.json](./config.json) で `"nerd_font.extra_args"` を変更する必要があるかもしれません。
+
+デフォルト引数： `-l --careful --outputdir dir`
+- `"nerd_font.propo"` が `true` の場合は `--variable-width-glyphs` を追加
+- そうでなければ、`"nerd_font.mono"` が `true` の場合は `--mono` を追加
 
 #### プリセット
 
@@ -594,17 +598,40 @@ OpenType Feature は、フォントに組み込まれたバリエーションや
 
 デフォルトでは、[`source/py/feature/`](./source/py/feature) 内の Python モジュールが OpenType Feature 文字列を生成し、ビルド時にロードします。ここで機能を変更したりカスタムタグを設定することができます。
 
-OpenType Feature ファイルを直接編集して実現したい場合、`build.py`  を実行する際に `--apply-fea-file` 引数を追加すると、[`source/features/{regular,italic}.fea`](./source/features) の特性ファイルが読み込まれ、適用されます。
+OpenType Feature ファイルを直接編集して実現したい場合、`build.py`  を実行する際に `--apply-fea-file` 引数を追加すると、[`source/features/{regular,italic}{_cn,}.fea`](./source/features) の特性ファイルが読み込まれ、適用されます。
 
 #### 無限矢印リガチャ
 
-Fira Codeに着想を得て、このフォントはv7.3からデフォルトで無限の矢印リガチャを有効にします。何らかの理由で、hintedフォントを使用するとリガチャがずれてしまうため、v7.4のhintedバージョンではデフォルトでそれを削除しました。`config.json` に `"keep_infinite_arrow": true` を設定するか、CLI フラグに `--keep-infinite-arrow` を追加してください。詳細は [#508](https://github.com/subframe7536/maple-font/issues/508) を参照してください
+Fira Codeに着想を得て、このフォントはv7.3からデフォルトで無限の矢印リガチャを有効にします。何らかの理由で、hintedフォントを使用するとリガチャがずれてしまうため、v7.4のhintedバージョンではデフォルトでそれを削除しました。
+
+`config.json` に `"infinite_arrow": true` を設定するか、CLI フラグに `--infinite-arrow` を追加してください。詳細は [#508](https://github.com/subframe7536/maple-font/issues/508) を参照してください
+
+#### カスタムフォントウェイトマッピング
+
+`config.json` の `"weight_mapping"` 項目を通じて、静的なフォントのウェイトを変更できます。
+
+たとえば、通常のフォントウェイトを少し軽くしたい場合は、`"weight_mapping.regular"` の数値を下げるだけです（この例では 400 から 350 に変更）：
+
+```json
+{
+  "weight_mapping": {
+    "thin": 100,
+    "extralight": 200,
+    "light": 300,
+    "regular": 350,
+    "semibold": 500,
+    "medium": 600,
+    "bold": 700,
+    "extrabold": 800
+  }
+}
+```
 
 ### 中国語バージョン
 
-CN バージョンはデフォルトで無効になっています。`python build.py` を `--cn` フラグで実行すると、CN ベースフォント（約 130 MB）が GitHub からダウンロードされます。
+CN バージョンはデフォルトで無効になっています。`python build.py` を `--cn` フラグで実行すると、CN ベースフォント（約 111 MB）が GitHub からダウンロードされます。
 
-可変（約 35 MB）から CN ベースフォントをビルドしたい場合は、[config.json](./config.json)で `"cn.use_static_base_font": false` を設定し、**忍耐強く待ってください**。インスタンス化には約 20〜30 分かかります。
+可変（約 27 MB）から CN ベースフォントをビルドしたい場合は、[config.json](./config.json)で `"cn.use_static_base_font": false` を設定し、**忍耐強く待ってください**。インスタンス化には約 20〜30 分かかります。
 
 #### CN グリフの間隔を狭くする
 
@@ -625,11 +652,11 @@ CN バージョンはデフォルトで無効になっています。`python bui
 ```
 usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--apply-fea-file]
                 [--hinted | --no-hinted] [--liga | --no-liga] [--keep-infinite-arrow]
-                [--remove-tag-liga] [--line-height LINE_HEIGHT] [--nf-mono]
-                [--cn-narrow] [--cn-scale-factor CN_SCALE_FACTOR] [--nerd-font |
-                --no-nerd-font] [--cn | --no-cn] [--cn-both] [--ttf-only]
-                [--least-styles] [--font-patcher] [--cache] [--cn-rebuild]
-                [--archive]
+                [--infinite-arrow] [--remove-tag-liga] [--line-height LINE_HEIGHT]
+                [--nf-mono] [--nf-propo] [--cn-narrow]
+                [--cn-scale-factor CN_SCALE_FACTOR] [--nf | --no-nf] [--cn | --no-cn]
+                [--cn-both] [--ttf-only] [--least-styles] [--font-patcher] [--cache]
+                [--cn-rebuild] [--archive]
 
 ✨ Builder and optimizer for Maple Mono
 
@@ -650,12 +677,13 @@ Feature Options:
   --no-hinted           NF / CN / NF-CNでヒントなしフォントをベースフォントとして使用
   --liga                すべてのリガチャを保持（デフォルト）
   --no-liga             すべてのリガチャを削除
-  --keep-infinite-arrow
-                        ヒンテッドフォントで無限矢印リガチャを保持します（デフォルトで削除）
+  --infinite-arrow      無限アローリガチャを有効にする（hinted フォントではデフォルト
+                        で無効）
   --remove-tag-liga     純テキストタグのリガチャ、例えば `[TODO]` を削除する。
   --line-height LINE_HEIGHT
                         行の高さのスケールファクター（例：1.1）
-  --nf-mono             固定幅の Nerd Font アイコンを使用します
+  --nf-mono             Nerd Font アイコンの幅を固定します
+  --nf-propo            Nerd Font アイコンの幅を可変にし、--nf-mono を上書きします
   --cn-narrow           中国語/日本語の文字間隔を縮小する（同時にシステムが等幅フォントと
                         して認識できなくなる）
   --cn-scale-factor CN_SCALE_FACTOR
@@ -663,8 +691,9 @@ Feature Options:
                         <幅の係数>,<高さの係数> (例：1.1 または 1.2,1.1)
 
 Build Options:
-  --nerd-font           Nerd-Fontバージョンをビルド（デフォルト）
-  --no-nerd-font        Nerd-Fontバージョンをビルドしない
+  --nf, --nerd-font     Nerd-Fontバージョンをビルド（デフォルト）
+  --no-nf, --no-nerd-font
+                        Nerd-Fontバージョンをビルドしない
   --cn                  中国語バージョンをビルド
   --no-cn               中国語バージョンをビルドしない（デフォルト）
   --cn-both             `Maple Mono CN` と `Maple Mono NF CN` の両方をビルド。

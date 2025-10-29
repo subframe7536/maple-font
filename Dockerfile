@@ -8,13 +8,16 @@ RUN apt-get update \
 # Set working directory
 WORKDIR /app
 
-# Copy the project files
-COPY . .
+# Copy requirements.txt first to avoid duplication installation
+COPY requirements.txt .
 
 # Install Python dependencies
 RUN pip install -r requirements.txt
 
-# Create volume mount point for output
+# Copy the project files
+COPY . .
+
+# Create volume mount points
 VOLUME /app/fonts
 
 # Default build arguments

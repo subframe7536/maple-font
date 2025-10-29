@@ -1,10 +1,10 @@
 import source.py.feature.ast as ast
-from source.py.feature.cv._common import GLYPHS_L, GLYPHS_ONE
+from source.py.feature.cv._common import GLYPHS_L, GLYPHS_1
 
 
 def cv35_subst():
     base_glyphs = [
-        *GLYPHS_L,
+        *[g for g in GLYPHS_L if g != 'lslash'],
         ast.gly("Cl"),
         ast.gly("al"),
         ast.gly("cl"),
@@ -53,7 +53,7 @@ def cv35_subst():
             ]
         )
 
-    result += ast.subst_map(GLYPHS_ONE, source_suffix=".cv04")
+    result += ast.subst_map(GLYPHS_1, source_suffix=".cv04")
 
     return result
 

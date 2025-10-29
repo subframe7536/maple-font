@@ -5,25 +5,9 @@ import shutil
 import subprocess
 from urllib.request import Request, urlopen
 from zipfile import ZIP_DEFLATED, ZipFile
-from fontTools.ttLib import TTFont
+from fontTools.ttLib import TTFont, newTable
 from fontTools.merge import Merger
-
-
-def is_ci():
-    ci_envs = [
-        "JENKINS_HOME",
-        "TRAVIS",
-        "CIRCLECI",
-        "GITHUB_ACTIONS",
-        "GITLAB_CI",
-        "TF_BUILD",
-    ]
-
-    for env in ci_envs:
-        if environ.get(env):
-            return True
-
-    return False
+from source.py.task._utils import is_ci, default_weight_map
 
 
 def run(command: str | list[str], extra_args: list[str] | None = None, log=not is_ci()):
@@ -212,24 +196,24 @@ def match_unicode_names(file_path: str) -> dict[str, str]:
 def verify_glyph_width(
     font: TTFont, expect_widths: list[int], file_name: str | None = None
 ):
-    print("Verify glyph width")
     result = []
     for name in font.getGlyphNames():
         width, _ = font["hmtx"][name]  # type: ignore
         if width not in expect_widths:
             result.append([name, width])
 
-    if result.__len__() > 0:
-        print(f"Every glyph's width should be in {expect_widths}, but these are not:")
-        for item in result:
-            print(f"{item[0]}  =>  {item[1]}")
+    if result.__len__() == 0:
+        print(f"✅ Verified glyph width in {file_name}")
+        return
 
-        raise Exception(
-            f"{file_name or 'The font'} may contain glyphs that width is not in {expect_widths}, which may broke monospace rule."
-        )
+    unexpected_glyphs = "\n".join([f"{item[0]}  =>  {item[1]}" for item in result])
+
+    raise Exception(
+        f"{file_name or 'The font'} may contains glyphs that width is not in {expect_widths}, which may broke monospace rule.\n{unexpected_glyphs}"
+    )
 
 
-def compress_folder(
+def archive_fonts(
     source_file_or_dir_path: str,
     target_parent_dir_path: str,
     family_name_compact: str,
@@ -418,13 +402,14 @@ def add_ital_axis_to_stat(font: TTFont):
     stat_table.AxisValueCount += 1
 
 
-def adjust_line_height(font: TTFont, factor: float) -> None:
+def adjust_line_height(
+    font: TTFont, factor: float, metric: tuple[float, float]
+) -> None:
     """
     Adjust the line height of the font by modifying the hhea and OS/2 table.
-
-    Offset is ``int(550 * (factor - 1))``
     """
-    if factor == 1.0:
+
+    if factor == 1:
         return
 
     if "hhea" not in font:
@@ -434,11 +419,136 @@ def adjust_line_height(font: TTFont, factor: float) -> None:
 
     hhea = font["hhea"]
     os2 = font["OS/2"]
-    offset = int(550 * (factor - 1))  # type: ignore
-    hhea.ascender += offset  # type: ignore
-    hhea.descender -= offset  # type: ignore
-    os2.sTypoAscender += offset  # type: ignore
-    os2.sTypoDescender -= offset  # type: ignore
-    os2.usWinAscent += offset  # type: ignore
-    # this is correct since this value is positive
-    os2.usWinDescent += offset  # type: ignore
+
+    asc, desc = metric
+    # Maintain original ascender/descender ratio
+    ascender_ratio = asc / (asc - desc)  # type: ignore
+    # Calculate target total height
+    target_total_height = int(round(factor * (asc - desc)))
+
+    # Calculate new metrics
+    new_ascender = int(round(target_total_height * ascender_ratio))
+    new_descender = new_ascender - target_total_height
+
+    print(f"Change vertical metric to [{new_ascender}, {new_descender}]")
+
+    # Apply changes to hhea table
+    hhea.ascent = new_ascender  # type: ignore
+    hhea.descent = new_descender  # type: ignore
+    os2.sTypoAscender = new_ascender  # type: ignore
+    os2.sTypoDescender = new_descender  # type: ignore
+    os2.usWinAscent = new_ascender  # type: ignore
+    os2.usWinDescent = -new_descender  # type: ignore
+
+
+def patch_instance(font: TTFont, all_weight_map: dict[str, int]):
+    if all_weight_map == default_weight_map:
+        print("Skip weight remapping since nothing changed.")
+        return
+
+    if "fvar" not in font or "STAT" not in font:
+        return
+
+    if all_weight_map["thin"] != 100:
+        raise Exception("Font weight of `thin` must be 100")
+
+    if all_weight_map["extrabold"] != 800:
+        raise Exception("Font weight of `extrabold` must be 800")
+
+    value_to_name = {v: k for k, v in default_weight_map.items()}
+
+    for instance in font["fvar"].instances:  # type: ignore
+        current_weight = int(instance.coordinates["wght"])
+        weight_name = value_to_name.get(current_weight)
+        if weight_name and weight_name in all_weight_map:
+            instance.coordinates["wght"] = all_weight_map[weight_name]
+
+    axes = font["fvar"].axes  # type: ignore
+    wght_index = next((i for i, ax in enumerate(axes) if ax.axisTag == "wght"), None)
+    if wght_index is None:
+        return
+
+    stat = font["STAT"].table  # type: ignore
+    if not stat.AxisValueArray:
+        return
+
+    handlers = {
+        1: lambda av: patch_single_value(av, "Value"),
+        2: lambda av: patch_range_value(av),
+        3: lambda av: (
+            patch_single_value(av, "Value"),
+            patch_single_value(av, "LinkedValue"),
+        ),
+        4: lambda av: [
+            patch_single_value(rec, "Value")
+            for rec in av.AxisValueRecord
+            if rec.AxisIndex == wght_index
+        ],
+    }
+
+    def patch_single_value(obj, attr: str) -> None:
+        current_value = int(getattr(obj, attr))
+        weight_name = value_to_name.get(current_value)
+        if weight_name and weight_name in all_weight_map:
+            setattr(obj, attr, all_weight_map[weight_name])
+
+    def patch_range_value(av) -> None:
+        current_value = int(av.NominalValue)
+        weight_name = value_to_name.get(current_value)
+        if weight_name and weight_name in all_weight_map:
+            new_value = all_weight_map[weight_name]
+            delta = new_value - av.NominalValue
+            av.RangeMinValue += delta
+            av.RangeMaxValue += delta
+            av.NominalValue = new_value
+
+    for av in stat.AxisValueArray.AxisValue:
+        fmt = av.Format
+        if fmt not in handlers or (fmt != 4 and av.AxisIndex != wght_index):
+            continue
+        handlers[fmt](av)
+
+
+def add_gasp(font: TTFont):
+    print("Fix GASP table")
+    gasp = newTable("gasp")
+    gasp.gaspRange = {65535: 15}  # type: ignore
+    font["gasp"] = gasp
+
+
+def change_glyph_width_or_scale(
+    font: TTFont,
+    match_width: int,
+    target_width: int,
+    scale_factor: tuple[float, float],
+    skip_name: list[str],
+):
+    font["hhea"].advanceWidthMax = target_width  # type: ignore
+    for name in font.getGlyphOrder():
+        if name in skip_name:
+            continue
+
+        glyph = font["glyf"][name]  # type: ignore
+        width, lsb = font["hmtx"][name]  # type: ignore
+        if width != match_width:
+            continue
+        if glyph.numberOfContours == 0:
+            font["hmtx"][name] = (target_width, lsb)  # type: ignore
+            continue
+
+        scale_w, scale_h = scale_factor
+        glyph.coordinates.scale((scale_w, scale_h))
+        glyph.xMin, glyph.yMin, glyph.xMax, glyph.yMax = (
+            glyph.coordinates.calcIntBounds()
+        )
+
+        scaled_width = int(round(width * scale_w))
+        delta = (target_width - scaled_width) / 2
+
+        glyph.coordinates.translate((delta, 0))
+        glyph.xMin, glyph.yMin, glyph.xMax, glyph.yMax = (
+            glyph.coordinates.calcIntBounds()
+        )
+
+        new_lsb = lsb + int(round(delta))
+        font["hmtx"][name] = (target_width, new_lsb)  # type: ignore

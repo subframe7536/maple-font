@@ -3,22 +3,9 @@ import re
 import shutil
 from typing import Callable
 from fontTools.ttLib import TTFont
-from source.py.task._utils import write_json, write_text
+from source.py.task._utils import write_json, write_text, default_weight_map
 from source.py.utils import joinPaths, run
 from build import main
-
-# Mapping of style names to weights
-weight_map = {
-    "Thin": "100",
-    "ExtraLight": "200",
-    "Light": "300",
-    "Regular": "400",
-    "Italic": "400",
-    "SemiBold": "500",
-    "Medium": "600",
-    "Bold": "700",
-    "ExtraBold": "800",
-}
 
 
 def format_fontsource_name(filename: str):
@@ -34,7 +21,9 @@ def format_fontsource_name(filename: str):
     else:
         base_style = style
     # Fallback to 'Regular' if not found
-    weight = weight_map.get(base_style, weight_map.get("Regular", "400"))
+    weight = default_weight_map.get(
+        base_style.lower(), default_weight_map.get("regular", 400)
+    )
     suf = "italic" if "italic" in style.lower() else "normal"
 
     new_filename = f"maple-mono-latin-{weight}-{suf}.{match.group(2)}"

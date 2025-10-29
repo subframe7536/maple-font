@@ -28,10 +28,17 @@ def run_git_command(args: list, cwd=None, check=True):
         sys.exit(1)
 
 
-def page(submodule_path: str, var_dir: str, woff2: bool = False, commit: bool = False) -> None:
+def page(
+    submodule_path: str,
+    var_dir: str,
+    woff2: bool = False,
+    commit: bool = False,
+    sync: bool = False,
+) -> None:
     # Switch to main branch
     abs_submodule_path = os.path.abspath(submodule_path)
-    if commit:
+
+    if sync or commit:
         if not os.path.exists(abs_submodule_path):
             print(
                 f"Error: Submodule {submodule_path} does not exist, please run `git submodule update --init` first"
@@ -39,10 +46,25 @@ def page(submodule_path: str, var_dir: str, woff2: bool = False, commit: bool = 
             sys.exit(1)
         print("Sync remote")
         run_git_command(["git", "submodule", "update", "--remote"])
-        print("Checkout main")
-        run_git_command(["git", "checkout", "main"], cwd=abs_submodule_path)
-        print("Pull commits")
-        run_git_command(["git", "pull"], cwd=abs_submodule_path)
+        if commit:
+            print("Checkout main")
+            run_git_command(["git", "checkout", "main"], cwd=abs_submodule_path)
+
+            print("Pull commits")
+            run_git_command(["git", "pull"], cwd=abs_submodule_path)
+        elif sync:
+            # Add all changes
+            run_git_command(["git", "add", "."])
+
+            # Commit changes
+            print("Commit sync")
+            run_git_command(["git", "commit", "-m", "sync landing page"])
+
+            # Push to remote
+            print("Push to remote")
+            run_git_command(["git", "push", "origin"])
+
+            return
 
     # Update landing page data
     print("Update features")
@@ -62,7 +84,7 @@ def page(submodule_path: str, var_dir: str, woff2: bool = False, commit: bool = 
     print("Update config")
     data = read_json("config.json")
     del data["$schema"]
-    write_json(joinPaths(feature_data_base, "config.json"), data)
+    write_json(joinPaths(submodule_path, "data", "config.json"), data)
 
     print("Update script")
     data = read_text(joinPaths("source", "py", "in_browser.py"))
@@ -72,7 +94,7 @@ def page(submodule_path: str, var_dir: str, woff2: bool = False, commit: bool = 
         + minify(data),
     )
 
-    if woff2 or commit:
+    if woff2:
         print("Update woff2")
         font_dir = joinPaths(submodule_path, "public", "fonts")
         os.system("python build.py --ttf-only --no-nerd-font --least-styles")

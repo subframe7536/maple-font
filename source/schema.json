@@ -42,6 +42,51 @@
       "description": "The font family name",
       "default": "Maple Mono"
     },
+    "weight_mapping": {
+      "type": "object",
+      "properties": {
+        "thin": {
+          "type": "number",
+          "description": "Weight mapping of thin",
+          "default": 100
+        },
+        "extralight": {
+          "type": "number",
+          "description": "Weight mapping of extra light",
+          "default": 200
+        },
+        "light": {
+          "type": "number",
+          "description": "Weight mapping of light",
+          "default": 300
+        },
+        "regular": {
+          "type": "number",
+          "description": "Weight mapping of regular",
+          "default": 400
+        },
+        "semibold": {
+          "type": "number",
+          "description": "Weight mapping of semibold",
+          "default": 500
+        },
+        "medium": {
+          "type": "number",
+          "description": "Weight mapping of medium",
+          "default": 600
+        },
+        "bold": {
+          "type": "number",
+          "description": "Weight mapping of bold",
+          "default": 700
+        },
+        "extrabold": {
+          "type": "number",
+          "description": "Weight mapping of extra bold",
+          "default": 800
+        }
+      }
+    },
     "use_hinted": {
       "type": "boolean",
       "description": "Whether to use hinted TTF as base font",
@@ -49,7 +94,7 @@
     },
     "ligature": {
       "type": "boolean",
-      "description": "Alias of \"enable_ligature\"",
+      "description": "(Deprecated) Use \"enable_ligature\" instead",
       "default": true
     },
     "enable_ligature": {
@@ -57,9 +102,17 @@
       "description": "Whether to enable ligature.\nIf set to false, all the ligatures will be removed and 'ssXX' options in 'feature_freeze' will no longer effect",
       "default": true
     },
+    "infinite_arrow": {
+      "type": [
+        "boolean",
+        "null"
+      ],
+      "description": "Enable infinite arrow ligatures\n- null: disabled in hinted font, enabled in unhinted font\n- true: enabled\n- false: disabled",
+      "default": null
+    },
     "keep_infinite_arrow": {
       "type": "boolean",
-      "description": "Keep infinite arrow ligatures in hinted font (Removed by default)",
+      "description": "(Deprecated) Use \"infinite_arrow\" instead",
       "default": false
     },
     "remove_tag_liga": {
@@ -153,6 +206,18 @@
           "description": "[v7.1] Alternative 'r' with bottom bar, no effect in italic style",
           "$ref": "#/definitions/freeze_options"
         },
+        "cv09": {
+          "description": "[v7.5] Alternative '7' with middle bar, no effect in italic style",
+          "$ref": "#/definitions/freeze_options"
+        },
+        "cv10": {
+          "description": "[v7.5] Alternative 'Z' and 'z' with middle bar, no effect in italic style",
+          "$ref": "#/definitions/freeze_options"
+        },
+        "cv11": {
+          "description": "[v7.7] Alternative 'f' with bottom bar",
+          "$ref": "#/definitions/freeze_options"
+        },
         "cv31": {
           "description": "[v7.0] Alternative italic 'a' with top arm",
           "$ref": "#/definitions/freeze_options"
@@ -197,6 +262,18 @@
           "description": "[v7.1] Alternative italic 'r' with bottom bar",
           "$ref": "#/definitions/freeze_options"
         },
+        "cv42": {
+          "description": "[v7.5] Alternative italic '7' with middle bar",
+          "$ref": "#/definitions/freeze_options"
+        },
+        "cv43": {
+          "description": "[v7.5] Alternative italic 'Z' and 'z' with middle bar",
+          "$ref": "#/definitions/freeze_options"
+        },
+        "cv44": {
+          "description": "[v7.7] Alternative Italic 'f' with bottom bar",
+          "$ref": "#/definitions/freeze_options"
+        },
         "cv61": {
           "description": "[v7.1] Alternative ',' and ';' with straight tail",
           "$ref": "#/definitions/freeze_options"
@@ -215,6 +292,10 @@
         },
         "cv65": {
           "description": "[v7.3] Alternative '&' in handwriting style",
+          "$ref": "#/definitions/freeze_options"
+        },
+        "cv66": {
+          "description": "[v7.8] Alternative pipe arrows",
           "$ref": "#/definitions/freeze_options"
         },
         "cv96": {
@@ -304,7 +385,12 @@
         },
         "mono": {
           "type": "boolean",
-          "description": "Whether to make icon width fixed",
+          "description": "Whether to make icons' width fixed",
+          "default": false
+        },
+        "propo": {
+          "type": "boolean",
+          "description": "Whether to make icons' width variable, override \"mono\"",
           "default": false
         },
         "font_forge_bin": {

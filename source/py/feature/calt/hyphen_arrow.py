@@ -5,7 +5,7 @@ from source.py.feature.calt._infinite_utils import infinite_helper, infinite_rul
 
 # Inspirde by Fira Code, source:
 # https://github.com/tonsky/FiraCode/blob/master/features/calt/hyphen_arrows.fea
-def infinite_hyphens():
+def infinite_hyphens(cls_var: ast.Clazz):
     if not infinite_helper.get():
         return None
 
@@ -37,7 +37,11 @@ def infinite_hyphens():
         [
             cls_start.state(),
             ast.ign(None, "<", [ast.cls("!", "#"), "-", "-"]),
-            ast.ign("|", "|", "-"),
+            ast.ign(ast.cls("|", "+"), "|", "-"),
+            ast.ign(None, "|", ["-", "-", cls_var]),
+            ast.ign("|", "-", ["-", cls_var]),
+            ast.ign(None, "|", ["-", "-", "<", cls_var]),
+            ast.ign("|", "-", ["-", "<", cls_var]),
             ast.ign("-", "|", "|"),
             ast.ign("-", "-", "|"),
             ast.ign(["(", cls_question, "<", "!"], "-", "-"),
@@ -63,7 +67,6 @@ def infinite_hyphens():
             ast.subst(None, ">", ["-", ast.cls("-", "|", ">")], ghy_start),
             ast.subst(None, ">", ["-", "<", "-"], ghy_start),
             ast.ign(None, ">", "-"),
-            # ast.ign(None, ">", ["-", ast.cls(ast.SPC, cls_digit)]),
             # Disable -<
             ast.subst(
                 ast.cls(
@@ -90,7 +93,7 @@ def infinite_hyphens():
     )
 
 
-def get_lookup():
+def get_lookup(cls_var: ast.Clazz):
     return [
         ast.subst_liga(
             "--",
@@ -103,6 +106,20 @@ def get_lookup():
                     "-",
                     "-",
                 ),
+            ],
+            surround=[
+                (None, None),
+                ("|", [cls_var]),
+                ("|", ["<", cls_var]),
+            ],
+        ),
+        ast.subst_liga(
+            "--",
+            lookup_name=ast.gly("--", "__REGEX__"),
+            extra_rules=[ast.ign(ast.cls("<", ">", "-", "!"), "-", ["-", "<"])],
+            surround=[
+                ("|", [cls_var]),
+                (None, ["<", cls_var]),
             ],
         ),
         infinite_helper.ignore_when_disabled(
@@ -196,5 +213,5 @@ def get_lookup():
                 ign_suffix=ast.cls(">", "-"),
             ),
         ),
-        infinite_hyphens(),
+        infinite_hyphens(cls_var),
     ]

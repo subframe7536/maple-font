@@ -109,5 +109,5 @@ ss08_name = (
     "Double headed arrows and reverse arrows ligatures (`>>=`, `-<<`, `->>`, `>>-` ...)"
 )
 ss08_feat = ast.StylisticSet(
-    id=8, desc=ss08_name, content=ss08_subst(), version="7.0", sample=">>="
+    id=8, desc=ss08_name, content=ss08_subst(), version="7.0", example=">>="
 )

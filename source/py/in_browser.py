@@ -8,55 +8,58 @@ MOVING_RULES = ["ss03", "ss07", "ss08", "ss09", "ss10", "ss11"]
 
 def get_freeze_config_str(config):
     result = ""
-    for k, v in config.items():
+    for k, v in sorted(config.items()):
         if v == "1":
             result += f"+{k};"
-        if v == "0" and k == "calt":
-            result += "-calt;"
+        if v == "0" and k == "calt" or v == "-1":
+            result += f"-{k};"
     return result
 
 
 def freeze_feature(font, moving_rules, config):
-    calt = config.get("calt") == "1"
-    feature_record = font["GSUB"].table.FeatureList.FeatureRecord
+    feature_list = font["GSUB"].table.FeatureList
+    feature_record = feature_list.FeatureRecord
     feature_dict = {
-        feature.FeatureTag: feature.Feature
-        for feature in feature_record
+        feature.FeatureTag: (i, feature.Feature)
+        for i, feature in enumerate(feature_record)
         if feature.FeatureTag != "calt"
     }
 
-    calt_features = []
-    if calt:
-        calt_features = [
-            feature.Feature
-            for feature in feature_record
-            if feature.FeatureTag == "calt"
-        ]
-    else:
-        for feature in feature_record:
-            if feature.FeatureTag == "calt":
-                feature.Feature.LookupListIndex.clear()
-                feature.Feature.LookupCount = 0
-                feature.FeatureTag = "DELT"
+    calt_features = [
+        feature.Feature for feature in feature_record if feature.FeatureTag == "calt"
+    ]
 
+    enable_calt = config.get("calt") == "1"
+    if not enable_calt:
+        for calt_feature in calt_features:
+            calt_feature.LookupListIndex.clear()
+            calt_feature.LookupCount = 0
+
+    indices_to_remove = []
     for tag, status in config.items():
-        target_feature = feature_dict.get(tag)
-        if not target_feature or status == "0":
+        if tag not in feature_dict or status == "0":
             continue
 
-        if tag in moving_rules and calt:
-            for calt_feat in calt_features:
-                calt_feat.LookupListIndex.extend(target_feature.LookupListIndex)
+        index, target_feature = feature_dict[tag]
+        if status == "-1":
+            indices_to_remove.append(index)
+            continue
+
+        if tag in moving_rules and enable_calt:
+            for calt_feature in calt_features:
+                calt_feature.LookupListIndex.extend(target_feature.LookupListIndex)
         else:
             glyph_dict = font["glyf"].glyphs
             hmtx_dict = font["hmtx"].metrics
-            for index in target_feature.LookupListIndex:
-                lookup_subtable = (
-                    font["GSUB"].table.LookupList.Lookup[index].SubTable[0]
+            for lookup_index in target_feature.LookupListIndex:
+                mapping = getattr(
+                    font["GSUB"].table.LookupList.Lookup[lookup_index].SubTable[0],
+                    "mapping",
+                    None,
                 )
-                if not lookup_subtable or "mapping" not in lookup_subtable.__dict__:
+                if not mapping:
                     continue
-                for old_key, new_key in lookup_subtable.mapping.items():
+                for old_key, new_key in mapping.items():
                     if (
                         old_key in glyph_dict
                         and old_key in hmtx_dict
@@ -65,6 +68,11 @@ def freeze_feature(font, moving_rules, config):
                     ):
                         glyph_dict[old_key] = glyph_dict[new_key]
                         hmtx_dict[old_key] = hmtx_dict[new_key]
+
+    # Remove features's lookup list index in reverse order to maintain correct indices
+    for index in sorted(indices_to_remove, reverse=True):
+        feature_list.FeatureRecord[index].Feature.LookupCount = 0
+        feature_list.FeatureRecord[index].Feature.LookupListIndex = []
 
 
 def set_font_name(font, name: str, id: int):
@@ -101,7 +109,7 @@ def main(zip_path: str, target_path: str, config: dict):
                     zip_out.writestr(file_info, output_io.read())
                     font.close()
             else:
-                print(f'Skip:  {file_name}')
+                print(f"Skip:  {file_name}")
                 zip_out.writestr(file_info, zip_in.read(file_info))
 
         zip_out.writestr(

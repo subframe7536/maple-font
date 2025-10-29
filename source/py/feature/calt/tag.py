@@ -1,4 +1,5 @@
 from source.py.feature import ast
+from source.py.feature.base.clazz import cls_space, cls_comma
 
 built_in_tag_text = [
     "trace",
@@ -88,9 +89,15 @@ def tag_any(text_list: list[str], cls_var: ast.Clazz):
                 target=f"tag_{text}.liga",
                 lookup_name=f"tag_{text}_alt",
                 desc=f"{text}))",
+                extra_rules=[
+                    ast.ign([ast.cls(":", "::", ","), cls_space], glyphs[0], glyphs[1:])
+                ],
                 ign_prefix=ast.cls(
                     "(",
                     ".",
+                    "..",
+                    "...",
+                    cls_comma,
                     ":",
                     "::",
                     "~",
@@ -103,9 +110,10 @@ def tag_any(text_list: list[str], cls_var: ast.Clazz):
                     "$",
                     ast.gly("$", ".cv01"),
                     "-",
+                    ast.gly_seq("-", "end"),
                     cls_var,
                 ),
-                ign_suffix=ast.cls(";", ")", ".")
+                ign_suffix=ast.cls(";", ")", "."),
             )
         )
 
@@ -213,6 +221,25 @@ def tag_custom(
     return result
 
 
+def tag_suffix_colon(text_list: list[str]):
+    result = []
+    for text in text_list:
+        text = text.lower()
+        if text not in built_in_tag_text:
+            raise Exception(
+                f"tag with suffix `:` must be in {built_in_tag_text}, but '{text}' is not"
+            )
+
+        result.append(
+            ast.subst_liga(
+                source=f"{text.upper()}:",
+                target=f"tag_{text}.liga",
+                lookup_name=f"{text}_colon",
+            )
+        )
+    return result
+
+
 def get_lookup(cls_var: ast.Clazz):
     # Dict to map letter and class.
     # Only letter that has uppercase variant will be added.
@@ -244,24 +271,22 @@ def get_lookup(cls_var: ast.Clazz):
         # ---------------------------------------------------------
         tag_custom(
             [
-                # ("_bug_", "[bug]"),
-                # ("_noqa_", "(noqa)"),
+                # ("_bug_", "[bug]"),  # type `_bug_`, get `bug` tag in square style
+                # ("_noqa_", "(noqa)"),  # type `_noqa_`, get `noqa` tag in rounded style
+                # (":test:", "<test>"),  # type `:test:`, get `test` tag in sharp style
             ],
             bg_cls_dict,
         ),
         # =========================================================
         #                Mark annotation in Xcode
         #             example: `// TODO: code review`
+        #   Limitation: the first glyph before will be overlapped
         # ---------------------------------------------------------
-        # ast.subst_liga(
-        #     source="TODO:",
-        #     target="tag_todo.liga",
-        #     lookup_name="todo_colon"
-        # )
-        # ast.subst_liga(
-        #     source="MARK:",
-        #     target="tag_todo.liga",
-        #     lookup_name="mark_colon"
-        # )
+        tag_suffix_colon(
+            [
+                # "todo",
+                # "mark",
+            ]
+        ),
         # =========================================================
     ]

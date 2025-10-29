@@ -184,6 +184,7 @@ __ccmp = [
     ccmp_other.use(),
 ]
 
+
 def get_ccmp_feature(cn: bool, cn_only: bool = False):
     if cn:
         content = ccmp_jp if cn_only else [__ccmp, ccmp_jp]

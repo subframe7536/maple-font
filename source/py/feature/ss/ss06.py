@@ -28,6 +28,7 @@ def ss06_subst():
             ast.gly("ull"),
             ast.gly("ff"),
             ast.gly("ff", ".cv32"),
+            ast.gly("ff", ".cv44"),
             ast.gly("tt"),
         ],
         target_suffix=".ss06",
@@ -36,5 +37,5 @@ def ss06_subst():
 
 ss06_name = "Break connected strokes between italic letters (`al`, `il`, `ull` ...)"
 ss06_feat = ast.StylisticSet(
-    id=6, desc=ss06_name, content=ss06_subst(), version="7.0", sample="all"
+    id=6, desc=ss06_name, content=ss06_subst(), version="7.0", example="all"
 )
