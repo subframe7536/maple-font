@@ -20,7 +20,7 @@ from source.py.utils import (
     change_glyph_width_or_scale,
     check_font_patcher,
     check_directory_hash,
-    expand_bg,
+    expand_custom_tag_bg,
     patch_instance,
     verify_glyph_width,
     archive_fonts,
@@ -1502,7 +1502,8 @@ def build_variable_fonts(font_config: FontConfig, build_option: BuildOption):
             ),
         )
 
-        expand_bg(font=font)
+        # Fix #682
+        expand_custom_tag_bg(font=font)
 
         is_italic = "Italic" in input_file
 

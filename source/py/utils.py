@@ -554,7 +554,10 @@ def change_glyph_width_or_scale(
         font["hmtx"][name] = (target_width, new_lsb)  # type: ignore
 
 
-def expand_bg(font: TTFont):
+def expand_custom_tag_bg(font: TTFont):
+    """
+    ``*.bg*`` shift the right edge by 10
+    """
     from fontTools.ttLib.tables._g_l_y_f import GlyphCoordinates
 
     # Key: (x, y) -> Value: new x
