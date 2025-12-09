@@ -552,3 +552,37 @@ def change_glyph_width_or_scale(
 
         new_lsb = lsb + int(round(delta))
         font["hmtx"][name] = (target_width, new_lsb)  # type: ignore
+
+
+def expand_bg(font: TTFont):
+    from fontTools.ttLib.tables._g_l_y_f import GlyphCoordinates
+
+    # Key: (x, y) -> Value: new x
+    target_map = {(600, 1020): 610, (600, -300): 610}
+
+    if "glyf" not in font:
+        return
+
+    glyf_table = font["glyf"]
+    glyph_order = font.getGlyphOrder()
+
+    bg_glyphs = [name for name in glyph_order if ".bg" in name]
+
+    for name in bg_glyphs:
+        glyph = glyf_table[name]  # type: ignore
+
+        # `*.bg*` is transformed in variable ttf, so there is no need to check if composited.
+        coordinates = glyph.coordinates
+        new_coords = []
+        modified = False
+
+        for x, y in coordinates:
+            if (x, y) in target_map:
+                new_x = target_map[(x, y)]
+                new_coords.append((new_x, y))
+                modified = True
+            else:
+                new_coords.append((x, y))
+
+        if modified:
+            glyph.coordinates = GlyphCoordinates(new_coords)
