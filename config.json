@@ -1,7 +1,7 @@
 {
   "family_name": "R Maple Mono",
   "use_hinted": true,
-  "pool_size": 4,
+  "pool_size": 8,
   "enable_ligature": true,
   "ttfautohint_param": {},
   "github_mirror": "github.com",
