@@ -23,7 +23,7 @@
     "cv02": "enable",
     "cv03": "ignore",
     "cv04": "ignore",
-    "cv05": "ignore",
+    "cv05": "enable",
     "cv06": "ignore",
     "cv07": "ignore",
     "cv08": "ignore",
