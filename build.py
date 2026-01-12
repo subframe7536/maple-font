@@ -1696,7 +1696,7 @@ def main(args: list[str] | None = None, version: str | None = None):
 
     should_use_cache = parsed_args.cache
     target_styles = (
-        ["Regular", "Italic"] if parsed_args.least_styles or font_config.debug else None
+        ["Regular", "Bold", "Italic", "BoldItalic"] if parsed_args.least_styles or font_config.debug else None
     )
 
     if not should_use_cache:
