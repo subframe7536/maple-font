@@ -1561,7 +1561,7 @@ def build_variable_fonts(font_config: FontConfig, build_option: BuildOption):
 
         font.save(joinPaths(build_option.output_variable, f"{file_name}[wght].ttf"))
 
-    print("\n✨ Instatiate and optimize fonts...\n")
+    print("\n✨ Instantiate and optimize fonts...\n")
 
     print("Check and optimize variable fonts")
 
