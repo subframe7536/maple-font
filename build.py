@@ -228,9 +228,9 @@ def parse_args(args: list[str] | None = None):
         help="Scale factor for CN / JP glyphs. Format: <factor> or <width_factor>,<height_factor> (e.g. 1.1 or 1.2,1.1)",
     )
     feature_group.add_argument(
-        "--cn-scale-skip-punctuation",
-        action="store_true",
-        help="Skip scaling for fullwidth punctuation glyphs when using --cn-scale-factor",
+        "--cn-scale-punctuation-factor",
+        type=parse_scale_factor,
+        help="Scale factor for fullwidth punctuation glyphs. Format: <factor> or <width_factor>,<height_factor> (e.g. 1.0 or 1.0,1.0)",
     )
 
     build_group = parser.add_argument_group("Build Options")
@@ -404,8 +404,8 @@ class FontConfig:
             "use_static_base_font": True,  # Deprecated. Always `True`
             # scale factor for CN glyphs
             "scale_factor": (1.0, 1.0),
-            # whether to skip scaling for fullwidth punctuation glyphs
-            "scale_skip_punctuation": False,
+            # scale factor for fullwidth punctuation glyphs (None means use scale_factor)
+            "scale_punctuation_factor": None,
         }
         self.glyph_width = 600
         self.glyph_width_cn_narrow = 1000
@@ -534,8 +534,10 @@ class FontConfig:
         if isinstance(self.cn["scale_factor"], (float, list)):
             self.cn["scale_factor"] = parse_scale_factor(self.cn["scale_factor"])
 
-        if args.cn_scale_skip_punctuation:
-            self.cn["scale_skip_punctuation"] = True
+        if args.cn_scale_punctuation_factor:
+            self.cn["scale_punctuation_factor"] = args.cn_scale_punctuation_factor
+        if isinstance(self.cn["scale_punctuation_factor"], (float, list)):
+            self.cn["scale_punctuation_factor"] = parse_scale_factor(self.cn["scale_punctuation_factor"])
 
     def _apply_build_options(self, args):
         """Apply general build options."""
@@ -1397,22 +1399,27 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
         else:
             scale_factor = (1.0, 1.0)
 
+        punctuation_scale_factor = font_config.cn["scale_punctuation_factor"]
+        if punctuation_scale_factor:
+            print(f"Scale punctuation glyph to ({punctuation_scale_factor[0]}x, {punctuation_scale_factor[1]}x)")
+
         change_glyph_width_or_scale(
             font=cn_font,
             match_width=match_width,
             target_width=target_width,
             scale_factor=scale_factor,
             special_names=["ellipsis.full"],
-            skip_punctuation=font_config.cn["scale_skip_punctuation"],
+            punctuation_scale_factor=punctuation_scale_factor,
         )
     elif font_config.get_width_name():
+        punctuation_scale_factor = font_config.cn["scale_punctuation_factor"]
         change_glyph_width_or_scale(
             font=cn_font,
             match_width=2 * font_config.glyph_width,
             target_width=2 * font_config.get_target_width(),
             scale_factor=(1.0, 1.0),
             special_names=["ellipsis.full"],
-            skip_punctuation=font_config.cn["scale_skip_punctuation"],
+            punctuation_scale_factor=punctuation_scale_factor,
         )
 
     # https://github.com/subframe7536/maple-font/issues/239
