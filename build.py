@@ -1377,7 +1377,9 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
         if font_config.cn["scale_factor"] != (1.0, 1.0)
         else None
     )
-    if target_width or scale_factor:
+    scale_punctuation_factor: tuple[float, float] | None = font_config.cn["scale_punctuation_factor"]
+
+    if target_width or scale_factor or scale_punctuation_factor:
         match_width = 2 * font_config.glyph_width
 
         # Change glyph width and keep monospace identifier will cause
@@ -1399,27 +1401,29 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
         else:
             scale_factor = (1.0, 1.0)
 
-        punctuation_scale_factor = font_config.cn["scale_punctuation_factor"]
-        if punctuation_scale_factor:
-            print(f"Scale punctuation glyph to ({punctuation_scale_factor[0]}x, {punctuation_scale_factor[1]}x)")
+        if scale_punctuation_factor:
+            print(
+                f"Scale CN punctuation glyph to ({scale_punctuation_factor[0]}x, {scale_punctuation_factor[1]}x)"
+            )
+        else:
+            scale_punctuation_factor = scale_factor
 
         change_glyph_width_or_scale(
             font=cn_font,
             match_width=match_width,
             target_width=target_width,
             scale_factor=scale_factor,
+            scale_punctuation_factor=scale_punctuation_factor,
             special_names=["ellipsis.full"],
-            punctuation_scale_factor=punctuation_scale_factor,
         )
     elif font_config.get_width_name():
-        punctuation_scale_factor = font_config.cn["scale_punctuation_factor"]
         change_glyph_width_or_scale(
             font=cn_font,
             match_width=2 * font_config.glyph_width,
             target_width=2 * font_config.get_target_width(),
             scale_factor=(1.0, 1.0),
+            scale_punctuation_factor=(1.0, 1.0),
             special_names=["ellipsis.full"],
-            punctuation_scale_factor=punctuation_scale_factor,
         )
 
     # https://github.com/subframe7536/maple-font/issues/239
