@@ -711,8 +711,9 @@ Feature Options:
   --cn-scale-factor CN_SCALE_FACTOR
                         中文/日文字形的缩放因子。格式：<因子> 或
                         <宽度因子>,<高度因子> (例如 1.1 或 1.2,1.1)
-  --cn-scale-skip-punctuation
-                        使用 --cn-scale-factor 时跳过全角标点符号的缩放
+  --cn-scale-punctuation-factor CN_SCALE_PUNCTUATION_FACTOR
+                        全角标点符号的缩放因子。格式：<因子> 或
+                        <宽度因子>,<高度因子> (例如 1.0)
 
 Build Options:
   --nf, --nerd-font     构建 Nerd-Font 版本（默认）
