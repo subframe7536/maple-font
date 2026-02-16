@@ -227,6 +227,11 @@ def parse_args(args: list[str] | None = None):
         type=parse_scale_factor,
         help="Scale factor for CN / JP glyphs. Format: <factor> or <width_factor>,<height_factor> (e.g. 1.1 or 1.2,1.1)",
     )
+    feature_group.add_argument(
+        "--cn-scale-skip-punctuation",
+        action="store_true",
+        help="Skip scaling for fullwidth punctuation glyphs when using --cn-scale-factor",
+    )
 
     build_group = parser.add_argument_group("Build Options")
     nf_group = build_group.add_mutually_exclusive_group()
@@ -399,6 +404,8 @@ class FontConfig:
             "use_static_base_font": True,  # Deprecated. Always `True`
             # scale factor for CN glyphs
             "scale_factor": (1.0, 1.0),
+            # whether to skip scaling for fullwidth punctuation glyphs
+            "scale_skip_punctuation": False,
         }
         self.glyph_width = 600
         self.glyph_width_cn_narrow = 1000
@@ -526,6 +533,9 @@ class FontConfig:
             self.cn["scale_factor"] = args.cn_scale_factor
         if isinstance(self.cn["scale_factor"], (float, list)):
             self.cn["scale_factor"] = parse_scale_factor(self.cn["scale_factor"])
+
+        if args.cn_scale_skip_punctuation:
+            self.cn["scale_skip_punctuation"] = True
 
     def _apply_build_options(self, args):
         """Apply general build options."""
@@ -1393,6 +1403,7 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
             target_width=target_width,
             scale_factor=scale_factor,
             special_names=["ellipsis.full"],
+            skip_punctuation=font_config.cn["scale_skip_punctuation"],
         )
     elif font_config.get_width_name():
         change_glyph_width_or_scale(
@@ -1401,6 +1412,7 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
             target_width=2 * font_config.get_target_width(),
             scale_factor=(1.0, 1.0),
             special_names=["ellipsis.full"],
+            skip_punctuation=font_config.cn["scale_skip_punctuation"],
         )
 
     # https://github.com/subframe7536/maple-font/issues/239
