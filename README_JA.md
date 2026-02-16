@@ -708,6 +708,9 @@ Feature Options:
   --cn-scale-factor CN_SCALE_FACTOR
                         中国語/日本語グリフのスケール係数。形式：<係数> または
                         <幅の係数>,<高さの係数> (例：1.1 または 1.2,1.1)
+  --cn-scale-skip-punctuation
+                        --cn-scale-factor 使用時に全角句読点グリフのスケーリングを
+                        スキップする
 
 Build Options:
   --nf, --nerd-font     Nerd-Fontバージョンをビルド（デフォルト）

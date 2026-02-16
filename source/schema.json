@@ -486,6 +486,11 @@
           ],
           "description": "Scale factor for CN / JP glyphs with <factor> or [<width_factor>,<height_factor>](e.g. 1.1 or [1.2, 1.1])",
           "default": 1.0
+        },
+        "scale_skip_punctuation": {
+          "type": "boolean",
+          "description": "Whether to skip scaling for fullwidth punctuation glyphs when using scale_factor",
+          "default": false
         }
       },
       "required": [
