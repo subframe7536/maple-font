@@ -3,6 +3,8 @@ from typing import Any, Tuple, List
 from fontTools.ttLib import TTFont
 from fontTools.ttLib.tables._g_l_y_f import GlyphCoordinates, Glyph
 
+from source.py.utils import FULLWIDTH_PUNCTUATION_NAMES
+
 # Type aliases
 Coordinate = Tuple[float, float]
 
@@ -232,6 +234,7 @@ def change_glyph_width_or_scale(
     target_width: int,
     scale_factor: tuple[float, float],
     special_names: list[str] = [],
+    skip_punctuation: bool = False,
 ):
     """
     Adjusts the width or scales the glyphs in a font based on the specified parameters.
@@ -248,18 +251,29 @@ def change_glyph_width_or_scale(
             width and height (scale_w, scale_h).
         special_names (list[str], optional): A list of glyph names that require special
             handling instead of trim whitespace only. Defaults to an empty list.
+        skip_punctuation (bool, optional): Whether to skip scaling for fullwidth
+            punctuation glyphs. These glyphs will only be centered, not scaled.
+            Defaults to True.
 
     Notes:
         - Glyphs with a width that does not match `match_width` are skipped.
         - Glyphs with zero contours are only updated in the horizontal metrics.
         - The scaling and translation are applied to the glyph coordinates, and the
           bounding box values are recalculated.
+        - When skip_punctuation is True, fullwidth punctuation glyphs (quotes, ellipsis,
+          em dash, CJK punctuation, etc.) are not scaled, only centered.
     """
     font["hhea"].advanceWidthMax = target_width  # type: ignore
     glyf: Any = font["glyf"]
     hmtx: Any = font["hmtx"]
     factor = target_width / match_width
+
+    # Track statistics
+    scaled_count = 0
+    skipped_punctuation_count = 0
+
     for glyph_name in font.getGlyphOrder():
+        # Handle special names (legacy behavior)
         if glyph_name in special_names:
             _change_glyph_width(
                 glyf=glyf,
@@ -280,6 +294,29 @@ def change_glyph_width_or_scale(
             hmtx[glyph_name] = (target_width, lsb)
             continue
 
+        # Check if this is a punctuation glyph that should not be scaled
+        is_punctuation = glyph_name in FULLWIDTH_PUNCTUATION_NAMES
+
+        if skip_punctuation and is_punctuation:
+            # For punctuation: only center, do not scale
+            # Calculate centering delta
+            current_width = width
+            delta = (target_width - current_width) / 2
+
+            if delta != 0:
+                glyph.coordinates.translate((delta, 0))
+                glyph.xMin, glyph.yMin, glyph.xMax, glyph.yMax = (
+                    glyph.coordinates.calcIntBounds()
+                )
+                new_lsb = lsb + int(round(delta))
+                hmtx[glyph_name] = (target_width, new_lsb)
+            else:
+                hmtx[glyph_name] = (target_width, lsb)
+
+            skipped_punctuation_count += 1
+            continue
+
+        # Normal scaling for CJK characters
         scale_w, scale_h = scale_factor
         glyph.coordinates.scale((scale_w, scale_h))
         glyph.xMin, glyph.yMin, glyph.xMax, glyph.yMax = (
@@ -296,3 +333,8 @@ def change_glyph_width_or_scale(
 
         new_lsb = lsb + int(round(delta))
         hmtx[glyph_name] = (target_width, new_lsb)
+        scaled_count += 1
+
+    # Print summary
+    if scaled_count > 0 or skipped_punctuation_count > 0:
+        print(f"  Scaled {scaled_count} CJK glyphs, skipped {skipped_punctuation_count} punctuation glyphs")
