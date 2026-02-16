@@ -233,8 +233,8 @@ def change_glyph_width_or_scale(
     match_width: int,
     target_width: int,
     scale_factor: tuple[float, float],
+    scale_punctuation_factor: tuple[float, float],
     special_names: list[str] = [],
-    punctuation_scale_factor: tuple[float, float] | None = None,
 ):
     """
     Adjusts the width or scales the glyphs in a font based on the specified parameters.
@@ -249,20 +249,16 @@ def change_glyph_width_or_scale(
         target_width (int): The new width to set for matching glyphs.
         scale_factor (tuple[float, float]): A tuple containing the scaling factors for
             width and height (scale_w, scale_h).
+        scale_punctuation_factor (tuple[float, float]): A tuple containing the scaling factors for
+            fullwidth punctuation glyphs (scale_w, scale_h).
         special_names (list[str], optional): A list of glyph names that require special
             handling instead of trim whitespace only. Defaults to an empty list.
-        punctuation_scale_factor (tuple[float, float] | None, optional): Separate scale
-            factor for fullwidth punctuation glyphs. When None, punctuation uses the
-            same scale_factor as other glyphs. Defaults to None.
 
     Notes:
         - Glyphs with a width that does not match `match_width` are skipped.
         - Glyphs with zero contours are only updated in the horizontal metrics.
         - The scaling and translation are applied to the glyph coordinates, and the
           bounding box values are recalculated.
-        - When punctuation_scale_factor is set, fullwidth punctuation glyphs (quotes,
-          ellipsis, em dash, CJK punctuation, etc.) use this factor instead of
-          scale_factor.
     """
     font["hhea"].advanceWidthMax = target_width  # type: ignore
     glyf: Any = font["glyf"]
@@ -299,13 +295,12 @@ def change_glyph_width_or_scale(
         is_punctuation = glyph_name in FULLWIDTH_PUNCTUATION_NAMES
 
         # Determine which scale factor to use
-        if is_punctuation and punctuation_scale_factor is not None:
-            use_scale_w, use_scale_h = punctuation_scale_factor
+        if is_punctuation:
+            use_scale_w, use_scale_h = scale_punctuation_factor
             punctuation_count += 1
         else:
             use_scale_w, use_scale_h = scale_factor
-            if not is_punctuation:
-                cjk_count += 1
+            cjk_count += 1
 
         # Apply scaling
         glyph.coordinates.scale((use_scale_w, use_scale_h))
@@ -326,7 +321,4 @@ def change_glyph_width_or_scale(
 
     # Print summary
     if cjk_count > 0 or punctuation_count > 0:
-        if punctuation_scale_factor is not None:
-            print(f"  Scaled {cjk_count} CJK glyphs, {punctuation_count} punctuation glyphs (with separate factor)")
-        else:
-            print(f"  Scaled {cjk_count + punctuation_count} glyphs")
+        print(f"  Scaled {cjk_count} CJK glyphs, {punctuation_count} punctuation glyphs")
