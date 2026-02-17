@@ -3,11 +3,47 @@ from os import environ, path, remove, walk
 import sys
 import shutil
 import subprocess
+from typing import Set
 from urllib.request import Request, urlopen
 from zipfile import ZIP_DEFLATED, ZipFile
 from fontTools.ttLib import TTFont, newTable
 from fontTools.merge import Merger
 from source.py.task._utils import is_ci, default_weight_map
+
+
+FULLWIDTH_PUNCTUATION_NAMES: Set[str] = {
+    # CJK Symbols and Punctuation (U+3000-U+303F)
+    "uni3000", "uni3001", "uni3002", "uni3003",
+    "uni3005", "uni3006", "uni3007",
+    "uni3008", "uni3009", "uni300A", "uni300B",
+    "uni300C", "uni300D", "uni300E", "uni300F",
+    "uni3010", "uni3011",
+    "uni3014", "uni3015", "uni3016", "uni3017",
+    "uni3018", "uni3019", "uni301A", "uni301B", "uni301C",
+    "uni3021", "uni3022", "uni3023", "uni3024", "uni3025",
+    "uni3026", "uni3027", "uni3028", "uni3029",
+    "uni3031", "uni3032", "uni3033", "uni3034", "uni3035",
+    "uni3036", "uni3037", "uni3038", "uni3039", "uni303A", "uni303B",
+
+    # Fullwidth ASCII Punctuation
+    "uniFF01", "uniFF08", "uniFF09", "uniFF0C", "uniFF0E",
+    "uniFF1A", "uniFF1B", "uniFF1F",
+    "uniFF3B", "uniFF3D", "uniFF5B", "uniFF5C", "uniFF5D", "uniFF5E",
+
+    # .full variants (cv96, cv97, cv98)
+    "ellipsis.full", "emdash.full",
+    "quotedblleft.full", "quotedblright.full",
+    "quoteleft.full", "quoteright.full",
+
+    # Base glyphs that may be replaced by .full variants when cv96/cv97/cv98 are frozen
+    "ellipsis", "emdash",
+    "quotedblleft", "quotedblright",
+    "quoteleft", "quoteright",
+
+    # .tw variants (cv99)
+    "uni3001.tw", "uni3002.tw", "uniFF01.tw", "uniFF0C.tw",
+    "uniFF1A.tw", "uniFF1B.tw", "uniFF1F.tw",
+}
 
 
 def run(command: str | list[str], extra_args: list[str] | None = None, log=not is_ci()):

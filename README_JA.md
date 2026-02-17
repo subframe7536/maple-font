@@ -708,6 +708,9 @@ Feature Options:
   --cn-scale-factor CN_SCALE_FACTOR
                         中国語/日本語グリフのスケール係数。形式：<係数> または
                         <幅の係数>,<高さの係数> (例：1.1 または 1.2,1.1)
+  --cn-scale-punctuation-factor CN_SCALE_PUNCTUATION_FACTOR
+                        全角句読点グリフのスケール係数。形式：<係数> または
+                        <幅の係数>,<高さの係数> (例：1.0)
 
 Build Options:
   --nf, --nerd-font     Nerd-Fontバージョンをビルド（デフォルト）

@@ -227,6 +227,11 @@ def parse_args(args: list[str] | None = None):
         type=parse_scale_factor,
         help="Scale factor for CN / JP glyphs. Format: <factor> or <width_factor>,<height_factor> (e.g. 1.1 or 1.2,1.1)",
     )
+    feature_group.add_argument(
+        "--cn-scale-punctuation-factor",
+        type=parse_scale_factor,
+        help="Scale factor for fullwidth punctuation glyphs. Format: <factor> or <width_factor>,<height_factor> (e.g. 1.0 or 1.0,1.0)",
+    )
 
     build_group = parser.add_argument_group("Build Options")
     nf_group = build_group.add_mutually_exclusive_group()
@@ -399,6 +404,8 @@ class FontConfig:
             "use_static_base_font": True,  # Deprecated. Always `True`
             # scale factor for CN glyphs
             "scale_factor": (1.0, 1.0),
+            # scale factor for fullwidth punctuation glyphs (None means use scale_factor)
+            "scale_punctuation_factor": None,
         }
         self.glyph_width = 600
         self.glyph_width_cn_narrow = 1000
@@ -526,6 +533,11 @@ class FontConfig:
             self.cn["scale_factor"] = args.cn_scale_factor
         if isinstance(self.cn["scale_factor"], (float, list)):
             self.cn["scale_factor"] = parse_scale_factor(self.cn["scale_factor"])
+
+        if args.cn_scale_punctuation_factor:
+            self.cn["scale_punctuation_factor"] = args.cn_scale_punctuation_factor
+        if isinstance(self.cn["scale_punctuation_factor"], (float, list)):
+            self.cn["scale_punctuation_factor"] = parse_scale_factor(self.cn["scale_punctuation_factor"])
 
     def _apply_build_options(self, args):
         """Apply general build options."""
@@ -1365,7 +1377,9 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
         if font_config.cn["scale_factor"] != (1.0, 1.0)
         else None
     )
-    if target_width or scale_factor:
+    scale_punctuation_factor: tuple[float, float] | None = font_config.cn["scale_punctuation_factor"]
+
+    if target_width or scale_factor or scale_punctuation_factor:
         match_width = 2 * font_config.glyph_width
 
         # Change glyph width and keep monospace identifier will cause
@@ -1387,11 +1401,19 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
         else:
             scale_factor = (1.0, 1.0)
 
+        if scale_punctuation_factor:
+            print(
+                f"Scale CN punctuation glyph to ({scale_punctuation_factor[0]}x, {scale_punctuation_factor[1]}x)"
+            )
+        else:
+            scale_punctuation_factor = scale_factor
+
         change_glyph_width_or_scale(
             font=cn_font,
             match_width=match_width,
             target_width=target_width,
             scale_factor=scale_factor,
+            scale_punctuation_factor=scale_punctuation_factor,
             special_names=["ellipsis.full"],
         )
     elif font_config.get_width_name():
@@ -1400,6 +1422,7 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
             match_width=2 * font_config.glyph_width,
             target_width=2 * font_config.get_target_width(),
             scale_factor=(1.0, 1.0),
+            scale_punctuation_factor=(1.0, 1.0),
             special_names=["ellipsis.full"],
         )
 

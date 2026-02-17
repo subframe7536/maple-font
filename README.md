@@ -705,6 +705,9 @@ Feature Options:
   --cn-scale-factor CN_SCALE_FACTOR
                         Scale factor for CN / JP glyphs. Format: <factor> or
                         <width_factor>,<height_factor> (e.g. 1.1 or 1.2,1.1)
+  --cn-scale-punctuation-factor CN_SCALE_PUNCTUATION_FACTOR
+                        Scale factor for fullwidth punctuation glyphs. Format:
+                        <factor> or <width_factor>,<height_factor> (e.g. 1.0)
 
 Build Options:
   --nf, --nerd-font     Build Nerd-Font version (default)

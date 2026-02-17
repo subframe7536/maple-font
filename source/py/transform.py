@@ -3,6 +3,8 @@ from typing import Any, Tuple, List
 from fontTools.ttLib import TTFont
 from fontTools.ttLib.tables._g_l_y_f import GlyphCoordinates, Glyph
 
+from source.py.utils import FULLWIDTH_PUNCTUATION_NAMES
+
 # Type aliases
 Coordinate = Tuple[float, float]
 
@@ -231,6 +233,7 @@ def change_glyph_width_or_scale(
     match_width: int,
     target_width: int,
     scale_factor: tuple[float, float],
+    scale_punctuation_factor: tuple[float, float],
     special_names: list[str] = [],
 ):
     """
@@ -246,6 +249,8 @@ def change_glyph_width_or_scale(
         target_width (int): The new width to set for matching glyphs.
         scale_factor (tuple[float, float]): A tuple containing the scaling factors for
             width and height (scale_w, scale_h).
+        scale_punctuation_factor (tuple[float, float]): A tuple containing the scaling factors for
+            fullwidth punctuation glyphs (scale_w, scale_h).
         special_names (list[str], optional): A list of glyph names that require special
             handling instead of trim whitespace only. Defaults to an empty list.
 
@@ -259,7 +264,13 @@ def change_glyph_width_or_scale(
     glyf: Any = font["glyf"]
     hmtx: Any = font["hmtx"]
     factor = target_width / match_width
+
+    # Track statistics
+    cjk_count = 0
+    punctuation_count = 0
+
     for glyph_name in font.getGlyphOrder():
+        # Handle special names (legacy behavior)
         if glyph_name in special_names:
             _change_glyph_width(
                 glyf=glyf,
@@ -280,13 +291,24 @@ def change_glyph_width_or_scale(
             hmtx[glyph_name] = (target_width, lsb)
             continue
 
-        scale_w, scale_h = scale_factor
-        glyph.coordinates.scale((scale_w, scale_h))
+        # Check if this is a punctuation glyph
+        is_punctuation = glyph_name in FULLWIDTH_PUNCTUATION_NAMES
+
+        # Determine which scale factor to use
+        if is_punctuation:
+            use_scale_w, use_scale_h = scale_punctuation_factor
+            punctuation_count += 1
+        else:
+            use_scale_w, use_scale_h = scale_factor
+            cjk_count += 1
+
+        # Apply scaling
+        glyph.coordinates.scale((use_scale_w, use_scale_h))
         glyph.xMin, glyph.yMin, glyph.xMax, glyph.yMax = (
             glyph.coordinates.calcIntBounds()
         )
 
-        scaled_width = int(round(width * scale_w))
+        scaled_width = int(round(width * use_scale_w))
         delta = (target_width - scaled_width) / 2
 
         glyph.coordinates.translate((delta, 0))
@@ -296,3 +318,7 @@ def change_glyph_width_or_scale(
 
         new_lsb = lsb + int(round(delta))
         hmtx[glyph_name] = (target_width, new_lsb)
+
+    # Print summary
+    if cjk_count > 0 or punctuation_count > 0:
+        print(f"  Scaled {cjk_count} CJK glyphs, {punctuation_count} punctuation glyphs")
