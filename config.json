@@ -89,6 +89,6 @@
     "use_hinted": false,
     "use_static_base_font": true,
     "scale_factor": 1.0,
-    "scale_skip_punctuation": false
+    "scale_punctuation_factor": 1.0
   }
 }
