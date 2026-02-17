@@ -35,6 +35,11 @@ FULLWIDTH_PUNCTUATION_NAMES: Set[str] = {
     "quotedblleft.full", "quotedblright.full",
     "quoteleft.full", "quoteright.full",
 
+    # Base glyphs that may be replaced by .full variants when cv96/cv97/cv98 are frozen
+    "ellipsis", "emdash",
+    "quotedblleft", "quotedblright",
+    "quoteleft", "quoteright",
+
     # .tw variants (cv99)
     "uni3001.tw", "uni3002.tw", "uniFF01.tw", "uniFF0C.tw",
     "uniFF1A.tw", "uniFF1B.tw", "uniFF1F.tw",
