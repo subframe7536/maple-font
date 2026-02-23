@@ -99,6 +99,7 @@ def _process_glyph_geometry(
     scale_x: float,
     scale_y: float,
     thicken_strength: float = 0.0,
+    translate_x: float = 0.0,
 ) -> int:
     """
     Shared core logic to transform a glyph.
@@ -125,6 +126,9 @@ def _process_glyph_geometry(
     # 3. Handle Simple Glyphs (Coordinate scaling)
     # Scale in-place
     glyph.coordinates.scale((scale_x, scale_y))
+
+    if translate_x != 0:
+        glyph.coordinates.translate((translate_x, 0))
 
     # 4. Apply Smart Thickening (if requested)
     # We only thicken if scaling down usually, or explicit request
@@ -158,6 +162,7 @@ def _change_glyph_width(
     scale_y: float,
     match_width: int,
     target_width: int,
+    translate_x: float = 0.0,
 ) -> None:
     """
     Global font resizer. Scales target glyphs horizontally and applies
@@ -171,6 +176,18 @@ def _change_glyph_width(
 
     if old_width == match_width:
         new_width = target_width
+    elif old_width == 0:
+        # Scale zero-width combining marks, keep width at 0
+        new_lsb = _process_glyph_geometry(
+            glyph=glyf[glyph_name],
+            glyf_table=glyf,
+            scale_x=scale_x,
+            scale_y=scale_y,
+            thicken_strength=0.0,
+            translate_x=0.0,
+        )
+        hmtx[glyph_name] = (0, new_lsb)
+        return
     else:
         return
 
@@ -183,6 +200,7 @@ def _change_glyph_width(
         # Heuristic: If we compress the font (scale < 1), lines get thin.
         # We add weight back based on how much we squeezed.
         thicken_strength=(1 - scale_x) / 3,
+        translate_x=translate_x,
     )
 
     # If the glyph was empty or composite, new_lsb comes from calculation
@@ -213,6 +231,7 @@ def smart_change_width(
     glyf: Any = font["glyf"]
 
     scale_factor = target_width / original_ref_width
+    composites: list[str] = []
 
     for glyph_name in font.getGlyphOrder():
         _change_glyph_width(
@@ -224,6 +243,16 @@ def smart_change_width(
             match_width=original_ref_width,
             target_width=target_width,
         )
+        if glyf[glyph_name].isComposite():
+            composites.append(glyph_name)
+
+    # Recalculate composite bounds after all components (including combining
+    # marks that appear later in glyph order) have been scaled
+    for glyph_name in composites:
+        glyph = glyf[glyph_name]
+        glyph.recalcBounds(glyf)
+        new_lsb = glyph.xMin if hasattr(glyph, "xMin") else 0
+        hmtx[glyph_name] = (hmtx[glyph_name][0], new_lsb)
 
 
 def change_glyph_width_or_scale(
@@ -259,6 +288,7 @@ def change_glyph_width_or_scale(
     glyf: Any = font["glyf"]
     hmtx: Any = font["hmtx"]
     factor = target_width / match_width
+    composites: list[str] = []
     for glyph_name in font.getGlyphOrder():
         if glyph_name in special_names:
             _change_glyph_width(
@@ -269,13 +299,37 @@ def change_glyph_width_or_scale(
                 scale_y=1.0,
                 match_width=match_width,
                 target_width=target_width,
+                translate_x=(
+                    target_width * 0.15
+                    if "right" in glyph_name and "quote" in glyph_name
+                    else target_width * -0.15
+                    if "left" in glyph_name and "quote" in glyph_name
+                    else 0
+                ),
             )
+            if glyf[glyph_name].isComposite():
+                composites.append(glyph_name)
             continue
 
         glyph = glyf[glyph_name]
         width, lsb = hmtx[glyph_name]
+        if width == 0:
+            # Scale zero-width combining marks, keep width at 0
+            scale_w, scale_h = scale_factor
+            _process_glyph_geometry(
+                glyph=glyph,
+                glyf_table=glyf,
+                scale_x=scale_w,
+                scale_y=scale_h,
+                thicken_strength=0.0,
+            )
+            new_lsb = glyph.xMin if hasattr(glyph, "xMin") else lsb
+            hmtx[glyph_name] = (0, new_lsb)
+            continue
         if width != match_width:
             continue
+        if glyph.isComposite():
+            composites.append(glyph_name)
         if glyph.numberOfContours == 0:
             hmtx[glyph_name] = (target_width, lsb)
             continue
@@ -296,3 +350,11 @@ def change_glyph_width_or_scale(
 
         new_lsb = lsb + int(round(delta))
         hmtx[glyph_name] = (target_width, new_lsb)
+
+    # Recalculate composite bounds after all components (including combining
+    # marks that appear later in glyph order) have been scaled
+    for glyph_name in composites:
+        glyph = glyf[glyph_name]
+        glyph.recalcBounds(glyf)
+        new_lsb = glyph.xMin if hasattr(glyph, "xMin") else 0
+        hmtx[glyph_name] = (hmtx[glyph_name][0], new_lsb)

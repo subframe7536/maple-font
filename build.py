@@ -1365,6 +1365,13 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
         if font_config.cn["scale_factor"] != (1.0, 1.0)
         else None
     )
+    special_scale_names = [
+        "ellipsis.full",
+        "quoteleft.full",
+        "quoteright.full",
+        "quotedblleft.full",
+        "quotedblright.full",
+    ]
     if target_width or scale_factor:
         match_width = 2 * font_config.glyph_width
 
@@ -1392,7 +1399,7 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
             match_width=match_width,
             target_width=target_width,
             scale_factor=scale_factor,
-            special_names=["ellipsis.full"],
+            special_names=special_scale_names,
         )
     elif font_config.get_width_name():
         change_glyph_width_or_scale(
@@ -1400,7 +1407,7 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
             match_width=2 * font_config.glyph_width,
             target_width=2 * font_config.get_target_width(),
             scale_factor=(1.0, 1.0),
-            special_names=["ellipsis.full"],
+            special_names=special_scale_names,
         )
 
     # https://github.com/subframe7536/maple-font/issues/239
