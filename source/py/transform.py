@@ -222,6 +222,8 @@ def smart_change_width(
     """
     Global font resizer. Scales all glyphs horizontally and applies
     smart thickening to counteract the "squashed" look.
+
+    For non-CN glyphs in the build process.
     """
     if original_ref_width <= 0:
         raise ValueError("Original reference width must be positive")
@@ -268,6 +270,8 @@ def change_glyph_width_or_scale(
     This function modifies the glyphs in the given font by either changing their width
     or scaling their coordinates. It also updates the horizontal metrics and bounding
     box values accordingly.
+
+    For CN glyphs in the build process.
 
     Args:
         font (TTFont): The font object to be modified.
