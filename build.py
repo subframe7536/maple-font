@@ -1181,18 +1181,27 @@ def build_nf_by_prebuild_nerd_font(
     suffix = font_config.get_nf_suffix()
     if suffix:
         suffix = "-" + suffix
-    result = merge_ttfonts(
-        base_font_path=joinPaths(build_option.ttf_base_dir, font_basename),
-        extra_font_path=f"{build_option.src_dir}/MapleMono-NF-Base{suffix}.ttf",
-    )
 
+    nf_base_font_path = f"{build_option.src_dir}/MapleMono-NF-Base{suffix}.ttf"
+    tmp_target_path = None
     if font_config.get_width_name():
+        tmp_font = TTFont(nf_base_font_path)
         smart_change_width(
-            font=result,
+            font=tmp_font,
             target_width=font_config.get_target_width(),
             original_ref_width=font_config.glyph_width,
             also_scale_y=True,
         )
+        tmp_target_path = f"{build_option.output_dir}/NF-Base-{font_basename}"
+        tmp_font.save(tmp_target_path)
+
+    result = merge_ttfonts(
+        base_font_path=joinPaths(build_option.ttf_base_dir, font_basename),
+        extra_font_path=tmp_target_path or nf_base_font_path,
+    )
+
+    if tmp_target_path is not None:
+        remove(tmp_target_path)
 
     return result
 
@@ -1347,16 +1356,6 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
     # https://github.com/subframe7536/maple-font/issues/313
     # fix_cn_cv(cn_font)
 
-    font_config.patch_font_feature(
-        font=cn_font,
-        issue_fea_dir=build_option.output_dir,
-        is_italic=is_italic,
-        is_cn=True,
-        is_variable=False,
-        is_hinted=font_config.use_hinted,
-        fea_path=build_option.get_feature_file_path(is_italic, True),
-    )
-
     target_width = (
         font_config.glyph_width_cn_narrow if font_config.cn["narrow"] else None
     )
@@ -1427,6 +1426,16 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
         cn_font["meta"] = meta
 
     adjust_line_height(cn_font, font_config.line_height, font_config.vertical_metric)
+
+    font_config.patch_font_feature(
+        font=cn_font,
+        issue_fea_dir=build_option.output_dir,
+        is_italic=is_italic,
+        is_cn=True,
+        is_variable=False,
+        is_hinted=font_config.use_hinted,
+        fea_path=build_option.get_feature_file_path(is_italic, True),
+    )
 
     if not (
         (
