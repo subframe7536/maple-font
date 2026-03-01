@@ -97,7 +97,7 @@ def main(zip_path: str, target_path: str, config: dict):
             if file_name.lower().endswith((".ttf", ".otf")):
                 print(f"Patch: {file_name}")
                 with zip_in.open(file_info) as ttf_file:
-                    font = TTFont(ttf_file)
+                    font = TTFont(io.BytesIO(ttf_file.read()))
 
                     suffix = get_freeze_config_str(config)
                     freeze_feature(font, MOVING_RULES, config)
