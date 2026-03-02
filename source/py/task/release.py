@@ -77,7 +77,7 @@ def write_unicode_map_json(font_path: str, output: str):
     font = TTFont(font_path)
     font_map = {
         format_font_map_key(k): v
-        for k, v in font.getBestCmap().items()
+        for k, v in font.getBestCmap().items()  # type: ignore
         if k is not None
     }
     write_json(output, font_map)

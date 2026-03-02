@@ -23,11 +23,24 @@ on:
         required: false
         default: false
         type: boolean
-      nf_mono:
-        description: 'Fixed Nerd Font icon width (add "--nf-mono" to build args)'
+      width:
+        description: 'Glyph width mode (add "--width <default|narrow|slim>" to build args)'
         required: false
-        default: false
-        type: boolean
+        default: default
+        type: choice
+        options:
+          - default
+          - narrow
+          - slim
+      nerd_font:
+        description: 'Nerd Font icon mode: default("--nf"), mono("--nf-mono"), proportional("--nf-propo")'
+        required: false
+        default: default
+        type: choice
+        options:
+          - default
+          - mono
+          - proportional
       feat:
         description: 'Enable features, split by `,`, e.g. "cv01,ss02" (add "--feat feat1,feat2" to build args)'
         required: false
@@ -93,9 +106,20 @@ jobs:
           if [ "${{ github.event.inputs.no_hinted }}" == "true" ]; then
             build_args="$build_args --no-hinted"
           fi
-          if [ "${{ github.event.inputs.nf_mono }}" == "true" ]; then
-            build_args="$build_args --nf-mono"
+          if [ "${{ github.event.inputs.width }}" != "default" ]; then
+            build_args="$build_args --width ${{ github.event.inputs.width }}"
           fi
+          case "${{ github.event.inputs.nerd_font }}" in
+            default)
+              build_args="$build_args --nf"
+              ;;
+            mono)
+              build_args="$build_args --nf-mono"
+              ;;
+            proportional)
+              build_args="$build_args --nf-propo"
+              ;;
+          esac
           if [ -n "${{ github.event.inputs.feat }}" ]; then
             build_args="$build_args --feat ${{ github.event.inputs.feat }}"
           fi
