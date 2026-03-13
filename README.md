@@ -28,9 +28,9 @@
 
 Maple Mono is an open source monospace font focused on smoothing your coding flow.
 
-I create it to enhance my working experience, and hope that it can be useful to others.
+I created it to enhance my working experience, and hope that it can be useful to others.
 
-V7 is a completely remade version, providing variable font format and source files of font project, redesigning more than half of the glyphs and offering smarter ligatures. You can checkout V6 [here](https://github.com/subframe7536/maple-font/tree/main)
+V7 is a completely remade version, providing variable font format and source files of the font project, redesigning more than half of the glyphs, and offering smarter ligatures. You can checkout V6 [here](https://github.com/subframe7536/maple-font/tree/main)
 
 ## Features
 
@@ -40,7 +40,7 @@ V7 is a completely remade version, providing variable font format and source fil
 - 🎨 Icon - First-Class [Nerd-Font](https://github.com/ryanoasis/nerd-fonts) support, make your terminal more vivid.
 - 🔨 Customize - Enable or disable font features as you want, just make your own font.
 
-### Simpified Chinese, Traditional Chinese and Japanese
+### Simplified Chinese, Traditional Chinese, and Japanese
 
 CN version based on [Resource Han Rounded](https://github.com/CyanoHao/Resource-Han-Rounded) provides complete character set support for Chinese development environments, including Simplified Chinese, Traditional Chinese, and Japanese. Meanwhile, the characteristic of perfect 2:1 alignment between Chinese and English allows this font to achieve a neat, uniform, beautiful, and comfortable appearance in scenarios such as multilingual display and Markdown tables. However, the spacing of Chinese characters is larger compared to other popular Chinese fonts. See details in [release notes](https://github.com/subframe7536/maple-font/releases/tag/cn-base) and [this issue](https://github.com/subframe7536/maple-font/issues/211).
 
@@ -502,38 +502,38 @@ See in [document](./source/features/README.md) or try it in [Playground](https:/
 
 ### Font Hint
 
-- **Hinted font** is used for low resolution screen to have better render effect. From my experience, if your screen resolution is lower or equal than 1080P, it is recommended to use "hinted font". Using "unhinted font" will lead to misalignment or uneven thickness on your text.
+- **Hinted font** is used for low resolution screen to have a better rendering effect. From my experience, if your screen resolution is equal to or lower than 1080P, it is recommended to use "hinted font". Using an "unhinted font" will lead to misalignment or uneven thickness on your text.
   - In this case, you can choose `MapleMono-TTF-AutoHint` / `MapleMono-NF` / `MapleMono-NF-CN`, etc.
-- **Unhinted font** is used for high resolution screen (e.g. for MacBook). Using "hinted font" will blur your text or make it looks weird.
+- **Unhinted font** is used for high resolution screen (e.g., for MacBook). Using "hinted font" will blur your text or make it look weird.
   - In this case, you can choose `MapleMono-OTF` / `MapleMono-TTF` / `MapleMono-NF-unhinted` / `MapleMono-NF-CN-unhinted`, etc.
-- Why there exists `-AutoHint` and `-unhinted` suffix?
+- Why are there both `-AutoHint` and `-unhinted` suffixes?
   - for backward compatibility, I keep the original naming scheme. `-AutoHint` is only used for `TTF` format.
 
 ## Custom Build
 
 The [`config.json`](./config.json) file is used to configure the build process. Checkout the [schema](./source/schema.json) or [document](./source/features/README.md) for more details.
 
-There also have some [command line options](#build-script-usage) for customizing the build process. Cli options have higher priority than options in `config.json`.
+There are also some [command line options](#build-script-usage) for customizing the build process. CLI options have a higher priority than options in `config.json`.
 
 ### Build Methods
 
 #### 1. Build In Browser
 
-Go to [Playground](https://font.subf.dev/en/playground), and click "Custom Build" button in the bottom left corner
+Go to [Playground](https://font.subf.dev/en/playground), and click the "Custom Build" button in the bottom left corner
 
-- Only support freezing OpenType features currently.
+- Only supports freezing OpenType features currently.
 
-#### 2. Use Github Actions
+#### 2. Use GitHub Actions
 
 You can use [Github Actions](https://github.com/subframe7536/maple-font/actions/workflows/custom.yml) to build the font.
 
-1. Fork the repo
-2. (Optional) Change the content in `config.json`
-3. Go to Actions tab
-4. Click on `Custom Build` menu item on the left
-5. Click on `Run workflow` button with options setup
-6. Wait for the build to finish
-7. Download the font archives from Releases
+1. Fork the repo.
+2. (Optional) Change the content in `config.json`.
+3. Go to the Actions tab.
+4. Click on the `Custom Build` menu item on the left.
+5. Click on the `Run workflow` button with options set.
+6. Wait for the build to finish.
+7. Download the font archives from Releases.
 
 #### 3. Use Docker
 
@@ -545,7 +545,7 @@ docker run -v "$(pwd)/fonts:/app/fonts" -e BUILD_ARGS="--normal" maple-font
 
 #### 4. Local Build
 
-Clone the repo and run on your local machine. Make sure you have `python3` and `pip` installed
+Clone the repo and run it on your local machine. Make sure you have `python3` and `pip` installed.
 
 ```shell
 git clone https://github.com/subframe7536/maple-font --depth 1 -b variable
@@ -560,7 +560,7 @@ python build.py
 
 ### Narrow Glyph Width
 
-You can setup `"width": "narrow"` in `config.json` or add `--width slim` in cli flag to change glyph width at build time.
+You can set `"width": "narrow"` in `config.json` or add `--width slim` as a cli flag to change glyph width at build time.
 
 There are 3 options:
 - default: 600
@@ -571,21 +571,21 @@ Preview: [#131](https://github.com/subframe7536/maple-font/issues/131#issuecomme
 
 ### Custom Nerd-Font
 
-If you want to get fixed width icons, setup `"nerd_font.mono": true` in `config.json` or add `--nf-mono` flag to build script args.
+If you want to get fixed-width icons, set `"nerd_font.mono": true` in `config.json` or add `--nf-mono` flag to build script args.
 
-If you want to get variable width icons, setup `"nerd_font.propo": true` in `config.json` or add `--nf-propo` flag to build script args.
+If you want to get variable-width icons, set `"nerd_font.propo": true` in `config.json` or add `--nf-propo` flag to build script args.
 
 For custom `font-patcher` args, `font-forge` (and maybe `python3-fontforge` as well) is required.
 
 Maybe you should also change `"nerd_font.extra_args"` in [config.json](./config.json)
 
-Default args: `-l --careful --outputdir dir`
-- if `"nerd_font.propo"` is `true`, then add `--variable-width-glyphs`
-- else if `"nerd_font.mono"` is `true`, then add `--mono`
+Default args: `-l --careful --outputdir dir`.
+- if `"nerd_font.propo"` is `true`, then add `--variable-width-glyphs`.
+- else if `"nerd_font.mono"` is `true`, then add `--mono`.
 
 ### Preset
 
-Run `build.py` with `--normal` flag, make the font looks not such "Opinioned" , just like `JetBrains Mono` (with slashed zero).
+Run `build.py` with `--normal` flag, make the font look not so "Opinioned", just like `JetBrains Mono` (with slashed zero).
 
 If you are using variable font (NOT recommended), please enable `calt` to make all features work.
 
@@ -602,27 +602,27 @@ cv01, cv02, cv33, cv34, cv35, cv36, cv61, cv62, ss05, ss06, ss07, ss08
 
 There are three kinds of options for feature freeze ([Why](https://github.com/subframe7536/maple-font/issues/233#issuecomment-2410170270)):
 
-1. `enable`: Forcely enable the features without setting up `cvXX` / `ssXX` / `zero` in font features config, just as default glyphs / ligatures
-2. `disable`: Remove the features in `cvXX` / `ssXX` / `zero`, which will no longer effect, even if you enable it manually
+1. `enable`: Forcely enable the features without setting up `cvXX` / `ssXX` / `zero` in font features config, just as default glyphs/ligatures
+2. `disable`: Remove the features in `cvXX` / `ssXX` / `zero`, which will no longer have an effect, even if you enable them manually
 3. `ignore`: Do nothing
 
 #### Custom OpenType Feature
 
-OpenType Feature is used to control the font's built-in variants and ligatures. You can remove some ligatures or features you don't want to, change feature's trigger rule or add some new rules by modifying OpenType Feature.
+OpenType Feature is used to control the font's built-in variants and ligatures. You can remove some ligatures or features you don't want to, change a feature's trigger rule, or add some new rules by modifying the OpenType Feature.
 
-By default, the Python module in [`source/py/feature/`](./source/py/feature) will generate feature rule string and load it at build time. You can modify the features or customize tags there.
+By default, the Python module in [`source/py/feature/`](./source/py/feature) will generate a feature rule string and load it at build time. You can modify the features or customize tags there.
 
 If you would like to modify the feature file instead, run `build.py` with `--apply-fea-file` flag, the feature file from [`source/features/{regular,italic}{_cn,}.fea`](./source/features) will be loaded.
 
 ### Infinite Arrow Ligatures
 
-Inspired by Fira Code, the font enables infinite arrow ligatures by default from v7.3. For some reason, the ligatures are misaligned when using hinted font, so they are removed in hinted version by default from v7.4.
+Inspired by Fira Code, the font enables infinite arrow ligatures by default from v7.3. For some reason, the ligatures are misaligned when using a hinted font, so they are removed in the hinted version by default from v7.4.
 
-You can setup `"infinite_arrow": true` in `config.json` or add `--infinite-arrow` in cli flag to force enabling the feature. See more details in [#508](https://github.com/subframe7536/maple-font/issues/508)
+You can set `"infinite_arrow": true` in `config.json` or add `--infinite-arrow` as a cli flag to force enabling the feature. See more details in [#508](https://github.com/subframe7536/maple-font/issues/508)
 
 ### Custom Font Weight Mapping
 
-You can modify the static font weight through `"weight_mapping"` item in `config.json`.
+You can modify the static font weight through the `"weight_mapping"` item in `config.json`.
 
 For example, if you want to make regular font weight a little bit lighter, just decrease the number of `"weight_mapping.regular"` (from 400 to 350 in this example) :
 
@@ -643,19 +643,19 @@ For example, if you want to make regular font weight a little bit lighter, just 
 
 ### Chinese version
 
-CN version is disabled by default. Run `python build.py` with `--cn` flag, the CN base fonts (about 111 MB) will download from GitHub.
+The CN version is disabled by default. Run `python build.py` with the `--cn` flag, the CN base fonts (about 111 MB) will download from GitHub.
 
-If you want to build CN base fonts from variable (about 27 MB), setup `"cn.use_static_base_font": false` in [config.json](./config.json) and **BE PATIENT**, instantiation will take about 10-30 minutes.
+If you want to build CN base fonts from variable (about 27 MB), set `"cn.use_static_base_font": false` in [config.json](./config.json) and **BE PATIENT**, instantiation will take about 10-30 minutes.
 
 #### Narrow spacing in CN glyphs
 
-If you think that **CN glyphs spacing is TOOOOOO large**, there is a build option `cn.narrow` or cli flag `--cn-narrow` to narrow spacing in CN glyphs, but this will make the font cannot be recogized as monospaced font. You can see effect in [#249](https://github.com/subframe7536/maple-font/issues/249#issuecomment-2871260476).
+If you think that **CN glyphs spacing is TOOOOOO large**, there is a build option `cn.narrow` or cli flag `--cn-narrow` to narrow spacing in CN glyphs, but this will make the font cannot be recognized as a monospaced font. You can see the effect in [#249](https://github.com/subframe7536/maple-font/issues/249#issuecomment-2871260476).
 
 And if you want to change the Latin letters' width as well, use [`--width` option](#narrow-glyph-width)
 
 #### GitHub Mirror
 
-The build script will auto download required assets from GitHub. If you have trouble downloading, please setup `github_mirror` in [config.json](./config.json) or `$GITHUB` to your environment variable. (Target URL will be `https://<github_mirror>/<user>/<repo>/releases/download/<tag>/<file>`), or just download the target `.zip` file and put it in the same directory as `build.py`.
+The build script will auto-download required assets from GitHub. If you have trouble downloading, please set `github_mirror` in [config.json](./config.json) or `$GITHUB` to your environment variable. (Target URL will be `https://<github_mirror>/<user>/<repo>/releases/download/<tag>/<file>`), or just download the target `.zip` file and put it in the same directory as `build.py`.
 
 #### Traditional Chinese Punctuation Support
 
@@ -683,7 +683,7 @@ options:
 Feature Options:
   -n, --normal          Use normal preset, just like `JetBrains Mono` with slashed
                         zero
-  --feat FEAT           Freeze font features, splited by `,` (e.g. `--feat
+  --feat FEAT           Freeze font features, split by `,` (e.g. `--feat
                         zero,cv01,ss07,ss08`). No effect on variable format
   --apply-fea-file      Load feature file from `source/features/{regular,italic}.fea`
                         to variable font
@@ -695,13 +695,13 @@ Feature Options:
                         default)
   --remove-tag-liga     Remove plain text tag ligatures like `[TODO]`
   --line-height LINE_HEIGHT
-                        Scale factor for line height (e.g. 1.1)
-  --width {default,narrow,slim}
+                        Scale factor for line height (e.g., 1.1)
+  --width {default, narrow, slim}
                         Set glyph width: default (600), narrow (550), slim (500)
   --nf-mono             Make Nerd Font icons' width fixed
   --nf-propo            Make Nerd Font icons' width variable, override `--nf-mono`
   --cn-narrow           Make CN / JP characters narrow (And the font cannot be
-                        recogized as monospaced font)
+                        recognized as a monospaced font)
   --cn-scale-factor CN_SCALE_FACTOR
                         Scale factor for CN / JP glyphs. Format: <factor> or
                         <width_factor>,<height_factor> (e.g. 1.1 or 1.2,1.1)
@@ -709,7 +709,7 @@ Feature Options:
 Build Options:
   --nf, --nerd-font     Build Nerd-Font version (default)
   --no-nf, --no-nerd-font
-                        Do not build Nerd-Font version
+                        Do not build the Nerd-Font version
   --cn                  Build Chinese version
   --no-cn               Do not build Chinese version (default)
   --cn-both             Build both `Maple Mono CN` and `Maple Mono NF CN`. Nerd-Font
@@ -717,9 +717,9 @@ Build Options:
   --ttf-only            Only build TTF format
   --least-styles        Only build Regular / Bold / Italic / BoldItalic style
   --font-patcher        Force the use of Nerd Font Patcher to build NF format
-  --cache               Reuse font cache of TTF, OTF and Woff2 formats
+  --cache               Reuse font cache of TTF, OTF, and Woff2 formats
   --cn-rebuild          Reinstantiate variable CN base font
-  --archive             Build font archives with config and license. If has `--cache`
+  --archive             Build font archives with config and license. If it has the `--cache`
                         flag, only archive NF and CN formats
 ```
 
@@ -764,11 +764,11 @@ uv run task.py release minor
 
 ## Sponser
 
-If this font is helpful to you, please feel free to buy me a coffee
+If this font is helpful to you, please feel free to buy me a coffee.
 
-<a href="https://www.buymeacoffee.com/subframe753"><img src="https://img.buymeacoffee.com/button-api/?text=Buy me a coffee&emoji=&slug=subframe753&button_colour=5F7FFF&font_colour=ffffff&font_family=Lato&outline_colour=000000&coffee_colour=FFDD00" /></a>
+<a href="https://www.buymeacoffee.com/subframe753"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" /></a>
 
-or sponser me through [Afdian](https://afdian.com/a/subframe7536)
+or sponsor me through [Afdian](https://afdian.com/a/subframe7536)
 
 ## Star History
 
