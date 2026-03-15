@@ -138,7 +138,7 @@ def parse_args(args: list[str] | None = None):
     feature_group.add_argument(
         "--feat",
         type=lambda x: x.strip().split(","),
-        help="Freeze font features, splited by `,` (e.g. `--feat zero,cv01,ss07,ss08`). No effect on variable format",
+        help="Freeze font features, split by `,` (e.g. `--feat zero,cv01,ss07,ss08`). No effect on variable format",
     )
     feature_group.add_argument(
         "--apply-fea-file",
@@ -198,7 +198,7 @@ def parse_args(args: list[str] | None = None):
     feature_group.add_argument(
         "--line-height",
         type=float,
-        help="Scale factor for line height (e.g. 1.1)",
+        help="Scale factor for line height (e.g., 1.1)",
     )
     feature_group.add_argument(
         "--width",
@@ -220,7 +220,7 @@ def parse_args(args: list[str] | None = None):
     feature_group.add_argument(
         "--cn-narrow",
         action="store_true",
-        help="Make CN / JP characters narrow (And the font cannot be recogized as monospaced font)",
+        help="Make CN / JP characters narrow (And the font cannot be recognized as a monospaced font)",
     )
     feature_group.add_argument(
         "--cn-scale-factor",
@@ -244,7 +244,7 @@ def parse_args(args: list[str] | None = None):
         dest="nerd_font",
         default=None,
         action="store_false",
-        help="Do not build Nerd-Font version",
+        help="Do not build the Nerd-Font version",
     )
     cn_group = build_group.add_mutually_exclusive_group()
     cn_group.add_argument(
@@ -284,7 +284,7 @@ def parse_args(args: list[str] | None = None):
     build_group.add_argument(
         "--cache",
         action="store_true",
-        help="Reuse font cache of TTF, OTF and Woff2 formats",
+        help="Reuse font cache of TTF, OTF, and Woff2 formats",
     )
     build_group.add_argument(
         "--cn-rebuild",
@@ -294,7 +294,7 @@ def parse_args(args: list[str] | None = None):
     build_group.add_argument(
         "--archive",
         action="store_true",
-        help="Build font archives with config and license. If has `--cache` flag, only archive NF and CN formats",
+        help="Build font archives with config and license. If it has the `--cache` flag, only archive NF and CN formats",
     )
 
     return parser.parse_args(args)
