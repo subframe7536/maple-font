@@ -593,3 +593,40 @@ def update_font_names(
     if not is_skip_subfamily and preferred_family_name and preferred_style_name:
         set_font_name(font, preferred_family_name, 16)
         set_font_name(font, preferred_style_name, 17)
+
+
+DEFAULT_COMPAT_ALIASES: dict[int, int] = {
+    0x2126: 0x03A9,  # Ω → Ω
+    0x212A: 0x004B,  # K → K
+    0x212B: 0x00C5,  # Å → Å
+}
+
+
+def alias_codepoints(font: TTFont, mapping: dict[int, int] | None = None):
+    """
+    Add cmap aliases: src_codepoint → dst_codepoint
+    """
+    if mapping is None:
+        mapping = DEFAULT_COMPAT_ALIASES
+
+    cmap_tables = font["cmap"].tables  # type: ignore
+
+    dst_glyphs: dict[int, str] = {}
+    for src, dst in mapping.items():
+        glyph = None
+        for table in cmap_tables:
+            if not table.isUnicode():
+                continue
+            if dst in table.cmap:
+                glyph = table.cmap[dst]
+                break
+        if glyph is None:
+            continue
+        dst_glyphs[src] = glyph
+
+    for table in cmap_tables:
+        if not table.isUnicode():
+            continue
+        cmap = table.cmap
+        for src, glyph in dst_glyphs.items():
+            cmap[src] = glyph

@@ -10,7 +10,8 @@ import time
 from functools import partial
 from os import environ, getcwd, listdir, makedirs, path, remove, getenv
 from typing import Callable, Literal
-from fontTools.ttLib import TTFont, newTable
+from fontTools.ttLib import TTFont
+from fontTools.ttLib.tables._m_e_t_a import table__m_e_t_a
 from fontTools.feaLib.builder import addOpenTypeFeatures, addOpenTypeFeaturesFromString
 from ttfautohint import StemWidthMode, ttfautohint
 from source.py.transform import change_glyph_width_or_scale, smart_change_width
@@ -18,6 +19,7 @@ from source.py.utils import (
     add_gasp,
     add_ital_axis_to_stat,
     adjust_line_height,
+    alias_codepoints,
     check_font_patcher,
     check_directory_hash,
     parse_style_name,
@@ -503,8 +505,6 @@ class FontConfig:
         """Apply Nerd Font specific arguments."""
         if self.debug:
             self.nerd_font["enable"] = False
-        if args.nerd_font is not None:
-            self.nerd_font["enable"] = args.nerd_font
 
         if args.nf_mono:
             self.nerd_font["mono"] = args.nf_mono
@@ -513,6 +513,9 @@ class FontConfig:
         if args.nf_propo:
             self.nerd_font["propo"] = args.nf_propo
             self.nerd_font["enable"] = True
+
+        if args.nerd_font is not None:
+            self.nerd_font["enable"] = args.nerd_font
 
     def _apply_cn_options(self, args):
         """Apply Chinese font related arguments."""
@@ -1418,7 +1421,7 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
         cn_font["OS/2"].ulCodePageRange1 = 1 << 0 | 1 << 17 | 1 << 18 | 1 << 20  # type: ignore
 
         # fix meta table, https://learn.microsoft.com/en-us/typography/opentype/spec/meta
-        meta = newTable("meta")
+        meta = table__m_e_t_a("meta")
         meta.data = {
             "dlng": "Latn, Hans, Hant, Jpan",
             "slng": "Latn, Hans, Hant, Jpan",
@@ -1514,6 +1517,8 @@ def build_variable_fonts(font_config: FontConfig, build_option: BuildOption):
                 input_file.replace(".ttf", ".glyphs").replace("-VF", "")
             ),
         )
+
+        alias_codepoints(font=font)
 
         if font_config.get_width_name():
             smart_change_width(
