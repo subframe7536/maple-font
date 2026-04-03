@@ -206,7 +206,7 @@ def parse_args(args: list[str] | None = None):
         "--width",
         type=str,
         choices=WIDTH_MAP.keys(),
-        default="default",
+        default=None,
         help="Set glyph width: default (600), narrow (550), slim (500)",
     )
     feature_group.add_argument(
@@ -492,7 +492,7 @@ class FontConfig:
         if args.remove_tag_liga:
             self.remove_tag_liga = True
 
-        if args.width and args.width != "default":
+        if args.width is not None:
             self.width = args.width
 
         if args.line_height is not None:
