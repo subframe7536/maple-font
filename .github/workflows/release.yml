@@ -20,10 +20,18 @@ jobs:
     strategy:
       matrix:
         config: [
-          {name: normal-liga, args: "--normal --liga"},
-          {name: normal-no-liga, args: "--normal --no-liga"},
-          {name: liga, args: "--liga"},
-          {name: no-liga, args: "--no-liga"}
+          {name: normal-liga, args: "--normal --liga --width default"},
+          {name: normal-no-liga, args: "--normal --no-liga --width default"},
+          {name: liga, args: "--liga --width default"},
+          {name: no-liga, args: "--no-liga --width default"},
+          {name: normal-liga-narrow , args: "--normal --liga --width narrow"},
+          {name: normal-no-liga-narrow, args: "--normal --no-liga --width narrow"},
+          {name: liga-narrow, args: "--liga --width narrow"},
+          {name: no-liga-narrow, args: "--no-liga --width narrow"},
+          {name: normal-liga-slim , args: "--normal --liga --width slim"},
+          {name: normal-no-liga-slim, args: "--normal --no-liga --width slim"},
+          {name: liga-slim, args: "--liga --width slim"},
+          {name: no-liga-slim, args: "--no-liga --width slim"},
         ]
     runs-on: ubuntu-latest
     steps:
