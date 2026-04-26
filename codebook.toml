@@ -1,0 +1,22 @@
+dictionaries = [
+    "en_us",
+    "en_gb",
+]
+words = [
+    "cjk",
+    "monoplex",
+    "noto",
+    "woong",
+    "yymmddhhmm",
+]
+ignore_paths = ["package.json"]
+ignore_patterns = [
+    "[가-힣]+",
+    "[가-힣_]+",
+    "[가-힣·]+",
+    "[가-힣']+",
+    '[가-힣"]+',
+    "[a-zA-Z0-9]+[가-힣]+",
+    "[가-힣]+[a-zA-Z0-9]+",
+    "[a-zA-Z0-9가-힣]+[가-힣]+",
+]
