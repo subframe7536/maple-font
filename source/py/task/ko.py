@@ -1,3 +1,4 @@
+from copy import deepcopy
 from math import radians, tan
 from os import listdir, makedirs, path
 import shutil
@@ -66,7 +67,6 @@ TABLES_TO_DROP = [
     "gvar",
     "GDEF",
     "GPOS",
-    "GSUB",
     "HVAR",
     "kern",
     "MVAR",
@@ -74,6 +74,8 @@ TABLES_TO_DROP = [
     "vhea",
     "vmtx",
 ]
+
+HANGUL_GSUB_FEATURES = {"ccmp", "ljmo", "vjmo", "tjmo"}
 
 
 def _all_ko_unicodes() -> list[int]:
@@ -116,7 +118,10 @@ def _get_italic_angle() -> float:
 
 def _subset_to_ko_ranges(font: TTFont):
     options = Options()
-    options.layout_features = []
+    # Preserve only the Hangul layout closure needed for modern Jamo composition.
+    # Keeping every Noto CJK layout script pulls in too many glyphs for TTF maxp.
+    options.layout_scripts = ["hang"]
+    options.layout_features = ["ccmp", "ljmo", "vjmo", "tjmo"]
     options.name_IDs = ["*"]
     options.name_legacy = True
     options.name_languages = ["*"]
@@ -202,9 +207,107 @@ def _normalize_width(font: TTFont, target_width: int = 1200):
 
 
 def _cleanup_tables(font: TTFont):
+    # Keep GSUB: CoreText needs Noto's Hangul Jamo composition features
+    # when macOS/APFS exposes Korean filenames as decomposed NFD text.
     for table in TABLES_TO_DROP:
         if table in font:
             del font[table]
+
+
+def _remap_langsys_features(langsys, feature_index_map: dict[int, int]) -> None:
+    feature_indices = [
+        feature_index_map[index]
+        for index in langsys.FeatureIndex
+        if index in feature_index_map
+    ]
+    langsys.FeatureIndex = feature_indices
+    langsys.FeatureCount = len(feature_indices)
+
+
+def restore_hangul_gsub(target_font: TTFont, ko_static_font_path: str) -> None:
+    source_font = TTFont(ko_static_font_path)
+    try:
+        if "GSUB" not in source_font or "GSUB" not in target_font:
+            return
+
+        source_gsub = source_font["GSUB"].table
+        target_gsub = target_font["GSUB"].table
+
+        source_hang_record = next(
+            (
+                record
+                for record in source_gsub.ScriptList.ScriptRecord
+                if record.ScriptTag == "hang"
+            ),
+            None,
+        )
+        if source_hang_record is None:
+            return
+
+        source_feature_records = source_gsub.FeatureList.FeatureRecord
+        source_hang_indices: set[int] = set()
+        langsys_list = []
+        if source_hang_record.Script.DefaultLangSys:
+            langsys_list.append(source_hang_record.Script.DefaultLangSys)
+        langsys_list.extend(
+            record.LangSys for record in source_hang_record.Script.LangSysRecord
+        )
+        for langsys in langsys_list:
+            source_hang_indices.update(
+                index
+                for index in langsys.FeatureIndex
+                if source_feature_records[index].FeatureTag in HANGUL_GSUB_FEATURES
+            )
+
+        if not source_hang_indices:
+            return
+
+        lookup_index_map: dict[int, int] = {}
+        feature_index_map: dict[int, int] = {}
+
+        for feature_index in sorted(source_hang_indices):
+            feature_record = source_feature_records[feature_index]
+            for lookup_index in feature_record.Feature.LookupListIndex:
+                if lookup_index in lookup_index_map:
+                    continue
+                lookup_index_map[lookup_index] = len(target_gsub.LookupList.Lookup)
+                target_gsub.LookupList.Lookup.append(
+                    deepcopy(source_gsub.LookupList.Lookup[lookup_index])
+                )
+        target_gsub.LookupList.LookupCount = len(target_gsub.LookupList.Lookup)
+
+        for feature_index in sorted(source_hang_indices):
+            feature_record = deepcopy(source_feature_records[feature_index])
+            feature_record.Feature.LookupListIndex = [
+                lookup_index_map[index]
+                for index in feature_record.Feature.LookupListIndex
+                if index in lookup_index_map
+            ]
+            feature_record.Feature.LookupCount = len(
+                feature_record.Feature.LookupListIndex
+            )
+            feature_index_map[feature_index] = len(
+                target_gsub.FeatureList.FeatureRecord
+            )
+            target_gsub.FeatureList.FeatureRecord.append(feature_record)
+        target_gsub.FeatureList.FeatureCount = len(target_gsub.FeatureList.FeatureRecord)
+
+        hang_record = deepcopy(source_hang_record)
+        if hang_record.Script.DefaultLangSys:
+            _remap_langsys_features(hang_record.Script.DefaultLangSys, feature_index_map)
+        for langsys_record in hang_record.Script.LangSysRecord:
+            _remap_langsys_features(langsys_record.LangSys, feature_index_map)
+
+        target_gsub.ScriptList.ScriptRecord = [
+            record
+            for record in target_gsub.ScriptList.ScriptRecord
+            if record.ScriptTag != "hang"
+        ]
+        target_gsub.ScriptList.ScriptRecord.append(hang_record)
+        target_gsub.ScriptList.ScriptRecord.sort(key=lambda record: record.ScriptTag)
+        target_gsub.ScriptList.ScriptCount = len(target_gsub.ScriptList.ScriptRecord)
+    finally:
+        source_font.close()
 
 
 def _instantiate_from_variable(vf_path: str, weight: int) -> TTFont:

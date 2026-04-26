@@ -4,7 +4,10 @@ dictionaries = [
 ]
 words = [
     "cjk",
+    "ghostty",
     "monoplex",
+    "myungjo",
+    "nfd",
     "noto",
     "woong",
     "yymmddhhmm",

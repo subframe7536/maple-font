@@ -43,6 +43,7 @@ from source.py.feature import (
     get_freeze_moving_rules,
     normal_enabled_features,
 )
+from source.py.task.ko import restore_hangul_gsub
 
 
 FONT_VERSION = "v7.9"
@@ -1720,6 +1721,12 @@ def build_ko(f: str, font_config: FontConfig, build_option: BuildOption):
         is_variable=False,
         is_hinted=font_config.use_hinted,
         fea_path=build_option.get_feature_file_path(is_italic, False),
+    )
+    restore_hangul_gsub(
+        target_font=ko_font,
+        ko_static_font_path=joinPaths(
+            build_option.ko_static_dir, f"MapleMonoKO-{style_compact_ko}.ttf"
+        ),
     )
 
     if not (
