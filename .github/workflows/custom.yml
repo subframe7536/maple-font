@@ -8,6 +8,11 @@ on:
         required: false
         default: false
         type: boolean
+      ko:
+        description: 'Include Korean version (add "--ko" to build args)'
+        required: false
+        default: false
+        type: boolean
       normal:
         description: 'Remove opinionated features (add "--normal" to build args)'
         required: false
@@ -96,6 +101,9 @@ jobs:
           build_args="--archive"
           if [ "${{ github.event.inputs.cn }}" == "true" ]; then
             build_args="$build_args --cn"
+          fi
+          if [ "${{ github.event.inputs.ko }}" == "true" ]; then
+            build_args="$build_args --ko"
           fi
           if [ "${{ github.event.inputs.normal }}" == "true" ]; then
             build_args="$build_args --normal"

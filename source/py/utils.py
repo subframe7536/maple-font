@@ -85,11 +85,26 @@ def parse_github_mirror(github_mirror: str) -> str:
 
 
 def download_file(url: str, target_path: str):
+    try:
+        _download_file_with_urllib(url, target_path)
+    except Exception:
+        curl = shutil.which("curl")
+        if not curl:
+            raise
+        print("\nPython downloader failed, retrying with curl...")
+        subprocess.run(
+            [curl, "-L", "--fail", "--output", target_path, url],
+            check=True,
+        )
+
+
+def _download_file_with_urllib(url: str, target_path: str):
     user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36"
     req = Request(url, headers={"User-Agent": user_agent})
     not_ci = not is_ci()
     with urlopen(req) as response, open(target_path, "wb") as out_file:
-        total_size = int(response.getheader("Content-Length").strip())
+        content_length = response.getheader("Content-Length")
+        total_size = int(content_length.strip()) if content_length else 0
         downloaded_size = 0
         block_size = 8192
 
@@ -102,11 +117,14 @@ def download_file(url: str, target_path: str):
 
             if not_ci:
                 downloaded_size += len(buffer)
-                percent_downloaded = (downloaded_size / total_size) * 100
-                print(
-                    f"Downloading: [{percent_downloaded:.2f}%] {downloaded_size} / {total_size}",
-                    end="\r",
-                )
+                if total_size:
+                    percent_downloaded = (downloaded_size / total_size) * 100
+                    print(
+                        f"Downloading: [{percent_downloaded:.2f}%] {downloaded_size} / {total_size}",
+                        end="\r",
+                    )
+                else:
+                    print(f"Downloading: {downloaded_size} bytes", end="\r")
 
 
 def download_zip_and_extract(

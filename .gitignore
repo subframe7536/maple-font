@@ -3,6 +3,8 @@ fonts
 release
 source/cn/**/*.ttf
 source/cn/**/*.vfc
+source/ko/**/*.ttf
+source/ko/**/*.otf
 cdn
 
 __pycache__
@@ -12,3 +14,7 @@ __pycache__
 .vscode
 uv.lock
 *.backup
+
+AGENTS.md
+dev-doc/
+tmp/

@@ -89,5 +89,15 @@
     "use_hinted": false,
     "use_static_base_font": true,
     "scale_factor": 1.0
+  },
+  "ko": {
+    "enable": false,
+    "with_nerd_font": true,
+    "fix_meta_table": true,
+    "clean_cache": false,
+    "narrow": false,
+    "use_hinted": false,
+    "use_static_base_font": true,
+    "scale_factor": 1.0
   }
 }

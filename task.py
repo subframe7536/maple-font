@@ -47,6 +47,12 @@ def main():
     )
     cn.add_argument("--rebuild", action="store_true", help="rebuild the CN static font")
 
+    ko = command.add_parser("ko", help="Rebuild KO static font")
+    ko.add_argument(
+        "--pull", action="store_true", help="pull the Noto Sans Mono CJK KR source files"
+    )
+    ko.add_argument("--rebuild", action="store_true", help="rebuild the KO static font")
+
     publish_parser = command.add_parser(
         "publish", help="Publish the font archives to GitHub Release"
     )
@@ -81,6 +87,10 @@ def main():
         from source.py.task.cn import cn
 
         cn("./source/cn", args.pull, args.rebuild)
+    elif args.command == "ko":
+        from source.py.task.ko import ko
+
+        ko("./source/ko", args.pull, args.rebuild)
     elif args.command == "publish":
         from source.py.task.publish import publish
 

@@ -268,6 +268,26 @@ def parse_args(args: list[str] | None = None):
         action="store_true",
         help="Build both `Maple Mono CN` and `Maple Mono NF CN`. Nerd-Font version must be enabled",
     )
+    ko_group = build_group.add_mutually_exclusive_group()
+    ko_group.add_argument(
+        "--ko",
+        dest="ko",
+        default=None,
+        action="store_true",
+        help="Build Korean version",
+    )
+    ko_group.add_argument(
+        "--no-ko",
+        dest="ko",
+        default=None,
+        action="store_false",
+        help="Do not build Korean version (default)",
+    )
+    build_group.add_argument(
+        "--ko-both",
+        action="store_true",
+        help="Build both `Maple Mono KO` and `Maple Mono NF KO`. Nerd-Font version must be enabled",
+    )
     build_group.add_argument(
         "--ttf-only",
         action="store_true",
@@ -313,6 +333,7 @@ class FontConfig:
 
         self.archive = False
         self.use_cn_both = False
+        self.use_ko_both = False
         self.ttf_only = False
         self.debug = False
         self.apply_fea_file = False
@@ -402,8 +423,29 @@ class FontConfig:
             # scale factor for CN glyphs
             "scale_factor": (1.0, 1.0),
         }
+        # korean font settings
+        self.ko = {
+            # whether to build Korean fonts
+            # skip if Korean base fonts are not founded
+            "enable": False,
+            # whether to patch Nerd-Font
+            "with_nerd_font": True,
+            # fix design language and supported languages
+            "fix_meta_table": True,
+            # whether to clean instantiated base KO fonts
+            "clean_cache": False,
+            # whether to narrow KO glyphs
+            "narrow": False,
+            # whether to hint KO font (will increase size)
+            "use_hinted": False,
+            # whether to use pre-instantiated static KO font as base font
+            "use_static_base_font": True,
+            # scale factor for KO glyphs
+            "scale_factor": (1.0, 1.0),
+        }
         self.glyph_width = 600
         self.glyph_width_cn_narrow = 1000
+        self.glyph_width_ko_narrow = 1000
         self.use_normal_preset = False
         self.ttfautohint_param = {}
         self.line_height = 1.0
@@ -446,6 +488,7 @@ class FontConfig:
                     "feature_freeze",
                     "nerd_font",
                     "cn",
+                    "ko",
                 ]:
                     if prop in data:
                         val = data[prop]
@@ -530,10 +573,19 @@ class FontConfig:
         if isinstance(self.cn["scale_factor"], (float, list)):
             self.cn["scale_factor"] = parse_scale_factor(self.cn["scale_factor"])
 
+    def _apply_ko_options(self, args):
+        """Apply Korean font related arguments."""
+        if args.ko is not None:
+            self.ko["enable"] = args.ko
+
+        if isinstance(self.ko["scale_factor"], (float, list)):
+            self.ko["scale_factor"] = parse_scale_factor(self.ko["scale_factor"])
+
     def _apply_build_options(self, args):
         """Apply general build options."""
         self.archive = args.archive
         self.use_cn_both = args.cn_both
+        self.use_ko_both = args.ko_both
         self.debug = args.debug
 
         if args.ttf_only:
@@ -577,6 +629,7 @@ class FontConfig:
         self._apply_feature_options(args)
         self._apply_nerd_font_options(args)
         self._apply_cn_options(args)
+        self._apply_ko_options(args)
         self._update_family_names()
 
         self.freeze_config_str = get_freeze_config_str(
@@ -594,6 +647,9 @@ class FontConfig:
 
     def should_build_nf_cn(self) -> bool:
         return self.cn["with_nerd_font"] and self.nerd_font["enable"]
+
+    def should_build_nf_ko(self) -> bool:
+        return self.ko["with_nerd_font"] and self.nerd_font["enable"]
 
     def get_nf_suffix(self) -> Literal["Mono", "Propo", ""]:
         extra_args = self.nerd_font["extra_args"]
@@ -615,12 +671,19 @@ class FontConfig:
         self.cn["with_nerd_font"] = not self.cn["with_nerd_font"]
         return True
 
-    def get_valid_glyph_width_list(self, cn=False):
+    def toggle_nf_ko_config(self) -> bool:
+        if not self.nerd_font["enable"]:
+            print("❗Nerd-Font version is disabled, skip toggle.")
+            return False
+        self.ko["with_nerd_font"] = not self.ko["with_nerd_font"]
+        return True
+
+    def get_valid_glyph_width_list(self, cn=False, ko=False):
         result = [0]
         if self.get_width_name():
             w = self.get_target_width()
             result.append(w)
-            if cn:
+            if cn or ko:
                 result.append(w * 2)
         else:
             result.append(self.glyph_width)
@@ -628,6 +691,12 @@ class FontConfig:
                 result.append(
                     self.glyph_width_cn_narrow
                     if self.cn["narrow"]
+                    else 2 * self.glyph_width
+                )
+            if ko:
+                result.append(
+                    self.glyph_width_ko_narrow
+                    if self.ko["narrow"]
                     else 2 * self.glyph_width
                 )
         return result
@@ -724,13 +793,20 @@ class BuildOption:
 
         self.cn_variable_dir = f"{self.src_dir}/cn"
         self.cn_static_dir = f"{self.cn_variable_dir}/static"
+        self.ko_variable_dir = f"{self.src_dir}/ko"
+        self.ko_static_dir = f"{self.ko_variable_dir}/static"
 
         self.cn_suffix = None
         self.cn_suffix_compact = None
+        self.ko_suffix = None
+        self.ko_suffix_compact = None
         self.cn_base_font_dir = ""
+        self.ko_base_font_dir = ""
         self.output_cn = ""
+        self.output_ko = ""
         self.is_nf_built = False
         self.is_cn_built = False
+        self.is_ko_built = False
         self.has_cache = (
             self.__check_file_count(self.output_variable, minCount=2, end=".ttf")
             and self.__check_file_count(self.output_ttf, minCount=4, end=".ttf")
@@ -757,6 +833,20 @@ class BuildOption:
         self.output_cn = joinPaths(
             self.output_dir,
             self.cn_suffix_compact.replace(suffix, ""),
+        )
+
+    def load_ko_dir_and_suffix(self, font_config: FontConfig) -> None:
+        suffix = font_config.get_nf_suffix()
+        if font_config.should_build_nf_ko():
+            self.ko_base_font_dir = self.output_nf
+            self.ko_suffix = f"NF{suffix} KO"
+            self.ko_suffix_compact = f"NF{suffix}-KO"
+        else:
+            self.ko_base_font_dir = self.ttf_base_dir
+            self.ko_suffix = self.ko_suffix_compact = "KO"
+        self.output_ko = joinPaths(
+            self.output_dir,
+            self.ko_suffix_compact.replace(suffix, ""),
         )
 
     def should_use_font_patcher(
@@ -794,6 +884,14 @@ class BuildOption:
             )
             return False
         return self.__ensure_cn_static_fonts(clean_cache=config.cn["clean_cache"])
+
+    def should_build_ko(self, config: FontConfig) -> bool:
+        if not config.ko["enable"] and not config.use_ko_both:
+            print(
+                '\nNo `"ko.enable": true` in config.json or `--ko` / `--ko-both` in argv. Skip KO build.'
+            )
+            return False
+        return self.__ensure_ko_static_fonts(clean_cache=config.ko["clean_cache"])
 
     def __ensure_cn_static_fonts(self, clean_cache: bool) -> bool:
         if clean_cache:
@@ -850,9 +948,49 @@ class BuildOption:
         print("\nCN base fonts don't exist. Skip CN build.")
         return False
 
+    def __ensure_ko_static_fonts(self, clean_cache: bool) -> bool:
+        if clean_cache:
+            print("Clean KO static fonts")
+            shutil.rmtree(self.ko_static_dir, ignore_errors=True)
+
+        if self.__check_ko_exists():
+            return True
+
+        print("\nKO base fonts don't exist. Generate from Noto Sans Mono CJK KR.")
+        try:
+            from source.py.task.ko import ko
+
+            ko(self.ko_variable_dir, pull=False, rebuild=True)
+        except Exception as e:
+            print(f"❗Failed to generate KO static fonts: {e}")
+            return False
+
+        if self.__check_ko_exists():
+            return True
+
+        print("\nKO base fonts don't exist. Skip KO build.")
+        return False
+
     def __check_cn_exists(self) -> bool:
         static_path = self.cn_static_dir
         print(f"\nChecking CN static font directory {static_path}")
+        if not path.exists(static_path):
+            print("🔎 Does not exist")
+            return False
+        if not self.__check_file_count(static_path):
+            print("🔎 Exists but not enough font files")
+            return False
+
+        if check_directory_hash(static_path):
+            print("✅ Hash verified")
+            return True
+        print("❌ Hash mismatch, removing directory")
+        shutil.rmtree(static_path)
+        return False
+
+    def __check_ko_exists(self) -> bool:
+        static_path = self.ko_static_dir
+        print(f"\nChecking KO static font directory {static_path}")
         if not path.exists(static_path):
             print("🔎 Does not exist")
             return False
@@ -1015,7 +1153,7 @@ def get_unique_identifier(
         nf_ver = font_config.nerd_font["version"]
         suffix += f"NF{nf_ver};"
 
-    if "CN" in postscript_name and narrow:
+    if ("CN" in postscript_name or "KO" in postscript_name) and narrow:
         suffix += "Narrow;"
 
     suffix += font_config.freeze_config_str
@@ -1464,6 +1602,150 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
     cn_font.close()
 
 
+def build_ko(f: str, font_config: FontConfig, build_option: BuildOption):
+    style_compact_ko = f.split("-")[-1].split(".")[0]
+
+    print(f"👉 {build_option.ko_suffix_compact} version for {f}")
+
+    ko_font = merge_ttfonts(
+        base_font_path=joinPaths(build_option.ko_base_font_dir, f),
+        extra_font_path=joinPaths(
+            build_option.ko_static_dir, f"MapleMonoKO-{style_compact_ko}.ttf"
+        ),
+        use_pyftmerge=True,
+    )
+
+    remove_target_glyph(ko_font, ".1")
+
+    (
+        style_ko_with_prefix_space,
+        style_in_2,
+        style_in_17,
+        is_skip_subfamily,
+        is_italic,
+    ) = parse_style_name(
+        style_name_compact=style_compact_ko,
+    )
+
+    postscript_name = f"{font_config.family_name_compact}-{build_option.ko_suffix_compact}-{style_compact_ko}"
+
+    update_font_names(
+        font=ko_font,
+        family_name=f"{font_config.family_name} {build_option.ko_suffix}{style_ko_with_prefix_space}",
+        style_name=style_in_2,
+        full_name=f"{font_config.family_name} {build_option.ko_suffix} {style_in_17}",
+        version_str=font_config.version_str,
+        postscript_name=postscript_name,
+        unique_identifier=get_unique_identifier(
+            font_config=font_config,
+            postscript_name=postscript_name,
+            narrow=font_config.ko["narrow"],
+        ),
+        is_skip_subfamily=is_skip_subfamily,
+        preferred_family_name=f"{font_config.family_name} {build_option.ko_suffix}",
+        preferred_style_name=style_in_17,
+    )
+
+    ko_font["OS/2"].xAvgCharWidth = font_config.get_target_width()  # type: ignore
+
+    target_width = (
+        font_config.glyph_width_ko_narrow if font_config.ko["narrow"] else None
+    )
+    scale_factor: tuple[float, float] | None = (
+        font_config.ko["scale_factor"]
+        if font_config.ko["scale_factor"] != (1.0, 1.0)
+        else None
+    )
+    special_scale_names = [
+        "ellipsis.full",
+        "quoteleft.full",
+        "quoteright.full",
+        "quotedblleft.full",
+        "quotedblright.full",
+    ]
+    if target_width or scale_factor:
+        match_width = 2 * font_config.glyph_width
+
+        if target_width and font_config.get_width_name() != "slim":
+            ko_font["post"].isFixedPitch = False  # type: ignore
+            ko_font["OS/2"].panose.bProportion = 0  # type: ignore
+            ko_font["OS/2"].panose.bSpacing = 0  # type: ignore
+            ko_font["hhea"].advanceWidthMax = target_width  # type: ignore
+            print(
+                "Changed KO glyph width, mark font file as not monospaced and skip checking glyph width"
+            )
+        else:
+            target_width = match_width
+
+        if scale_factor:
+            print(f"Scale KO glyph to ({scale_factor[0]}x, {scale_factor[1]}x)")
+        else:
+            scale_factor = (1.0, 1.0)
+
+        change_glyph_width_or_scale(
+            font=ko_font,
+            match_width=match_width,
+            target_width=target_width,
+            scale_factor=scale_factor,
+            special_names=special_scale_names,
+        )
+    elif font_config.get_width_name():
+        change_glyph_width_or_scale(
+            font=ko_font,
+            match_width=2 * font_config.glyph_width,
+            target_width=2 * font_config.get_target_width(),
+            scale_factor=(1.0, 1.0),
+            special_names=special_scale_names,
+        )
+
+    if font_config.ko["fix_meta_table"]:
+        # Code page bits: Latin 1 / Korean Wansung / Korean Johab
+        ko_font["OS/2"].ulCodePageRange1 = 1 << 0 | 1 << 19 | 1 << 21  # type: ignore
+
+        # fix meta table, https://learn.microsoft.com/en-us/typography/opentype/spec/meta
+        meta = table__m_e_t_a("meta")
+        meta.data = {
+            "dlng": "Latn, Hang, Hani",
+            "slng": "Latn, Hang, Hani",
+        }
+        ko_font["meta"] = meta
+
+    adjust_line_height(ko_font, font_config.line_height, font_config.vertical_metric)
+
+    font_config.patch_font_feature(
+        font=ko_font,
+        issue_fea_dir=build_option.output_dir,
+        is_italic=is_italic,
+        is_cn=False,
+        is_variable=False,
+        is_hinted=font_config.use_hinted,
+        fea_path=build_option.get_feature_file_path(is_italic, False),
+    )
+
+    if not (
+        (
+            font_config.should_build_nf_ko()
+            and (
+                build_option.should_use_font_patcher(font_config)
+                or font_config.get_nf_suffix() == "Propo"
+            )
+        )
+        or target_width
+    ):
+        verify_glyph_width(
+            font=ko_font,
+            expect_widths=font_config.get_valid_glyph_width_list(ko=True),
+            file_name=postscript_name,
+        )
+
+    target_path = joinPaths(
+        build_option.output_ko,
+        f"{postscript_name}.ttf",
+    )
+    ko_font.save(target_path)
+    ko_font.close()
+
+
 def run_build(
     pool_size: int, fn: Callable, dir: str, target_styles: list[str] | None = None
 ):
@@ -1694,6 +1976,41 @@ def build_chinese_fonts(
     build_option.is_cn_built = True
 
 
+def build_korean_fonts(
+    font_config: FontConfig, build_option: BuildOption, target_styles: list[str] | None
+):
+    """Build Korean font variants."""
+    if not build_option.should_build_ko(font_config):
+        return
+
+    def _build_ko(with_nf: bool = False):
+        print(f"\n🔎 Build KO fonts {'with Nerd-Font' if with_nf else ''}...\n")
+        makedirs(build_option.output_ko, exist_ok=True)
+
+        run_build(
+            font_config.pool_size,
+            partial(
+                build_ko,
+                font_config=font_config,
+                build_option=build_option,
+            ),
+            build_option.ko_base_font_dir,
+            target_styles,
+        )
+
+        if font_config.ko["use_hinted"]:
+            print("Auto hinting all glyphs")
+            run(f"ftcli ttf autohint {build_option.output_ko}")
+
+    _build_ko()
+
+    if font_config.use_ko_both and font_config.toggle_nf_ko_config():
+        build_option.load_ko_dir_and_suffix(font_config)
+        _build_ko(True)
+
+    build_option.is_ko_built = True
+
+
 # Now, refactor the main function to use these
 def main(args: list[str] | None = None, version: str | None = None):
     check_ftcli()
@@ -1702,6 +2019,7 @@ def main(args: list[str] | None = None, version: str | None = None):
     font_config = FontConfig(args=parsed_args, version=version)
     build_option = BuildOption(use_hinted=font_config.use_hinted)
     build_option.load_cn_dir_and_suffix(font_config)
+    build_option.load_ko_dir_and_suffix(font_config)
 
     if parsed_args.dry:
         font_config.nerd_font["use_font_patcher"] = (
@@ -1745,6 +2063,7 @@ def main(args: list[str] | None = None, version: str | None = None):
     # Build variants
     build_nerd_fonts(font_config, build_option, target_styles)
     build_chinese_fonts(font_config, build_option, target_styles)
+    build_korean_fonts(font_config, build_option, target_styles)
 
     # Write config
     with open(
@@ -1765,10 +2084,12 @@ def main(args: list[str] | None = None, version: str | None = None):
             "feature_freeze": font_config.feature_freeze,
             "nerd_font": font_config.nerd_font,
             "cn": font_config.cn,
+            "ko": font_config.ko,
         }
         del result["nerd_font"]["font_forge_bin"]
         del result["nerd_font"]["enable"]
         del result["cn"]["enable"]
+        del result["ko"]["enable"]
         config_file.write(
             json.dumps(
                 result,
@@ -1791,7 +2112,7 @@ def main(args: list[str] | None = None, version: str | None = None):
                 continue
 
             suffix = ""
-            if f in ["CN", "NF", "NF-CN"]:
+            if f in ["CN", "NF", "NF-CN", "KO", "NF-KO"]:
                 if not font_config.use_hinted:
                     suffix = "-unhinted"
             else:
