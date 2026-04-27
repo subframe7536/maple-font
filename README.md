@@ -21,7 +21,8 @@
   <a href="https://font.subf.dev">Website</a> |
   English |
   <a href="./README_CN.md">中文</a> |
-  <a href="./README_JA.md">日本語</a>
+  <a href="./README_JA.md">日本語</a> |
+  <a href="./README_KO.md">한국어</a>
 </p>
 
 # Maple Mono
@@ -40,11 +41,15 @@ V7 is a completely remade version, providing variable font format and source fil
 - 🎨 Icon - First-Class [Nerd-Font](https://github.com/ryanoasis/nerd-fonts) support, make your terminal more vivid.
 - 🔨 Customize - Enable or disable font features as you want, just make your own font.
 
-### Simplified Chinese, Traditional Chinese, and Japanese
+### Simplified Chinese, Traditional Chinese, Japanese, and Korean
 
 CN version based on [Resource Han Rounded](https://github.com/CyanoHao/Resource-Han-Rounded) provides complete character set support for Chinese development environments, including Simplified Chinese, Traditional Chinese, and Japanese. Meanwhile, the characteristic of perfect 2:1 alignment between Chinese and English allows this font to achieve a neat, uniform, beautiful, and comfortable appearance in scenarios such as multilingual display and Markdown tables. However, the spacing of Chinese characters is larger compared to other popular Chinese fonts. See details in [release notes](https://github.com/subframe7536/maple-font/releases/tag/cn-base) and [this issue](https://github.com/subframe7536/maple-font/issues/211).
 
 - No variable format support in CN version
+
+KO version based on [Noto Sans Mono CJK KR](https://github.com/notofonts/noto-cjk) provides Korean glyph support while preserving Maple Mono Latin glyphs, programming symbols, ligatures, contextual alternates, and Nerd Font symbols. Korean glyphs are kept at a 2:1 Korean-to-Latin advance width ratio for monospaced terminal/editor alignment, and the KO build preserves Noto CJK KR Hangul shaping (`hang` with `ccmp`, `ljmo`, `vjmo`, and `tjmo`) so decomposed Hangul Jamo can render as syllable clusters on CoreText and HarfBuzz paths.
+
+- No variable format support in KO version
 
 ![2-1.png](./resources/2-1.png)
 
@@ -59,6 +64,8 @@ CN version based on [Resource Han Rounded](https://github.com/CyanoHao/Resource-
 ## Download
 
 You can download all the font archives from [Releases](https://github.com/subframe7536/maple-font/releases).
+
+For KO / NF-KO archives in this fork, use [maple-font-ko Releases](https://github.com/kuskhan/maple-font-ko/releases) or build locally with `--ko` / `--ko-both`.
 
 ### Scoop (Windows)
 
@@ -501,6 +508,8 @@ See in [document](./source/features/README.md) or try it in [Playground](https:/
 - **NF**: Nerd-Font patched version, add icons for terminal (With `-NF` suffix)
 - **CN**: Chinese version, embed with Chinese and Japanese glyphs (With `-CN` suffix)
 - **NF-CN**: Full version, embed with icons, Chinese and Japanese glyphs (With `-NF-CN` suffix)
+- **KO**: Korean version, embed Korean glyphs from Noto Sans Mono CJK KR (With `-KO` suffix)
+- **NF-KO**: Full Korean version, embed with icons and Korean glyphs (With `-NF-KO` suffix)
 
 ### Font Hint
 
@@ -663,6 +672,20 @@ The build script will auto-download required assets from GitHub. If you have tro
 
 By enabling `cv99`, all Chinese punctuation marks will be centred. See more details in [#150](https://github.com/subframe7536/maple-font/issues/150)
 
+### Korean version
+
+The KO version is disabled by default. Run `python build.py` with the `--ko` flag to build `Maple Mono KO`, or use `--ko-both` to build both `Maple Mono KO` and `Maple Mono NF KO`.
+
+KO static base fonts are generated from Korean-only Noto Sans Mono CJK KR sources:
+
+```sh
+uv run task.py ko --pull
+uv run task.py ko --rebuild
+uv run build.py --ko-both
+```
+
+The KO pipeline keeps Maple Mono glyphs and features outside Korean ranges, uses Noto CJK KR only for approved Korean coverage, preserves Hangul `GSUB` shaping for decomposed Jamo, and keeps the default Korean glyph advance at twice the Latin width.
+
 ### Build Script Usage
 
 ```
@@ -671,8 +694,9 @@ usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--apply-fea-file]
                 [--infinite-arrow] [--remove-tag-liga] [--line-height LINE_HEIGHT]
                 [--width {default,narrow,slim}] [--nf-mono] [--nf-propo]
                 [--cn-narrow] [--cn-scale-factor CN_SCALE_FACTOR] [--nf | --no-nf]
-                [--cn | --no-cn] [--cn-both] [--ttf-only] [--least-styles]
-                [--font-patcher] [--cache] [--cn-rebuild] [--archive]
+                [--cn | --no-cn] [--cn-both] [--ko | --no-ko] [--ko-both]
+                [--ttf-only] [--least-styles] [--font-patcher] [--cache]
+                [--cn-rebuild] [--archive]
 
 ✨ Builder and optimizer for Maple Mono
 
@@ -689,8 +713,9 @@ Feature Options:
                         zero,cv01,ss07,ss08`). No effect on variable format
   --apply-fea-file      Load feature file from `source/features/{regular,italic}.fea`
                         to variable font
-  --hinted              Use hinted font as base font in NF / CN / NF-CN (default)
-  --no-hinted           Use unhinted font as base font in NF / CN / NF-CN
+  --hinted              Use hinted font as base font in NF / CN / NF-CN / KO / NF-KO
+                        (default)
+  --no-hinted           Use unhinted font as base font in NF / CN / NF-CN / KO / NF-KO
   --liga                Preserve all the ligatures (default)
   --no-liga             Remove all the ligatures
   --infinite-arrow      Enable infinite arrow ligatures (Disabled in hinted font by
@@ -716,13 +741,17 @@ Build Options:
   --no-cn               Do not build Chinese version (default)
   --cn-both             Build both `Maple Mono CN` and `Maple Mono NF CN`. Nerd-Font
                         version must be enabled
+  --ko                  Build Korean version
+  --no-ko               Do not build Korean version (default)
+  --ko-both             Build both `Maple Mono KO` and `Maple Mono NF KO`. Nerd-Font
+                        version must be enabled
   --ttf-only            Only build TTF format
   --least-styles        Only build Regular / Bold / Italic / BoldItalic style
   --font-patcher        Force the use of Nerd Font Patcher to build NF format
   --cache               Reuse font cache of TTF, OTF, and Woff2 formats
   --cn-rebuild          Reinstantiate variable CN base font
   --archive             Build font archives with config and license. If it has the `--cache`
-                        flag, only archive NF and CN formats
+                        flag, only archive NF, CN, and KO formats
 ```
 
 ## Development

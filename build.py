@@ -155,14 +155,14 @@ def parse_args(args: list[str] | None = None):
         dest="hinted",
         default=None,
         action="store_true",
-        help="Use hinted font as base font in NF / CN / NF-CN (default)",
+        help="Use hinted font as base font in NF / CN / NF-CN / KO / NF-KO (default)",
     )
     hint_group.add_argument(
         "--no-hinted",
         dest="hinted",
         default=None,
         action="store_false",
-        help="Use unhinted font as base font in NF / CN / NF-CN",
+        help="Use unhinted font as base font in NF / CN / NF-CN / KO / NF-KO",
     )
     liga_group = feature_group.add_mutually_exclusive_group()
     liga_group.add_argument(
@@ -317,7 +317,7 @@ def parse_args(args: list[str] | None = None):
     build_group.add_argument(
         "--archive",
         action="store_true",
-        help="Build font archives with config and license. If it has the `--cache` flag, only archive NF and CN formats",
+        help="Build font archives with config and license. If it has the `--cache` flag, only archive NF, CN, and KO formats",
     )
 
     return parser.parse_args(args)

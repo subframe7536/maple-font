@@ -22,7 +22,8 @@
   <a href="https://font.subf.dev">网站</a> |
   <a href="./README.md">English</a> |
   中文 |
-  <a href="./README_JA.md">日本語</a>
+  <a href="./README_JA.md">日本語</a> |
+  <a href="./README_KO.md">한국어</a>
 </p>
 
 # Maple Mono
@@ -41,11 +42,15 @@ V7 是一个完全重制版本，提供了可变字体格式和字体工程源�
 - 🎨 图标 - 提供 [Nerd-Font](https://github.com/ryanoasis/nerd-fonts) 嵌入的版本，添加图标支持。
 - 🔨 定制 - 自由开关或者构建 OpenType 字体特性，打造您专属的字体。
 
-### 简体中文、繁体中文和日文
+### 简体中文、繁体中文、日文和韩文
 
 CN 版本基于[资源圆体](https://github.com/CyanoHao/Resource-Han-Rounded)提供了完整的中文开发环境的字符集支持，包括简体中文、繁体中文和日文。同时，中英文 2:1 完美对齐的特性，使得本字体在多语言显示、Markdown 表格等场景可以做到整齐划一、美观舒适。但是中文的间距相比其他流行的中文字体更大，详情请参阅[发行版说明](https://github.com/subframe7536/maple-font/releases/tag/cn-base)和[这个议题](https://github.com/subframe7536/maple-font/issues/211)。
 
 - CN 版本暂时不支持可变字体格式
+
+KO 版本基于 [Noto Sans Mono CJK KR](https://github.com/notofonts/noto-cjk) 提供韩文支持，同时保留 Maple Mono 的拉丁字形、编程符号、连字、上下文替代和 Nerd Font 符号。韩文字形默认保持韩文与拉丁字符 2:1 的宽度比例，并保留 Noto CJK KR 的 Hangul shaping（`hang`、`ccmp`、`ljmo`、`vjmo`、`tjmo`），以便分解韩文字母序列在 CoreText 和 HarfBuzz 中组合为音节。
+
+- KO 版本暂时不支持可变字体格式
 
 ![2-1.png](./resources/2-1.png)
 
@@ -60,6 +65,8 @@ CN 版本基于[资源圆体](https://github.com/CyanoHao/Resource-Han-Rounded)�
 ## 下载
 
 您可以从 [Releases](https://github.com/subframe7536/maple-font/releases) 下载所有字体压缩包。
+
+本 fork 的 KO / NF-KO 压缩包可从 [maple-font-ko Releases](https://github.com/kuskhan/maple-font-ko/releases) 下载，或使用 `--ko` / `--ko-both` 在本地构建。
 
 ### Scoop (Windows)
 
@@ -505,6 +512,8 @@ fonts.packages = with pkgs; [
 - **NF**: 嵌入 Nerd-Font 的版本，为终端添加图标 (带有 `-NF` 后缀)
 - **CN**: 中文版本，嵌入中文和日文字形 (带有 `-CN` 后缀)
 - **NF-CN**: 完整版本，嵌入图标、中文和日文字形 (带有 `-NF-CN` 后缀)
+- **KO**: 韩文版本，嵌入来自 Noto Sans Mono CJK KR 的韩文字形 (带有 `-KO` 后缀)
+- **NF-KO**: 韩文完整版本，嵌入图标和韩文字形 (带有 `-NF-KO` 后缀)
 
 ### 字体微调
 
@@ -672,6 +681,20 @@ OpenType 特性可以控制字体的内置变体和连字。您可以通过修�
 
 通過開啟 `cv99`，所有的中文標點符號都會居中，詳情見 [#150](https://github.com/subframe7536/maple-font/issues/150)
 
+### 韩文版本
+
+KO 版本默认关闭。运行 `python build.py --ko` 可构建 `Maple Mono KO`，或使用 `--ko-both` 同时构建 `Maple Mono KO` 和 `Maple Mono NF KO`。
+
+KO 静态基础字体来自仅限韩文的 Noto Sans Mono CJK KR 源：
+
+```sh
+uv run task.py ko --pull
+uv run task.py ko --rebuild
+uv run build.py --ko-both
+```
+
+KO 流程会保留 Korean 范围之外的 Maple Mono 字形和特性，只在批准的 Korean 覆盖范围中使用 Noto CJK KR，并保留 Hangul `GSUB` shaping，使分解的 Hangul Jamo 能组合为音节；默认韩文字形宽度保持为拉丁宽度的两倍。
+
 ### 构建脚本用法
 
 ```
@@ -680,8 +703,9 @@ usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--apply-fea-file]
                 [--infinite-arrow] [--remove-tag-liga] [--line-height LINE_HEIGHT]
                 [--width {default,narrow,slim}] [--nf-mono] [--nf-propo]
                 [--cn-narrow] [--cn-scale-factor CN_SCALE_FACTOR] [--nf | --no-nf]
-                [--cn | --no-cn] [--cn-both] [--ttf-only] [--least-styles]
-                [--font-patcher] [--cache] [--cn-rebuild] [--archive]
+                [--cn | --no-cn] [--cn-both] [--ko | --no-ko] [--ko-both]
+                [--ttf-only] [--least-styles] [--font-patcher] [--cache]
+                [--cn-rebuild] [--archive]
 
 ✨ Builder and optimizer for Maple Mono
 
@@ -697,8 +721,9 @@ Feature Options:
                         zero,cv01,ss07,ss08`）。 对可变字体无效
   --apply-fea-file      从 `source/features/{regular,italic}.fea` 加载特性文件到
                         可变字体
-  --hinted              在 NF / CN / NF-CN 中使用 hinted 字体作为基础字体（默认）
-  --no-hinted           在 NF / CN / NF-CN 中使用 unhinted 字体作为基础字体
+  --hinted              在 NF / CN / NF-CN / KO / NF-KO 中使用 hinted 字体作为基础字体
+                        （默认）
+  --no-hinted           在 NF / CN / NF-CN / KO / NF-KO 中使用 unhinted 字体作为基础字体
   --liga                保留所有连字（默认）
   --no-liga             删除所有连字
   --infinite-arrow      开启无限箭头连字 (默认在 hinted 格式中禁用)
@@ -722,13 +747,17 @@ Build Options:
   --no-cn               不构建中文版本（默认）
   --cn-both             同时构建 `Maple Mono CN` 和 `Maple Mono NF CN`。必须启用
                         Nerd-Font 版本
+  --ko                  构建韩文版本
+  --no-ko               不构建韩文版本（默认）
+  --ko-both             同时构建 `Maple Mono KO` 和 `Maple Mono NF KO`。必须启用
+                        Nerd-Font 版本
   --ttf-only            仅构建 TTF 格式
   --least-styles        仅构建 常规 / 粗体 / 斜体 / 粗斜体 样式
   --font-patcher        强制使用 Nerd Font Patcher 构建 NF 格式
   --cache               重用 TTF、OTF 和 Woff2 格式的字体缓存
   --cn-rebuild          重新静态化可变的中文基字
   --archive             构建带有配置和许可的字体压缩包。如果带有 `--cache`
-                        标志，则仅打包 NF 和 CN 格式
+                        标志，则仅打包 NF、CN 和 KO 格式
 ```
 
 ## 我个人在用的其他中文字体资源

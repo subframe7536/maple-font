@@ -22,7 +22,8 @@
   <a href="https://font.subf.dev">ウェブサイト</a> |
   <a href="./README.md">English</a> |
   <a href="./README_CN.md">中文</a> |
-  日本語
+  日本語 |
+  <a href="./README_KO.md">한국어</a>
 </p>
 
 # Maple Mono
@@ -41,11 +42,15 @@ V7 は完全に再作成されたバージョンで、可変フォント形式�
 - 🎨 アイコン - 一流の[Nerd-Font](https://github.com/ryanoasis/nerd-fonts)サポート、ターミナルをより鮮やかに。
 - 🔨 カスタマイズ - フォント機能を自由に有効または無効にして、自分だけのフォントを作成。
 
-### 簡体字中国語、繁体字中国語、日本語
+### 簡体字中国語、繁体字中国語、日本語、韓国語
 
 CN バージョンは[Resource Han Rounded](https://github.com/CyanoHao/Resource-Han-Rounded)に基づいており、簡体字中国語、繁体字中国語、日本語の開発環境に完全な文字セットサポートを提供します。同時に、中国語と英語の 2:1 の完璧な整列の特性により、このフォントは多言語表示や Markdown テーブルなどのシナリオで整然とした、統一された、美しく快適な外観を実現します。ただし、中国語の文字間隔は他の人気のある中国語フォントと比較して大きくなっています。詳細は[リリースノート](https://github.com/subframe7536/maple-font/releases/tag/cn-base)および[この問題](https://github.com/subframe7536/maple-font/issues/211)を参照してください。
 
 - CN 版は現在、可変フォント形式をサポートしていません
+
+KO バージョンは [Noto Sans Mono CJK KR](https://github.com/notofonts/noto-cjk) に基づいて韓国語グリフを提供し、Maple Mono のラテン字形、プログラミング記号、リガチャ、コンテキスト代替、Nerd Font 記号を保持します。韓国語グリフはデフォルトでラテン幅との 2:1 比率を維持し、CoreText と HarfBuzz で分解ハングル Jamo が音節クラスタとして描画されるように Noto CJK KR の Hangul shaping（`hang`、`ccmp`、`ljmo`、`vjmo`、`tjmo`）を保持します。
+
+- KO 版は現在、可変フォント形式をサポートしていません
 
 ![2-1.png](./resources/2-1.png)
 
@@ -60,6 +65,8 @@ CN バージョンは[Resource Han Rounded](https://github.com/CyanoHao/Resource
 ## ダウンロード
 
 すべてのフォントアーカイブは[リリース](https://github.com/subframe7536/maple-font/releases)からダウンロードできます。
+
+この fork の KO / NF-KO アーカイブは [maple-font-ko Releases](https://github.com/kuskhan/maple-font-ko/releases) から取得するか、`--ko` / `--ko-both` でローカルビルドできます。
 
 ### Scoop (Windows)
 
@@ -502,6 +509,8 @@ fonts.packages = with pkgs; [
 - **NF**: Nerd-Font パッチバージョン、ターミナルにアイコンを追加（`-NF` サフィックス付き）
 - **CN**: 中国語バージョン、中国語と日本語のグリフを埋め込む（`-CN` サフィックス付き）
 - **NF-CN**: フルバージョン、アイコン、中国語、日本語のグリフを埋め込む（`-NF-CN` サフィックス付き）
+- **KO**: 韓国語バージョン、Noto Sans Mono CJK KR の韓国語グリフを埋め込む（`-KO` サフィックス付き）
+- **NF-KO**: 韓国語フルバージョン、アイコンと韓国語グリフを埋め込む（`-NF-KO` サフィックス付き）
 
 ### フォントヒント
 
@@ -666,6 +675,20 @@ CN バージョンはデフォルトで無効になっています。`python bui
 
 ビルドスクリプトは必要なアセットを GitHub から自動的にダウンロードします。ダウンロードに問題がある場合は、[config.json](./config.json)で `github_mirror` を設定するか、環境変数に `$GITHUB` を設定してください。（ターゲット URL は `https://<github_mirror>/<user>/<repo>/releases/download/<tag>/<file>` になります）、またはターゲットの `.zip` ファイルをダウンロードし、`build.py` と同じディレクトリに配置してください。
 
+### 韓国語バージョン
+
+KO バージョンはデフォルトでは無効です。`python build.py --ko` で `Maple Mono KO` をビルドし、`--ko-both` で `Maple Mono KO` と `Maple Mono NF KO` の両方をビルドできます。
+
+KO 静的ベースフォントは、韓国語専用の Noto Sans Mono CJK KR ソースから生成します。
+
+```sh
+uv run task.py ko --pull
+uv run task.py ko --rebuild
+uv run build.py --ko-both
+```
+
+KO パイプラインは韓国語範囲外の Maple Mono グリフと機能を保持し、承認済みの韓国語カバレッジにのみ Noto CJK KR を使います。また Hangul `GSUB` shaping を保持して、分解された Hangul Jamo が音節として合成されるようにし、デフォルトの韓国語グリフ幅をラテン幅の 2 倍に保ちます。
+
 ### ビルドスクリプトの使用法
 
 ```
@@ -674,8 +697,9 @@ usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--apply-fea-file]
                 [--infinite-arrow] [--remove-tag-liga] [--line-height LINE_HEIGHT]
                 [--width {default,narrow,slim}] [--nf-mono] [--nf-propo]
                 [--cn-narrow] [--cn-scale-factor CN_SCALE_FACTOR] [--nf | --no-nf]
-                [--cn | --no-cn] [--cn-both] [--ttf-only] [--least-styles]
-                [--font-patcher] [--cache] [--cn-rebuild] [--archive]
+                [--cn | --no-cn] [--cn-both] [--ko | --no-ko] [--ko-both]
+                [--ttf-only] [--least-styles] [--font-patcher] [--cache]
+                [--cn-rebuild] [--archive]
 
 ✨ Builder and optimizer for Maple Mono
 
@@ -691,9 +715,10 @@ Feature Options:
                         zero,cv01,ss07,ss08`）。可変フォーマットには効果がありません
   --apply-fea-file      `source/features/{regular,italic}.fea` から機能ファイルを読み込み、
                         可変フォントに適用
-  --hinted              NF / CN / NF-CNでヒント付きフォントをベースフォントとして使用
-                        （デフォルト）
-  --no-hinted           NF / CN / NF-CNでヒントなしフォントをベースフォントとして使用
+  --hinted              NF / CN / NF-CN / KO / NF-KOでヒント付きフォントをベース
+                        フォントとして使用（デフォルト）
+  --no-hinted           NF / CN / NF-CN / KO / NF-KOでヒントなしフォントをベース
+                        フォントとして使用
   --liga                すべてのリガチャを保持（デフォルト）
   --no-liga             すべてのリガチャを削除
   --infinite-arrow      無限アローリガチャを有効にする（hinted フォントではデフォルト
@@ -719,13 +744,17 @@ Build Options:
   --no-cn               中国語バージョンをビルドしない（デフォルト）
   --cn-both             `Maple Mono CN` と `Maple Mono NF CN` の両方をビルド。
                         Nerd-Fontバージョンが有効である必要があります
+  --ko                  韓国語バージョンをビルド
+  --no-ko               韓国語バージョンをビルドしない（デフォルト）
+  --ko-both             `Maple Mono KO` と `Maple Mono NF KO` の両方をビルド。
+                        Nerd-Fontバージョンが有効である必要があります
   --ttf-only            TTF形式のみをビルド
   --least-styles        通常の / 太字 / 斜体 / 太字斜体スタイルのみを構築する
   --font-patcher        NF形式を構築するためにNerd Font Patcherの使用を強制する
   --cache               TTF、OTF、Woff2形式のフォントキャッシュを再利用
   --cn-rebuild          CNベースフォントを再インスタンス化
   --archive             設定とライセンスを含むフォントアーカイブをビルド。
-                        `--cache` フラグがある場合、NFとCN形式のみをアーカイブ
+                        `--cache` フラグがある場合、NF、CN、KO形式のみをアーカイブ
 ```
 
 ## クレジット
