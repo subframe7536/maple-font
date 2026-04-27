@@ -31,7 +31,6 @@ Maple Mono는 코딩 흐름을 부드럽게 만드는 데 초점을 둔 오픈�
 
 원본 프로젝트는 개발 작업 경험을 개선하기 위해 만들어졌고, V7에서는 가변 폰트 형식, 폰트 프로젝트 소스, 절반 이상의 글리프 재설계, 더 똑똑한 ligature를 제공합니다. V6는 [여기](https://github.com/subframe7536/maple-font/tree/main)에서 확인할 수 있습니다.
 
-이 fork는 기존 Maple Mono / Maple Mono NF의 장점을 유지하면서 한국어 개발 환경을 위한 `Maple Mono KO`와 `Maple Mono NF KO` 빌드 경로를 추가합니다.
 
 ## 특징
 
