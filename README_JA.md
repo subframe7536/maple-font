@@ -45,6 +45,8 @@ V7 は完全に再作成されたバージョンで、可変フォント形式�
 
 CN バージョンは[Resource Han Rounded](https://github.com/CyanoHao/Resource-Han-Rounded)に基づいており、簡体字中国語、繁体字中国語、日本語の開発環境に完全な文字セットサポートを提供します。同時に、中国語と英語の 2:1 の完璧な整列の特性により、このフォントは多言語表示や Markdown テーブルなどのシナリオで整然とした、統一された、美しく快適な外観を実現します。ただし、中国語の文字間隔は他の人気のある中国語フォントと比較して大きくなっています。詳細は[リリースノート](https://github.com/subframe7536/maple-font/releases/tag/cn-base)および[この問題](https://github.com/subframe7536/maple-font/issues/211)を参照してください。
 
+- CN 版は現在、可変フォント形式をサポートしていません
+
 ![2-1.png](./resources/2-1.png)
 
 ## スクリーンショット
@@ -512,37 +514,41 @@ fonts.packages = with pkgs; [
 
 ## カスタムビルド
 
-[`config.json`](./config.json)ファイルはビルドプロセスを構成するために使用されます。詳細については、[スキーマ](./source/schema.json)または[ドキュメント](./source/features/README.md)を参照してください。
+`[config.json`](./config.json) ファイルはビルドプロセスの設定に使用されます。[スキーマ](./source/schema.json) または [ドキュメント](./source/features/README.md) を参照して詳細をご覧ください。
 
-ビルドプロセスをカスタマイズするための[コマンドラインオプション](#build-script-usage)もいくつかあります。CLI オプションは `config.json` のオプションよりも優先されます。
+カスタムビルドプロセスにはいくつかの [コマンドラインオプション](#ビルドスクリプトの使い方) も用意されています。コマンドラインオプションの優先順位は `config.json` 内の設定よりも高いです。
 
-### ブラウザで構築する
+### ビルド方法
 
-[プレイグラウンド](https://font.subf.dev/en/playground)に行く，左下隅の「Custom Build」ボタンをクリックしてください
+#### 1. ブラウザでのビルド
 
-### Github Actions を使用する
+[特徴テストページ](https://font.subf.dev/zh-cn/playground) にアクセスし、左下の「カスタムビルド」ボタンをクリックします。
 
-[Github Actions](https://github.com/subframe7536/maple-font/actions/workflows/custom.yml)を使用してフォントをビルドできます。
+- 現在は固定オープントイプ特徴のみサポートされています。
 
-1. リポジトリをフォークする
-2. （オプション） `config.json` の内容を変更する
-3. Actions タブに移動する
-4. 左側の `Custom Build` メニュー項目をクリックする
-5. オプションを設定して `Run workflow` ボタンをクリックする
-6. ビルドが完了するのを待つ
-7. リリースからフォントアーカイブをダウンロードする
+#### 2. Github Actions の使用
 
-### Docker を使用する
+[Github Actions](https://github.com/subframe7536/maple-font/actions/workflows/custom.yml) を使用してフォントをビルドできます。
+
+1. リポジトリをフォークします。
+2. (オプション) `config.json` の内容を変更します。
+3. 「Actions」タブに移動します。
+4. 左側の「カスタムビルド」メニューアイテムをクリックします。
+5. 「ワークフローを実行」ボタンをクリックし、オプションを設定します。
+6. ビルドが完了するのを待ちます。
+7. 「リリース」からフォントの圧縮パッケージをダウンロードします。
+
+#### 3. Docker の使用
 
 ```shell
 git clone https://github.com/subframe7536/maple-font --depth 1 -b variable
-docker build -t maple-font .
+docker build -t maple-font.
 docker run -v "$(pwd)/fonts:/app/fonts" -e BUILD_ARGS="--normal" maple-font
 ```
 
-### ローカルビルド
+#### 4. ローカルでのビルド
 
-リポジトリをクローンし、ローカルマシンで実行します。`python3` と `pip` がインストールされていることを確認してください。
+リポジトリをクローンし、お使いのローカルマシンで実行します。`python3` と `pip` がインストールされていることを確認してください。
 
 ```shell
 git clone https://github.com/subframe7536/maple-font --depth 1 -b variable
@@ -555,7 +561,18 @@ python build.py
 >
 > 依存関係のインストールに問題がある場合は、新しい GitHub Codespace を作成し、そこでコマンドを実行してください。
 
-#### カスタム Nerd-Font
+### 字形幅を窄くする
+
+ビルド時に `config.json` 中で `"width": "narrow"` を設定したり、CLI フラグで `--width slim` を追加したりで、字形幅を変更できます。
+
+3 つのオプションがあります：
+- default: 600
+- narrow: 550
+- slim: 500
+
+プレビュー：[#131](https://github.com/subframe7536/maple-font/issues/131#issuecomment-3678666194)
+
+### カスタム Nerd-Font
 
 固定幅のアイコンを取得したいだけの場合は、`config.json` に `"nerd_font.mono": true` を設定するか、ビルドスクリプト引数に `--nf-mono` フラグを追加してください。
 
@@ -569,7 +586,7 @@ python build.py
 - `"nerd_font.propo"` が `true` の場合は `--variable-width-glyphs` を追加
 - そうでなければ、`"nerd_font.mono"` が `true` の場合は `--mono` を追加
 
-#### プリセット
+### プリセット
 
 `build.py` を `--normal` フラグで実行し、フォントがあまり「意見的」ではなく、`JetBrains Mono` のように見えるようにします（斜線付きのゼロを含む）。
 
@@ -584,29 +601,29 @@ cv01, cv02, cv33, cv34, cv35, cv36, cv61, cv62, ss05, ss06, ss07, ss08
 
 [オンラインプレビュー](https://font.subf.dev/en/playground?normal)
 
-#### フォント機能のフリーズ
+### OpenType テクニカルの強制有効化
 
-フォント機能のフリーズには 3 つのオプションがあります（[なぜ](https://github.com/subframe7536/maple-font/issues/233#issuecomment-2410170270)）：
+以下の3つのオプションがあります（[理由はこちら](https://github.com/subframe7536/maple-font/issues/233#issuecomment-2410170270)）：
 
-1. `enable` : フォント機能設定で `cvXX` / `ssXX` / `zero` を設定せずに、デフォルトのグリフ/リガチャとして機能を強制的に有効にします。
-2. `disable` :  `cvXX` / `ssXX` / `zero` の機能を削除し、手動で有効にしても効果がありません。
-3. `ignore` : 何もしません。
+1. `enable`: 字体のテクニカル設定で `cvXX` / `ssXX` / `zero` を指定する必要なく、これらのテクニカルを強制的に有効化します。デフォルトの連結文字と同様の動作になります。
+2. `disable`: `cvXX` / `ssXX` / `zero` 内のテクニカルを削除します。たとえ手動で有効にしたとしても、実際には機能しません。
+3. `ignore`: 何も行いません。
 
-#### カスタマイズされた OpenType Feature
+#### カスタム OpenType テクニカル
 
-OpenType Feature は、フォントに組み込まれたバリエーションやリガチャを制御できます。不要なリガチャや機能を削除したり、機能のトリガー条件を変更したり、新しいルールを追加するために OpenType Feature を編集することが可能です。
+OpenType テクニカルを使用すると、フォントの内蔵されたバリエーションや連結文字を制御できます。OpenType テクニカルを変更することで、不要な連結文字や特徴を削除したり、特徴のトリガールールを変更したり、新しいルールを追加したりできます。
 
-デフォルトでは、[`source/py/feature/`](./source/py/feature) 内の Python モジュールが OpenType Feature 文字列を生成し、ビルド時にロードします。ここで機能を変更したりカスタムタグを設定することができます。
+デフォルトでは、`[source/py/feature/`](./source/py/feature) 内のPythonモジュールがOpenTypeテクニカルの文字列を生成し、ビルド時に読み込まれます。ここで機能を変更したり、カスタムのラベルを定義することができます。
 
-OpenType Feature ファイルを直接編集して実現したい場合、`build.py`  を実行する際に `--apply-fea-file` 引数を追加すると、[`source/features/{regular,italic}{_cn,}.fea`](./source/features) の特性ファイルが読み込まれ、適用されます。
+OpenTypeテクニカルファイルを直接変更して実装したい場合は、`build.py` を実行する際に `--apply-fea-file` パラメータを指定してください。これにより、`[source/features/{regular,italic}{_cn,}.fea`](./source/features) 内のテクニカルファイルが読み込まれます。
 
-#### 無限矢印リガチャ
+### 無限矢印リガチャ
 
 Fira Codeに着想を得て、このフォントはv7.3からデフォルトで無限の矢印リガチャを有効にします。何らかの理由で、hintedフォントを使用するとリガチャがずれてしまうため、v7.4のhintedバージョンではデフォルトでそれを削除しました。
 
 `config.json` に `"infinite_arrow": true` を設定するか、CLI フラグに `--infinite-arrow` を追加してください。詳細は [#508](https://github.com/subframe7536/maple-font/issues/508) を参照してください
 
-#### カスタムフォントウェイトマッピング
+### カスタムフォントウェイトマッピング
 
 `config.json` の `"weight_mapping"` 項目を通じて、静的なフォントのウェイトを変更できます。
 
@@ -639,6 +656,8 @@ CN バージョンはデフォルトで無効になっています。`python bui
 
 効果については、[#249](https://github.com/subframe7536/maple-font/issues/249#issuecomment-2871260476) をご参照ください。
 
+ラテン文字の幅も変更したい場合は、[`--width` オプション](#字形幅を窄くする)を使用してください
+
 #### 繁体中文の句読点サポート
 
 `cv99` を開くことで、すべての中国語の句読点が中央に配置されます。詳細は [#150](https://github.com/subframe7536/maple-font/issues/150) を参照してください
@@ -653,10 +672,10 @@ CN バージョンはデフォルトで無効になっています。`python bui
 usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--apply-fea-file]
                 [--hinted | --no-hinted] [--liga | --no-liga] [--keep-infinite-arrow]
                 [--infinite-arrow] [--remove-tag-liga] [--line-height LINE_HEIGHT]
-                [--nf-mono] [--nf-propo] [--cn-narrow]
-                [--cn-scale-factor CN_SCALE_FACTOR] [--nf | --no-nf] [--cn | --no-cn]
-                [--cn-both] [--ttf-only] [--least-styles] [--font-patcher] [--cache]
-                [--cn-rebuild] [--archive]
+                [--width {default,narrow,slim}] [--nf-mono] [--nf-propo]
+                [--cn-narrow] [--cn-scale-factor CN_SCALE_FACTOR] [--nf | --no-nf]
+                [--cn | --no-cn] [--cn-both] [--ttf-only] [--least-styles]
+                [--font-patcher] [--cache] [--cn-rebuild] [--archive]
 
 ✨ Builder and optimizer for Maple Mono
 
@@ -682,6 +701,8 @@ Feature Options:
   --remove-tag-liga     純テキストタグのリガチャ、例えば `[TODO]` を削除する。
   --line-height LINE_HEIGHT
                         行の高さのスケールファクター（例：1.1）
+  --width {default,narrow,slim}
+                        字形の幅を設定: default (600), narrow (550), slim (500)
   --nf-mono             Nerd Font アイコンの幅を固定します
   --nf-propo            Nerd Font アイコンの幅を可変にし、--nf-mono を上書きします
   --cn-narrow           中国語/日本語の文字間隔を縮小する（同時にシステムが等幅フォントと
@@ -731,7 +752,13 @@ Build Options:
 
 ## スター履歴
 
-[![Star History Chart](https://api.star-history.com/svg?repos=subframe7536/maple-font&type=Date)](https://www.star-history.com/#subframe7536/maple-font&Date)
+<a href="https://www.star-history.com/#subframe7536/maple-font&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=subframe7536/maple-font&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=subframe7536/maple-font&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=subframe7536/maple-font&type=date&legend=top-left" />
+ </picture>
+</a>
 
 ## ライセンス
 

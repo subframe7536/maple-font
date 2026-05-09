@@ -45,6 +45,8 @@ V7 是一个完全重制版本，提供了可变字体格式和字体工程源�
 
 CN 版本基于[资源圆体](https://github.com/CyanoHao/Resource-Han-Rounded)提供了完整的中文开发环境的字符集支持，包括简体中文、繁体中文和日文。同时，中英文 2:1 完美对齐的特性，使得本字体在多语言显示、Markdown 表格等场景可以做到整齐划一、美观舒适。但是中文的间距相比其他流行的中文字体更大，详情请参阅[发行版说明](https://github.com/subframe7536/maple-font/releases/tag/cn-base)和[这个议题](https://github.com/subframe7536/maple-font/issues/211)。
 
+- CN 版本暂时不支持可变字体格式
+
 ![2-1.png](./resources/2-1.png)
 
 ## 屏幕截图
@@ -520,11 +522,15 @@ fonts.packages = with pkgs; [
 
 还有一些 [命令行选项](#构建脚本用法) 用于自定义构建过程。命令行选项的优先级高于 `config.json` 中的选项。
 
-### 浏览器中构建
+### 构建方法
+
+#### 1. 浏览器中构建
 
 进入 [特性测试页面](https://font.subf.dev/zh-cn/playground)，点击左下角的“自定义构建”按钮
 
-### 使用 Github Actions
+- 目前只支持固定 OpenType 特性
+
+#### 2. 使用 Github Actions
 
 您可以使用 [Github Actions](https://github.com/subframe7536/maple-font/actions/workflows/custom.yml) 来构建字体。
 
@@ -536,7 +542,7 @@ fonts.packages = with pkgs; [
 6. 等待构建完成
 7. 从 Releases 下载字体压缩包
 
-### 使用 Docker
+#### 3. 使用 Docker
 
 ```shell
 git clone https://github.com/subframe7536/maple-font --depth 1 -b variable
@@ -544,7 +550,7 @@ docker build -t maple-font .
 docker run -v "$(pwd)/fonts:/app/fonts" -e BUILD_ARGS="--normal" maple-font
 ```
 
-### 本地构建
+#### 4. 本地构建
 
 克隆仓库并在您的本地机器上运行。确保您已安装 `python3` 和 `pip`
 
@@ -559,7 +565,18 @@ python build.py
 >
 > 如果您在安装依赖项时遇到问题，只需创建一个新的 GitHub Codespace 并在那里运行命令
 
-#### 自定义 Nerd-Font
+### 窄字符
+
+你可以在 config.json 中设置 `"width": "narrow"` 或者在命令行添加 `--width slim` 来在构建时修改字形宽度。中文字符部分也会等比例修改。
+
+有 3 个选项：
+- default: 600
+- narrow: 550
+- slim: 500
+
+预览：[#131](https://github.com/subframe7536/maple-font/issues/131#issuecomment-3678666194)
+
+### 自定义 Nerd-Font
 
 如果您想获得固定宽度的图标，请在 `config.json` 中设置 `"nerd_font.mono": true` 或在构建脚本参数中添加 `--nf-mono` 标志。
 
@@ -573,7 +590,7 @@ python build.py
 - 如果 `"nerd_font.propo"` 为 `true`，则添加 `--variable-width-glyphs`
 - 否则，如果 `"nerd_font.mono"` 为 `true`，则添加 `--mono`
 
-#### 预设
+### 预设
 
 如果您想要获得固定宽度的 Nerd Font 图标，只需要在 `config.json` 中设置 `"nerd_font.mono": true` 或者在构建脚本中添加 `--nf-mono` 参数即可。
 
@@ -590,7 +607,7 @@ cv01, cv02, cv33, cv34, cv35, cv36, cv61, cv62, ss05, ss06, ss07, ss08
 
 [在线预览](https://font.subf.dev/zh-cn/playground?normal)
 
-#### 字体特性强制开启
+### OpenType 特性强制开启
 
 有三种选项（[为什么](https://github.com/subframe7536/maple-font/issues/233#issuecomment-2410170270)）：
 
@@ -598,21 +615,21 @@ cv01, cv02, cv33, cv34, cv35, cv36, cv61, cv62, ss05, ss06, ss07, ss08
 2. `disable`: 删除 `cvXX` / `ssXX` / `zero` 中的特性，即使您手动启用它，也不在生效
 3. `ignore`: 什么也不做
 
-#### 自定义 OpenType Feature
+#### 自定义 OpenType 特性
 
-OpenType Feature 可以控制字体的内置变体和连字。您可以通过修改 OpenType Feature 来删除一些不需要的连字或特征，修改特征的触发规则或添加一些新规则。
+OpenType 特性可以控制字体的内置变体和连字。您可以通过修改 OpenType 特性来删除一些不需要的连字或特征，修改特征的触发规则或添加一些新规则。
 
-默认情况下，[`source/py/feature/`](./source/py/feature) 中的 Python 模块会生成 OpenType Feature 字符串并在构建时加载。您可以在此处修改功能或自定义标签。
+默认情况下，[`source/py/feature/`](./source/py/feature) 中的 Python 模块会生成 OpenType 特性字符串并在构建时加载。您可以在此处修改功能或自定义标签。
 
-如果你想通过修改 OpenType Feature 文件实现，运行 `build.py` 时添加 `--apply-fea-file` 参数，会读取 [`source/features/{regular,italic}{_cn,}.fea`](./source/features) 的特性文件并加载。
+如果你想通过修改 OpenType 特性文件实现，运行 `build.py` 时添加 `--apply-fea-file` 参数，会读取 [`source/features/{regular,italic}{_cn,}.fea`](./source/features) 的特性文件并加载。
 
-#### 无限箭头连字
+### 无限箭头连字
 
 受 Fira Code 的启发，从 v7.3 开始，该字体默认启用无限箭头连字。由于某种原因，在使用 Hinted 字体时连字会错位，因此在 v7.4 的 Hinted 版本中默认将其移除。
 
 您可以在 `config.json` 中设置 `"infinite_arrow": true`，或在命令行标志中添加 `--infinite-arrow`。详情见 [#508](https://github.com/subframe7536/maple-font/issues/508)
 
-#### 自定义字重映射
+### 自定义字重映射
 
 您可以通过 `config.json` 中的 `"weight_mapping"` 项修改静态字体粗细。
 
@@ -645,6 +662,8 @@ OpenType Feature 可以控制字体的内置变体和连字。您可以通过修
 
 您可以在 [#249](https://github.com/subframe7536/maple-font/issues/249#issuecomment-2871260476) 中查看效果。
 
+如果您也想改变拉丁字母的宽度，请使用 [`--width` 参数](#窄字符)
+
 #### GitHub 镜像
 
 构建脚本将自动从 GitHub 下载所需的资源。如果您在下载时遇到问题，请在 [config.json](./config.json) 中设置 `github_mirror` 或将 `$GITHUB` 设置为您的环境变量。（目标 URL 为 `https://<github_mirror>/<user>/<repo>/releases/download/<tag>/<file>`），或者直接下载目标 `.zip` 文件并将其放在与 `build.py` 相同的目录中。
@@ -659,10 +678,10 @@ OpenType Feature 可以控制字体的内置变体和连字。您可以通过修
 usage: build.py [-h] [-v] [-d] [--debug] [-n] [--feat FEAT] [--apply-fea-file]
                 [--hinted | --no-hinted] [--liga | --no-liga] [--keep-infinite-arrow]
                 [--infinite-arrow] [--remove-tag-liga] [--line-height LINE_HEIGHT]
-                [--nf-mono] [--nf-propo] [--cn-narrow]
-                [--cn-scale-factor CN_SCALE_FACTOR] [--nf | --no-nf] [--cn | --no-cn]
-                [--cn-both] [--ttf-only] [--least-styles] [--font-patcher] [--cache]
-                [--cn-rebuild] [--archive]
+                [--width {default,narrow,slim}] [--nf-mono] [--nf-propo]
+                [--cn-narrow] [--cn-scale-factor CN_SCALE_FACTOR] [--nf | --no-nf]
+                [--cn | --no-cn] [--cn-both] [--ttf-only] [--least-styles]
+                [--font-patcher] [--cache] [--cn-rebuild] [--archive]
 
 ✨ Builder and optimizer for Maple Mono
 
@@ -686,6 +705,8 @@ Feature Options:
   --remove-tag-liga     移除纯文本标签连字，例如 `[TODO]`
   --line-height LINE_HEIGHT
                         行高的缩放因子 (例如 1.1)
+  --width {default,narrow,slim}
+                        设置字形宽度: default (600), narrow (550), slim (500)
   --nf-mono             使 Nerd Font 图标的宽度固定
   --nf-propo            使 Nerd Font 图标的宽度不固定，覆盖 `--nf-mono`
   --cn-narrow           减小中文/日文字形间距（同时会让系统无法识别为等宽字体）
@@ -734,7 +755,13 @@ Build Options:
 
 ## 点星
 
-[![Star History Chart](https://api.star-history.com/svg?repos=subframe7536/maple-font&type=Date)](https://www.star-history.com/#subframe7536/maple-font&Date)
+<a href="https://www.star-history.com/#subframe7536/maple-font&type=date&legend=top-left">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=subframe7536/maple-font&type=date&theme=dark&legend=top-left" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=subframe7536/maple-font&type=date&legend=top-left" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=subframe7536/maple-font&type=date&legend=top-left" />
+ </picture>
+</a>
 
 ## 许可
 

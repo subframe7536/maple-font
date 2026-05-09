@@ -1,0 +1,121 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "family_name": {
+      "type": "string",
+      "description": "The family name of the resulting font family"
+    },
+    "output_dir": {
+      "type": "string",
+      "description": "The output directory for generated fonts"
+    },
+    "line_height": {
+      "description": "Line height configuration - scale factor, custom metrics, or object with ascender/descender",
+      "oneOf": [
+        {
+          "type": "number",
+          "description": "Scaling factor to apply to existing line height"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "integer"
+          },
+          "minItems": 2,
+          "maxItems": 2,
+          "description": "Custom [ascender, descender] values in font units"
+        },
+        {
+          "type": "object",
+          "description": "Detailed metrics with optional safe values",
+          "properties": {
+            "top": {
+              "type": "number",
+              "description": "Typo ascender value in font units"
+            },
+            "bottom": {
+              "type": "number",
+              "description": "Typo descender value in font units (negative)"
+            },
+            "safe_top": {
+              "type": "number",
+              "description": "Win ascender value in font units (optional, defaults to ascender)"
+            },
+            "safe_bottom": {
+              "type": "number",
+              "description": "Win descender value in font units (optional, defaults to -descender)"
+            }
+          },
+          "required": [
+            "top",
+            "bottom"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "instances": {
+      "type": "object",
+      "description": "Font style configurations with multiple font sources",
+      "patternProperties": {
+        "^[a-zA-Z0-9_-]+$": {
+          "type": "array",
+          "description": "Font sources for this style - first is base, others are overrides",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string",
+                "description": "Path to base font file"
+              },
+              {
+                "type": "object",
+                "description": "Override font configuration",
+                "properties": {
+                  "enable": {
+                    "type": "boolean",
+                    "description": "Enable this override font (default: true)"
+                  },
+                  "path": {
+                    "type": "string",
+                    "description": "Path to override font file"
+                  },
+                  "unicode_range": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[Uu]\\+[0-9a-fA-F]{4,6}(-[0-9a-fA-F]{4,6})?$"
+                    },
+                    "description": "Unicode ranges to include from this override (e.g., [\"U+0030-0039\"])"
+                  },
+                  "width_scale": {
+                    "type": "number",
+                    "description": "Scale factor for glyph widths (e.g., 1.06 to make 6% wider)",
+                    "minimum": 0.1
+                  },
+                  "axes": {
+                    "type": "object",
+                    "description": "Variable font axis values for instantiation",
+                    "patternProperties": {
+                      "^[a-zA-Z]{4}$": {
+                        "type": "number"
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "path"
+                ]
+              }
+            ]
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "family_name",
+    "output_dir",
+    "instances"
+  ]
+}

@@ -5,7 +5,7 @@ from source.py.feature.base.number import get_number_feature_list
 from source.py.feature.base.locl import get_locl_feature_list
 
 
-def get_base_features(calt: ast.Feature | None, is_cn: bool):
+def get_base_features(calt: ast.Feature, is_cn: bool):
     aalt_feat_list = (
         get_locl_feature_list(cn=is_cn)
         + [get_case_feature()]

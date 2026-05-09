@@ -38,9 +38,8 @@ def main():
         "--woff2", action="store_true", help="Generate new woff2 fonts"
     )
     page_parser.add_argument(
-        "--commit", action="store_true", help="Commit changes to page"
+        "--sync", action="store_true", help="Sync latest page data and commit"
     )
-    page_parser.add_argument("--sync", action="store_true", help="Sync page data")
 
     cn = command.add_parser("cn", help="Rebuild CN static font")
     cn.add_argument(
@@ -56,6 +55,8 @@ def main():
         action="store_true",
         help="Write changelog to release note file (auto write in CI)",
     )
+
+    command.add_parser("merge", help="Merge and instantiate fonts")
 
     args = parser.parse_args()
     if args.command == "nf":
@@ -75,9 +76,7 @@ def main():
     elif args.command == "page":
         from source.py.task.page import page
 
-        page(
-            "./maple-font-page", "./fonts/Variable", args.woff2, args.commit, args.sync
-        )
+        page("./maple-font-page", "./fonts/Variable", args.woff2, args.sync)
     elif args.command == "cn":
         from source.py.task.cn import cn
 
@@ -86,6 +85,10 @@ def main():
         from source.py.task.publish import publish
 
         publish(args.write)
+    elif args.command == "merge":
+        from source.py.task.merge_font import main
+
+        main()
     else:
         print("Test only")
         from source.py.in_browser import main

@@ -2106,6 +2106,24 @@ feature cv65 {
 
 } cv65;
 
+feature cv66 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV66: Alternative pipe arrows";
+    };
+  };
+
+  sub bar_bar_greater.liga by bar_bar_greater.liga.cv66;
+  sub less_bar_bar.liga by less_bar_bar.liga.cv66;
+  sub less_bar.liga by less_bar.liga.cv66;
+  sub bar_greater.liga by bar_greater.liga.cv66;
+  sub less_bar_greater.liga by less_bar_greater.liga.cv66;
+  sub bar_bar_bar_greater.liga by bar_bar_bar_greater.liga.cv66;
+  sub less_bar_bar_bar.liga by less_bar_bar_bar.liga.cv66;
+
+} cv66;
+
 feature cv96 {
 
   cvParameters {

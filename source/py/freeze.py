@@ -1,6 +1,5 @@
 from source.py.in_browser import (
     freeze_feature as freeze,
-    MOVING_RULES as default_moving_rules,
     get_freeze_config_str as config_str,
 )
 from fontTools.ttLib import TTFont
@@ -18,7 +17,7 @@ def is_ignore(v):
     return v.upper().startswith("IGNORE")
 
 
-def parse_config(config: dict, calt: bool):
+def patch_config(config: dict, calt: bool):
     result = {}
     invalid_items = []
     for k, v in config.items():
@@ -41,10 +40,8 @@ def parse_config(config: dict, calt: bool):
 
 
 def get_freeze_config_str(config: dict, calt: bool) -> str:
-    return config_str(parse_config(config, calt))
+    return config_str(patch_config(config, calt))
 
 
 def freeze_feature(font: TTFont, calt: bool, moving_rules: list[str], config: dict):
-    return freeze(
-        font, moving_rules or default_moving_rules, parse_config(config, calt)
-    )
+    return freeze(font, moving_rules, patch_config(config, calt))

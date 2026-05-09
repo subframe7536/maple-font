@@ -19,6 +19,7 @@ def get_calt_lookup(
     is_italic: bool,
     normal: bool = False,
     enable_tag: bool = True,
+    remove_italic_calt: bool = False,
 ) -> list[list[ast.Lookup]]:
     lookup = [
         whitespace.get_lookup(cls_var),
@@ -32,9 +33,9 @@ def get_calt_lookup(
     ]
 
     if enable_tag:
-        lookup.append(tag.get_lookup(cls_var))
+        lookup += [tag.get_lookup(cls_var)]
 
-    if is_italic and not normal:
+    if is_italic and not normal and not remove_italic_calt:
         lookup += [italic.get_lookup()]
 
     return lookup
@@ -46,11 +47,17 @@ def get_calt(
     is_italic: bool,
     is_normal: bool = False,
     enable_tag: bool = True,
+    remove_italic_calt: bool = False,
 ) -> ast.Feature:
     return ast.Feature(
         "calt",
         get_calt_lookup(
-            cls_var, cls_hex_letter, is_italic, is_normal, enable_tag=enable_tag
+            cls_var,
+            cls_hex_letter,
+            is_italic,
+            is_normal,
+            enable_tag,
+            remove_italic_calt,
         ),
         "7.0",
     )

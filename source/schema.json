@@ -94,7 +94,7 @@
     },
     "ligature": {
       "type": "boolean",
-      "description": "Alias of \"enable_ligature\"",
+      "description": "(Deprecated) Use \"enable_ligature\" instead",
       "default": true
     },
     "enable_ligature": {
@@ -107,12 +107,12 @@
         "boolean",
         "null"
       ],
-      "description": "Enable infinite arrow ligatures (Disabled in hinted font by default)",
+      "description": "Enable infinite arrow ligatures\n- null: disabled in hinted font, enabled in unhinted font\n- true: enabled\n- false: disabled",
       "default": null
     },
     "keep_infinite_arrow": {
       "type": "boolean",
-      "description": "(Deprecated) Use infinite_arrow instead",
+      "description": "(Deprecated) Use \"infinite_arrow\" instead",
       "default": false
     },
     "remove_tag_liga": {
@@ -124,6 +124,16 @@
       "type": "number",
       "description": "Scale factor for line height. (e.g. 1.1)",
       "default": 1.0
+    },
+    "width": {
+      "type": "string",
+      "enum": [
+        "default",
+        "narrow",
+        "slim"
+      ],
+      "description": "Set glyph width: default (600), narrow (550), slim (500)",
+      "default": "default"
     },
     "ttfautohint_param": {
       "type": "object",
@@ -292,6 +302,10 @@
         },
         "cv65": {
           "description": "[v7.3] Alternative '&' in handwriting style",
+          "$ref": "#/definitions/freeze_options"
+        },
+        "cv66": {
+          "description": "[v7.8] Alternative pipe arrows",
           "$ref": "#/definitions/freeze_options"
         },
         "cv96": {

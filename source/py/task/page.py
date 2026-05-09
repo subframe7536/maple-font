@@ -32,39 +32,24 @@ def page(
     submodule_path: str,
     var_dir: str,
     woff2: bool = False,
-    commit: bool = False,
     sync: bool = False,
 ) -> None:
     # Switch to main branch
     abs_submodule_path = os.path.abspath(submodule_path)
 
-    if sync or commit:
-        if not os.path.exists(abs_submodule_path):
-            print(
-                f"Error: Submodule {submodule_path} does not exist, please run `git submodule update --init` first"
-            )
-            sys.exit(1)
-        print("Sync remote")
+    if not os.path.exists(abs_submodule_path):
+        print(
+            f"Error: Submodule {submodule_path} does not exist, please run `git submodule update --init` first"
+        )
+        sys.exit(1)
+
+    if sync:
         run_git_command(["git", "submodule", "update", "--remote"])
-        if commit:
-            print("Checkout main")
-            run_git_command(["git", "checkout", "main"], cwd=abs_submodule_path)
+        print("Checkout main")
+        run_git_command(["git", "checkout", "main"], cwd=abs_submodule_path)
 
-            print("Pull commits")
-            run_git_command(["git", "pull"], cwd=abs_submodule_path)
-        elif sync:
-            # Add all changes
-            run_git_command(["git", "add", "."])
-
-            # Commit changes
-            print("Commit sync")
-            run_git_command(["git", "commit", "-m", "sync landing page"])
-
-            # Push to remote
-            print("Push to remote")
-            run_git_command(["git", "push", "origin"])
-
-            return
+        run_git_command(["git", "pull"], cwd=abs_submodule_path)
+        print("Sync remote")
 
     # Update landing page data
     print("Update features")
@@ -109,20 +94,30 @@ def page(
                 )
 
     # Commit changes if specified
-    if commit:
+    if sync:
         # Add all changes
         run_git_command(["git", "add", "."], cwd=abs_submodule_path)
 
         # Commit changes
-        print("Commit update")
+        print("Commit submodule")
         run_git_command(
             ["git", "commit", "-m", "Update landing page data"], cwd=abs_submodule_path
         )
 
-        # Push to remote
-        print("Push to remote")
+        # Push submodule to remote
+        print("Update remote submodule")
         run_git_command(["git", "push", "origin", "main"], cwd=abs_submodule_path)
 
         # Reset to HEAD
-        print("Update")
         run_git_command(["git", "submodule", "update", "--remote"])
+
+        # Add all changes
+        run_git_command(["git", "add", "."])
+
+        # Commit changes
+        print("Commit main")
+        run_git_command(["git", "commit", "-m", "sync landing page"])
+
+        # Push main to remote
+        print("Update remote main")
+        run_git_command(["git", "push", "origin"])
