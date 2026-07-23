@@ -891,6 +891,7 @@ def build_cjk_extended_variable_fonts(
                     merged_font, extra_path
                 )
                 recalculate_font_metrics(merged_font)
+                merged_font.table("OS/2").xAvgCharWidth = font_config.get_target_width()
                 drop_font_tables(merged_font, ("HVAR", "VVAR"))
 
                 locale_suffix = output_locale or entry.locale_name

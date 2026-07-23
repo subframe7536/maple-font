@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from typing import Protocol
 
+from scripts.font_ops.constant import INSTANCE_WEIGHT_MAPPING
 from scripts.font_ops.fonttools import TTFont
 from scripts.utils.logging import logger
 
@@ -75,6 +76,8 @@ def update_font_names(
     narrow: bool = False,
     variable: bool = False,
 ):
+    if variable:
+        ensure_variable_instance_names(font)
     font["name"].removeNames(platformID=1)
     if len(family_name) > 31:
         logger.warning(
@@ -107,3 +110,54 @@ def update_font_names(
     if not is_skip_subfamily and preferred_family_name and preferred_style_name:
         set_font_name(font, preferred_family_name, 16)
         set_font_name(font, preferred_style_name, 17)
+
+
+def ensure_variable_instance_names(font: TTFont) -> None:
+    """Give each fvar instance a stable, non-reserved style name record."""
+    if "fvar" not in font or "name" not in font:
+        return
+
+    name_table = font["name"]
+    weight_names = {
+        value: name.title().replace("Semibold", "SemiBold")
+        for name, value in INSTANCE_WEIGHT_MAPPING.items()
+    }
+    used_name_ids = {record.nameID for record in name_table.names}
+    next_name_id = max(used_name_ids, default=255) + 1
+    assigned: dict[str, int] = {}
+
+    for instance in font["fvar"].instances:
+        weight = int(round(float(instance.coordinates.get("wght", 400))))
+        fallback_name = weight_names.get(weight, str(weight))
+        current_name = name_table.getDebugName(instance.subfamilyNameID)
+        name = (
+            current_name
+            if current_name and current_name != "Regular"
+            else fallback_name
+        )
+
+        name_id = assigned.get(name)
+        if name_id is None:
+            name_id = _find_variable_instance_name_id(name_table, name)
+        if name_id is None or name_id in {1, 2, 3, 4, 5, 6, 16, 17, 25}:
+            while next_name_id in used_name_ids:
+                next_name_id += 1
+            name_id = next_name_id
+            used_name_ids.add(name_id)
+            next_name_id += 1
+            set_font_name(font, name, name_id)
+        assigned[name] = name_id
+        instance.subfamilyNameID = name_id
+        instance.postscriptNameID = 0xFFFF
+
+
+def _find_variable_instance_name_id(name_table, value: str) -> int | None:
+    for record in name_table.names:
+        if record.nameID in {1, 2, 3, 4, 5, 6, 16, 17, 25}:
+            continue
+        try:
+            if record.toUnicode() == value:
+                return int(record.nameID)
+        except UnicodeDecodeError:
+            continue
+    return None

@@ -44,12 +44,7 @@ def merge_ttfonts(
         base_font["maxp"].numGlyphs = len(updated_glyph_order)
 
         if "cmap" in extra_font and "cmap" in base_font:
-            base_cmap = base_font["cmap"].getBestCmap()
-            extra_cmap = extra_font["cmap"].getBestCmap()
-            if base_cmap and extra_cmap:
-                for codepoint, glyph_name in extra_cmap.items():
-                    if glyph_name in glyphs_to_add and codepoint not in base_cmap:
-                        base_cmap[codepoint] = glyph_name
+            _merge_cmap(base_font, extra_font, set(glyphs_to_add))
 
         if "hhea" in base_font:
             if base_hmtx:
@@ -58,3 +53,35 @@ def merge_ttfonts(
         return base_font
     except Exception:
         raise
+
+
+def _merge_cmap(base_font: TTFont, extra_font: TTFont, glyphs_to_add: set[str]) -> None:
+    base_codepoints = set(base_font["cmap"].getBestCmap() or {})
+    extra_cmap = extra_font["cmap"].getBestCmap() or {}
+    entries = {
+        codepoint: glyph_name
+        for codepoint, glyph_name in extra_cmap.items()
+        if glyph_name in glyphs_to_add and codepoint not in base_codepoints
+    }
+    if not entries:
+        return
+
+    for table in base_font["cmap"].tables:
+        if table.isUnicode():
+            table.cmap.update(
+                {
+                    codepoint: glyph_name
+                    for codepoint, glyph_name in entries.items()
+                    if _cmap_supports_codepoint(table.format, codepoint)
+                }
+            )
+
+
+def _cmap_supports_codepoint(table_format: int, codepoint: int) -> bool:
+    if table_format == 0:
+        return codepoint <= 0xFF
+    if table_format in (2, 4, 6):
+        return codepoint <= 0xFFFF
+    if table_format in (10, 12, 13):
+        return codepoint <= 0x10FFFF
+    return codepoint <= 0xFFFF
