@@ -408,6 +408,8 @@ class FontConfig:
             "scale_factor": (1.0, 1.0),
             # CN static base font archive to download
             "base_zip_path": "cn-base-static.zip",
+            # Hash used to validate the extracted CN static base fonts
+            "base_hash_path": "source/cn/static.sha256",
         }
         self.glyph_width = 600
         self.glyph_width_cn_narrow = 1000
@@ -539,6 +541,7 @@ class FontConfig:
 
         if args.cn_wenyuan:
             self.cn["base_zip_path"] = "cn-base-static-wenyuan.zip"
+            self.cn["base_hash_path"] = "source/cn/static-wenyuan.sha256"
 
     def _apply_build_options(self, args):
         """Apply general build options."""
@@ -806,14 +809,17 @@ class BuildOption:
         return self.__ensure_cn_static_fonts(
             clean_cache=config.cn["clean_cache"],
             zip_path=config.cn["base_zip_path"],
+            hash_path=config.cn["base_hash_path"],
         )
 
-    def __ensure_cn_static_fonts(self, clean_cache: bool, zip_path: str) -> bool:
+    def __ensure_cn_static_fonts(
+        self, clean_cache: bool, zip_path: str, hash_path: str
+    ) -> bool:
         if clean_cache:
             print("Clean CN static fonts")
             shutil.rmtree(self.cn_static_dir, ignore_errors=True)
 
-        if self.__check_cn_exists():
+        if self.__check_cn_exists(hash_path):
             return True
 
         tag = "cn-base"
@@ -823,7 +829,7 @@ class BuildOption:
             target_dir=self.cn_static_dir,
             github_mirror=self.github_mirror,
         ):
-            if self.__check_cn_exists():
+            if self.__check_cn_exists(hash_path):
                 return True
 
             print(
@@ -862,7 +868,7 @@ class BuildOption:
         print("\nCN base fonts don't exist. Skip CN build.")
         return False
 
-    def __check_cn_exists(self) -> bool:
+    def __check_cn_exists(self, hash_path: str) -> bool:
         static_path = self.cn_static_dir
         print(f"\nChecking CN static font directory {static_path}")
         if not path.exists(static_path):
@@ -872,7 +878,7 @@ class BuildOption:
             print("🔎 Exists but not enough font files")
             return False
 
-        if check_directory_hash(static_path):
+        if check_directory_hash(static_path, hash_path):
             print("✅ Hash verified")
             return True
         print("❌ Hash mismatch, removing directory")

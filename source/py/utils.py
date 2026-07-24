@@ -280,11 +280,11 @@ def get_directory_hash(dir_path: str) -> str:
     return hasher.hexdigest()
 
 
-def check_directory_hash(dir_path: str) -> bool:
+def check_directory_hash(dir_path: str, hash_path: str | None = None) -> bool:
     if not path.exists(dir_path):
         print(f"{dir_path} not exist, skip computing hash")
         return False
-    with open(f"{dir_path}.sha256", "r") as f:
+    with open(hash_path or f"{dir_path}.sha256", "r") as f:
         return f.readline() == get_directory_hash(dir_path)
 
 

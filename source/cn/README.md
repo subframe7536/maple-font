@@ -12,7 +12,8 @@ cn
 ├── static                                          # Generated static CN base fonts
 │   ├── MapleMonoCN-Bold.ttf
 │   └── ...
-└── static.sha256                                   # Hash of static fonts
+├── static.sha256                                   # Hash of static fonts
+└── static-wenyuan.sha256                           # Hash of Wenyuan static fonts
 ```
 
 ### Development
