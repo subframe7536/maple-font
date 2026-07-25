@@ -881,7 +881,7 @@ class BuildOption:
         if check_directory_hash(static_path, hash_path):
             print("✅ Hash verified")
             return True
-        print("❌ Hash mismatch, removing directory")
+        print(f"❌ Hash {hash_path} mismatch, removing directory")
         shutil.rmtree(static_path)
         return False
 
