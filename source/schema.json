@@ -477,7 +477,7 @@
         "version": {
           "type": "string",
           "description": "Target version of Nerd-Font. If font-patcher not exists when need to use it or there is no prebuild font for current version, will download from Github",
-          "default": "3.2.1"
+          "default": "3.5.0"
         },
         "mono": {
           "type": "boolean",
