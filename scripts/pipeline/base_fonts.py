@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING
 from ttfautohint import ttfautohint
 
 from scripts.cjk.builder import get_ttfautohint_options
+from scripts.external.process import run_process_jobs
 from scripts.feature.apply import apply_binary_features
 from scripts.font_ops.conversion import convert_to_web
 from scripts.font_ops.fonttools import load_font
@@ -19,7 +20,6 @@ from scripts.utils.logging import (
     logger,
     set_log_task,
 )
-from scripts.utils.process import run_process_jobs
 
 if TYPE_CHECKING:
     from concurrent.futures import Executor

@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-import argparse
-import sys
 import threading
 from dataclasses import dataclass
 from io import BytesIO
@@ -16,16 +14,6 @@ from fontTools.pens.transformPen import TransformPen
 from fontTools.subset import Options
 from fontTools.ttLib.scaleUpem import scale_upem
 from ttfautohint import StemWidthMode, ttfautohint
-
-from scripts.font_ops.fonttools import (
-    TTFont,
-    instantiate_variable_font,
-    load_font,
-    save_font_atomic,
-)
-
-if __package__ in {None, ""}:
-    sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from scripts.cjk.cache import write_static_hash
 from scripts.cjk.config import (
@@ -43,7 +31,6 @@ from scripts.cjk.outlines import (
     install_existing_glyf_tables,
 )
 from scripts.cjk.resolver import (
-    add_cjk_arguments,
     apply_cli_overrides,
     apply_unicode_override,
     config_from_cli,
@@ -62,22 +49,27 @@ from scripts.cjk.variable import (
     update_italic_metadata,
     weight_axis,
 )
-from scripts.font_ops.fonttools import (
-    SubsetOptions,
-)
-from scripts.font_ops.names import FontNameConfig, set_font_name, update_font_names
-from scripts.font_ops.subset import subset_to_codepoints
-from scripts.utils.downloads import resolve_cached_download
-from scripts.utils.errors import CJKSourceUnavailable
-from scripts.utils.files import archive
-from scripts.utils.logging import logger, set_log_task
-from scripts.utils.process import (
+from scripts.errors import CJKSourceUnavailable
+from scripts.external.process import (
     SynchronousExecutor,
     create_process_executor,
     run_process_jobs,
 )
+from scripts.font_ops.fonttools import (
+    SubsetOptions,
+    TTFont,
+    instantiate_variable_font,
+    load_font,
+    save_font_atomic,
+)
+from scripts.font_ops.names import FontNameConfig, set_font_name, update_font_names
+from scripts.font_ops.subset import subset_to_codepoints
+from scripts.utils.downloads import resolve_cached_download
+from scripts.utils.files import archive
+from scripts.utils.logging import logger, set_log_task
 
 if TYPE_CHECKING:
+    import argparse
     from collections.abc import Collection, Iterable
     from concurrent.futures import Executor
 
@@ -1420,14 +1412,3 @@ def build_cjk_from_args(
         args.vf_only,
         github_mirror=github_mirror,
     )
-
-
-def main() -> None:
-    parser = argparse.ArgumentParser(description="Build Maple Mono CJK fonts")
-    add_cjk_arguments(parser)
-    args = parser.parse_args()
-    build_cjk_from_args(args)
-
-
-if __name__ == "__main__":
-    main()

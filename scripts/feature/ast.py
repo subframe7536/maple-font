@@ -248,17 +248,17 @@ __PUNCTUATION_CN_MAP = {
 def __gly(g: str | Clazz | Sequence[str | Clazz] | None) -> str:
     if not g:
         return ""
-    if isinstance(g, list):
-        return " ".join([__gly(_) for _ in g])
     if isinstance(g, Clazz):
         return g.use()
-    if not isinstance(g, str):
-        raise TypeError(f"{g}({type(g)}) is invalid for __gly")
-    if g in __PUNCTUATION_MAP:
-        return __PUNCTUATION_MAP[g]
-    if g in __PUNCTUATION_CN_MAP:
-        return __PUNCTUATION_CN_MAP[g]
-    return g
+    if isinstance(g, str):
+        if g in __PUNCTUATION_MAP:
+            return __PUNCTUATION_MAP[g]
+        if g in __PUNCTUATION_CN_MAP:
+            return __PUNCTUATION_CN_MAP[g]
+        return g
+    if isinstance(g, Sequence):
+        return " ".join(__gly(item) for item in g)
+    raise TypeError(f"{g}({type(g)}) is invalid for __gly")
 
 
 def __prefix(data: str | Clazz | Sequence[str | Clazz] | None) -> str:

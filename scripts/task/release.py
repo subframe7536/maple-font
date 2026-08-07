@@ -8,12 +8,12 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, Literal
 
+from scripts.external.process import run as run_command
 from scripts.font_ops.constant import INSTANCE_WEIGHT_MAPPING
 from scripts.font_ops.conversion import convert_to_web
 from scripts.pipeline import main as build_main
 from scripts.utils.files import join_path
 from scripts.utils.logging import logger
-from scripts.utils.process import run as run_command
 from scripts.utils.version import (
     font_version_for_core,
     parse_font_version,
@@ -224,13 +224,13 @@ def select_release_bump(
 
 
 def git_release_commit(tag, files):
-    run_command(f"git add {' '.join(files)}")
+    run_command(["git", "add", *files])
     run_command(["git", "commit", "-m", f"Release {tag}"])
-    run_command(f"git tag {tag}")
+    run_command(["git", "tag", tag])
     logger.info("Committed release and created tag")
 
-    run_command("git push origin")
-    run_command(f"git push origin {tag}")
+    run_command(["git", "push", "origin"])
+    run_command(["git", "push", "origin", tag])
     logger.info("Pushed release to origin")
 
 

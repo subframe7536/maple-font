@@ -1,11 +1,12 @@
 from __future__ import annotations
 
-import hashlib
 import json
 from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
+from scripts.cache.digest import digest_paths
+from scripts.cache.fingerprint import Fingerprint
 from scripts.utils.logging import logger
 
 CACHE_SCHEMA = 3
@@ -17,8 +18,7 @@ def cache_record_path(output_root: str | Path) -> Path:
 
 
 def _digest(value: Any) -> str:
-    payload = json.dumps(value, sort_keys=True, separators=(",", ":")).encode()
-    return hashlib.sha256(payload).hexdigest()
+    return Fingerprint().add_json("value", value).digest()
 
 
 def stage_identity(
@@ -27,13 +27,12 @@ def stage_identity(
     dependencies: dict[str, str] | None = None,
 ) -> str:
     """Return a stable key for one stage and its upstream keys."""
-    return _digest(
-        {
-            "stage": stage,
-            "inputs": build_identity,
-            "dependencies": dependencies or {},
-        }
+    fingerprint = (
+        Fingerprint().add_value("stage", stage).add_json("inputs", build_identity)
     )
+    for name, identity in sorted((dependencies or {}).items()):
+        fingerprint = fingerprint.add_upstream(name, identity)
+    return fingerprint.digest()
 
 
 def relative_cache_path(root: Path, path: Path) -> str:
@@ -42,18 +41,7 @@ def relative_cache_path(root: Path, path: Path) -> str:
 
 def stage_digest(root: Path, paths: list[Path]) -> str:
     """Hash one stage, including relative names and file contents."""
-    hasher = hashlib.sha256()
-    for path in sorted(paths):
-        if not path.is_file():
-            continue
-        relative = relative_cache_path(root, path).encode("utf-8")
-        hasher.update(len(relative).to_bytes(4, "big"))
-        hasher.update(relative)
-        hasher.update(path.stat().st_size.to_bytes(8, "big"))
-        with path.open("rb") as source:
-            while chunk := source.read(1024 * 1024):
-                hasher.update(chunk)
-    return hasher.hexdigest()
+    return digest_paths(root, tuple(path for path in paths if path.is_file()))
 
 
 def output_snapshot(

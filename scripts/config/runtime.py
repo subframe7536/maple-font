@@ -15,11 +15,11 @@ from scripts.config.base import (
     ResolvedCJKBuildEntry,
     ResolvedConfig,
 )
+from scripts.errors import CJKBaseUnavailable
+from scripts.external.process import get_font_forge_bin
 from scripts.utils.downloads import download_zip_and_extract
-from scripts.utils.errors import CJKBaseUnavailable
 from scripts.utils.files import join_path
 from scripts.utils.logging import logger
-from scripts.utils.process import get_font_forge_bin
 
 if TYPE_CHECKING:
     from collections.abc import Callable

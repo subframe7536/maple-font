@@ -26,13 +26,13 @@ from scripts.config.base import CJKCommonBuildOptions, ResolvedCJKBuildEntry
 from scripts.config.cli import parse_args
 from scripts.config.resolver import BuildConfigResolver
 from scripts.config.runtime import BuildRuntimeContext
+from scripts.errors import BuildDependencyError
+from scripts.external.process import SynchronousExecutor
 from scripts.pipeline.nerd_fonts import (
     ensure_font_patcher_available,
     should_use_font_patcher,
 )
-from scripts.utils.errors import BuildDependencyError
 from scripts.utils.files import get_directory_hash
-from scripts.utils.process import SynchronousExecutor
 
 if TYPE_CHECKING:
     from concurrent.futures import Executor

@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING
 
 from python_minifier import minify
 
+from scripts.external.process import run as run_command
 from scripts.feature.compiler import (
     get_cv_cn_version_info,
     get_cv_italic_version_info,
@@ -24,7 +25,6 @@ from scripts.utils.files import (
     write_text,
 )
 from scripts.utils.logging import logger
-from scripts.utils.process import run as run_command
 
 if TYPE_CHECKING:
     import argparse
@@ -104,7 +104,9 @@ def update_page(
     if woff2:
         logger.info("Update landing-page WOFF2 fonts")
         font_dir = join_path(submodule_path, "public", "fonts")
-        run_command("python build.py --ttf-only --no-nerd-font --least-styles")
+        run_command(
+            ["python", "build.py", "--ttf-only", "--no-nerd-font", "--least-styles"]
+        )
         convert_to_web(var_dir, flavor="woff2")
         shutil.rmtree(font_dir, ignore_errors=True)
         os.makedirs(font_dir, exist_ok=True)

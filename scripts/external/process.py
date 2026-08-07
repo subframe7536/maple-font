@@ -15,10 +15,11 @@ from concurrent.futures.process import BrokenProcessPool
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, TypeVar
 
+from scripts.errors import ExternalToolError
 from scripts.utils.logging import configure_logging, logger
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Iterable
+    from collections.abc import Callable, Iterable, Sequence
 
 CI_ENVIRONMENTS = (
     "JENKINS_HOME",
@@ -68,22 +69,32 @@ def is_ci() -> bool:
 
 
 def run(
-    command: str | list[str],
-    extra_args: list[str] | None = None,
+    command: Sequence[str],
+    extra_args: Sequence[str] | None = None,
     log: bool | None = None,
     cwd: str | Path | None = None,
 ) -> subprocess.CompletedProcess[str]:
-    args = command.split() if isinstance(command, str) else list(command)
+    if isinstance(command, str):
+        raise TypeError("command must be an argv sequence, not a shell-like string")
+    args = list(command)
     args.extend(extra_args or ())
     should_log = not is_ci() if log is None else log
-    return subprocess.run(
-        args,
-        cwd=cwd,
-        stdout=None if should_log else subprocess.DEVNULL,
-        stderr=None if should_log else subprocess.DEVNULL,
-        check=True,
-        text=True,
-    )
+    try:
+        return subprocess.run(
+            args,
+            cwd=cwd,
+            stdout=None if should_log else subprocess.PIPE,
+            stderr=None if should_log else subprocess.PIPE,
+            check=True,
+            text=True,
+        )
+    except subprocess.CalledProcessError as error:
+        failure = ExternalToolError(
+            tuple(args), error.returncode, error.stdout or "", error.stderr or ""
+        )
+        if not should_log:
+            logger.error("%s", failure)
+        raise failure from error
 
 
 def create_process_executor(

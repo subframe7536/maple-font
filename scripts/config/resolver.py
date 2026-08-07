@@ -283,21 +283,25 @@ class BuildConfigResolver:
             selection.set_builtin_enabled(locale, enabled)
 
         raw_custom = raw_locales.get("custom", [])
-        if isinstance(raw_custom, list):
-            for index, raw_entry in enumerate(raw_custom):
-                if not isinstance(raw_entry, dict):
-                    continue
-                entry_data = dict(raw_entry)
-                raw_enable = entry_data.pop("enable", True)
-                enable = _require_bool(
-                    raw_enable, f"cjk.locales.custom[{index}].enable"
+        if not isinstance(raw_custom, list):
+            raise ValueError(
+                f"cjk.locales.custom must be a list, got {type(raw_custom).__name__}"
+            )
+        for index, raw_entry in enumerate(raw_custom):
+            if not isinstance(raw_entry, dict):
+                raise ValueError(
+                    f"cjk.locales.custom[{index}] must be an object, "
+                    f"got {type(raw_entry).__name__}"
                 )
-                selection.custom.append(
-                    CustomCJKEntryConfig(
-                        enable=enable,
-                        build_config=config_from_data(entry_data, self.project_root),
-                    )
+            entry_data = dict(raw_entry)
+            raw_enable = entry_data.pop("enable", True)
+            enable = _require_bool(raw_enable, f"cjk.locales.custom[{index}].enable")
+            selection.custom.append(
+                CustomCJKEntryConfig(
+                    enable=enable,
+                    build_config=config_from_data(entry_data, self.project_root),
                 )
+            )
 
         return selection
 

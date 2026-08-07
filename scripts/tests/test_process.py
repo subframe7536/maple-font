@@ -1,20 +1,46 @@
 from __future__ import annotations
 
+import os
+import sys
 import unittest
 from concurrent.futures import Future, ThreadPoolExecutor
 from concurrent.futures.process import BrokenProcessPool
 from unittest.mock import MagicMock, patch
 
-from scripts.utils.process import (
+from scripts.errors import ExternalToolError
+from scripts.external.process import (
     _probe_process_worker,
     create_process_executor,
+    run,
     run_jobs,
     run_process_jobs,
 )
 
 
 class ProcessExecutorTest(unittest.TestCase):
-    @patch("scripts.utils.process.ProcessPoolExecutor")
+    def test_run_preserves_arguments_and_reports_ci_failure(self) -> None:
+        with patch.dict(os.environ, {"GITHUB_ACTIONS": "1"}):
+            result = run(
+                [sys.executable, "-c", "import sys; print(sys.argv[1])", "a b"]
+            )
+            self.assertEqual(result.stdout.strip(), "a b")
+            with self.assertRaises(ExternalToolError) as raised:
+                run(
+                    [
+                        sys.executable,
+                        "-c",
+                        "import sys; print('out'); print('err', file=sys.stderr); sys.exit(7)",
+                    ]
+                )
+        self.assertEqual(raised.exception.exit_code, 7)
+        self.assertIn("out", raised.exception.stdout)
+        self.assertIn("err", raised.exception.stderr)
+
+    def test_run_rejects_shell_like_strings(self) -> None:
+        with self.assertRaisesRegex(TypeError, "argv sequence"):
+            run("echo unsafe")  # type: ignore[arg-type]
+
+    @patch("scripts.external.process.ProcessPoolExecutor")
     def test_create_process_executor_probes_worker_before_returning(
         self, process_pool: MagicMock
     ) -> None:
@@ -27,8 +53,8 @@ class ProcessExecutorTest(unittest.TestCase):
         executor.submit.assert_called_once_with(_probe_process_worker)
         probe_future.result.assert_called_once_with()
 
-    @patch("scripts.utils.process.ThreadPoolExecutor")
-    @patch("scripts.utils.process.ProcessPoolExecutor")
+    @patch("scripts.external.process.ThreadPoolExecutor")
+    @patch("scripts.external.process.ProcessPoolExecutor")
     def test_create_process_executor_falls_back_after_constructor_failure(
         self, process_pool: MagicMock, thread_pool: MagicMock
     ) -> None:
@@ -39,8 +65,8 @@ class ProcessExecutorTest(unittest.TestCase):
         self.assertIs(result, thread_pool.return_value)
         thread_pool.assert_called_once_with(max_workers=3)
 
-    @patch("scripts.utils.process.ThreadPoolExecutor")
-    @patch("scripts.utils.process.ProcessPoolExecutor")
+    @patch("scripts.external.process.ThreadPoolExecutor")
+    @patch("scripts.external.process.ProcessPoolExecutor")
     def test_create_process_executor_propagates_constructor_failure(
         self, process_pool: MagicMock, thread_pool: MagicMock
     ) -> None:
@@ -53,8 +79,8 @@ class ProcessExecutorTest(unittest.TestCase):
         self.assertIs(raised.exception, error)
         thread_pool.assert_not_called()
 
-    @patch("scripts.utils.process.ThreadPoolExecutor")
-    @patch("scripts.utils.process.ProcessPoolExecutor")
+    @patch("scripts.external.process.ThreadPoolExecutor")
+    @patch("scripts.external.process.ProcessPoolExecutor")
     def test_create_process_executor_shuts_down_after_submit_failure(
         self, process_pool: MagicMock, thread_pool: MagicMock
     ) -> None:
@@ -67,8 +93,8 @@ class ProcessExecutorTest(unittest.TestCase):
         executor.shutdown.assert_called_once_with(wait=True, cancel_futures=True)
         thread_pool.assert_called_once_with(max_workers=2)
 
-    @patch("scripts.utils.process.ThreadPoolExecutor")
-    @patch("scripts.utils.process.ProcessPoolExecutor")
+    @patch("scripts.external.process.ThreadPoolExecutor")
+    @patch("scripts.external.process.ProcessPoolExecutor")
     def test_create_process_executor_handles_broken_probe_worker(
         self, process_pool: MagicMock, thread_pool: MagicMock
     ) -> None:
@@ -84,7 +110,7 @@ class ProcessExecutorTest(unittest.TestCase):
         thread_pool.assert_not_called()
 
     @patch(
-        "scripts.utils.process.ProcessPoolExecutor",
+        "scripts.external.process.ProcessPoolExecutor",
         side_effect=BrokenProcessPool("worker failed to start"),
     )
     def test_thread_fallback_runs_jobs_after_startup_failure(

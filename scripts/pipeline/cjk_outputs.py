@@ -31,6 +31,7 @@ from scripts.config.paths import (
     static_output_dir,
     variable_output_dir,
 )
+from scripts.external.process import is_ci, run_process_jobs
 from scripts.font_ops.fonttools import (
     instantiate_variable_font,
     load_font,
@@ -50,7 +51,6 @@ from scripts.utils.logging import (
     logger,
     set_log_task,
 )
-from scripts.utils.process import is_ci, run_process_jobs
 
 if TYPE_CHECKING:
     from concurrent.futures import Executor

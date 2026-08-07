@@ -8,9 +8,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Literal
 
+from scripts.external.process import is_ci
 from scripts.utils.files import archive_fonts
 from scripts.utils.logging import logger
-from scripts.utils.process import is_ci
 from scripts.utils.version import parse_version_tag, version_tag
 
 if TYPE_CHECKING:

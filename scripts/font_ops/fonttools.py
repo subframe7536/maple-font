@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Any, Literal, Protocol, overload
+from typing import Any, Literal, Protocol, cast, overload
 
 from fontTools.ttLib import TTFont as FontToolsTTFont
 from fontTools.ttLib import newTable
@@ -177,13 +177,8 @@ def load_font(font_path: str | Path, *, decompile: bool = False) -> TTFont:
 
 
 def adapt_ttfont(font: FontToolsTTFont) -> TTFont:
-    """Promote a FontTools font to the stateless typed wrapper."""
-    if isinstance(font, TTFont):
-        return font
-    font.__class__ = TTFont
-    if not isinstance(font, TTFont):
-        raise TypeError("FontTools did not accept the TTFont wrapper type")
-    return font
+    """View a FontTools font through the project's structural typed boundary."""
+    return cast("TTFont", font)
 
 
 def instantiate_variable_font(

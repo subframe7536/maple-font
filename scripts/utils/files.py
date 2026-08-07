@@ -5,7 +5,7 @@ import json
 import shutil
 import stat
 from datetime import datetime, timezone
-from os import environ, path, walk
+from os import environ
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 from urllib.parse import quote
@@ -216,14 +216,7 @@ def archive_font_readme(archive_name: str, font_files: list[str]) -> str:
 
 
 def get_directory_hash(dir_path: str) -> str:
-    hasher = hashlib.sha256()
-    for root, _, files in sorted(walk(dir_path)):
-        for file_name in sorted(files):
-            file_path = path.join(root, file_name)
-            try:
-                with open(file_path, "rb") as file:
-                    while data := file.read(4096):
-                        hasher.update(data)
-            except OSError as error:
-                raise Exception(f"Error reading file: {file_path} - {error}") from error
-    return hasher.hexdigest()
+    """Return the canonical tree digest (kept for archive-task compatibility)."""
+    from scripts.cache.digest import digest_tree
+
+    return digest_tree(Path(dir_path))

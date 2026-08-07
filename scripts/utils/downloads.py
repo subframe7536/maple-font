@@ -12,6 +12,7 @@ from zipfile import ZipFile
 
 import py7zr
 
+from scripts.errors import ArchiveError, ArchiveMemberNotFoundError, DownloadError
 from scripts.utils.logging import log_progress, logger
 
 GITHUB_HOST = "github.com"
@@ -212,10 +213,15 @@ def resolve_cached_download(
     temporary_path = target.with_name(f".{target.name}.download")
     temporary_path.unlink(missing_ok=True)
     try:
-        download_file(url, temporary_path, github_mirror)
+        try:
+            download_file(url, temporary_path, github_mirror)
+        except Exception as error:
+            raise DownloadError(
+                f"Failed to download {name} from {url}: {error}"
+            ) from error
         if py7zr.is_7zfile(temporary_path):
             if path_in_archive is None:
-                raise ValueError(
+                raise ArchiveError(
                     "download.path_in_archive is required for a 7z archive"
                 )
             archive_path = validate_archive_path(path_in_archive)
@@ -227,7 +233,7 @@ def resolve_cached_download(
                 with py7zr.SevenZipFile(temporary_path, mode="r") as archive:
                     members = archive.list()
                     if len(members) > MAX_ARCHIVE_MEMBERS:
-                        raise ValueError(
+                        raise ArchiveError(
                             "7z archive exceeds member limit: "
                             f"{len(members)} > {MAX_ARCHIVE_MEMBERS}"
                         )
@@ -235,12 +241,12 @@ def resolve_cached_download(
                         member for member in members if member.filename == archive_path
                     ]
                     if len(matches) != 1:
-                        raise ValueError(
+                        raise ArchiveMemberNotFoundError(
                             "download.path_in_archive must match exactly one archive "
                             f"member: {archive_path!r} matched {len(matches)}"
                         )
                     if not matches[0].is_file or matches[0].is_symlink:
-                        raise ValueError(
+                        raise ArchiveError(
                             "download.path_in_archive must select a regular file: "
                             f"{archive_path!r}"
                         )
@@ -250,33 +256,34 @@ def resolve_cached_download(
                         or extracted_size < 0
                         or extracted_size > MAX_EXTRACTED_BYTES
                     ):
-                        raise ValueError(
+                        raise ArchiveError(
                             "Selected 7z member exceeds extracted size limit: "
                             f"{archive_path!r}"
                         )
                     archive.extract(path=extract_dir, targets=[archive_path])
                 extracted_path = extract_dir.joinpath(*archive_path.split("/"))
                 if not extracted_path.is_file():
-                    raise ValueError(
+                    raise ArchiveError(
                         f"extracted archive member is not a file: {archive_path!r}"
                     )
                 if extracted_path.stat().st_size > MAX_EXTRACTED_BYTES:
-                    raise ValueError(
+                    raise ArchiveError(
                         "Selected 7z member exceeds extracted size limit: "
                         f"{archive_path!r}"
                     )
                 extracted_path.replace(target)
         else:
             if path_in_archive is not None:
-                raise ValueError(
+                raise ArchiveError(
                     "download.path_in_archive is only valid for a 7z archive"
                 )
             temporary_path.replace(target)
+    except (DownloadError, ArchiveError):
+        temporary_path.unlink(missing_ok=True)
+        raise
     except Exception as error:
         temporary_path.unlink(missing_ok=True)
-        raise FileNotFoundError(
-            f"Failed to download {name}: {target}: {error}"
-        ) from error
+        raise ArchiveError(f"Failed to extract {name}: {target}") from error
     temporary_path.unlink(missing_ok=True)
     return target
 

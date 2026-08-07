@@ -10,6 +10,9 @@ from scripts.cjk.variable import (
     merge_masters_into_vf,
     recalculate_font_metrics,
 )
+from scripts.errors import BuildDependencyError
+from scripts.external.process import run as run_command
+from scripts.external.process import run_process_jobs
 from scripts.font_ops.fonttools import TTFont, load_font, save_font_atomic
 from scripts.font_ops.glyph_transform import smart_change_width
 from scripts.font_ops.merge import merge_ttfonts
@@ -23,7 +26,6 @@ from scripts.font_ops.opentype import (
 from scripts.font_ops.subset import subset_to_codepoints
 from scripts.pipeline.artifacts import require_existing_files, require_unique_targets
 from scripts.utils.downloads import check_font_patcher
-from scripts.utils.errors import BuildDependencyError
 from scripts.utils.logging import (
     TaskName,
     log_task,
@@ -31,8 +33,6 @@ from scripts.utils.logging import (
     logger,
     set_log_task,
 )
-from scripts.utils.process import run as run_command
-from scripts.utils.process import run_process_jobs
 
 if TYPE_CHECKING:
     from collections.abc import Callable

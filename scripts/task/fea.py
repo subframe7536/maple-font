@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+from pathlib import Path
 from typing import TYPE_CHECKING
 
 from scripts.feature.compiler import (
@@ -38,11 +39,22 @@ def register_parser(subparsers: argparse._SubParsersAction[argparse.ArgumentPars
 
 def replace_section(md_path: str, border: str, content: str) -> None:
     md_content = read_text(md_path)
-    pattern = f"{border}(.*){border}"
-    updated_content = re.sub(
+    if md_content.count(border) != 2:
+        raise ValueError(
+            f"Expected exactly one section delimited by {border!r} in {md_path}"
+        )
+    pattern = f"{re.escape(border)}(.*?){re.escape(border)}"
+    updated_content, matches = re.subn(
         pattern, f"{border}\n{content}\n{border}", md_content, flags=re.DOTALL
     )
-    write_text(md_path, updated_content)
+    if matches != 1:
+        raise ValueError(f"Ambiguous generated section {border!r} in {md_path}")
+    if updated_content == md_content:
+        return
+    target = Path(md_path)
+    temporary = target.with_name(f".{target.name}.tmp")
+    temporary.write_text(updated_content, encoding="utf-8")
+    temporary.replace(target)
 
 
 def update_feature_freeze(file_path: str, features: dict[str, str]) -> None:

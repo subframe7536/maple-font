@@ -25,7 +25,7 @@ from scripts.cjk.outlines import (
     detect_outline_format,
 )
 from scripts.config.resolver import BuildConfigResolver
-from scripts.utils.errors import CJKSourceUnavailable
+from scripts.errors import CJKSourceUnavailable
 
 if TYPE_CHECKING:
     from concurrent.futures import Executor

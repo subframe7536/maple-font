@@ -18,6 +18,12 @@ from scripts.config.paths import (
 )
 from scripts.config.resolver import BuildConfigResolver
 from scripts.config.runtime import BuildRuntimeContext
+from scripts.errors import BuildDependencyError
+from scripts.external.process import (
+    SynchronousExecutor,
+    create_process_executor,
+    is_ci,
+)
 from scripts.pipeline.artifacts import (
     IGNORED_OUTPUT_DIRS,
     base_cache_identity,
@@ -54,7 +60,6 @@ from scripts.pipeline.nerd_fonts import (
     build_nerd_fonts,
     should_use_font_patcher,
 )
-from scripts.utils.errors import BuildDependencyError
 from scripts.utils.files import archive_fonts, join_path
 from scripts.utils.logging import (
     ENVIRONMENT_VARIABLE,
@@ -64,11 +69,6 @@ from scripts.utils.logging import (
     log_task_complete,
     logger,
     set_log_task,
-)
-from scripts.utils.process import (
-    SynchronousExecutor,
-    create_process_executor,
-    is_ci,
 )
 from scripts.utils.version import version_tag
 

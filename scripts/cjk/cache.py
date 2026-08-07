@@ -6,12 +6,17 @@ from pathlib import Path, PurePosixPath
 from typing import TYPE_CHECKING
 from zipfile import BadZipFile, ZipFile
 
-from scripts.utils.files import get_directory_hash
+from scripts.cache.digest import digest_tree
 
 if TYPE_CHECKING:
     from scripts.cjk.config import CJKBuildConfig
 
 HASH_PATTERN = re.compile(r"^[0-9a-f]{64}$")
+
+
+def get_directory_hash(directory: str) -> str:
+    """Use the canonical digest behind the legacy CJK sidecar file format."""
+    return digest_tree(Path(directory))
 
 
 def static_hash_path(config: CJKBuildConfig) -> Path:
