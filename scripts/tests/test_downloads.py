@@ -11,6 +11,7 @@ from zipfile import ZipFile
 
 import py7zr
 
+from scripts.errors import DownloadError
 from scripts.utils.downloads import (
     download_file,
     download_json,
@@ -294,6 +295,37 @@ class CachedDownloadTest(unittest.TestCase):
 
             self.assertEqual(resolved, target)
             self.assertEqual(target.read_bytes(), b"downloaded")
+            self.assertFalse((target.parent / ".font.ttf.download").exists())
+
+    def test_plain_file_finalization_failure_is_a_download_error(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            target = Path(tmp) / "font.ttf"
+
+            def fake_download(
+                _url: str,
+                temporary_path: str | Path,
+                _github_mirror: str,
+            ) -> None:
+                Path(temporary_path).write_bytes(b"downloaded")
+
+            with (
+                patch(
+                    "scripts.utils.downloads.download_file",
+                    side_effect=fake_download,
+                ),
+                patch.object(Path, "replace", side_effect=OSError("disk full")),
+                self.assertRaisesRegex(
+                    DownloadError,
+                    "Failed to finalize font.*disk full",
+                ),
+            ):
+                resolve_cached_download(
+                    "font",
+                    target,
+                    "https://example.com/font.ttf",
+                )
+
+            self.assertFalse(target.exists())
             self.assertFalse((target.parent / ".font.ttf.download").exists())
 
     def test_missing_file_without_url_raises(self) -> None:

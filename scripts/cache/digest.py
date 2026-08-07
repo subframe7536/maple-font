@@ -1,11 +1,10 @@
 from __future__ import annotations
 
 import hashlib
+import os
 import stat
-from typing import TYPE_CHECKING, BinaryIO
-
-if TYPE_CHECKING:
-    from pathlib import Path
+from pathlib import Path
+from typing import BinaryIO
 
 _CHUNK_SIZE = 1024 * 1024
 
@@ -26,9 +25,11 @@ def _contents(hasher: object, source: BinaryIO) -> None:
 
 def digest_paths(root: Path, paths: list[Path] | tuple[Path, ...]) -> str:
     """Hash paths canonically, including names, kinds, sizes, and contents."""
-    root = root.resolve()
+    root = Path(os.path.abspath(root))
     hasher = hashlib.sha256()
-    normalized = sorted({path.resolve() for path in paths}, key=lambda p: p.as_posix())
+    normalized = sorted(
+        {Path(os.path.abspath(path)) for path in paths}, key=lambda p: p.as_posix()
+    )
     for path in normalized:
         relative = path.relative_to(root).as_posix().encode()
         mode = path.lstat().st_mode
@@ -57,6 +58,6 @@ def digest_file(path: Path) -> str:
 
 
 def digest_tree(root: Path) -> str:
-    root = root.resolve()
+    root = Path(os.path.abspath(root))
     paths = [path for path in root.rglob("*") if not path.is_dir()]
     return digest_paths(root, paths)

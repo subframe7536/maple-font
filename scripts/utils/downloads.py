@@ -212,6 +212,7 @@ def resolve_cached_download(
     target.parent.mkdir(parents=True, exist_ok=True)
     temporary_path = target.with_name(f".{target.name}.download")
     temporary_path.unlink(missing_ok=True)
+    is_archive = False
     try:
         try:
             download_file(url, temporary_path, github_mirror)
@@ -219,7 +220,8 @@ def resolve_cached_download(
             raise DownloadError(
                 f"Failed to download {name} from {url}: {error}"
             ) from error
-        if py7zr.is_7zfile(temporary_path):
+        is_archive = py7zr.is_7zfile(temporary_path)
+        if is_archive:
             if path_in_archive is None:
                 raise ArchiveError(
                     "download.path_in_archive is required for a 7z archive"
@@ -283,7 +285,13 @@ def resolve_cached_download(
         raise
     except Exception as error:
         temporary_path.unlink(missing_ok=True)
-        raise ArchiveError(f"Failed to extract {name}: {target}") from error
+        if is_archive:
+            raise ArchiveError(
+                f"Failed to extract {name} to {target}: {error}"
+            ) from error
+        raise DownloadError(
+            f"Failed to finalize {name} at {target}: {error}"
+        ) from error
     temporary_path.unlink(missing_ok=True)
     return target
 

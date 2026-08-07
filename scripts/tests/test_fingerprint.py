@@ -27,6 +27,19 @@ class CanonicalDigestTest(unittest.TestCase):
             (root / "b").write_text("bc")
             self.assertNotEqual(first, digest_tree(root))
 
+    def test_symlink_hash_does_not_follow_target_outside_root(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary) / "root"
+            root.mkdir()
+            target = Path(temporary) / "target.txt"
+            target.write_text("first")
+            (root / "link.txt").symlink_to(target)
+
+            first = digest_tree(root)
+            target.write_text("second")
+
+            self.assertEqual(first, digest_tree(root))
+
     def test_fingerprint_is_order_independent_and_upstream_sensitive(self) -> None:
         first = Fingerprint().add_value("config", 1).add_upstream("source", "a")
         second = Fingerprint().add_upstream("source", "a").add_value("config", 1)
