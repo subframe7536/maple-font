@@ -9,7 +9,7 @@ This directory implements `build.py` and `task.py`. The build pipeline is determ
 | Inspect the resolved build | `uv run build.py --dry`                    | Resolves configuration and prints the local config plus runtime context, without constructing a `BuildPlan` or building fonts. |
 | Build release outputs      | `uv run build.py`                          | Runs the complete pipeline selected by the resolved configuration.                                                             |
 | Build a focused format     | `uv run build.py --format ttf --debug`     | Selects a requested base format and the debug style/output policy.                                                             |
-| Build CJK base assets      | `uv run task.py cjk --preset cn`           | Rebuilds the standalone CJK variable bases, then static bases unless `--vf-only` is set.                                       |
+| Build CJK base assets      | `uv run task.py cjk --preset cn`           | Rebuilds the standalone CJK variable bases and variable archive/hash, then static bases unless `--vf-only` is set.              |
 | Run a repository task      | `uv run task.py <name>`                    | Dispatches feature, designspace, Nerd Font, page, release, and publish workflows.                                              |
 | Follow maintenance steps   | [`maintenance.md`](maintenance.md)         | Covers source updates, generated files, CJK base refreshes, validation, and release procedures.                                |
 | Trace pipeline state       | [`pipeline/README.md`](pipeline/README.md) | Documents stage selection, cache transitions, failure state, and executor ownership.                                           |

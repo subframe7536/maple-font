@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import shutil
 import tempfile
 import unittest
 from contextlib import redirect_stdout
@@ -9,11 +10,12 @@ from pathlib import Path
 from types import SimpleNamespace
 from typing import TYPE_CHECKING, Any, cast
 from unittest.mock import MagicMock, patch
+from zipfile import ZipFile
 
 from fontTools.fontBuilder import FontBuilder
 from fontTools.pens.ttGlyphPen import TTGlyphPen
 
-from scripts.cjk.cache import write_static_hash
+from scripts.cjk.cache import write_static_hash, write_variable_hash
 from scripts.cjk.config import (
     CJKBuildConfig,
     CJKNamingConfig,
@@ -32,6 +34,7 @@ from scripts.pipeline.nerd_fonts import (
     ensure_font_patcher_available,
     should_use_font_patcher,
 )
+from scripts.tests.cjk_font_fixtures import build_test_font
 from scripts.utils.files import get_directory_hash
 
 if TYPE_CHECKING:
@@ -174,6 +177,17 @@ def write_variable_fonts(config: CJKBuildConfig) -> None:
     write_test_font(config.output.dir / config.output.italic_variable)
 
 
+def write_real_variable_fonts(config: CJKBuildConfig) -> tuple[Path, Path]:
+    paths = (
+        config.output.dir / config.output.regular_variable,
+        config.output.dir / config.output.italic_variable,
+    )
+    for path in paths:
+        font = build_test_font(path, variable=True)
+        font.close()
+    return paths
+
+
 def resolve_quietly(
     runtime_context: BuildRuntimeContext,
     entry: ResolvedCJKBuildEntry,
@@ -221,6 +235,160 @@ class BuildRuntimeContextCJKStaticBaseTest(unittest.TestCase):
                 download.call_args.kwargs["url"],
                 "https://github.com/subframe7536/maple-font/releases/download/cjk-base/cn-base-static.zip",
             )
+
+    def test_local_static_archive_is_used_before_remote_asset(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            runtime_context = make_runtime_context(tmp_path)
+            entry = make_entry(tmp_path)
+            config = entry.build_config
+            static_dir = runtime_context.cjk_static_dir(config)
+            write_static_fonts(
+                static_dir,
+                config.naming.static_file_prefix,
+                ["Regular"],
+            )
+            write_static_hash(config, static_dir)
+            local_archive = config.output.dir / config.output.archive_name
+            with ZipFile(local_archive, "w") as archive:
+                for font_path in static_dir.glob("*.ttf"):
+                    archive.write(font_path, font_path.name)
+            shutil.rmtree(static_dir)
+
+            with patch(
+                "scripts.utils.downloads.download_file",
+                side_effect=AssertionError("remote download should not run"),
+            ) as download:
+                downloaded = runtime_context.download_cjk_static_base("cn", config)
+
+            self.assertTrue(downloaded)
+            self.assertTrue((static_dir / "MapleMonoCN-Regular.ttf").is_file())
+            download.assert_not_called()
+
+    def test_variable_download_uses_effective_github_mirror_and_validates_archive(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            runtime_context = make_runtime_context(tmp_path)
+            runtime_context.effective_github_mirror = "mirror.example.com/github.com"
+            entry = make_entry(tmp_path)
+            config = entry.build_config
+            paths = write_real_variable_fonts(config)
+            write_variable_hash(config)
+            remote_archive = tmp_path / "remote-variable.zip"
+            with ZipFile(remote_archive, "w") as archive:
+                for path in paths:
+                    archive.write(path, path.name)
+            for path in paths:
+                path.unlink()
+
+            def fake_download(
+                *,
+                zip_path: str | Path,
+                output_dir: str | Path,
+                **_kwargs,
+            ) -> bool:
+                shutil.copy2(remote_archive, zip_path)
+                Path(output_dir).mkdir(parents=True, exist_ok=True)
+                with ZipFile(zip_path) as archive:
+                    archive.extractall(output_dir)
+                return True
+
+            with patch(
+                "scripts.config.runtime.download_zip_and_extract",
+                side_effect=fake_download,
+            ) as download:
+                downloaded = runtime_context.download_cjk_variable_base(
+                    "cn",
+                    config,
+                )
+
+            self.assertTrue(downloaded)
+            self.assertTrue(all(path.is_file() for path in paths))
+            self.assertEqual(
+                download.call_args.kwargs["github_mirror"],
+                "mirror.example.com/github.com",
+            )
+            self.assertEqual(
+                download.call_args.kwargs["url"],
+                "https://github.com/subframe7536/maple-font/releases/download/cjk-base/cn-base-variable.zip",
+            )
+            self.assertFalse(
+                config.output.dir.joinpath(
+                    ".cn-base-variable.zip.download.zip"
+                ).exists()
+            )
+
+    def test_local_variable_archive_is_used_before_remote_asset(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            runtime_context = make_runtime_context(tmp_path)
+            entry = make_entry(tmp_path)
+            config = entry.build_config
+            paths = write_real_variable_fonts(config)
+            write_variable_hash(config)
+            local_archive = config.output.dir / config.output.variable_archive_name
+            with ZipFile(local_archive, "w") as archive:
+                for font_path in paths:
+                    archive.write(font_path, font_path.name)
+            for font_path in paths:
+                font_path.unlink()
+
+            with patch(
+                "scripts.utils.downloads.download_file",
+                side_effect=AssertionError("remote download should not run"),
+            ) as download:
+                downloaded = runtime_context.download_cjk_variable_base("cn", config)
+
+            self.assertTrue(downloaded)
+            self.assertTrue(all(font_path.is_file() for font_path in paths))
+            download.assert_not_called()
+
+    def test_remote_variable_fallback_precedes_source_rebuild(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            runtime_context = make_runtime_context(tmp_path)
+            entry = make_entry(tmp_path)
+
+            def fake_instantiate(
+                config: CJKBuildConfig,
+                _font_config,
+                **_kwargs,
+            ) -> None:
+                static_dir = runtime_context.cjk_static_dir(config)
+                write_static_fonts(
+                    static_dir,
+                    config.naming.static_file_prefix,
+                    ["Regular"],
+                )
+                write_static_hash(config, static_dir)
+
+            with (
+                patch.object(
+                    BuildRuntimeContext,
+                    "download_cjk_static_base",
+                    return_value=False,
+                ),
+                patch.object(
+                    BuildRuntimeContext,
+                    "download_cjk_variable_base",
+                    return_value=True,
+                ) as download_variable,
+                patch(
+                    "scripts.config.runtime.instantiate_cjk_static_from_variable",
+                    side_effect=fake_instantiate,
+                ),
+                patch.object(
+                    BuildRuntimeContext,
+                    "build_cjk_static_base_from_variable",
+                ) as build_source,
+            ):
+                result = resolve_quietly(runtime_context, entry, ["Regular"])
+
+            self.assertEqual(result.source_kind, "remote-variable")
+            download_variable.assert_called_once_with("cn", entry.build_config)
+            build_source.assert_not_called()
 
     def test_variable_fallback_uses_effective_github_mirror(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

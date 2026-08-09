@@ -66,16 +66,16 @@ The four source URLs are maintained manually. Update the `source.download.url` v
 | JP     | `source/cjk/jp/config-jp.json` |
 | KR     | `source/cjk/kr/config-kr.json` |
 
-Keep the URL pinned to the intended upstream release or ref. The committed static hash is the source of truth for the generated archive contents; CI does not look up a latest release or store a separate manifest.
+Keep the URL pinned to the intended upstream release or ref. The committed static and variable hashes are the source of truth for the generated archive contents; CI does not look up a latest release or store a separate manifest.
 
 ### Published update (recommended)
 
-1. Update the `source.download.url` value in the relevant preset and run `uv run task.py cjk --preset <locale>` locally. Review the generated fonts, then commit the config and matching `source/cjk/<locale>/static-<locale>.sha256` together.
-2. Pushing one or more static hash files triggers **Update CJK Base Fonts**. The workflow rebuilds the selected locales and verifies each generated ZIP by extracting it and comparing its directory hash with the committed hash.
-3. For a rebuild without a hash change, run the workflow manually and choose `all`, `cn`, `tc`, `jp`, or `kr`. Use `all` when bootstrapping a missing release or repairing an incomplete release.
-4. The workflow deletes and replaces only the changed locale archives. After upload it downloads the published ZIPs again and repeats the committed-hash validation.
+1. Update the `source.download.url` value in the relevant preset and run `uv run task.py cjk --preset <locale>` locally. Review the generated fonts, then commit the config and matching `source/cjk/<locale>/static-<locale>.sha256` and `variable-<locale>.sha256` files together.
+2. Pushing one or more static or variable hash files triggers **Update CJK Base Fonts**. The workflow rebuilds the selected locales and validates both ZIPs, including root-level members, variable `fvar` tables, ZIP integrity, and the corresponding committed hash.
+3. For a rebuild without a hash change, run the workflow manually and choose `all`, `cn`, `tc`, `jp`, or `kr`. Use `all` when bootstrapping a missing release or repairing an incomplete release; the workflow refuses to leave the release with fewer than eight locale/kind assets.
+4. The workflow deletes and replaces both static and variable archives for only the changed locales. After upload it downloads the published ZIPs again and repeats the eight-asset validation.
 
-The main release workflow downloads all four `cjk-base` ZIPs and validates them against the committed hashes before building the normal release. A stale, missing, or corrupt CJK archive blocks the normal release.
+The main release workflow downloads all eight `cjk-base` ZIPs and validates them against the committed hashes before building the normal release. A stale, missing, or corrupt CJK archive blocks the normal release; ordinary `build.py` and `task.py publish build` runs use local CJK directories and ZIPs first, then remote archives or source rebuilds.
 
 ### Local check or rebuild
 
@@ -86,7 +86,7 @@ uv run task.py cjk --help
 uv run task.py cjk --preset cn
 ```
 
-The task rebuilds the regular and italic variable bases and the static instances unless `--vf-only` is selected. Generated CJK fonts, temporary source files, and ZIPs under `source/cjk/` are disposable; the tracked `static-<locale>.sha256` files are updated by the local task and committed with the matching config, so do not hand-edit the digest. Avoid a full CJK build unless the source URL, outline conversion, or generated base artifacts are part of the requested change.
+The task rebuilds the regular and italic variable bases, writes their standalone variable ZIP/hash, and writes the static instances unless `--vf-only` is selected. Generated CJK fonts, temporary source files, and ZIPs under `source/cjk/` are disposable; the tracked `static-<locale>.sha256` and `variable-<locale>.sha256` files are updated by the local task and committed with the matching config, so do not hand-edit either digest. Avoid a full CJK build unless the source URL, outline conversion, or generated base artifacts are part of the requested change.
 
 ## Create a Maple Mono release
 
@@ -111,7 +111,7 @@ The task rebuilds the regular and italic variable bases and the static instances
 
 ### Build and publish GitHub release assets
 
-The `Build All Formats and Release` workflow starts from a `v*` tag. It builds 8 base tasks and 32 CJK tasks in parallel, producing the 176 archives declared by the release matrix, validates every expected archive, and creates a draft GitHub release with `uv run task.py publish release`.
+The `Build All Formats and Release` workflow starts from a `v*` tag. It builds 8 profile/width bundles in parallel; each bundle builds the base outputs once and then all four CJK locales on the same runner, producing 22 archives. The final manifest still contains 176 archives, and the workflow creates a draft GitHub release with `uv run task.py publish release`.
 
 For a manual rerun, use **Run workflow** and enter the existing release tag in the required `release_tag` field (for example, `v8.1`). The workflow checks out that tag; it does not create a new tag or infer one from the default branch. Do not pass a branch name or an unpushed tag.
 

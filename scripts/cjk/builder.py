@@ -15,7 +15,7 @@ from fontTools.subset import Options
 from fontTools.ttLib.scaleUpem import scale_upem
 from ttfautohint import StemWidthMode, ttfautohint
 
-from scripts.cjk.cache import write_static_hash
+from scripts.cjk.cache import write_static_hash, write_variable_hash
 from scripts.cjk.config import (
     CJKBuildConfig,
     CJKMasterLocations,
@@ -923,6 +923,8 @@ class CJKBuilder:
             finally:
                 regular_font.close()
 
+            self._write_variable_artifacts()
+
             if vf_only:
                 logger.debug("Skip CJK static font generation because --vf-only is set")
                 return
@@ -1172,6 +1174,21 @@ class CJKBuilder:
         logger.info("Saved CJK variable font to %s", self.regular_output)
         save_font_atomic(italic_font, self.italic_output)
         logger.info("Saved CJK variable font to %s", self.italic_output)
+
+    def _write_variable_artifacts(self) -> None:
+        write_variable_hash(self.config)
+        archive_path = self.config.output.dir / self.config.output.variable_archive_name
+        variable_names = {
+            self.config.output.regular_variable,
+            self.config.output.italic_variable,
+        }
+        logger.debug("Archive CJK variable fonts: path=%s", archive_path)
+        archive(
+            str(self.config.output.dir),
+            str(archive_path),
+            lambda path: Path(path).name in variable_names,
+        )
+        logger.debug("CJK variable font archive ready: path=%s", archive_path)
 
     def _build_static_fonts(
         self,

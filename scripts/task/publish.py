@@ -16,7 +16,7 @@ from scripts.utils.version import parse_version_tag, version_tag
 if TYPE_CHECKING:
     import argparse
 
-ReleaseTaskKind = Literal["base", "cjk"]
+ReleaseTaskKind = Literal["bundle"]
 RELEASE_ASSET_DIR = Path("release")
 RELEASE_TASK_DIR = Path("release-task")
 BUILD_ARCHIVE_DIR = Path("fonts/archive")
@@ -76,32 +76,27 @@ class ReleaseBuildStep:
 
 @dataclass(frozen=True, slots=True)
 class ReleaseTask:
-    kind: ReleaseTaskKind
     profile: ReleaseProfile
     width: ReleaseWidth
-    locale: ReleaseLocale | None = None
 
     @property
     def id(self) -> str:
-        parts = [self.kind, self.profile.id, self.width.id]
-        if self.locale is not None:
-            parts.append(self.locale.id)
-        return "-".join(parts)
+        return f"bundle-{self.profile.id}-{self.width.id}"
 
     @property
     def family_name(self) -> str:
         return "MapleMono" + self.profile.family_suffix + self.width.family_suffix
 
     def archive_names(self) -> tuple[str, ...]:
-        if self.kind == "base":
-            targets = BASE_ARCHIVE_TARGETS
-        else:
-            if self.locale is None:
-                raise ValueError("CJK release task requires a locale")
-            targets = tuple(
-                target.format(locale=self.locale.name) for target in CJK_ARCHIVE_TARGETS
-            )
-        return tuple(f"{self.family_name}-{target}.zip" for target in targets)
+        base_targets = tuple(
+            f"{self.family_name}-{target}.zip" for target in BASE_ARCHIVE_TARGETS
+        )
+        cjk_targets = tuple(
+            f"{self.family_name}-{target.format(locale=locale.name)}.zip"
+            for locale in RELEASE_CJK_LOCALES
+            for target in CJK_ARCHIVE_TARGETS
+        )
+        return (*base_targets, *cjk_targets)
 
 
 RELEASE_PROFILES = (
@@ -185,7 +180,7 @@ def register_parser(subparsers: argparse._SubParsersAction[argparse.ArgumentPars
     matrix_parser = actions.add_parser(
         "matrix", help="Print a GitHub Actions release task matrix"
     )
-    matrix_parser.add_argument("kind", choices=("base", "cjk"))
+    matrix_parser.add_argument("kind", choices=("bundle",))
 
     build_parser = actions.add_parser("build", help="Run one release build task")
     build_parser.add_argument("task", help="Task id emitted by the matrix command")
@@ -210,27 +205,18 @@ def register_parser(subparsers: argparse._SubParsersAction[argparse.ArgumentPars
     return parser
 
 
-def release_tasks(kind: ReleaseTaskKind | None = None) -> tuple[ReleaseTask, ...]:
-    base_tasks = tuple(
-        ReleaseTask("base", profile, width)
+def release_tasks() -> tuple[ReleaseTask, ...]:
+    return tuple(
+        ReleaseTask(profile, width)
         for profile in RELEASE_PROFILES
         for width in RELEASE_WIDTHS
     )
-    cjk_tasks = tuple(
-        ReleaseTask("cjk", profile, width, locale)
-        for profile in RELEASE_PROFILES
-        for width in RELEASE_WIDTHS
-        for locale in RELEASE_CJK_LOCALES
-    )
-    if kind == "base":
-        return base_tasks
-    if kind == "cjk":
-        return cjk_tasks
-    return (*base_tasks, *cjk_tasks)
 
 
 def release_matrix(kind: ReleaseTaskKind) -> dict[str, list[dict[str, str]]]:
-    return {"include": [{"task": task.id} for task in release_tasks(kind)]}
+    if kind != "bundle":
+        raise ValueError(f"Unsupported release matrix kind: {kind}")
+    return {"include": [{"task": task.id} for task in release_tasks()]}
 
 
 def release_manifest() -> dict[str, Any]:
@@ -277,54 +263,59 @@ def release_build_steps(
         task.width.value,
         *task.profile.args,
     ]
-    if task.kind == "base":
-        return (
-            ReleaseBuildStep(
-                (*common, "--format", "ttf,otf,woff2", "--hinted"),
-                (ReleaseArchiveSpec("NF"),),
+    base_steps = (
+        ReleaseBuildStep(
+            (*common, "--format", "ttf,otf,woff2", "--hinted"),
+            (ReleaseArchiveSpec("NF"),),
+        ),
+        ReleaseBuildStep(
+            (
+                *common,
+                "--format",
+                "ttf,otf,woff2",
+                "--no-hinted",
+                "--cache",
             ),
-            ReleaseBuildStep(
-                (
-                    *common,
-                    "--format",
-                    "ttf,otf,woff2",
-                    "--no-hinted",
-                    "--cache",
-                ),
-                (ReleaseArchiveSpec("NF", "-unhinted"),),
+            (ReleaseArchiveSpec("NF", "-unhinted"),),
+        ),
+        ReleaseBuildStep(
+            (
+                *extra_args,
+                "--nf-variable",
+                "--width",
+                task.width.value,
+                *task.profile.args,
+                "--format",
+                "ttf,otf,woff2",
+                "--no-hinted",
+                "--cache",
             ),
-            ReleaseBuildStep(
-                (
-                    *extra_args,
-                    "--nf-variable",
-                    "--width",
-                    task.width.value,
-                    *task.profile.args,
-                    "--format",
-                    "ttf,otf,woff2",
-                    "--no-hinted",
-                    "--cache",
-                ),
-                tuple(
-                    ReleaseArchiveSpec(directory)
-                    for directory in (
-                        "Variable",
-                        "TTF",
-                        "TTF-AutoHint",
-                        "OTF",
-                        "Woff2",
-                        "Variable-NF",
-                    )
-                ),
+            tuple(
+                ReleaseArchiveSpec(directory)
+                for directory in (
+                    "Variable",
+                    "TTF",
+                    "TTF-AutoHint",
+                    "OTF",
+                    "Woff2",
+                    "Variable-NF",
+                )
             ),
-            *_release_nf_variant_steps(task, extra_args, RELEASE_NF_VARIANTS[1:]),
-        )
-    if task.locale is None:
-        raise ValueError("CJK release task requires a locale")
-    cjk = [*common, "--format", "ttf", "--cjk", task.locale.id]
-    cjk_directory = RELEASE_DEFAULT_NF_VARIANT.directory_name + "-" + task.locale.name
+        ),
+        *_release_nf_variant_steps(task, extra_args, RELEASE_NF_VARIANTS[1:]),
+    )
+    cjk_locales = ",".join(locale.id for locale in RELEASE_CJK_LOCALES)
+    cjk = [*common, "--format", "ttf", "--cjk", cjk_locales]
+    cjk_directories = tuple(
+        f"{RELEASE_DEFAULT_NF_VARIANT.directory_name}-{locale.name}"
+        for locale in RELEASE_CJK_LOCALES
+    )
     return (
-        ReleaseBuildStep((*cjk, "--hinted"), (ReleaseArchiveSpec(cjk_directory),)),
+        *base_steps,
+        ReleaseBuildStep(
+            (*cjk, "--hinted", "--cache"),
+            tuple(ReleaseArchiveSpec(directory) for directory in cjk_directories),
+        ),
         ReleaseBuildStep(
             (
                 *cjk,
@@ -332,7 +323,10 @@ def release_build_steps(
                 "--no-cjk-hinted",
                 "--cache",
             ),
-            (ReleaseArchiveSpec(cjk_directory, "-unhinted"),),
+            tuple(
+                ReleaseArchiveSpec(directory, "-unhinted")
+                for directory in cjk_directories
+            ),
         ),
         ReleaseBuildStep(
             (
@@ -342,7 +336,10 @@ def release_build_steps(
                 "--no-cjk-hinted",
                 "--cache",
             ),
-            (ReleaseArchiveSpec(f"Variable-{cjk_directory}"),),
+            tuple(
+                ReleaseArchiveSpec(f"Variable-{directory}")
+                for directory in cjk_directories
+            ),
         ),
     )
 

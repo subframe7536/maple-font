@@ -161,6 +161,8 @@ class CJKOutputConfig:
     static_dir: str = "static"
     static_hash: str = "static.sha256"
     archive_name: str = "cjk-base-static.zip"
+    variable_hash: str = "variable.sha256"
+    variable_archive_name: str = "cjk-base-variable.zip"
 
 
 @dataclass(frozen=True)

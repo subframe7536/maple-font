@@ -11,9 +11,12 @@ from fontTools.pens.ttGlyphPen import TTGlyphPen
 from scripts.cjk.cache import (
     has_valid_cjk_static_cache,
     verify_static_archive,
+    verify_variable_archive,
     write_static_hash,
+    write_variable_hash,
 )
 from scripts.cjk.config import CJKBuildConfig, CJKOutputConfig, CJKSourceConfig
+from scripts.tests.cjk_font_fixtures import build_test_font
 
 
 def write_test_font(path: Path) -> None:
@@ -37,6 +40,11 @@ def write_test_font(path: Path) -> None:
     builder.setupMaxp()
     path.parent.mkdir(parents=True, exist_ok=True)
     builder.save(path)
+
+
+def write_variable_test_font(path: Path) -> None:
+    font = build_test_font(path, variable=True)
+    font.close()
 
 
 class CJKStaticCacheTest(unittest.TestCase):
@@ -66,6 +74,25 @@ class CJKStaticCacheTest(unittest.TestCase):
         with ZipFile(archive_path, "w") as archive:
             for font_path in static_dir.glob("*.ttf"):
                 archive.write(font_path, font_path.name)
+
+    def write_variable(self, config: CJKBuildConfig) -> tuple[Path, Path]:
+        regular = config.output.dir / config.output.regular_variable
+        italic = config.output.dir / config.output.italic_variable
+        write_variable_test_font(regular)
+        write_variable_test_font(italic)
+        write_variable_hash(config)
+        return regular, italic
+
+    def write_variable_archive(
+        self,
+        paths: tuple[Path, Path],
+        archive_path: Path,
+        names: tuple[str, str] | None = None,
+    ) -> None:
+        member_names = names or tuple(path.name for path in paths)
+        with ZipFile(archive_path, "w") as archive:
+            for path, name in zip(paths, member_names, strict=True):
+                archive.write(path, name)
 
     def test_static_archive_matches_committed_hash(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
@@ -191,6 +218,94 @@ class CJKStaticCacheTest(unittest.TestCase):
                     {"Regular"},
                 )
             )
+
+    def test_variable_archive_matches_hash_and_ignores_static_files(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            config = self.make_config(Path(tmp))
+            paths = self.write_variable(config)
+            archive_path = Path(tmp) / "cn-base-variable.zip"
+            self.write_variable_archive(paths, archive_path)
+            expected_names = tuple(path.name for path in paths)
+
+            verify_variable_archive(
+                archive_path,
+                config.output.dir / config.output.variable_hash,
+                expected_names,
+            )
+
+            write_test_font(config.output.dir / "static" / "unrelated.ttf")
+            verify_variable_archive(
+                archive_path,
+                config.output.dir / config.output.variable_hash,
+                expected_names,
+            )
+
+    def test_variable_archive_rejects_hash_mismatch(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            config = self.make_config(Path(tmp))
+            paths = self.write_variable(config)
+            archive_path = Path(tmp) / "cn-base-variable.zip"
+            self.write_variable_archive(paths, archive_path)
+            config.output.dir.joinpath(config.output.variable_hash).write_text(
+                "0" * 64,
+                encoding="utf-8",
+            )
+
+            with self.assertRaisesRegex(ValueError, "hash mismatch"):
+                verify_variable_archive(
+                    archive_path,
+                    config.output.dir / config.output.variable_hash,
+                    tuple(path.name for path in paths),
+                )
+
+    def test_variable_archive_rejects_invalid_members_and_corrupt_fonts(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            config = self.make_config(Path(tmp))
+            paths = self.write_variable(config)
+            hash_path = config.output.dir / config.output.variable_hash
+
+            invalid_archive = Path(tmp) / "invalid-variable.zip"
+            with ZipFile(invalid_archive, "w") as archive:
+                archive.write(paths[0], "nested/font.ttf")
+                archive.write(paths[1], paths[1].name)
+            with self.assertRaisesRegex(ValueError, "root-level TTF"):
+                verify_variable_archive(invalid_archive, hash_path)
+
+            wrong_names_archive = Path(tmp) / "wrong-names-variable.zip"
+            self.write_variable_archive(
+                paths,
+                wrong_names_archive,
+                ("regular.ttf", "italic.ttf"),
+            )
+            with self.assertRaisesRegex(ValueError, "expected regular"):
+                verify_variable_archive(wrong_names_archive, hash_path)
+
+            corrupt_archive = Path(tmp) / "corrupt-variable.zip"
+            with ZipFile(corrupt_archive, "w") as archive:
+                archive.writestr(paths[0].name, b"not a font")
+                archive.write(paths[1], paths[1].name)
+            with self.assertRaisesRegex(ValueError, "valid font"):
+                verify_variable_archive(corrupt_archive, hash_path)
+
+            broken_archive = Path(tmp) / "broken-variable.zip"
+            broken_archive.write_bytes(b"not a zip")
+            with self.assertRaisesRegex(ValueError, "Invalid variable archive"):
+                verify_variable_archive(broken_archive, hash_path)
+
+    def test_variable_archive_rejects_non_variable_font(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            config = self.make_config(Path(tmp))
+            regular, italic = self.write_variable(config)
+            write_test_font(regular)
+            archive_path = Path(tmp) / "not-variable.zip"
+            self.write_variable_archive((regular, italic), archive_path)
+
+            with self.assertRaisesRegex(ValueError, "not variable"):
+                verify_variable_archive(
+                    archive_path,
+                    config.output.dir / config.output.variable_hash,
+                    (regular.name, italic.name),
+                )
 
 
 if __name__ == "__main__":

@@ -334,6 +334,8 @@ def output_config_from_locale(locale_name: str) -> CJKOutputConfig:
         static_dir="static",
         static_hash=f"static-{locale_dir}.sha256",
         archive_name=f"{locale_dir}-base-static.zip",
+        variable_hash=f"variable-{locale_dir}.sha256",
+        variable_archive_name=f"{locale_dir}-base-variable.zip",
     )
 
 

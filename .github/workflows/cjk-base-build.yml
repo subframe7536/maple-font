@@ -6,6 +6,7 @@ on:
       - "variable"
     paths:
       - "source/cjk/*/static-*.sha256"
+      - "source/cjk/*/variable-*.sha256"
   workflow_dispatch:
     inputs:
       locale:
@@ -45,20 +46,39 @@ jobs:
           EVENT_BEFORE: ${{ github.event.before }}
           EVENT_SHA: ${{ github.sha }}
           MANUAL_LOCALE: ${{ inputs.locale }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
           locales=()
-          if [ "$EVENT_NAME" = "push" ]; then
+          release_assets=""
+          if gh release view cjk-base --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' >/tmp/cjk-base-assets 2>/dev/null; then
+            release_assets="$(cat /tmp/cjk-base-assets)"
+          fi
+          needs_all=false
+          for locale in cn jp tc kr; do
+            for kind in static variable; do
+              expected="${locale}-base-${kind}.zip"
+              if ! grep -Fxq "$expected" <<< "$release_assets"; then
+                needs_all=true
+              fi
+            done
+          done
+          if [ "$needs_all" = true ]; then
+            locales=(cn jp tc kr)
+          elif [ "$EVENT_NAME" = "push" ]; then
             if [ "$EVENT_BEFORE" = "0000000000000000000000000000000000000000" ]; then
-              changed_files="$(git ls-files 'source/cjk/*/static-*.sha256')"
+              changed_files="$(git ls-files 'source/cjk/*/*-*.sha256')"
             else
               changed_files="$(git diff --name-only "$EVENT_BEFORE" "$EVENT_SHA")"
             fi
             for locale in cn jp tc kr; do
-              path="source/cjk/$locale/static-$locale.sha256"
-              if grep -Fqx "$path" <<< "$changed_files"; then
-                locales+=("$locale")
-              fi
+              for kind in static variable; do
+                path="source/cjk/$locale/${kind}-$locale.sha256"
+                if grep -Fqx "$path" <<< "$changed_files"; then
+                  locales+=("$locale")
+                  break
+                fi
+              done
             done
           else
             case "$MANUAL_LOCALE" in
@@ -101,12 +121,15 @@ jobs:
         run: |
           set -euo pipefail
           hash_file="source/cjk/$LOCALE/static-$LOCALE.sha256"
+          variable_hash_file="source/cjk/$LOCALE/variable-$LOCALE.sha256"
           archive="source/cjk/$LOCALE/${LOCALE}-base-static.zip"
+          variable_archive="source/cjk/$LOCALE/${LOCALE}-base-variable.zip"
           uv run task.py cjk --preset "$LOCALE"
-          git diff --exit-code -- "$hash_file"
+          git diff --exit-code -- "$hash_file" "$variable_hash_file"
           test -f "$archive"
+          test -f "$variable_archive"
           mkdir -p cjk-base-artifacts
-          cp "$archive" "cjk-base-artifacts/${LOCALE}-base-static.zip"
+          cp "$archive" "$variable_archive" cjk-base-artifacts/
       - uses: actions/upload-artifact@v7
         with:
           name: cjk-base-${{ matrix.locale }}
@@ -142,18 +165,22 @@ jobs:
         run: |
           set -euo pipefail
           while IFS= read -r locale; do
-            archive="cjk-base-artifacts/${locale}-base-static.zip"
-            hash_file="source/cjk/$locale/static-$locale.sha256"
-            test -f "$archive"
-            uv run task.py cjk cache-validate \
-              --archive "$archive" \
-              --hash "$hash_file"
+            for kind in static variable; do
+              archive="cjk-base-artifacts/${locale}-base-${kind}.zip"
+              hash_file="source/cjk/$locale/${kind}-$locale.sha256"
+              test -f "$archive"
+              test -f "$hash_file"
+              uv run task.py cjk cache-validate \
+                --archive "$archive" \
+                --hash "$hash_file" \
+                --kind "$kind"
+            done
           done < <(jq -r '.include[].locale' <<< "$LOCALES_JSON")
       - name: Render release notes
         run: |
           UPDATE_TIME="$(date -u +'%Y-%m-%d %H:%M UTC')"
           cat > cjk-base-notes.md <<EOF
-          This is not a regular release. It only contains prebuilt static CJK base fonts.
+          This is not a regular release. It only contains prebuilt CJK static and variable base fonts.
 
           Updated at $UPDATE_TIME
           EOF
@@ -165,16 +192,18 @@ jobs:
           mapfile -t locales < <(jq -r '.include[].locale' <<< "$LOCALES_JSON")
           upload_args=()
           for locale in "${locales[@]}"; do
-            upload_args+=("cjk-base-artifacts/${locale}-base-static.zip")
+            upload_args+=(
+              "cjk-base-artifacts/${locale}-base-static.zip"
+              "cjk-base-artifacts/${locale}-base-variable.zip"
+            )
           done
           if gh release view cjk-base --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             assets="$(gh release view cjk-base --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name')"
-            for locale in cn tc jp kr; do
-              grep -Fxq "${locale}-base-static.zip" <<< "$assets"
-            done
             while IFS= read -r asset; do
+              [ -n "$asset" ] || continue
               case "$asset" in
-                cn-base-static.zip|tc-base-static.zip|jp-base-static.zip|kr-base-static.zip)
+                cn-base-static.zip|tc-base-static.zip|jp-base-static.zip|kr-base-static.zip|\
+                cn-base-variable.zip|tc-base-variable.zip|jp-base-variable.zip|kr-base-variable.zip)
                   ;;
                 *)
                   gh release delete-asset cjk-base "$asset" \
@@ -183,9 +212,13 @@ jobs:
               esac
             done <<< "$assets"
             for locale in "${locales[@]}"; do
-              asset="${locale}-base-static.zip"
-              gh release delete-asset cjk-base "$asset" \
-                --repo "$GITHUB_REPOSITORY" --yes
+              for kind in static variable; do
+                asset="${locale}-base-${kind}.zip"
+                if grep -Fxq "$asset" <<< "$assets"; then
+                  gh release delete-asset cjk-base "$asset" \
+                    --repo "$GITHUB_REPOSITORY" --yes
+                fi
+              done
             done
             gh release upload cjk-base \
               --repo "$GITHUB_REPOSITORY" \
@@ -211,5 +244,7 @@ jobs:
           set -euo pipefail
           assets="$(gh release view cjk-base --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name')"
           for locale in cn tc jp kr; do
-            grep -Fxq "${locale}-base-static.zip" <<< "$assets"
+            for kind in static variable; do
+              grep -Fxq "${locale}-base-${kind}.zip" <<< "$assets"
+            done
           done

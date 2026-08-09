@@ -303,6 +303,37 @@ class CJKExecutorOwnershipTest(unittest.TestCase):
             )
             create_executor.assert_not_called()
 
+    def test_variable_artifacts_include_only_regular_and_italic_outputs(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            config = make_config(Path(tmp))
+            regular = config.output.dir / config.output.regular_variable
+            italic = config.output.dir / config.output.italic_variable
+            unrelated = config.output.dir / "unrelated.ttf"
+            for path in (regular, italic, unrelated):
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_bytes(b"font")
+            builder = CJKBuilder(config, BuildConfigResolver().load_defaults())
+
+            with (
+                patch("scripts.cjk.builder.write_variable_hash") as write_hash,
+                patch("scripts.cjk.builder.archive") as create_archive,
+            ):
+                builder._write_variable_artifacts()
+
+            write_hash.assert_called_once_with(config)
+            create_archive.assert_called_once()
+            self.assertEqual(
+                create_archive.call_args.args[:2],
+                (
+                    str(config.output.dir),
+                    str(config.output.dir / config.output.variable_archive_name),
+                ),
+            )
+            include = create_archive.call_args.args[2]
+            self.assertTrue(include(str(regular)))
+            self.assertTrue(include(str(italic)))
+            self.assertFalse(include(str(unrelated)))
+
     def test_builder_does_not_close_a_caller_owned_executor(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             executor = cast("Executor", MagicMock())

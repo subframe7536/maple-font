@@ -18,8 +18,7 @@ jobs:
   prepare-matrix:
     runs-on: ubuntu-latest
     outputs:
-      base: ${{ steps.matrix.outputs.base }}
-      cjk: ${{ steps.matrix.outputs.cjk }}
+      bundle: ${{ steps.matrix.outputs.bundle }}
     steps:
     - uses: actions/checkout@v6
       with:
@@ -38,56 +37,32 @@ jobs:
         assets="$(gh release view cjk-base --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name')"
         mkdir -p cjk-base-verify
         for locale in cn tc jp kr; do
-          expected="${locale}-base-static.zip"
-          grep -Fxq "$expected" <<< "$assets"
-          mkdir -p "cjk-base-verify/$locale"
-          gh release download cjk-base \
-            --repo "$GITHUB_REPOSITORY" \
-            --pattern "$expected" \
-            --dir "cjk-base-verify/$locale" \
-            --clobber
-          uv run task.py cjk cache-validate \
-            --archive "cjk-base-verify/$locale/$expected" \
-            --hash "source/cjk/$locale/static-$locale.sha256"
+          for kind in static variable; do
+            expected="${locale}-base-${kind}.zip"
+            grep -Fxq "$expected" <<< "$assets"
+            mkdir -p "cjk-base-verify/$kind/$locale"
+            gh release download cjk-base \
+              --repo "$GITHUB_REPOSITORY" \
+              --pattern "$expected" \
+              --dir "cjk-base-verify/$kind/$locale" \
+              --clobber
+            uv run task.py cjk cache-validate \
+              --archive "cjk-base-verify/$kind/$locale/$expected" \
+              --hash "source/cjk/$locale/${kind}-$locale.sha256" \
+              --kind "$kind"
+          done
         done
     - id: matrix
       name: Generate release task matrices
       run: |
-        echo "base=$(uv run task.py publish matrix base)" >> "$GITHUB_OUTPUT"
-        echo "cjk=$(uv run task.py publish matrix cjk)" >> "$GITHUB_OUTPUT"
+        echo "bundle=$(uv run task.py publish matrix bundle)" >> "$GITHUB_OUTPUT"
 
-  build-base:
-    needs: prepare-matrix
-    strategy:
-      fail-fast: false
-      matrix: ${{ fromJSON(needs.prepare-matrix.outputs.base) }}
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v6
-      with:
-        ref: ${{ github.event_name == 'workflow_dispatch' && inputs.release_tag || github.ref }}
-    - uses: astral-sh/setup-uv@v9
-      with:
-        enable-cache: true
-        prune-cache: false
-        python-version: '3.12'
-    - run: uv sync --locked --no-dev
-    - name: Build release task
-      run: uv run task.py publish build "${{ matrix.task }}"
-    - uses: actions/upload-artifact@v7
-      with:
-        name: release-${{ matrix.task }}
-        path: release-task/*.zip
-        if-no-files-found: error
-        compression-level: 0
-        retention-days: 1
-
-  build-cjk:
+  build-release:
     needs: prepare-matrix
     strategy:
       fail-fast: false
       max-parallel: 8
-      matrix: ${{ fromJSON(needs.prepare-matrix.outputs.cjk) }}
+      matrix: ${{ fromJSON(needs.prepare-matrix.outputs.bundle) }}
     runs-on: ubuntu-latest
     timeout-minutes: 360
     steps:
@@ -111,7 +86,7 @@ jobs:
         retention-days: 1
 
   create-release:
-    needs: [build-base, build-cjk]
+    needs: [build-release]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6

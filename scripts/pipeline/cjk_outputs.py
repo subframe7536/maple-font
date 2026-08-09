@@ -96,6 +96,7 @@ def ensure_cjk_variable_fonts(
     font_config: ResolvedConfig,
     github_mirror: str,
     executor: Executor | None = None,
+    runtime_context: BuildRuntimeContext | None = None,
 ) -> tuple[Path, Path]:
     preset_config = entry.build_config
     regular_path = preset_config.output.dir / preset_config.output.regular_variable
@@ -112,6 +113,19 @@ def ensure_cjk_variable_fonts(
             regular_path,
             italic_path,
         )
+        return regular_path, italic_path
+
+    if (
+        not entry.common_options.clean_cache
+        and runtime_context is not None
+        and runtime_context.download_cjk_variable_base(
+            entry.download_locale,
+            preset_config,
+        )
+        and regular_path.is_file()
+        and italic_path.is_file()
+    ):
+        logger.info("Reuse downloaded CJK variable fonts: %s", entry.display_name)
         return regular_path, italic_path
 
     logger.info("Build CJK variable fonts: %s", entry.display_name)
@@ -140,6 +154,7 @@ def build_cjk_extended_variable_fonts(
         font_config,
         runtime_context.effective_github_mirror,
         executor,
+        runtime_context,
     )
     output_dir.mkdir(parents=True, exist_ok=True)
     core_pairs = (

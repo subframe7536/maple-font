@@ -32,6 +32,28 @@ class TaskDownloadMirrorTest(unittest.TestCase):
 
         verify.assert_called_once_with(Path("archive.zip"), Path("static.sha256"))
 
+    def test_cjk_cache_validate_task_selects_variable_archive_validator(self) -> None:
+        parser = argparse.ArgumentParser()
+        subparsers = parser.add_subparsers(dest="command")
+        cjk.register_parser(subparsers)
+        args = parser.parse_args(
+            [
+                "cjk",
+                "cache-validate",
+                "--archive",
+                "archive.zip",
+                "--hash",
+                "variable.sha256",
+                "--kind",
+                "variable",
+            ]
+        )
+
+        with patch("scripts.task.cjk.verify_variable_archive") as verify:
+            cjk.run(args)
+
+        verify.assert_called_once_with(Path("archive.zip"), Path("variable.sha256"))
+
     def test_cjk_task_builds_comma_separated_presets_independently(self) -> None:
         parser = argparse.ArgumentParser()
         subparsers = parser.add_subparsers(dest="command")
