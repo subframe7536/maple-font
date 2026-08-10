@@ -211,6 +211,22 @@ class BuildRuntimeContext:
     ) -> bool:
         return locale in CJK_STATIC_DOWNLOAD_LOCALES
 
+    def _use_local_archive(
+        self,
+        local_archive: Path,
+        archive_name: str,
+        output_dir: Path,
+        installer: Callable[[Path], bool],
+    ) -> bool:
+        """Run an archive installer against a temporary local copy."""
+        with tempfile.TemporaryDirectory(
+            prefix=f".{output_dir.name}-local-archive-",
+            dir=output_dir.parent,
+        ) as temporary_dir:
+            local_copy = Path(temporary_dir) / archive_name
+            shutil.copy2(local_archive, local_copy)
+            return installer(local_copy)
+
     def download_cjk_static_base(
         self,
         locale: BuiltinCJKLocaleId,
@@ -234,13 +250,9 @@ class BuildRuntimeContext:
         if local_archive.is_file():
             try:
                 verify_static_archive(local_archive, static_hash_path(preset_config))
-                with tempfile.TemporaryDirectory(
-                    prefix=f".{static_dir.name}-static-",
-                    dir=static_dir.parent,
-                ) as temporary_dir:
-                    local_copy = Path(temporary_dir) / archive_name
-                    shutil.copy2(local_archive, local_copy)
-                    downloaded = download_zip_and_extract(
+
+                def install_local_archive(local_copy: Path) -> bool:
+                    return download_zip_and_extract(
                         name=f"{preset_config.locale_name} local static CJK base font",
                         url=self.cjk_static_download_url(locale),
                         zip_path=local_copy,
@@ -248,6 +260,13 @@ class BuildRuntimeContext:
                         remove_zip=False,
                         github_mirror=self.effective_github_mirror,
                     )
+
+                downloaded = self._use_local_archive(
+                    local_archive,
+                    archive_name,
+                    static_dir,
+                    install_local_archive,
+                )
                 if downloaded:
                     logger.info(
                         "Reuse local CJK static base archive: locale=%s",
@@ -261,14 +280,38 @@ class BuildRuntimeContext:
                     preset_config.locale_name,
                     error,
                 )
-        return download_zip_and_extract(
-            name=f"{preset_config.locale_name} static CJK base font",
-            url=self.cjk_static_download_url(locale),
-            zip_path=static_dir.parent / f".{archive_name}.download.zip",
-            output_dir=str(static_dir),
-            remove_zip=True,
-            github_mirror=self.effective_github_mirror,
-        )
+        try:
+            with tempfile.TemporaryDirectory(
+                prefix=f".{static_dir.name}-remote-static-",
+                dir=static_dir.parent,
+            ) as temporary_dir:
+                temporary_root = Path(temporary_dir)
+                archive_path = temporary_root / archive_name
+                extracted_dir = temporary_root / "files"
+                downloaded = download_zip_and_extract(
+                    name=f"{preset_config.locale_name} static CJK base font",
+                    url=self.cjk_static_download_url(locale),
+                    zip_path=archive_path,
+                    output_dir=extracted_dir,
+                    remove_zip=False,
+                    github_mirror=self.effective_github_mirror,
+                )
+                if not downloaded:
+                    return False
+                verify_static_archive(archive_path, static_hash_path(preset_config))
+                extracted_dir.replace(static_dir)
+            logger.info(
+                "Downloaded CJK static base archive: locale=%s",
+                preset_config.locale_name,
+            )
+            return True
+        except (OSError, ValueError) as error:
+            logger.warning(
+                "Downloaded CJK static base archive is invalid: locale=%s, error=%s",
+                preset_config.locale_name,
+                error,
+            )
+            return False
 
     def _install_cjk_variable_archive(
         self,
@@ -344,25 +387,28 @@ class BuildRuntimeContext:
                         hash_path,
                         tuple(path.name for path in expected_paths),
                     )
-                    with tempfile.TemporaryDirectory(
-                        prefix=f".{output_dir.name}-local-variable-",
-                        dir=output_dir.parent,
-                    ) as temporary_dir:
-                        local_copy = Path(temporary_dir) / archive_name
-                        shutil.copy2(local_archive, local_copy)
-                        if self._install_cjk_variable_archive(
+
+                    def install_local_archive(local_copy: Path) -> bool:
+                        return self._install_cjk_variable_archive(
                             local_copy,
                             hash_path,
                             expected_paths,
                             output_dir,
                             locale,
                             preset_config.locale_name,
-                        ):
-                            logger.info(
-                                "Reuse local CJK variable base archive: locale=%s",
-                                preset_config.locale_name,
-                            )
-                            return True
+                        )
+
+                    if self._use_local_archive(
+                        local_archive,
+                        archive_name,
+                        output_dir,
+                        install_local_archive,
+                    ):
+                        logger.info(
+                            "Reuse local CJK variable base archive: locale=%s",
+                            preset_config.locale_name,
+                        )
+                        return True
                 except (OSError, ValueError) as error:
                     logger.warning(
                         "Local CJK variable base archive is invalid; try remote asset: "
@@ -476,16 +522,17 @@ class BuildRuntimeContext:
 
     def _resolve_variable_cjk_static_base(
         self,
-        preset_config: CJKBuildConfig,
-        static_dir: Path,
-        static_file_prefix: str,
+        entry: ResolvedCJKBuildEntry,
         required_styles: list[str],
         build_config: ResolvedConfig,
         builder: Callable[..., None],
-        clean_cache: bool,
-        download_locale: BuiltinCJKLocaleId | None,
         executor: Executor | None = None,
     ) -> CJKStaticBaseResolution:
+        preset_config = entry.build_config
+        static_dir = self.cjk_static_dir(preset_config)
+        static_file_prefix = preset_config.naming.static_file_prefix
+        clean_cache = entry.common_options.clean_cache
+        download_locale = entry.download_locale
         failures: list[str] = []
         variable_paths = (
             preset_config.output.dir / preset_config.output.regular_variable,
@@ -591,14 +638,10 @@ class BuildRuntimeContext:
             return download_resolution
 
         return self._resolve_variable_cjk_static_base(
-            preset_config,
-            static_dir,
-            static_file_prefix,
+            entry,
             required_styles,
             font_config,
             variable_builder,
-            entry.common_options.clean_cache,
-            entry.download_locale,
             executor,
         )
 

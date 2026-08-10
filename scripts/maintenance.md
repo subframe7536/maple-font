@@ -25,6 +25,7 @@ Do not run a release, publish, push, or page synchronization command until the g
    ```
 
    Review the complete diff under `source/*.designspace` and `source/*.ufo/`. If conversion reports compatibility errors, inspect `fonts/source-issues.json` before continuing.
+
 3. If feature definitions or feature configuration changed in scripts/feature, regenerate all derived feature data:
 
    ```sh
@@ -32,6 +33,7 @@ Do not run a release, publish, push, or page synchronization command until the g
    ```
 
    Review every generated file listed below. Do not keep unrelated churn.
+
 4. Run a focused build before committing source changes:
 
    ```sh
@@ -92,7 +94,7 @@ The task rebuilds the regular and italic variable bases, writes their standalone
 
 ### Prepare and tag locally
 
-1. Finish source, feature, page, and CJK updates, then run the validation baseline below. Make sure the `cjk-base` release is current and its four hashes match the repository.
+1. Finish source, feature, page, and CJK updates, then run the validation baseline below. Make sure the `cjk-base` release is current and its 8 hashes match the repository.
 2. Preview the next version without changing files. The release task uses the development-only `questionary` menu with arrow-key navigation; each option includes its target tag and embedded font version, and `minor` is selected by default:
 
    ```sh

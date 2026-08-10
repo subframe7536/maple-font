@@ -4,7 +4,7 @@ import re
 import tempfile
 from pathlib import Path, PurePosixPath
 from typing import TYPE_CHECKING
-from zipfile import BadZipFile, ZipFile
+from zipfile import BadZipFile, ZipFile, ZipInfo
 
 from scripts.cache.digest import digest_paths, digest_tree
 from scripts.font_ops.fonttools import load_font
@@ -68,6 +68,30 @@ def write_variable_hash(config: CJKBuildConfig) -> None:
     temporary.replace(hash_path)
 
 
+def _validate_root_level_ttf_members(
+    members: list[ZipInfo], archive_label: str
+) -> list[str]:
+    """Validate archive member shape shared by static and variable bases."""
+    names = [member.filename for member in members]
+    if len(names) != len(set(names)):
+        raise ValueError(f"{archive_label} archive contains duplicate members")
+    for member in members:
+        member_path = PurePosixPath(member.filename)
+        if (
+            member.is_dir()
+            or "/" in member.filename
+            or "\\" in member.filename
+            or member.filename != member_path.name
+            or member_path.name in {"", ".", ".."}
+            or member_path.suffix.lower() != ".ttf"
+        ):
+            raise ValueError(
+                f"{archive_label} archive must contain only root-level TTF files: "
+                f"{member.filename!r}"
+            )
+    return names
+
+
 def verify_static_archive(archive_path: Path, expected_hash_path: Path) -> None:
     """Verify a static archive against a committed directory hash."""
     expected_hash = expected_hash_path.read_text(encoding="utf-8").strip()
@@ -77,27 +101,9 @@ def verify_static_archive(archive_path: Path, expected_hash_path: Path) -> None:
     try:
         with ZipFile(archive_path) as archive:
             members = archive.infolist()
-            names = [member.filename for member in members]
             if not members:
                 raise ValueError(f"Static archive is empty: {archive_path}")
-            if len(names) != len(set(names)):
-                raise ValueError(
-                    f"Static archive contains duplicate members: {archive_path}"
-                )
-            for member in members:
-                member_path = PurePosixPath(member.filename)
-                if (
-                    member.is_dir()
-                    or "/" in member.filename
-                    or "\\" in member.filename
-                    or member.filename != member_path.name
-                    or member_path.name in {"", ".", ".."}
-                    or member_path.suffix.lower() != ".ttf"
-                ):
-                    raise ValueError(
-                        "Static archive must contain only root-level TTF files: "
-                        f"{member.filename!r}"
-                    )
+            _validate_root_level_ttf_members(members, "Static")
             bad_member = archive.testzip()
             if bad_member is not None:
                 raise ValueError(f"Corrupt static archive member: {bad_member!r}")
@@ -128,30 +134,12 @@ def verify_variable_archive(
     try:
         with ZipFile(archive_path) as archive:
             members = archive.infolist()
-            names = [member.filename for member in members]
+            names = _validate_root_level_ttf_members(members, "Variable")
             if len(names) != 2:
                 raise ValueError(
                     "Variable archive must contain exactly two TTF files: "
                     f"{archive_path}"
                 )
-            if len(names) != len(set(names)):
-                raise ValueError(
-                    f"Variable archive contains duplicate members: {archive_path}"
-                )
-            for member in members:
-                member_path = PurePosixPath(member.filename)
-                if (
-                    member.is_dir()
-                    or "/" in member.filename
-                    or "\\" in member.filename
-                    or member.filename != member_path.name
-                    or member_path.name in {"", ".", ".."}
-                    or member_path.suffix.lower() != ".ttf"
-                ):
-                    raise ValueError(
-                        "Variable archive must contain only root-level TTF files: "
-                        f"{member.filename!r}"
-                    )
             if expected_names is not None and set(names) != set(expected_names):
                 raise ValueError(
                     "Variable archive members do not match the expected outputs: "

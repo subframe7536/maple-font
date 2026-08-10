@@ -216,14 +216,32 @@ class BuildRuntimeContextCJKStaticBaseTest(unittest.TestCase):
             runtime_context = make_runtime_context(tmp_path)
             runtime_context.effective_github_mirror = "mirror.example.com/github.com"
             entry = make_entry(tmp_path)
+            config = entry.build_config
+            expected_dir = tmp_path / "expected-static"
+            write_static_fonts(
+                expected_dir, config.naming.static_file_prefix, ["Regular"]
+            )
+            write_static_hash(config, expected_dir)
+
+            def fake_download(*, zip_path, output_dir, **_kwargs) -> bool:
+                extracted_dir = Path(output_dir)
+                write_static_fonts(
+                    extracted_dir,
+                    config.naming.static_file_prefix,
+                    ["Regular"],
+                )
+                with ZipFile(zip_path, "w") as archive:
+                    for font_path in extracted_dir.glob("*.ttf"):
+                        archive.write(font_path, font_path.name)
+                return True
 
             with patch(
                 "scripts.config.runtime.download_zip_and_extract",
-                return_value=True,
+                side_effect=fake_download,
             ) as download:
                 downloaded = runtime_context.download_cjk_static_base(
                     "cn",
-                    entry.build_config,
+                    config,
                 )
 
             self.assertTrue(downloaded)
@@ -235,6 +253,47 @@ class BuildRuntimeContextCJKStaticBaseTest(unittest.TestCase):
                 download.call_args.kwargs["url"],
                 "https://github.com/subframe7536/maple-font/releases/download/cjk-base/cn-base-static.zip",
             )
+            self.assertTrue(
+                (
+                    runtime_context.cjk_static_dir(config) / "MapleMonoCN-Regular.ttf"
+                ).is_file()
+            )
+
+    def test_remote_static_archive_hash_mismatch_is_rejected(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            runtime_context = make_runtime_context(tmp_path)
+            entry = make_entry(tmp_path)
+            config = entry.build_config
+            static_dir = runtime_context.cjk_static_dir(config)
+            write_static_fonts(
+                static_dir,
+                config.naming.static_file_prefix,
+                ["Regular"],
+            )
+            write_static_hash(config, static_dir)
+            shutil.rmtree(static_dir)
+
+            def fake_download(*, zip_path, output_dir, **_kwargs) -> bool:
+                extracted_dir = Path(output_dir)
+                write_static_fonts(
+                    extracted_dir,
+                    config.naming.static_file_prefix,
+                    ["Regular", "Bold"],
+                )
+                with ZipFile(zip_path, "w") as archive:
+                    for font_path in extracted_dir.glob("*.ttf"):
+                        archive.write(font_path, font_path.name)
+                return True
+
+            with patch(
+                "scripts.config.runtime.download_zip_and_extract",
+                side_effect=fake_download,
+            ):
+                downloaded = runtime_context.download_cjk_static_base("cn", config)
+
+            self.assertFalse(downloaded)
+            self.assertFalse(static_dir.exists())
 
     def test_local_static_archive_is_used_before_remote_asset(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

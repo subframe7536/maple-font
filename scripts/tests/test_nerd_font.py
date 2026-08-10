@@ -68,10 +68,12 @@ class NerdFontHelpersTest(unittest.TestCase):
                 config.nerd_font.mono = flags.get("mono", False)
                 config.nerd_font.propo = flags.get("propo", False)
                 runtime_context = BuildRuntimeContext.from_config(config)
-                self.assertEqual(runtime_context.output_nf, f"fonts/{directory}")
+                self.assertEqual(
+                    runtime_context.output_nf, str(Path("fonts") / directory)
+                )
                 self.assertEqual(
                     runtime_context.output_nf_variable,
-                    f"fonts/Variable-{directory}",
+                    str(Path("fonts") / f"Variable-{directory}"),
                 )
 
     def test_parse_codes_from_json_loads_and_sorts_codes(self) -> None:
