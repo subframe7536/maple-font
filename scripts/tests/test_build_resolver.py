@@ -318,15 +318,24 @@ class BuildRuntimeContextCJKStaticBaseTest(unittest.TestCase):
                     archive.write(font_path, font_path.name)
             shutil.rmtree(static_dir)
 
-            with patch(
-                "scripts.utils.downloads.download_file",
-                side_effect=AssertionError("remote download should not run"),
-            ) as download:
+            with (
+                patch(
+                    "scripts.utils.downloads.download_file",
+                    side_effect=AssertionError("remote download should not run"),
+                ) as download,
+                patch.object(
+                    ZipFile,
+                    "extractall",
+                    autospec=True,
+                    side_effect=ZipFile.extractall,
+                ) as extractall,
+            ):
                 downloaded = runtime_context.download_cjk_static_base("cn", config)
 
             self.assertTrue(downloaded)
             self.assertTrue((static_dir / "MapleMonoCN-Regular.ttf").is_file())
             download.assert_not_called()
+            extractall.assert_called_once()
 
     def test_variable_download_uses_effective_github_mirror_and_validates_archive(
         self,
@@ -358,10 +367,18 @@ class BuildRuntimeContextCJKStaticBaseTest(unittest.TestCase):
                     archive.extractall(output_dir)
                 return True
 
-            with patch(
-                "scripts.config.runtime.download_zip_and_extract",
-                side_effect=fake_download,
-            ) as download:
+            with (
+                patch(
+                    "scripts.config.runtime.download_zip_and_extract",
+                    side_effect=fake_download,
+                ) as download,
+                patch.object(
+                    ZipFile,
+                    "extractall",
+                    autospec=True,
+                    side_effect=ZipFile.extractall,
+                ) as extractall,
+            ):
                 downloaded = runtime_context.download_cjk_variable_base(
                     "cn",
                     config,
@@ -377,6 +394,7 @@ class BuildRuntimeContextCJKStaticBaseTest(unittest.TestCase):
                 download.call_args.kwargs["url"],
                 "https://github.com/subframe7536/maple-font/releases/download/cjk-base/cn-base-variable.zip",
             )
+            extractall.assert_called_once()
             self.assertFalse(
                 config.output.dir.joinpath(
                     ".cn-base-variable.zip.download.zip"
@@ -398,15 +416,24 @@ class BuildRuntimeContextCJKStaticBaseTest(unittest.TestCase):
             for font_path in paths:
                 font_path.unlink()
 
-            with patch(
-                "scripts.utils.downloads.download_file",
-                side_effect=AssertionError("remote download should not run"),
-            ) as download:
+            with (
+                patch(
+                    "scripts.utils.downloads.download_file",
+                    side_effect=AssertionError("remote download should not run"),
+                ) as download,
+                patch.object(
+                    ZipFile,
+                    "extractall",
+                    autospec=True,
+                    side_effect=ZipFile.extractall,
+                ) as extractall,
+            ):
                 downloaded = runtime_context.download_cjk_variable_base("cn", config)
 
             self.assertTrue(downloaded)
             self.assertTrue(all(font_path.is_file() for font_path in paths))
             download.assert_not_called()
+            extractall.assert_called_once()
 
     def test_remote_variable_fallback_precedes_source_rebuild(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

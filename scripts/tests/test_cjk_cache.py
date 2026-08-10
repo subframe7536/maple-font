@@ -262,6 +262,28 @@ class CJKStaticCacheTest(unittest.TestCase):
                 expected_names,
             )
 
+    def test_variable_archive_reuses_existing_extraction(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            config = self.make_config(Path(tmp))
+            paths = self.write_variable(config)
+            archive_path = Path(tmp) / "cn-base-variable.zip"
+            self.write_variable_archive(paths, archive_path)
+            extracted_dir = Path(tmp) / "extracted"
+            with ZipFile(archive_path) as archive:
+                archive.extractall(extracted_dir)
+
+            with patch.object(
+                ZipFile,
+                "extractall",
+                side_effect=AssertionError("archive should not be extracted again"),
+            ):
+                verify_variable_archive(
+                    archive_path,
+                    config.output.dir / config.output.variable_hash,
+                    tuple(path.name for path in paths),
+                    extracted_dir=extracted_dir,
+                )
+
     def test_variable_archive_rejects_hash_mismatch(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             config = self.make_config(Path(tmp))

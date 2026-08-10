@@ -326,7 +326,7 @@ def _validate_zip_resources(zip_file: ZipFile) -> None:
 
 def download_zip_and_extract(
     name: str,
-    url: str,
+    url: str | None,
     zip_path: str | Path,
     output_dir: str | Path,
     remove_zip: bool = False,
@@ -344,6 +344,8 @@ def download_zip_and_extract(
             archive_path.unlink(missing_ok=True)
 
     if not archive_path.exists():
+        if url is None:
+            return False
         logger.info("Download archive: name=%s, url=%s", name, url)
         archive_path.parent.mkdir(parents=True, exist_ok=True)
         temporary_archive = archive_path.with_name(f".{archive_path.name}.download")

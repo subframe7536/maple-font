@@ -18,7 +18,7 @@ jobs:
   prepare-matrix:
     runs-on: ubuntu-latest
     outputs:
-      bundle: ${{ steps.matrix.outputs.bundle }}
+      matrix: ${{ steps.matrix.outputs.matrix }}
     steps:
       - uses: actions/checkout@v6
         with:
@@ -53,16 +53,16 @@ jobs:
             done
           done
       - id: matrix
-        name: Generate release task matrices
+        name: Generate release task matrix
         run: |
-          echo "bundle=$(uv run task.py publish matrix bundle)" >> "$GITHUB_OUTPUT"
+          echo "matrix=$(uv run task.py publish matrix)" >> "$GITHUB_OUTPUT"
 
   build-release:
     needs: prepare-matrix
     strategy:
       fail-fast: false
       max-parallel: 8
-      matrix: ${{ fromJSON(needs.prepare-matrix.outputs.bundle) }}
+      matrix: ${{ fromJSON(needs.prepare-matrix.outputs.matrix) }}
     runs-on: ubuntu-latest
     timeout-minutes: 360
     steps:

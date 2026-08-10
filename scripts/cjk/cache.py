@@ -128,10 +128,29 @@ def verify_static_archive(
         )
 
 
+def _verify_variable_directory(names: list[str], extracted_dir: Path) -> str:
+    """Validate variable fonts in an extracted archive and return their digest."""
+    for name in names:
+        font_path = extracted_dir / name
+        try:
+            font = load_font(font_path)
+        except Exception as error:
+            raise ValueError(
+                f"Variable archive member is not a valid font: {name}"
+            ) from error
+        try:
+            if "fvar" not in font:
+                raise ValueError(f"Variable archive member is not variable: {name}")
+        finally:
+            font.close()
+    return digest_tree(extracted_dir)
+
+
 def verify_variable_archive(
     archive_path: Path,
     expected_hash_path: Path,
     expected_names: tuple[str, ...] | None = None,
+    extracted_dir: Path | None = None,
 ) -> None:
     """Verify a variable base archive and its regular/italic font members."""
     expected_hash = expected_hash_path.read_text(encoding="utf-8").strip()
@@ -173,26 +192,17 @@ def verify_variable_archive(
             bad_member = archive.testzip()
             if bad_member is not None:
                 raise ValueError(f"Corrupt variable archive member: {bad_member!r}")
-            with tempfile.TemporaryDirectory(
-                prefix="cjk-variable-verify-"
-            ) as extract_dir:
-                archive.extractall(extract_dir)
-                for name in names:
-                    font_path = Path(extract_dir) / name
-                    try:
-                        font = load_font(font_path)
-                    except Exception as error:
-                        raise ValueError(
-                            f"Variable archive member is not a valid font: {name}"
-                        ) from error
-                    try:
-                        if "fvar" not in font:
-                            raise ValueError(
-                                f"Variable archive member is not variable: {name}"
-                            )
-                    finally:
-                        font.close()
-                actual_hash = digest_tree(Path(extract_dir))
+            if extracted_dir is None:
+                with tempfile.TemporaryDirectory(
+                    prefix="cjk-variable-verify-"
+                ) as extract_dir:
+                    archive.extractall(extract_dir)
+                    actual_hash = _verify_variable_directory(
+                        names,
+                        Path(extract_dir),
+                    )
+            else:
+                actual_hash = _verify_variable_directory(names, extracted_dir)
     except BadZipFile as error:
         raise ValueError(f"Invalid variable archive: {archive_path}") from error
 

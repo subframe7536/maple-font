@@ -6,7 +6,7 @@ import shutil
 import subprocess
 from dataclasses import dataclass
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Literal
+from typing import TYPE_CHECKING, Any
 
 from scripts.external.process import is_ci
 from scripts.utils.files import archive_fonts
@@ -16,7 +16,6 @@ from scripts.utils.version import parse_version_tag, version_tag
 if TYPE_CHECKING:
     import argparse
 
-ReleaseTaskKind = Literal["bundle"]
 RELEASE_ASSET_DIR = Path("release")
 RELEASE_TASK_DIR = Path("release-task")
 BUILD_ARCHIVE_DIR = Path("fonts/archive")
@@ -177,10 +176,7 @@ def register_parser(subparsers: argparse._SubParsersAction[argparse.ArgumentPars
     )
     actions = parser.add_subparsers(dest="publish_action", required=True)
 
-    matrix_parser = actions.add_parser(
-        "matrix", help="Print a GitHub Actions release task matrix"
-    )
-    matrix_parser.add_argument("kind", choices=("bundle",))
+    actions.add_parser("matrix", help="Print a GitHub Actions release task matrix")
 
     build_parser = actions.add_parser("build", help="Run one release build task")
     build_parser.add_argument("task", help="Task id emitted by the matrix command")
@@ -213,10 +209,8 @@ def release_tasks() -> tuple[ReleaseTask, ...]:
     )
 
 
-def release_matrix(kind: ReleaseTaskKind) -> dict[str, list[dict[str, str]]]:
-    if kind != "bundle":
-        raise ValueError(f"Unsupported release matrix kind: {kind}")
-    return {"include": [{"task": task.id} for task in release_tasks()]}
+def release_matrix() -> dict[str, list[str]]:
+    return {"task": [task.id for task in release_tasks()]}
 
 
 def release_manifest() -> dict[str, Any]:
@@ -519,7 +513,7 @@ def publish(write: bool, tag: str | None = None, dry: bool = not is_ci()):
 
 def run(args: argparse.Namespace) -> None:
     if args.publish_action == "matrix":
-        print(json.dumps(release_matrix(args.kind), separators=(",", ":")))
+        print(json.dumps(release_matrix(), separators=(",", ":")))
     elif args.publish_action == "build":
         build_release_task(args.task, args.build_args)
     else:

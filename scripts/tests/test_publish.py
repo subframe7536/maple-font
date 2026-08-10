@@ -284,15 +284,11 @@ class PublishTest(unittest.TestCase):
             self.assertFalse(list(release_dir.glob("*.sha256")))
 
     def test_release_matrix_exposes_eight_bundle_tasks(self) -> None:
-        bundle = release_matrix("bundle")["include"]
+        bundle = release_matrix()["task"]
 
         self.assertEqual(len(bundle), 8)
-        self.assertTrue(all(set(item) == {"task"} for item in bundle))
-        self.assertFalse(any("narrow" in item["task"] for item in bundle))
-        self.assertIn(
-            {"task": "bundle-normal-no-ligature-slim"},
-            bundle,
-        )
+        self.assertFalse(any("narrow" in task for task in bundle))
+        self.assertIn("bundle-normal-no-ligature-slim", bundle)
 
     def test_release_task_owns_build_steps_and_archive_names(self) -> None:
         with self.assertRaises(ValueError):

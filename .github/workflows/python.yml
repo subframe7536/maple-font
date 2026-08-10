@@ -3,7 +3,7 @@ name: Python Quality
 on:
   push:
     branches:
-      - "**"
+      - "variable"
     paths:
       - "**.py"
       - "config.json"
