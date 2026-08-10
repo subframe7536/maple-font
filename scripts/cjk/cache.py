@@ -92,7 +92,11 @@ def _validate_root_level_ttf_members(
     return names
 
 
-def verify_static_archive(archive_path: Path, expected_hash_path: Path) -> None:
+def verify_static_archive(
+    archive_path: Path,
+    expected_hash_path: Path,
+    extracted_dir: Path | None = None,
+) -> None:
     """Verify a static archive against a committed directory hash."""
     expected_hash = expected_hash_path.read_text(encoding="utf-8").strip()
     if not HASH_PATTERN.fullmatch(expected_hash):
@@ -107,11 +111,14 @@ def verify_static_archive(archive_path: Path, expected_hash_path: Path) -> None:
             bad_member = archive.testzip()
             if bad_member is not None:
                 raise ValueError(f"Corrupt static archive member: {bad_member!r}")
-            with tempfile.TemporaryDirectory(
-                prefix="cjk-static-verify-"
-            ) as extract_dir:
-                archive.extractall(extract_dir)
-                actual_hash = get_directory_hash(extract_dir)
+            if extracted_dir is None:
+                with tempfile.TemporaryDirectory(
+                    prefix="cjk-static-verify-"
+                ) as extract_dir:
+                    archive.extractall(extract_dir)
+                    actual_hash = get_directory_hash(extract_dir)
+            else:
+                actual_hash = get_directory_hash(str(extracted_dir))
     except BadZipFile as error:
         raise ValueError(f"Invalid static archive: {archive_path}") from error
 

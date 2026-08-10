@@ -235,10 +235,13 @@ class BuildRuntimeContextCJKStaticBaseTest(unittest.TestCase):
                         archive.write(font_path, font_path.name)
                 return True
 
-            with patch(
-                "scripts.config.runtime.download_zip_and_extract",
-                side_effect=fake_download,
-            ) as download:
+            with (
+                patch(
+                    "scripts.config.runtime.download_zip_and_extract",
+                    side_effect=fake_download,
+                ) as download,
+                patch("zipfile.ZipFile.extractall") as extractall,
+            ):
                 downloaded = runtime_context.download_cjk_static_base(
                     "cn",
                     config,
@@ -253,6 +256,7 @@ class BuildRuntimeContextCJKStaticBaseTest(unittest.TestCase):
                 download.call_args.kwargs["url"],
                 "https://github.com/subframe7536/maple-font/releases/download/cjk-base/cn-base-static.zip",
             )
+            extractall.assert_not_called()
             self.assertTrue(
                 (
                     runtime_context.cjk_static_dir(config) / "MapleMonoCN-Regular.ttf"

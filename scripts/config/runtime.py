@@ -298,7 +298,11 @@ class BuildRuntimeContext:
                 )
                 if not downloaded:
                     return False
-                verify_static_archive(archive_path, static_hash_path(preset_config))
+                verify_static_archive(
+                    archive_path,
+                    static_hash_path(preset_config),
+                    extracted_dir=extracted_dir,
+                )
                 extracted_dir.replace(static_dir)
             logger.info(
                 "Downloaded CJK static base archive: locale=%s",
@@ -534,11 +538,8 @@ class BuildRuntimeContext:
         clean_cache = entry.common_options.clean_cache
         download_locale = entry.download_locale
         failures: list[str] = []
-        variable_paths = (
-            preset_config.output.dir / preset_config.output.regular_variable,
-            preset_config.output.dir / preset_config.output.italic_variable,
-        )
-        if not clean_cache and all(path.is_file() for path in variable_paths):
+        variable_output_paths = variable_paths(preset_config)
+        if not clean_cache and all(path.is_file() for path in variable_output_paths):
             try:
                 instantiate_cjk_static_from_variable(
                     preset_config,

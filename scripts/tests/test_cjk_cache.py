@@ -3,6 +3,7 @@ from __future__ import annotations
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 from zipfile import ZipFile
 
 from fontTools.fontBuilder import FontBuilder
@@ -104,6 +105,27 @@ class CJKStaticCacheTest(unittest.TestCase):
             verify_static_archive(
                 archive_path, config.output.dir / config.output.static_hash
             )
+
+    def test_static_archive_reuses_existing_extraction(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            config = self.make_config(Path(tmp))
+            static_dir = self.write_static(config)
+            archive_path = Path(tmp) / "cn-base-static.zip"
+            self.write_archive(static_dir, archive_path)
+            extracted_dir = Path(tmp) / "extracted"
+            with ZipFile(archive_path) as archive:
+                archive.extractall(extracted_dir)
+
+            with patch.object(
+                ZipFile,
+                "extractall",
+                side_effect=AssertionError("archive should not be extracted again"),
+            ):
+                verify_static_archive(
+                    archive_path,
+                    config.output.dir / config.output.static_hash,
+                    extracted_dir=extracted_dir,
+                )
 
     def test_static_archive_hash_mismatch_is_rejected(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
