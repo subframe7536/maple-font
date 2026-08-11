@@ -7,6 +7,7 @@ from pathlib import Path
 from unittest.mock import patch
 from zipfile import ZipFile
 
+from scripts.config.paths import static_output_dir, variable_output_dir
 from scripts.utils.files import archive_fonts, archive_output_label
 
 
@@ -20,6 +21,16 @@ class FontArchiveTest(unittest.TestCase):
         self.assertEqual(archive_output_label("Variable-NFMono"), "NFMono-VF")
         self.assertEqual(archive_output_label("NFMono-CN"), "NFMono-CN")
         self.assertEqual(archive_output_label("Variable-NFPropo-CN"), "NFPropo-CN-VF")
+
+    def test_output_dirs_preserve_variant_casing(self) -> None:
+        root = Path("fonts")
+        self.assertEqual(static_output_dir(root, "CN"), root / "CN")
+        self.assertEqual(static_output_dir(root, "NFMono-CN"), root / "NFMono-CN")
+        self.assertEqual(variable_output_dir(root, "JP"), root / "Variable-JP")
+        self.assertEqual(
+            variable_output_dir(root, "NFPropo-CN"),
+            root / "Variable-NFPropo-CN",
+        )
 
     def test_archive_readme_links_only_relative_font_files(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
