@@ -164,38 +164,21 @@ class PostprocessCJKStaticFontTest(unittest.TestCase):
 
         apply_meta_mock.assert_not_called()
 
-    def test_nf_propo_marks_font_proportional_and_skips_width_validation(self) -> None:
+    def test_nf_propo_width_transform_marks_font_proportional(self) -> None:
         font_config = BuildConfigResolver().load_defaults()
         font_config.nerd_font.propo = True
         font = MagicMock()
 
-        with (
-            patch("scripts.cjk.static.remove_target_glyph"),
-            patch(
-                "scripts.cjk.static.apply_cjk_names",
-                return_value="MapleMono-NFP-CN-Regular",
-            ),
-            patch(
-                "scripts.cjk.static.apply_cjk_width_transform",
-                return_value=False,
-            ),
-            patch("scripts.cjk.static.apply_cjk_meta_table"),
-            patch("scripts.cjk.static.apply_cjk_metrics"),
-            patch("scripts.cjk.static.apply_binary_features"),
-            patch("scripts.cjk.static.verify_cjk_widths") as verify_widths,
-        ):
-            postprocess_cjk_extended_static_font(
-                font,
-                make_builtin_entry(),
-                font_config,
-                make_runtime_context(),
-                "Regular",
-            )
+        skip_verify = apply_cjk_width_transform(
+            font,
+            font_config,
+            CJKCommonBuildOptions(),
+        )
 
         self.assertFalse(font.table("post").isFixedPitch)
         self.assertEqual(font.table("OS/2").panose.bProportion, 0)
         self.assertEqual(font.table("OS/2").panose.bSpacing, 0)
-        self.assertTrue(verify_widths.call_args.args[3])
+        self.assertTrue(skip_verify)
 
 
 if __name__ == "__main__":
