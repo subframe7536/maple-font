@@ -39,8 +39,7 @@ class NerdFontVariant:
 
     @property
     def compact(self) -> str:
-        # Keep the historical NFo/NFr output suffixes used by the build paths.
-        return self.suffix[1] if self.suffix else ""
+        return self.suffix[0] if self.suffix else ""
 
     @property
     def symbol(self) -> str:

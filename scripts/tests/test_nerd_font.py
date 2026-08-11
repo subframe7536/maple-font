@@ -19,7 +19,7 @@ class NerdFontHelpersTest(unittest.TestCase):
     def test_variant_preserves_nf_output_names(self) -> None:
         self.assertEqual(NerdFontVariant.from_options().symbol, "NF")
         self.assertEqual(NerdFontVariant.from_options(mono=True).suffix, "Mono")
-        self.assertEqual(NerdFontVariant.from_options(mono=True).symbol, "NFo")
+        self.assertEqual(NerdFontVariant.from_options(mono=True).symbol, "NFM")
         self.assertEqual(
             NerdFontVariant.from_options(mono=True).directory_name, "NFMono"
         )
@@ -27,7 +27,7 @@ class NerdFontHelpersTest(unittest.TestCase):
             NerdFontVariant.from_options(mono=True).cjk_directory_name("CN"),
             "NFMono-CN",
         )
-        self.assertEqual(NerdFontVariant.from_options(propo=True).symbol, "NFr")
+        self.assertEqual(NerdFontVariant.from_options(propo=True).symbol, "NFP")
         self.assertEqual(
             NerdFontVariant.from_options(propo=True).directory_name, "NFPropo"
         )
@@ -50,7 +50,7 @@ class NerdFontHelpersTest(unittest.TestCase):
         )
         self.assertEqual(
             variant.patched_style_path("fonts", "MapleMono", "Italic"),
-            Path("fonts/MapleMono-NFo-Italic.ttf"),
+            Path("fonts/MapleMono-NFM-Italic.ttf"),
         )
         self.assertEqual(
             variant.patched_font_path("fonts", "MapleMono-Regular.ttf"),

@@ -214,6 +214,12 @@ def postprocess_cjk_extended_static_font(
         entry.common_options.narrow,
     )
     skip_verify = apply_cjk_width_transform(font, font_config, entry.common_options)
+    if font_config.get_nf_variant().suffix == "Propo":
+        font.table("post").isFixedPitch = False
+        os2 = font.table("OS/2")
+        os2.panose.bProportion = 0
+        os2.panose.bSpacing = 0
+        skip_verify = True
     if entry.is_builtin and entry.common_options.fix_meta_table and entry.preset_spec:
         apply_cjk_meta_table(
             font,
