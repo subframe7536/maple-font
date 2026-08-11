@@ -423,6 +423,63 @@ feature ss12 { lookup shared; } ss12;
             (FeatureSubstitution("cv01", "a", "missing"),),
         )
 
+    def test_ufo_freeze_avoids_self_referential_cycle_when_target_references_source(
+        self,
+    ) -> None:
+        # Reproduces the cyclical component reference crash from issue #810.
+        # z.cv10 uses z as a component, so freezing z -> z.cv10 must not create z => z.
+        font = UFOFont()
+
+        # Set up z: a simple contour glyph.
+        z = font.newGlyph("z")
+        z.width = 600
+        pen = z.getPen()
+        pen.moveTo((100, 0))
+        pen.lineTo((500, 0))
+        pen.lineTo((100, 500))
+        pen.lineTo((500, 500))
+        pen.closePath()
+
+        # Set up decorator: another simple glyph.
+        decorator = font.newGlyph("decorator")
+        decorator.width = 600
+        pen = decorator.getPen()
+        pen.moveTo((200, 200))
+        pen.lineTo((400, 200))
+        pen.lineTo((400, 300))
+        pen.closePath()
+
+        # Set up z.cv10: composite referencing z and decorator (no transformation).
+        z_cv10 = font.newGlyph("z.cv10")
+        z_cv10.width = 600
+        comp_pen = z_cv10.getPointPen()
+        comp_pen.addComponent("z", (1, 0, 0, 1, 0, 0))
+        comp_pen.addComponent("decorator", (1, 0, 0, 1, 100, -50))
+
+        descriptor = SourceDescriptor()
+        descriptor.font = font
+        designspace = DesignSpaceDocument()
+        designspace.addSource(descriptor)
+
+        # Freezing z -> z.cv10 must not cause a cyclical component reference.
+        apply_ufo_substitutions(
+            designspace,
+            (FeatureSubstitution("cv10", "z", "z.cv10"),),
+        )
+
+        # After freeze, z should have no components that reference itself.
+        for component in z.components:
+            self.assertNotEqual(
+                component.baseGlyph,
+                "z",
+                "z must not contain a self-referential component",
+            )
+        # z should visually match z.cv10: it contains the decorator component.
+        component_bases = {c.baseGlyph for c in z.components}
+        self.assertIn("decorator", component_bases)
+        # z should carry the original contours from the pre-freeze z glyph.
+        self.assertGreater(len(z.contours), 0)
+
 
 class FeatureGenerationLoggingTest(unittest.TestCase):
     def test_feature_generation_logs_all_output_affecting_options(self) -> None:

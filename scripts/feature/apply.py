@@ -9,6 +9,8 @@ from typing import TYPE_CHECKING, Any
 from fontTools.feaLib import ast as fea_ast
 from fontTools.feaLib.builder import addOpenTypeFeaturesFromString
 from fontTools.feaLib.parser import Parser
+from fontTools.pens.pointPen import AbstractPointPen, PointToSegmentPen
+from fontTools.pens.transformPen import TransformPen
 
 from scripts.config.base import ResolvedConfig, normalize_feature_freeze
 from scripts.feature.compiler import generate_fea_string, get_freeze_moving_rules
@@ -340,10 +342,80 @@ def prepare_feature_source(
         ) from error
 
 
+_IDENTITY_TRANSFORM = (1, 0, 0, 1, 0, 0)
+
+
+class _InlineSelfRefPointPen(AbstractPointPen):
+    """A PointPen wrapper that replaces self-referential component calls with the
+    snapshot glyph's own outline, preserving the drawing order of the target."""
+
+    def __init__(
+        self, output_pen: AbstractPointPen, source_name: str, snapshot: Glyph
+    ) -> None:
+        self._output_pen = output_pen
+        self._source_name = source_name
+        self._snapshot = snapshot
+
+    def beginPath(self, identifier: str | None = None, **kwargs: Any) -> None:
+        self._output_pen.beginPath(identifier, **kwargs)
+
+    def endPath(self) -> None:
+        self._output_pen.endPath()
+
+    def addPoint(
+        self,
+        pt: tuple[float, float],
+        segmentType: str | None = None,
+        smooth: bool = False,
+        name: str | None = None,
+        identifier: str | None = None,
+        **kwargs: Any,
+    ) -> None:
+        self._output_pen.addPoint(pt, segmentType, smooth, name, identifier, **kwargs)
+
+    def addComponent(
+        self,
+        baseGlyphName: str,
+        transformation: Any,
+        identifier: Any = None,
+        **kwargs: Any,
+    ) -> None:
+        if baseGlyphName == self._source_name:
+            # Replace the self-referential component with the snapshot's actual
+            # outline so that no glyph ends up referencing itself.
+            if transformation == _IDENTITY_TRANSFORM:
+                self._snapshot.drawPoints(self._output_pen)
+            else:
+                self._snapshot.draw(
+                    TransformPen(PointToSegmentPen(self._output_pen), transformation)
+                )
+        else:
+            self._output_pen.addComponent(
+                baseGlyphName, transformation, identifier, **kwargs
+            )
+
+
 def _copy_ufo_outline(source: Glyph, target: Glyph) -> None:
+    source_name = source.name
+
+    # If target contains a component that directly references source, copying it
+    # verbatim would create a self-referential cycle (e.g. z.cv10 -> z => z).
+    # Snapshot source first so the self-referential component can be inlined.
+    has_self_ref = source_name is not None and any(
+        c.baseGlyph == source_name for c in target.components
+    )
+    snapshot = deepcopy(source) if has_self_ref else None
+
     source.clearContours()
     source.clearComponents()
-    target.drawPoints(source.getPointPen())
+
+    if snapshot is not None:
+        assert source_name is not None
+        point_pen = source.getPointPen()
+        target.drawPoints(_InlineSelfRefPointPen(point_pen, source_name, snapshot))
+    else:
+        target.drawPoints(source.getPointPen())
+
     source.width = target.width
     source.height = target.height
 
