@@ -43,6 +43,18 @@ For example, `--normal --no-liga --width narrow` produces `MapleMonoNormalNLNR-R
 | `NFMono`         | `MapleMono-NFM-Regular.ttf` | Fixed-width Nerd Font icons; release packages use the `NFMono` label and output directory.           |
 | `NFPropo`        | `MapleMono-NFP-Regular.ttf` | Proportional Nerd Font icons; release packages use the `NFPropo` label and output directory.         |
 
+### Terminal Icon Variants
+
+The terminal-icon variants use one label for directories and release package names, and another compact marker inside font family names and filenames.
+
+| Variant label | Directory or package example | Family or filename example        | Meaning                          |
+| ------------- | ---------------------------- | --------------------------------- | -------------------------------- |
+| `NF`          | `fonts/NF/`                  | `MapleMono-NF-Regular.ttf`        | Default Nerd Font icon spacing.  |
+| `NFMono`      | `fonts/NFMono/`              | `MapleMono-NFM-Regular.ttf`       | Fixed-width Nerd Font icons.     |
+| `NFPropo`     | `fonts/NFPropo/`             | `MapleMono-NFP-Regular.ttf`       | Proportional Nerd Font icons.    |
+
+`NFMono` maps to the compact `NFM` filename/family marker, and `NFPropo` maps to `NFP`. The same rule applies to CJK outputs: for example, `fonts/NFMono-CN/` contains files such as `MapleMono-NFM-CN-Regular.ttf`, and `fonts/NFPropo-CN/` contains files such as `MapleMono-NFP-CN-Regular.ttf`.
+
 ### CJK Character Sets
 
 CJK outputs use a locale suffix. The coverage below follows each built-in locale configuration, including its Unicode ranges and source-font encoding filter. Regular CJK and NF-CJK fonts are written to `fonts/<LOCALE>/` and `fonts/NF-<LOCALE>/`; Variable outputs use the corresponding `Variable-<LOCALE>` and `Variable-NF-<LOCALE>` directories.
