@@ -199,7 +199,7 @@ Maple Mono에 일부 Unicode 코드 포인트가 없으면 해당 문자가 표�
 
 ### 사용자 정의 Nerd Font 설정
 
-Maple Mono는 Nerd Font 아이콘을 내장하고 명명 규칙을 따릅니다. 기본적으로 각 아이콘은 라틴 문자 두 개의 폭을 사용합니다.
+Maple Mono는 Nerd Font 아이콘을 내장하고 명명 규칙을 따릅니다. 기본적으로 각 아이콘은 라틴 문자 한 개의 전진 폭을 사용하지만 글리프의 실제 폭은 달라질 수 있습니다.
 
 - 아이콘을 라틴 문자 하나의 폭（Nerd Font Mono）으로 만들려면 `config.json`에서 `"nerd_font.mono": true`를 설정하거나 빌드 인수에 `--nf-mono`를 추가하세요.
 - 가변 폭 아이콘을 사용하려면 `config.json`에서 `"nerd_font.propo": true`를 설정하거나 빌드 인수에 `--nf-propo`를 추가하세요.

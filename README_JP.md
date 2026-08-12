@@ -199,7 +199,7 @@ Maple Mono に Unicode コードポイントがない場合、該当する文字
 
 ### Nerd Font 設定のカスタマイズ
 
-Maple Mono は Nerd Font アイコンを内蔵し、その命名規則に従っています。デフォルトでは、各アイコンはラテン文字 2 文字分の幅を使用します。
+Maple Mono は Nerd Font アイコンを内蔵し、その命名規則に従っています。デフォルトでは、各アイコンの送り幅はラテン文字 1 文字分ですが、グリフの見た目の幅は異なる場合があります。
 
 - アイコンをラテン文字 1 文字分の幅（Nerd Font Mono）にするには、`config.json` の `"nerd_font.mono": true` または `--nf-mono` を使用します。
 - 可変幅アイコンを使用するには、`config.json` の `"nerd_font.propo": true` または `--nf-propo` を使用します。

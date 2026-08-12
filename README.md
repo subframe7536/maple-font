@@ -202,7 +202,7 @@ For example, make the regular weight slightly thinner by lowering `"weight_mappi
 
 ### Custom Nerd Font Configuration
 
-Maple Mono includes Nerd Font icons and follows its naming rules. By default, each icon occupies two Latin-character widths.
+Maple Mono includes Nerd Font icons and follows its naming rules. By default, each icon uses a one-Latin-character advance width, while its glyph width may vary.
 
 - To make icons occupy one Latin-character width (Nerd Font Mono), set `"nerd_font.mono": true` in `config.json`, or add `--nf-mono` to the build arguments.
 - To use variable-width icons (Nerd Font Propo), set `"nerd_font.propo": true` in `config.json`, or add `--nf-propo` to the build arguments.
