@@ -7,6 +7,7 @@ from typing import Any, Literal, Protocol, cast, overload
 
 from fontTools.ttLib import TTFont as FontToolsTTFont
 from fontTools.ttLib import newTable
+from fontTools.ttLib.removeOverlaps import removeOverlaps as _remove_overlaps
 from fontTools.varLib.instancer import (
     instantiateVariableFont as _instantiate_variable_font,
 )
@@ -201,6 +202,11 @@ def instantiate_variable_font(
     return adapt_ttfont(instance)
 
 
+def remove_overlaps(font: TTFont) -> None:
+    """Merge overlapping contours and discard invalidated hinting."""
+    _remove_overlaps(font)
+
+
 def save_font_atomic(font: TTFont, target_path: str | Path) -> Path:
     """Save a font through a sibling temporary file and atomically publish it."""
     target = Path(target_path)
@@ -232,5 +238,6 @@ __all__ = [
     "adapt_ttfont",
     "instantiate_variable_font",
     "newTable",
+    "remove_overlaps",
     "save_font_atomic",
 ]

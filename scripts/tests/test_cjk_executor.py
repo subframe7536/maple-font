@@ -11,6 +11,7 @@ from scripts.cjk.builder import (
     CJKBuilder,
     autohint_static_fonts,
     create_font_executor,
+    finalize_static_font_instance,
     instantiate_cjk_static_from_variable,
     instantiate_variable_font_file,
 )
@@ -51,6 +52,35 @@ def make_config(output_dir: Path) -> CJKBuildConfig:
 
 
 class CJKExecutorOwnershipTest(unittest.TestCase):
+    def test_static_instance_removes_overlaps_before_saving(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            config = make_config(Path(tmp))
+            instance = MagicMock()
+            instance.__contains__.return_value = False
+            events: list[str] = []
+            instance.save.side_effect = lambda _path: events.append("save")
+
+            with (
+                patch("scripts.cjk.builder.update_font_names"),
+                patch("scripts.cjk.builder.drop_font_tables"),
+                patch("scripts.cjk.builder.remove_mac_name_records"),
+                patch(
+                    "scripts.cjk.builder.remove_overlaps",
+                    side_effect=lambda _font: events.append("remove_overlaps"),
+                ) as remove,
+            ):
+                finalize_static_font_instance(
+                    instance,
+                    "output.ttf",
+                    "Regular",
+                    False,
+                    config,
+                    BuildConfigResolver().load_defaults(),
+                )
+
+            remove.assert_called_once_with(instance)
+            self.assertEqual(events, ["remove_overlaps", "save"])
+
     def test_static_autohint_uses_the_caller_executor(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

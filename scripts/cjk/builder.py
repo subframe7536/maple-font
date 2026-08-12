@@ -62,6 +62,7 @@ from scripts.font_ops.fonttools import (
     TTFont,
     instantiate_variable_font,
     load_font,
+    remove_overlaps,
     save_font_atomic,
 )
 from scripts.font_ops.names import FontNameConfig, set_font_name, update_font_names
@@ -1345,6 +1346,7 @@ def finalize_static_font_instance(
     )
     drop_font_tables(instance, ("kern", "GPOS"))
     remove_mac_name_records(instance)
+    remove_overlaps(instance)
     instance.save(output_path)
     logger.info("Instantiate CJK base static font to %s", output_path)
 
