@@ -203,9 +203,9 @@ Maple Mono 的預設行高為 `1`。你可以修改 [`config.json`](./config.jso
 
 ### 自訂 Nerd Font 設定
 
-Maple Mono 內建 Nerd Font 圖示支援，並遵循其命名規則。預設情況下，每個圖示佔用一個拉丁字元的寬度。
+Maple Mono 內建 Nerd Font 圖示支援，並遵循其命名規則。預設情況下，每個圖示佔用兩個拉丁字元的寬度。
 
-- 如果需要讓圖示佔用兩個拉丁字元的寬度（Nerd Font Mono），請在 `config.json` 中設定 `"nerd_font.mono": true`，或在建置參數中加入 `--nf-mono`。
+- 如果需要讓圖示佔用一個拉丁字元的寬度（Nerd Font Mono），請在 `config.json` 中設定 `"nerd_font.mono": true`，或在建置參數中加入 `--nf-mono`。
 - 如果需要使用可變寬度圖示（Nerd Font Propo），請在 `config.json` 中設定 `"nerd_font.propo": true`，或在建置參數中加入 `--nf-propo`。
 
 如果要自訂 `font-patcher` 參數，需要安裝 `fontforge`（可能還需要 `python3-fontforge`）。你也可能需要在 [config.json](./config.json) 中修改 `"nerd_font.extra_args"`。
