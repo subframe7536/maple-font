@@ -14,7 +14,7 @@ from scripts.cjk.static import (
 )
 from scripts.config.resolver import BuildConfigResolver
 from scripts.font_ops.fonttools import TTFont, newTable
-from scripts.font_ops.names import get_font_name, update_font_names
+from scripts.font_ops.names import get_font_name, set_font_name, update_font_names
 
 
 def make_font() -> TTFont:
@@ -132,6 +132,26 @@ class FontNameTest(unittest.TestCase):
         self.assertEqual(
             build_cjk_postscript_prefix(config, "NF-CN"), "MapleMono-NF-CN"
         )
+
+    def test_skip_subfamily_removes_stale_name_ids_16_and_17(self) -> None:
+        font = make_font()
+        # Simulate a base font that already has name IDs 16 and 17 set
+        set_font_name(font, "Maple Mono", 16)
+        set_font_name(font, "Bold", 17)
+        config = make_font_config()
+
+        update_font_names(
+            font=font,
+            font_config=config,
+            family_name="Maple Mono NF",
+            style_name="Bold",
+            full_name="Maple Mono NF Bold",
+            postscript_name="MapleMono-NF-Bold",
+            is_skip_subfamily=True,
+        )
+
+        self.assertIsNone(font["name"].getName(nameID=16, platformID=3, platEncID=1, langID=0x409))
+        self.assertIsNone(font["name"].getName(nameID=17, platformID=3, platEncID=1, langID=0x409))
 
 
 if __name__ == "__main__":

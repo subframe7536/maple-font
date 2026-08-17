@@ -120,6 +120,9 @@ def update_font_names(
     if not is_skip_subfamily and preferred_family_name and preferred_style_name:
         set_font_name(font, preferred_family_name, 16)
         set_font_name(font, preferred_style_name, 17)
+    else:
+        del_font_name(font, 16)
+        del_font_name(font, 17)
 
 
 def ensure_variable_instance_names(
