@@ -160,6 +160,7 @@ class FontNameTest(unittest.TestCase):
         font["fvar"].instances = []
         config = make_font_config()
 
+        # With explicit preferred names
         update_font_names(
             font=font,
             font_config=config,
@@ -180,6 +181,34 @@ class FontNameTest(unittest.TestCase):
         self.assertEqual(
             font["name"].getName(nameID=17, platformID=3, platEncID=1, langID=0x409).toUnicode(),
             "Regular",
+        )
+
+    def test_variable_falls_back_to_family_name_for_ids_16_and_17(self) -> None:
+        font = make_font()
+        font["fvar"] = newTable("fvar")
+        font["fvar"].axes = []
+        font["fvar"].instances = []
+        config = make_font_config()
+
+        # Without preferred names — should fall back to family_name / style_name
+        update_font_names(
+            font=font,
+            font_config=config,
+            family_name="Maple Mono NF",
+            style_name="Bold",
+            full_name="Maple Mono NF Bold",
+            postscript_name="MapleMono-NF-Bold",
+            is_skip_subfamily=True,
+            variable=True,
+        )
+
+        self.assertEqual(
+            font["name"].getName(nameID=16, platformID=3, platEncID=1, langID=0x409).toUnicode(),
+            "Maple Mono NF",
+        )
+        self.assertEqual(
+            font["name"].getName(nameID=17, platformID=3, platEncID=1, langID=0x409).toUnicode(),
+            "Bold",
         )
 
 
