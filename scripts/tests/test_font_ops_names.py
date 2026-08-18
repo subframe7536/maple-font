@@ -135,7 +135,7 @@ class FontNameTest(unittest.TestCase):
 
     def test_skip_subfamily_removes_stale_name_ids_16_and_17(self) -> None:
         font = make_font()
-        # Simulate a base font that already has name IDs 16 and 17 set
+        # Pre-seed stale base-font values to simulate what NF merging inherits
         set_font_name(font, "Maple Mono", 16)
         set_font_name(font, "Bold", 17)
         config = make_font_config()
@@ -153,14 +153,11 @@ class FontNameTest(unittest.TestCase):
         self.assertIsNone(font["name"].getName(nameID=16, platformID=3, platEncID=1, langID=0x409))
         self.assertIsNone(font["name"].getName(nameID=17, platformID=3, platEncID=1, langID=0x409))
 
-    def test_skip_subfamily_keeps_name_ids_16_and_17_for_variable(self) -> None:
+    def test_skip_subfamily_writes_name_ids_16_and_17_for_variable(self) -> None:
         font = make_font()
         font["fvar"] = newTable("fvar")
         font["fvar"].axes = []
         font["fvar"].instances = []
-        # Simulate inherited name IDs 16 and 17 from the base variable font
-        set_font_name(font, "Maple Mono", 16)
-        set_font_name(font, "Regular", 17)
         config = make_font_config()
 
         update_font_names(
@@ -171,12 +168,14 @@ class FontNameTest(unittest.TestCase):
             full_name="Maple Mono NF Regular",
             postscript_name="MapleMono-NF-Regular",
             is_skip_subfamily=True,
+            preferred_family_name="Maple Mono NF",
+            preferred_style_name="Regular",
             variable=True,
         )
 
         self.assertEqual(
             font["name"].getName(nameID=16, platformID=3, platEncID=1, langID=0x409).toUnicode(),
-            "Maple Mono",
+            "Maple Mono NF",
         )
         self.assertEqual(
             font["name"].getName(nameID=17, platformID=3, platEncID=1, langID=0x409).toUnicode(),

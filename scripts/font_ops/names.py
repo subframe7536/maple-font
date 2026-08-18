@@ -117,7 +117,7 @@ def update_font_names(
     set_font_name(font, font_config.version_str, 5)
     set_font_name(font, postscript_name, 6)
 
-    if not is_skip_subfamily and preferred_family_name and preferred_style_name:
+    if (not is_skip_subfamily or variable) and preferred_family_name and preferred_style_name:
         set_font_name(font, preferred_family_name, 16)
         set_font_name(font, preferred_style_name, 17)
     elif is_skip_subfamily and not variable:
