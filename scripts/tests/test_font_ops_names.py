@@ -153,6 +153,36 @@ class FontNameTest(unittest.TestCase):
         self.assertIsNone(font["name"].getName(nameID=16, platformID=3, platEncID=1, langID=0x409))
         self.assertIsNone(font["name"].getName(nameID=17, platformID=3, platEncID=1, langID=0x409))
 
+    def test_skip_subfamily_keeps_name_ids_16_and_17_for_variable(self) -> None:
+        font = make_font()
+        font["fvar"] = newTable("fvar")
+        font["fvar"].axes = []
+        font["fvar"].instances = []
+        # Simulate inherited name IDs 16 and 17 from the base variable font
+        set_font_name(font, "Maple Mono", 16)
+        set_font_name(font, "Regular", 17)
+        config = make_font_config()
+
+        update_font_names(
+            font=font,
+            font_config=config,
+            family_name="Maple Mono NF",
+            style_name="Regular",
+            full_name="Maple Mono NF Regular",
+            postscript_name="MapleMono-NF-Regular",
+            is_skip_subfamily=True,
+            variable=True,
+        )
+
+        self.assertEqual(
+            font["name"].getName(nameID=16, platformID=3, platEncID=1, langID=0x409).toUnicode(),
+            "Maple Mono",
+        )
+        self.assertEqual(
+            font["name"].getName(nameID=17, platformID=3, platEncID=1, langID=0x409).toUnicode(),
+            "Regular",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()
