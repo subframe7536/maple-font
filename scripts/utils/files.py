@@ -44,12 +44,10 @@ def write_json(
         temp_path = path.with_name(f".{path.name}.tmp")
         with temp_path.open("w", encoding="utf-8", newline="\n") as file:
             json.dump(data, file, indent=indent, sort_keys=sort_keys)
-            file.write("\n")
         temp_path.replace(path)
     else:
         with path.open("w", encoding="utf-8", newline="\n") as file:
             json.dump(data, file, indent=indent, sort_keys=sort_keys)
-            file.write("\n")
 
 
 def _archive_timestamp() -> tuple[int, int, int, int, int, int]:
