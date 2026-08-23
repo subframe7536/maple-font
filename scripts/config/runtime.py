@@ -1,25 +1,15 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
-from os import listdir, path
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
-from scripts.external.process import get_font_forge_bin
 from scripts.utils.downloads import github_host
 from scripts.utils.files import join_path
+from scripts.utils.process import get_font_forge_bin
 
 if TYPE_CHECKING:
     from scripts.config.base import ResolvedConfig
-
-
-def check_file_count(
-    dir_path: str, min_count: int = 16, end: str | None = None
-) -> bool:
-    return path.isdir(dir_path) and (
-        len([file for file in listdir(dir_path) if end is None or file.endswith(end)])
-        >= min_count
-    )
 
 
 @dataclass(slots=True)
@@ -33,7 +23,6 @@ class BuildRuntimeContext:
     output_woff2: str
     output_nf: str
     ttf_base_dir: str
-    has_cache: bool
     is_nf_built: bool
     is_cjk_built: bool
     effective_github_mirror: str
@@ -56,28 +45,6 @@ class BuildRuntimeContext:
             output_woff2=join_path(output_root, "Woff2"),
             output_nf=join_path(output_root, nf_variant.directory_name),
             ttf_base_dir=output_ttf_hinted if config.use_hinted else output_ttf,
-            has_cache=(
-                check_file_count(
-                    join_path(output_root, "Variable"), min_count=2, end=".ttf"
-                )
-                and check_file_count(output_ttf, min_count=4, end=".ttf")
-                and (
-                    not config.needs_hinted_ttf()
-                    or check_file_count(output_ttf_hinted, min_count=4, end=".ttf")
-                )
-                and (
-                    not config.wants_format("otf")
-                    or check_file_count(
-                        join_path(output_root, "OTF"), min_count=4, end=".otf"
-                    )
-                )
-                and (
-                    not config.wants_format("woff2")
-                    or check_file_count(
-                        join_path(output_root, "Woff2"), min_count=4, end=".woff2"
-                    )
-                )
-            ),
             is_nf_built=False,
             is_cjk_built=False,
             effective_github_mirror=github_host(config.github_mirror),

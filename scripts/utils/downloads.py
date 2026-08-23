@@ -12,7 +12,7 @@ from zipfile import ZipFile
 
 import py7zr
 
-from scripts.errors import ArchiveError, ArchiveMemberNotFoundError, DownloadError
+from scripts.utils.errors import ArchiveError, ArchiveMemberNotFoundError, DownloadError
 from scripts.utils.logging import log_progress, logger
 
 GITHUB_HOST = "github.com"

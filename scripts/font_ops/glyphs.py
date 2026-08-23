@@ -15,17 +15,17 @@ from fontTools.designspaceLib import (
 from ufo2ft.filters import DecomposeTransformedComponentsFilter
 from ufoLib2 import Font as UFOFont
 
-from scripts.external.process import (
-    create_process_executor,
-    create_thread_executor,
-    run_jobs,
-)
 from scripts.font_ops.glyph_transform import (
     SmartWidthThickenFilter,
     scale_ufo_width,
 )
 from scripts.font_ops.metrics import calculate_line_height_metrics
 from scripts.utils.logging import logger, set_log_task
+from scripts.utils.process import (
+    create_process_executor,
+    create_thread_executor,
+    run_jobs,
+)
 
 if TYPE_CHECKING:
     from collections.abc import Iterable

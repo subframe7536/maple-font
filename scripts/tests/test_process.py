@@ -6,8 +6,8 @@ import unittest
 from concurrent.futures import Future
 from unittest.mock import MagicMock, patch
 
-from scripts.errors import ExternalToolError
-from scripts.external.process import (
+from scripts.utils.errors import ExternalToolError
+from scripts.utils.process import (
     run,
     run_jobs,
     run_process_jobs,

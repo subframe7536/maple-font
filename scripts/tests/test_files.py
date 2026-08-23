@@ -7,7 +7,7 @@ from pathlib import Path
 from unittest.mock import patch
 from zipfile import ZipFile
 
-from scripts.config.paths import static_output_dir, variable_output_dir
+from scripts.pipeline.artifacts import static_output_dir, variable_output_dir
 from scripts.utils.files import archive_fonts, archive_output_label
 from scripts.utils.hashing import hash_file
 

@@ -18,9 +18,8 @@ from glyphsLib.classes import (
     GSPath,
 )
 
-from scripts.config.base import ResolvedConfig
+from scripts.config.base import INSTANCE_WEIGHT_MAPPING, ResolvedConfig
 from scripts.feature.apply import apply_binary_features
-from scripts.font_ops.constant import INSTANCE_WEIGHT_MAPPING
 from scripts.font_ops.fonttools import instantiate_variable_font, load_font
 from scripts.font_ops.glyph_transform import SmartWidthThickenFilter
 from scripts.font_ops.glyphs import (

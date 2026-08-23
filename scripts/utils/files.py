@@ -31,17 +31,6 @@ def join_path(*parts: str | Path) -> str:
     return str(result)
 
 
-def write_text(
-    file_path: str | Path,
-    content: str,
-    mode: str = "w",
-) -> None:
-    if not isinstance(content, str):
-        raise ValueError("Invalid content")
-    with Path(file_path).open(encoding="utf-8", mode=mode, newline="\n") as file:
-        file.write(content)
-
-
 def write_json(
     file_path: str | Path,
     data: Any,
@@ -61,15 +50,6 @@ def write_json(
         with path.open("w", encoding="utf-8", newline="\n") as file:
             json.dump(data, file, indent=indent, sort_keys=sort_keys)
             file.write("\n")
-
-
-def read_json(file_path: str | Path) -> dict[str, Any]:
-    with Path(file_path).open("r", encoding="utf-8") as file:
-        return json.load(file)
-
-
-def read_text(file_path: str | Path) -> str:
-    return Path(file_path).read_text(encoding="utf-8")
 
 
 def _archive_timestamp() -> tuple[int, int, int, int, int, int]:

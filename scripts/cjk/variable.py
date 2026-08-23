@@ -10,8 +10,8 @@ from fontTools.ttLib.tables._g_l_y_f import GlyphCoordinates
 from fontTools.ttLib.tables.TupleVariation import TupleVariation
 from fontTools.varLib.instancer import otRound
 
-from scripts.font_ops.cmap import merge_cmap_entries
 from scripts.font_ops.fonttools import TTFont, load_font
+from scripts.font_ops.merge import merge_cmap_entries
 from scripts.utils.logging import logger
 
 if TYPE_CHECKING:

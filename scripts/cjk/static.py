@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 from scripts.feature.apply import apply_binary_features
-from scripts.feature.catalog import CJK_FEATURES
+from scripts.feature.compiler import CJK_FEATURES
 from scripts.font_ops.glyph_transform import (
     change_glyph_width_or_scale,
     smart_change_width,

@@ -8,30 +8,23 @@ from copy import deepcopy
 from dataclasses import dataclass
 from os import environ, makedirs
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Literal
+from typing import TYPE_CHECKING, Literal
 
-from scripts.config.paths import (
-    merged_variable_name,
-    static_output_dir,
-    variable_output_dir,
-)
 from scripts.config.resolver import BuildConfigResolver
 from scripts.config.runtime import BuildRuntimeContext
-from scripts.errors import BuildDependencyError
-from scripts.external.process import (
-    SynchronousExecutor,
-    create_process_executor,
-    is_ci,
-)
+from scripts.font_ops.metrics import read_font_vertical_metric
 from scripts.pipeline.artifacts import (
     IGNORED_OUTPUT_DIRS,
     cleanup_unselected_base_formats,
     ensure_base_output_dirs,
     expected_static_font_paths,
     expected_static_styles,
-    read_font_vertical_metric,
+    merged_variable_name,
+    static_output_dir,
+    variable_output_dir,
 )
 from scripts.pipeline.base_fonts import build_base_fonts, build_woff2_fonts
+from scripts.pipeline.cache import StageCacheTracker
 from scripts.pipeline.cjk_outputs import (
     build_cjk_extended_static_outputs,
     build_cjk_extended_variable_outputs,
@@ -47,7 +40,7 @@ from scripts.pipeline.nerd_fonts import (
     build_nerd_fonts,
     should_use_font_patcher,
 )
-from scripts.pipeline.stage_cache import StageCacheTracker
+from scripts.utils.errors import BuildDependencyError
 from scripts.utils.files import archive_fonts, join_path, write_json
 from scripts.utils.logging import (
     ENVIRONMENT_VARIABLE,
@@ -57,6 +50,11 @@ from scripts.utils.logging import (
     log_task_complete,
     logger,
     set_log_task,
+)
+from scripts.utils.process import (
+    SynchronousExecutor,
+    create_process_executor,
+    is_ci,
 )
 from scripts.utils.version import version_tag
 
@@ -132,22 +130,6 @@ class MapleBuildPipeline:
         self.target_styles = self.plan.target_styles
         self.start_time = 0.0
         self._cache_tracker = StageCacheTracker(font_config, runtime_context, self.plan)
-
-    @property
-    def _cache_record(self) -> dict[str, Any] | None:
-        return self._cache_tracker._cache_record
-
-    @_cache_record.setter
-    def _cache_record(self, value: dict[str, Any] | None) -> None:
-        self._cache_tracker._cache_record = value
-
-    @property
-    def _validated_stage_records(self) -> dict[str, dict[str, object]]:
-        return self._cache_tracker._validated_stage_records
-
-    @property
-    def _rebuilt_stage_paths(self) -> dict[str, list[Path]]:
-        return self._cache_tracker._rebuilt_stage_paths
 
     def build(self) -> None:
         self.start_build_timer()

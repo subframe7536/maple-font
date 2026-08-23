@@ -27,12 +27,6 @@ from scripts.cjk.variable import (
     merge_vf,
     recalculate_font_metrics,
 )
-from scripts.config.paths import (
-    merged_variable_name,
-    static_output_dir,
-    variable_output_dir,
-)
-from scripts.external.process import is_ci, run_process_jobs
 from scripts.font_ops.fonttools import (
     instantiate_variable_font,
     load_font,
@@ -44,6 +38,11 @@ from scripts.font_ops.glyph_transform import (
 from scripts.font_ops.merge import merge_ttfonts
 from scripts.font_ops.names import update_font_names
 from scripts.font_ops.opentype import add_weight_axis_values_to_stat
+from scripts.pipeline.artifacts import (
+    merged_variable_name,
+    static_output_dir,
+    variable_output_dir,
+)
 from scripts.pipeline.nerd_fonts import load_nerd_font_variable_source
 from scripts.utils.logging import (
     TaskName,
@@ -52,6 +51,7 @@ from scripts.utils.logging import (
     logger,
     set_log_task,
 )
+from scripts.utils.process import is_ci, run_process_jobs
 
 if TYPE_CHECKING:
     from concurrent.futures import Executor

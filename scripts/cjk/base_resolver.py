@@ -16,8 +16,8 @@ from scripts.cjk.cache import (
     verify_variable_archive,
     write_static_hash,
 )
-from scripts.errors import CJKBaseUnavailable
 from scripts.utils.downloads import download_zip_and_extract
+from scripts.utils.errors import CJKBaseUnavailable
 from scripts.utils.logging import logger
 
 if TYPE_CHECKING:

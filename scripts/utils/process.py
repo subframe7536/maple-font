@@ -15,7 +15,7 @@ from concurrent.futures.process import BrokenProcessPool
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, TypeVar
 
-from scripts.errors import ExternalToolError
+from scripts.utils.errors import ExternalToolError
 from scripts.utils.logging import configure_logging, logger
 
 if TYPE_CHECKING:

@@ -42,13 +42,6 @@ from scripts.cjk.variable import (
     update_italic_metadata,
     weight_axis,
 )
-from scripts.errors import CJKSourceUnavailable
-from scripts.external.process import (
-    SynchronousExecutor,
-    create_process_executor,
-    is_ci,
-    run_process_jobs,
-)
 from scripts.font_ops.fonttools import (
     HeadTable,
     TTFont,
@@ -59,8 +52,15 @@ from scripts.font_ops.fonttools import (
 from scripts.font_ops.names import FontNameConfig, set_font_name, update_font_names
 from scripts.font_ops.subset import SubsetConfig, subset_to_codepoints
 from scripts.utils.downloads import resolve_cached_download
+from scripts.utils.errors import CJKSourceUnavailable
 from scripts.utils.files import archive
 from scripts.utils.logging import logger, set_log_task
+from scripts.utils.process import (
+    SynchronousExecutor,
+    create_process_executor,
+    is_ci,
+    run_process_jobs,
+)
 
 if TYPE_CHECKING:
     from collections.abc import Collection, Iterable
@@ -139,6 +139,12 @@ class StaticFontCache:
             drop_font_tables(font, ("STAT",))
             cls._fonts[cache_key] = font
         return font
+
+    @classmethod
+    def clear(cls) -> None:
+        while cls._fonts:
+            _, font = cls._fonts.popitem()
+            font.close()
 
 
 def create_font_executor(pool_size: int = 4) -> Executor:

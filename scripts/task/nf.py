@@ -5,8 +5,6 @@ from os import path, remove
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from scripts.external.process import get_font_forge_bin
-from scripts.external.process import run as run_command
 from scripts.font_ops.fonttools import load_font
 from scripts.font_ops.metadata import set_monospace_metadata
 from scripts.font_ops.names import (
@@ -21,6 +19,8 @@ from scripts.utils.downloads import (
     github_mirror_from_config,
 )
 from scripts.utils.logging import logger
+from scripts.utils.process import get_font_forge_bin
+from scripts.utils.process import run as run_command
 
 if TYPE_CHECKING:
     import argparse

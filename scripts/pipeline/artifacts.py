@@ -7,8 +7,6 @@ from typing import TYPE_CHECKING, Any
 
 from fontTools.designspaceLib import DesignSpaceDocument
 
-from scripts.font_ops.constant import DEFAULT_NAMING_MAPPING
-from scripts.font_ops.fonttools import load_font
 from scripts.utils.hashing import hash_files
 
 if TYPE_CHECKING:
@@ -17,6 +15,41 @@ if TYPE_CHECKING:
 
 FONT_ARTIFACT_SUFFIXES = {".otf", ".ttf", ".woff", ".woff2", ".zip"}
 IGNORED_OUTPUT_DIRS = {".cjk-temp", "temp"}
+
+DEFAULT_STATIC_STYLES: tuple[str, ...] = (
+    "Thin",
+    "ThinItalic",
+    "ExtraLight",
+    "ExtraLightItalic",
+    "Light",
+    "LightItalic",
+    "Regular",
+    "Italic",
+    "Medium",
+    "MediumItalic",
+    "SemiBold",
+    "SemiBoldItalic",
+    "Bold",
+    "BoldItalic",
+    "ExtraBold",
+    "ExtraBoldItalic",
+)
+
+
+def variable_output_dir(output_root: str | Path, locale: str | None = None) -> Path:
+    root = Path(output_root)
+    if locale is None:
+        return root / "Variable"
+    return root / f"Variable-{locale}"
+
+
+def static_output_dir(output_root: str | Path, locale: str) -> Path:
+    return Path(output_root) / locale
+
+
+def merged_variable_name(postscript_prefix: str, italic: bool) -> str:
+    suffix = "-Italic" if italic else ""
+    return f"{postscript_prefix}{suffix}[wght].ttf"
 
 
 def is_target_style_file(file_name: str, target_styles: list[str] | None) -> bool:
@@ -31,7 +64,7 @@ def is_target_style_file(file_name: str, target_styles: list[str] | None) -> boo
 def expected_static_styles(target_styles: list[str] | None) -> tuple[str, ...]:
     if target_styles is not None:
         return tuple(target_styles)
-    return tuple(DEFAULT_NAMING_MAPPING)
+    return DEFAULT_STATIC_STYLES
 
 
 def expected_static_font_paths(
@@ -149,11 +182,3 @@ def ensure_base_output_dirs(runtime_context: BuildRuntimeContext) -> None:
     makedirs(runtime_context.output_variable, exist_ok=True)
     makedirs(runtime_context.output_ttf, exist_ok=True)
     makedirs(runtime_context.output_ttf_hinted, exist_ok=True)
-
-
-def read_font_vertical_metric(font_path: str | Path) -> tuple[int, int]:
-    font = load_font(font_path)
-    try:
-        return (font["hhea"].ascender, font["hhea"].descender)
-    finally:
-        font.close()

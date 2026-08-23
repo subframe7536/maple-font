@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING, cast
 from fontTools.fontBuilder import FontBuilder
 from fontTools.pens.ttGlyphPen import TTGlyphPen
 
-from scripts.font_ops.cmap import merge_cmap_entries
+from scripts.font_ops.merge import merge_cmap_entries
 
 if TYPE_CHECKING:
     from scripts.font_ops.fonttools import TTFont

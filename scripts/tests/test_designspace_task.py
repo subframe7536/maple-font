@@ -6,7 +6,7 @@ from pathlib import Path
 
 from fontTools.designspaceLib import AxisDescriptor
 
-from scripts.font_ops.constant import INSTANCE_WEIGHT_MAPPING
+from scripts.config.base import INSTANCE_WEIGHT_MAPPING
 from scripts.font_ops.glyphs import (
     prepare_designspace_source,
 )

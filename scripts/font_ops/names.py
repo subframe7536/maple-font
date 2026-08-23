@@ -3,11 +3,21 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Protocol
 
-from scripts.font_ops.constant import INSTANCE_WEIGHT_MAPPING
 from scripts.utils.logging import logger
 
 if TYPE_CHECKING:
     from scripts.font_ops.fonttools import TTFont
+
+INSTANCE_WEIGHT_MAPPING: dict[str, int] = {
+    "thin": 100,
+    "extralight": 200,
+    "light": 300,
+    "regular": 400,
+    "medium": 500,
+    "semibold": 600,
+    "bold": 700,
+    "extrabold": 800,
+}
 
 RESERVED_NAME_IDS = {1, 2, 3, 4, 5, 6, 16, 17, 25}
 

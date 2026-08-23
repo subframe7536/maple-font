@@ -28,7 +28,6 @@ def make_runtime_context() -> BuildRuntimeContext:
         output_woff2="fonts/Woff2",
         output_nf="fonts/NF",
         ttf_base_dir="fonts/TTF-AutoHint",
-        has_cache=False,
         is_nf_built=False,
         is_cjk_built=False,
         effective_github_mirror="github.com",

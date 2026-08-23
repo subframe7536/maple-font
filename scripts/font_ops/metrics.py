@@ -2,10 +2,21 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
+from scripts.font_ops.fonttools import load_font
 from scripts.utils.logging import logger
 
 if TYPE_CHECKING:
+    from pathlib import Path
+
     from scripts.font_ops.fonttools import TTFont
+
+
+def read_font_vertical_metric(font_path: str | Path) -> tuple[int, int]:
+    font = load_font(font_path)
+    try:
+        return (font["hhea"].ascender, font["hhea"].descender)
+    finally:
+        font.close()
 
 
 def verify_glyph_width(

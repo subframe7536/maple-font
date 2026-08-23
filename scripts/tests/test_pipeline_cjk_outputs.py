@@ -66,7 +66,7 @@ class PipelineCJKOutputsTest(unittest.TestCase):
             font_config = make_font_config()
             font_config.behavior.cache = True
             pipeline = MapleBuildPipeline(font_config, make_runtime_context(Path(tmp)))
-            pipeline._cache_record = {
+            pipeline._cache_tracker._cache_record = {
                 "schema": CACHE_SCHEMA,
                 "stages": {
                     "jp-static": {"key": "old-jp"},

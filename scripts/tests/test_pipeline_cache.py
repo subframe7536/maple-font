@@ -12,7 +12,6 @@ from scripts.pipeline.cache import (
     read_cache_record,
     relative_cache_path,
     stage_identity,
-    validate_stage,
     validated_stage_record,
     write_cache_record,
 )
@@ -51,8 +50,8 @@ class PipelineCacheTest(unittest.TestCase):
             }
             output.write_bytes(b"other")
 
-            self.assertFalse(
-                validate_stage(root, record, "variable", identity, [output])
+            self.assertIsNone(
+                validated_stage_record(root, record, "variable", identity, [output])
             )
 
     def test_validation_returns_an_independent_copy_of_the_stage_record(self) -> None:

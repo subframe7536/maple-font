@@ -24,12 +24,12 @@ from scripts.config.base import CJKCommonBuildOptions, ResolvedCJKBuildEntry
 from scripts.config.cli import parse_args
 from scripts.config.resolver import BuildConfigResolver
 from scripts.config.runtime import BuildRuntimeContext
-from scripts.errors import BuildDependencyError
 from scripts.pipeline.nerd_fonts import (
     ensure_font_patcher_available,
     should_use_font_patcher,
 )
 from scripts.tests.cjk_font_fixtures import build_test_font
+from scripts.utils.errors import BuildDependencyError
 
 
 def make_runtime_context(tmp_path: Path) -> BuildRuntimeContext:
@@ -43,7 +43,6 @@ def make_runtime_context(tmp_path: Path) -> BuildRuntimeContext:
         output_woff2=str(tmp_path / "fonts" / "Woff2"),
         output_nf=str(tmp_path / "fonts" / "NF"),
         ttf_base_dir=str(tmp_path / "fonts" / "TTF-AutoHint"),
-        has_cache=False,
         is_nf_built=False,
         is_cjk_built=False,
         effective_github_mirror="github.com",
