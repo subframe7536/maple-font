@@ -7,9 +7,9 @@ from typing import TYPE_CHECKING
 
 from ttfautohint import ttfautohint
 
-from scripts.cjk.builder import get_ttfautohint_options
 from scripts.font_ops.conversion import convert_to_web
 from scripts.font_ops.fonttools import load_font
+from scripts.font_ops.hinting import get_ttfautohint_options
 from scripts.pipeline.artifacts import require_existing_files, require_unique_targets
 from scripts.utils.logging import (
     TaskName,

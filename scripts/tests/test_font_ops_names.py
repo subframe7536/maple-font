@@ -5,8 +5,8 @@ from pathlib import Path
 
 from fontTools.ttLib.tables._f_v_a_r import NamedInstance
 
-from scripts.cjk.builder import update_variable_font_names
 from scripts.cjk.config import CJKBuildConfig, CJKSourceConfig
+from scripts.cjk.postprocess import update_variable_font_names
 from scripts.cjk.static import (
     apply_cjk_names,
     build_cjk_family_name,

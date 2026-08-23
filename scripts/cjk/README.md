@@ -50,7 +50,7 @@ An existing but invalid static directory is never silently removed, and a failed
 
 ```mermaid
 flowchart LR
-    INPUT["preset / JSON / CLI"] --> RESOLVE["resolver.py\nCJKBuildConfig"]
+    INPUT["preset / JSON / CLI"] --> RESOLVE["config.py / cli.py\nCJKBuildConfig"]
     RESOLVE --> SOURCE{"source.path exists?"}
     SOURCE -->|yes| VF["regular + italic variable bases"]
     SOURCE -->|no| DOWNLOAD["download and atomically install source"]
@@ -67,11 +67,17 @@ flowchart LR
 
 | Module                    | Responsibility                                                                                                                        |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| `config.py`               | Typed CJK configuration, Unicode presets, transforms, output defaults, and naming defaults.                                           |
-| `resolver.py`             | JSON/CLI parsing, validation, Unicode and axis overrides, and locale-derived paths and names.                                         |
+| `config.py`               | Typed CJK configuration, Unicode presets, JSON parsing, strict validation, config-file loading, and stable serialization.            |
+| `cli.py`                  | CJK CLI arguments and direct-CLI overrides.                                                                                            |
+| `masters.py`              | Unicode override, axis parsing, source master validation, and stable master ordering.                                                 |
+| `paths.py`                | Locale validation plus derived output, naming, temporary, and config-relative paths.                                                  |
 | `presets.py`              | Built-in CN, JP, TC, and KR metadata and config loading.                                                                              |
-| `builder.py`              | Source preparation, subsetting, master preparation, variable-font generation, static instantiation, and standalone executor lifecycle. |
-| `base_resolver.py`        | Main-build static/variable base fallback, archive installation, integrity checks, and source-rebuild escalation.                       |
+| `source.py`               | Source validation, subsetting, outline/metric transforms, CFF2 conversion, and source-master preparation.                             |
+| `instances.py`            | Variable, master, italic, and static instance jobs; worker font cache; and weight-instance mapping.                                    |
+| `postprocess.py`          | Variable/static naming, table cleanup, metric finalization, and Name ID management.                                                    |
+| `builder.py`              | Standalone CJK build orchestration, executor lifecycle, output hashes, and archives.                                                   |
+| `assets.py`               | Verified local/remote static and variable base archive installation.                                                                   |
+| `resolver.py`             | Main-build fallback order: cached static base, installed archive, variable base, then source rebuild.                                  |
 | `outlines.py`             | Glyph command replay, compatibility checks, and CFF/CFF2-to-glyf conversion.                                                          |
 | `variable.py`             | Variable-font loading, master merging, `gvar` construction, italic transforms, and table cleanup.                                     |
 | `cache.py`                | Static-directory and variable-file digest creation, archive validation, and cache checks for standalone CJK assets.                 |

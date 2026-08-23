@@ -11,7 +11,6 @@ from typing import Any
 from fontTools.fontBuilder import FontBuilder
 from fontTools.pens.ttGlyphPen import TTGlyphPen
 
-from scripts.cjk.base_resolver import CJKBaseResolver
 from scripts.cjk.cache import has_valid_cjk_static_cache, write_static_hash
 from scripts.cjk.config import (
     CJKBuildConfig,
@@ -20,6 +19,7 @@ from scripts.cjk.config import (
     CJKSourceConfig,
 )
 from scripts.cjk.presets import CJKPresetId, get_preset
+from scripts.cjk.resolver import CJKBaseResolver
 from scripts.config.base import CJKCommonBuildOptions, ResolvedCJKBuildEntry
 from scripts.config.cli import parse_args
 from scripts.config.resolver import BuildConfigResolver

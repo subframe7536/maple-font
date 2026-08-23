@@ -6,13 +6,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING
 
-from scripts.cjk.base_resolver import CJKBaseResolver
-from scripts.cjk.builder import (
-    StaticFontCache,
-    autohint_static_fonts,
-    build_cjk_fonts,
-    feature_weight_instances,
-)
+from scripts.cjk.builder import build_cjk_fonts
+from scripts.cjk.instances import StaticFontCache, feature_weight_instances
+from scripts.cjk.resolver import CJKBaseResolver
 from scripts.cjk.static import (
     apply_cjk_meta_table,
     build_cjk_family_name,
@@ -35,6 +31,7 @@ from scripts.font_ops.fonttools import (
 from scripts.font_ops.glyph_transform import (
     reduce_glyph_side_bearings,
 )
+from scripts.font_ops.hinting import autohint_static_fonts
 from scripts.font_ops.merge import merge_ttfonts
 from scripts.font_ops.names import update_font_names
 from scripts.font_ops.opentype import add_weight_axis_values_to_stat

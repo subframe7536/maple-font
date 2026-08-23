@@ -6,14 +6,14 @@ from typing import cast
 
 from scripts.cjk.builder import build_cjk_fonts
 from scripts.cjk.cache import verify_static_archive, verify_variable_archive
-from scripts.cjk.presets import CJKPresetId, build_preset_config, list_presets
-from scripts.cjk.resolver import (
+from scripts.cjk.cli import (
     add_cjk_arguments,
     apply_cli_overrides,
-    apply_unicode_override,
     config_from_cli,
-    config_from_json,
 )
+from scripts.cjk.config import config_from_json
+from scripts.cjk.masters import apply_unicode_override
+from scripts.cjk.presets import CJKPresetId, build_preset_config, list_presets
 from scripts.config.resolver import resolve_default_build_config
 from scripts.utils.downloads import github_mirror_from_config
 

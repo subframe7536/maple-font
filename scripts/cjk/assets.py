@@ -2,65 +2,49 @@ from __future__ import annotations
 
 import shutil
 import tempfile
-from dataclasses import dataclass
 from pathlib import Path
-from typing import TYPE_CHECKING, Literal
+from typing import TYPE_CHECKING
 
-from scripts.cjk.builder import build_cjk_fonts, instantiate_cjk_static_from_variable
 from scripts.cjk.cache import (
-    has_valid_cjk_static_cache,
     static_hash_path,
     variable_hash_path,
     variable_paths,
     verify_static_archive,
     verify_variable_archive,
-    write_static_hash,
 )
 from scripts.utils.downloads import download_zip_and_extract
-from scripts.utils.errors import CJKBaseUnavailable
 from scripts.utils.logging import logger
 
 if TYPE_CHECKING:
-    from concurrent.futures import Executor
-
     from scripts.cjk.config import CJKBuildConfig
-    from scripts.config.base import (
-        BuiltinCJKLocaleId,
-        ResolvedCJKBuildEntry,
-        ResolvedConfig,
-    )
-    from scripts.config.runtime import BuildRuntimeContext
+    from scripts.config.base import BuiltinCJKLocaleId, ResolvedCJKBuildEntry
 
 
-CJK_STATIC_DOWNLOAD_LOCALES = frozenset(("cn", "jp", "tc", "kr"))
-CJKStaticBaseSource = Literal[
-    "local-static", "remote-static", "local-variable", "remote-variable"
-]
+CJK_BASE_DOWNLOAD_LOCALES = frozenset(("cn", "jp", "tc", "kr"))
 
 
-@dataclass(frozen=True, slots=True)
-class CJKStaticBaseResolution:
-    static_dir: Path
-    static_file_prefix: str
-    source_kind: CJKStaticBaseSource
+def static_base_dir(config: CJKBuildConfig) -> Path:
+    """Return the static CJK base directory for one resolved configuration."""
+    return config.output.dir / config.output.static_dir
 
 
-class CJKBaseResolver:
-    """Resolve reusable CJK bases without coupling runtime paths to CJK I/O."""
+def static_style_names(static_dir: Path, prefix: str) -> set[str]:
+    """Return the available static style names for a CJK base directory."""
+    if not static_dir.is_dir():
+        return set()
+    marker = f"{prefix}-"
+    return {
+        font.stem.removeprefix(marker)
+        for font in static_dir.glob("*.ttf")
+        if font.name.startswith(marker)
+    }
 
-    def __init__(
-        self,
-        runtime_context: BuildRuntimeContext,
-        font_config: ResolvedConfig,
-        executor: Executor | None = None,
-    ) -> None:
-        self.runtime_context = runtime_context
-        self.font_config = font_config
-        self.executor = executor
 
-    @staticmethod
-    def static_dir(config: CJKBuildConfig) -> Path:
-        return config.output.dir / config.output.static_dir
+class CJKBaseArchiveStore:
+    """Install validated local or remote CJK base archives into their output paths."""
+
+    def __init__(self, github_mirror: str) -> None:
+        self.github_mirror = github_mirror
 
     @staticmethod
     def _archive_name(locale: BuiltinCJKLocaleId, kind: str) -> str:
@@ -72,17 +56,6 @@ class CJKBaseResolver:
             "https://github.com/subframe7536/maple-font/"
             + f"releases/download/cjk-base/{cls._archive_name(locale, kind)}"
         )
-
-    @staticmethod
-    def _style_names(static_dir: Path, prefix: str) -> set[str]:
-        if not static_dir.is_dir():
-            return set()
-        marker = f"{prefix}-"
-        return {
-            font.stem.removeprefix(marker)
-            for font in static_dir.glob("*.ttf")
-            if font.name.startswith(marker)
-        }
 
     def _install_static_archive(
         self,
@@ -101,7 +74,7 @@ class CJKBaseResolver:
                 url,
                 archive,
                 extracted_dir,
-                github_mirror=self.runtime_context.effective_github_mirror,
+                github_mirror=self.github_mirror,
             ):
                 return False
             verify_static_archive(archive, expected_hash, extracted_dir=extracted_dir)
@@ -126,7 +99,7 @@ class CJKBaseResolver:
                 url,
                 archive,
                 extracted_dir,
-                github_mirror=self.runtime_context.effective_github_mirror,
+                github_mirror=self.github_mirror,
             ):
                 return False
             verify_variable_archive(
@@ -155,11 +128,11 @@ class CJKBaseResolver:
             shutil.copy2(local_archive, archive_copy)
             return installer(archive_copy)
 
-    def _download_static_base(
+    def install_static_base(
         self, locale: BuiltinCJKLocaleId, config: CJKBuildConfig
     ) -> bool:
-        output_dir = self.static_dir(config)
-        if locale not in CJK_STATIC_DOWNLOAD_LOCALES or output_dir.exists():
+        output_dir = static_base_dir(config)
+        if locale not in CJK_BASE_DOWNLOAD_LOCALES or output_dir.exists():
             return False
         output_dir.parent.mkdir(parents=True, exist_ok=True)
         archive_name = self._archive_name(locale, "static")
@@ -217,7 +190,7 @@ class CJKBaseResolver:
         """Populate a preset's reusable variable base from a verified archive."""
         locale = entry.download_locale
         config = entry.build_config
-        if locale is None or locale not in CJK_STATIC_DOWNLOAD_LOCALES:
+        if locale is None or locale not in CJK_BASE_DOWNLOAD_LOCALES:
             return False
         expected_hash = variable_hash_path(config)
         if not expected_hash.is_file():
@@ -267,105 +240,3 @@ class CJKBaseResolver:
             return False
         finally:
             archive.unlink(missing_ok=True)
-
-    def _resolution(
-        self, config: CJKBuildConfig, source_kind: CJKStaticBaseSource
-    ) -> CJKStaticBaseResolution:
-        return CJKStaticBaseResolution(
-            self.static_dir(config), config.naming.static_file_prefix, source_kind
-        )
-
-    def resolve_static_base(
-        self, entry: ResolvedCJKBuildEntry, required_styles: list[str]
-    ) -> CJKStaticBaseResolution:
-        """Resolve local static, remote static, then variable CJK base outputs."""
-        config = entry.build_config
-        required_styles = sorted(set(required_styles))
-        static_dir = self.static_dir(config)
-        if has_valid_cjk_static_cache(config, static_dir, set(required_styles)):
-            return self._resolution(config, "local-static")
-        if static_dir.exists():
-            logger.warning(
-                "Cached CJK static fonts are invalid; preserving cache: locale=%s",
-                config.locale_name,
-            )
-        if entry.download_locale and self._download_static_base(
-            entry.download_locale, config
-        ):
-            missing = [
-                style
-                for style in required_styles
-                if style
-                not in self._style_names(static_dir, config.naming.static_file_prefix)
-            ]
-            if not missing:
-                write_static_hash(config, static_dir)
-                return self._resolution(config, "remote-static")
-            logger.warning(
-                "Downloaded CJK static fonts are incomplete; locale=%s",
-                config.locale_name,
-            )
-
-        resolved_variable_base, failures = self._resolve_variable_static_base(
-            entry, required_styles
-        )
-        if resolved_variable_base is not None:
-            return resolved_variable_base
-        try:
-            build_cjk_fonts(
-                config,
-                self.font_config,
-                vf_only=True,
-                executor=self.executor,
-                github_mirror=self.runtime_context.effective_github_mirror,
-            )
-            instantiate_cjk_static_from_variable(
-                config,
-                self.font_config,
-                executor=self.executor,
-                required_styles=required_styles,
-            )
-            return self._resolution(config, "remote-variable")
-        except Exception as error:
-            failures.append(f"remote variable source: {error}")
-            raise CJKBaseUnavailable(
-                f"Unable to resolve {config.locale_name} CJK base: "
-                + "; ".join(failures)
-            ) from error
-
-    def _resolve_variable_static_base(
-        self, entry: ResolvedCJKBuildEntry, required_styles: list[str]
-    ) -> tuple[CJKStaticBaseResolution | None, list[str]]:
-        config = entry.build_config
-        failures: list[str] = []
-        if entry.common_options.clean_cache:
-            return None, [
-                "local variable outputs unavailable or clean_cache is enabled"
-            ]
-        if all(path.is_file() for path in variable_paths(config)):
-            try:
-                self._instantiate_static_from_variable(config, required_styles)
-                return self._resolution(config, "local-variable"), failures
-            except Exception as error:
-                failures.append(f"local variable instantiation: {error}")
-        else:
-            failures.append(
-                "local variable outputs unavailable or clean_cache is enabled"
-            )
-        if self.ensure_variable_base(entry):
-            try:
-                self._instantiate_static_from_variable(config, required_styles)
-                return self._resolution(config, "remote-variable"), failures
-            except Exception as error:
-                failures.append(f"remote variable archive: {error}")
-        return None, failures
-
-    def _instantiate_static_from_variable(
-        self, config: CJKBuildConfig, required_styles: list[str]
-    ) -> None:
-        instantiate_cjk_static_from_variable(
-            config,
-            self.font_config,
-            executor=self.executor,
-            required_styles=required_styles,
-        )

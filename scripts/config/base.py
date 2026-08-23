@@ -5,7 +5,7 @@ from dataclasses import asdict, dataclass, field
 from os import getenv
 from typing import TYPE_CHECKING, Any, Literal
 
-from scripts.cjk.resolver import serialize_cjk_build_config
+from scripts.cjk.config import serialize_cjk_build_config
 from scripts.font_ops.names import INSTANCE_WEIGHT_MAPPING
 from scripts.font_ops.nerd_font import NerdFontVariant
 

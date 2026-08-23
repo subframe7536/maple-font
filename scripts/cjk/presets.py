@@ -4,7 +4,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import TYPE_CHECKING, Literal
 
-from scripts.cjk.resolver import config_from_json
+from scripts.cjk.config import config_from_json
 
 if TYPE_CHECKING:
     from scripts.cjk.config import CJKBuildConfig

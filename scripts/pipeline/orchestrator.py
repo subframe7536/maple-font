@@ -735,7 +735,10 @@ class MapleBuildPipeline:
         return stages
 
     def write_cache_record(self) -> None:
-        self._cache_tracker.write_cache_record(self._requested_cache_stages())
+        self._cache_tracker.write_cache_record(
+            self._requested_cache_stages(),
+            self._cjk_stage_targets(),
+        )
 
     def archive_outputs(self) -> None:
         started_at = log_task(TaskName.ARCHIVE, "Archive build outputs")

@@ -8,15 +8,17 @@ from dataclasses import fields
 from pathlib import Path
 from typing import Any, cast
 
-from scripts.cjk.config import CJKSourceConfig
-from scripts.cjk.presets import build_preset_config, get_preset
-from scripts.cjk.resolver import (
+from scripts.cjk.cli import (
     add_cjk_arguments,
     apply_cli_overrides,
+)
+from scripts.cjk.config import (
+    CJKSourceConfig,
     config_from_data,
     config_from_json,
     serialize_cjk_build_config,
 )
+from scripts.cjk.presets import build_preset_config, get_preset
 
 
 def custom_config_data() -> dict[str, Any]:

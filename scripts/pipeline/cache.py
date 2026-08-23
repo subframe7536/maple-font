@@ -5,7 +5,7 @@ from copy import deepcopy
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Literal
 
-from scripts.cjk.resolver import serialize_cjk_build_config
+from scripts.cjk.config import serialize_cjk_build_config
 from scripts.pipeline.artifacts import base_cache_identity
 from scripts.pipeline.nerd_fonts import should_use_font_patcher
 from scripts.utils.files import write_json
@@ -236,6 +236,7 @@ class StageCacheTracker:
         self,
         stage: str,
         paths: list[Path],
+        cjk_targets: list[tuple[str, ResolvedCJKBuildEntry, str]] | None = None,
     ) -> bool:
         self._validated_stage_records.pop(stage, None)
         if not self.stage_cache_record_available(stage):
@@ -244,7 +245,7 @@ class StageCacheTracker:
             Path(self.runtime_context.output_root),
             self._cache_record,
             stage,
-            self.stage_cache_identity(stage),
+            self.stage_cache_identity(stage, cjk_targets),
             paths,
         )
         if stage_record is None:
@@ -326,6 +327,7 @@ class StageCacheTracker:
         return self.validate_cached_stage_after_log(
             stage,
             paths,
+            cjk_targets,
         )
 
     def invalidate_recorded_stage(self, stage: str) -> None:
@@ -434,7 +436,11 @@ class StageCacheTracker:
             inputs = {"record": record}
         return stage_identity(inputs, stage, dependencies)
 
-    def write_cache_record(self, requested_stages: list[str]) -> None:
+    def write_cache_record(
+        self,
+        requested_stages: list[str],
+        cjk_targets: list[tuple[str, ResolvedCJKBuildEntry, str]],
+    ) -> None:
         log_task(TaskName.BUILD, "Write cache record", force_separator=True)
         root = Path(self.runtime_context.output_root)
         stages: dict[str, dict[str, object]] = {}
@@ -449,7 +455,7 @@ class StageCacheTracker:
                         f"Stage {stage} outputs changed before cache recording"
                     )
                 stages[stage] = {
-                    "key": self.stage_cache_identity(stage),
+                    "key": self.stage_cache_identity(stage, cjk_targets),
                     "snapshot": output_snapshot(
                         root,
                         stage,
