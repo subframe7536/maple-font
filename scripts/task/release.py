@@ -41,6 +41,7 @@ RELEASE_VARIABLE_WIDTHS: tuple[ReleaseWidth, ...] = ("default", "narrow", "slim"
 class ReleasePlan:
     tag: str
     build_args: tuple[str, ...]
+    cjk_locale: str = "cn"
     fontsource_dir: str = "cdn/fontsource"
     requirements_file: str = "requirements.txt"
     variable_woff2_dir: str = "woff2/variable"
@@ -53,12 +54,16 @@ class ReleasePlan:
                 f"Tag: {self.tag}",
                 f"Project version: {self.project_version}",
                 f"Font version: {self.font_version}",
-                f"Build: build.py {' '.join(self.build_args)}",
+                f"Build: build.py {' '.join(self.default_build_args)}",
                 f"Fontsource output: {self.fontsource_dir}",
                 f"Variable WOFF2 output: {self.variable_woff2_dir}",
                 f"Requirements output: {self.requirements_file}",
             )
         )
+
+    @property
+    def default_build_args(self) -> tuple[str, ...]:
+        return (*self.build_args, "--cjk", self.cjk_locale)
 
 
 def register_parser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser]):
@@ -250,14 +255,14 @@ def create_release_plan(
     )
     return ReleasePlan(
         tag=version_tag(target_version),
-        build_args=("--ttf-only", "--no-nerd-font", "--cn", "--no-hinted"),
+        build_args=("--format", "ttf", "--no-nerd-font", "--no-hinted"),
         project_version=target_version,
         font_version=target_font_version,
     )
 
 
 def generate_release_assets(plan: ReleasePlan) -> None:
-    build_main(list(plan.build_args), plan.tag)
+    build_main(list(plan.default_build_args), plan.tag)
 
     shutil.rmtree("./cdn", ignore_errors=True)
     convert_to_web("./fonts/TTF", plan.fontsource_dir, flavor="woff2")
@@ -283,8 +288,7 @@ def generate_release_assets(plan: ReleasePlan) -> None:
     shutil.rmtree(plan.variable_woff2_dir, ignore_errors=True)
     for width in RELEASE_VARIABLE_WIDTHS:
         if width != "default":
-            build_args = [arg for arg in plan.build_args if arg != "--cn"]
-            build_main([*build_args, "--width", width], plan.tag)
+            build_main([*plan.build_args, "--width", width], plan.tag)
         convert_to_web("./fonts/Variable", plan.variable_woff2_dir, flavor="woff2")
         rename_woff_files(plan.variable_woff2_dir, format_woff2_name)
         logger.info("Generated %s variable WOFF2 files", width)

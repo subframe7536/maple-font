@@ -70,13 +70,14 @@ flowchart LR
 | `config.py`               | Typed CJK configuration, Unicode presets, transforms, output defaults, and naming defaults.                                           |
 | `resolver.py`             | JSON/CLI parsing, validation, Unicode and axis overrides, and locale-derived paths and names.                                         |
 | `presets.py`              | Built-in CN, JP, TC, and KR metadata and config loading.                                                                              |
-| `builder.py`              | Source resolution, subsetting, master preparation, variable-font generation, static instantiation, and standalone executor lifecycle. |
+| `builder.py`              | Source preparation, subsetting, master preparation, variable-font generation, static instantiation, and standalone executor lifecycle. |
+| `base_resolver.py`        | Main-build static/variable base fallback, archive installation, integrity checks, and source-rebuild escalation.                       |
 | `outlines.py`             | Glyph command replay, compatibility checks, and CFF/CFF2-to-glyf conversion.                                                          |
 | `variable.py`             | Variable-font loading, master merging, `gvar` construction, italic transforms, and table cleanup.                                     |
 | `cache.py`                | Static-directory and variable-file digest creation, archive validation, and cache checks for standalone CJK assets.                 |
 | `static.py`               | Main-build CJK static naming, metrics, metadata, feature application, and width processing.                                           |
 | `pipeline/cjk_outputs.py` | Merge CJK bases with Maple and Nerd Font outputs and publish final stages.                                                            |
-| `config/runtime.py`       | Resolve local static bases and archives, remote static/variable archives, local VFs, and source regeneration for the main build. |
+| `config/runtime.py`       | Resolved paths, immutable runtime choices, and mutable upstream-output flags for the main build.                               |
 | `task/cjk.py`             | Register `task.py cjk` and dispatch preset, JSON, or direct-CLI builds.                                                               |
 
 ## Generated layout

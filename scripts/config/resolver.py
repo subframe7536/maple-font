@@ -29,7 +29,10 @@ from scripts.config.base import (
     parse_codepoint_alias,
     parse_scale_factor,
 )
-from scripts.config.runtime import BuildRuntimeContext
+from scripts.config.compat import (
+    apply_deprecated_cli_overrides,
+    apply_legacy_cn_config,
+)
 from scripts.feature.compiler import normal_enabled_features
 from scripts.utils.logging import logger
 from scripts.utils.version import font_version_for_core, parse_font_version
@@ -45,6 +48,67 @@ def _require_string_list(value: Any, field: str) -> list[str]:
     if not isinstance(value, list) or not all(isinstance(item, str) for item in value):
         raise ValueError(f"{field} must be an array of strings")
     return list(value)
+
+
+def _apply_behavior_cli(config: ResolvedConfig, args) -> None:
+    config.behavior.archive = bool(args.archive)
+    config.behavior.debug = bool(args.debug)
+    config.behavior.cache = bool(args.cache)
+    config.behavior.least_styles = bool(args.least_styles)
+    config.behavior.apply_fea_file = bool(args.apply_fea_file)
+    if args.cjk_variable:
+        config.behavior.cjk_output_format = "variable"
+    config.behavior.use_cjk_both = bool(args.cjk_both)
+    if args.formats is not None:
+        config.behavior.formats = list(args.formats)
+
+
+def _apply_feature_cli(config: ResolvedConfig, args) -> None:
+    if args.normal:
+        config.feature.normal = True
+        for feature in normal_enabled_features:
+            config.feature_freeze[feature] = "enable"
+    if args.standard_zero:
+        config.feature.standard_zero = True
+    if args.feat:
+        config.feature.feat = list(args.feat)
+        for feature in args.feat:
+            if feature in config.feature_freeze:
+                config.feature_freeze[feature] = "enable"
+    if args.hinted is not None:
+        config.feature.hinted = bool(args.hinted)
+    if args.liga is not None:
+        config.feature.liga = bool(args.liga)
+    if args.infinite_arrow is not None:
+        config.feature.infinite_arrow = bool(args.infinite_arrow)
+    if args.remove_tag_liga:
+        config.feature.remove_tag_liga = True
+    if args.width is not None:
+        config.feature.width = args.width
+    if args.line_height is not None:
+        config.feature.line_height = float(args.line_height)
+
+
+def _apply_nerd_font_cli(config: ResolvedConfig, args) -> None:
+    if config.debug:
+        config.nerd_font.enable = False
+    if args.nf_mono:
+        config.nerd_font.mono = True
+        config.nerd_font.propo = False
+        config.nerd_font.enable = True
+    if args.nf_propo:
+        config.nerd_font.propo = True
+        config.nerd_font.mono = False
+        config.nerd_font.enable = True
+    elif config.nerd_font.propo:
+        config.nerd_font.mono = False
+    if args.nf_variable:
+        config.nerd_font.variable = True
+        config.nerd_font.enable = True
+    if args.nerd_font is not None:
+        config.nerd_font.enable = bool(args.nerd_font)
+    if args.font_patcher:
+        config.nerd_font.use_font_patcher = True
 
 
 class BuildConfigResolver:
@@ -251,7 +315,7 @@ class BuildConfigResolver:
             locales=self._resolve_cjk_locales(raw_cjk),
             common_options=self._resolve_cjk_common_options(raw_cjk),
         )
-        self._apply_legacy_cn_config(selection, legacy_cn)
+        apply_legacy_cn_config(selection, legacy_cn)
         selection.entries = self._build_cjk_entries(
             selection.locales,
             selection.common_options,
@@ -320,34 +384,6 @@ class BuildConfigResolver:
             options.scale_factor = parse_scale_factor(raw_cjk["scale_factor"])
         return options
 
-    def _apply_legacy_cn_config(
-        self,
-        selection: CJKBuildSelection,
-        legacy_cn: dict[str, Any] | None,
-    ) -> None:
-        if not isinstance(legacy_cn, dict):
-            return
-
-        if "enable" in legacy_cn and _require_bool(legacy_cn["enable"], "cn.enable"):
-            selection.locales.cn = True
-        for key in (
-            "with_nerd_font",
-            "fix_meta_table",
-            "clean_cache",
-            "narrow",
-            "use_hinted",
-        ):
-            if key in legacy_cn:
-                setattr(
-                    selection.common_options,
-                    key,
-                    _require_bool(legacy_cn[key], f"cn.{key}"),
-                )
-        if "scale_factor" in legacy_cn:
-            selection.common_options.scale_factor = parse_scale_factor(
-                legacy_cn["scale_factor"]
-            )
-
     def _build_cjk_entries(
         self,
         locale_selection: CJKLocaleSelection,
@@ -400,85 +436,11 @@ class BuildConfigResolver:
         return entries
 
     def _apply_cli_overrides(self, config: ResolvedConfig, args) -> None:
-        # ========== Build behavior overrides ============
-        config.behavior.archive = bool(args.archive)
-        config.behavior.debug = bool(args.debug)
-        config.behavior.cache = bool(args.cache)
-        config.behavior.least_styles = bool(args.least_styles)
-        config.behavior.apply_fea_file = bool(args.apply_fea_file)
-        if args.cjk_variable:
-            config.behavior.cjk_output_format = "variable"
-        config.behavior.use_cjk_both = bool(args.cjk_both or args.cn_both)
-
-        if args.cn_both:
-            logger.warning("--cn-both is deprecated; use --cjk-both instead")
-
-        if args.formats is not None:
-            config.behavior.formats = list(args.formats)
-
-        if args.ttf_only:
-            logger.warning("--ttf-only is deprecated; use --format ttf instead")
-            config.behavior.formats = ["ttf"]
-
-        # ============== Feature overrides ============
-        if args.normal:
-            config.feature.normal = True
-            for feature in normal_enabled_features:
-                config.feature_freeze[feature] = "enable"
-
-        if args.standard_zero:
-            config.feature.standard_zero = True
-
-        if args.feat:
-            config.feature.feat = list(args.feat)
-            for feature in args.feat:
-                if feature in config.feature_freeze:
-                    config.feature_freeze[feature] = "enable"
-
-        if args.hinted is not None:
-            config.feature.hinted = bool(args.hinted)
-        if args.liga is not None:
-            config.feature.liga = bool(args.liga)
-        if args.infinite_arrow is not None:
-            config.feature.infinite_arrow = bool(args.infinite_arrow)
-        if args.remove_tag_liga:
-            config.feature.remove_tag_liga = True
-        if args.width is not None:
-            config.feature.width = args.width
-        if args.line_height is not None:
-            config.feature.line_height = float(args.line_height)
-
-        # ============== Nerd Font overrides ============
-        if config.debug:
-            config.nerd_font.enable = False
-        if args.nf_mono:
-            config.nerd_font.mono = True
-            config.nerd_font.propo = False
-            config.nerd_font.enable = True
-        if args.nf_propo:
-            config.nerd_font.propo = True
-            config.nerd_font.mono = False
-            config.nerd_font.enable = True
-        elif config.nerd_font.propo:
-            config.nerd_font.mono = False
-        if args.nf_variable:
-            config.nerd_font.variable = True
-            config.nerd_font.enable = True
-        if args.nerd_font is not None:
-            config.nerd_font.enable = bool(args.nerd_font)
-        if args.font_patcher:
-            config.nerd_font.use_font_patcher = True
-
-        # ============== CJK overrides ============
+        _apply_behavior_cli(config, args)
+        _apply_feature_cli(config, args)
+        _apply_nerd_font_cli(config, args)
         enabled_locales = set(config.cjk.locales.builtin_enabled_locales())
         enabled_locales.update(normalize_cjk_locale_list(getattr(args, "cjk", None)))
-
-        if args.cn is not None:
-            logger.warning("--cn is deprecated; use --cjk cn instead")
-            if args.cn:
-                enabled_locales.add("cn")
-            else:
-                enabled_locales.discard("cn")
 
         if args.cjk_narrow:
             config.cjk.common_options.narrow = True
@@ -487,19 +449,7 @@ class BuildConfigResolver:
         if args.cjk_hinted is not None:
             config.cjk.common_options.use_hinted = bool(args.cjk_hinted)
 
-        if args.cn_narrow:
-            logger.warning("--cn-narrow is deprecated; use --cjk-narrow instead")
-            config.cjk.common_options.narrow = True
-        if args.cn_scale_factor is not None:
-            logger.warning(
-                "--cn-scale-factor is deprecated; use --cjk-scale-factor instead"
-            )
-            config.cjk.common_options.scale_factor = args.cn_scale_factor
-        if args.cn_rebuild:
-            logger.warning(
-                "--cn-rebuild is deprecated; use task.py cjk --preset cn instead"
-            )
-            enabled_locales.add("cn")
+        apply_deprecated_cli_overrides(config, args, enabled_locales)
 
         for locale in BUILTIN_CJK_LOCALES:
             config.cjk.locales.set_builtin_enabled(locale, locale in enabled_locales)
@@ -559,7 +509,6 @@ def resolve_default_build_config() -> ResolvedConfig:
 
 __all__ = [
     "BuildConfigResolver",
-    "BuildRuntimeContext",
     "ResolvedConfig",
     "resolve_default_build_config",
 ]

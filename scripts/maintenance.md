@@ -13,7 +13,7 @@ uv sync
 
 The FontLab `.vfc` files, CJK preset JSON files, and feature source modules are inputs. Designspace/UFO sources, `.fea` files, release archives, and files under `fonts/` are generated outputs. Regenerate them with the task that owns them instead of editing them by hand. Exported root `sources/*.glyphs` files are local intermediates and are ignored.
 
-Do not run a release, publish, push, or page synchronization command until the generated diff has been reviewed. `uv run task.py page --sync` updates and commits the landing-page submodule, while `uv run task.py release ...` commits and pushes a version tag.
+Do not run a release, publish, or push command until the generated diff has been reviewed. `uv run task.py release ...` commits and pushes a version tag.
 
 ## Update the Maple Mono source
 
@@ -52,8 +52,6 @@ Feature generation updates these tracked outputs:
 - `documentation/opentype-features.md`
 - `sources/schema.json` and the feature-freeze section in `config.json`
 - The moving-rule list in `scripts/in_browser.py`
-
-For landing-page data, run `uv run task.py page` only when those generated files are part of the change. Use `--woff2` to regenerate web fonts; reserve `--sync` for an intentional remote submodule update and commit.
 
 When deliberately adopting a new Nerd Font upstream release, build a base TTF first and run `uv run task.py nf`. The task checks the upstream release, updates `nerd_font.version` in `config.json`, downloads the matching patcher, and writes the three tracked NF base fonts under `sources/`. Use `uv run task.py nf --no-update` when the configured version is already correct and only the local NF outputs need rebuilding.
 
@@ -94,7 +92,7 @@ The task rebuilds the regular and italic variable bases, writes their standalone
 
 ### Prepare and tag locally
 
-1. Finish source, feature, page, and CJK updates, then run the validation baseline below. Make sure the `cjk-base` release is current and its 8 hashes match the repository.
+1. Finish source, feature, and CJK updates, then run the validation baseline below. Make sure the `cjk-base` release is current and its 8 hashes match the repository.
 2. Preview the next version without changing files. The release task uses the development-only `questionary` menu with arrow-key navigation; each option includes its target tag and embedded font version, and `minor` is selected by default:
 
    ```sh

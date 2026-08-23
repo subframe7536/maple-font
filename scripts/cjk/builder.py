@@ -29,13 +29,7 @@ from scripts.cjk.outlines import (
     detect_outline_format,
     install_existing_glyf_tables,
 )
-from scripts.cjk.resolver import (
-    apply_cli_overrides,
-    apply_unicode_override,
-    config_from_cli,
-    config_from_json,
-    ordered_master_locations,
-)
+from scripts.cjk.resolver import ordered_master_locations
 from scripts.cjk.variable import (
     drop_font_tables,
     get_cmap_codepoints,
@@ -69,7 +63,6 @@ from scripts.utils.files import archive
 from scripts.utils.logging import logger, set_log_task
 
 if TYPE_CHECKING:
-    import argparse
     from collections.abc import Collection, Iterable
     from concurrent.futures import Executor
 
@@ -1415,23 +1408,4 @@ def build_cjk_fonts(
     """Build regular, italic, and optionally static CJK fonts."""
     CJKBuilder(build_config, name_config, executor, github_mirror).build(
         vf_only=vf_only
-    )
-
-
-def build_cjk_from_args(
-    args: argparse.Namespace,
-    github_mirror: str = "github.com",
-) -> None:
-    """Build CJK fonts from JSON config plus CLI overrides or direct CLI flags."""
-    from scripts.config.resolver import resolve_default_build_config
-
-    if args.config:
-        config = apply_cli_overrides(config_from_json(args.config), args)
-    else:
-        config = config_from_cli(args)
-    build_cjk_fonts(
-        apply_unicode_override(config, args.unicodes),
-        resolve_default_build_config(),
-        args.vf_only,
-        github_mirror=github_mirror,
     )

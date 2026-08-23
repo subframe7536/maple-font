@@ -58,7 +58,6 @@ uv run build.py --dry
 uv run build.py --ttf-only --debug
 uv run build.py --ttf-only --cn --debug
 uv run task.py fea
-uv run task.py page
 ```
 
 The downloaded `FontPatcher/` tool are intentionally excluded from root Python Ruff and Pyrefly checks.
@@ -102,7 +101,7 @@ Treat `fonts/` as disposable build output. Do not commit generated churn unless 
 ## Dependencies, Network, and Release Safety
 
 - Python runtime dependencies belong in `pyproject.toml` and `requirements.txt`; Python development tools belong in the uv development dependency group.
-- CN source downloads, Nerd Font assets, FontForge tooling, page package installation, and release actions may require network access. Do not trigger them unless the task needs them.
+- CN source downloads, Nerd Font assets, FontForge tooling, and release actions may require network access. Do not trigger them unless the task needs them.
 - Never run release, publish, push, or destructive cleanup commands unless explicitly requested.
 
 ## Before Finishing

@@ -10,7 +10,7 @@ This directory implements `build.py` and `task.py`. The build pipeline is determ
 | Build release outputs      | `uv run build.py`                          | Runs the complete pipeline selected by the resolved configuration.                                                             |
 | Build a focused format     | `uv run build.py --format ttf --debug`     | Selects a requested base format and the debug style/output policy.                                                             |
 | Build CJK base assets      | `uv run task.py cjk --preset cn`           | Rebuilds the standalone CJK variable bases and variable archive/hash, then static bases unless `--vf-only` is set.              |
-| Run a repository task      | `uv run task.py <name>`                    | Dispatches feature, designspace, Google Fonts, Nerd Font, page, release, and publish workflows.                                |
+| Run a repository task      | `uv run task.py <name>`                    | Dispatches feature, designspace, Google Fonts, Nerd Font, release, and publish workflows.                                      |
 | Follow maintenance steps   | [`maintenance.md`](maintenance.md)         | Covers source updates, generated files, CJK base refreshes, validation, and release procedures.                                |
 | Trace pipeline state       | [`pipeline/README.md`](pipeline/README.md) | Documents stage selection, cache transitions, failure state, and executor ownership.                                           |
 
@@ -22,7 +22,8 @@ This directory implements `build.py` and `task.py`. The build pipeline is determ
 | Area                   | Source of truth                                         | Responsibility                                                                                                           |
 | ---------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
 | Configuration          | `config/base.py`, `config/resolver.py`, `config/cli.py` | Parse JSON and CLI values, normalize defaults, validate selections, and derive the resolved build model.                 |
-| Runtime decisions      | `config/runtime.py`, `config/paths.py`                  | Resolve output paths, CJK base fallback, downloads, and runtime flags.                                                   |
+| Runtime decisions      | `config/runtime.py`, `config/paths.py`                  | Resolve output paths and runtime flags.                                                                                  |
+| CJK base resolution    | `cjk/base_resolver.py`, `cjk/cache.py`                  | Validate reusable CJK bases and apply static/variable/source fallback in a dedicated boundary.                           |
 | Build orchestration    | [`pipeline/orchestrator.py`](pipeline/orchestrator.py)  | Select stages, coordinate dependencies, manage cache state, and archive outputs.                                         |
 | Fontmake base build    | `pipeline/fontmake.py`                                  | Prepare Designspace/UFO sources, compile Fontmake branches, and post-process base Variable/TTF/OTF fonts.                |
 | Derived base outputs   | `pipeline/base_fonts.py`                                | Apply AutoHint to static TTFs and convert static TTFs to WOFF2. It does not compile or post-process Fontmake base fonts. |

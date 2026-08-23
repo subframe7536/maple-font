@@ -35,7 +35,6 @@ class TaskName(str, Enum):
     NF = "nf"
     GOOGLEFONTS = "googlefonts"
     RELEASE = "release"
-    PAGE = "page"
     PUBLISH = "publish"
 
 

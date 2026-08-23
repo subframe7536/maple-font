@@ -11,6 +11,8 @@ from scripts.cjk.resolver import (
     add_cjk_arguments,
     apply_cli_overrides,
     apply_unicode_override,
+    config_from_cli,
+    config_from_json,
 )
 from scripts.config.resolver import resolve_default_build_config
 from scripts.utils.downloads import github_mirror_from_config
@@ -78,6 +80,14 @@ def run(args: argparse.Namespace) -> None:
             )
         return
 
-    from scripts.cjk.builder import build_cjk_from_args
-
-    build_cjk_from_args(args, github_mirror)
+    config = (
+        apply_cli_overrides(config_from_json(args.config), args)
+        if args.config
+        else config_from_cli(args)
+    )
+    build_cjk_fonts(
+        apply_unicode_override(config, args.unicodes),
+        resolve_default_build_config(),
+        args.vf_only,
+        github_mirror=github_mirror,
+    )

@@ -19,20 +19,8 @@ class CJKBaseUnavailable(BuildDependencyError):
     """Raised when no valid CJK base can be resolved."""
 
 
-class ConfigurationError(BuildError, ValueError):
-    """Raised when user configuration is structurally or semantically invalid."""
-
-
-class CacheError(BuildError):
-    """Raised when a cache manifest cannot be safely processed."""
-
-
 class DownloadError(BuildError, FileNotFoundError):
     """Raised when an external source cannot be downloaded."""
-
-
-class DownloadTooLargeError(DownloadError):
-    """Raised when a download exceeds its configured safety limit."""
 
 
 class ArchiveError(DownloadError, ValueError):
@@ -41,10 +29,6 @@ class ArchiveError(DownloadError, ValueError):
 
 class ArchiveMemberNotFoundError(ArchiveError):
     """Raised when the requested archive member is absent or ambiguous."""
-
-
-class FeatureBuildError(BuildError):
-    """Raised when feature preparation fails outside the feature parser."""
 
 
 @dataclass(frozen=True)

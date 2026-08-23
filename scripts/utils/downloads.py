@@ -209,77 +209,15 @@ def resolve_cached_download(
     if not url:
         raise FileNotFoundError(f"{name} not found: {target}")
 
-    target.parent.mkdir(parents=True, exist_ok=True)
-    temporary_path = target.with_name(f".{target.name}.download")
-    temporary_path.unlink(missing_ok=True)
+    temporary_path = _temporary_download_path(target)
     is_archive = False
     try:
-        try:
-            download_file(url, temporary_path, github_mirror)
-        except Exception as error:
-            raise DownloadError(
-                f"Failed to download {name} from {url}: {error}"
-            ) from error
+        _download_to_temporary(name, url, temporary_path, github_mirror)
         is_archive = py7zr.is_7zfile(temporary_path)
         if is_archive:
-            if path_in_archive is None:
-                raise ArchiveError(
-                    "download.path_in_archive is required for a 7z archive"
-                )
-            archive_path = validate_archive_path(path_in_archive)
-            with tempfile.TemporaryDirectory(
-                prefix=f".{target.name}.extract-",
-                dir=target.parent,
-            ) as extract_tmp:
-                extract_dir = Path(extract_tmp)
-                with py7zr.SevenZipFile(temporary_path, mode="r") as archive:
-                    members = archive.list()
-                    if len(members) > MAX_ARCHIVE_MEMBERS:
-                        raise ArchiveError(
-                            "7z archive exceeds member limit: "
-                            f"{len(members)} > {MAX_ARCHIVE_MEMBERS}"
-                        )
-                    matches = [
-                        member for member in members if member.filename == archive_path
-                    ]
-                    if len(matches) != 1:
-                        raise ArchiveMemberNotFoundError(
-                            "download.path_in_archive must match exactly one archive "
-                            f"member: {archive_path!r} matched {len(matches)}"
-                        )
-                    if not matches[0].is_file or matches[0].is_symlink:
-                        raise ArchiveError(
-                            "download.path_in_archive must select a regular file: "
-                            f"{archive_path!r}"
-                        )
-                    extracted_size = matches[0].uncompressed
-                    if (
-                        not isinstance(extracted_size, int)
-                        or extracted_size < 0
-                        or extracted_size > MAX_EXTRACTED_BYTES
-                    ):
-                        raise ArchiveError(
-                            "Selected 7z member exceeds extracted size limit: "
-                            f"{archive_path!r}"
-                        )
-                    archive.extract(path=extract_dir, targets=[archive_path])
-                extracted_path = extract_dir.joinpath(*archive_path.split("/"))
-                if not extracted_path.is_file():
-                    raise ArchiveError(
-                        f"extracted archive member is not a file: {archive_path!r}"
-                    )
-                if extracted_path.stat().st_size > MAX_EXTRACTED_BYTES:
-                    raise ArchiveError(
-                        "Selected 7z member exceeds extracted size limit: "
-                        f"{archive_path!r}"
-                    )
-                extracted_path.replace(target)
+            _extract_7z_member(temporary_path, target, path_in_archive)
         else:
-            if path_in_archive is not None:
-                raise ArchiveError(
-                    "download.path_in_archive is only valid for a 7z archive"
-                )
-            temporary_path.replace(target)
+            _publish_plain_download(temporary_path, target, path_in_archive)
     except (DownloadError, ArchiveError):
         temporary_path.unlink(missing_ok=True)
         raise
@@ -294,6 +232,83 @@ def resolve_cached_download(
         ) from error
     temporary_path.unlink(missing_ok=True)
     return target
+
+
+def _temporary_download_path(target: Path) -> Path:
+    target.parent.mkdir(parents=True, exist_ok=True)
+    temporary_path = target.with_name(f".{target.name}.download")
+    temporary_path.unlink(missing_ok=True)
+    return temporary_path
+
+
+def _download_to_temporary(
+    name: str, url: str, temporary_path: Path, github_mirror: str
+) -> None:
+    try:
+        download_file(url, temporary_path, github_mirror)
+    except Exception as error:
+        raise DownloadError(f"Failed to download {name} from {url}: {error}") from error
+
+
+def _extract_7z_member(
+    archive_path: Path, target: Path, path_in_archive: str | None
+) -> None:
+    if path_in_archive is None:
+        raise ArchiveError("download.path_in_archive is required for a 7z archive")
+    member_path = validate_archive_path(path_in_archive)
+    with tempfile.TemporaryDirectory(
+        prefix=f".{target.name}.extract-", dir=target.parent
+    ) as extract_tmp:
+        extract_dir = Path(extract_tmp)
+        with py7zr.SevenZipFile(archive_path, mode="r") as archive:
+            _select_7z_member(archive.list(), member_path)
+            archive.extract(path=extract_dir, targets=[member_path])
+        extracted_path = extract_dir.joinpath(*member_path.split("/"))
+        if not extracted_path.is_file():
+            raise ArchiveError(
+                f"extracted archive member is not a file: {member_path!r}"
+            )
+        if extracted_path.stat().st_size > MAX_EXTRACTED_BYTES:
+            raise ArchiveError(
+                f"Selected 7z member exceeds extracted size limit: {member_path!r}"
+            )
+        extracted_path.replace(target)
+
+
+def _select_7z_member(members: list[Any], member_path: str) -> Any:
+    if len(members) > MAX_ARCHIVE_MEMBERS:
+        raise ArchiveError(
+            f"7z archive exceeds member limit: {len(members)} > {MAX_ARCHIVE_MEMBERS}"
+        )
+    matches = [member for member in members if member.filename == member_path]
+    if len(matches) != 1:
+        raise ArchiveMemberNotFoundError(
+            "download.path_in_archive must match exactly one archive member: "
+            f"{member_path!r} matched {len(matches)}"
+        )
+    member = matches[0]
+    if not member.is_file or member.is_symlink:
+        raise ArchiveError(
+            f"download.path_in_archive must select a regular file: {member_path!r}"
+        )
+    extracted_size = member.uncompressed
+    if (
+        not isinstance(extracted_size, int)
+        or extracted_size < 0
+        or extracted_size > MAX_EXTRACTED_BYTES
+    ):
+        raise ArchiveError(
+            f"Selected 7z member exceeds extracted size limit: {member_path!r}"
+        )
+    return member
+
+
+def _publish_plain_download(
+    temporary_path: Path, target: Path, path_in_archive: str | None
+) -> None:
+    if path_in_archive is not None:
+        raise ArchiveError("download.path_in_archive is only valid for a 7z archive")
+    temporary_path.replace(target)
 
 
 def validate_archive_path(value: str) -> str:

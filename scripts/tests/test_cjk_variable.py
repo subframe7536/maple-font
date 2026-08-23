@@ -11,6 +11,7 @@ from scripts.cjk.variable import (
     merge_vf,
     rebuild_weight_masters_with_regular_default,
     skew_glyphs,
+    variation_scalar,
 )
 from scripts.font_ops.fonttools import instantiate_variable_font
 from scripts.font_ops.glyph_transform import reduce_glyph_side_bearings
@@ -24,6 +25,15 @@ from scripts.tests.cjk_font_fixtures import (
 
 
 class CJKVariableOperationsTest(unittest.TestCase):
+    def test_variation_scalar_follows_normalized_support_region(self) -> None:
+        support = (-1.0, 0.5, 1.0)
+
+        self.assertEqual(variation_scalar(support, -1.1), 0.0)
+        self.assertEqual(variation_scalar(support, -0.25), 0.5)
+        self.assertEqual(variation_scalar(support, 0.5), 1.0)
+        self.assertEqual(variation_scalar(support, 0.75), 0.5)
+        self.assertEqual(variation_scalar(support, 1.1), 0.0)
+
     def test_reduce_side_bearings_preserves_variable_glyph_shapes(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

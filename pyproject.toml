@@ -18,14 +18,13 @@ dev = [
     "fontbakery[googlefonts]==1.1.0",
     "gftools==0.9.97",
     "pyrefly~=1.1",
-    "python-minifier~=3.2",
     "questionary~=2.1",
     "ruff~=0.15",
 ]
 
 [tool.ruff]
 target-version = "py310"
-extend-exclude = ["maple-font-page", "FontPatcher"]
+extend-exclude = ["FontPatcher"]
 
 [tool.ruff.lint]
 extend-select = [
@@ -75,5 +74,5 @@ fixable = ["ALL"]
 
 [tool.pyrefly]
 project-includes = ["scripts/**/*.py", "build.py", "task.py"]
-project-excludes = ["maple-font-page/**", "FontPatcher/**"]
+project-excludes = ["FontPatcher/**"]
 python-version = "3.10"

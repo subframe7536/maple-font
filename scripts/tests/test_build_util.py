@@ -13,7 +13,8 @@ from scripts.config.base import (
     CJKCommonBuildOptions,
     ResolvedCJKBuildEntry,
 )
-from scripts.config.resolver import BuildConfigResolver, BuildRuntimeContext
+from scripts.config.resolver import BuildConfigResolver
+from scripts.config.runtime import BuildRuntimeContext
 
 
 def make_runtime_context() -> BuildRuntimeContext:

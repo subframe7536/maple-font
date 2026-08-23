@@ -11,7 +11,8 @@ Read this document with [`scripts/README.md`](../README.md), which defines packa
 | State                 | Owner               | Purpose                                                                                                                         |
 | --------------------- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | `ResolvedConfig`      | `config/`           | Normalized user intent: formats, styles, feature options, Nerd Font options, CJK selections, cache policy, and output settings. |
-| `BuildRuntimeContext` | `config/runtime.py` | Filesystem paths, resolved vertical metrics, CJK fallback helpers, and mutable upstream-output flags.                           |
+| `BuildRuntimeContext` | `config/runtime.py` | Filesystem paths, resolved vertical metrics, and mutable upstream-output flags.                                                 |
+| `CJKBaseResolver`     | `cjk/base_resolver.py` | Resolves and validates local/remote static or variable CJK bases before source rebuild fallback.                           |
 | `BuildPlan`           | `orchestrator.py`   | Derived stage policy: target styles, base formats, WOFF2, Nerd Font, CJK mode, cleanup, and archive selection.                  |
 | Cache record          | `pipeline/cache.py` | Per-stage identities, exact output snapshots, and file digests persisted in `fonts/build-cache.json`.                           |
 

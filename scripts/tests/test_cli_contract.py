@@ -194,7 +194,6 @@ class PublicCliContractTest(unittest.TestCase):
             "fea",
             "designspace",
             "release",
-            "page",
             "cjk",
             "googlefonts",
             "publish",
@@ -210,14 +209,6 @@ class PublicCliContractTest(unittest.TestCase):
         )
         self.assertIn("--rebuild", result.stdout)
         self.assertIn("--qa", result.stdout)
-
-    def test_page_command_contract_is_unchanged(self) -> None:
-        result = self.run_cli("task.py", "page", "--help")
-
-        self.assertEqual(result.returncode, 0)
-        self.assertIn("usage: task.py page [-h] [--woff2] [--sync]", result.stdout)
-        self.assertIn("--woff2", result.stdout)
-        self.assertIn("--sync", result.stdout)
 
     def test_invalid_build_argument_returns_argparse_error(self) -> None:
         result = self.run_cli("build.py", "--unknown-option")

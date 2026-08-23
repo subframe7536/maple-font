@@ -416,8 +416,7 @@ def change_glyph_width_or_scale(
         - The scaling and translation are applied to the glyph coordinates, and the
           bounding box values are recalculated.
     """
-    if special_names is None:
-        special_names = []
+    special_names = special_names or []
     font["hhea"].advanceWidthMax = target_width
     glyf: Any = font["glyf"]
     hmtx: Any = font["hmtx"]
@@ -425,21 +424,8 @@ def change_glyph_width_or_scale(
     composites: list[str] = []
     for glyph_name in font.getGlyphOrder():
         if glyph_name in special_names:
-            _change_glyph_width(
-                glyf=glyf,
-                hmtx=hmtx,
-                glyph_name=glyph_name,
-                scale_x=factor,
-                scale_y=1.0,
-                match_width=match_width,
-                target_width=target_width,
-                translate_x=(
-                    target_width * 0.15
-                    if "right" in glyph_name and "quote" in glyph_name
-                    else target_width * -0.15
-                    if "left" in glyph_name and "quote" in glyph_name
-                    else 0
-                ),
+            _change_special_cjk_glyph(
+                glyf, hmtx, glyph_name, factor, match_width, target_width
             )
             if glyf[glyph_name].isComposite():
                 composites.append(glyph_name)
@@ -448,17 +434,7 @@ def change_glyph_width_or_scale(
         glyph = glyf[glyph_name]
         width, lsb = hmtx[glyph_name]
         if width == 0:
-            # Scale zero-width combining marks, keep width at 0
-            scale_w, scale_h = scale_factor
-            _process_glyph_geometry(
-                glyph=glyph,
-                glyf_table=glyf,
-                scale_x=scale_w,
-                scale_y=scale_h,
-                thicken_strength=0.0,
-            )
-            new_lsb = glyph.xMin if hasattr(glyph, "xMin") else lsb
-            hmtx[glyph_name] = (0, new_lsb)
+            _scale_zero_width_cjk_glyph(glyph, glyf, hmtx, glyph_name, scale_factor)
             continue
         if width != match_width:
             continue
@@ -467,26 +443,78 @@ def change_glyph_width_or_scale(
         if glyph.numberOfContours == 0:
             hmtx[glyph_name] = (target_width, lsb)
             continue
+        _scale_simple_cjk_glyph(glyph, hmtx, glyph_name, scale_factor, target_width)
 
-        scale_w, scale_h = scale_factor
-        glyph.coordinates.scale((scale_w, scale_h))
-        glyph.xMin, glyph.yMin, glyph.xMax, glyph.yMax = (
-            glyph.coordinates.calcIntBounds()
-        )
+    _recalculate_cjk_composite_metrics(glyf, hmtx, composites)
 
-        scaled_width = round(width * scale_w)
-        delta = (target_width - scaled_width) / 2
 
-        glyph.coordinates.translate((delta, 0))
-        glyph.xMin, glyph.yMin, glyph.xMax, glyph.yMax = (
-            glyph.coordinates.calcIntBounds()
-        )
+def _change_special_cjk_glyph(
+    glyf: Any,
+    hmtx: Any,
+    glyph_name: str,
+    factor: float,
+    match_width: int,
+    target_width: int,
+) -> None:
+    translate_x = 0.0
+    if "quote" in glyph_name:
+        if "right" in glyph_name:
+            translate_x = target_width * 0.15
+        elif "left" in glyph_name:
+            translate_x = target_width * -0.15
+    _change_glyph_width(
+        glyf=glyf,
+        hmtx=hmtx,
+        glyph_name=glyph_name,
+        scale_x=factor,
+        scale_y=1.0,
+        match_width=match_width,
+        target_width=target_width,
+        translate_x=translate_x,
+    )
 
-        new_lsb = lsb + round(delta)
-        hmtx[glyph_name] = (target_width, new_lsb)
 
-    # Recalculate composite bounds after all components (including combining
-    # marks that appear later in glyph order) have been scaled
+def _scale_zero_width_cjk_glyph(
+    glyph: Glyph,
+    glyf: Any,
+    hmtx: Any,
+    glyph_name: str,
+    scale_factor: tuple[float, float],
+) -> None:
+    scale_w, scale_h = scale_factor
+    _process_glyph_geometry(
+        glyph=glyph,
+        glyf_table=glyf,
+        scale_x=scale_w,
+        scale_y=scale_h,
+        thicken_strength=0.0,
+    )
+    _, lsb = hmtx[glyph_name]
+    new_lsb = glyph.xMin if hasattr(glyph, "xMin") else lsb
+    hmtx[glyph_name] = (0, new_lsb)
+
+
+def _scale_simple_cjk_glyph(
+    glyph: Glyph,
+    hmtx: Any,
+    glyph_name: str,
+    scale_factor: tuple[float, float],
+    target_width: int,
+) -> None:
+    width, lsb = hmtx[glyph_name]
+    scale_w, scale_h = scale_factor
+    glyph.coordinates.scale((scale_w, scale_h))
+    glyph.xMin, glyph.yMin, glyph.xMax, glyph.yMax = glyph.coordinates.calcIntBounds()
+    delta = (target_width - round(width * scale_w)) / 2
+    glyph.coordinates.translate((delta, 0))
+    glyph.xMin, glyph.yMin, glyph.xMax, glyph.yMax = glyph.coordinates.calcIntBounds()
+    hmtx[glyph_name] = (target_width, lsb + round(delta))
+
+
+def _recalculate_cjk_composite_metrics(
+    glyf: Any, hmtx: Any, composites: list[str]
+) -> None:
+    """Refresh composite bounds after their referenced glyphs have been changed."""
     for glyph_name in composites:
         glyph = glyf[glyph_name]
         glyph.recalcBounds(glyf)

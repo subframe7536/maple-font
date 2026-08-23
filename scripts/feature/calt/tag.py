@@ -138,6 +138,62 @@ __map = {
 }
 
 
+def _validate_custom_tag(source: str, target: str) -> None:
+    if len(target) != len(source):
+        raise ValueError(
+            f"length of `content` ({len(source)}) must be equal to length of "
+            f"`target` ({len(target)})."
+        )
+    if not target or target[-1] not in __map:
+        raise ValueError(
+            f"Last letter of `target` must in {list(__map.keys())}, "
+            f"current is '{target[-1:]}'"
+        )
+
+
+def _custom_tag_source(source: str) -> list[str | ast.Clazz]:
+    return [
+        f"@{glyph.upper()}" if glyph.isalpha() else ast.gly(glyph) for glyph in source
+    ]
+
+
+def _custom_tag_target(
+    target: str, bg_cls_dict: dict[str, ast.Clazz]
+) -> list[str | ast.Clazz]:
+    target_list: list[str | ast.Clazz] = []
+    for target_glyph in target:
+        if target_glyph in __map:
+            target_list.append(f"{__map[target_glyph]}.bg")
+        elif target_glyph.isalpha():
+            upper = target_glyph.upper()
+            target_list.append(bg_cls_dict.get(upper, f"{upper}.bg"))
+        else:
+            raise ValueError(
+                "All tag content must be in ASCII letters or "
+                f"{list(__map.keys())}, current is {target[1:-1]}"
+            )
+    return target_list
+
+
+def _custom_tag_rules(
+    source_list: list[str | ast.Clazz], target_list: list[str | ast.Clazz]
+) -> list[ast.Line]:
+    substitutions: list[ast.Line] = []
+    for index in range(len(source_list), 0, -1):
+        replacement = target_list[index - 1]
+        if isinstance(replacement, ast.Clazz):
+            replacement = replacement.glyphs[0]
+        substitutions.append(
+            ast.subst(
+                target_list[: index - 1],
+                source_list[index - 1],
+                source_list[index:] or None,
+                replacement,
+            )
+        )
+    return substitutions
+
+
 def tag_custom(
     content_list: list[tuple[str, str]],
     bg_cls_dict: dict[str, ast.Clazz],
@@ -161,53 +217,9 @@ def tag_custom(
     """
     result = []
     for source, target in content_list:
-        glyphs = list(source)
-        glyphs_len = len(glyphs)
-        target_len = len(target)
-
-        if target_len != glyphs_len:
-            raise ValueError(
-                f"length of `content` ({glyphs_len}) must be equal to length of `target` ({target_len})."
-            )
-        if target[-1] not in __map:
-            raise ValueError(
-                f"Last letter of `target` must in {list(__map.keys())}, current is '{target[-1]}'"
-            )
-
-        # Parse source
-        source_list = []
-        for g in glyphs:
-            if g.isalpha():
-                source_list.append(f"@{g.upper()}")
-            else:
-                source_list.append(ast.gly(g))
-
-        # Parse target
-        target_list: list[str | ast.Clazz] = []
-        for target_gly in target:
-            if target_gly in __map:
-                target_list.append(f"{__map[target_gly]}.bg")
-            elif target_gly.isalpha():
-                up = target_gly.upper()
-                if up in bg_cls_dict:
-                    target_list.append(bg_cls_dict[up])
-                else:
-                    target_list.append(f"{up}.bg")
-            else:
-                raise Exception(
-                    f"All tag content must be in ASCII letters or {list(__map.keys())}, current is {target[1:-1]}"
-                )
-
-        # Generate substitutions in reverse order (from last glyph to first)
-        subst_list = []
-        for i in range(glyphs_len, 0, -1):
-            before = target_list[: i - 1]
-            glyph = source_list[i - 1]
-            after = source_list[i:] if i < glyphs_len else None
-            replace = target_list[i - 1]
-            if isinstance(replace, ast.Clazz):
-                replace = replace.glyphs[0]
-            subst_list.append(ast.subst(before, glyph, after, replace))
+        _validate_custom_tag(source, target)
+        source_list = _custom_tag_source(source)
+        target_list = _custom_tag_target(target, bg_cls_dict)
 
         desc = []
         for item in source_list:
@@ -222,7 +234,7 @@ def tag_custom(
             ast.Lookup(
                 name=lookup_name,
                 desc=source,
-                content=subst_list,
+                content=_custom_tag_rules(source_list, target_list),
             )
         )
 

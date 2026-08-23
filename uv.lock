@@ -1,5 +1,5 @@
 version = 1
-revision = 2
+revision = 3
 requires-python = ">=3.10"
 resolution-markers = [
     "python_full_version >= '3.13' and implementation_name == 'cpython'",
@@ -792,7 +792,7 @@ name = "exceptiongroup"
 version = "1.3.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version < '3.11'" },
+    { name = "typing-extensions" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/50/79/66800aadf48771f6b62f7eb014e352e5d06856655206165d775e675a02c9/exceptiongroup-1.3.1.tar.gz", hash = "sha256:8b412432c6055b0b7d14c310000ae93352ed6754f70fa8f7c34141f91c4e3219", size = 30371, upload-time = "2025-11-21T23:01:54.787Z" }
 wheels = [
@@ -1459,7 +1459,6 @@ dev = [
     { name = "fontbakery", extra = ["googlefonts"] },
     { name = "gftools" },
     { name = "pyrefly" },
-    { name = "python-minifier" },
     { name = "questionary" },
     { name = "ruff" },
 ]
@@ -1479,7 +1478,6 @@ dev = [
     { name = "fontbakery", extras = ["googlefonts"], specifier = "==1.1.0" },
     { name = "gftools", specifier = "==0.9.97" },
     { name = "pyrefly", specifier = "~=1.1" },
-    { name = "python-minifier", specifier = "~=3.2" },
     { name = "questionary", specifier = "~=2.1" },
     { name = "ruff", specifier = "~=0.15" },
 ]
@@ -2254,7 +2252,7 @@ resolution-markers = [
     "python_full_version < '3.11' and implementation_name != 'cpython'",
 ]
 dependencies = [
-    { name = "cffi", marker = "python_full_version < '3.13'" },
+    { name = "cffi" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/6e/4d/e2fdc0ba6333ad5d1435a8839a2845ec9db52503d1495a0671e9d6fcce58/pygit2-1.15.0.tar.gz", hash = "sha256:a635525ffc74128669de2f63460a94c9d5609634a4875c0aafce510fdeec17ac", size = 766816, upload-time = "2024-05-18T21:07:38.92Z" }
 wheels = [
@@ -2290,7 +2288,7 @@ resolution-markers = [
     "python_full_version >= '3.13' and implementation_name != 'cpython'",
 ]
 dependencies = [
-    { name = "cffi", marker = "python_full_version >= '3.13'" },
+    { name = "cffi" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a4/85/c848cdf44214bf541c4a725a0a6e271f8db9f18cfccef702d53f83f1e19a/pygit2-1.16.0.tar.gz", hash = "sha256:7b29a6796baa15fc89d443ac8d51775411d9b1e5b06dc40d458c56c8576b48a2", size = 768597, upload-time = "2024-10-11T18:53:55.044Z" }
 wheels = [
@@ -2507,15 +2505,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/66/c0/0c8b6ad9f17a802ee498c46e004a0eb49bc148f2fd230864601a86dcf6db/python-dateutil-2.9.0.post0.tar.gz", hash = "sha256:37dd54208da7e1cd875388217d5e00ebd4179249f90fb72437e91a35459a0ad3", size = 342432, upload-time = "2024-03-01T18:36:20.211Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ec/57/56b9bcc3c9c6a792fcbaf139543cee77261f3651ca9da0c93f5c1221264b/python_dateutil-2.9.0.post0-py2.py3-none-any.whl", hash = "sha256:a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427", size = 229892, upload-time = "2024-03-01T18:36:18.57Z" },
-]
-
-[[package]]
-name = "python-minifier"
-version = "3.2.0"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/ff/65/984ccfc140c6a9364331fe8cbeccc4138bd4083b165c7685998c07586f84/python_minifier-3.2.0.tar.gz", hash = "sha256:d39d4aa9655206870b89b41099a84725e1845319aa5a8bea6a1046b5644cd413", size = 85512, upload-time = "2025-12-31T19:50:01.173Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/69/05/c26bcd42c9134b4d3919ddbabf8de323004e89355c1b0ce87d1be65fdd1d/python_minifier-3.2.0-py3-none-any.whl", hash = "sha256:b8486b1dc15980d1d833f72a8a8696616a611f1a10fb72aaf96e2de891beb4c2", size = 62345, upload-time = "2025-12-31T19:49:59.639Z" },
 ]
 
 [[package]]

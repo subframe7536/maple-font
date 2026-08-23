@@ -373,6 +373,26 @@ def _glyph_coordinates(font: TTFont, glyph_name: str) -> GlyphCoordinates:
     return coordinates
 
 
+def variation_scalar(support: tuple[float, ...], normalized_position: float) -> float:
+    """Return the scalar for one normalized variation support region."""
+    min_s, peak, max_s = (
+        (support[0], support[1], support[2])
+        if len(support) == 3
+        else (support[0], support[0], support[0])
+    )
+    if peak == 0:
+        return 0.0
+    if normalized_position == peak:
+        return 1.0
+    if normalized_position < peak:
+        if normalized_position < min_s or peak == min_s:
+            return 0.0
+        return (normalized_position - min_s) / (peak - min_s)
+    if normalized_position > max_s or max_s == peak:
+        return 0.0
+    return (max_s - normalized_position) / (max_s - peak)
+
+
 def _interpolated_coordinates(
     font: TTFont, glyph_name: str, axis_tag: str, normalized_position: float
 ) -> GlyphCoordinates:
@@ -382,27 +402,7 @@ def _interpolated_coordinates(
         if not support or variation.coordinates is None:
             continue
 
-        min_s, peak, max_s = (
-            (support[0], support[1], support[2])
-            if len(support) == 3
-            else (support[0], support[0], support[0])
-        )
-        if peak == 0:
-            scalar = 0.0
-        elif normalized_position == peak:
-            scalar = 1.0
-        elif normalized_position < peak:
-            scalar = (
-                0.0
-                if normalized_position < min_s or peak == min_s
-                else (normalized_position - min_s) / (peak - min_s)
-            )
-        else:
-            scalar = (
-                0.0
-                if normalized_position > max_s or max_s == peak
-                else (max_s - normalized_position) / (max_s - peak)
-            )
+        scalar = variation_scalar(support, normalized_position)
 
         if scalar == 0:
             continue

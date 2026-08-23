@@ -3,19 +3,11 @@ from __future__ import annotations
 import argparse
 from dataclasses import asdict, dataclass, field
 from os import getenv
-from pathlib import Path
 from typing import TYPE_CHECKING, Any, Literal
 
-from scripts.cjk.resolver import (
-    config_from_data,
-    serialize_cjk_build_config,
-)
-from scripts.feature.compiler import (
-    normal_enabled_features,
-)
+from scripts.cjk.resolver import serialize_cjk_build_config
 from scripts.font_ops.constant import INSTANCE_WEIGHT_MAPPING
 from scripts.font_ops.nerd_font import NerdFontVariant
-from scripts.in_browser import get_freeze_config_str as get_browser_freeze_config_str
 
 if TYPE_CHECKING:
     from scripts.cjk.config import CJKBuildConfig
@@ -145,6 +137,18 @@ def normalize_feature_freeze(config: dict[str, str], calt: bool) -> dict[str, st
 
     normalized["calt"] = "1" if calt else "0"
     return normalized
+
+
+def format_freeze_config(config: dict[str, str]) -> str:
+    """Format resolved feature freeze states for font metadata."""
+    return "".join(
+        f"+{tag};"
+        if status == "1"
+        else f"-{tag};"
+        if status == "-1" or (tag == "calt" and status == "0")
+        else ""
+        for tag, status in sorted(config.items())
+    )
 
 
 def default_weight_mapping() -> dict[str, int]:
@@ -434,10 +438,6 @@ class ResolvedConfig:
         return self.behavior.use_cjk_both
 
     @property
-    def use_cn_both(self) -> bool:
-        return self.behavior.use_cjk_both
-
-    @property
     def family_name(self) -> str:
         return self.identity.family_name
 
@@ -525,7 +525,7 @@ class ResolvedConfig:
 
     @property
     def freeze_config_str(self) -> str:
-        return get_browser_freeze_config_str(
+        return format_freeze_config(
             normalize_feature_freeze(self.feature_freeze, self.enable_ligature)
         )
 
@@ -568,9 +568,6 @@ class ResolvedConfig:
         return self.nerd_font.enable and (
             not self.nerd_font.variable or self.nerd_font.uses_font_patcher()
         )
-
-    def get_nf_suffix_compact(self) -> str:
-        return self.get_nf_variant().compact
 
     def get_nf_suffix(self) -> Literal["Mono", "Propo", ""]:
         return self.get_nf_variant().suffix
@@ -645,67 +642,6 @@ class ResolvedConfig:
         }
 
 
-def normalize_cjk_config(
-    raw_cjk: dict[str, Any] | None,
-    legacy_cn: dict[str, Any] | None = None,
-) -> dict[str, Any]:
-    selection = CJKBuildSelection()
-    if raw_cjk and isinstance(raw_cjk, dict):
-        raw_locales = raw_cjk.get("locales", {})
-        if isinstance(raw_locales, dict):
-            for locale in BUILTIN_CJK_LOCALES:
-                selection.locales.set_builtin_enabled(
-                    locale,
-                    bool(raw_locales.get(locale, False)),
-                )
-            raw_custom = raw_locales.get("custom", [])
-            if isinstance(raw_custom, list):
-                for entry in raw_custom:
-                    if not isinstance(entry, dict):
-                        continue
-                    entry_data = dict(entry)
-                    enable = bool(entry_data.pop("enable", True))
-                    selection.locales.custom.append(
-                        CustomCJKEntryConfig(
-                            enable=enable,
-                            build_config=config_from_data(entry_data, Path(".")),
-                        )
-                    )
-
-        for key in (
-            "with_nerd_font",
-            "fix_meta_table",
-            "clean_cache",
-            "narrow",
-            "use_hinted",
-        ):
-            if key in raw_cjk:
-                setattr(selection.common_options, key, bool(raw_cjk[key]))
-        if "scale_factor" in raw_cjk:
-            selection.common_options.scale_factor = parse_scale_factor(
-                raw_cjk["scale_factor"]
-            )
-
-    if legacy_cn and isinstance(legacy_cn, dict):
-        if legacy_cn.get("enable"):
-            selection.locales.cn = True
-        for key in (
-            "with_nerd_font",
-            "fix_meta_table",
-            "clean_cache",
-            "narrow",
-            "use_hinted",
-        ):
-            if key in legacy_cn:
-                setattr(selection.common_options, key, bool(legacy_cn[key]))
-        if "scale_factor" in legacy_cn:
-            selection.common_options.scale_factor = parse_scale_factor(
-                legacy_cn["scale_factor"]
-            )
-
-    return selection.to_dict()
-
-
 __all__ = [
     "BUILD_FORMATS",
     "BUILTIN_CJK_LOCALES",
@@ -725,9 +661,8 @@ __all__ = [
     "ResolvedConfig",
     "default_feature_freeze",
     "default_weight_mapping",
-    "normal_enabled_features",
+    "format_freeze_config",
     "normalize_build_formats",
-    "normalize_cjk_config",
     "normalize_cjk_locale_list",
     "normalize_cjk_output_format",
     "normalize_feature_freeze",

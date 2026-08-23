@@ -3,6 +3,7 @@ from __future__ import annotations
 import unittest
 
 from scripts.task.release import (
+    create_release_plan,
     next_font_version,
     next_version,
 )
@@ -27,3 +28,19 @@ class ReleaseVersionTest(unittest.TestCase):
         self.assertEqual(next_font_version("7.9", "7.900", "8.0b1"), "8.001")
         self.assertEqual(next_font_version("8.0b1", "8.001", "8.0b2"), "8.002")
         self.assertEqual(next_font_version("8.0b2", "8.002", "8.0"), "8.003")
+
+    def test_release_plan_uses_modern_build_arguments(self) -> None:
+        plan = create_release_plan(
+            "minor",
+            current_version="7.9",
+            current_font_version="7.900",
+        )
+
+        self.assertEqual(
+            plan.build_args,
+            ("--format", "ttf", "--no-nerd-font", "--no-hinted"),
+        )
+        self.assertEqual(
+            plan.default_build_args,
+            ("--format", "ttf", "--no-nerd-font", "--no-hinted", "--cjk", "cn"),
+        )
