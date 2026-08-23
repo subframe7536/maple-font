@@ -445,7 +445,7 @@ def config_from_data(
 def config_from_json(config_path: str | Path) -> CJKBuildConfig:
     """Load a CJK build config from JSON."""
     path = Path(config_path)
-    data = json.loads(path.read_text())
+    data = json.loads(path.read_text(encoding="utf-8"))
     return config_from_data(data, path.parent)
 
 

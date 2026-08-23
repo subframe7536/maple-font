@@ -680,7 +680,7 @@ def _build_static_profiles_from_variable_instantiation(
     executor: Executor | None,
     output_locales: set[str] | None,
     temp_root: Path,
-) -> int:
+) -> tuple[int, bool]:
     profiles = cjk_static_base_profiles(font_config, runtime_context, entry)
     if output_locales is not None:
         profiles = [
@@ -718,7 +718,7 @@ def _build_static_profiles_from_variable_instantiation(
             )
         )
         shutil.rmtree(locale_output_dir, ignore_errors=True)
-    return output_count
+    return output_count, bool(profiles)
 
 
 def build_cjk_extended_static_outputs(
@@ -779,16 +779,18 @@ def build_cjk_extended_static_outputs(
             log_task_complete(task_started_at, f"{output_count} fonts")
             continue
 
-        output_count = _build_static_profiles_from_variable_instantiation(
-            entry,
-            font_config,
-            runtime_context,
-            target_styles,
-            executor,
-            output_locales,
-            temp_root,
+        output_count, built_profile = (
+            _build_static_profiles_from_variable_instantiation(
+                entry,
+                font_config,
+                runtime_context,
+                target_styles,
+                executor,
+                output_locales,
+                temp_root,
+            )
         )
-        built_any = True
+        built_any = built_any or built_profile
         log_task_complete(task_started_at, f"{output_count} fonts")
 
     shutil.rmtree(temp_root, ignore_errors=True)

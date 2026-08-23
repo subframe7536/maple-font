@@ -47,7 +47,7 @@ def replace_section(md_path: str | Path, border: str, content: str) -> None:
     if updated_content == md_content:
         return
     temporary = target.with_name(f".{target.name}.tmp")
-    temporary.write_text(updated_content, encoding="utf-8")
+    temporary.write_text(updated_content, encoding="utf-8", newline="\n")
     temporary.replace(target)
 
 
@@ -80,7 +80,7 @@ def build_fea(output: str) -> None:
     }
     for filename, content in files.items():
         fea_path = output_dir / filename
-        fea_path.write_text(f"# {banner}\n\n{content}", encoding="utf-8")
+        fea_path.write_text(f"# {banner}\n\n{content}", encoding="utf-8", newline="\n")
         logger.info("Saved feature file to %s", fea_path)
 
     files_cn = {
@@ -89,7 +89,7 @@ def build_fea(output: str) -> None:
     }
     for filename, content in files_cn.items():
         fea_path = output_dir / filename
-        fea_path.write_text(f"# {banner}\n\n{content}", encoding="utf-8")
+        fea_path.write_text(f"# {banner}\n\n{content}", encoding="utf-8", newline="\n")
         logger.info("Saved feature file to %s", fea_path)
 
     md_path = Path("documentation") / "opentype-features.md"
@@ -121,7 +121,7 @@ def build_fea(output: str) -> None:
         f"MOVING_RULES = {rule_arr_text}",
         in_browser_script,
     )
-    script_path.write_text(patched, encoding="utf-8")
+    script_path.write_text(patched, encoding="utf-8", newline="\n")
     logger.info("Synchronized browser feature rules: path=%s", script_path)
 
 

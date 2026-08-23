@@ -200,6 +200,7 @@ class CJKBaseArchiveStore:
         archive_name = self._archive_name(locale, "variable")
         archive = output_dir / f".{archive_name}.download.zip"
         expected_paths = variable_paths(config)
+
         try:
             local_archive = output_dir / config.output.variable_archive_name
             if local_archive.is_file() and self._install_local_archive(
@@ -220,6 +221,14 @@ class CJKBaseArchiveStore:
                     config.locale_name,
                 )
                 return True
+        except (OSError, ValueError) as error:
+            logger.warning(
+                "Local CJK variable base archive is invalid; locale=%s, error=%s",
+                config.locale_name,
+                error,
+            )
+
+        try:
             if not self._install_variable_archive(
                 archive,
                 expected_hash,
