@@ -5,6 +5,7 @@ from copy import deepcopy
 from pathlib import Path
 from typing import Any
 
+from scripts.utils.files import write_json
 from scripts.utils.hashing import hash_files, hash_json
 from scripts.utils.logging import logger
 
@@ -77,13 +78,7 @@ def read_cache_record(root: Path) -> dict[str, Any] | None:
 
 
 def write_cache_record(root: Path, record: dict[str, Any]) -> None:
-    path = cache_record_path(root)
-    temporary = path.with_name(f".{path.name}.tmp")
-    temporary.write_text(
-        json.dumps(record, indent=2, sort_keys=True) + "\n",
-        encoding="utf-8",
-    )
-    temporary.replace(path)
+    write_json(cache_record_path(root), record, indent=2, sort_keys=True, atomic=True)
 
 
 def validate_stage(

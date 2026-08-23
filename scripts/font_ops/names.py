@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from dataclasses import dataclass
 from typing import TYPE_CHECKING, Protocol
 
 from scripts.font_ops.constant import INSTANCE_WEIGHT_MAPPING
@@ -9,6 +10,21 @@ if TYPE_CHECKING:
     from scripts.font_ops.fonttools import TTFont
 
 RESERVED_NAME_IDS = {1, 2, 3, 4, 5, 6, 16, 17, 25}
+
+
+@dataclass(frozen=True)
+class FontNamingSpec:
+    """Encapsulates font naming parameters for OpenType name table updates."""
+
+    family_name: str
+    style_name: str
+    full_name: str
+    postscript_name: str
+    is_skip_subfamily: bool = False
+    preferred_family_name: str | None = None
+    preferred_style_name: str | None = None
+    narrow: bool = False
+    variable: bool = False
 
 
 class _NerdFontConfig(Protocol):
@@ -72,58 +88,86 @@ def parse_style_name(style_name_compact: str):
 def update_font_names(
     font: TTFont,
     font_config: FontNameConfig,
-    family_name: str,
-    style_name: str,
-    full_name: str,
-    postscript_name: str,
-    is_skip_subfamily: bool,
+    spec: FontNamingSpec | None = None,
+    *,
+    family_name: str | None = None,
+    style_name: str | None = None,
+    full_name: str | None = None,
+    postscript_name: str | None = None,
+    is_skip_subfamily: bool = False,
     preferred_family_name: str | None = None,
     preferred_style_name: str | None = None,
     narrow: bool = False,
     variable: bool = False,
 ):
-    if variable:
+    if spec is None:
+        if (
+            family_name is None
+            or style_name is None
+            or full_name is None
+            or postscript_name is None
+        ):
+            raise ValueError(
+                "Either spec (FontNamingSpec) or required name fields must be provided"
+            )
+        spec = FontNamingSpec(
+            family_name=family_name,
+            style_name=style_name,
+            full_name=full_name,
+            postscript_name=postscript_name,
+            is_skip_subfamily=is_skip_subfamily,
+            preferred_family_name=preferred_family_name,
+            preferred_style_name=preferred_style_name,
+            narrow=narrow,
+            variable=variable,
+        )
+
+    if spec.variable:
         ensure_variable_instance_names(
             font,
-            postscript_prefix=postscript_name.removesuffix(f"-{style_name}"),
-            italic=style_name.endswith("Italic"),
+            postscript_prefix=spec.postscript_name.removesuffix(f"-{spec.style_name}"),
+            italic=spec.style_name.endswith("Italic"),
         )
     font["name"].removeNames(platformID=1)
-    if len(family_name) > 31:
+    if len(spec.family_name) > 31:
         logger.warning(
             "Family name may exceed legacy Windows limits: family=%s, length=%s",
-            family_name,
-            len(family_name),
+            spec.family_name,
+            len(spec.family_name),
         )
-    set_font_name(font, family_name, 1)
-    set_font_name(font, style_name, 2)
+    set_font_name(font, spec.family_name, 1)
+    set_font_name(font, spec.style_name, 2)
     suffix = ""
-    if variable:
+    if spec.variable:
         suffix += "Variable;"
-    if "NF" in postscript_name:
+    if "NF" in spec.postscript_name:
         suffix += f"NF{font_config.nerd_font.version};"
-    if "CN" in postscript_name and narrow:
+    if "CN" in spec.postscript_name and spec.narrow:
         suffix += "Narrow;"
 
     suffix += font_config.freeze_config_str
     beta_str = f"-{font_config.beta}" if font_config.beta else ""
     unique_identifier = (
-        f"{font_config.version_str}{beta_str};SUBF;{postscript_name};"
+        f"{font_config.version_str}{beta_str};SUBF;{spec.postscript_name};"
         f"2026;FL830;{suffix}"
     )
 
     set_font_name(font, unique_identifier, 3)
-    set_font_name(font, full_name, 4)
+    set_font_name(font, spec.full_name, 4)
     set_font_name(font, font_config.version_str, 5)
-    set_font_name(font, postscript_name, 6)
+    set_font_name(font, spec.postscript_name, 6)
 
-    if variable:
-        set_font_name(font, preferred_family_name or family_name, 16)
-        set_font_name(font, preferred_style_name or style_name, 17)
-    elif not is_skip_subfamily and preferred_family_name and preferred_style_name:
-        set_font_name(font, preferred_family_name, 16)
-        set_font_name(font, preferred_style_name, 17)
-    elif is_skip_subfamily:
+    if spec.variable:
+        set_font_name(font, spec.preferred_family_name or spec.family_name, 16)
+        set_font_name(font, spec.preferred_style_name or spec.style_name, 17)
+    elif (
+        not spec.is_skip_subfamily
+        and spec.preferred_family_name
+        and spec.preferred_style_name
+    ):
+        set_font_name(font, spec.preferred_family_name, 16)
+        set_font_name(font, spec.preferred_style_name, 17)
+    elif spec.is_skip_subfamily:
         del_font_name(font, 16)
         del_font_name(font, 17)
 

@@ -603,6 +603,43 @@ def _autohint_cached_static_profiles(
         )
 
 
+def _build_variable_profiles_for_entry(
+    entry: ResolvedCJKBuildEntry,
+    font_config: ResolvedConfig,
+    runtime_context: BuildRuntimeContext,
+    executor: Executor | None,
+    output_locales: set[str] | None,
+) -> list[Path]:
+    include_nf = font_config.nerd_font.enable and entry.common_options.with_nerd_font
+    profiles: list[tuple[str, bool]] = []
+    if include_nf:
+        profiles.append(
+            (
+                font_config.get_nf_variant().cjk_directory_name(entry.locale_name),
+                True,
+            )
+        )
+    if not include_nf or font_config.use_cjk_both:
+        profiles.append((entry.locale_name, False))
+    if output_locales is not None:
+        profiles = [profile for profile in profiles if profile[0] in output_locales]
+
+    output_paths: list[Path] = []
+    for output_locale, profile_include_nf in profiles:
+        output_paths.extend(
+            build_cjk_extended_variable_fonts(
+                entry,
+                font_config,
+                runtime_context,
+                variable_output_dir(runtime_context.output_dir, output_locale),
+                executor,
+                output_locale=output_locale,
+                include_nerd_font=profile_include_nf,
+            )
+        )
+    return output_paths
+
+
 def build_cjk_extended_variable_outputs(
     font_config: ResolvedConfig,
     runtime_context: BuildRuntimeContext,
@@ -630,38 +667,61 @@ def build_cjk_extended_variable_outputs(
             )
         )
         started_at = None
-        include_nf = (
-            font_config.nerd_font.enable and entry.common_options.with_nerd_font
+        output_paths = _build_variable_profiles_for_entry(
+            entry, font_config, runtime_context, executor, output_locales
         )
-        profiles = []
-        if include_nf:
-            profiles.append(
-                (
-                    font_config.get_nf_variant().cjk_directory_name(entry.locale_name),
-                    True,
-                )
-            )
-        if not include_nf or font_config.use_cjk_both:
-            profiles.append((entry.locale_name, False))
-        if output_locales is not None:
-            profiles = [profile for profile in profiles if profile[0] in output_locales]
-
-        output_paths: list[Path] = []
-        for output_locale, profile_include_nf in profiles:
-            output_paths.extend(
-                build_cjk_extended_variable_fonts(
-                    entry,
-                    font_config,
-                    runtime_context,
-                    variable_output_dir(runtime_context.output_dir, output_locale),
-                    executor,
-                    output_locale=output_locale,
-                    include_nerd_font=profile_include_nf,
-                )
-            )
         log_task_complete(task_started_at, f"{len(output_paths)} fonts")
 
     runtime_context.is_cjk_built = True
+
+
+def _build_static_profiles_from_variable_instantiation(
+    entry: ResolvedCJKBuildEntry,
+    font_config: ResolvedConfig,
+    runtime_context: BuildRuntimeContext,
+    target_styles: list[str] | None,
+    executor: Executor | None,
+    output_locales: set[str] | None,
+    temp_root: Path,
+) -> int:
+    profiles = cjk_static_base_profiles(font_config, runtime_context, entry)
+    if output_locales is not None:
+        profiles = [
+            profile for profile in profiles if profile.output_locale in output_locales
+        ]
+    output_count = 0
+    for profile in profiles:
+        locale_output_dir = temp_root / profile.output_locale.upper()
+        merged_paths = build_cjk_extended_variable_fonts(
+            entry,
+            font_config,
+            runtime_context,
+            locale_output_dir,
+            executor,
+            output_locale=profile.output_locale,
+            include_nerd_font=profile.output_locale.startswith(
+                f"{font_config.get_nf_variant().directory_name}-"
+            ),
+        )
+        instantiate_cjk_extended_static_fonts(
+            entry,
+            profile.font_config,
+            runtime_context,
+            merged_paths,
+            target_styles,
+            profile.output_locale,
+            executor,
+        )
+        output_count += len(
+            list(
+                static_output_dir(
+                    runtime_context.output_dir,
+                    profile.output_locale,
+                ).glob("*.ttf")
+            )
+        )
+        shutil.rmtree(locale_output_dir, ignore_errors=True)
+    return output_count
 
 
 def build_cjk_extended_static_outputs(
@@ -722,46 +782,16 @@ def build_cjk_extended_static_outputs(
             log_task_complete(task_started_at, f"{output_count} fonts")
             continue
 
-        profiles = cjk_static_base_profiles(font_config, runtime_context, entry)
-        if output_locales is not None:
-            profiles = [
-                profile
-                for profile in profiles
-                if profile.output_locale in output_locales
-            ]
-        output_count = 0
-        for profile in profiles:
-            locale_output_dir = temp_root / profile.output_locale.upper()
-            merged_paths = build_cjk_extended_variable_fonts(
-                entry,
-                font_config,
-                runtime_context,
-                locale_output_dir,
-                executor,
-                output_locale=profile.output_locale,
-                include_nerd_font=profile.output_locale.startswith(
-                    f"{font_config.get_nf_variant().directory_name}-"
-                ),
-            )
-            built_any = True
-            instantiate_cjk_extended_static_fonts(
-                entry,
-                profile.font_config,
-                runtime_context,
-                merged_paths,
-                target_styles,
-                profile.output_locale,
-                executor,
-            )
-            output_count += len(
-                list(
-                    static_output_dir(
-                        runtime_context.output_dir,
-                        profile.output_locale,
-                    ).glob("*.ttf")
-                )
-            )
-            shutil.rmtree(locale_output_dir, ignore_errors=True)
+        output_count = _build_static_profiles_from_variable_instantiation(
+            entry,
+            font_config,
+            runtime_context,
+            target_styles,
+            executor,
+            output_locales,
+            temp_root,
+        )
+        built_any = True
         log_task_complete(task_started_at, f"{output_count} fonts")
 
     shutil.rmtree(temp_root, ignore_errors=True)

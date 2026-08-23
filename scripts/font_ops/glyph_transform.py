@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import math
+from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
 from fontTools.misc.transform import Transform
@@ -16,6 +17,15 @@ if TYPE_CHECKING:
 
 # Type aliases
 Coordinate = tuple[float, float]
+
+
+@dataclass(frozen=True)
+class GlyphWidthScaleParams:
+    scale_x: float
+    scale_y: float
+    match_width: int
+    target_width: int
+    translate_x: float = 0.0
 
 
 def reduce_glyph_side_bearings(
@@ -217,11 +227,7 @@ def _change_glyph_width(
     glyf: Any,
     hmtx: Any,
     glyph_name: str,
-    scale_x: float,
-    scale_y: float,
-    match_width: int,
-    target_width: int,
-    translate_x: float = 0.0,
+    params: GlyphWidthScaleParams,
 ) -> None:
     """
     Global font resizer. Scales target glyphs horizontally and applies
@@ -233,15 +239,15 @@ def _change_glyph_width(
     # Update Metrics (hmtx)
     old_width, old_lsb = hmtx[glyph_name]
 
-    if old_width == match_width:
-        new_width = target_width
+    if old_width == params.match_width:
+        new_width = params.target_width
     elif old_width == 0:
         # Scale zero-width combining marks, keep width at 0
         new_lsb = _process_glyph_geometry(
             glyph=glyf[glyph_name],
             glyf_table=glyf,
-            scale_x=scale_x,
-            scale_y=scale_y,
+            scale_x=params.scale_x,
+            scale_y=params.scale_y,
             thicken_strength=0.0,
             translate_x=0.0,
         )
@@ -254,18 +260,18 @@ def _change_glyph_width(
     new_lsb = _process_glyph_geometry(
         glyph=glyf[glyph_name],
         glyf_table=glyf,
-        scale_x=scale_x,
-        scale_y=scale_y,
+        scale_x=params.scale_x,
+        scale_y=params.scale_y,
         # Heuristic: If we compress the font (scale < 1), lines get thin.
         # We add weight back based on how much we squeezed.
-        thicken_strength=(1 - scale_x) / 3,
-        translate_x=translate_x,
+        thicken_strength=(1 - params.scale_x) / 3,
+        translate_x=params.translate_x,
     )
 
     # If the glyph was empty or composite, new_lsb comes from calculation
     # or scaling the old lsb
     if glyf[glyph_name].numberOfContours == 0 and not glyf[glyph_name].isComposite():
-        final_lsb = round(old_lsb * scale_x)
+        final_lsb = round(old_lsb * params.scale_x)
     else:
         final_lsb = new_lsb
 
@@ -293,6 +299,12 @@ def smart_change_width(
     glyf: Any = font["glyf"]
 
     scale_factor = target_width / original_ref_width
+    params = GlyphWidthScaleParams(
+        scale_x=scale_factor,
+        scale_y=scale_factor if also_scale_y else 1.0,
+        match_width=original_ref_width,
+        target_width=target_width,
+    )
     composites: list[str] = []
 
     for glyph_name in font.getGlyphOrder():
@@ -302,10 +314,7 @@ def smart_change_width(
             glyf=glyf,
             hmtx=hmtx,
             glyph_name=glyph_name,
-            scale_x=scale_factor,
-            scale_y=scale_factor if also_scale_y else 1.0,
-            match_width=original_ref_width,
-            target_width=target_width,
+            params=params,
         )
         if glyf[glyph_name].isComposite():
             composites.append(glyph_name)
@@ -466,11 +475,13 @@ def _change_special_cjk_glyph(
         glyf=glyf,
         hmtx=hmtx,
         glyph_name=glyph_name,
-        scale_x=factor,
-        scale_y=1.0,
-        match_width=match_width,
-        target_width=target_width,
-        translate_x=translate_x,
+        params=GlyphWidthScaleParams(
+            scale_x=factor,
+            scale_y=1.0,
+            match_width=match_width,
+            target_width=target_width,
+            translate_x=translate_x,
+        ),
     )
 
 

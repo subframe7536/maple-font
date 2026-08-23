@@ -7,7 +7,11 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any, Literal
 
 from fontmake.compatibility import CompatibilityChecker
-from fontTools.designspaceLib import AxisDescriptor, DesignSpaceDocument
+from fontTools.designspaceLib import (
+    AxisDescriptor,
+    DesignSpaceDocument,
+    SourceDescriptor,
+)
 from glyphsLib import load, to_designspace
 from ufo2ft.constants import FEATURE_WRITERS_KEY
 
@@ -152,10 +156,9 @@ def _rename_italic_masters(designspace: DesignSpaceDocument) -> None:
         source.font.info.styleName = italic_style
 
 
-def prepare_static_source(converted: ConvertedGlyphsSource) -> PreparedGlyphsSource:
-    """Apply configuration-independent normalization before committing UFOs."""
-    path = converted.source_path
-    designspace = converted.designspace
+def _configure_weight_axis_and_defaults(
+    designspace: DesignSpaceDocument, path: Path
+) -> tuple[str, SourceDescriptor]:
     weight_axis = next((axis for axis in designspace.axes if axis.tag == "wght"), None)
     if not isinstance(weight_axis, AxisDescriptor) or weight_axis.name is None:
         raise ValueError(f"Glyphs source requires a continuous named wght axis: {path}")
@@ -169,7 +172,12 @@ def prepare_static_source(converted: ConvertedGlyphsSource) -> PreparedGlyphsSou
     )
     if default_source is None or default_source.font is None:
         raise ValueError(f"Glyphs source is missing a wght 400 master: {path}")
+    return axis_name, default_source
 
+
+def _normalize_source_master_infos(
+    sources: list[SourceDescriptor], default_source: SourceDescriptor, path: Path
+) -> None:
     for source in sources:
         is_default = source is default_source
         source.copyLib = is_default
@@ -197,6 +205,12 @@ def prepare_static_source(converted: ConvertedGlyphsSource) -> PreparedGlyphsSou
             if writer.get("class") == "GdefFeatureWriter"
         ]
 
+
+def _backfill_missing_glyphs_from_default(
+    sources: list[SourceDescriptor],
+    default_source: SourceDescriptor,
+    designspace: DesignSpaceDocument,
+) -> list[dict[str, Any]]:
     skip_export = set(designspace.lib.get("public.skipExportGlyphs", ()))
     glyph_names = sorted(
         set().union(
@@ -206,6 +220,8 @@ def prepare_static_source(converted: ConvertedGlyphsSource) -> PreparedGlyphsSou
     )
     errors: list[dict[str, Any]] = []
     default_font = default_source.font
+    assert default_font is not None
+
     for glyph_name in glyph_names:
         available_sources = [
             source
@@ -240,20 +256,39 @@ def prepare_static_source(converted: ConvertedGlyphsSource) -> PreparedGlyphsSou
             assert source.font is not None
             source.font.addGlyph(default_glyph.copy())
 
+    return errors
+
+
+def _collect_master_compatibility_errors(
+    sources: list[SourceDescriptor], default_source: SourceDescriptor
+) -> list[dict[str, Any]]:
     source_fonts = [source.font for source in sources]
     checker = IssueCollectingCompatibilityChecker(
         source_fonts,
         sources.index(default_source),
     )
     checker.check()
-    errors.extend(
+    return [
         {
             "glyph": glyph_name,
             "kind": "incompatible_masters",
             "details": sorted(details),
         }
         for glyph_name, details in sorted(checker.glyph_issues.items())
-    )
+    ]
+
+
+def prepare_static_source(converted: ConvertedGlyphsSource) -> PreparedGlyphsSource:
+    """Apply configuration-independent normalization before committing UFOs."""
+    path = converted.source_path
+    designspace = converted.designspace
+    _, default_source = _configure_weight_axis_and_defaults(designspace, path)
+    sources = list(designspace.sources)
+
+    _normalize_source_master_infos(sources, default_source, path)
+
+    errors = _backfill_missing_glyphs_from_default(sources, default_source, designspace)
+    errors.extend(_collect_master_compatibility_errors(sources, default_source))
     errors.sort(key=lambda item: (item["glyph"], item["kind"]))
 
     return PreparedGlyphsSource(

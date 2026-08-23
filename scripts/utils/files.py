@@ -42,9 +42,25 @@ def write_text(
         file.write(content)
 
 
-def write_json(file_path: str | Path, data: dict[str, Any]) -> None:
-    with Path(file_path).open("w", encoding="utf-8", newline="\n") as file:
-        json.dump(data, file, indent=2)
+def write_json(
+    file_path: str | Path,
+    data: Any,
+    indent: int = 2,
+    sort_keys: bool = False,
+    atomic: bool = False,
+) -> None:
+    path = Path(file_path)
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if atomic:
+        temp_path = path.with_name(f".{path.name}.tmp")
+        with temp_path.open("w", encoding="utf-8", newline="\n") as file:
+            json.dump(data, file, indent=indent, sort_keys=sort_keys)
+            file.write("\n")
+        temp_path.replace(path)
+    else:
+        with path.open("w", encoding="utf-8", newline="\n") as file:
+            json.dump(data, file, indent=indent, sort_keys=sort_keys)
+            file.write("\n")
 
 
 def read_json(file_path: str | Path) -> dict[str, Any]:

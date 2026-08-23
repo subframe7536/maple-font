@@ -6,7 +6,12 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any, Literal
 
 from fontmake.font_project import CFFOptimization, FontProject
-from fontTools.designspaceLib import AxisDescriptor, DesignSpaceDocument
+from fontTools.designspaceLib import (
+    AxisDescriptor,
+    DesignSpaceDocument,
+    InstanceDescriptor,
+    SourceDescriptor,
+)
 from ufo2ft.filters import DecomposeTransformedComponentsFilter
 from ufoLib2 import Font as UFOFont
 
@@ -23,6 +28,7 @@ from scripts.font_ops.metrics import calculate_line_height_metrics
 from scripts.utils.logging import logger, set_log_task
 
 if TYPE_CHECKING:
+    from collections.abc import Iterable
     from concurrent.futures import Executor
 
 SourceStyle = Literal["regular", "italic"]
@@ -119,6 +125,54 @@ def _compile_fontmake_branch(job: FontmakeBranchJob) -> None:
     project.run_from_designspace(job.designspace_path, **_fontmake_options(job))
 
 
+def _resolve_default_source_vertical_metric(
+    default_source: SourceDescriptor,
+) -> tuple[int, int]:
+    if default_source.font is None:
+        raise ValueError("Default source has no UFO font")
+    info = default_source.font.info
+    ascender = (
+        info.openTypeHheaAscender
+        if info.openTypeHheaAscender is not None
+        else info.ascender
+    )
+    descender = (
+        info.openTypeHheaDescender
+        if info.openTypeHheaDescender is not None
+        else info.descender
+    )
+    if ascender is None or descender is None:
+        raise ValueError("UFO source is missing vertical metrics")
+    return round(ascender), round(descender)
+
+
+def _apply_metrics_and_width_to_sources(
+    sources: list[SourceDescriptor],
+    target_vertical_metric: tuple[int, int] | None,
+    target_width: int | None,
+    original_ref_width: int,
+    path: Path,
+) -> None:
+    for source in sources:
+        if source.font is None:
+            raise ValueError(f"Designspace source master has no UFO font: {path}")
+        if target_vertical_metric is not None:
+            target_ascender, target_descender = target_vertical_metric
+            info = source.font.info
+            info.openTypeHheaAscender = target_ascender
+            info.openTypeHheaDescender = target_descender
+            info.openTypeOS2TypoAscender = target_ascender
+            info.openTypeOS2TypoDescender = target_descender
+            info.openTypeOS2WinAscent = target_ascender
+            info.openTypeOS2WinDescent = -target_descender
+        if target_width is not None:
+            scale_ufo_width(
+                source.font,
+                target_width=target_width,
+                original_ref_width=original_ref_width,
+            )
+
+
 def prepare_designspace_source(
     source_path: str | Path,
     style: SourceStyle,
@@ -167,39 +221,20 @@ def prepare_designspace_source(
         )
         if default_source is None or default_source.font is None:
             raise ValueError(f"Designspace source is missing a wght 400 master: {path}")
-        info = default_source.font.info
-        ascender = info.openTypeHheaAscender
-        descender = info.openTypeHheaDescender
-        if ascender is None:
-            ascender = info.ascender
-        if descender is None:
-            descender = info.descender
-        if ascender is None or descender is None:
-            raise ValueError("UFO source is missing vertical metrics")
-        vertical_metric = round(ascender), round(descender)
+
+        vertical_metric = _resolve_default_source_vertical_metric(default_source)
         target_vertical_metric = (
             calculate_line_height_metrics(line_height, vertical_metric)
             if line_height != 1
             else None
         )
-        for source in sources:
-            if source.font is None:
-                raise ValueError(f"Designspace source master has no UFO font: {path}")
-            if target_vertical_metric is not None:
-                target_ascender, target_descender = target_vertical_metric
-                info = source.font.info
-                info.openTypeHheaAscender = target_ascender
-                info.openTypeHheaDescender = target_descender
-                info.openTypeOS2TypoAscender = target_ascender
-                info.openTypeOS2TypoDescender = target_descender
-                info.openTypeOS2WinAscent = target_ascender
-                info.openTypeOS2WinDescent = -target_descender
-            if target_width is not None:
-                scale_ufo_width(
-                    source.font,
-                    target_width=target_width,
-                    original_ref_width=original_ref_width,
-                )
+        _apply_metrics_and_width_to_sources(
+            sources,
+            target_vertical_metric,
+            target_width,
+            original_ref_width,
+            path,
+        )
 
         return PreparedDesignspaceSource(
             source_path=path,
@@ -212,6 +247,29 @@ def prepare_designspace_source(
             with suppress(Exception):
                 font.close()
         raise
+
+
+def _extract_weight_axis_mapping(
+    items: Iterable[SourceDescriptor | InstanceDescriptor],
+    axis_name: str,
+    weight_mapping: dict[str, int],
+    is_instance: bool = False,
+) -> list[tuple[float, float]]:
+    mapping: list[tuple[float, float]] = []
+    for item in items:
+        style_name = item.styleName or item.name or ""
+        base_style = style_name.removesuffix("Italic") or "Regular"
+        weight_name = base_style.replace(" ", "").lower()
+        if weight_name not in weight_mapping:
+            continue
+        design_weight = (
+            item.designLocation.get(axis_name)
+            if is_instance
+            else item.location.get(axis_name)
+        )
+        if design_weight is not None and not isinstance(design_weight, tuple):
+            mapping.append((weight_mapping[weight_name], float(design_weight)))
+    return mapping
 
 
 def _apply_designspace_weight_mapping(
@@ -233,25 +291,14 @@ def _apply_designspace_weight_mapping(
         raise ValueError("Designspace wght axis must be continuous and named")
     axis_name = weight_axis.name
 
-    mapping: list[tuple[float, float]] = []
-    for source in designspace.sources:
-        style_name = source.styleName or source.name or ""
-        base_style = style_name.removesuffix("Italic") or "Regular"
-        weight_name = base_style.replace(" ", "").lower()
-        design_weight = source.location.get(axis_name)
-        if weight_name in weight_mapping and design_weight is not None:
-            mapping.append((weight_mapping[weight_name], design_weight))
-    for instance in designspace.instances:
-        style_name = instance.styleName or instance.name or ""
-        base_style = style_name.removesuffix("Italic") or "Regular"
-        weight_name = base_style.replace(" ", "").lower()
-        design_weight = instance.designLocation.get(axis_name)
-        if (
-            weight_name in weight_mapping
-            and design_weight is not None
-            and not isinstance(design_weight, tuple)
-        ):
-            mapping.append((weight_mapping[weight_name], design_weight))
+    mapping = _extract_weight_axis_mapping(
+        designspace.sources, axis_name, weight_mapping, is_instance=False
+    )
+    mapping.extend(
+        _extract_weight_axis_mapping(
+            designspace.instances, axis_name, weight_mapping, is_instance=True
+        )
+    )
     if mapping:
         weight_axis.map = sorted(dict(mapping).items())
         weight_axis.minimum = weight_axis.map[0][0]

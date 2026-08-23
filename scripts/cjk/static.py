@@ -93,6 +93,41 @@ def apply_cjk_metrics(
     )
 
 
+def _apply_custom_cjk_scale_or_narrow(
+    font: TTFont,
+    font_config: ResolvedConfig,
+    target_width: int | None,
+    scale_factor: tuple[float, float] | None,
+    special_scale_names: list[str],
+) -> bool:
+    match_width = 2 * font_config.glyph_width
+    is_slim = font_config.get_width_name() != "SL"
+    if target_width and is_slim:
+        font.table("hhea").advanceWidthMax = target_width
+        logger.warning(
+            "Changed CJK glyph width; mark font as proportional and skip width checks"
+        )
+    elif target_width is None:
+        target_width = match_width
+
+    resolved_scale = scale_factor or (1.0, 1.0)
+    if scale_factor:
+        logger.debug(
+            "Scale CJK glyphs: width_factor=%s, height_factor=%s",
+            scale_factor[0],
+            scale_factor[1],
+        )
+
+    change_glyph_width_or_scale(
+        font=font,
+        match_width=match_width,
+        target_width=target_width,
+        scale_factor=resolved_scale,
+        special_names=special_scale_names,
+    )
+    return bool(target_width and is_slim)
+
+
 def apply_cjk_width_transform(
     font: TTFont,
     font_config: ResolvedConfig,
@@ -114,33 +149,14 @@ def apply_cjk_width_transform(
 
     skip_verify = font_config.get_nf_variant().suffix == "Propo"
     if target_width or scale_factor:
-        match_width = 2 * font_config.glyph_width
-        is_slim = font_config.get_width_name() != "SL"
-        if target_width and is_slim:
-            font.table("hhea").advanceWidthMax = target_width
-            logger.warning(
-                "Changed CJK glyph width; mark font as proportional and skip width checks"
-            )
-        elif target_width is None:
-            target_width = match_width
-
-        if scale_factor:
-            logger.debug(
-                "Scale CJK glyphs: width_factor=%s, height_factor=%s",
-                scale_factor[0],
-                scale_factor[1],
-            )
-        else:
-            scale_factor = (1.0, 1.0)
-
-        change_glyph_width_or_scale(
+        custom_proportional = _apply_custom_cjk_scale_or_narrow(
             font=font,
-            match_width=match_width,
+            font_config=font_config,
             target_width=target_width,
             scale_factor=scale_factor,
-            special_names=special_scale_names,
+            special_scale_names=special_scale_names,
         )
-        skip_verify = skip_verify or bool(target_width and is_slim)
+        skip_verify = skip_verify or custom_proportional
     elif font_config.get_width_name():
         change_glyph_width_or_scale(
             font=font,

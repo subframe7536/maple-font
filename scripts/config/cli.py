@@ -12,10 +12,9 @@ from scripts.config.base import (
 from scripts.utils.version import project_version
 
 
-def build_parser(version: str | None = None) -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(
-        description="Builder and optimizer for Maple Mono",
-    )
+def _add_general_arguments(
+    parser: argparse.ArgumentParser, version: str | None
+) -> None:
     parser.add_argument(
         "-v",
         "--version",
@@ -35,6 +34,8 @@ def build_parser(version: str | None = None) -> argparse.ArgumentParser:
         help="Use a fast debug build: add `Debug`, enable debug logging, build Regular/Italic only, and skip OTF/WOFF2/Nerd Font outputs",
     )
 
+
+def _add_feature_arguments(parser: argparse.ArgumentParser) -> None:
     feature_group = parser.add_argument_group("Feature Options")
     feature_group.add_argument(
         "-n",
@@ -123,6 +124,8 @@ def build_parser(version: str | None = None) -> argparse.ArgumentParser:
         help="Set glyph width: default (600), narrow (550), slim (500)",
     )
 
+
+def _add_build_arguments(parser: argparse.ArgumentParser) -> None:
     build_group = parser.add_argument_group("Build Options")
     build_group.add_argument(
         "--format",
@@ -151,6 +154,8 @@ def build_parser(version: str | None = None) -> argparse.ArgumentParser:
         help="Archive each existing non-JSON output directory with config and license",
     )
 
+
+def _add_nerd_font_arguments(parser: argparse.ArgumentParser) -> None:
     nerd_font_group = parser.add_argument_group("Nerd Font Options")
     nerd_font_enable_group = nerd_font_group.add_mutually_exclusive_group()
     nerd_font_enable_group.add_argument(
@@ -190,6 +195,8 @@ def build_parser(version: str | None = None) -> argparse.ArgumentParser:
         help="Force the use of Nerd Font Patcher to build NF format",
     )
 
+
+def _add_cjk_arguments(parser: argparse.ArgumentParser) -> None:
     cjk_group = parser.add_argument_group("CJK Options")
     cjk_group.add_argument(
         "--cjk",
@@ -233,6 +240,8 @@ def build_parser(version: str | None = None) -> argparse.ArgumentParser:
         help="Do not auto-hint final static CJK fonts (default).",
     )
 
+
+def _add_deprecated_cn_arguments(parser: argparse.ArgumentParser) -> None:
     deprecated_cn_group = parser.add_argument_group("Deprecated CN Options")
     cn_group = deprecated_cn_group.add_mutually_exclusive_group()
     cn_group.add_argument(
@@ -270,6 +279,17 @@ def build_parser(version: str | None = None) -> argparse.ArgumentParser:
         help=argparse.SUPPRESS,
     )
 
+
+def build_parser(version: str | None = None) -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(
+        description="Builder and optimizer for Maple Mono",
+    )
+    _add_general_arguments(parser, version)
+    _add_feature_arguments(parser)
+    _add_build_arguments(parser)
+    _add_nerd_font_arguments(parser)
+    _add_cjk_arguments(parser)
+    _add_deprecated_cn_arguments(parser)
     return parser
 
 

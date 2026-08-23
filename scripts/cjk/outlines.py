@@ -207,6 +207,39 @@ def validate_compatible_glyph_commands(
                 )
 
 
+def _dispatch_pen_command(
+    multi_pen: Cu2QuMultiPen,
+    glyph_name: str,
+    operation: str,
+    args_list: list[tuple[Any, ...]],
+) -> None:
+    if operation == "moveTo":
+        multi_pen.moveTo(args_list)
+    elif operation == "lineTo":
+        multi_pen.lineTo(args_list)
+    elif operation == "curveTo":
+        multi_pen.curveTo(args_list)
+    elif operation == "qCurveTo":
+        multi_pen.qCurveTo(args_list)
+    elif operation == "closePath":
+        multi_pen.closePath()
+    elif operation == "endPath":
+        multi_pen.endPath()
+    elif operation == "addComponent":
+        component_names = {args[0] for args in args_list}
+        if len(component_names) != 1:
+            raise ValueError(
+                f"Incompatible source outlines for {glyph_name}: "
+                f"component names differ across masters"
+            )
+        multi_pen.addComponent(args_list[0][0], [args[1] for args in args_list])
+    else:
+        raise ValueError(
+            f"Unsupported segment operation {operation!r} while converting "
+            f"{glyph_name} from CFF to glyf"
+        )
+
+
 def replay_multi_glyph_commands(
     glyph_name: str,
     recordings: Sequence[list[tuple[str, tuple[Any, ...]]]],
@@ -217,31 +250,7 @@ def replay_multi_glyph_commands(
     for commands in zip(*recordings, strict=False):
         operation = commands[0][0]
         args_list = [args for _, args in commands]
-        if operation == "moveTo":
-            multi_pen.moveTo(args_list)
-        elif operation == "lineTo":
-            multi_pen.lineTo(args_list)
-        elif operation == "curveTo":
-            multi_pen.curveTo(args_list)
-        elif operation == "qCurveTo":
-            multi_pen.qCurveTo(args_list)
-        elif operation == "closePath":
-            multi_pen.closePath()
-        elif operation == "endPath":
-            multi_pen.endPath()
-        elif operation == "addComponent":
-            component_names = {args[0] for args in args_list}
-            if len(component_names) != 1:
-                raise ValueError(
-                    f"Incompatible source outlines for {glyph_name}: "
-                    f"component names differ across masters"
-                )
-            multi_pen.addComponent(args_list[0][0], [args[1] for args in args_list])
-        else:
-            raise ValueError(
-                f"Unsupported segment operation {operation!r} while converting "
-                f"{glyph_name} from CFF to glyf"
-            )
+        _dispatch_pen_command(multi_pen, glyph_name, operation, args_list)
 
 
 def convert_cff_glyphs_from_loaded_fonts(
