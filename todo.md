@@ -4,6 +4,7 @@
 
 - [x] `[erro]` / `[dbug]` / `[crit]` / `[alert]` / `[success]` / `[tracing]` / `[critical]` #767 #777
 - [x] add missing `>:` / `:>:` / `:<:`
+- [ ] https://lobste.rs/s/ahca9t/maple_mono_open_source_monospace_font#c_un8dnc
 
 ## Character Variant
 
