@@ -88,7 +88,7 @@ def comb(c1: str, c2: str) -> list[ast.Line]:
 
 
 def comb_jp(c1: str, c2: str) -> ast.Line:
-    return ast.__subst(f"uni{c1} uni{c1}", f"uni{c1}{c2}")
+    return ast.__subst(f"uni{c1} uni{c2}", f"uni{c1}{c2}")
 
 
 ccmp_latn = ast.Lookup(
