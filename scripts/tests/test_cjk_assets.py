@@ -41,7 +41,9 @@ class CJKBaseArchiveStoreTest(unittest.TestCase):
 
             with (
                 patch("scripts.cjk.assets.Path.cwd", return_value=root),
-                patch.object(store, "_install_local_archive", return_value=True) as local,
+                patch.object(
+                    store, "_install_local_archive", return_value=True
+                ) as local,
                 patch.object(store, "_install_static_archive") as remote,
             ):
                 self.assertTrue(store.install_static_base("cn", config))
@@ -72,7 +74,9 @@ class CJKBaseArchiveStoreTest(unittest.TestCase):
 
             with (
                 patch("scripts.cjk.assets.Path.cwd", return_value=root),
-                patch.object(store, "_install_local_archive", return_value=True) as local,
+                patch.object(
+                    store, "_install_local_archive", return_value=True
+                ) as local,
                 patch.object(store, "_install_variable_archive") as remote,
             ):
                 self.assertTrue(store.ensure_variable_base(entry))
