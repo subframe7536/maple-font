@@ -10,6 +10,8 @@ from fontTools.designspaceLib import (
     SourceDescriptor,
 )
 
+from scripts.font_ops.glyphs import _apply_designspace_weight_mapping
+
 
 STYLE_DESIGN_WEIGHTS = (
     ("Thin", 100),
@@ -21,14 +23,6 @@ STYLE_DESIGN_WEIGHTS = (
     ("Bold", 680),
     ("ExtraBold", 800),
 )
-
-
-def apply_weight_mapping(
-    designspace: DesignSpaceDocument, mapping: dict[str, int]
-) -> None:
-    from scripts.font_ops.glyphs import _apply_designspace_weight_mapping
-
-    _apply_designspace_weight_mapping(designspace, mapping)
 
 
 def make_designspace() -> DesignSpaceDocument:
@@ -84,7 +78,7 @@ class WeightMappingTest(unittest.TestCase):
             "extrabold": 800,
         }
 
-        apply_weight_mapping(designspace, mapping)
+        _apply_designspace_weight_mapping(designspace, mapping)
 
         axis = designspace.axes[0]
         self.assertEqual(axis.default, 300)
@@ -111,7 +105,7 @@ class WeightMappingTest(unittest.TestCase):
             ValueError,
             "unique and strictly increase from Thin to ExtraBold",
         ):
-            apply_weight_mapping(designspace, mapping)
+            _apply_designspace_weight_mapping(designspace, mapping)
 
     def test_duplicate_weight_mapping_is_rejected(self) -> None:
         designspace = make_designspace()
@@ -130,7 +124,7 @@ class WeightMappingTest(unittest.TestCase):
             ValueError,
             "unique and strictly increase from Thin to ExtraBold",
         ):
-            apply_weight_mapping(designspace, mapping)
+            _apply_designspace_weight_mapping(designspace, mapping)
 
 
 if __name__ == "__main__":
