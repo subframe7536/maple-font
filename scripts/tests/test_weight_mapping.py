@@ -3,7 +3,6 @@ from __future__ import annotations
 import unittest
 
 from scripts.font_ops.glyphs import _apply_designspace_weight_mapping
-
 from fontTools.designspaceLib import (
     AxisDescriptor,
     DesignSpaceDocument,
