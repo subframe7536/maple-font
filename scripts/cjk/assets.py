@@ -137,7 +137,9 @@ class CJKBaseArchiveStore:
         output_dir.parent.mkdir(parents=True, exist_ok=True)
         archive_name = self._archive_name(locale, "static")
         expected_hash = static_hash_path(config)
-        local_archive = config.output.dir / config.output.archive_name
+        local_archive = Path.cwd() / config.output.archive_name
+        if not local_archive.is_file():
+            local_archive = config.output.dir / config.output.archive_name
         try:
             if local_archive.is_file() and self._install_local_archive(
                 local_archive,
@@ -202,7 +204,9 @@ class CJKBaseArchiveStore:
         expected_paths = variable_paths(config)
 
         try:
-            local_archive = output_dir / config.output.variable_archive_name
+            local_archive = Path.cwd() / config.output.variable_archive_name
+            if not local_archive.is_file():
+                local_archive = output_dir / config.output.variable_archive_name
             if local_archive.is_file() and self._install_local_archive(
                 local_archive,
                 archive_name,
