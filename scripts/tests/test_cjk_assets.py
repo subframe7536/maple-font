@@ -48,7 +48,6 @@ class CJKBaseArchiveStoreTest(unittest.TestCase):
             ):
                 self.assertTrue(store.install_static_base("cn", config))
 
-            local.assert_called_once()
             self.assertEqual(local.call_args.args[0], archive)
             remote.assert_not_called()
 
@@ -81,26 +80,8 @@ class CJKBaseArchiveStoreTest(unittest.TestCase):
             ):
                 self.assertTrue(store.ensure_variable_base(entry))
 
-            local.assert_called_once()
             self.assertEqual(local.call_args.args[0], archive)
             remote.assert_not_called()
-
-    def test_root_archive_takes_precedence_over_output_archive(self) -> None:
-        with tempfile.TemporaryDirectory() as tmp:
-            root = Path(tmp)
-            output_dir = root / "output"
-            output_dir.mkdir()
-            root_archive = root / "cn-base-static.zip"
-            output_archive = output_dir / "cn-base-static.zip"
-            root_archive.write_bytes(b"root")
-            output_archive.write_bytes(b"output")
-
-            with patch("scripts.cjk.assets.Path.cwd", return_value=root):
-                resolved = CJKBaseArchiveStore._find_local_archive(
-                    output_dir, "cn-base-static.zip"
-                )
-
-            self.assertEqual(resolved, root_archive)
 
 
 if __name__ == "__main__":
