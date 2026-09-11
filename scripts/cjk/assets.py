@@ -57,6 +57,15 @@ class CJKBaseArchiveStore:
             + f"releases/download/cjk-base/{cls._archive_name(locale, kind)}"
         )
 
+    @staticmethod
+    def _find_local_archive(output_dir: Path, archive_name: str) -> Path | None:
+        """Find a pre-downloaded archive in the project root or CJK output dir."""
+        for base_dir in (Path.cwd(), output_dir):
+            archive = base_dir / archive_name
+            if archive.is_file():
+                return archive
+        return None
+
     def _install_static_archive(
         self,
         archive: Path,
@@ -137,9 +146,11 @@ class CJKBaseArchiveStore:
         output_dir.parent.mkdir(parents=True, exist_ok=True)
         archive_name = self._archive_name(locale, "static")
         expected_hash = static_hash_path(config)
-        local_archive = config.output.dir / config.output.archive_name
+        local_archive = self._find_local_archive(
+            config.output.dir, config.output.archive_name
+        )
         try:
-            if local_archive.is_file() and self._install_local_archive(
+            if local_archive is not None and self._install_local_archive(
                 local_archive,
                 archive_name,
                 output_dir,
@@ -202,8 +213,10 @@ class CJKBaseArchiveStore:
         expected_paths = variable_paths(config)
 
         try:
-            local_archive = output_dir / config.output.variable_archive_name
-            if local_archive.is_file() and self._install_local_archive(
+            local_archive = self._find_local_archive(
+                output_dir, config.output.variable_archive_name
+            )
+            if local_archive is not None and self._install_local_archive(
                 local_archive,
                 archive_name,
                 output_dir,
