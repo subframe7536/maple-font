@@ -212,15 +212,15 @@ def prepare_designspace_source(
             raise ValueError(
                 f"Designspace source requires a continuous named wght axis: {path}"
             )
-        weight_axis.default = 400
-        axis_name = weight_axis.name
         sources = list(designspace.sources)
-        default_source = next(
-            (source for source in sources if source.location.get(axis_name) == 400),
-            None,
-        )
+        default_source = designspace.findDefault()
         if default_source is None or default_source.font is None:
-            raise ValueError(f"Designspace source is missing a wght 400 master: {path}")
+            default_design_weight = weight_axis.map_forward(weight_axis.default)
+            raise ValueError(
+                "Designspace source is missing its default wght master "
+                f"(user={weight_axis.default:g}, design={default_design_weight:g}): "
+                f"{path}"
+            )
 
         vertical_metric = _resolve_default_source_vertical_metric(default_source)
         target_vertical_metric = (
@@ -300,10 +300,28 @@ def _apply_designspace_weight_mapping(
         )
     )
     if mapping:
-        weight_axis.map = sorted(dict(mapping).items())
-        weight_axis.minimum = weight_axis.map[0][0]
-        weight_axis.maximum = weight_axis.map[-1][0]
-        weight_axis.default = 400
+        mapped_weights: dict[float, float] = {}
+        for user_weight, design_weight in mapping:
+            previous = mapped_weights.get(user_weight)
+            if previous is not None and previous != design_weight:
+                raise ValueError(
+                    "weight_mapping values must be unique and strictly increase "
+                    "from Thin to ExtraBold"
+                )
+            mapped_weights[user_weight] = design_weight
+
+        axis_map = sorted(mapped_weights.items())
+        design_weights = [design_weight for _, design_weight in axis_map]
+        if design_weights != sorted(design_weights):
+            raise ValueError(
+                "weight_mapping values must be unique and strictly increase "
+                "from Thin to ExtraBold"
+            )
+
+        weight_axis.map = axis_map
+        weight_axis.minimum = axis_map[0][0]
+        weight_axis.maximum = axis_map[-1][0]
+        weight_axis.default = weight_mapping["regular"]
 
 
 def materialize_prepared_source(
