@@ -8,7 +8,6 @@ from fontTools.designspaceLib import (
     InstanceDescriptor,
     SourceDescriptor,
 )
-
 from scripts.font_ops.glyphs import _apply_designspace_weight_mapping
 
 
