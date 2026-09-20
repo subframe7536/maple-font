@@ -130,17 +130,6 @@ RELEASE_WIDTHS = (
     ReleaseWidth("narrow", "narrow", "NR", False),
     ReleaseWidth("slim", "slim", "SL", False),
 )
-PROFILE_LABELS = {
-    "default": "Ligature (default)",
-    "normal": "Normal-Ligature",
-    "no-ligature": "No-Ligature",
-    "normal-no-ligature": "Normal-No-Ligature",
-}
-WIDTH_LABELS = {
-    "default": "Default width",
-    "narrow": "Narrow width (NR)",
-    "slim": "Slim width (SL)",
-}
 RELEASE_CJK_LOCALES = (
     ReleaseLocale("cn", "CN"),
     ReleaseLocale("tc", "TC"),
@@ -416,106 +405,6 @@ def _release_nf_variant_steps(
     )
 
 
-def _archive_link(
-    base_url: str,
-    task: ReleaseTask,
-    target: str,
-    label: str = "Download",
-) -> str:
-    return f"[{label}]({base_url}/{task.family_name}-{target}.zip)"
-
-
-def _release_table_cell(base_url: str, task: ReleaseTask, format_name: str) -> str:
-    if format_name == "Variable":
-        return _archive_link(base_url, task, "VF")
-    if format_name == "TTF":
-        return (
-            f"{_archive_link(base_url, task, 'TTF')} / "
-            f"{_archive_link(base_url, task, 'TTF-AutoHint', 'Hinted')}"
-        )
-    if format_name == "OTF":
-        return _archive_link(base_url, task, "OTF")
-    if format_name == "WOFF2":
-        return _archive_link(base_url, task, "Woff2")
-    if format_name == "NF":
-        unhinted = _archive_link(base_url, task, "NF-unhinted")
-        hinted = _archive_link(base_url, task, "NF", "Hinted")
-        if not task.width.full_release:
-            return f"{unhinted} / {hinted}"
-        nfmono = _archive_link(base_url, task, "NFMono-unhinted", "NFMono")
-        nfpropo = _archive_link(base_url, task, "NFPropo-unhinted", "NFPropo")
-        variable = _archive_link(base_url, task, "NF-VF", "Variable")
-        return f"{unhinted} ({nfmono} / {nfpropo}) / {hinted} / {variable}"
-    if format_name.startswith("NF-"):
-        locale = format_name.removeprefix("NF-")
-        unhinted = _archive_link(base_url, task, f"NF-{locale}-unhinted")
-        if not task.width.full_release:
-            return unhinted
-        hinted = _archive_link(base_url, task, f"NF-{locale}", "Hinted")
-        variable = _archive_link(base_url, task, f"NF-{locale}-VF", "Variable")
-        return f"{unhinted} / {hinted} / {variable}"
-    raise ValueError(f"Unsupported release table format: {format_name}")
-
-
-def render_download_matrix(base_url: str = "https://<url>") -> str:
-    lines: list[str] = []
-    formats = (
-        "Variable",
-        "TTF",
-        "OTF",
-        "WOFF2",
-        "NF",
-        *(f"NF-{locale.name}" for locale in RELEASE_CJK_LOCALES),
-    )
-    header = (
-        "| Format | "
-        + " | ".join(PROFILE_LABELS[profile.id] for profile in RELEASE_PROFILES)
-        + " |"
-    )
-    separator = "| --- | " + " | ".join("---" for _ in RELEASE_PROFILES) + " |"
-
-    for width in RELEASE_WIDTHS:
-        lines.extend((f"### {WIDTH_LABELS[width.id]}", ""))
-        if not width.full_release:
-            lines.extend(
-                (
-                    "<details>",
-                    "<summary>Click to expand</summary>",
-                    "",
-                    "Compact release: common base packages and unhinted NF-CJK packages.",
-                    "",
-                )
-            )
-
-        lines.extend((header, separator))
-        for format_name in formats:
-            cells = [
-                _release_table_cell(
-                    base_url,
-                    ReleaseTask(profile, width),
-                    format_name,
-                )
-                for profile in RELEASE_PROFILES
-            ]
-            lines.append(f"| {format_name} | " + " | ".join(cells) + " |")
-        lines.append("")
-
-        if not width.full_release:
-            lines.extend(("</details>", ""))
-
-    lines.extend(
-        (
-            "### Note",
-            "",
-            "- Default width publishes the full release matrix. Narrow (NR) and Slim (SL) publish the common compact matrix.",
-            "- Static output is the default and has no Static suffix. Variable archives use the -VF suffix.",
-            "- NFMono and NFPropo are published only for the default width as unhinted static fonts.",
-            f"- The complete machine-readable matrix is available in [release-manifest.json]({base_url}/release-manifest.json).",
-        )
-    )
-    return "\n".join(lines)
-
-
 def collect_release_task_archives(
     task: ReleaseTask,
     archive_dir: Path = BUILD_ARCHIVE_DIR,
@@ -651,7 +540,6 @@ def publish(write: bool, tag: str | None = None, dry: bool = not is_ci()):
     ]
 
     template = template_path.read_text().replace("<!-- changelog -->", changelog)
-    template = template.replace("<!-- download-matrix -->", render_download_matrix())
     template = template.replace(
         "https://<url>",
         f"https://github.com/subframe7536/maple-font/releases/download/{tag}",
