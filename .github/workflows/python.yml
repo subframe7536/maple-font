@@ -43,9 +43,7 @@ jobs:
       - name: Sync locked environment
         run: uv sync --locked
       - name: Check formatting
-        run: |
-          uv run ruff format --diff .
-          exit 1
+        run: uv run ruff format --check .
       - name: Lint
         run: uv run ruff check .
       - name: Type check
