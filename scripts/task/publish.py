@@ -392,6 +392,7 @@ def release_build_steps(
         ),
     )
 
+
 def _release_nf_variant_steps(
     task: ReleaseTask,
     extra_args: tuple[str, ...],
