@@ -1,6 +1,6 @@
 [project]
 name = "maple-font"
-version = "8.0b2"
+version = "8.0b3"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.10"

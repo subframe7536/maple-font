@@ -3,10 +3,10 @@ revision = 3
 requires-python = ">=3.10"
 resolution-markers = [
     "python_full_version >= '3.13' and implementation_name == 'cpython'",
-    "python_full_version >= '3.11' and python_full_version < '3.13' and implementation_name == 'cpython'",
-    "python_full_version < '3.11' and implementation_name == 'cpython'",
     "python_full_version >= '3.13' and implementation_name != 'cpython'",
+    "python_full_version >= '3.11' and python_full_version < '3.13' and implementation_name == 'cpython'",
     "python_full_version >= '3.11' and python_full_version < '3.13' and implementation_name != 'cpython'",
+    "python_full_version < '3.11' and implementation_name == 'cpython'",
     "python_full_version < '3.11' and implementation_name != 'cpython'",
 ]
 
@@ -1443,7 +1443,7 @@ wheels = [
 
 [[package]]
 name = "maple-font"
-version = "8.0b2"
+version = "8.0b3"
 source = { virtual = "." }
 dependencies = [
     { name = "fontmake" },
@@ -1663,8 +1663,8 @@ version = "3.6.1"
 source = { registry = "https://pypi.org/simple" }
 resolution-markers = [
     "python_full_version >= '3.13' and implementation_name == 'cpython'",
-    "python_full_version >= '3.11' and python_full_version < '3.13' and implementation_name == 'cpython'",
     "python_full_version >= '3.13' and implementation_name != 'cpython'",
+    "python_full_version >= '3.11' and python_full_version < '3.13' and implementation_name == 'cpython'",
     "python_full_version >= '3.11' and python_full_version < '3.13' and implementation_name != 'cpython'",
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/6a/51/63fe664f3908c97be9d2e4f1158eb633317598cfa6e1fc14af5383f17512/networkx-3.6.1.tar.gz", hash = "sha256:26b7c357accc0c8cde558ad486283728b65b6a95d85ee1cd66bafab4c8168509", size = 2517025, upload-time = "2025-12-08T17:02:39.908Z" }
@@ -2247,8 +2247,8 @@ version = "1.15.0"
 source = { registry = "https://pypi.org/simple" }
 resolution-markers = [
     "python_full_version >= '3.11' and python_full_version < '3.13' and implementation_name == 'cpython'",
-    "python_full_version < '3.11' and implementation_name == 'cpython'",
     "python_full_version >= '3.11' and python_full_version < '3.13' and implementation_name != 'cpython'",
+    "python_full_version < '3.11' and implementation_name == 'cpython'",
     "python_full_version < '3.11' and implementation_name != 'cpython'",
 ]
 dependencies = [
