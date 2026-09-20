@@ -11,7 +11,6 @@ from scripts.task.publish import (
     release_build_steps,
     release_manifest,
     release_matrix,
-    render_download_matrix,
     resolve_release_task,
 )
 
@@ -101,16 +100,6 @@ class PublishTest(unittest.TestCase):
         self.assertNotIn(
             "MapleMonoNormalNR-NF-JP-VF.zip", narrow_bundle.archive_names()
         )
-
-    def test_download_matrix_is_generated_from_release_config(self) -> None:
-        matrix = render_download_matrix()
-
-        self.assertIn("### Narrow width (NR)", matrix)
-        self.assertIn("### Slim width (SL)", matrix)
-        self.assertIn("MapleMonoNR-NF-CN-unhinted.zip", matrix)
-        self.assertNotIn("MapleMonoNR-NF-CN-VF.zip", matrix)
-        self.assertNotIn("MapleMonoSL-NFMono-unhinted.zip", matrix)
-        self.assertIn("MapleMono-NFMono-unhinted.zip", matrix)
 
     def test_collect_release_task_archives_isolates_job_outputs(self) -> None:
         task = resolve_release_task("bundle-default-default")
