@@ -25,8 +25,12 @@ class PublishTest(unittest.TestCase):
         self.assertEqual(len(archives), 176)
         self.assertEqual(len(manifest["archives"]), 176)
         self.assertEqual(len(manifest["nf_variants"]), 3)
-        self.assertFalse(any("NR" in name for name in archives))
+        self.assertIn("MapleMonoNR-Woff2.zip", archives)
         self.assertIn("MapleMonoSL-Woff2.zip", archives)
+        self.assertNotIn("MapleMonoNR-NF-VF.zip", archives)
+        self.assertNotIn("MapleMonoSL-NFMono-unhinted.zip", archives)
+        self.assertNotIn("MapleMonoNR-NF-CN-VF.zip", archives)
+        self.assertIn("MapleMonoNR-NF-CN-unhinted.zip", archives)
         self.assertFalse(
             any("Static" in name or "Variable" in name for name in archives)
         )
@@ -58,52 +62,43 @@ class PublishTest(unittest.TestCase):
             self.assertFalse((release_dir / "SHA256SUMS").exists())
             self.assertFalse(list(release_dir.glob("*.sha256")))
 
-    def test_release_matrix_exposes_eight_bundle_tasks(self) -> None:
+    def test_release_matrix_exposes_twelve_bundle_tasks(self) -> None:
         bundle = release_matrix()["task"]
 
-        self.assertEqual(len(bundle), 8)
-        self.assertFalse(any("narrow" in task for task in bundle))
+        self.assertEqual(len(bundle), 12)
+        self.assertIn("bundle-default-narrow", bundle)
         self.assertIn("bundle-normal-no-ligature-slim", bundle)
 
-    def test_release_task_owns_build_steps_and_archive_names(self) -> None:
-        with self.assertRaises(ValueError):
-            resolve_release_task("base-normal-narrow")
+    def test_release_task_uses_full_and_compact_width_plans(self) -> None:
+        default_bundle = resolve_release_task("bundle-normal-default")
+        default_steps = release_build_steps(default_bundle, ("--least-styles",))
+        self.assertEqual(len(default_steps), 8)
+        self.assertEqual(len(default_bundle.archive_names()), 22)
+        self.assertIn("--nf-variable", default_steps[2].args)
+        self.assertIn("--nf-mono", default_steps[3].args)
+        self.assertIn("--nf-propo", default_steps[4].args)
+        self.assertIn("MapleMonoNormal-NF-JP-VF.zip", default_bundle.archive_names())
 
-        bundle = resolve_release_task("bundle-normal-slim")
-        steps = release_build_steps(bundle, ("--least-styles",))
-        self.assertEqual(len(steps), 8)
-        self.assertTrue(all("--least-styles" in step.args for step in steps))
-        self.assertIn("--hinted", steps[0].args)
-        self.assertNotIn("--archive", steps[0].args)
-        self.assertNotIn("--archive", steps[1].args)
-        self.assertNotIn("--archive", steps[2].args)
-        self.assertIn("--no-hinted", steps[1].args)
-        self.assertIn("--nf-variable", steps[2].args)
-        self.assertIn("--nf-mono", steps[3].args)
-        self.assertIn("--nf-propo", steps[4].args)
-        self.assertEqual(len(bundle.archive_names()), 22)
-        self.assertIn("MapleMonoNormalSL-VF.zip", bundle.archive_names())
-        self.assertIn("MapleMonoNormalSL-NF-VF.zip", bundle.archive_names())
-        self.assertIn("MapleMonoNormalSL-NFMono-unhinted.zip", bundle.archive_names())
-        self.assertIn("MapleMonoNormalSL-NFPropo-unhinted.zip", bundle.archive_names())
-        self.assertIn("MapleMonoNormalSL-NF-JP-VF.zip", bundle.archive_names())
-        self.assertIn("MapleMonoNormalSL-NF-KR-unhinted.zip", bundle.archive_names())
-
-        cjk_steps = steps[5:]
-        self.assertTrue(all("--cjk" in step.args for step in cjk_steps))
-        self.assertTrue(all("cn,tc,jp,kr" in step.args for step in cjk_steps))
-        self.assertIn("--hinted", cjk_steps[0].args)
-        self.assertIn("--cache", cjk_steps[0].args)
-        self.assertNotIn("--cjk-hinted", cjk_steps[0].args)
-        self.assertIn("--cjk-variable", cjk_steps[2].args)
-        self.assertEqual(
-            {archive.directory for archive in cjk_steps[0].archives},
-            {"NF-CN", "NF-TC", "NF-JP", "NF-KR"},
+        narrow_bundle = resolve_release_task("bundle-normal-narrow")
+        narrow_steps = release_build_steps(narrow_bundle, ("--least-styles",))
+        self.assertEqual(len(narrow_steps), 4)
+        self.assertTrue(all("--least-styles" in step.args for step in narrow_steps))
+        self.assertEqual(len(narrow_bundle.archive_names()), 11)
+        self.assertIn("--no-nf", narrow_steps[2].args)
+        self.assertNotIn("--nf-variable", narrow_steps[2].args)
+        self.assertTrue("--cjk" in narrow_steps[3].args)
+        self.assertIn("--no-cjk-hinted", narrow_steps[3].args)
+        self.assertIn("MapleMonoNormalNR-VF.zip", narrow_bundle.archive_names())
+        self.assertIn(
+            "MapleMonoNormalNR-NF-KR-unhinted.zip", narrow_bundle.archive_names()
         )
-        self.assertEqual(cjk_steps[1].archives[0].suffix, "-unhinted")
-        self.assertEqual(
-            {archive.directory for archive in cjk_steps[2].archives},
-            {"Variable-NF-CN", "Variable-NF-TC", "Variable-NF-JP", "Variable-NF-KR"},
+        self.assertNotIn("MapleMonoNormalNR-NF-VF.zip", narrow_bundle.archive_names())
+        self.assertNotIn(
+            "MapleMonoNormalNR-NFMono-unhinted.zip", narrow_bundle.archive_names()
+        )
+        self.assertNotIn("MapleMonoNormalNR-NF-JP.zip", narrow_bundle.archive_names())
+        self.assertNotIn(
+            "MapleMonoNormalNR-NF-JP-VF.zip", narrow_bundle.archive_names()
         )
 
     def test_collect_release_task_archives_isolates_job_outputs(self) -> None:

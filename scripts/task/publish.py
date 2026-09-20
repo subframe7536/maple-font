@@ -33,6 +33,7 @@ class ReleaseWidth:
     id: str
     value: str
     family_suffix: str
+    full_release: bool
 
 
 @dataclass(frozen=True, slots=True)
@@ -86,14 +87,30 @@ class ReleaseTask:
     def family_name(self) -> str:
         return "MapleMono" + self.profile.family_suffix + self.width.family_suffix
 
+    @property
+    def base_archive_targets(self) -> tuple[str, ...]:
+        return (
+            BASE_ARCHIVE_TARGETS
+            if self.width.full_release
+            else COMPACT_BASE_ARCHIVE_TARGETS
+        )
+
+    @property
+    def cjk_archive_targets(self) -> tuple[str, ...]:
+        return (
+            CJK_ARCHIVE_TARGETS
+            if self.width.full_release
+            else COMPACT_CJK_ARCHIVE_TARGETS
+        )
+
     def archive_names(self) -> tuple[str, ...]:
         base_targets = tuple(
-            f"{self.family_name}-{target}.zip" for target in BASE_ARCHIVE_TARGETS
+            f"{self.family_name}-{target}.zip" for target in self.base_archive_targets
         )
         cjk_targets = tuple(
             f"{self.family_name}-{target.format(locale=locale.name)}.zip"
             for locale in RELEASE_CJK_LOCALES
-            for target in CJK_ARCHIVE_TARGETS
+            for target in self.cjk_archive_targets
         )
         return (*base_targets, *cjk_targets)
 
@@ -109,8 +126,9 @@ RELEASE_PROFILES = (
     ),
 )
 RELEASE_WIDTHS = (
-    ReleaseWidth("default", "default", ""),
-    ReleaseWidth("slim", "slim", "SL"),
+    ReleaseWidth("default", "default", "", True),
+    ReleaseWidth("narrow", "narrow", "NR", False),
+    ReleaseWidth("slim", "slim", "SL", False),
 )
 RELEASE_CJK_LOCALES = (
     ReleaseLocale("cn", "CN"),
@@ -152,22 +170,33 @@ BASE_CORE_ARCHIVE_TARGETS = (
     "OTF",
     "Woff2",
 )
-BASE_NF_ARCHIVE_TARGETS = (
+BASE_NF_COMMON_ARCHIVE_TARGETS = (
     "NF",
     "NF-unhinted",
+)
+BASE_NF_EXTENDED_ARCHIVE_TARGETS = (
     "NF-VF",
     "NFMono-unhinted",
     "NFPropo-unhinted",
 )
+BASE_NF_ARCHIVE_TARGETS = (
+    *BASE_NF_COMMON_ARCHIVE_TARGETS,
+    *BASE_NF_EXTENDED_ARCHIVE_TARGETS,
+)
 BASE_ARCHIVE_TARGETS = (
     *BASE_CORE_ARCHIVE_TARGETS,
     *BASE_NF_ARCHIVE_TARGETS,
+)
+COMPACT_BASE_ARCHIVE_TARGETS = (
+    *BASE_CORE_ARCHIVE_TARGETS,
+    *BASE_NF_COMMON_ARCHIVE_TARGETS,
 )
 CJK_ARCHIVE_TARGETS = (
     "NF-{locale}-VF",
     "NF-{locale}",
     "NF-{locale}-unhinted",
 )
+COMPACT_CJK_ARCHIVE_TARGETS = ("NF-{locale}-unhinted",)
 
 
 def register_parser(subparsers: argparse._SubParsersAction[argparse.ArgumentParser]):
@@ -224,16 +253,21 @@ def release_manifest() -> dict[str, Any]:
                 "id": width.id,
                 "value": width.value,
                 "family_suffix": width.family_suffix,
+                "release_mode": "full" if width.full_release else "compact",
             }
             for width in RELEASE_WIDTHS
         ],
         "nf_variants": [variant.manifest() for variant in RELEASE_NF_VARIANTS],
-        "base": {"targets": list(BASE_ARCHIVE_TARGETS)},
+        "base": {
+            "targets": list(BASE_ARCHIVE_TARGETS),
+            "compact_targets": list(COMPACT_BASE_ARCHIVE_TARGETS),
+        },
         "cjk": {
             "locales": [
                 {"id": locale.id, "name": locale.name} for locale in RELEASE_CJK_LOCALES
             ],
             "targets": list(CJK_ARCHIVE_TARGETS),
+            "compact_targets": list(COMPACT_CJK_ARCHIVE_TARGETS),
         },
         "archives": sorted(expected_release_archives()),
     }
@@ -257,7 +291,18 @@ def release_build_steps(
         task.width.value,
         *task.profile.args,
     ]
-    base_steps = (
+    core_nf_args = ("--nf-variable",) if task.width.full_release else ("--no-nf",)
+    core_directories = [
+        "Variable",
+        "TTF",
+        "TTF-AutoHint",
+        "OTF",
+        "Woff2",
+    ]
+    if task.width.full_release:
+        core_directories.append("Variable-NF")
+
+    base_steps: tuple[ReleaseBuildStep, ...] = (
         ReleaseBuildStep(
             (*common, "--format", "ttf,otf,woff2", "--hinted"),
             (ReleaseArchiveSpec("NF"),),
@@ -275,7 +320,7 @@ def release_build_steps(
         ReleaseBuildStep(
             (
                 *extra_args,
-                "--nf-variable",
+                *core_nf_args,
                 "--width",
                 task.width.value,
                 *task.profile.args,
@@ -284,44 +329,42 @@ def release_build_steps(
                 "--no-hinted",
                 "--cache",
             ),
-            tuple(
-                ReleaseArchiveSpec(directory)
-                for directory in (
-                    "Variable",
-                    "TTF",
-                    "TTF-AutoHint",
-                    "OTF",
-                    "Woff2",
-                    "Variable-NF",
-                )
-            ),
+            tuple(ReleaseArchiveSpec(directory) for directory in core_directories),
         ),
-        *_release_nf_variant_steps(task, extra_args, RELEASE_NF_VARIANTS[1:]),
     )
+    if task.width.full_release:
+        base_steps = (
+            *base_steps,
+            *_release_nf_variant_steps(task, extra_args, RELEASE_NF_VARIANTS[1:]),
+        )
+
     cjk_locales = ",".join(locale.id for locale in RELEASE_CJK_LOCALES)
     cjk = [*common, "--format", "ttf", "--cjk", cjk_locales]
     cjk_directories = tuple(
         f"{RELEASE_DEFAULT_NF_VARIANT.directory_name}-{locale.name}"
         for locale in RELEASE_CJK_LOCALES
     )
+    cjk_unhinted_step = ReleaseBuildStep(
+        (
+            *cjk,
+            "--no-hinted",
+            "--no-cjk-hinted",
+            "--cache",
+        ),
+        tuple(
+            ReleaseArchiveSpec(directory, "-unhinted") for directory in cjk_directories
+        ),
+    )
+    if not task.width.full_release:
+        return (*base_steps, cjk_unhinted_step)
+
     return (
         *base_steps,
         ReleaseBuildStep(
             (*cjk, "--hinted", "--cache"),
             tuple(ReleaseArchiveSpec(directory) for directory in cjk_directories),
         ),
-        ReleaseBuildStep(
-            (
-                *cjk,
-                "--no-hinted",
-                "--no-cjk-hinted",
-                "--cache",
-            ),
-            tuple(
-                ReleaseArchiveSpec(directory, "-unhinted")
-                for directory in cjk_directories
-            ),
-        ),
+        cjk_unhinted_step,
         ReleaseBuildStep(
             (
                 *cjk,
