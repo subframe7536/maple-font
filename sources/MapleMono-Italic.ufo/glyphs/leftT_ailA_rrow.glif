@@ -3,21 +3,22 @@
   <advance width="600"/>
   <unicode hex="21A2"/>
   <outline>
-    <component base="rightTailArrow" xScale="-1" xOffset="440"/>
+    <contour>
+      <point x="77.751" y="95" type="line"/>
+      <point x="171.751" y="95" type="line"/>
+      <point x="66.437" y="235" type="line"/>
+      <point x="323.437" y="235" type="line"/>
+      <point x="423.751" y="95" type="line"/>
+      <point x="526.751" y="95" type="line"/>
+      <point x="402.666" y="276" type="line"/>
+      <point x="590.229" y="455" type="line"/>
+      <point x="486.229" y="455" type="line"/>
+      <point x="336.543" y="315" type="line"/>
+      <point x="80.543" y="315" type="line"/>
+      <point x="236.229" y="455" type="line"/>
+      <point x="141.229" y="455" type="line"/>
+      <point x="-15.339" y="310" type="line"/>
+      <point x="-27.682" y="240" type="line"/>
+    </contour>
   </outline>
-  <lib>
-    <dict>
-      <key>com.schriftgestaltung.Glyphs.ComponentInfo</key>
-      <array>
-        <dict>
-          <key>alignment</key>
-          <integer>-1</integer>
-          <key>index</key>
-          <integer>0</integer>
-          <key>name</key>
-          <string>rightTailArrow</string>
-        </dict>
-      </array>
-    </dict>
-  </lib>
 </glyph>

@@ -24,7 +24,11 @@ Do not run a release, publish, or push command until the generated diff has been
    uv run task.py designspace
    ```
 
-   Review the complete diff under `sources/*.designspace` and `sources/*.ufo/`. If conversion reports compatibility errors, inspect `fonts/source-issues.json` before continuing.
+   `tag_*` ligature glyphs and `.bg` variants are normalized to integer coordinates
+   during conversion. Their 400-weight master is derived from the Thin and ExtraBold
+   endpoints, so edit those endpoint masters rather than the middle layer. Review the
+   complete diff under `sources/*.designspace` and `sources/*.ufo/`. If conversion
+   reports compatibility errors, inspect `fonts/source-issues.json` before continuing.
 
 3. If feature definitions or feature configuration changed in scripts/feature, regenerate all derived feature data:
 

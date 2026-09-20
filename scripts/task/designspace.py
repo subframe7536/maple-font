@@ -3,8 +3,9 @@ from __future__ import annotations
 import os
 import tempfile
 from dataclasses import dataclass
+from decimal import ROUND_HALF_UP, Decimal
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Literal
+from typing import TYPE_CHECKING, Any, Literal, cast
 
 from fontmake.compatibility import CompatibilityChecker
 from fontTools.designspaceLib import (
@@ -22,8 +23,13 @@ from scripts.utils.logging import TaskName, log_task, logger
 if TYPE_CHECKING:
     import argparse
 
+    from ufoLib2 import Font as UFOFont
+
 SourceStyle = Literal["regular", "italic"]
 SOURCE_ISSUE_REPORT = Path("fonts/source-issues.json")
+TAG_GLYPH_PREFIX = "tag_"
+BACKGROUND_GLYPH_MARKER = ".bg"
+INTEGER_GRID = Decimal(1)
 
 
 @dataclass(frozen=True, slots=True)
@@ -206,6 +212,127 @@ def _normalize_source_master_infos(
         ]
 
 
+def _as_decimal(value: float | int) -> Decimal:
+    return Decimal(str(value))
+
+
+def _quantize_stabilized_value(value: Decimal) -> int:
+    """Round platform-sensitive geometry onto the committed integer grid."""
+    return int(value.quantize(INTEGER_GRID, rounding=ROUND_HALF_UP))
+
+
+def _is_stabilized_glyph(glyph_name: str) -> bool:
+    return (
+        glyph_name.startswith(TAG_GLYPH_PREFIX) or BACKGROUND_GLYPH_MARKER in glyph_name
+    )
+
+
+def _stabilized_glyph_has_matching_topology(*glyphs: Any) -> bool:
+    contour_counts = {len(glyph.contours) for glyph in glyphs}
+    if len(contour_counts) != 1:
+        return False
+    return all(
+        len({len(contour) for contour in contours}) == 1
+        for contours in zip(*(glyph.contours for glyph in glyphs), strict=True)
+    )
+
+
+def _interpolate_stabilized_glyph(
+    target: Any,
+    low: Any,
+    high: Any,
+    factor: Decimal,
+) -> None:
+    for target_contour, low_contour, high_contour in zip(
+        target.contours,
+        low.contours,
+        high.contours,
+        strict=True,
+    ):
+        for target_point, low_point, high_point in zip(
+            target_contour,
+            low_contour,
+            high_contour,
+            strict=True,
+        ):
+            low_x = _as_decimal(low_point.x)
+            low_y = _as_decimal(low_point.y)
+            target_point.x = float(low_x + (_as_decimal(high_point.x) - low_x) * factor)
+            target_point.y = float(low_y + (_as_decimal(high_point.y) - low_y) * factor)
+
+    low_width = _as_decimal(low.width)
+    target.width = float(low_width + (_as_decimal(high.width) - low_width) * factor)
+
+
+def _quantize_stabilized_glyph(glyph: Any) -> None:
+    glyph.width = _quantize_stabilized_value(_as_decimal(glyph.width))
+    for contour in glyph.contours:
+        for point in contour:
+            point.x = _quantize_stabilized_value(_as_decimal(point.x))
+            point.y = _quantize_stabilized_value(_as_decimal(point.y))
+
+
+def _canonicalize_platform_sensitive_glyphs(
+    sources: list[SourceDescriptor],
+    default_source: SourceDescriptor,
+    axis_name: str,
+) -> None:
+    """Derive platform-sensitive default geometry from endpoints and quantize it."""
+    font_sources: list[tuple[SourceDescriptor, UFOFont]] = [
+        (source, cast("UFOFont", source.font))
+        for source in sources
+        if source.font is not None
+    ]
+    if not font_sources:
+        return
+
+    glyph_names = sorted(set().union(*(set(font.keys()) for _, font in font_sources)))
+    glyph_names = [name for name in glyph_names if _is_stabilized_glyph(name)]
+    if not glyph_names:
+        return
+
+    ordered_sources = sorted(
+        font_sources,
+        key=lambda item: _as_decimal(item[0].location[axis_name]),
+    )
+    low_source, low_font = ordered_sources[0]
+    high_source, high_font = ordered_sources[-1]
+    default_font = next(
+        (font for source, font in font_sources if source is default_source), None
+    )
+    if default_font is None:
+        return
+    default_location = _as_decimal(default_source.location[axis_name])
+    low_location = _as_decimal(low_source.location[axis_name])
+    high_location = _as_decimal(high_source.location[axis_name])
+
+    if (
+        low_source is not default_source
+        and high_source is not default_source
+        and low_location < default_location < high_location
+    ):
+        factor = (default_location - low_location) / (high_location - low_location)
+        for glyph_name in glyph_names:
+            if not all(
+                glyph_name in font for font in (low_font, default_font, high_font)
+            ):
+                continue
+            low_glyph = low_font[glyph_name]
+            default_glyph = default_font[glyph_name]
+            high_glyph = high_font[glyph_name]
+            if _stabilized_glyph_has_matching_topology(
+                low_glyph, default_glyph, high_glyph
+            ):
+                _interpolate_stabilized_glyph(
+                    default_glyph, low_glyph, high_glyph, factor
+                )
+
+    for _, font in font_sources:
+        for glyph_name in glyph_names:
+            if glyph_name in font:
+                _quantize_stabilized_glyph(font[glyph_name])
+
+
 def _backfill_missing_glyphs_from_default(
     sources: list[SourceDescriptor],
     default_source: SourceDescriptor,
@@ -282,9 +409,10 @@ def prepare_static_source(converted: ConvertedGlyphsSource) -> PreparedGlyphsSou
     """Apply configuration-independent normalization before committing UFOs."""
     path = converted.source_path
     designspace = converted.designspace
-    _, default_source = _configure_weight_axis_and_defaults(designspace, path)
+    axis_name, default_source = _configure_weight_axis_and_defaults(designspace, path)
     sources = list(designspace.sources)
 
+    _canonicalize_platform_sensitive_glyphs(sources, default_source, axis_name)
     _normalize_source_master_infos(sources, default_source, path)
 
     errors = _backfill_missing_glyphs_from_default(sources, default_source, designspace)

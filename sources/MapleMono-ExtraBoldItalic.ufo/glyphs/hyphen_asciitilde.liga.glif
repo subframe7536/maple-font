@@ -2,21 +2,47 @@
 <glyph name="hyphen_asciitilde.liga" format="2">
   <advance width="600"/>
   <outline>
-    <component base="asciitilde_hyphen.liga" xScale="-1" xOffset="-160"/>
+    <contour>
+      <point x="-513.273" y="265" type="curve" smooth="yes"/>
+      <point x="-131.273" y="265" type="line" smooth="yes"/>
+      <point x="-116.273" y="265"/>
+      <point x="-105.155" y="260"/>
+      <point x="-94.8" y="245" type="curve" smooth="yes"/>
+      <point x="-69.324" y="208"/>
+      <point x="-29.616" y="195"/>
+      <point x="34.384" y="195" type="curve" smooth="yes"/>
+      <point x="204.384" y="195"/>
+      <point x="223.188" y="330"/>
+      <point x="313.188" y="330" type="curve" smooth="yes"/>
+      <point x="346.188" y="330"/>
+      <point x="364.661" y="310"/>
+      <point x="359.372" y="280" type="curve" smooth="yes"/>
+      <point x="354.963" y="255" type="line" smooth="yes"/>
+      <point x="347.91" y="215"/>
+      <point x="364.384" y="195"/>
+      <point x="404.384" y="195" type="curve" smooth="yes"/>
+      <point x="444.384" y="195"/>
+      <point x="467.91" y="215"/>
+      <point x="474.963" y="255" type="curve" smooth="yes"/>
+      <point x="484.661" y="310" type="line" smooth="yes"/>
+      <point x="500.002" y="397"/>
+      <point x="440.992" y="465"/>
+      <point x="341.992" y="465" type="curve" smooth="yes"/>
+      <point x="171.992" y="465"/>
+      <point x="153.188" y="330"/>
+      <point x="64.188" y="330" type="curve" smooth="yes"/>
+      <point x="34.188" y="330"/>
+      <point x="10.951" y="340"/>
+      <point x="4.478" y="360" type="curve" smooth="yes"/>
+      <point x="-3.29" y="384"/>
+      <point x="-16.351" y="395"/>
+      <point x="-45.351" y="395" type="curve" smooth="yes"/>
+      <point x="-490.351" y="395" type="line" smooth="yes"/>
+      <point x="-534.351" y="395"/>
+      <point x="-559.054" y="374"/>
+      <point x="-566.812" y="330" type="curve" smooth="yes"/>
+      <point x="-574.57" y="286"/>
+      <point x="-557.273" y="265"/>
+    </contour>
   </outline>
-  <lib>
-    <dict>
-      <key>com.schriftgestaltung.Glyphs.ComponentInfo</key>
-      <array>
-        <dict>
-          <key>alignment</key>
-          <integer>-1</integer>
-          <key>index</key>
-          <integer>0</integer>
-          <key>name</key>
-          <string>asciitilde_hyphen.liga</string>
-        </dict>
-      </array>
-    </dict>
-  </lib>
 </glyph>

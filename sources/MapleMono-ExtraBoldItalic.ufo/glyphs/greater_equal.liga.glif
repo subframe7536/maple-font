@@ -2,21 +2,48 @@
 <glyph name="greater_equal.liga" format="2">
   <advance width="600"/>
   <outline>
-    <component base="less_equal.liga" xScale="-1" xOffset="-160"/>
+    <contour>
+      <point x="78.294" y="410" type="curve" smooth="yes"/>
+      <point x="-286.981" y="278" type="line" smooth="yes"/>
+      <point x="-317.921" y="267"/>
+      <point x="-337.682" y="240"/>
+      <point x="-343.148" y="209" type="curve" smooth="yes"/>
+      <point x="-353.904" y="148"/>
+      <point x="-329.135" y="124"/>
+      <point x="-267.08" y="147" type="curve" smooth="yes"/>
+      <point x="227.835" y="328" type="line" smooth="yes"/>
+      <point x="278.009" y="346"/>
+      <point x="306.299" y="376"/>
+      <point x="314.939" y="425" type="curve" smooth="yes"/>
+      <point x="323.579" y="474"/>
+      <point x="305.692" y="503"/>
+      <point x="261.866" y="521" type="curve" smooth="yes"/>
+      <point x="-170.218" y="702" type="line" smooth="yes"/>
+      <point x="-223.339" y="724"/>
+      <point x="-256.395" y="701"/>
+      <point x="-267.151" y="640" type="curve" smooth="yes"/>
+      <point x="-272.441" y="610"/>
+      <point x="-262.025" y="584"/>
+      <point x="-234.965" y="573" type="curve" smooth="yes"/>
+      <point x="83.937" y="442" type="line" smooth="yes"/>
+      <point x="101.702" y="435"/>
+      <point x="98.528" y="417"/>
+    </contour>
+    <contour>
+      <point x="-384.761" y="-27" type="curve" smooth="yes"/>
+      <point x="-394.811" y="-84"/>
+      <point x="-374.63" y="-117"/>
+      <point x="-316.927" y="-96" type="curve" smooth="yes"/>
+      <point x="217.28" y="98" type="line" smooth="yes"/>
+      <point x="246.043" y="108"/>
+      <point x="263.804" y="135"/>
+      <point x="268.741" y="163" type="curve" smooth="yes"/>
+      <point x="278.792" y="220"/>
+      <point x="258.611" y="253"/>
+      <point x="200.908" y="232" type="curve" smooth="yes"/>
+      <point x="-333.3" y="38" type="line" smooth="yes"/>
+      <point x="-362.063" y="28"/>
+      <point x="-379.824" y="1"/>
+    </contour>
   </outline>
-  <lib>
-    <dict>
-      <key>com.schriftgestaltung.Glyphs.ComponentInfo</key>
-      <array>
-        <dict>
-          <key>alignment</key>
-          <integer>-1</integer>
-          <key>index</key>
-          <integer>0</integer>
-          <key>name</key>
-          <string>less_equal.liga</string>
-        </dict>
-      </array>
-    </dict>
-  </lib>
 </glyph>

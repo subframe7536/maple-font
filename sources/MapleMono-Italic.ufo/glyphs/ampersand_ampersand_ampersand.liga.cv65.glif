@@ -5,8 +5,8 @@
     <component base="ampersand.cv65" xOffset="-80"/>
     <component base="ampersand.cv65" xOffset="-600"/>
     <component base="ampersand.cv65" xOffset="-1120"/>
-    <component base="hyphen" xScale="-1" xOffset="234" yOffset="80"/>
-    <component base="hyphen" xScale="-1" xOffset="-266" yOffset="80"/>
+    <component base="hyphen" xOffset="-300" yOffset="80"/>
+    <component base="hyphen" xOffset="-800" yOffset="80"/>
   </outline>
   <lib>
     <dict>

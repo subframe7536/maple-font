@@ -2,39 +2,75 @@
 <glyph name="less_bar_greater.liga" format="2">
   <advance width="600"/>
   <outline>
-    <component base="arrow_pipe.decorator" xOffset="-40"/>
-    <component base="bar_pipe.decorator" xOffset="-600"/>
-    <component base="arrow_pipe.decorator" xScale="-1" xOffset="-720"/>
+    <contour>
+      <point x="297.606" y="287" type="curve" smooth="yes"/>
+      <point x="-285.58" y="-60" type="line" smooth="yes"/>
+      <point x="-304.519" y="-71"/>
+      <point x="-311.638" y="-66"/>
+      <point x="-308.111" y="-46" type="curve" smooth="yes"/>
+      <point x="-304.585" y="-26"/>
+      <point x="-293.94" y="-11"/>
+      <point x="-275" y="0" type="curve" smooth="yes"/>
+      <point x="250.719" y="316" type="line" smooth="yes"/>
+      <point x="267.483" y="326"/>
+      <point x="269.07" y="335"/>
+      <point x="255.656" y="344" type="curve"/>
+      <point x="-165.037" y="669" type="line" smooth="yes"/>
+      <point x="-174.803" y="676"/>
+      <point x="-178.863" y="687"/>
+      <point x="-176.571" y="700" type="curve" smooth="yes"/>
+      <point x="-171.81" y="727"/>
+      <point x="-159.752" y="733"/>
+      <point x="-139.397" y="718" type="curve" smooth="yes"/>
+      <point x="312.417" y="371" type="line" smooth="yes"/>
+      <point x="326.478" y="360"/>
+      <point x="331.185" y="347"/>
+      <point x="328.012" y="329" type="curve" smooth="yes"/>
+      <point x="324.838" y="311"/>
+      <point x="315.369" y="297"/>
+    </contour>
+    <contour>
+      <point x="-415.58" y="-60" type="curve" smooth="yes"/>
+      <point x="-277.163" y="725" type="line" smooth="yes"/>
+      <point x="-274.165" y="742"/>
+      <point x="-264.755" y="750"/>
+      <point x="-247.755" y="750" type="curve" smooth="yes"/>
+      <point x="-230.755" y="750"/>
+      <point x="-224.165" y="742"/>
+      <point x="-227.163" y="725" type="curve" smooth="yes"/>
+      <point x="-365.58" y="-60" type="line" smooth="yes"/>
+      <point x="-368.577" y="-77"/>
+      <point x="-377.988" y="-85"/>
+      <point x="-394.988" y="-85" type="curve" smooth="yes"/>
+      <point x="-411.988" y="-85"/>
+      <point x="-418.577" y="-77"/>
+    </contour>
+    <contour>
+      <point x="-495.58" y="-60" type="curve" smooth="yes"/>
+      <point x="-956.394" y="287" type="line" smooth="yes"/>
+      <point x="-970.631" y="297"/>
+      <point x="-975.162" y="311"/>
+      <point x="-971.988" y="329" type="curve" smooth="yes"/>
+      <point x="-968.815" y="347"/>
+      <point x="-959.522" y="360"/>
+      <point x="-941.583" y="371" type="curve" smooth="yes"/>
+      <point x="-367.397" y="718" type="line" smooth="yes"/>
+      <point x="-341.752" y="733"/>
+      <point x="-331.81" y="727"/>
+      <point x="-336.571" y="700" type="curve" smooth="yes"/>
+      <point x="-338.863" y="687"/>
+      <point x="-346.803" y="676"/>
+      <point x="-359.037" y="669" type="curve" smooth="yes"/>
+      <point x="-894.344" y="344" type="line"/>
+      <point x="-910.93" y="335"/>
+      <point x="-912.517" y="326"/>
+      <point x="-899.281" y="316" type="curve" smooth="yes"/>
+      <point x="-485" y="0" type="line" smooth="yes"/>
+      <point x="-469.94" y="-11"/>
+      <point x="-464.585" y="-26"/>
+      <point x="-468.111" y="-46" type="curve" smooth="yes"/>
+      <point x="-471.638" y="-66"/>
+      <point x="-480.519" y="-71"/>
+    </contour>
   </outline>
-  <lib>
-    <dict>
-      <key>com.schriftgestaltung.Glyphs.ComponentInfo</key>
-      <array>
-        <dict>
-          <key>alignment</key>
-          <integer>-1</integer>
-          <key>index</key>
-          <integer>0</integer>
-          <key>name</key>
-          <string>arrow_pipe.decorator</string>
-        </dict>
-        <dict>
-          <key>alignment</key>
-          <integer>-1</integer>
-          <key>index</key>
-          <integer>1</integer>
-          <key>name</key>
-          <string>bar_pipe.decorator</string>
-        </dict>
-        <dict>
-          <key>alignment</key>
-          <integer>-1</integer>
-          <key>index</key>
-          <integer>2</integer>
-          <key>name</key>
-          <string>arrow_pipe.decorator</string>
-        </dict>
-      </array>
-    </dict>
-  </lib>
 </glyph>

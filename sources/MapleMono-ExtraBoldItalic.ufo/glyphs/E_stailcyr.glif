@@ -5,30 +5,67 @@
   <anchor x="402" y="730" name="top"/>
   <anchor x="273" y="0" name="bottom"/>
   <outline>
-    <component base="C"/>
-    <component base="ogonekcomb" xScale="-1" xOffset="-136"/>
+    <contour>
+      <point x="32" y="351" type="curve" smooth="yes"/>
+      <point x="70" y="567"/>
+      <point x="184" y="740"/>
+      <point x="407" y="740" type="curve" smooth="yes"/>
+      <point x="525" y="740"/>
+      <point x="568" y="691"/>
+      <point x="579" y="636" type="curve" smooth="yes"/>
+      <point x="588" y="593"/>
+      <point x="576" y="553"/>
+      <point x="541" y="537" type="curve" smooth="yes"/>
+      <point x="511" y="524"/>
+      <point x="472" y="533"/>
+      <point x="458" y="567" type="curve" smooth="yes"/>
+      <point x="449" y="589"/>
+      <point x="425" y="608"/>
+      <point x="380" y="608" type="curve" smooth="yes"/>
+      <point x="260" y="608"/>
+      <point x="204" y="476"/>
+      <point x="184" y="361" type="curve" smooth="yes"/>
+      <point x="166" y="260"/>
+      <point x="167" y="125"/>
+      <point x="296" y="125" type="curve" smooth="yes"/>
+      <point x="340" y="125"/>
+      <point x="372" y="141"/>
+      <point x="390" y="156" type="curve" smooth="yes"/>
+      <point x="420" y="182"/>
+      <point x="456" y="180"/>
+      <point x="475" y="157" type="curve" smooth="yes"/>
+      <point x="494" y="135"/>
+      <point x="497" y="93"/>
+      <point x="463" y="54" type="curve" smooth="yes"/>
+      <point x="419" y="6"/>
+      <point x="343" y="-10"/>
+      <point x="270" y="-10" type="curve" smooth="yes"/>
+      <point x="28" y="-10"/>
+      <point x="0" y="169"/>
+    </contour>
+    <contour>
+      <point x="171" y="-120" type="curve" smooth="yes"/>
+      <point x="188" y="-120" type="line" smooth="yes"/>
+      <point x="217" y="-120"/>
+      <point x="237" y="-103"/>
+      <point x="241" y="-83" type="curve"/>
+      <point x="243" y="-66"/>
+      <point x="231" y="-42"/>
+      <point x="211" y="-18" type="curve"/>
+      <point x="184" y="11" type="line"/>
+      <point x="270" y="11" type="line"/>
+      <point x="333" y="-18"/>
+      <point x="367" y="-68"/>
+      <point x="358" y="-115" type="curve" smooth="yes"/>
+      <point x="348" y="-180"/>
+      <point x="290" y="-225"/>
+      <point x="209" y="-225" type="curve" smooth="yes"/>
+      <point x="154" y="-225" type="line" smooth="yes"/>
+      <point x="119" y="-225"/>
+      <point x="104" y="-208"/>
+      <point x="110" y="-173" type="curve" smooth="yes"/>
+      <point x="115" y="-138"/>
+      <point x="136" y="-120"/>
+    </contour>
   </outline>
-  <lib>
-    <dict>
-      <key>com.schriftgestaltung.Glyphs.ComponentInfo</key>
-      <array>
-        <dict>
-          <key>alignment</key>
-          <integer>-1</integer>
-          <key>index</key>
-          <integer>0</integer>
-          <key>name</key>
-          <string>C</string>
-        </dict>
-        <dict>
-          <key>alignment</key>
-          <integer>-1</integer>
-          <key>index</key>
-          <integer>1</integer>
-          <key>name</key>
-          <string>ogonekcomb</string>
-        </dict>
-      </array>
-    </dict>
-  </lib>
 </glyph>

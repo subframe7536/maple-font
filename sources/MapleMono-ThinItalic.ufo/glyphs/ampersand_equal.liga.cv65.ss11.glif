@@ -3,8 +3,8 @@
   <advance width="600"/>
   <outline>
     <component base="ampersand.cv65" xOffset="-500"/>
-    <component base="equal" xOffset="-87" yOffset="-40"/>
-    <component base="hyphen" xScale="-1" xOffset="234" yOffset="80"/>
+    <component base="equal" xOffset="-8" yOffset="-40"/>
+    <component base="hyphen" xOffset="-300" yOffset="80"/>
   </outline>
   <lib>
     <dict>

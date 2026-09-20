@@ -4,7 +4,7 @@
   <outline>
     <component base="ampersand_ampersand.liga.cv65" xOffset="-500"/>
     <component base="equal" yOffset="-40"/>
-    <component base="hyphen" xScale="-1" xOffset="300" yOffset="80"/>
+    <component base="hyphen" xOffset="-300" yOffset="80"/>
   </outline>
   <lib>
     <dict>
