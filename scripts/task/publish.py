@@ -363,8 +363,7 @@ def release_build_steps(
             "--cache",
         ),
         tuple(
-            ReleaseArchiveSpec(directory, "-unhinted")
-            for directory in cjk_directories
+            ReleaseArchiveSpec(directory, "-unhinted") for directory in cjk_directories
         ),
     )
     if not task.width.full_release:
@@ -468,9 +467,11 @@ def render_download_matrix(base_url: str = "https://<url>") -> str:
         "NF",
         *(f"NF-{locale.name}" for locale in RELEASE_CJK_LOCALES),
     )
-    header = "| Format | " + " | ".join(
-        PROFILE_LABELS[profile.id] for profile in RELEASE_PROFILES
-    ) + " |"
+    header = (
+        "| Format | "
+        + " | ".join(PROFILE_LABELS[profile.id] for profile in RELEASE_PROFILES)
+        + " |"
+    )
     separator = "| --- | " + " | ".join("---" for _ in RELEASE_PROFILES) + " |"
 
     for width in RELEASE_WIDTHS:
