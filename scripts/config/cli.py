@@ -50,6 +50,12 @@ def _add_feature_arguments(parser: argparse.ArgumentParser) -> None:
         help="Use standard zero semantics: default dotted zero and slashed zero when `zero` is enabled",
     )
     feature_group.add_argument(
+        "--legacy-thin-weight-class",
+        action="store_true",
+        default=None,
+        help="Use legacy weight class values (250/275 instead of 100/200) for Thin and ExtraLight static fonts to work around GDI fake-bold in JetBrains IDEs on Windows",
+    )
+    feature_group.add_argument(
         "--feat",
         type=lambda x: x.strip().split(","),
         help="Enable and freeze the listed features, split by `,` (e.g. `--feat zero,cv01,ss07,ss08`); contextual rules are enabled through `calt`",

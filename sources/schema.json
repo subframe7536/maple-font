@@ -164,6 +164,11 @@
       "description": "Whether to use hinted Latin TTF and Nerd Font static outputs as the base for static NF/CJK merges",
       "default": true
     },
+    "legacy_thin_weight_class": {
+      "type": "boolean",
+      "description": "Use legacy weight class values (250/275 instead of 100/200) for Thin and ExtraLight static fonts to work around GDI fake-bold in JetBrains IDEs on Windows. Default false (use spec-compliant 100/200 values).",
+      "default": false
+    },
     "standard_zero": {
       "type": "boolean",
       "description": "Use standard OpenType zero semantics: the default zero is dotted and the `zero` feature selects the slashed form",

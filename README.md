@@ -243,9 +243,9 @@ The build script automatically downloads required resources from GitHub. If a do
 ## `build.py` CLI
 
 ```text
-usage: build.py [-h] [-v] [-d] [--debug] [-n] [--standard-zero] [--feat FEAT]
-                [--apply-fea-file] [--hinted | --no-hinted]
-                [--liga | --no-liga]
+usage: build.py [-h] [-v] [-d] [--debug] [-n] [--standard-zero]
+                [--legacy-thin-weight-class] [--feat FEAT] [--apply-fea-file]
+                [--hinted | --no-hinted] [--liga | --no-liga]
                 [--infinite-arrow | --no-infinite-arrow] [--remove-tag-liga]
                 [--line-height LINE_HEIGHT] [--width {default,narrow,slim}]
                 [--format FORMATS] [--least-styles] [--cache] [--archive]
@@ -270,6 +270,10 @@ Feature Options:
                         slashed zero
   --standard-zero       Use standard zero semantics: default dotted zero and
                         slashed zero when `zero` is enabled
+  --legacy-thin-weight-class
+                        Use legacy weight class values (250/275 instead of
+                        100/200) for Thin and ExtraLight static fonts to work
+                        around GDI fake-bold in JetBrains IDEs on Windows
   --feat FEAT           Enable and freeze the listed features, split by `,`
                         (e.g. `--feat zero,cv01,ss07,ss08`); contextual rules
                         are enabled through `calt`

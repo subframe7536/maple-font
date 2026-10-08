@@ -135,6 +135,8 @@ def _apply_feature_cli(config: ResolvedConfig, args) -> None:
             config.feature_freeze[feature] = "enable"
     if args.standard_zero:
         config.feature.standard_zero = True
+    if args.legacy_thin_weight_class:
+        config.feature.legacy_thin_weight_class = True
     if args.feat:
         config.feature.feat = list(args.feat)
         for feature in args.feat:
@@ -287,6 +289,10 @@ class BuildConfigResolver:
         if "standard_zero" in data:
             config.feature.standard_zero = _require_bool(
                 data["standard_zero"], "standard_zero"
+            )
+        if "legacy_thin_weight_class" in data:
+            config.feature.legacy_thin_weight_class = _require_bool(
+                data["legacy_thin_weight_class"], "legacy_thin_weight_class"
             )
         if "ligature" in data:
             config.feature.liga = _require_bool(data["ligature"], "ligature")

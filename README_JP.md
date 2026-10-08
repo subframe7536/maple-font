@@ -236,9 +236,9 @@ Maple Mono は Nerd Font アイコンを内蔵し、その命名規則に従っ�
 ## `build.py` コマンドラインオプション
 
 ```text
-使い方: build.py [-h] [-v] [-d] [--debug] [-n] [--standard-zero] [--feat FEAT]
-                 [--apply-fea-file] [--hinted | --no-hinted]
-                 [--liga | --no-liga]
+使い方: build.py [-h] [-v] [-d] [--debug] [-n] [--standard-zero]
+                 [--legacy-thin-weight-class] [--feat FEAT] [--apply-fea-file]
+                 [--hinted | --no-hinted] [--liga | --no-liga]
                  [--infinite-arrow | --no-infinite-arrow] [--remove-tag-liga]
                  [--line-height LINE_HEIGHT] [--width {default,narrow,slim}]
                  [--format FORMATS] [--least-styles] [--cache] [--archive]
@@ -263,6 +263,10 @@ Maple Mono のビルダーおよびオプティマイザー
                         `0` はスラッシュ付きになります
   --standard-zero       標準の zero の意味を使用します。デフォルトの 0 はドット付きで、
                         `zero` を有効にするとスラッシュ付きになります
+  --legacy-thin-weight-class
+                        Thin および ExtraLight の静的フォントに、Windows 上の
+                        JetBrains IDE の GDI 擬似ボールド問題を回避するため、
+                        レガシー weight class 値（100/200 の代わりに 250/275）を使用します
   --feat FEAT           指定した機能を有効化して固定します。`,` で区切って指定します
                         （例: `--feat zero,cv01,ss07,ss08`）。コンテキストルールは
                         `calt` で有効になります
