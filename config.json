@@ -8,6 +8,7 @@
     "woff2"
   ],
   "use_hinted": true,
+  "legacy_thin_weight_class": false,
   "standard_zero": false,
   "pool_size": 4,
   "ttfautohint_param": {},

@@ -123,10 +123,31 @@ def postprocess_static_font(
         preferred_style_name=style_in_17,
     )
 
-    if style_with_prefix_space == " Thin":
-        font.table("OS/2").usWeightClass = 250
-    elif style_with_prefix_space == " ExtraLight":
-        font.table("OS/2").usWeightClass = 275
+    # Optional legacy weight class override for Thin and ExtraLight static fonts.
+    # When enabled (legacy_thin_weight_class=True): uses OS/2.usWeightClass 250 (Thin) and 275 (ExtraLight).
+    # When disabled (default): uses spec-compliant values 100 (Thin) and 200 (ExtraLight).
+    #
+    # The legacy 250/275 values work around a GDI rendering issue in JetBrains IDEs on Windows:
+    # - JDK/JBR rasterizes via GDI with subpixel antialiasing enabled
+    # - When the IDE requests a font at lfWeight=FW_NORMAL (400), GDI synthesizes fake bold
+    #   if the font's usWeightClass is <= 200 (difference >= 200)
+    # - This causes unwanted smear-bolding for Thin (100) and ExtraLight (200) faces
+    # - Setting usWeightClass to 250/275 prevents the GDI fake-bold synthesis
+    # - This is the Adobe convention: https://adobe-type-tools.github.io/afdko/WinWeights.html
+    #
+    # Trade-off: On Linux fontconfig, 250 → FC_WEIGHT_THIN (45) and 275 → FC 47.5.
+    # Requesting FC_WEIGHT_EXTRALIGHT (40) will incorrectly resolve to the Thin face when both are >= 250.
+    # Most modern fonts (JetBrains Mono, Cascadia, Iosevka, Inter) use 100/200.
+    #
+    # References:
+    # - https://github.com/subframe7536/maple-font/issues/182 (original Windows GDI issue)
+    # - https://github.com/ftCLI/FoundryTools-CLI/issues/166 (FoundryTools discussion)
+    # - https://github.com/subframe7536/maple-font/issues/847 (fontconfig resolution issue)
+    if font_config.legacy_thin_weight_class:
+        if style_with_prefix_space == " Thin":
+            font.table("OS/2").usWeightClass = 250
+        elif style_with_prefix_space == " ExtraLight":
+            font.table("OS/2").usWeightClass = 275
 
     if font_config.line_height != 1:
         adjust_line_height(

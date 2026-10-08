@@ -254,6 +254,7 @@ class BuildBehaviorConfig:
 class FeatureBuildConfig:
     normal: bool = False
     standard_zero: bool = False
+    legacy_thin_weight_class: bool = False
     feat: list[str] = field(default_factory=list)
     hinted: bool = True
     liga: bool = True
@@ -470,6 +471,10 @@ class ResolvedConfig:
     @property
     def use_hinted(self) -> bool:
         return self.feature.hinted
+
+    @property
+    def legacy_thin_weight_class(self) -> bool:
+        return self.feature.legacy_thin_weight_class
 
     @property
     def enable_ligature(self) -> bool:

@@ -244,9 +244,9 @@ Maple Mono 支援 `cpct` 特性，讓全形標點置中顯示；也可以啟用 
 ## `build.py` 命令列選項
 
 ```text
-用法：build.py [-h] [-v] [-d] [--debug] [-n] [--standard-zero] [--feat FEAT]
-               [--apply-fea-file] [--hinted | --no-hinted]
-               [--liga | --no-liga]
+用法：build.py [-h] [-v] [-d] [--debug] [-n] [--standard-zero]
+               [--legacy-thin-weight-class] [--feat FEAT] [--apply-fea-file]
+               [--hinted | --no-hinted] [--liga | --no-liga]
                [--infinite-arrow | --no-infinite-arrow] [--remove-tag-liga]
                [--line-height LINE_HEIGHT] [--width {default,narrow,slim}]
                [--format FORMATS] [--least-styles] [--cache] [--archive]
@@ -269,6 +269,10 @@ Maple Mono 建置與最佳化工具
   -n, --normal          使用 Normal 預設，產生類似 `JetBrains Mono` 的字形，
                         其中 0 使用斜線樣式
   --standard-zero       使用標準 zero 語義：預設顯示圓點，啟用 `zero` 後顯示斜線
+  --legacy-thin-weight-class
+                        使用舊版 weight class 值（250/275 而非 100/200）
+                        用於 Thin 和 ExtraLight 靜態字型，以解決 Windows 上
+                        JetBrains IDE 中的 GDI 偽粗體問題
   --feat FEAT           啟用並凍結指定特性，以逗號分隔
                         （例如 `--feat zero,cv01,ss07,ss08`）；上下文規則透過
                         `calt` 啟用

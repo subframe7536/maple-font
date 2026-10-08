@@ -240,9 +240,9 @@ Maple Mono는 전각 문장 부호를 가운데 정렬하는 `cpct` 기능을 �
 ## `build.py` 명령줄 옵션
 
 ```text
-사용법: build.py [-h] [-v] [-d] [--debug] [-n] [--standard-zero] [--feat FEAT]
-                 [--apply-fea-file] [--hinted | --no-hinted]
-                 [--liga | --no-liga]
+사용법: build.py [-h] [-v] [-d] [--debug] [-n] [--standard-zero]
+                 [--legacy-thin-weight-class] [--feat FEAT] [--apply-fea-file]
+                 [--hinted | --no-hinted] [--liga | --no-liga]
                  [--infinite-arrow | --no-infinite-arrow] [--remove-tag-liga]
                  [--line-height LINE_HEIGHT] [--width {default,narrow,slim}]
                  [--format FORMATS] [--least-styles] [--cache] [--archive]
@@ -267,6 +267,10 @@ Maple Mono 빌더 및 최적화 도구
                         `0`은 사선 모양이 됩니다
   --standard-zero       표준 zero 의미를 사용합니다. 기본 `0`은 점 모양이고,
                         `zero`를 활성화하면 사선 모양이 됩니다
+  --legacy-thin-weight-class
+                        Thin 및 ExtraLight 정적 글꼴에 레거시 weight class 값
+                        (100/200 대신 250/275)을 사용하여 Windows의
+                        JetBrains IDE에서 GDI 가짜 굵은체 문제를 해결합니다
   --feat FEAT           지정한 기능을 활성화하고 고정합니다. `,`로 구분합니다
                         (예: `--feat zero,cv01,ss07,ss08`). 문맥 규칙은 `calt`를
                         통해 활성화됩니다
