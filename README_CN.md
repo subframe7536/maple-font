@@ -63,7 +63,7 @@ CJK 字符与英文字符按 2:1 的宽度对齐，让多语言文本和 Markdow
 
 ## 我个人在用的其他中文字体资源
 
-参见 [cn-resource](https://github.com/subframe7536/maple-font/tree/other-resources/cn-resource) 和 [cn-base](https://github.com/subframe7536/maple-font/releases/tag/cn-base)。
+参见 [cn-base](https://github.com/subframe7536/maple-font/releases/tag/cn-base)。
 
 ## 预览
 
