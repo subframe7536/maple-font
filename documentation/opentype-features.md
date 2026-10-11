@@ -1,6 +1,6 @@
 # OpenType Features
 
-Here is the check list and explaination of Maple Mono ligatures and features.
+Here is the check list and explanation of Maple Mono ligatures and features.
 
 For more details, please check out `.fea` files in [features](../sources/features) and [OpenType Feature Spec](https://adobe-type-tools.github.io/afdko/OpenTypeFeatureFileSpecification.html).
 
@@ -78,11 +78,11 @@ For more details, please check out `.fea` files in [features](../sources/feature
 
 ### Notice
 
-- `>>` / `>>>` is smart, but much contextual-sensitive, so it may be not effect in some IDEs ([explaination](https://github.com/subframe7536/maple-font/discussions/275)). Turn on `ss07` to force enable.
+- `>>` / `>>>` is smart, but much contextual-sensitive, so it may be not effect in some IDEs ([explanation](https://github.com/subframe7536/maple-font/discussions/275)). Turn on `ss07` to force enable.
 
 ## Features
 
-### Character Varients (cvXX)
+### Character Variants (cvXX)
 
 <!-- CV -->
 - [v7.0] cv01: Normalize special symbols (`@ $ & % Q => ->`)

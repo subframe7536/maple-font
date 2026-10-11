@@ -130,7 +130,7 @@ VS Code、JetBrains IDE、Zed、Windows Terminal、Kitty 和 Ghostty 的設定�
 - **建置**：[自訂建置](./documentation/build.md) · [建置選項](./documentation/build-options.md) · [CJK 建置](./documentation/cjk.md) · [`build.py` 命令列參考](./documentation/cli.md)
 - **參與開發**：[開發](./documentation/development.md) · [Google Fonts 建置與 QA](./documentation/google-fonts.md)
 
-## 鸣謝
+## 鳴謝
 
 - [JetBrains Mono](https://github.com/JetBrains/JetBrainsMono)
 - [Fira Code](https://github.com/tonsky/FiraCode)
