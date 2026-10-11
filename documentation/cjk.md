@@ -58,7 +58,3 @@ The V7 `--cn` options are still accepted as deprecated aliases:
 | `--cn-narrow`       | `--cjk-narrow` when targeting `cn`    |
 | `--cn-scale-factor` | `--cjk-scale-factor` when targeting `cn` |
 | `--cn-both`         | `--cjk-both`                          |
-
-## Other Chinese Font Resources
-
-Other Chinese font resources used by the author: see [cn-resource](https://github.com/subframe7536/maple-font/tree/other-resources/cn-resource) and [cn-base](https://github.com/subframe7536/maple-font/releases/tag/cn-base).

@@ -46,6 +46,21 @@ Maple Mono는 코딩을 더 편안하고 효율적으로 할 수 있도록 만�
 - 📏 **세 가지 문자 폭** - default, narrow, slim 세 가지 문자 폭을 제공합니다.
 - 🔨 **높은 사용자 설정 가능성** - OpenType 기능, 태그 합자, 줄 높이, 문자 폭과 글꼴 두께 매핑을 설정하거나 소스에서 전용 글꼴을 생성할 수 있습니다.
 
+## CJK
+
+다국어 텍스트와 Markdown 표를 정렬하기 위해 CJK 문자와 라틴 문자는 2:1 폭으로 맞춰집니다. 그 대신 기본 CJK 문자 간격은 일반적인 한국어 글꼴보다 넓습니다([이유](https://github.com/subframe7536/maple-font/issues/211)). V7과 비교해 V8은 CJK 문자 세트를 크게 확장하고 개선했습니다.
+
+| 지역 | 지원 범위                                       | CJK 글꼴 소스                                                                          |
+| ---- | ----------------------------------------------- | -------------------------------------------------------------------------------------- |
+| CN   | 중국어 간체 및 일반적인 중국어 번체·일본어 문자 | [WenYuan Rounded SC](https://github.com/takushun-wu/WenYuanFonts)                      |
+| TC   | 중국어 번체                                     | [Chiron Go Round TC](https://github.com/chiron-fonts/chiron-go-round-tc)               |
+| JP   | 일본어                                          | [Resource Han Rounded JP](https://github.com/CyanoHao/Resource-Han-Rounded)            |
+| KR   | 한국어                                          | [Chiron Go Round TC](https://github.com/chiron-fonts/chiron-go-round-tc)의 한국어 범위 |
+
+![2-1.png](./resources/2-1.png)
+
+자세한 내용은 [CJK 빌드](./documentation/cjk.md)를 참고하세요.
+
 ## 미리보기
 
 ![showcase.png](./resources/showcase.webp)
@@ -70,21 +85,6 @@ Maple Mono는 스마트 합자(`calt`로 활성화), 문자 변형(`cvXX`), 스�
 | ![Width comparison](./resources/preview-widths.webp) | ![Nerd Font spacing modes](./resources/preview-nerd-fonts.webp)       |
 
 각 스타일의 빌드 방법은 [빌드 옵션](./documentation/build-options.md)을 참고하세요.
-
-## CJK
-
-다국어 텍스트와 Markdown 표를 정렬하기 위해 CJK 문자와 라틴 문자는 2:1 폭으로 맞춰집니다. 그 대신 기본 CJK 문자 간격은 일반적인 한국어 글꼴보다 넓습니다([이유](https://github.com/subframe7536/maple-font/issues/211)). V7과 비교해 V8은 CJK 문자 세트를 크게 확장하고 개선했습니다.
-
-| 지역 | 지원 범위                                       | CJK 글꼴 소스                                                                          |
-| ---- | ----------------------------------------------- | -------------------------------------------------------------------------------------- |
-| CN   | 중국어 간체 및 일반적인 중국어 번체·일본어 문자 | [WenYuan Rounded SC](https://github.com/takushun-wu/WenYuanFonts)                      |
-| TC   | 중국어 번체                                     | [Chiron Go Round TC](https://github.com/chiron-fonts/chiron-go-round-tc)               |
-| JP   | 일본어                                          | [Resource Han Rounded JP](https://github.com/CyanoHao/Resource-Han-Rounded)            |
-| KR   | 한국어                                          | [Chiron Go Round TC](https://github.com/chiron-fonts/chiron-go-round-tc)의 한국어 범위 |
-
-![2-1.png](./resources/2-1.png)
-
-자세한 내용은 [CJK 빌드](./documentation/cjk.md)를 참고하세요.
 
 ## 설치
 
@@ -127,8 +127,99 @@ VS Code, JetBrains IDE, Zed, Windows Terminal, Kitty, Ghostty 설정 방법은 [
 문서는 현재 영어로만 제공됩니다.
 
 - **시작하기**: [설치](./documentation/install.md) · [이름 규칙 및 글꼴 선택](./documentation/choose.md) · [사용법](./documentation/usage.md) · [OpenType 기능](./documentation/opentype-features.md)
-- **빌드**: [사용자 정의 빌드](./documentation/build.md) · [빌드 옵션](./documentation/build-options.md) · [CJK 빌드](./documentation/cjk.md) · [`build.py` CLI 참조](./documentation/cli.md)
+- **빌드**: [사용자 정의 빌드](./documentation/build.md) · [빌드 옵션](./documentation/build-options.md) · [CJK 빌드](./documentation/cjk.md) · [`build.py` CLI 참조](#buildpy-cli)
 - **개발 참여**: [개발](./documentation/development.md) · [Google Fonts 빌드 및 QA](./documentation/google-fonts.md)
+
+<a id="buildpy-cli"></a>
+
+## `build.py` 명령줄 옵션
+
+```text
+사용법: build.py [-h] [-v] [-d] [--debug] [-n] [--standard-zero]
+                 [--legacy-thin-weight-class] [--feat FEAT] [--apply-fea-file]
+                 [--hinted | --no-hinted] [--liga | --no-liga]
+                 [--infinite-arrow | --no-infinite-arrow] [--remove-tag-liga]
+                 [--line-height LINE_HEIGHT] [--width {default,narrow,slim}]
+                 [--format FORMATS] [--least-styles] [--cache] [--archive]
+                 [--nf | --no-nf] [--nf-mono] [--nf-propo] [--nf-variable]
+                 [--font-patcher] [--cjk CJK] [--cjk-variable] [--cjk-narrow]
+                 [--cjk-scale-factor CJK_SCALE_FACTOR] [--cjk-both]
+                 [--cjk-hinted | --no-cjk-hinted] [--cn | --no-cn]
+                 [--cn-narrow] [--cn-scale-factor CN_SCALE_FACTOR] [--cn-both]
+
+Maple Mono 빌더 및 최적화 도구
+
+옵션:
+  -h, --help            이 도움말을 표시하고 종료합니다
+  -v, --version         프로그램 버전을 표시하고 종료합니다
+  -d, --dry             설정을 출력하고 종료합니다
+  --debug               빠른 디버그 빌드를 사용합니다. `Debug`를 추가하고,
+                        디버그 로깅을 활성화하며 Regular/Italic만 빌드하고,
+                        OTF/WOFF2/Nerd Font 출력을 건너뜁니다
+
+기능 옵션:
+  -n, --normal          `JetBrains Mono`와 비슷한 Normal 프리셋을 사용하며,
+                        `0`은 사선 모양이 됩니다
+  --standard-zero       표준 zero 의미를 사용합니다. 기본 `0`은 점 모양이고,
+                        `zero`를 활성화하면 사선 모양이 됩니다
+  --legacy-thin-weight-class
+                        Thin 및 ExtraLight 정적 글꼴에 레거시 weight class 값
+                        (100/200 대신 250/275)을 사용하여 Windows의
+                        JetBrains IDE에서 GDI 가짜 굵은체 문제를 해결합니다
+  --feat FEAT           지정한 기능을 활성화하고 고정합니다. `,`로 구분합니다
+                        (예: `--feat zero,cv01,ss07,ss08`). 문맥 규칙은 `calt`를
+                        통해 활성화됩니다
+  --apply-fea-file      일치하는
+                        `sources/features/{regular,italic}{_cn,}.fea`를 정적 및 가변 글꼴에 적용합니다
+  --hinted              NF/CJK/NF-CJK의 기본 글꼴로 힌팅된 글꼴을 사용합니다（기본값）
+  --no-hinted           NF/CJK/NF-CJK의 기본 글꼴로 힌팅되지 않은 글꼴을 사용합니다
+  --liga                모든 합자를 유지합니다（기본값）
+  --no-liga             모든 합자를 제거합니다
+  --infinite-arrow      무한 화살표 합자 지원을 추가합니다（기본값）
+  --no-infinite-arrow   무한 화살표 합자 지원을 추가하지 않습니다
+  --remove-tag-liga     `[TODO]`와 같은 일반 텍스트 태그 합자를 제거합니다
+  --line-height LINE_HEIGHT
+                        줄 높이 배율（예: 1.1）
+  --width {default,narrow,slim}
+                        글리프 폭을 설정합니다: default（600）, narrow（550）, slim（500）
+
+빌드 옵션:
+  --format FORMATS      필요한 기본 출력 형식을 쉼표로 구분해 선택합니다: ttf, otf, woff2.
+                        가변 글꼴 기본 버전은 항상 빌드됩니다
+  --least-styles        Regular / Bold / Italic / BoldItalic 스타일만 빌드합니다
+  --cache               `fonts/` 아래의 유효한 캐시 파이프라인 단계를 재사용하고,
+                        관련 없는 기존 출력을 보존합니다
+  --archive             설정과 라이선스를 포함하여 기존의 각 비 JSON 출력 디렉터리를 보관합니다
+
+Nerd Font 옵션:
+  --nf, --nerd-font     Nerd Font 버전을 빌드합니다（기본값）
+  --no-nf, --no-nerd-font
+                        Nerd Font 버전을 빌드하지 않습니다
+  --nf-mono             Nerd Font 아이콘 폭을 고정합니다
+  --nf-propo            Nerd Font 아이콘 폭을 가변으로 만들고 `--nf-mono`를 덮어씁니다
+  --nf-variable         Nerd Font를 가변 글꼴로 빌드합니다
+  --font-patcher        Nerd Font Patcher를 사용해 NF 형식을 빌드하도록 강제합니다
+
+CJK 옵션:
+  --cjk CJK             cn, jp, tc, kr 로케일용 Maple Mono + CJK 확장 글꼴을 빌드합니다.
+                        반복해서 지정하거나 쉼표로 구분할 수 있습니다
+  --cjk-variable        CJK 확장 출력을 병합된 가변 글꼴로 유지합니다
+  --cjk-narrow          선택한 로케일에 좁은 CJK 간격을 적용합니다
+  --cjk-scale-factor CJK_SCALE_FACTOR
+                        선택한 CJK 로케일의 배율을 설정합니다. 형식:
+                        <factor> 또는 <width_factor>,<height_factor>
+  --cjk-both            Nerd Font가 활성화되면 NF CJK와 비 NF CJK 출력을 모두 빌드합니다
+  --cjk-hinted          최종 정적 CJK 글꼴에 자동 힌팅을 적용합니다
+  --no-cjk-hinted       최종 정적 CJK 글꼴에 자동 힌팅을 적용하지 않습니다（기본값）
+
+더 이상 사용하지 않는 CN 옵션:
+  --cn                  더 이상 사용하지 않습니다. `--cjk cn`의 별칭입니다
+  --no-cn               더 이상 사용하지 않습니다. 선택한 CJK 로케일에서 `cn`을 제거하는 별칭입니다
+  --cn-narrow           더 이상 사용하지 않습니다. `cn` 대상 `--cjk-narrow`의 별칭입니다
+  --cn-scale-factor CN_SCALE_FACTOR
+                        더 이상 사용하지 않습니다. `cn` 대상 `--cjk-scale-factor`의 별칭입니다
+  --cn-both             더 이상 사용하지 않습니다. `--cjk-both`의 별칭입니다
+```
 
 ## 감사의 글
 

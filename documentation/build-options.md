@@ -3,7 +3,7 @@
 Maple Mono provides highly customizable builds. Modify [`config.json`](../config.json) or add command-line arguments to generate the font you need. Command-line options have a higher priority than options in `config.json`.
 
 - For build methods (browser, GitHub Actions, Docker, local), see [Custom Build](./build.md).
-- For every command-line flag, see the [`build.py` CLI Reference](./cli.md).
+- For every command-line flag, see the [`build.py` CLI reference](../README.md#buildpy-cli).
 - For CJK-specific options, see [CJK Build](./cjk.md).
 
 ## Character Width
@@ -135,4 +135,4 @@ Default arguments: `-l --careful --outputdir dir`
 
 ## Output Formats
 
-`--format` selects the requested base output formats as a comma-separated list (`ttf,otf,woff2`); the variable base is always built. `--least-styles` only builds the Regular / Bold / Italic / BoldItalic styles. See the [CLI reference](./cli.md) for cache, archive, and debug options.
+`--format` selects the requested base output formats as a comma-separated list (`ttf,otf,woff2`); the variable base is always built. `--least-styles` only builds the Regular / Bold / Italic / BoldItalic styles. See the [CLI reference](../README.md#buildpy-cli) for cache, archive, and debug options.

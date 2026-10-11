@@ -6,7 +6,7 @@ Command-line options have a higher priority than options in `config.json`. See:
 
 - [Build Options](./build-options.md) for what each option does (width, Nerd Font, Normal preset, feature freezing, line height, weight mapping, and more).
 - [CJK Build](./cjk.md) for Simplified Chinese, Traditional Chinese, Japanese, and Korean builds.
-- [`build.py` CLI Reference](./cli.md) for the full list of command-line flags, or run `python build.py --help` after installing dependencies.
+- [`build.py` CLI reference](../README.md#buildpy-cli) for the full list of command-line flags, or run `python build.py --help` after installing dependencies.
 
 ## Build Methods
 

@@ -49,7 +49,7 @@ uv run python -m unittest discover -s scripts/tests
 
 ## Related Guides
 
-- [`build.py` CLI Reference](./cli.md)
+- [`build.py` CLI reference](../README.md#buildpy-cli)
 - [Google Fonts build and QA](./google-fonts.md)
 - [CJK source, configuration, generation, and cache guide](../scripts/cjk/README.md)
 - [OpenType feature generation guide](../scripts/feature/README.md)
