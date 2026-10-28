@@ -13,7 +13,7 @@ Maple Mono is an open-source monospace font project. Keep changes small, determi
 - Do not manually edit font binaries, UFO sources, or generated outputs when the repository provides a generator.
 - Treat designspace and UFO sources as coupled inputs: every designspace change is accompanied by changes to the corresponding UFO sources.
 - Avoid changing font names, versioning, release packaging, or output layout unless the request explicitly requires it.
-- When adding or changing a `build.py` CLI flag, update the complete translated `build.py --help` section in every root README (`README.md`, `README_CN.md`, `README_TC.md`, `README_JP.md`, and `README_KR.md`) in the same change.
+- When adding or changing a `build.py` CLI flag, update the `build.py --help` reference in `documentation/cli.md` (English only) in the same change.
 
 ## Repository Map
 
