@@ -543,8 +543,16 @@ You can use [Github Actions](https://github.com/subframe7536/maple-font/actions/
 #### 3. Use Docker
 
 ```shell
+# Clone the repository
 git clone https://github.com/subframe7536/maple-font --depth 1 -b variable
+
+# Change directory to the cloned repository
+cd maple-font
+
+# Build the docker image from the Dockerfile
 docker build -t maple-font .
+
+# Build the font by passing the CLI flags from playground to BUILD_ARGS
 docker run -v "$(pwd)/fonts:/app/fonts" -e BUILD_ARGS="--normal" maple-font
 ```
 
