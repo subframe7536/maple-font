@@ -7,12 +7,7 @@
     "download": {
       "url": "https://github.com/chiron-fonts/chiron-go-round-tc/raw/v1.011/VAR_TTF/ChironGoRoundTCVF.ttf"
     },
-    "drop_tables": [
-      "BASE",
-      "VVAR",
-      "vhea",
-      "vmtx"
-    ],
+    "drop_tables": ["BASE", "VVAR", "vhea", "vmtx"],
     "masters": {
       "100": {
         "wght": 310

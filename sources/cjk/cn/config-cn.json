@@ -4,14 +4,9 @@
   "source": {
     "path": "../variable-source/WenYuanRoundedSCVF.ttf",
     "download": {
-      "url": "https://github.com/takushun-wu/WenYuanFonts/releases/download/v1.000/WenYuanRoundedSCVF.ttf"
+      "url": "https://github.com/takushun-wu/WenYuanFonts/releases/download/v1.110/WenYuanRoundedSCVF.ttf"
     },
-    "drop_tables": [
-      "BASE",
-      "VVAR",
-      "vhea",
-      "vmtx"
-    ],
+    "drop_tables": ["BASE", "VVAR", "vhea", "vmtx"],
     "masters": {
       "100": {
         "ital": 0,

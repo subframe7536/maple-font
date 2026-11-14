@@ -7,18 +7,7 @@
       "url": "https://github.com/CyanoHao/Resource-Han-Rounded/releases/download/v1.910/RHR-CFF2-JP-1.910.7z",
       "path_in_archive": "ResourceHanRoundedJP-VF.otf"
     },
-    "drop_tables": [
-      "BASE",
-      "GDEF",
-      "GPOS",
-      "GSUB",
-      "HVAR",
-      "MVAR",
-      "VORG",
-      "VVAR",
-      "vhea",
-      "vmtx"
-    ],
+    "drop_tables": ["BASE", "GDEF", "GPOS", "GSUB", "HVAR", "MVAR", "VORG", "VVAR", "vhea", "vmtx"],
     "masters": {
       "100": {
         "wght": 300,
