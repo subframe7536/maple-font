@@ -132,6 +132,7 @@ For more details, please check out `.fea` files in [features](../sources/feature
 #### CN Only
 
 <!-- CV-CN -->
+- [v8.0] cv95: Full width Roman numerals and enclosed alphanumerics (`Ⅻ` / `①` / `ⓐ`)
 - [v7.0] cv96: Full width quotes (`“` / `”` / `‘` / `’`)
 - [v7.0] cv97: Full width ellipsis (`…`)
 - [v7.0] cv98: Full width emdash (`—`)

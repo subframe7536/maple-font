@@ -397,6 +397,10 @@
           "description": "[v8.0] Alternative '===' with 2 bars",
           "$ref": "#/definitions/freeze_options"
         },
+        "cv95": {
+          "description": "[v8.0] Full width Roman numerals and enclosed alphanumerics ('\u216b' / '\u2460' / '\u24d0')",
+          "$ref": "#/definitions/freeze_options"
+        },
         "cv96": {
           "description": "[v7.0] Full width quotes ('\u201c' / '\u201d' / '\u2018' / '\u2019')",
           "$ref": "#/definitions/freeze_options"
