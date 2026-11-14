@@ -2638,6 +2638,9 @@
       <string>greaterThanWithCircleInside</string>
       <string>doubleSucceeds</string>
       <string>tripleNestedGreaterThan</string>
+      <string>carriagereturn</string>
+      <string>starwhite</string>
+      <string>starblack</string>
     </array>
     <key>public.postscriptNames</key>
     <dict>
@@ -4697,6 +4700,8 @@
       <string>uni2292</string>
       <key>squareoriginalornotequal</key>
       <string>uni22E5</string>
+      <key>starblack</key>
+      <string>uni2605</string>
       <key>starcentreopenpointedcircledeight</key>
       <string>uni2742</string>
       <key>starequals</key>
@@ -4715,6 +4720,8 @@
       <string>uni2739</string>
       <key>starpointedpinwheeleight</key>
       <string>uni2735</string>
+      <key>starwhite</key>
+      <string>uni2606</string>
       <key>strictlyequivalent</key>
       <string>uni2263</string>
       <key>strokelongcomb</key>

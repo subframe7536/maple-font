@@ -2647,6 +2647,9 @@
       <string>greaterThanWithCircleInside</string>
       <string>doubleSucceeds</string>
       <string>tripleNestedGreaterThan</string>
+      <string>carriagereturn</string>
+      <string>starwhite</string>
+      <string>starblack</string>
     </array>
     <key>public.postscriptNames</key>
     <dict>

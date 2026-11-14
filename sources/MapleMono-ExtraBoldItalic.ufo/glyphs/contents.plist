@@ -1544,6 +1544,8 @@
     <string>caroncomb.alt.glif</string>
     <key>caroncomb.case</key>
     <string>caroncomb.case.glif</string>
+    <key>carriagereturn</key>
+    <string>carriagereturn.glif</string>
     <key>ccaron</key>
     <string>ccaron.glif</string>
     <key>ccedilla</key>
@@ -3888,6 +3890,8 @@
     <string>squareoriginalorequal.glif</string>
     <key>squareoriginalornotequal</key>
     <string>squareoriginalornotequal.glif</string>
+    <key>starblack</key>
+    <string>starblack.glif</string>
     <key>starcentreopenpointedcircledeight</key>
     <string>starcentreopenpointedcircledeight.glif</string>
     <key>starequals</key>
@@ -3906,6 +3910,8 @@
     <string>starpointedblacktwelve.glif</string>
     <key>starpointedpinwheeleight</key>
     <string>starpointedpinwheeleight.glif</string>
+    <key>starwhite</key>
+    <string>starwhite.glif</string>
     <key>sterling</key>
     <string>sterling.glif</string>
     <key>strictlyequivalent</key>

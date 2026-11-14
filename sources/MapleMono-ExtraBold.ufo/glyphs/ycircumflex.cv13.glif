@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="ycircumflex.cv13" format="2">
+  <advance width="600"/>
+  <anchor x="300" y="785" name="top"/>
+  <outline>
+    <component base="y.cv13"/>
+    <component base="circumflexcomb" xOffset="600"/>
+  </outline>
+  <lib>
+    <dict>
+      <key>com.schriftgestaltung.Glyphs.ComponentInfo</key>
+      <array>
+        <dict>
+          <key>alignment</key>
+          <integer>-1</integer>
+          <key>index</key>
+          <integer>0</integer>
+          <key>name</key>
+          <string>y.cv13</string>
+        </dict>
+        <dict>
+          <key>alignment</key>
+          <integer>-1</integer>
+          <key>index</key>
+          <integer>1</integer>
+          <key>name</key>
+          <string>circumflexcomb</string>
+        </dict>
+      </array>
+    </dict>
+  </lib>
+</glyph>

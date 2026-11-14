@@ -11,7 +11,7 @@ from scripts.feature.base import get_base_feature_cn_only, get_base_features
 from scripts.feature.base.lang import get_lang_list
 from scripts.feature.calt import CaltOptions, get_calt, get_calt_lookup
 from scripts.feature.calt._infinite_utils import InfiniteOptions
-from scripts.feature.cv import cv96, cv97, cv98, cv99
+from scripts.feature.cv import cv95, cv96, cv97, cv98, cv99
 from scripts.feature.italic import (
     class_list_italic,
     cv_list_italic,
@@ -42,6 +42,7 @@ NORMAL_ENABLED_FEATURES: tuple[str, ...] = (
 )
 
 CJK_FEATURES: tuple[ast.FeatureWithDocs, ...] = (
+    cv95.cv95_feat_cn,
     cv96.cv96_feat_cn,
     cv97.cv97_feat_cn,
     cv98.cv98_feat_cn,

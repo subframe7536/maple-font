@@ -97,6 +97,7 @@ For more details, please check out `.fea` files in [features](../sources/feature
 - [v7.5] cv10: Alternative `Z` and `z` with middle bar, no effect in italic style
 - [v7.7] cv11: Alternative `f` with bottom bar, no effect in italic style
 - [v8.0] cv12: Alternative `u` without tail, no effect in italic style
+- [v8.0] cv13: Alternative `y` in rounded style, no effect in italic style
 - [v7.1] cv61: Alternative `,` and `;` with straight tail
 - [v7.1] cv62: Alternative `?` with larger openings
 - [v7.1] cv63: Alternative `<=` in arrow style
@@ -131,6 +132,7 @@ For more details, please check out `.fea` files in [features](../sources/feature
 #### CN Only
 
 <!-- CV-CN -->
+- [v8.0] cv95: Full width Roman numerals and enclosed alphanumerics (`Ⅻ` / `①` / `ⓐ`)
 - [v7.0] cv96: Full width quotes (`“` / `”` / `‘` / `’`)
 - [v7.0] cv97: Full width ellipsis (`…`)
 - [v7.0] cv98: Full width emdash (`—`)
