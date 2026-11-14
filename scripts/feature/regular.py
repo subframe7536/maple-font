@@ -14,6 +14,7 @@ from scripts.feature.cv import (
     cv10,
     cv11,
     cv12,
+    cv13,
     cv31,
     cv32,
     cv33,
@@ -78,7 +79,7 @@ cls_u = ast.Clazz("U", ["U", "u"])
 cls_v = ast.Clazz("V", ["V", "v"])
 cls_w = ast.Clazz("W", ["W", "w"])
 cls_x = ast.Clazz("X", ["X", "x"])
-cls_y = ast.Clazz("Y", ["Y", "y"])
+cls_y = ast.Clazz("Y", ["Y", "y", "y.cv13"])
 cls_z = ast.Clazz("Z", ["Z", "z"])
 
 cls_letters_list = [
@@ -141,6 +142,7 @@ def cv_list_regular(
             cv10.cv10_feat_regular,
             cv11.cv11_feat_regular,
             cv12.cv12_feat_regular,
+            cv13.cv13_feat_regular,
             ast.clone_empty(cv31.cv31_feat_italic, italic_prefix),
             ast.clone_empty(cv32.cv32_feat_italic, italic_prefix),
             ast.clone_empty(cv33.cv33_feat_italic, italic_prefix),

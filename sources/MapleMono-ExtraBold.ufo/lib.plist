@@ -649,22 +649,22 @@
       <string>idieresis-cy</string>
       <string>odieresis-cy</string>
       <string>obarred-cy</string>
-      <string>Iebrevecyr</string>
-      <string>iebrevecyr</string>
-      <string>Schwadieresiscyr</string>
-      <string>schwadieresiscyr</string>
-      <string>Imacroncyr</string>
-      <string>imacroncyr</string>
-      <string>Obardieresiscyr</string>
-      <string>obardieresiscyr</string>
-      <string>Ereverseddieresiscyr</string>
-      <string>ereverseddieresiscyr</string>
-      <string>Umacroncyr</string>
-      <string>umacroncyr</string>
-      <string>Udieresiscyr</string>
-      <string>udieresiscyr</string>
-      <string>Uacutedblcyr</string>
-      <string>uacutedblcyr</string>
+      <string>Iebreve-cy</string>
+      <string>iebreve-cy</string>
+      <string>Schwadieresis-cy</string>
+      <string>schwadieresis-cy</string>
+      <string>Imacron-cy</string>
+      <string>imacron-cy</string>
+      <string>Obardieresis-cy</string>
+      <string>obardieresis-cy</string>
+      <string>Ereverseddieresis-cy</string>
+      <string>ereverseddieresis-cy</string>
+      <string>Umacron-cy</string>
+      <string>umacron-cy</string>
+      <string>Udieresis-cy</string>
+      <string>udieresis-cy</string>
+      <string>Uacutedbl-cy</string>
+      <string>uacutedbl-cy</string>
       <string>ustraight-cy</string>
       <string>ustraightstroke-cy</string>
       <string>chedieresis-cy</string>
@@ -2000,6 +2000,29 @@
       <string>upsilontonos.cv12</string>
       <string>upsilondieresis.cv12</string>
       <string>upsilondieresistonos.cv12</string>
+      <string>Y.cv13</string>
+      <string>Yacute.cv13</string>
+      <string>Ycircumflex.cv13</string>
+      <string>Ydieresis.cv13</string>
+      <string>Ydotbelow.cv13</string>
+      <string>Ygrave.cv13</string>
+      <string>Yhookabove.cv13</string>
+      <string>Ymacron.cv13</string>
+      <string>Ytilde.cv13</string>
+      <string>y.cv13</string>
+      <string>yacute.cv13</string>
+      <string>ycircumflex.cv13</string>
+      <string>ydieresis.cv13</string>
+      <string>ydotbelow.cv13</string>
+      <string>ygrave.cv13</string>
+      <string>yhookabove.cv13</string>
+      <string>ymacron.cv13</string>
+      <string>ytilde.cv13</string>
+      <string>u-cy.cv13</string>
+      <string>ushort-cy.cv13</string>
+      <string>umacron-cy.cv13</string>
+      <string>udieresis-cy.cv13</string>
+      <string>uacutedbl-cy.cv13</string>
       <string>comma.cv61</string>
       <string>semicolon.cv61</string>
       <string>semicolon_semicolon.liga.cv61</string>
@@ -2537,6 +2560,8 @@
       <string>greaterThanWithCircleInside</string>
       <string>doubleSucceeds</string>
       <string>tripleNestedGreaterThan</string>
+      <string>carriagereturn</string>
+      <string>starwhite</string>
     </array>
     <key>public.postscriptNames</key>
     <dict>
@@ -2636,7 +2661,7 @@
       <string>uni018E</string>
       <key>Ereversed-cy</key>
       <string>uni042D</string>
-      <key>Ereverseddieresiscyr</key>
+      <key>Ereverseddieresis-cy</key>
       <string>uni04EC</string>
       <key>Es-cy</key>
       <string>uni0421</string>
@@ -2690,7 +2715,7 @@
       <string>uni1ECA</string>
       <key>Ie-cy</key>
       <string>uni0415</string>
-      <key>Iebrevecyr</key>
+      <key>Iebreve-cy</key>
       <string>uni04D6</string>
       <key>Iegravecyr</key>
       <string>uni0400</string>
@@ -2702,7 +2727,7 @@
       <string>uni0418</string>
       <key>Iishort-cy</key>
       <string>uni0419</string>
-      <key>Imacroncyr</key>
+      <key>Imacron-cy</key>
       <string>uni04E2</string>
       <key>Io-cy</key>
       <string>uni0401</string>
@@ -2740,7 +2765,7 @@
       <string>uni040A</string>
       <key>O-cy</key>
       <string>uni041E</string>
-      <key>Obardieresiscyr</key>
+      <key>Obardieresis-cy</key>
       <string>uni04EA</string>
       <key>Obarred-cy</key>
       <string>uni04E8</string>
@@ -2794,7 +2819,7 @@
       <string>uni018F</string>
       <key>Schwa-cy</key>
       <string>uni04D8</string>
-      <key>Schwadieresiscyr</key>
+      <key>Schwadieresis-cy</key>
       <string>uni04DA</string>
       <key>Scommaaccent</key>
       <string>uni0218</string>
@@ -2820,11 +2845,11 @@
       <string>uni040B</string>
       <key>U-cy</key>
       <string>uni0423</string>
-      <key>Uacutedblcyr</key>
+      <key>Uacutedbl-cy</key>
       <string>uni04F2</string>
       <key>Ucaron</key>
       <string>uni01D3</string>
-      <key>Udieresiscyr</key>
+      <key>Udieresis-cy</key>
       <string>uni04F0</string>
       <key>Udotbelow</key>
       <string>uni1EE4</string>
@@ -2840,7 +2865,7 @@
       <string>uni1EEC</string>
       <key>Uhorntilde</key>
       <string>uni1EEE</string>
-      <key>Umacroncyr</key>
+      <key>Umacron-cy</key>
       <string>uni04EE</string>
       <key>Upsilonafrican</key>
       <string>uni01B1</string>
@@ -2856,16 +2881,24 @@
       <string>uni0245</string>
       <key>Ydotbelow</key>
       <string>uni1EF4</string>
+      <key>Ydotbelow.cv13</key>
+      <string>uni1EF4.cv13</string>
       <key>Yeru-cy</key>
       <string>uni042B</string>
       <key>Yhookabove</key>
       <string>uni1EF6</string>
+      <key>Yhookabove.cv13</key>
+      <string>uni1EF6.cv13</string>
       <key>Yi-cy</key>
       <string>uni0407</string>
       <key>Ymacron</key>
       <string>uni0232</string>
+      <key>Ymacron.cv13</key>
+      <string>uni0232.cv13</string>
       <key>Ytilde</key>
       <string>uni1EF8</string>
+      <key>Ytilde.cv13</key>
+      <string>uni1EF8.cv13</string>
       <key>ZEROWIDTHSPACE</key>
       <string>uni200B</string>
       <key>Ze-cy</key>
@@ -3572,7 +3605,7 @@
       <string>uni044D</string>
       <key>ereversed-ipa</key>
       <string>uni0258</string>
-      <key>ereverseddieresiscyr</key>
+      <key>ereverseddieresis-cy</key>
       <string>uni04ED</string>
       <key>es-cy</key>
       <string>uni0441</string>
@@ -3734,7 +3767,7 @@
       <string>dotlessi.cv06</string>
       <key>ie-cy</key>
       <string>uni0435</string>
-      <key>iebrevecyr</key>
+      <key>iebreve-cy</key>
       <string>uni04D7</string>
       <key>iegravecyr</key>
       <string>uni0450</string>
@@ -3754,7 +3787,7 @@
       <string>uni0439</string>
       <key>iishort-cy.loclBGR</key>
       <string>uni0439.loclBGR</string>
-      <key>imacroncyr</key>
+      <key>imacron-cy</key>
       <string>uni04E3</string>
       <key>imageorapproximatelyequal</key>
       <string>uni2253</string>
@@ -4036,7 +4069,7 @@
       <string>uni2116</string>
       <key>o-cy</key>
       <string>uni043E</string>
-      <key>obardieresiscyr</key>
+      <key>obardieresis-cy</key>
       <string>uni04EB</string>
       <key>obarred-cy</key>
       <string>uni04E9</string>
@@ -4230,7 +4263,7 @@
       <string>uni0259</string>
       <key>schwa-cy</key>
       <string>uni04D9</string>
-      <key>schwadieresiscyr</key>
+      <key>schwadieresis-cy</key>
       <string>uni04DB</string>
       <key>schwainferior</key>
       <string>uni2094</string>
@@ -4400,14 +4433,20 @@
       <string>uni00B2</string>
       <key>u-cy</key>
       <string>uni0443</string>
-      <key>uacutedblcyr</key>
+      <key>u-cy.cv13</key>
+      <string>uni0443.cv13</string>
+      <key>uacutedbl-cy</key>
       <string>uni04F3</string>
+      <key>uacutedbl-cy.cv13</key>
+      <string>uacutedblcy.cv13</string>
       <key>ucaron</key>
       <string>uni01D4</string>
       <key>ucaron.cv12</key>
       <string>uni01D4.cv12</string>
-      <key>udieresiscyr</key>
+      <key>udieresis-cy</key>
       <string>uni04F1</string>
+      <key>udieresis-cy.cv13</key>
+      <string>uni04F1.cv13</string>
       <key>udotbelow</key>
       <string>uni1EE5</string>
       <key>udotbelow.cv12</key>
@@ -4436,8 +4475,10 @@
       <string>uni1EEF</string>
       <key>uhorntilde.cv12</key>
       <string>uni1EEF.cv12</string>
-      <key>umacroncyr</key>
+      <key>umacron-cy</key>
       <string>uni04EF</string>
+      <key>umacron-cy.cv13</key>
+      <string>uni04EF.cv13</string>
       <key>undertie</key>
       <string>uni203F</string>
       <key>unionarray</key>
@@ -4480,6 +4521,8 @@
       <string>uni028A</string>
       <key>ushort-cy</key>
       <string>uni045E</string>
+      <key>ushort-cy.cv13</key>
+      <string>uni045E.cv13</string>
       <key>ustraight-cy</key>
       <string>uni04AF</string>
       <key>ustraightstroke-cy</key>
@@ -4518,10 +4561,14 @@
       <string>uni22BB</string>
       <key>ydotbelow</key>
       <string>uni1EF5</string>
+      <key>ydotbelow.cv13</key>
+      <string>uni1EF5.cv13</string>
       <key>yeru-cy</key>
       <string>uni044B</string>
       <key>yhookabove</key>
       <string>uni1EF7</string>
+      <key>yhookabove.cv13</key>
+      <string>uni1EF7.cv13</string>
       <key>yi-cy</key>
       <string>uni0457</string>
       <key>yi-cy.cv03</key>
@@ -4530,8 +4577,12 @@
       <string>uni0457.cv06</string>
       <key>ymacron</key>
       <string>uni0233</string>
+      <key>ymacron.cv13</key>
+      <string>uni0233.cv13</string>
       <key>ytilde</key>
       <string>uni1EF9</string>
+      <key>ytilde.cv13</key>
+      <string>uni1EF9.cv13</string>
       <key>ze-cy</key>
       <string>uni0437</string>
       <key>ze-cy.loclBGR</key>

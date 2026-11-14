@@ -2221,6 +2221,19 @@ feature cv12 {
 
 } cv12;
 
+feature cv13 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV13: [Regular Only] Alternative y in rounded style, no effect in italic style";
+    };
+  };
+
+  # Placeholder
+  sub EMquad by space;
+
+} cv13;
+
 feature cv31 {
 
   cvParameters {

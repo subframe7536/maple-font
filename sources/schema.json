@@ -301,6 +301,10 @@
           "description": "[v8.0] Alternative 'u' without tail, no effect in italic style",
           "$ref": "#/definitions/freeze_options"
         },
+        "cv13": {
+          "description": "[v8.0] Alternative 'y' in rounded style, no effect in italic style",
+          "$ref": "#/definitions/freeze_options"
+        },
         "cv31": {
           "description": "[v7.0] Alternative italic 'a' with top arm",
           "$ref": "#/definitions/freeze_options"

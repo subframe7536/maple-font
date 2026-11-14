@@ -31,7 +31,7 @@
 @V = [V v];
 @W = [W w];
 @X = [X x];
-@Y = [Y y];
+@Y = [Y y y.cv13];
 @Z = [Z z];
 @Var = [underscore underscore_underscore.liga @A @B @C @D @E @F @G @H @I @J @K @L @M @N @O @P @Q @R @S @T @U @V @W @X @Y @Z @Digit];
 @HexLetter = [@A @B @C @D @E @F];
@@ -2216,6 +2216,40 @@ feature cv12 {
   sub upsilondieresistonos by upsilondieresistonos.cv12;
 
 } cv12;
+
+feature cv13 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV13: Alternative y in rounded style, no effect in italic style";
+    };
+  };
+
+  sub Y by Y.cv13;
+  sub Yacute by Yacute.cv13;
+  sub Ycircumflex by Ycircumflex.cv13;
+  sub Ydieresis by Ydieresis.cv13;
+  sub Ydotbelow by Ydotbelow.cv13;
+  sub Ygrave by Ygrave.cv13;
+  sub Yhookabove by Yhookabove.cv13;
+  sub Ymacron by Ymacron.cv13;
+  sub Ytilde by Ytilde.cv13;
+  sub y by y.cv13;
+  sub yacute by yacute.cv13;
+  sub ycircumflex by ycircumflex.cv13;
+  sub ydieresis by ydieresis.cv13;
+  sub ydotbelow by ydotbelow.cv13;
+  sub ygrave by ygrave.cv13;
+  sub yhookabove by yhookabove.cv13;
+  sub ymacron by ymacron.cv13;
+  sub ytilde by ytilde.cv13;
+  sub u-cy by u-cy.cv13;
+  sub ushort-cy by ushort-cy.cv13;
+  sub umacron-cy by umacron-cy.cv13;
+  sub udieresis-cy by udieresis-cy.cv13;
+  sub uacutedbl-cy by uacutedbl-cy.cv13;
+
+} cv13;
 
 feature cv31 {
 

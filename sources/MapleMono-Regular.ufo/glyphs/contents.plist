@@ -192,8 +192,8 @@
     <string>E_reversed.glif</string>
     <key>Ereversed-cy</key>
     <string>E_reversed-cy.glif</string>
-    <key>Ereverseddieresiscyr</key>
-    <string>E_reverseddieresiscyr.glif</string>
+    <key>Ereverseddieresis-cy</key>
+    <string>E_reverseddieresis-cy.glif</string>
     <key>Es-cy</key>
     <string>E_s-cy.glif</string>
     <key>Estailcyr</key>
@@ -300,8 +300,8 @@
     <string>I_dotbelow.glif</string>
     <key>Ie-cy</key>
     <string>I_e-cy.glif</string>
-    <key>Iebrevecyr</key>
-    <string>I_ebrevecyr.glif</string>
+    <key>Iebreve-cy</key>
+    <string>I_ebreve-cy.glif</string>
     <key>Iegravecyr</key>
     <string>I_egravecyr.glif</string>
     <key>Igrave</key>
@@ -316,8 +316,8 @@
     <string>I_ishort-cy.glif</string>
     <key>Imacron</key>
     <string>I_macron.glif</string>
-    <key>Imacroncyr</key>
-    <string>I_macroncyr.glif</string>
+    <key>Imacron-cy</key>
+    <string>I_macron-cy.glif</string>
     <key>Io-cy</key>
     <string>I_o-cy.glif</string>
     <key>Iogonek</key>
@@ -426,8 +426,8 @@
     <string>O_E_.glif</string>
     <key>Oacute</key>
     <string>O_acute.glif</string>
-    <key>Obardieresiscyr</key>
-    <string>O_bardieresiscyr.glif</string>
+    <key>Obardieresis-cy</key>
+    <string>O_bardieresis-cy.glif</string>
     <key>Obarred-cy</key>
     <string>O_barred-cy.glif</string>
     <key>Obreve</key>
@@ -546,8 +546,8 @@
     <string>S_chwa.glif</string>
     <key>Schwa-cy</key>
     <string>S_chwa-cy.glif</string>
-    <key>Schwadieresiscyr</key>
-    <string>S_chwadieresiscyr.glif</string>
+    <key>Schwadieresis-cy</key>
+    <string>S_chwadieresis-cy.glif</string>
     <key>Scircumflex</key>
     <string>S_circumflex.glif</string>
     <key>Scommaaccent</key>
@@ -598,8 +598,8 @@
     <string>U_.bg.glif</string>
     <key>Uacute</key>
     <string>U_acute.glif</string>
-    <key>Uacutedblcyr</key>
-    <string>U_acutedblcyr.glif</string>
+    <key>Uacutedbl-cy</key>
+    <string>U_acutedbl-cy.glif</string>
     <key>Ubreve</key>
     <string>U_breve.glif</string>
     <key>Ucaron</key>
@@ -608,8 +608,8 @@
     <string>U_circumflex.glif</string>
     <key>Udieresis</key>
     <string>U_dieresis.glif</string>
-    <key>Udieresiscyr</key>
-    <string>U_dieresiscyr.glif</string>
+    <key>Udieresis-cy</key>
+    <string>U_dieresis-cy.glif</string>
     <key>Udotbelow</key>
     <string>U_dotbelow.glif</string>
     <key>Ugrave</key>
@@ -632,8 +632,8 @@
     <string>U_hungarumlaut.glif</string>
     <key>Umacron</key>
     <string>U_macron.glif</string>
-    <key>Umacroncyr</key>
-    <string>U_macroncyr.glif</string>
+    <key>Umacron-cy</key>
+    <string>U_macron-cy.glif</string>
     <key>Uogonek</key>
     <string>U_ogonek.glif</string>
     <key>Upsilon</key>
@@ -684,26 +684,44 @@
     <string>Y_.glif</string>
     <key>Y.bg</key>
     <string>Y_.bg.glif</string>
+    <key>Y.cv13</key>
+    <string>Y_.cv13.glif</string>
     <key>Yacute</key>
     <string>Y_acute.glif</string>
+    <key>Yacute.cv13</key>
+    <string>Y_acute.cv13.glif</string>
     <key>Ycircumflex</key>
     <string>Y_circumflex.glif</string>
+    <key>Ycircumflex.cv13</key>
+    <string>Y_circumflex.cv13.glif</string>
     <key>Ydieresis</key>
     <string>Y_dieresis.glif</string>
+    <key>Ydieresis.cv13</key>
+    <string>Y_dieresis.cv13.glif</string>
     <key>Ydotbelow</key>
     <string>Y_dotbelow.glif</string>
+    <key>Ydotbelow.cv13</key>
+    <string>Y_dotbelow.cv13.glif</string>
     <key>Yeru-cy</key>
     <string>Y_eru-cy.glif</string>
     <key>Ygrave</key>
     <string>Y_grave.glif</string>
+    <key>Ygrave.cv13</key>
+    <string>Y_grave.cv13.glif</string>
     <key>Yhookabove</key>
     <string>Y_hookabove.glif</string>
+    <key>Yhookabove.cv13</key>
+    <string>Y_hookabove.cv13.glif</string>
     <key>Yi-cy</key>
     <string>Y_i-cy.glif</string>
     <key>Ymacron</key>
     <string>Y_macron.glif</string>
+    <key>Ymacron.cv13</key>
+    <string>Y_macron.cv13.glif</string>
     <key>Ytilde</key>
     <string>Y_tilde.glif</string>
+    <key>Ytilde.cv13</key>
+    <string>Y_tilde.cv13.glif</string>
     <key>Z</key>
     <string>Z_.glif</string>
     <key>Z.bg</key>
@@ -1510,6 +1528,8 @@
     <string>caroncomb.alt.glif</string>
     <key>caroncomb.case</key>
     <string>caroncomb.case.glif</string>
+    <key>carriagereturn</key>
+    <string>carriagereturn.glif</string>
     <key>ccaron</key>
     <string>ccaron.glif</string>
     <key>ccedilla</key>
@@ -2042,8 +2062,8 @@
     <string>ereversed-cy.glif</string>
     <key>ereversed-ipa</key>
     <string>ereversed-ipa.glif</string>
-    <key>ereverseddieresiscyr</key>
-    <string>ereverseddieresiscyr.glif</string>
+    <key>ereverseddieresis-cy</key>
+    <string>ereverseddieresis-cy.glif</string>
     <key>es-cy</key>
     <string>es-cy.glif</string>
     <key>esh</key>
@@ -2462,8 +2482,8 @@
     <string>idotless.cv06.glif</string>
     <key>ie-cy</key>
     <string>ie-cy.glif</string>
-    <key>iebrevecyr</key>
-    <string>iebrevecyr.glif</string>
+    <key>iebreve-cy</key>
+    <string>iebreve-cy.glif</string>
     <key>iegravecyr</key>
     <string>iegravecyr.glif</string>
     <key>igrave</key>
@@ -2496,12 +2516,12 @@
     <string>ij_acute.glif</string>
     <key>imacron</key>
     <string>imacron.glif</string>
+    <key>imacron-cy</key>
+    <string>imacron-cy.glif</string>
     <key>imacron.cv03</key>
     <string>imacron.cv03.glif</string>
     <key>imacron.cv06</key>
     <string>imacron.cv06.glif</string>
-    <key>imacroncyr</key>
-    <string>imacroncyr.glif</string>
     <key>image</key>
     <string>image.glif</string>
     <key>imageorapproximatelyequal</key>
@@ -3118,8 +3138,8 @@
     <string>o-cy.glif</string>
     <key>oacute</key>
     <string>oacute.glif</string>
-    <key>obardieresiscyr</key>
-    <string>obardieresiscyr.glif</string>
+    <key>obardieresis-cy</key>
+    <string>obardieresis-cy.glif</string>
     <key>obarred-cy</key>
     <string>obarred-cy.glif</string>
     <key>obreve</key>
@@ -3564,8 +3584,8 @@
     <string>schwa.glif</string>
     <key>schwa-cy</key>
     <string>schwa-cy.glif</string>
-    <key>schwadieresiscyr</key>
-    <string>schwadieresiscyr.glif</string>
+    <key>schwadieresis-cy</key>
+    <string>schwadieresis-cy.glif</string>
     <key>schwainferior</key>
     <string>schwainferior.glif</string>
     <key>scircumflex</key>
@@ -3762,6 +3782,8 @@
     <string>starpointedblacktwelve.glif</string>
     <key>starpointedpinwheeleight</key>
     <string>starpointedpinwheeleight.glif</string>
+    <key>starwhite</key>
+    <string>starwhite.glif</string>
     <key>sterling</key>
     <string>sterling.glif</string>
     <key>strictlyequivalent</key>
@@ -3936,14 +3958,18 @@
     <string>u.glif</string>
     <key>u-cy</key>
     <string>u-cy.glif</string>
+    <key>u-cy.cv13</key>
+    <string>u-cy.cv13.glif</string>
     <key>u.cv12</key>
     <string>u.cv12.glif</string>
     <key>uacute</key>
     <string>uacute.glif</string>
     <key>uacute.cv12</key>
     <string>uacute.cv12.glif</string>
-    <key>uacutedblcyr</key>
-    <string>uacutedblcyr.glif</string>
+    <key>uacutedbl-cy</key>
+    <string>uacutedbl-cy.glif</string>
+    <key>uacutedbl-cy.cv13</key>
+    <string>uacutedbl-cy.cv13.glif</string>
     <key>ubreve</key>
     <string>ubreve.glif</string>
     <key>ubreve.cv12</key>
@@ -3958,10 +3984,12 @@
     <string>ucircumflex.cv12.glif</string>
     <key>udieresis</key>
     <string>udieresis.glif</string>
+    <key>udieresis-cy</key>
+    <string>udieresis-cy.glif</string>
+    <key>udieresis-cy.cv13</key>
+    <string>udieresis-cy.cv13.glif</string>
     <key>udieresis.cv12</key>
     <string>udieresis.cv12.glif</string>
-    <key>udieresiscyr</key>
-    <string>udieresiscyr.glif</string>
     <key>udotbelow</key>
     <string>udotbelow.glif</string>
     <key>udotbelow.cv12</key>
@@ -4004,10 +4032,12 @@
     <string>uhungarumlaut.cv12.glif</string>
     <key>umacron</key>
     <string>umacron.glif</string>
+    <key>umacron-cy</key>
+    <string>umacron-cy.glif</string>
+    <key>umacron-cy.cv13</key>
+    <string>umacron-cy.cv13.glif</string>
     <key>umacron.cv12</key>
     <string>umacron.cv12.glif</string>
-    <key>umacroncyr</key>
-    <string>umacroncyr.glif</string>
     <key>underscore</key>
     <string>underscore.glif</string>
     <key>underscore_bar_underscore.liga</key>
@@ -4656,6 +4686,8 @@
     <string>uring.cv12.glif</string>
     <key>ushort-cy</key>
     <string>ushort-cy.glif</string>
+    <key>ushort-cy.cv13</key>
+    <string>ushort-cy.cv13.glif</string>
     <key>ustraight-cy</key>
     <string>ustraight-cy.glif</string>
     <key>ustraightstroke-cy</key>
@@ -4734,22 +4766,36 @@
     <string>xor.glif</string>
     <key>y</key>
     <string>y.glif</string>
+    <key>y.cv13</key>
+    <string>y.cv13.glif</string>
     <key>yacute</key>
     <string>yacute.glif</string>
+    <key>yacute.cv13</key>
+    <string>yacute.cv13.glif</string>
     <key>ycircumflex</key>
     <string>ycircumflex.glif</string>
+    <key>ycircumflex.cv13</key>
+    <string>ycircumflex.cv13.glif</string>
     <key>ydieresis</key>
     <string>ydieresis.glif</string>
+    <key>ydieresis.cv13</key>
+    <string>ydieresis.cv13.glif</string>
     <key>ydotbelow</key>
     <string>ydotbelow.glif</string>
+    <key>ydotbelow.cv13</key>
+    <string>ydotbelow.cv13.glif</string>
     <key>yen</key>
     <string>yen.glif</string>
     <key>yeru-cy</key>
     <string>yeru-cy.glif</string>
     <key>ygrave</key>
     <string>ygrave.glif</string>
+    <key>ygrave.cv13</key>
+    <string>ygrave.cv13.glif</string>
     <key>yhookabove</key>
     <string>yhookabove.glif</string>
+    <key>yhookabove.cv13</key>
+    <string>yhookabove.cv13.glif</string>
     <key>yi-cy</key>
     <string>yi-cy.glif</string>
     <key>yi-cy.cv03</key>
@@ -4758,8 +4804,12 @@
     <string>yi-cy.cv06.glif</string>
     <key>ymacron</key>
     <string>ymacron.glif</string>
+    <key>ymacron.cv13</key>
+    <string>ymacron.cv13.glif</string>
     <key>ytilde</key>
     <string>ytilde.glif</string>
+    <key>ytilde.cv13</key>
+    <string>ytilde.cv13.glif</string>
     <key>z</key>
     <string>z.glif</string>
     <key>z.cv10</key>
