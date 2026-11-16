@@ -1398,7 +1398,7 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
         # Change glyph width and keep monospace identifier will cause
         # Intellij IDEA / Windows Notepad and other applications to
         # render the font incorrectly. See details in #249
-        if target_width and font_config.get_width_name() != "slim":
+        if target_width and font_config.width != "slim":
             cn_font["post"].isFixedPitch = False  # type: ignore
             cn_font["OS/2"].panose.bProportion = 0  # type: ignore
             cn_font["OS/2"].panose.bSpacing = 0  # type: ignore
@@ -1406,8 +1406,8 @@ def build_cn(f: str, font_config: FontConfig, build_option: BuildOption):
             print(
                 "Changed CN glyph width, mark font file as not monospaced and skip checking glyph width"
             )
-        else:
-            target_width = match_width
+        elif not target_width:
+            target_width = 2 * font_config.get_target_width()
 
         if scale_factor:
             print(f"Scale CN / JP glyph to ({scale_factor[0]}x, {scale_factor[1]}x)")
