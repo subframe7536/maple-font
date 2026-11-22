@@ -514,9 +514,16 @@ def _scale_simple_cjk_glyph(
 ) -> None:
     width, lsb = hmtx[glyph_name]
     scale_w, scale_h = scale_factor
+    delta = (target_width - round(width * scale_w)) / 2
+    if glyph.isComposite():
+        # Composites inherit the scaled outlines; only shift their offsets.
+        for component in glyph.components:
+            if hasattr(component, "x"):
+                component.x = round(component.x * scale_w + delta)
+        hmtx[glyph_name] = (target_width, lsb)
+        return
     glyph.coordinates.scale((scale_w, scale_h))
     glyph.xMin, glyph.yMin, glyph.xMax, glyph.yMax = glyph.coordinates.calcIntBounds()
-    delta = (target_width - round(width * scale_w)) / 2
     glyph.coordinates.translate((delta, 0))
     glyph.xMin, glyph.yMin, glyph.xMax, glyph.yMax = glyph.coordinates.calcIntBounds()
     hmtx[glyph_name] = (target_width, lsb + round(delta))

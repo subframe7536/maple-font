@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import tempfile
 import unittest
 from pathlib import Path
 from unittest.mock import MagicMock
@@ -15,6 +16,8 @@ from scripts.config.base import (
 )
 from scripts.config.resolver import BuildConfigResolver
 from scripts.config.runtime import BuildRuntimeContext
+from scripts.font_ops.glyph_transform import change_glyph_width_or_scale
+from scripts.tests.cjk_font_fixtures import build_test_font
 
 
 def make_runtime_context() -> BuildRuntimeContext:
@@ -80,6 +83,28 @@ class PostprocessCJKStaticFontTest(unittest.TestCase):
         self.assertEqual(font.table("OS/2").panose.bProportion, 0)
         self.assertEqual(font.table("OS/2").panose.bSpacing, 0)
         self.assertTrue(skip_verify)
+
+    def test_width_transform_scales_composite_offsets(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            font = build_test_font(Path(tmp) / "fixture.ttf", box_width=320)
+
+        # box.component (composite, advance=670) and cjk (simple, advance=670)
+        # both match; the composite has no `.coordinates` attribute.
+        change_glyph_width_or_scale(
+            font,
+            match_width=670,
+            target_width=500,
+            scale_factor=(1.0, 1.0),
+        )
+
+        hmtx = font["hmtx"].metrics
+        self.assertEqual(hmtx["box.component"][0], 500)
+        self.assertEqual(hmtx["cjk"][0], 500)
+        component = font["glyf"]["box.component"].components[0]
+        # Offset shifted by the centering delta: 40 + round((500 - 670) / 2).
+        self.assertEqual(component.x, -45)
+        # Composite lsb is refreshed from recalculated bounds.
+        self.assertEqual(hmtx["box.component"][1], 5)
 
 
 if __name__ == "__main__":
