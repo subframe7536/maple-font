@@ -2649,6 +2649,11 @@
       <string>dblarrowSW</string>
       <string>verticalstrokearrowright</string>
       <string>verticalsdbltrokearrowright</string>
+      <string>sho</string>
+      <string>Yot</string>
+      <string>sigmalunatereversedsymbol</string>
+      <string>sigmalunatedottedsymbol</string>
+      <string>sigmalunatedottedreversedsymbol</string>
     </array>
     <key>public.postscriptNames</key>
     <dict>
@@ -2992,6 +2997,8 @@
       <string>uni0232</string>
       <key>Ymacron.cv13</key>
       <string>uni0232.cv13</string>
+      <key>Yot</key>
+      <string>uni037F</string>
       <key>Ytilde</key>
       <string>uni1EF8</string>
       <key>Ytilde.cv13</key>
@@ -4404,8 +4411,16 @@
       <string>uni0449.loclBGR</string>
       <key>shha-cy</key>
       <string>uni04BB</string>
+      <key>sho</key>
+      <string>uni03F8</string>
       <key>sigmafinal</key>
       <string>uni03C2</string>
+      <key>sigmalunatedottedreversedsymbol</key>
+      <string>uni037D</string>
+      <key>sigmalunatedottedsymbol</key>
+      <string>uni037C</string>
+      <key>sigmalunatereversedsymbol</key>
+      <string>uni037B</string>
       <key>sigmalunatesymbol</key>
       <string>uni03F2</string>
       <key>sinewave</key>

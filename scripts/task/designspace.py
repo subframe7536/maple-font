@@ -13,6 +13,8 @@ from fontTools.designspaceLib import (
     DesignSpaceDocument,
     SourceDescriptor,
 )
+from fontTools.pens.qu2cuPen import Qu2CuPen
+from fontTools.pens.recordingPen import RecordingPen
 from glyphsLib import load, to_designspace
 from ufo2ft.constants import FEATURE_WRITERS_KEY
 
@@ -26,6 +28,27 @@ if TYPE_CHECKING:
     from ufoLib2 import Font as UFOFont
 
 SourceStyle = Literal["regular", "italic"]
+
+_QUADRATIC_MAX_ERR = 0.5
+
+
+def _convert_quadratic_glyphs(font: UFOFont) -> int:
+    """Upgrade TrueType curve segments to cubic; overlap removal rejects qcurve."""
+    converted = 0
+    for glyph in font:
+        original = RecordingPen()
+        glyph.draw(original)
+        if not any(op == "qCurveTo" for op, _ in original.value):
+            continue
+        result = RecordingPen()
+        original.replay(Qu2CuPen(result, max_err=_QUADRATIC_MAX_ERR, all_cubic=True))
+        glyph.clearContours()
+        glyph.clearComponents()
+        result.replay(glyph.getPen())
+        converted += 1
+    return converted
+
+
 SOURCE_ISSUE_REPORT = Path("fonts/source-issues.json")
 TAG_GLYPH_PREFIX = "tag_"
 BACKGROUND_GLYPH_MARKER = ".bg"
@@ -129,6 +152,13 @@ def convert_glyphs_source(
         if source.font is None:
             raise ValueError(f"Glyphs source master has no UFO font: {path}")
         source.font.features.text = feature_source
+        converted = _convert_quadratic_glyphs(source.font)
+        if converted:
+            logger.info(
+                "Upgrade quadratic segments to cubic: path=%s, glyphs=%s",
+                path.name,
+                converted,
+            )
 
     weight_axis = next((axis for axis in designspace.axes if axis.tag == "wght"), None)
     if weight_axis is None:

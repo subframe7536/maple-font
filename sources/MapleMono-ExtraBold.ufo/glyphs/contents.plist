@@ -730,6 +730,8 @@
     <string>Y_macron.glif</string>
     <key>Ymacron.cv13</key>
     <string>Y_macron.cv13.glif</string>
+    <key>Yot</key>
+    <string>Y_ot.glif</string>
     <key>Ytilde</key>
     <string>Y_tilde.glif</string>
     <key>Ytilde.cv13</key>
@@ -3792,10 +3794,18 @@
     <string>shcha-cy.loclB_G_R_.glif</string>
     <key>shha-cy</key>
     <string>shha-cy.glif</string>
+    <key>sho</key>
+    <string>sho.glif</string>
     <key>sigma</key>
     <string>sigma.glif</string>
     <key>sigmafinal</key>
     <string>sigmafinal.glif</string>
+    <key>sigmalunatedottedreversedsymbol</key>
+    <string>sigmalunatedottedreversedsymbol.glif</string>
+    <key>sigmalunatedottedsymbol</key>
+    <string>sigmalunatedottedsymbol.glif</string>
+    <key>sigmalunatereversedsymbol</key>
+    <string>sigmalunatereversedsymbol.glif</string>
     <key>sigmalunatesymbol</key>
     <string>sigmalunatesymbol.glif</string>
     <key>similar</key>

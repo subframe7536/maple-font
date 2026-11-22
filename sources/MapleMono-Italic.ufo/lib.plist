@@ -2661,8 +2661,6 @@
       <string>znotationrightbindingbracket</string>
       <string>uni261B</string>
       <string>uni2710</string>
-      <string>uni261B.1</string>
-      <string>uni2710.1</string>
       <string>verticalbarlight</string>
       <string>verticalbarmedium</string>
       <string>verticalbarheavy</string>
@@ -2728,6 +2726,11 @@
       <string>dblarrowSW</string>
       <string>verticalstrokearrowright</string>
       <string>verticalsdbltrokearrowright</string>
+      <string>sho</string>
+      <string>Yot</string>
+      <string>sigmalunatereversedsymbol</string>
+      <string>sigmalunatedottedsymbol</string>
+      <string>sigmalunatedottedreversedsymbol</string>
     </array>
     <key>public.postscriptNames</key>
     <dict>
@@ -3065,6 +3068,8 @@
       <string>uni0407</string>
       <key>Ymacron</key>
       <string>uni0232</string>
+      <key>Yot</key>
+      <string>uni037F</string>
       <key>Ytilde</key>
       <string>uni1EF8</string>
       <key>ZEROWIDTHSPACE</key>
@@ -4847,8 +4852,16 @@
       <string>uni0449</string>
       <key>shha-cy</key>
       <string>uni04BB</string>
+      <key>sho</key>
+      <string>uni03F8</string>
       <key>sigmafinal</key>
       <string>uni03C2</string>
+      <key>sigmalunatedottedreversedsymbol</key>
+      <string>uni037D</string>
+      <key>sigmalunatedottedsymbol</key>
+      <string>uni037C</string>
+      <key>sigmalunatereversedsymbol</key>
+      <string>uni037B</string>
       <key>sigmalunatesymbol</key>
       <string>uni03F2</string>
       <key>sinewave</key>

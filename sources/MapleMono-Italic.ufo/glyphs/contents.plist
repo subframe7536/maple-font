@@ -720,6 +720,8 @@
     <string>Y_i-cy.glif</string>
     <key>Ymacron</key>
     <string>Y_macron.glif</string>
+    <key>Yot</key>
+    <string>Y_ot.glif</string>
     <key>Ytilde</key>
     <string>Y_tilde.glif</string>
     <key>Z</key>
@@ -3924,10 +3926,18 @@
     <string>shcha-cy.glif</string>
     <key>shha-cy</key>
     <string>shha-cy.glif</string>
+    <key>sho</key>
+    <string>sho.glif</string>
     <key>sigma</key>
     <string>sigma.glif</string>
     <key>sigmafinal</key>
     <string>sigmafinal.glif</string>
+    <key>sigmalunatedottedreversedsymbol</key>
+    <string>sigmalunatedottedreversedsymbol.glif</string>
+    <key>sigmalunatedottedsymbol</key>
+    <string>sigmalunatedottedsymbol.glif</string>
+    <key>sigmalunatereversedsymbol</key>
+    <string>sigmalunatereversedsymbol.glif</string>
     <key>sigmalunatesymbol</key>
     <string>sigmalunatesymbol.glif</string>
     <key>similar</key>
@@ -4346,12 +4356,8 @@
     <string>uni2135.glif</string>
     <key>uni261B</key>
     <string>uni261B_.glif</string>
-    <key>uni261B.1</key>
-    <string>uni261B_.1.glif</string>
     <key>uni2710</key>
     <string>uni2710.glif</string>
-    <key>uni2710.1</key>
-    <string>uni2710.1.glif</string>
     <key>uni2801</key>
     <string>uni2801.glif</string>
     <key>uni2802</key>
