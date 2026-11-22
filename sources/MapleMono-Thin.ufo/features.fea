@@ -2120,6 +2120,7 @@ feature cv10 {
   sub zacute by zacute.cv10;
   sub zcaron by zcaron.cv10;
   sub zdotaccent by zdotaccent.cv10;
+  sub Z.bg by Z.bg.cv10;
 
 } cv10;
 
@@ -2200,6 +2201,7 @@ feature cv13 {
   sub umacron-cy by umacron-cy.cv13;
   sub udieresis-cy by udieresis-cy.cv13;
   sub uacutedbl-cy by uacutedbl-cy.cv13;
+  sub Y.bg by Y.bg.cv13;
 
 } cv13;
 

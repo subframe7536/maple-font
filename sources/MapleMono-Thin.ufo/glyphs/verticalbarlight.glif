@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="verticalbarlight" format="2">
+  <advance width="600"/>
+  <unicode hex="2758"/>
+  <outline>
+    <contour>
+      <point x="338" y="730" type="line"/>
+      <point x="338" y="0" type="line"/>
+      <point x="263" y="0" type="line"/>
+      <point x="263" y="730" type="line"/>
+    </contour>
+  </outline>
+</glyph>

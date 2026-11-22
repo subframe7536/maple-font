@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="znotationrightbindingbracket" format="2">
+  <advance width="600"/>
+  <unicode hex="298A"/>
+  <outline>
+    <component base="znotationleftbindingbracket" xScale="-1" xOffset="600"/>
+  </outline>
+  <lib>
+    <dict>
+      <key>com.schriftgestaltung.Glyphs.ComponentInfo</key>
+      <array>
+        <dict>
+          <key>alignment</key>
+          <integer>-1</integer>
+          <key>index</key>
+          <integer>0</integer>
+          <key>name</key>
+          <string>znotationleftbindingbracket</string>
+        </dict>
+      </array>
+    </dict>
+  </lib>
+</glyph>

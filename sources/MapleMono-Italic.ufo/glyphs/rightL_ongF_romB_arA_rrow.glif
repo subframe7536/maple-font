@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="rightLongFromBarArrow" format="2">
+  <advance width="600"/>
+  <unicode hex="27FC"/>
+  <outline>
+    <contour>
+      <point x="-59" y="117" type="line"/>
+      <point x="-4" y="433" type="line"/>
+      <point x="76" y="433" type="line"/>
+      <point x="54" y="307" type="line"/>
+      <point x="471" y="307" type="line"/>
+      <point x="389" y="433" type="line"/>
+      <point x="473" y="433" type="line"/>
+      <point x="568" y="275" type="line"/>
+      <point x="418" y="117" type="line"/>
+      <point x="334" y="117" type="line"/>
+      <point x="460" y="243" type="line"/>
+      <point x="43" y="243" type="line"/>
+      <point x="21" y="117" type="line"/>
+    </contour>
+  </outline>
+</glyph>

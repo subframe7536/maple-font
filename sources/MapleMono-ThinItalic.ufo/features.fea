@@ -2536,6 +2536,7 @@ feature cv43 {
   sub zacute by zacute.cv43;
   sub zcaron by zcaron.cv43;
   sub zdotaccent by zdotaccent.cv43;
+  sub Z.bg by Z.bg.cv43;
 
 } cv43;
 

@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="dblarrowSW" format="2">
+  <advance width="600"/>
+  <unicode hex="21D9"/>
+  <outline>
+    <contour>
+      <point x="-18" y="43" type="line"/>
+      <point x="2" y="415" type="line"/>
+      <point x="90" y="490" type="line"/>
+      <point x="80" y="320" type="line"/>
+      <point x="387" y="581" type="line"/>
+      <point x="434" y="524" type="line"/>
+      <point x="75" y="219" type="line"/>
+      <point x="69" y="118" type="line"/>
+      <point x="168" y="106" type="line"/>
+      <point x="527" y="411" type="line"/>
+      <point x="574" y="355" type="line"/>
+      <point x="268" y="94" type="line"/>
+      <point x="434" y="73" type="line"/>
+      <point x="347" y="-1" type="line"/>
+    </contour>
+  </outline>
+</glyph>

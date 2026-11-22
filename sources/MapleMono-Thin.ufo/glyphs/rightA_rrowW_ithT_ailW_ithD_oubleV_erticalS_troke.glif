@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="rightArrowWithTailWithDoubleVerticalStroke" format="2">
+  <advance width="600"/>
+  <unicode hex="2915"/>
+  <outline>
+    <contour>
+      <point x="182" y="243" type="line"/>
+      <point x="84" y="117" type="line"/>
+      <point x="0" y="117" type="line"/>
+      <point x="126" y="275" type="line"/>
+      <point x="0" y="433" type="line"/>
+      <point x="84" y="433" type="line"/>
+      <point x="182" y="307" type="line"/>
+      <point x="205" y="307" type="line"/>
+      <point x="205" y="433" type="line"/>
+      <point x="275" y="433" type="line"/>
+      <point x="275" y="307" type="line"/>
+      <point x="300" y="307" type="line"/>
+      <point x="300" y="433" type="line"/>
+      <point x="370" y="433" type="line"/>
+      <point x="370" y="307" type="line"/>
+      <point x="497" y="307" type="line"/>
+      <point x="393" y="433" type="line"/>
+      <point x="477" y="433" type="line"/>
+      <point x="600" y="275" type="line"/>
+      <point x="477" y="117" type="line"/>
+      <point x="393" y="117" type="line"/>
+      <point x="497" y="243" type="line"/>
+      <point x="370" y="243" type="line"/>
+      <point x="370" y="117" type="line"/>
+      <point x="300" y="117" type="line"/>
+      <point x="300" y="243" type="line"/>
+      <point x="275" y="243" type="line"/>
+      <point x="275" y="117" type="line"/>
+      <point x="205" y="117" type="line"/>
+      <point x="205" y="243" type="line"/>
+    </contour>
+  </outline>
+</glyph>

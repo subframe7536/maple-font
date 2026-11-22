@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="lozengesquare" format="2">
+  <advance width="600"/>
+  <unicode hex="2311"/>
+  <outline>
+    <contour>
+      <point x="473" y="8" type="curve"/>
+      <point x="314" y="50"/>
+      <point x="144" y="50"/>
+      <point x="-31" y="8" type="curve"/>
+      <point x="41" y="175"/>
+      <point x="71" y="345"/>
+      <point x="58" y="512" type="curve"/>
+      <point x="218" y="470"/>
+      <point x="388" y="470"/>
+      <point x="562" y="512" type="curve"/>
+      <point x="491" y="345"/>
+      <point x="461" y="175"/>
+    </contour>
+    <contour>
+      <point x="130" y="425" type="curve"/>
+      <point x="135" y="316"/>
+      <point x="115" y="204"/>
+      <point x="72" y="95" type="curve"/>
+      <point x="185" y="119"/>
+      <point x="297" y="119"/>
+      <point x="402" y="95" type="curve"/>
+      <point x="397" y="204"/>
+      <point x="417" y="316"/>
+      <point x="460" y="425" type="curve"/>
+      <point x="347" y="401"/>
+      <point x="235" y="401"/>
+    </contour>
+  </outline>
+</glyph>

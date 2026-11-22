@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="Reverseddottedsigmalunatesymbol" format="2">
+  <advance width="600"/>
+  <unicode hex="03FF"/>
+  <anchor x="250" y="730" name="top"/>
+  <anchor x="250" y="0" name="bottom"/>
+  <outline>
+    <component base="Sigmalunatesymboldotted" xScale="-1" xOffset="599"/>
+  </outline>
+  <lib>
+    <dict>
+      <key>com.schriftgestaltung.Glyphs.ComponentInfo</key>
+      <array>
+        <dict>
+          <key>alignment</key>
+          <integer>-1</integer>
+          <key>index</key>
+          <integer>0</integer>
+          <key>name</key>
+          <string>Sigmalunatesymboldotted</string>
+        </dict>
+      </array>
+    </dict>
+  </lib>
+</glyph>

@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="pilcrowsignreversed" format="2">
+  <advance width="600"/>
+  <unicode hex="204B"/>
+  <outline>
+    <contour>
+      <point x="276.429" y="700" type="curve" smooth="yes"/>
+      <point x="128.314" y="-140" type="line" smooth="yes"/>
+      <point x="123.553" y="-167"/>
+      <point x="134.261" y="-180"/>
+      <point x="161.261" y="-180" type="curve" smooth="yes"/>
+      <point x="188.261" y="-180"/>
+      <point x="203.553" y="-167"/>
+      <point x="208.314" y="-140" type="curve" smooth="yes"/>
+      <point x="282.372" y="280" type="line" smooth="yes"/>
+      <point x="286.956" y="306"/>
+      <point x="301.248" y="319"/>
+      <point x="329.954" y="323" type="curve" smooth="yes"/>
+      <point x="435.775" y="339"/>
+      <point x="499.057" y="420"/>
+      <point x="518.453" y="530" type="curve" smooth="yes"/>
+      <point x="540.142" y="653"/>
+      <point x="493.482" y="740"/>
+      <point x="363.482" y="740" type="curve" smooth="yes"/>
+      <point x="323.482" y="740" type="line" smooth="yes"/>
+      <point x="296.482" y="740"/>
+      <point x="281.19" y="727"/>
+    </contour>
+    <contour>
+      <point x="106.429" y="700" type="curve" smooth="yes"/>
+      <point x="-41.686" y="-140" type="line" smooth="yes"/>
+      <point x="-46.447" y="-167"/>
+      <point x="-35.739" y="-180"/>
+      <point x="-8.739" y="-180" type="curve" smooth="yes"/>
+      <point x="18.261" y="-180"/>
+      <point x="33.553" y="-167"/>
+      <point x="38.314" y="-140" type="curve" smooth="yes"/>
+      <point x="186.429" y="700" type="line" smooth="yes"/>
+      <point x="191.19" y="727"/>
+      <point x="180.482" y="740"/>
+      <point x="153.482" y="740" type="curve" smooth="yes"/>
+      <point x="126.482" y="740"/>
+      <point x="111.19" y="727"/>
+    </contour>
+  </outline>
+</glyph>

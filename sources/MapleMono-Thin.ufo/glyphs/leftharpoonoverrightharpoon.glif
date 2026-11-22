@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="leftharpoonoverrightharpoon" format="2">
+  <advance width="600"/>
+  <unicode hex="21CB"/>
+  <outline>
+    <contour>
+      <point x="328" y="495" type="line"/>
+      <point x="248" y="427" type="line"/>
+      <point x="550" y="427" type="line"/>
+      <point x="550" y="350" type="line"/>
+      <point x="50" y="350" type="line"/>
+      <point x="273" y="550" type="line"/>
+    </contour>
+    <contour>
+      <point x="272" y="142" type="line"/>
+      <point x="352" y="210" type="line"/>
+      <point x="50" y="210" type="line"/>
+      <point x="50" y="287" type="line"/>
+      <point x="550" y="287" type="line"/>
+      <point x="327" y="87" type="line"/>
+    </contour>
+  </outline>
+</glyph>

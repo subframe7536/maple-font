@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="rightTwoHeadedArrowWithTail.1" format="2">
+  <advance width="600"/>
+  <outline>
+    <contour>
+      <point x="145" y="243" type="line"/>
+      <point x="25" y="117" type="line"/>
+      <point x="-59" y="117" type="line"/>
+      <point x="94" y="275" type="line"/>
+      <point x="-4" y="433" type="line"/>
+      <point x="80" y="433" type="line"/>
+      <point x="156" y="307" type="line"/>
+      <point x="319" y="307" type="line"/>
+      <point x="237" y="433" type="line"/>
+      <point x="320" y="433" type="line"/>
+      <point x="397" y="307" type="line"/>
+      <point x="471" y="307" type="line"/>
+      <point x="389" y="433" type="line"/>
+      <point x="473" y="433" type="line"/>
+      <point x="568" y="275" type="line"/>
+      <point x="418" y="117" type="line"/>
+      <point x="334" y="117" type="line"/>
+      <point x="460" y="243" type="line"/>
+      <point x="386" y="243" type="line"/>
+      <point x="265" y="117" type="line"/>
+      <point x="182" y="117" type="line"/>
+      <point x="308" y="243" type="line"/>
+    </contour>
+  </outline>
+</glyph>

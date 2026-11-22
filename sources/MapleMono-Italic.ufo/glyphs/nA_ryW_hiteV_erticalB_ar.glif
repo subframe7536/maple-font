@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="nAryWhiteVerticalBar" format="2">
+  <advance width="600"/>
+  <unicode hex="2AFF"/>
+  <outline>
+    <contour>
+      <point x="504" y="760" type="line"/>
+      <point x="322" y="-270" type="line"/>
+      <point x="22" y="-270" type="line"/>
+      <point x="204" y="760" type="line"/>
+    </contour>
+    <contour>
+      <point x="399" y="673" type="line"/>
+      <point x="279" y="673" type="line"/>
+      <point x="128" y="-183" type="line"/>
+      <point x="248" y="-183" type="line"/>
+    </contour>
+  </outline>
+</glyph>

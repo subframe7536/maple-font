@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="amalgamationOrCoproduct" format="2">
+  <advance width="600"/>
+  <unicode hex="2A3F"/>
+  <outline>
+    <contour>
+      <point x="10" y="59" type="curve"/>
+      <point x="86" y="485" type="line" smooth="yes"/>
+      <point x="91" y="516"/>
+      <point x="79" y="534"/>
+      <point x="45" y="537" type="curve"/>
+      <point x="47" y="550" type="line"/>
+      <point x="237" y="550" type="line"/>
+      <point x="235" y="537" type="line"/>
+      <point x="199" y="534"/>
+      <point x="181" y="518"/>
+      <point x="176" y="485" type="curve" smooth="yes"/>
+      <point x="102" y="70" type="line"/>
+      <point x="362" y="70" type="line"/>
+      <point x="436" y="485" type="line" smooth="yes"/>
+      <point x="441" y="516"/>
+      <point x="429" y="534"/>
+      <point x="395" y="537" type="curve"/>
+      <point x="397" y="550" type="line"/>
+      <point x="587" y="550" type="line"/>
+      <point x="585" y="537" type="line"/>
+      <point x="549" y="534"/>
+      <point x="531" y="518"/>
+      <point x="526" y="485" type="curve" smooth="yes"/>
+      <point x="451" y="62" type="line" smooth="yes"/>
+      <point x="445" y="30"/>
+      <point x="463" y="15"/>
+      <point x="497" y="13" type="curve"/>
+      <point x="495" y="0" type="line"/>
+      <point x="-55" y="0" type="line"/>
+      <point x="-53" y="13" type="line"/>
+      <point x="-17" y="15"/>
+      <point x="5" y="30"/>
+    </contour>
+  </outline>
+</glyph>

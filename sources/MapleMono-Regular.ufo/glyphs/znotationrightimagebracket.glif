@@ -3,29 +3,21 @@
   <advance width="600"/>
   <unicode hex="2988"/>
   <outline>
-    <contour>
-      <point x="115" y="-120" type="curve"/>
-      <point x="115" y="840" type="line"/>
-      <point x="312" y="808"/>
-      <point x="416" y="655"/>
-      <point x="440" y="450" type="curve" smooth="yes"/>
-      <point x="447" y="391"/>
-      <point x="447" y="329"/>
-      <point x="440" y="270" type="curve" smooth="yes"/>
-      <point x="416" y="65"/>
-      <point x="312" y="-88"/>
-    </contour>
-    <contour>
-      <point x="200" y="729" type="curve"/>
-      <point x="200" y="-5" type="line"/>
-      <point x="293" y="42"/>
-      <point x="335" y="143"/>
-      <point x="350" y="270" type="curve" smooth="yes"/>
-      <point x="357" y="329"/>
-      <point x="357" y="391"/>
-      <point x="350" y="450" type="curve" smooth="yes"/>
-      <point x="335" y="579"/>
-      <point x="293" y="681"/>
-    </contour>
+    <component base="znotationleftimagebracket" xScale="-1" xOffset="600"/>
   </outline>
+  <lib>
+    <dict>
+      <key>com.schriftgestaltung.Glyphs.ComponentInfo</key>
+      <array>
+        <dict>
+          <key>alignment</key>
+          <integer>-1</integer>
+          <key>index</key>
+          <integer>0</integer>
+          <key>name</key>
+          <string>znotationleftimagebracket</string>
+        </dict>
+      </array>
+    </dict>
+  </lib>
 </glyph>

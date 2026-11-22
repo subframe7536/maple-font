@@ -3,21 +3,13 @@
   <advance width="600"/>
   <unicode hex="23CB"/>
   <outline>
-    <component base="dentistrytopverticalright" xScale="-1" xOffset="600"/>
+    <contour>
+      <point x="281.086" y="630" type="line"/>
+      <point x="170" y="0" type="line"/>
+      <point x="270" y="0" type="line"/>
+      <point x="398.719" y="730" type="line"/>
+      <point x="28.719" y="730" type="line"/>
+      <point x="11.086" y="630" type="line"/>
+    </contour>
   </outline>
-  <lib>
-    <dict>
-      <key>com.schriftgestaltung.Glyphs.ComponentInfo</key>
-      <array>
-        <dict>
-          <key>alignment</key>
-          <integer>-1</integer>
-          <key>index</key>
-          <integer>0</integer>
-          <key>name</key>
-          <string>dentistrytopverticalright</string>
-        </dict>
-      </array>
-    </dict>
-  </lib>
 </glyph>

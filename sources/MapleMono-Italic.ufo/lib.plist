@@ -938,17 +938,12 @@
       <string>xcircle</string>
       <string>Icircle</string>
       <string>house</string>
-      <string>dentistrytopverticalright</string>
-      <string>dentistrybottomverticalright</string>
-      <string>dentistrytopverticalleft</string>
-      <string>dentistrybottomverticalleft</string>
       <string>lowringmod</string>
       <string>lowtildemod</string>
       <string>warningSign</string>
       <string>highVoltageSign</string>
       <string>at</string>
       <string>ampersand</string>
-      <string>paragraph</string>
       <string>section</string>
       <string>copyright</string>
       <string>copyleftsymbol</string>
@@ -988,7 +983,6 @@
       <string>yen</string>
       <string>leftBarbUpRightBarbDownHarpoon</string>
       <string>leftMultimap</string>
-      <string>nAryCircledDotOperator</string>
       <string>nArySquareIntersectionOperator</string>
       <string>nArySquareUnionOperator</string>
       <string>plus</string>
@@ -1040,8 +1034,6 @@
       <string>rightarrowoverleftarrow</string>
       <string>leftarrowoverrightarrow</string>
       <string>rightDoublePairedArrow</string>
-      <string>upDoubleArrow</string>
-      <string>downDoubleArrow</string>
       <string>leftDoubleArrow</string>
       <string>rightDoubleArrow</string>
       <string>leftRightDoubleArrow</string>
@@ -2641,6 +2633,101 @@
       <string>carriagereturn</string>
       <string>starwhite</string>
       <string>starblack</string>
+      <string>weierstrass</string>
+      <string>epsilonlunatesymbol</string>
+      <string>epsilonreversedlunatesymbol</string>
+      <string>Thetasymbol</string>
+      <string>yot</string>
+      <string>San</string>
+      <string>san</string>
+      <string>Sigmareversedlunatesymbol</string>
+      <string>Sigmalunatesymboldotted</string>
+      <string>Reverseddottedsigmalunatesymbol</string>
+      <string>charactertie</string>
+      <string>pilcrowsignreversed</string>
+      <string>paragraph</string>
+      <string>horizontalbar</string>
+      <string>ceilingleft</string>
+      <string>ceilingright</string>
+      <string>floorleft</string>
+      <string>floorright</string>
+      <string>dentistrytopverticalright</string>
+      <string>dentistrybottomverticalright</string>
+      <string>dentistrytopverticalleft</string>
+      <string>dentistrybottomverticalleft</string>
+      <string>leftwhitecurlybracket</string>
+      <string>rightwhitecurlybracket</string>
+      <string>znotationleftbindingbracket</string>
+      <string>znotationrightbindingbracket</string>
+      <string>uni261B</string>
+      <string>uni2710</string>
+      <string>uni261B.1</string>
+      <string>uni2710.1</string>
+      <string>verticalbarlight</string>
+      <string>verticalbarmedium</string>
+      <string>verticalbarheavy</string>
+      <string>frown</string>
+      <string>smile</string>
+      <string>lozengesquare</string>
+      <string>ohminverted</string>
+      <string>uni2135</string>
+      <string>amalgamationOrCoproduct</string>
+      <string>bigSolidus</string>
+      <string>bigReverseSolidus</string>
+      <string>tripleNestedLessThan</string>
+      <string>doublePrecedes</string>
+      <string>lessThanClosedByCurve</string>
+      <string>lessThanWithCircleInside</string>
+      <string>doubleNestedLessThan</string>
+      <string>doubleNestedGreaterThan</string>
+      <string>doubleSolidusOperator</string>
+      <string>nAryWhiteVerticalBar</string>
+      <string>dottedSquare</string>
+      <string>tripleVerticalBarBinaryRelation</string>
+      <string>zNotationDomainAntirestriction</string>
+      <string>zNotationRangeAntirestriction</string>
+      <string>lessThanOrApproximate</string>
+      <string>greaterThanOrApproximate</string>
+      <string>nAryCircledPlusOperator</string>
+      <string>nAryCircledTimesOperator</string>
+      <string>nAryCircledDotOperator</string>
+      <string>zNotationRelationalComposition</string>
+      <string>zNotationSchemaComposition</string>
+      <string>zNotationSchemaProjection</string>
+      <string>leftTripleDashArrow</string>
+      <string>rightTripleDashArrow</string>
+      <string>rightTwoHeadedArrowWithTail.1</string>
+      <string>rightArrowWithTailWithVerticalStroke</string>
+      <string>rightArrowWithTailWithDoubleVerticalStroke</string>
+      <string>rightDoubleArrowTail</string>
+      <string>zNotationTypeColon</string>
+      <string>rightTwoHeadedArrowWithVerticalStroke</string>
+      <string>rightLongFromBarArrow</string>
+      <string>leftLongFromBarArrow</string>
+      <string>leftLongDoubleArrow</string>
+      <string>rightLongDoubleArrow</string>
+      <string>leftRightLongDoubleArrow</string>
+      <string>arrowrightsquatblack</string>
+      <string>diamondminusxblackwhite</string>
+      <string>squarediagonalcrosshatchfill</string>
+      <string>harpoonupbarbleft</string>
+      <string>harpoonleftbarbup</string>
+      <string>harpoonleftbarbdown</string>
+      <string>harpoonrightbarbup</string>
+      <string>harpoonrightbarbdown</string>
+      <string>harpoondownbarbright</string>
+      <string>harpoondownbarbleft</string>
+      <string>rightharpoonoverleftharpoon</string>
+      <string>leftharpoonoverrightharpoon</string>
+      <string>dblarrowupdown</string>
+      <string>arrowdblup</string>
+      <string>arrowdbldown</string>
+      <string>dblarrowNE</string>
+      <string>dblarrowNW</string>
+      <string>dblarrowSE</string>
+      <string>dblarrowSW</string>
+      <string>verticalstrokearrowright</string>
+      <string>verticalsdbltrokearrowright</string>
     </array>
     <key>public.postscriptNames</key>
     <dict>
@@ -2894,6 +2981,10 @@
       <string>uni041F</string>
       <key>Rcommaaccent</key>
       <string>uni0156</string>
+      <key>Reverseddottedsigmalunatesymbol</key>
+      <string>uni03FF</string>
+      <key>San</key>
+      <string>uni03FA</string>
       <key>Schwa</key>
       <string>uni018F</string>
       <key>Schwa-cy</key>
@@ -2910,6 +3001,10 @@
       <string>uni04BA</string>
       <key>Sigmalunatesymbol</key>
       <string>uni03F9</string>
+      <key>Sigmalunatesymboldotted</key>
+      <string>uni03FE</string>
+      <key>Sigmareversedlunatesymbol</key>
+      <string>uni03FD</string>
       <key>Softsign-cy</key>
       <string>uni042C</string>
       <key>Tcedilla</key>
@@ -2918,6 +3013,8 @@
       <string>uni021A</string>
       <key>Te-cy</key>
       <string>uni0422</string>
+      <key>Thetasymbol</key>
+      <string>uni03F4</string>
       <key>Tse-cy</key>
       <string>uni0426</string>
       <key>Tshe-cy</key>
@@ -3054,6 +3151,8 @@
       <string>uni0251</string>
       <key>alphaturned</key>
       <string>uni0252</string>
+      <key>amalgamationOrCoproduct</key>
+      <string>uni2A3F</string>
       <key>anglearcright</key>
       <string>uni22BE</string>
       <key>angstrom</key>
@@ -3094,6 +3193,8 @@
       <string>uni21E2</string>
       <key>arrowrightdowntip</key>
       <string>uni21B3</string>
+      <key>arrowrightsquatblack</key>
+      <string>uni27A7</string>
       <key>arrowupdashed</key>
       <string>uni21E1</string>
       <key>arrowuprighttip</key>
@@ -3148,6 +3249,10 @@
       <string>uni23E3</string>
       <key>between</key>
       <string>uni226C</string>
+      <key>bigReverseSolidus</key>
+      <string>uni29F9</string>
+      <key>bigSolidus</key>
+      <string>uni29F8</string>
       <key>bishopblack</key>
       <string>uni265D</string>
       <key>bishopwhite</key>
@@ -3470,6 +3575,12 @@
       <string>uni0327</string>
       <key>cedillacomb.case</key>
       <string>uni0327.case</string>
+      <key>ceilingleft</key>
+      <string>uni2308</string>
+      <key>ceilingright</key>
+      <string>uni2309</string>
+      <key>charactertie</key>
+      <string>uni2040</string>
       <key>che-cy</key>
       <string>uni0447</string>
       <key>checkbox</key>
@@ -3592,6 +3703,16 @@
       <string>uni22CF</string>
       <key>curlylogicalor</key>
       <string>uni22CE</string>
+      <key>dblarrowNE</key>
+      <string>uni21D7</string>
+      <key>dblarrowNW</key>
+      <string>uni21D6</string>
+      <key>dblarrowSE</key>
+      <string>uni21D8</string>
+      <key>dblarrowSW</key>
+      <string>uni21D9</string>
+      <key>dblarrowupdown</key>
+      <string>uni21D5</string>
       <key>dblgravecomb</key>
       <string>uni030F</string>
       <key>dblgravecomb.case</key>
@@ -3618,6 +3739,8 @@
       <string>uni23CB</string>
       <key>dentistrytopverticalright</key>
       <string>uni23BE</string>
+      <key>diamondminusxblackwhite</key>
+      <string>uni2756</string>
       <key>diamondoperator</key>
       <string>uni22C4</string>
       <key>diamondwhite-misc</key>
@@ -3666,6 +3789,16 @@
       <string>uni2214</string>
       <key>dottedCircle</key>
       <string>uni25CC</string>
+      <key>dottedSquare</key>
+      <string>uni2B1A</string>
+      <key>doubleNestedGreaterThan</key>
+      <string>uni2AA2</string>
+      <key>doubleNestedLessThan</key>
+      <string>uni2AA1</string>
+      <key>doublePrecedes</key>
+      <string>uni2ABB</string>
+      <key>doubleSolidusOperator</key>
+      <string>uni2AFD</string>
       <key>doubleSucceeds</key>
       <string>uni2ABC</string>
       <key>doublebarvertical</key>
@@ -3678,8 +3811,6 @@
       <string>uni25BE</string>
       <key>downBlackTriangle</key>
       <string>triagdn</string>
-      <key>downDoubleArrow</key>
-      <string>arrowdbldown</string>
       <key>downFrombarArrow</key>
       <string>uni21A7</string>
       <key>downWhiteSmallTriangle</key>
@@ -3762,6 +3893,10 @@
       <string>uni025B</string>
       <key>eopenreversed</key>
       <string>uni025C</string>
+      <key>epsilonlunatesymbol</key>
+      <string>uni03F5</string>
+      <key>epsilonreversedlunatesymbol</key>
+      <string>uni03F6</string>
       <key>equal.inferior</key>
       <string>uni208C</string>
       <key>equal.superior</key>
@@ -3828,6 +3963,10 @@
       <string>uni2690</string>
       <key>flat-musical</key>
       <string>uni266D</string>
+      <key>floorleft</key>
+      <string>uni230A</string>
+      <key>floorright</key>
+      <string>uni230B</string>
       <key>floretteblack</key>
       <string>uni273F</string>
       <key>floretteoutlinedpetalledblackeight</key>
@@ -3846,6 +3985,8 @@
       <string>uni2074</string>
       <key>fourthroot-math</key>
       <string>uni221C</string>
+      <key>frown</key>
+      <string>uni2322</string>
       <key>fullBlock</key>
       <string>block</string>
       <key>gacute</key>
@@ -3876,6 +4017,8 @@
       <string>uni0453</string>
       <key>greaterThanClosedByCurve</key>
       <string>uni2AA7</string>
+      <key>greaterThanOrApproximate</key>
+      <string>uni2A86</string>
       <key>greaterThanWithCircleInside</key>
       <string>uni2A7A</string>
       <key>greaterbutnotequal</key>
@@ -3912,6 +4055,20 @@
       <string>uni04FD.cv36</string>
       <key>hardsign-cy</key>
       <string>uni044A</string>
+      <key>harpoondownbarbleft</key>
+      <string>uni21C3</string>
+      <key>harpoondownbarbright</key>
+      <string>uni21C2</string>
+      <key>harpoonleftbarbdown</key>
+      <string>uni21BD</string>
+      <key>harpoonleftbarbup</key>
+      <string>uni21BC</string>
+      <key>harpoonrightbarbdown</key>
+      <string>uni21C1</string>
+      <key>harpoonrightbarbup</key>
+      <string>uni21C0</string>
+      <key>harpoonupbarbleft</key>
+      <string>uni21BF</string>
       <key>hastroke-cy</key>
       <string>uni04FF</string>
       <key>hastroke-cy.cv36</key>
@@ -3938,6 +4095,8 @@
       <string>uni2095</string>
       <key>homotic</key>
       <string>uni223B</string>
+      <key>horizontalbar</key>
+      <string>uni2015</string>
       <key>horncomb</key>
       <string>uni031B</string>
       <key>horncomb.case</key>
@@ -4120,6 +4279,10 @@
       <string>uni21A9</string>
       <key>leftLongArrow</key>
       <string>uni27F5</string>
+      <key>leftLongDoubleArrow</key>
+      <string>uni27F8</string>
+      <key>leftLongFromBarArrow</key>
+      <string>uni27FB</string>
       <key>leftMultimap</key>
       <string>uni27DC</string>
       <key>leftOneEighthBlock</key>
@@ -4132,6 +4295,8 @@
       <string>arrowdblboth</string>
       <key>leftRightLongArrow</key>
       <string>uni27F7</string>
+      <key>leftRightLongDoubleArrow</key>
+      <string>uni27FA</string>
       <key>leftRightWaveArrow</key>
       <string>uni21AD</string>
       <key>leftSevenEighthsBlock</key>
@@ -4142,6 +4307,8 @@
       <string>uni258D</string>
       <key>leftThreeQuartersBlock</key>
       <string>uni258A</string>
+      <key>leftTripleDashArrow</key>
+      <string>uni290E</string>
       <key>leftTwoheadedArrow</key>
       <string>uni219E</string>
       <key>leftWhitePointer</key>
@@ -4156,10 +4323,20 @@
       <string>uni21C6</string>
       <key>leftdoubleanglebracket-math</key>
       <string>uni27EA</string>
+      <key>leftharpoonoverrightharpoon</key>
+      <string>uni21CB</string>
       <key>leftsshapedbagdelimiter</key>
       <string>uni27C5</string>
+      <key>leftwhitecurlybracket</key>
+      <string>uni2983</string>
       <key>leftwhitesquarebracket-math</key>
       <string>uni27E6</string>
+      <key>lessThanClosedByCurve</key>
+      <string>uni2AA6</string>
+      <key>lessThanOrApproximate</key>
+      <string>uni2A85</string>
+      <key>lessThanWithCircleInside</key>
+      <string>uni2A79</string>
       <key>lessbutnotequal</key>
       <string>uni2268</string>
       <key>lessbutnotequivalent</key>
@@ -4218,6 +4395,8 @@
       <string>uni02F3</string>
       <key>lowtildemod</key>
       <string>uni02F7</string>
+      <key>lozengesquare</key>
+      <string>uni2311</string>
       <key>macronbelowcomb.case</key>
       <string>uni0331.case</string>
       <key>macroncomb</key>
@@ -4264,10 +4443,16 @@
       <string>uni207F</string>
       <key>nAryCircledDotOperator</key>
       <string>uni2A00</string>
+      <key>nAryCircledPlusOperator</key>
+      <string>uni2A01</string>
+      <key>nAryCircledTimesOperator</key>
+      <string>uni2A02</string>
       <key>nArySquareIntersectionOperator</key>
       <string>uni2A05</string>
       <key>nArySquareUnionOperator</key>
       <string>uni2A06</string>
+      <key>nAryWhiteVerticalBar</key>
+      <string>uni2AFF</string>
       <key>naira</key>
       <string>uni20A6</string>
       <key>nand</key>
@@ -4380,6 +4565,8 @@
       <string>uni0328</string>
       <key>ogonekcomb.case</key>
       <string>uni0328.case</string>
+      <key>ohminverted</key>
+      <string>uni2127</string>
       <key>ohookabove</key>
       <string>uni1ECF</string>
       <key>ohornacute</key>
@@ -4450,6 +4637,8 @@
       <string>uni03D5</string>
       <key>piSymbol</key>
       <string>uni03D6</string>
+      <key>pilcrowsignreversed</key>
+      <string>uni204B</string>
       <key>pinferior</key>
       <string>uni209A</string>
       <key>pitchfork</key>
@@ -4508,6 +4697,10 @@
       <string>uni23CE</string>
       <key>rightArrow</key>
       <string>arrowright</string>
+      <key>rightArrowWithTailWithDoubleVerticalStroke</key>
+      <string>uni2915</string>
+      <key>rightArrowWithTailWithVerticalStroke</key>
+      <string>uni2914</string>
       <key>rightBlackPointer</key>
       <string>triagrt</string>
       <key>rightBlackSmallTriangle</key>
@@ -4518,6 +4711,8 @@
       <string>rtblock</string>
       <key>rightDoubleArrow</key>
       <string>arrowdblright</string>
+      <key>rightDoubleArrowTail</key>
+      <string>uni291C</string>
       <key>rightDoublePairedArrow</key>
       <string>uni21C9</string>
       <key>rightFrombarArrow</key>
@@ -4530,6 +4725,10 @@
       <string>uni2794</string>
       <key>rightHookArrow</key>
       <string>uni21AA</string>
+      <key>rightLongDoubleArrow</key>
+      <string>uni27F9</string>
+      <key>rightLongFromBarArrow</key>
+      <string>uni27FC</string>
       <key>rightOneEighthBlock</key>
       <string>uni2595</string>
       <key>rightTabArrow</key>
@@ -4542,8 +4741,14 @@
       <string>uni279D</string>
       <key>rightTripleArrow</key>
       <string>uni21DB</string>
+      <key>rightTripleDashArrow</key>
+      <string>uni290F</string>
       <key>rightTwoHeadedArrowWithTail</key>
       <string>uni2916</string>
+      <key>rightTwoHeadedArrowWithTail.1</key>
+      <string>uni2916.1</string>
+      <key>rightTwoHeadedArrowWithVerticalStroke</key>
+      <string>uni2900</string>
       <key>rightTwoheadedArrow</key>
       <string>uni21A0</string>
       <key>rightWaveArrow</key>
@@ -4562,10 +4767,14 @@
       <string>uni21C4</string>
       <key>rightdoubleanglebracket-math</key>
       <string>uni27EB</string>
+      <key>rightharpoonoverleftharpoon</key>
+      <string>uni21CC</string>
       <key>rightlongArrow</key>
       <string>uni27F6</string>
       <key>rightsshapedbagdelimiter</key>
       <string>uni27C6</string>
+      <key>rightwhitecurlybracket</key>
+      <string>uni2984</string>
       <key>rightwhitesquarebracket-math</key>
       <string>uni27E7</string>
       <key>ringbelowcomb</key>
@@ -4590,6 +4799,8 @@
       <string>uni20BD</string>
       <key>rupeeIndian</key>
       <string>uni20B9</string>
+      <key>san</key>
+      <string>uni03FB</string>
       <key>schwa</key>
       <string>uni0259</string>
       <key>schwa-cy</key>
@@ -4652,6 +4863,8 @@
       <string>uni0338</string>
       <key>slashshortcomb</key>
       <string>uni0337</string>
+      <key>smile</key>
+      <string>uni2323</string>
       <key>snowflake</key>
       <string>uni2744</string>
       <key>snowflaketight</key>
@@ -4678,6 +4891,8 @@
       <string>uni2294</string>
       <key>squareddotoperator</key>
       <string>uni22A1</string>
+      <key>squarediagonalcrosshatchfill</key>
+      <string>uni25A9</string>
       <key>squaredminus</key>
       <string>uni229F</string>
       <key>squaredplus</key>
@@ -4780,6 +4995,10 @@
       <string>uni2023</string>
       <key>tripleNestedGreaterThan</key>
       <string>uni2AF8</string>
+      <key>tripleNestedLessThan</key>
+      <string>uni2AF7</string>
+      <key>tripleVerticalBarBinaryRelation</key>
+      <string>uni2AF4</string>
       <key>triplearrowleft</key>
       <string>uni21DA</string>
       <key>tripleprime</key>
@@ -4864,8 +5083,6 @@
       <string>uni25B4</string>
       <key>upBlackTriangle</key>
       <string>triagup</string>
-      <key>upDoubleArrow</key>
-      <string>arrowdblup</string>
       <key>upDownArrow</key>
       <string>arrowupdn</string>
       <key>upFrombarArrow</key>
@@ -4918,10 +5135,20 @@
       <string>uni0432</string>
       <key>verticalBisectingLineWhiteSquare</key>
       <string>uni25EB</string>
+      <key>verticalbarheavy</key>
+      <string>uni275A</string>
+      <key>verticalbarlight</key>
+      <string>uni2758</string>
+      <key>verticalbarmedium</key>
+      <string>uni2759</string>
       <key>verticallinelowmod</key>
       <string>uni02CC</string>
       <key>verticallinemod</key>
       <string>uni02C8</string>
+      <key>verticalsdbltrokearrowright</key>
+      <string>uni21FB</string>
+      <key>verticalstrokearrowright</key>
+      <string>uni21F8</string>
       <key>verymuchgreater</key>
       <string>uni22D9</string>
       <key>verymuchless</key>
@@ -4980,10 +5207,24 @@
       <string>uni0233</string>
       <key>ymacron.cv37</key>
       <string>uni0233.cv37</string>
+      <key>yot</key>
+      <string>uni03F3</string>
       <key>ytilde</key>
       <string>uni1EF9</string>
       <key>ytilde.cv37</key>
       <string>uni1EF9.cv37</string>
+      <key>zNotationDomainAntirestriction</key>
+      <string>uni2A64</string>
+      <key>zNotationRangeAntirestriction</key>
+      <string>uni2A65</string>
+      <key>zNotationRelationalComposition</key>
+      <string>uni2A3E</string>
+      <key>zNotationSchemaComposition</key>
+      <string>uni2A1F</string>
+      <key>zNotationSchemaProjection</key>
+      <string>uni2A21</string>
+      <key>zNotationTypeColon</key>
+      <string>uni2982</string>
       <key>ze-cy</key>
       <string>uni0437</string>
       <key>ze-cy.loclBGR</key>
@@ -5012,8 +5253,12 @@
       <string>uni04DD</string>
       <key>znotationbagmembership</key>
       <string>uni22FF</string>
+      <key>znotationleftbindingbracket</key>
+      <string>uni2989</string>
       <key>znotationleftimagebracket</key>
       <string>uni2987</string>
+      <key>znotationrightbindingbracket</key>
+      <string>uni298A</string>
       <key>znotationrightimagebracket</key>
       <string>uni2988</string>
     </dict>

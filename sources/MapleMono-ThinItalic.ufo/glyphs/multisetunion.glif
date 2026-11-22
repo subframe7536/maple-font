@@ -2,6 +2,7 @@
 <glyph name="multisetunion" format="2">
   <advance width="600"/>
   <unicode hex="228E"/>
+  <unicode hex="2A04"/>
   <outline>
     <contour>
       <point x="500.837" y="230" type="curve" smooth="yes"/>

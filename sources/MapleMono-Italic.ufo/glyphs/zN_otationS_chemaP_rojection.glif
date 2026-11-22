@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="zNotationSchemaProjection" format="2">
+  <advance width="600"/>
+  <unicode hex="2A21"/>
+  <outline>
+    <contour>
+      <point x="422" y="429" type="line"/>
+      <point x="339" y="553" type="line"/>
+      <point x="200" y="-230" type="line"/>
+      <point x="123" y="-230" type="line"/>
+      <point x="296" y="750" type="line"/>
+      <point x="486" y="484" type="line"/>
+    </contour>
+  </outline>
+</glyph>

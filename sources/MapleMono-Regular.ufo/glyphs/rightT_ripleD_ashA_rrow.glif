@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="rightTripleDashArrow" format="2">
+  <advance width="600"/>
+  <unicode hex="290F"/>
+  <outline>
+    <contour>
+      <point x="360" y="307" type="line"/>
+      <point x="497" y="307" type="line"/>
+      <point x="393" y="433" type="line"/>
+      <point x="477" y="433" type="line"/>
+      <point x="600" y="275" type="line"/>
+      <point x="477" y="117" type="line"/>
+      <point x="393" y="117" type="line"/>
+      <point x="497" y="243" type="line"/>
+      <point x="360" y="243" type="line"/>
+    </contour>
+    <contour>
+      <point x="310" y="243" type="line"/>
+      <point x="170" y="243" type="line"/>
+      <point x="170" y="307" type="line"/>
+      <point x="310" y="307" type="line"/>
+    </contour>
+    <contour>
+      <point x="0" y="243" type="line"/>
+      <point x="0" y="307" type="line"/>
+      <point x="120" y="307" type="line"/>
+      <point x="120" y="243" type="line"/>
+    </contour>
+  </outline>
+</glyph>

@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="doubleNestedLessThan" format="2">
+  <advance width="600"/>
+  <unicode hex="2AA1"/>
+  <outline>
+    <contour>
+      <point x="491.826" y="-18" type="line"/>
+      <point x="502.935" y="45" type="line"/>
+      <point x="119.611" y="253" type="line"/>
+      <point x="576.463" y="462" type="line"/>
+      <point x="587.395" y="524" type="line"/>
+      <point x="-9.508" y="258" type="line"/>
+      <point x="-11.271" y="248" type="line"/>
+    </contour>
+    <contour>
+      <point x="513.867" y="107" type="line"/>
+      <point x="525.681" y="174" type="line"/>
+      <point x="380.611" y="253" type="line"/>
+      <point x="553.364" y="331" type="line"/>
+      <point x="565.002" y="397" type="line"/>
+      <point x="252.492" y="258" type="line"/>
+      <point x="250.729" y="248" type="line"/>
+    </contour>
+  </outline>
+</glyph>

@@ -79,11 +79,11 @@
     <dict>
       <key>GSDimensionPlugin.Dimensions</key>
       <dict>
-        <key>14D55BA4-4BD8-48D4-B7FB-10E9BB8AA75A</key>
+        <key>3FD07A34-8A97-46F6-AE99-6A6B6CA74913</key>
         <dict/>
-        <key>1C81519E-CA65-4963-B918-5C0B624B750E</key>
+        <key>AAC7D390-5153-4E37-8298-7A563F062EEF</key>
         <dict/>
-        <key>B92838BB-1F21-43C9-A4F7-9336D65FE3B4</key>
+        <key>CE6EB677-BB95-48D5-9DA1-1440327EA1B4</key>
         <dict/>
       </dict>
       <key>public.skipExportGlyphs</key>

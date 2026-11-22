@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="nAryCircledPlusOperator" format="2">
+  <advance width="600"/>
+  <unicode hex="2A01"/>
+  <outline>
+    <contour>
+      <point x="569" y="275" type="qcurve" smooth="yes"/>
+      <point x="569" y="201"/>
+      <point x="498" y="77"/>
+      <point x="374" y="5"/>
+      <point x="300" y="5" type="qcurve" smooth="yes"/>
+      <point x="227" y="5"/>
+      <point x="104" y="77"/>
+      <point x="32" y="201"/>
+      <point x="32" y="275" type="qcurve" smooth="yes"/>
+      <point x="32" y="349"/>
+      <point x="104" y="472"/>
+      <point x="227" y="544"/>
+      <point x="300" y="544" type="qcurve" smooth="yes"/>
+      <point x="374" y="544"/>
+      <point x="498" y="472"/>
+      <point x="569" y="349"/>
+    </contour>
+    <contour>
+      <point x="332" y="306" type="line"/>
+      <point x="494" y="306" type="line"/>
+      <point x="489" y="348"/>
+      <point x="444" y="418"/>
+      <point x="374" y="464"/>
+      <point x="332" y="470" type="qcurve"/>
+    </contour>
+    <contour>
+      <point x="269" y="306" type="line"/>
+      <point x="269" y="470" type="line"/>
+      <point x="227" y="464"/>
+      <point x="157" y="418"/>
+      <point x="112" y="348"/>
+      <point x="106" y="306" type="qcurve"/>
+    </contour>
+    <contour>
+      <point x="332" y="244" type="line"/>
+      <point x="332" y="80" type="line"/>
+      <point x="374" y="86"/>
+      <point x="444" y="131"/>
+      <point x="489" y="201"/>
+      <point x="494" y="244" type="qcurve"/>
+    </contour>
+    <contour>
+      <point x="269" y="244" type="line"/>
+      <point x="106" y="244" type="line"/>
+      <point x="112" y="202"/>
+      <point x="157" y="131"/>
+      <point x="227" y="86"/>
+      <point x="269" y="80" type="qcurve"/>
+    </contour>
+  </outline>
+</glyph>
