@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="verticalsdbltrokearrowright" format="2">
+  <advance width="600"/>
+  <unicode hex="21FB"/>
+  <outline>
+    <contour>
+      <point x="-37" y="243" type="line"/>
+      <point x="-26" y="307" type="line"/>
+      <point x="84" y="307" type="line"/>
+      <point x="106" y="433" type="line"/>
+      <point x="176" y="433" type="line"/>
+      <point x="154" y="307" type="line"/>
+      <point x="224" y="307" type="line"/>
+      <point x="246" y="433" type="line"/>
+      <point x="316" y="433" type="line"/>
+      <point x="294" y="307" type="line"/>
+      <point x="471" y="307" type="line"/>
+      <point x="389" y="433" type="line"/>
+      <point x="473" y="433" type="line"/>
+      <point x="568" y="275" type="line"/>
+      <point x="418" y="117" type="line"/>
+      <point x="334" y="117" type="line"/>
+      <point x="460" y="243" type="line"/>
+      <point x="283" y="243" type="line"/>
+      <point x="261" y="117" type="line"/>
+      <point x="191" y="117" type="line"/>
+      <point x="213" y="243" type="line"/>
+      <point x="143" y="243" type="line"/>
+      <point x="121" y="117" type="line"/>
+      <point x="51" y="117" type="line"/>
+      <point x="73" y="243" type="line"/>
+    </contour>
+  </outline>
+</glyph>

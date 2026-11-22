@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="rightTwoHeadedArrowWithVerticalStroke" format="2">
+  <advance width="600"/>
+  <unicode hex="2900"/>
+  <outline>
+    <contour>
+      <point x="172" y="243" type="line"/>
+      <point x="172" y="117" type="line"/>
+      <point x="98" y="117" type="line"/>
+      <point x="98" y="243" type="line"/>
+      <point x="10" y="243" type="line"/>
+      <point x="10" y="307" type="line"/>
+      <point x="98" y="307" type="line"/>
+      <point x="98" y="433" type="line"/>
+      <point x="172" y="433" type="line"/>
+      <point x="172" y="307" type="line"/>
+      <point x="335" y="307" type="line"/>
+      <point x="231" y="433" type="line"/>
+      <point x="314" y="433" type="line"/>
+      <point x="413" y="307" type="line"/>
+      <point x="487" y="307" type="line"/>
+      <point x="383" y="433" type="line"/>
+      <point x="467" y="433" type="line"/>
+      <point x="590" y="275" type="line"/>
+      <point x="467" y="117" type="line"/>
+      <point x="383" y="117" type="line"/>
+      <point x="487" y="243" type="line"/>
+      <point x="413" y="243" type="line"/>
+      <point x="314" y="117" type="line"/>
+      <point x="231" y="117" type="line"/>
+      <point x="335" y="243" type="line"/>
+    </contour>
+  </outline>
+</glyph>

@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="dblarrowupdown" format="2">
+  <advance width="600"/>
+  <unicode hex="21D5"/>
+  <outline>
+    <contour>
+      <point x="220" y="28" type="line"/>
+      <point x="220" y="612" type="line"/>
+      <point x="300" y="675" type="line"/>
+      <point x="380" y="612" type="line"/>
+      <point x="380" y="28" type="line"/>
+      <point x="300" y="-35" type="line"/>
+    </contour>
+    <contour>
+      <point x="300" y="-140" type="line"/>
+      <point x="595" y="91" type="line"/>
+      <point x="595" y="197" type="line"/>
+      <point x="460" y="91" type="line"/>
+      <point x="460" y="549" type="line"/>
+      <point x="595" y="443" type="line"/>
+      <point x="595" y="549" type="line"/>
+      <point x="300" y="780" type="line"/>
+      <point x="5" y="548" type="line"/>
+      <point x="5" y="443" type="line"/>
+      <point x="140" y="549" type="line"/>
+      <point x="140" y="91" type="line"/>
+      <point x="5" y="197" type="line"/>
+      <point x="5" y="92" type="line"/>
+    </contour>
+  </outline>
+</glyph>

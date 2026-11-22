@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="harpoondownbarbright" format="2">
+  <advance width="600"/>
+  <unicode hex="21C2"/>
+  <outline>
+    <contour>
+      <point x="373" y="750" type="line"/>
+      <point x="235" y="-33" type="line"/>
+      <point x="362" y="91" type="line"/>
+      <point x="407" y="36" type="line"/>
+      <point x="123" y="-230" type="line"/>
+      <point x="296" y="750" type="line"/>
+    </contour>
+  </outline>
+</glyph>

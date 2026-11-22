@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="dblarrowNE" format="2">
+  <advance width="600"/>
+  <unicode hex="21D7"/>
+  <outline>
+    <contour>
+      <point x="561" y="537" type="line"/>
+      <point x="540" y="165" type="line"/>
+      <point x="452" y="90" type="line"/>
+      <point x="462" y="260" type="line"/>
+      <point x="155" y="-1" type="line"/>
+      <point x="108" y="56" type="line"/>
+      <point x="468" y="361" type="line"/>
+      <point x="473" y="462" type="line"/>
+      <point x="375" y="474" type="line"/>
+      <point x="15" y="169" type="line"/>
+      <point x="-31" y="225" type="line"/>
+      <point x="275" y="486" type="line"/>
+      <point x="108" y="507" type="line"/>
+      <point x="195" y="581" type="line"/>
+    </contour>
+  </outline>
+</glyph>

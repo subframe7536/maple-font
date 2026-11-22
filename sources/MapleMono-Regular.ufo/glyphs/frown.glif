@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="frown" format="2">
+  <advance width="600"/>
+  <unicode hex="2322"/>
+  <outline>
+    <component base="undertie" yScale="-1" yOffset="-10"/>
+  </outline>
+  <lib>
+    <dict>
+      <key>com.schriftgestaltung.Glyphs.ComponentInfo</key>
+      <array>
+        <dict>
+          <key>alignment</key>
+          <integer>-1</integer>
+          <key>index</key>
+          <integer>0</integer>
+          <key>name</key>
+          <string>undertie</string>
+        </dict>
+      </array>
+    </dict>
+  </lib>
+</glyph>

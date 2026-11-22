@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="zNotationRangeAntirestriction" format="2">
+  <advance width="600"/>
+  <unicode hex="2A65"/>
+  <outline>
+    <contour>
+      <point x="-92.164" y="-86" type="line"/>
+      <point x="546.553" y="247" type="line"/>
+      <point x="25.446" y="581" type="line"/>
+    </contour>
+    <contour>
+      <point x="18.169" y="52" type="line"/>
+      <point x="45.852" y="209" type="line"/>
+      <point x="318.852" y="209" type="line"/>
+    </contour>
+    <contour>
+      <point x="331.43" y="286" type="line"/>
+      <point x="59.43" y="286" type="line"/>
+      <point x="86.937" y="442" type="line"/>
+    </contour>
+  </outline>
+</glyph>

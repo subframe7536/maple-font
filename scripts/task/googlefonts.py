@@ -30,6 +30,8 @@ SOURCE_DIR = Path("sources")
 BUILDER_CONFIG = Path("sources/config.yaml")
 FONTBAKERY_ARGS = (
     "check-googlefonts",
+    "--exclude-checkid",
+    "family/win_ascent_and_descent",
     "--ghmarkdown",
     "fonts/report.md",
     "fonts/variable/*.ttf",

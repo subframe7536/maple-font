@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="ceilingright" format="2">
+  <advance width="600"/>
+  <unicode hex="2309"/>
+  <outline>
+    <contour>
+      <point x="416.086" y="630" type="line"/>
+      <point x="305" y="0" type="line"/>
+      <point x="405" y="0" type="line"/>
+      <point x="533.719" y="730" type="line"/>
+      <point x="163.719" y="730" type="line"/>
+      <point x="146.086" y="630" type="line"/>
+    </contour>
+  </outline>
+</glyph>

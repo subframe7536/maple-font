@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="znotationrightbindingbracket" format="2">
+  <advance width="600"/>
+  <unicode hex="298A"/>
+  <outline>
+    <contour>
+      <point x="167.185" y="761" type="curve" smooth="yes"/>
+      <point x="25.771" y="-41" type="line" smooth="yes"/>
+      <point x="11.841" y="-120"/>
+      <point x="80.077" y="-130"/>
+      <point x="131.952" y="-74" type="curve" smooth="yes"/>
+      <point x="456.49" y="275" type="line" smooth="yes"/>
+      <point x="509.717" y="333"/>
+      <point x="521.357" y="382"/>
+      <point x="485.937" y="442" type="curve" smooth="yes"/>
+      <point x="279.122" y="789" type="line" smooth="yes"/>
+      <point x="249.115" y="840"/>
+      <point x="180.233" y="835"/>
+    </contour>
+    <contour>
+      <point x="137.988" y="85" type="curve" smooth="yes"/>
+      <point x="234.791" y="634" type="line" smooth="yes"/>
+      <point x="237.26" y="648"/>
+      <point x="252.318" y="654"/>
+      <point x="259.202" y="642" type="curve" smooth="yes"/>
+      <point x="407.886" y="385" type="line" smooth="yes"/>
+      <point x="418.536" y="366"/>
+      <point x="417.42" y="354"/>
+      <point x="398.893" y="334" type="curve" smooth="yes"/>
+      <point x="161.225" y="75" type="line" smooth="yes"/>
+      <point x="143.874" y="56"/>
+      <point x="134.109" y="63"/>
+    </contour>
+  </outline>
+</glyph>

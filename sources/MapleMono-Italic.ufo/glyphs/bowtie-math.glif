@@ -2,6 +2,7 @@
 <glyph name="bowtie-math" format="2">
   <advance width="600"/>
   <unicode hex="22C8"/>
+  <unicode hex="2A1D"/>
   <outline>
     <contour>
       <point x="263" y="236" type="line"/>

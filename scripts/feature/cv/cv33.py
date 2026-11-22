@@ -12,17 +12,24 @@ def cv33_subst():
 
         return result
 
-    return ast.subst_map(
-        [
-            *GLYPHS_I,
-            "j",
-            "jcircumflex",
-            "jdotless",
-            "je-cy",
-            *gen("", ".cv04"),
-        ],
-        target_suffix=".cv33",
-    )
+    return [
+        ast.subst_map(
+            [
+                *GLYPHS_I,
+                "j",
+                "jcircumflex",
+                "jdotless",
+                "je-cy",
+                *gen(""),
+            ],
+            target_suffix=".cv33",
+        ),
+        ast.subst_map(
+            gen(""),
+            source_suffix=".cv46",
+            target_suffix=".cv33.cv46",
+        ),
+    ]
 
 
 cv33_name = "Alternative Italic `i` and `j` with left bottom bar and horizen top bar"

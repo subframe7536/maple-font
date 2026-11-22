@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="sigmalunatereversedsymbol" format="2">
+  <advance width="600"/>
+  <unicode hex="037B"/>
+  <anchor x="290" y="0" name="bottom"/>
+  <anchor x="290" y="550" name="top"/>
+  <outline>
+    <component base="c" xScale="-1" xOffset="599"/>
+  </outline>
+  <lib>
+    <dict>
+      <key>com.schriftgestaltung.Glyphs.ComponentInfo</key>
+      <array>
+        <dict>
+          <key>alignment</key>
+          <integer>-1</integer>
+          <key>index</key>
+          <integer>0</integer>
+          <key>name</key>
+          <string>c</string>
+        </dict>
+      </array>
+    </dict>
+  </lib>
+</glyph>

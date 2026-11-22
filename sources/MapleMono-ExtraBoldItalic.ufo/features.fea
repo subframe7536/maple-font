@@ -1,5 +1,5 @@
 @Zero = [zero zero.zero];
-@One = [one one.cv04];
+@One = [one one.cv46];
 @Digit = [@Zero @One two three four five six seven eight nine];
 @Comma = [comma comma.cv61];
 @Question = [question question.cv62];
@@ -31,7 +31,7 @@
 @X = [X x x.cv36];
 @Y = [Y y y.cv37];
 @Z = [Z z];
-@AL = [a_l.liga a_l.liga.cv31 a_l.liga.cv35 a_l.liga.cv31.cv35 a_l.liga.cv04 a_l.liga.cv04.cv31 a_l.liga.ss06];
+@AL = [a_l.liga a_l.liga.cv31 a_l.liga.cv35 a_l.liga.cv31.cv35 a_l.liga.cv46 a_l.liga.cv31.cv46 a_l.liga.ss06];
 @Var = [underscore underscore_underscore.liga @A @B @C @D @E @F @G @H @I @J @K @L @M @N @O @P @Q @R @S @T @U @V @W @X @Y @Z @Digit];
 @HexLetter = [@A @B @C @D @E @F];
 
@@ -65,8 +65,8 @@ feature aalt {
 
 feature ccmp {
 
-  @CombiningTopAccents = [acutecomb brevecomb caroncomb circumflexcomb commaturnedabovecomb dblgravecomb dieresiscomb dotaccentcomb gravecomb hookabovecomb hungarumlautcomb macroncomb ringcomb tildecomb];
-  @CombiningNonTopAccents = [cedillacomb dotbelowcomb ogonekcomb ringbelowcomb horncomb slashlongcomb slashshortcomb strokelongcomb];
+  @CombiningTopAccents = [acutecomb brevecomb caroncomb circumflexcomb commaturnedabovecomb dblgravecomb dieresiscomb dotaccentcomb gravecomb hookabovecomb hungarumlautcomb macroncomb overlinecomb ringcomb tildecomb];
+  @CombiningNonTopAccents = [cedillacomb commaaccentcomb dotbelowcomb ogonekcomb ringbelowcomb horncomb slashlongcomb slashshortcomb strokelongcomb];
   @Markscomb = [dieresiscomb dotaccentcomb gravecomb acutecomb hungarumlautcomb circumflexcomb caroncomb brevecomb ringcomb tildecomb macroncomb hookabovecomb dblgravecomb commaturnedabovecomb horncomb dotbelowcomb commaaccentcomb cedillacomb ogonekcomb dieresis dotaccent acute hungarumlaut circumflex caron breve ring tilde macron tonos brevecomb_acutecomb brevecomb_gravecomb brevecomb_hookabovecomb brevecomb_tildecomb circumflexcomb_acutecomb circumflexcomb_gravecomb circumflexcomb_hookabovecomb circumflexcomb_tildecomb];
   @MarkscombCase = [dieresiscomb.case dotaccentcomb.case gravecomb.case acutecomb.case hungarumlautcomb.case circumflexcomb.case caroncomb.case brevecomb.case ringcomb.case tildecomb.case macroncomb.case hookabovecomb.case dblgravecomb.case commaturnedabovecomb.case horncomb.case dotbelowcomb.case commaaccentcomb.case cedillacomb.case ogonekcomb.case dieresis.case dotaccent.case acute.case hungarumlaut.case circumflex.case caron.case breve.case ring.case tilde.case macron.case tonos.case brevecomb_acutecomb.case brevecomb_gravecomb.case brevecomb_hookabovecomb.case brevecomb_tildecomb.case circumflexcomb_acutecomb.case circumflexcomb_gravecomb.case circumflexcomb_hookabovecomb.case circumflexcomb_tildecomb.case];
 
@@ -99,6 +99,8 @@ feature ccmp {
     sub circumflexcomb.case tildecomb.case by circumflexcomb_tildecomb.case;
   } ccmp_latn;
   script latn;
+  lookup ccmp_other;
+  script cyrl;
   lookup ccmp_other;
 
 } ccmp;
@@ -2035,35 +2037,12 @@ feature cv04 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV04: Alternative l with left bottom bar, like consolas, will be overrided by cv35 in italic style";
+      name "CV04: [Regular Only] Alternative l with left bottom bar, like consolas";
     };
   };
 
-  sub l by l.cv04;
-  sub lacute by lacute.cv04;
-  sub lcaron by lcaron.cv04;
-  sub lcommaaccent by lcommaaccent.cv04;
-  sub ldot by ldot.cv04;
-  sub lslash by lslash.cv04;
-  sub linferior by linferior.cv04;
-  sub one by one.cv04;
-  sub one.dnom by one.dnom.cv04;
-  sub one.numr by one.numr.cv04;
-  sub oneinferior by oneinferior.cv04;
-  sub onesuperior by onesuperior.cv04;
-  sub C_l.liga by C_l.liga.cv04;
-  sub a_l.liga by a_l.liga.cv04;
-  sub c_l.liga by c_l.liga.cv04;
-  sub e_l.liga by e_l.liga.cv04;
-  sub i_l.liga by i_l.liga.cv04;
-  sub l_l.liga by l_l.liga.cv04;
-  sub t_l.liga by t_l.liga.cv04;
-  sub u_l.liga by u_l.liga.cv04;
-  sub x_l.liga by x_l.liga.cv04;
-  sub a_l_l.liga by a_l_l.liga.cv04;
-  sub e_l_l.liga by e_l_l.liga.cv04;
-  sub i_l_l.liga by i_l_l.liga.cv04;
-  sub u_l_l.liga by u_l_l.liga.cv04;
+  # Placeholder
+  sub EMquad by space;
 
 } cv04;
 
@@ -2171,6 +2150,19 @@ feature cv12 {
 
 } cv12;
 
+feature cv13 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV13: [Regular Only] Alternative y in rounded style, no effect in italic style";
+    };
+  };
+
+  # Placeholder
+  sub EMquad by space;
+
+} cv13;
+
 feature cv31 {
 
   cvParameters {
@@ -2207,8 +2199,8 @@ feature cv31 {
   sub ainferior by ainferior.cv31;
   sub a_l.liga by a_l.liga.cv31;
   sub a_l_l.liga by a_l_l.liga.cv31;
-  sub a_l.liga.cv04 by a_l.liga.cv04.cv31;
-  sub a_l_l.liga.cv04 by a_l_l.liga.cv04.cv31;
+  sub a_l.liga.cv46 by a_l.liga.cv31.cv46;
+  sub a_l_l.liga.cv46 by a_l_l.liga.cv31.cv46;
 
 } cv31;
 
@@ -2258,8 +2250,8 @@ feature cv33 {
   sub je-cy by je-cy.cv33;
   sub i_l.liga by i_l.liga.cv33;
   sub i_l_l.liga by i_l_l.liga.cv33;
-  sub i_l.liga.cv04 by i_l.liga.cv04.cv33;
-  sub i_l_l.liga.cv04 by i_l_l.liga.cv04.cv33;
+  sub i_l.liga.cv46 by i_l.liga.cv33.cv46;
+  sub i_l_l.liga.cv46 by i_l_l.liga.cv33.cv46;
 
 } cv33;
 
@@ -2303,38 +2295,10 @@ feature cv35 {
   sub e_l_l.liga by e_l_l.liga.cv35;
   sub i_l_l.liga by i_l_l.liga.cv35;
   sub u_l_l.liga by u_l_l.liga.cv35;
-  sub l.cv04 by l.cv35;
-  sub lacute.cv04 by lacute.cv35;
-  sub lcaron.cv04 by lcaron.cv35;
-  sub lcommaaccent.cv04 by lcommaaccent.cv35;
-  sub ldot.cv04 by ldot.cv35;
-  sub linferior.cv04 by linferior.cv35;
-  sub C_l.liga.cv04 by C_l.liga.cv35;
-  sub a_l.liga.cv04 by a_l.liga.cv35;
-  sub c_l.liga.cv04 by c_l.liga.cv35;
-  sub e_l.liga.cv04 by e_l.liga.cv35;
-  sub i_l.liga.cv04 by i_l.liga.cv35;
-  sub l_l.liga.cv04 by l_l.liga.cv35;
-  sub t_l.liga.cv04 by t_l.liga.cv35;
-  sub u_l.liga.cv04 by u_l.liga.cv35;
-  sub x_l.liga.cv04 by x_l.liga.cv35;
-  sub a_l_l.liga.cv04 by a_l_l.liga.cv35;
-  sub e_l_l.liga.cv04 by e_l_l.liga.cv35;
-  sub i_l_l.liga.cv04 by i_l_l.liga.cv35;
-  sub u_l_l.liga.cv04 by u_l_l.liga.cv35;
   sub a_l.liga.cv31 by a_l.liga.cv31.cv35;
-  sub a_l.liga.cv04.cv31 by a_l.liga.cv31.cv35;
   sub a_l_l.liga.cv31 by a_l_l.liga.cv31.cv35;
-  sub a_l_l.liga.cv04.cv31 by a_l_l.liga.cv31.cv35;
   sub i_l.liga.cv33 by i_l.liga.cv33.cv35;
-  sub i_l.liga.cv04.cv33 by i_l.liga.cv33.cv35;
   sub i_l_l.liga.cv33 by i_l_l.liga.cv33.cv35;
-  sub i_l_l.liga.cv04.cv33 by i_l_l.liga.cv33.cv35;
-  sub one.cv04 by one;
-  sub one.dnom.cv04 by one.dnom;
-  sub one.numr.cv04 by one.numr;
-  sub oneinferior.cv04 by oneinferior;
-  sub onesuperior.cv04 by onesuperior;
 
 } cv35;
 
@@ -2352,8 +2316,8 @@ feature cv36 {
   sub hahook-cy by hahook-cy.cv36;
   sub hastroke-cy by hastroke-cy.cv36;
   sub x_l.liga by x_l.liga.cv36;
-  sub x_l.liga.cv04 by x_l.liga.cv04.cv36;
   sub x_l.liga.cv35 by x_l.liga.cv35.cv36;
+  sub x_l.liga.cv46 by x_l.liga.cv36.cv46;
 
 } cv36;
 
@@ -2448,14 +2412,14 @@ feature cv39 {
   sub i.superior.cv33 by i.superior.cv39;
   sub i_l.liga by i_l.liga.cv39;
   sub i_l_l.liga by i_l_l.liga.cv39;
-  sub i_l.liga.cv04 by i_l.liga.cv04.cv39;
-  sub i_l_l.liga.cv04 by i_l_l.liga.cv04.cv39;
   sub i_l.liga.cv33 by i_l.liga.cv33.cv39;
   sub i_l_l.liga.cv33 by i_l_l.liga.cv33.cv39;
-  sub i_l.liga.cv04.cv33 by i_l.liga.cv04.cv33.cv39;
-  sub i_l_l.liga.cv04.cv33 by i_l_l.liga.cv04.cv33.cv39;
   sub i_l.liga.cv33.cv35 by i_l.liga.cv33.cv35.cv39;
   sub i_l_l.liga.cv33.cv35 by i_l_l.liga.cv33.cv35.cv39;
+  sub i_l.liga.cv46 by i_l.liga.cv39.cv46;
+  sub i_l_l.liga.cv46 by i_l_l.liga.cv39.cv46;
+  sub i_l.liga.cv33.cv46 by i_l.liga.cv33.cv39.cv46;
+  sub i_l_l.liga.cv33.cv46 by i_l_l.liga.cv33.cv39.cv46;
 
 } cv39;
 
@@ -2521,6 +2485,7 @@ feature cv43 {
   sub zacute by zacute.cv43;
   sub zcaron by zcaron.cv43;
   sub zdotaccent by zdotaccent.cv43;
+  sub Z.bg by Z.bg.cv43;
 
 } cv43;
 
@@ -2572,6 +2537,77 @@ feature cv45 {
   sub upsilondieresistonos by upsilondieresistonos.cv45;
 
 } cv45;
+
+feature cv46 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV46: Alternative italic l with left bottom bar, like consolas";
+    };
+  };
+
+  sub l by l.cv46;
+  sub lacute by lacute.cv46;
+  sub lcaron by lcaron.cv46;
+  sub lcommaaccent by lcommaaccent.cv46;
+  sub ldot by ldot.cv46;
+  sub lslash by lslash.cv46;
+  sub linferior by linferior.cv46;
+  sub one by one.cv46;
+  sub one.dnom by one.dnom.cv46;
+  sub one.numr by one.numr.cv46;
+  sub oneinferior by oneinferior.cv46;
+  sub onesuperior by onesuperior.cv46;
+  sub C_l.liga by C_l.liga.cv46;
+  sub a_l.liga by a_l.liga.cv46;
+  sub c_l.liga by c_l.liga.cv46;
+  sub e_l.liga by e_l.liga.cv46;
+  sub i_l.liga by i_l.liga.cv46;
+  sub l_l.liga by l_l.liga.cv46;
+  sub t_l.liga by t_l.liga.cv46;
+  sub u_l.liga by u_l.liga.cv46;
+  sub x_l.liga by x_l.liga.cv46;
+  sub a_l_l.liga by a_l_l.liga.cv46;
+  sub e_l_l.liga by e_l_l.liga.cv46;
+  sub i_l_l.liga by i_l_l.liga.cv46;
+  sub u_l_l.liga by u_l_l.liga.cv46;
+  sub l.cv35 by l.cv46;
+  sub lacute.cv35 by lacute.cv46;
+  sub lcaron.cv35 by lcaron.cv46;
+  sub lcommaaccent.cv35 by lcommaaccent.cv46;
+  sub ldot.cv35 by ldot.cv46;
+  sub linferior.cv35 by linferior.cv46;
+  sub C_l.liga.cv35 by C_l.liga.cv46;
+  sub a_l.liga.cv35 by a_l.liga.cv46;
+  sub c_l.liga.cv35 by c_l.liga.cv46;
+  sub e_l.liga.cv35 by e_l.liga.cv46;
+  sub i_l.liga.cv35 by i_l.liga.cv46;
+  sub l_l.liga.cv35 by l_l.liga.cv46;
+  sub t_l.liga.cv35 by t_l.liga.cv46;
+  sub u_l.liga.cv35 by u_l.liga.cv46;
+  sub x_l.liga.cv35 by x_l.liga.cv46;
+  sub a_l_l.liga.cv35 by a_l_l.liga.cv46;
+  sub e_l_l.liga.cv35 by e_l_l.liga.cv46;
+  sub i_l_l.liga.cv35 by i_l_l.liga.cv46;
+  sub u_l_l.liga.cv35 by u_l_l.liga.cv46;
+  sub a_l.liga.cv31 by a_l.liga.cv31.cv46;
+  sub a_l_l.liga.cv31 by a_l_l.liga.cv31.cv46;
+  sub i_l.liga.cv33 by i_l.liga.cv33.cv46;
+  sub i_l_l.liga.cv33 by i_l_l.liga.cv33.cv46;
+  sub x_l.liga.cv36 by x_l.liga.cv36.cv46;
+  sub i_l.liga.cv39 by i_l.liga.cv39.cv46;
+  sub i_l_l.liga.cv39 by i_l_l.liga.cv39.cv46;
+  sub i_l.liga.cv33.cv39 by i_l.liga.cv33.cv39.cv46;
+  sub i_l_l.liga.cv33.cv39 by i_l_l.liga.cv33.cv39.cv46;
+  sub a_l.liga.cv31.cv35 by a_l.liga.cv31.cv46;
+  sub a_l_l.liga.cv31.cv35 by a_l_l.liga.cv31.cv46;
+  sub i_l.liga.cv33.cv35 by i_l.liga.cv33.cv46;
+  sub i_l_l.liga.cv33.cv35 by i_l_l.liga.cv33.cv46;
+  sub x_l.liga.cv35.cv36 by x_l.liga.cv36.cv46;
+  sub i_l.liga.cv33.cv35.cv39 by i_l.liga.cv33.cv39.cv46;
+  sub i_l_l.liga.cv33.cv35.cv39 by i_l_l.liga.cv33.cv39.cv46;
+
+} cv46;
 
 feature cv61 {
 
@@ -2707,6 +2743,19 @@ feature cv68 {
   sub equal_equal_equal.liga by equal_equal_equal.liga.cv68;
 
 } cv68;
+
+feature cv69 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV69: Normalize @";
+    };
+  };
+
+  sub at by at.cv01;
+  sub asciitilde_at.liga by asciitilde_at.liga.cv01;
+
+} cv69;
 
 feature ss01 {
 

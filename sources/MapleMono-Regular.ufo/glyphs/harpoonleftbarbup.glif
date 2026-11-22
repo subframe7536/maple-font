@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="harpoonleftbarbup" format="2">
+  <advance width="600"/>
+  <unicode hex="21BC"/>
+  <outline>
+    <contour>
+      <point x="328" y="375" type="line"/>
+      <point x="248" y="307" type="line"/>
+      <point x="550" y="307" type="line"/>
+      <point x="550" y="230" type="line"/>
+      <point x="50" y="230" type="line"/>
+      <point x="273" y="430" type="line"/>
+    </contour>
+  </outline>
+</glyph>

@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="arrowrightsquatblack" format="2">
+  <advance width="600"/>
+  <unicode hex="27A7"/>
+  <outline>
+    <contour>
+      <point x="360" y="560" type="line"/>
+      <point x="490" y="275" type="line"/>
+      <point x="360" y="-10" type="line"/>
+      <point x="360" y="80" type="line"/>
+      <point x="100" y="80" type="line"/>
+      <point x="100" y="470" type="line"/>
+      <point x="360" y="470" type="line"/>
+    </contour>
+  </outline>
+</glyph>

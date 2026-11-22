@@ -80,10 +80,10 @@
     <string>C_R_.glif</string>
     <key>C_l.liga</key>
     <string>C__l.liga.glif</string>
-    <key>C_l.liga.cv04</key>
-    <string>C__l.liga.cv04.glif</string>
     <key>C_l.liga.cv35</key>
     <string>C__l.liga.cv35.glif</string>
+    <key>C_l.liga.cv46</key>
+    <string>C__l.liga.cv46.glif</string>
     <key>C_l.liga.ss06</key>
     <string>C__l.liga.ss06.glif</string>
     <key>Cacute</key>
@@ -536,6 +536,8 @@
     <string>R_caron.glif</string>
     <key>Rcommaaccent</key>
     <string>R_commaaccent.glif</string>
+    <key>Reverseddottedsigmalunatesymbol</key>
+    <string>R_everseddottedsigmalunatesymbol.glif</string>
     <key>Rho</key>
     <string>R_ho.glif</string>
     <key>S</key>
@@ -546,6 +548,8 @@
     <string>S_P_C_.glif</string>
     <key>Sacute</key>
     <string>S_acute.glif</string>
+    <key>San</key>
+    <string>S_an.glif</string>
     <key>Scaron</key>
     <string>S_caron.glif</string>
     <key>Scedilla</key>
@@ -570,6 +574,10 @@
     <string>S_igma.glif</string>
     <key>Sigmalunatesymbol</key>
     <string>S_igmalunatesymbol.glif</string>
+    <key>Sigmalunatesymboldotted</key>
+    <string>S_igmalunatesymboldotted.glif</string>
+    <key>Sigmareversedlunatesymbol</key>
+    <string>S_igmareversedlunatesymbol.glif</string>
     <key>Softsign-cy</key>
     <string>S_oftsign-cy.glif</string>
     <key>T</key>
@@ -592,6 +600,8 @@
     <string>T_heta.glif</string>
     <key>Theta.decorator</key>
     <string>T_heta.decorator.glif</string>
+    <key>Thetasymbol</key>
+    <string>T_hetasymbol.glif</string>
     <key>Thorn</key>
     <string>T_horn.glif</string>
     <key>Tse-cy</key>
@@ -710,6 +720,8 @@
     <string>Y_i-cy.glif</string>
     <key>Ymacron</key>
     <string>Y_macron.glif</string>
+    <key>Yot</key>
+    <string>Y_ot.glif</string>
     <key>Ytilde</key>
     <string>Y_tilde.glif</string>
     <key>Z</key>
@@ -758,32 +770,32 @@
     <string>a.cv31.glif</string>
     <key>a_l.liga</key>
     <string>a_l.liga.glif</string>
-    <key>a_l.liga.cv04</key>
-    <string>a_l.liga.cv04.glif</string>
-    <key>a_l.liga.cv04.cv31</key>
-    <string>a_l.liga.cv04.cv31.glif</string>
     <key>a_l.liga.cv31</key>
     <string>a_l.liga.cv31.glif</string>
     <key>a_l.liga.cv31.cv35</key>
     <string>a_l.liga.cv31.cv35.glif</string>
+    <key>a_l.liga.cv31.cv46</key>
+    <string>a_l.liga.cv31.cv46.glif</string>
     <key>a_l.liga.cv35</key>
     <string>a_l.liga.cv35.glif</string>
+    <key>a_l.liga.cv46</key>
+    <string>a_l.liga.cv46.glif</string>
     <key>a_l.liga.ss06</key>
     <string>a_l.liga.ss06.glif</string>
     <key>a_l_l.liga</key>
     <string>a_l_l.liga.glif</string>
-    <key>a_l_l.liga.cv04</key>
-    <string>a_l_l.liga.cv04.glif</string>
-    <key>a_l_l.liga.cv04.cv31</key>
-    <string>a_l_l.liga.cv04.cv31.glif</string>
     <key>a_l_l.liga.cv31</key>
     <string>a_l_l.liga.cv31.glif</string>
     <key>a_l_l.liga.cv31.cv35</key>
     <string>a_l_l.liga.cv31.cv35.glif</string>
+    <key>a_l_l.liga.cv31.cv46</key>
+    <string>a_l_l.liga.cv31.cv46.glif</string>
     <key>a_l_l.liga.cv31.ss06</key>
     <string>a_l_l.liga.cv31.ss06.glif</string>
     <key>a_l_l.liga.cv35</key>
     <string>a_l_l.liga.cv35.glif</string>
+    <key>a_l_l.liga.cv46</key>
+    <string>a_l_l.liga.cv46.glif</string>
     <key>a_l_l.liga.ss06</key>
     <string>a_l_l.liga.ss06.glif</string>
     <key>aacute</key>
@@ -892,6 +904,8 @@
     <string>amacron.glif</string>
     <key>amacron.cv31</key>
     <string>amacron.cv31.glif</string>
+    <key>amalgamationOrCoproduct</key>
+    <string>amalgamationO_rC_oproduct.glif</string>
     <key>ampersand</key>
     <string>ampersand.glif</string>
     <key>ampersand.cv01</key>
@@ -958,6 +972,10 @@
     <string>arrowanticlockwiseopencircle.glif</string>
     <key>arrowclockwiseopencircle</key>
     <string>arrowclockwiseopencircle.glif</string>
+    <key>arrowdbldown</key>
+    <string>arrowdbldown.glif</string>
+    <key>arrowdblup</key>
+    <string>arrowdblup.glif</string>
     <key>arrowdowndashed</key>
     <string>arrowdowndashed.glif</string>
     <key>arrowdownzigzag</key>
@@ -982,6 +1000,8 @@
     <string>arrowrightdashed.glif</string>
     <key>arrowrightdowntip</key>
     <string>arrowrightdowntip.glif</string>
+    <key>arrowrightsquatblack</key>
+    <string>arrowrightsquatblack.glif</string>
     <key>arrowupdashed</key>
     <string>arrowupdashed.glif</string>
     <key>arrowuprighttip</key>
@@ -1172,6 +1192,10 @@
     <string>beta.glif</string>
     <key>between</key>
     <string>between.glif</string>
+    <key>bigReverseSolidus</key>
+    <string>bigR_everseS_olidus.glif</string>
+    <key>bigSolidus</key>
+    <string>bigS_olidus.glif</string>
     <key>bishopblack</key>
     <string>bishopblack.glif</string>
     <key>bishopwhite</key>
@@ -1524,10 +1548,10 @@
     <string>c.glif</string>
     <key>c_l.liga</key>
     <string>c_l.liga.glif</string>
-    <key>c_l.liga.cv04</key>
-    <string>c_l.liga.cv04.glif</string>
     <key>c_l.liga.cv35</key>
     <string>c_l.liga.cv35.glif</string>
+    <key>c_l.liga.cv46</key>
+    <string>c_l.liga.cv46.glif</string>
     <key>c_l.liga.ss06</key>
     <string>c_l.liga.ss06.glif</string>
     <key>cacute</key>
@@ -1544,6 +1568,8 @@
     <string>caroncomb.alt.glif</string>
     <key>caroncomb.case</key>
     <string>caroncomb.case.glif</string>
+    <key>carriagereturn</key>
+    <string>carriagereturn.glif</string>
     <key>ccaron</key>
     <string>ccaron.glif</string>
     <key>ccedilla</key>
@@ -1558,8 +1584,14 @@
     <string>cedillacomb.glif</string>
     <key>cedillacomb.case</key>
     <string>cedillacomb.case.glif</string>
+    <key>ceilingleft</key>
+    <string>ceilingleft.glif</string>
+    <key>ceilingright</key>
+    <string>ceilingright.glif</string>
     <key>cent</key>
     <string>cent.glif</string>
+    <key>charactertie</key>
+    <string>charactertie.glif</string>
     <key>che-cy</key>
     <string>che-cy.glif</string>
     <key>checkbox</key>
@@ -1748,6 +1780,16 @@
     <string>dagger.glif</string>
     <key>daggerdbl</key>
     <string>daggerdbl.glif</string>
+    <key>dblarrowNE</key>
+    <string>dblarrowN_E_.glif</string>
+    <key>dblarrowNW</key>
+    <string>dblarrowN_W_.glif</string>
+    <key>dblarrowSE</key>
+    <string>dblarrowS_E_.glif</string>
+    <key>dblarrowSW</key>
+    <string>dblarrowS_W_.glif</string>
+    <key>dblarrowupdown</key>
+    <string>dblarrowupdown.glif</string>
     <key>dblgravecomb</key>
     <string>dblgravecomb.glif</string>
     <key>dblgravecomb.case</key>
@@ -1784,6 +1826,8 @@
     <string>dentistrytopverticalright.glif</string>
     <key>diamond</key>
     <string>diamond.glif</string>
+    <key>diamondminusxblackwhite</key>
+    <string>diamondminusxblackwhite.glif</string>
     <key>diamondoperator</key>
     <string>diamondoperator.glif</string>
     <key>diamondwhite-misc</key>
@@ -1854,6 +1898,16 @@
     <string>dotplus.glif</string>
     <key>dottedCircle</key>
     <string>dottedC_ircle.glif</string>
+    <key>dottedSquare</key>
+    <string>dottedS_quare.glif</string>
+    <key>doubleNestedGreaterThan</key>
+    <string>doubleN_estedG_reaterT_han.glif</string>
+    <key>doubleNestedLessThan</key>
+    <string>doubleN_estedL_essT_han.glif</string>
+    <key>doublePrecedes</key>
+    <string>doubleP_recedes.glif</string>
+    <key>doubleSolidusOperator</key>
+    <string>doubleS_olidusO_perator.glif</string>
     <key>doubleSucceeds</key>
     <string>doubleS_ucceeds.glif</string>
     <key>doublebarvertical</key>
@@ -1866,8 +1920,6 @@
     <string>downB_lackS_mallT_riangle.glif</string>
     <key>downBlackTriangle</key>
     <string>downB_lackT_riangle.glif</string>
-    <key>downDoubleArrow</key>
-    <string>downD_oubleA_rrow.glif</string>
     <key>downFrombarArrow</key>
     <string>downF_rombarA_rrow.glif</string>
     <key>downWhiteSmallTriangle</key>
@@ -1888,18 +1940,18 @@
     <string>e.orig.glif</string>
     <key>e_l.liga</key>
     <string>e_l.liga.glif</string>
-    <key>e_l.liga.cv04</key>
-    <string>e_l.liga.cv04.glif</string>
     <key>e_l.liga.cv35</key>
     <string>e_l.liga.cv35.glif</string>
+    <key>e_l.liga.cv46</key>
+    <string>e_l.liga.cv46.glif</string>
     <key>e_l.liga.ss06</key>
     <string>e_l.liga.ss06.glif</string>
     <key>e_l_l.liga</key>
     <string>e_l_l.liga.glif</string>
-    <key>e_l_l.liga.cv04</key>
-    <string>e_l_l.liga.cv04.glif</string>
     <key>e_l_l.liga.cv35</key>
     <string>e_l_l.liga.cv35.glif</string>
+    <key>e_l_l.liga.cv46</key>
+    <string>e_l_l.liga.cv46.glif</string>
     <key>e_l_l.liga.ss06</key>
     <string>e_l_l.liga.ss06.glif</string>
     <key>eacute</key>
@@ -2010,6 +2062,10 @@
     <string>eopenreversed.glif</string>
     <key>epsilon</key>
     <string>epsilon.glif</string>
+    <key>epsilonlunatesymbol</key>
+    <string>epsilonlunatesymbol.glif</string>
+    <key>epsilonreversedlunatesymbol</key>
+    <string>epsilonreversedlunatesymbol.glif</string>
     <key>epsilontonos</key>
     <string>epsilontonos.glif</string>
     <key>equal</key>
@@ -2176,6 +2232,10 @@
     <string>flagwhite.glif</string>
     <key>flat-musical</key>
     <string>flat-musical.glif</string>
+    <key>floorleft</key>
+    <string>floorleft.glif</string>
+    <key>floorright</key>
+    <string>floorright.glif</string>
     <key>floretteblack</key>
     <string>floretteblack.glif</string>
     <key>floretteoutlinedpetalledblackeight</key>
@@ -2206,6 +2266,8 @@
     <string>fraction.glif</string>
     <key>franc</key>
     <string>franc.glif</string>
+    <key>frown</key>
+    <string>frown.glif</string>
     <key>fullBlock</key>
     <string>fullB_lock.glif</string>
     <key>g</key>
@@ -2276,6 +2338,8 @@
     <string>greater.glif</string>
     <key>greaterThanClosedByCurve</key>
     <string>greaterT_hanC_losedB_yC_urve.glif</string>
+    <key>greaterThanOrApproximate</key>
+    <string>greaterT_hanO_rA_pproximate.glif</string>
     <key>greaterThanWithCircleInside</key>
     <string>greaterT_hanW_ithC_ircleI_nside.glif</string>
     <key>greater_colon.liga</key>
@@ -2366,6 +2430,20 @@
     <string>hahook-cy.cv36.glif</string>
     <key>hardsign-cy</key>
     <string>hardsign-cy.glif</string>
+    <key>harpoondownbarbleft</key>
+    <string>harpoondownbarbleft.glif</string>
+    <key>harpoondownbarbright</key>
+    <string>harpoondownbarbright.glif</string>
+    <key>harpoonleftbarbdown</key>
+    <string>harpoonleftbarbdown.glif</string>
+    <key>harpoonleftbarbup</key>
+    <string>harpoonleftbarbup.glif</string>
+    <key>harpoonrightbarbdown</key>
+    <string>harpoonrightbarbdown.glif</string>
+    <key>harpoonrightbarbup</key>
+    <string>harpoonrightbarbup.glif</string>
+    <key>harpoonupbarbleft</key>
+    <string>harpoonupbarbleft.glif</string>
     <key>hastroke-cy</key>
     <string>hastroke-cy.glif</string>
     <key>hastroke-cy.cv36</key>
@@ -2402,6 +2480,8 @@
     <string>hookabovecomb.glif</string>
     <key>hookabovecomb.case</key>
     <string>hookabovecomb.case.glif</string>
+    <key>horizontalbar</key>
+    <string>horizontalbar.glif</string>
     <key>horncomb</key>
     <string>horncomb.glif</string>
     <key>horncomb.case</key>
@@ -2474,14 +2554,6 @@
     <string>i.superior.cv39.glif</string>
     <key>i_l.liga</key>
     <string>i_l.liga.glif</string>
-    <key>i_l.liga.cv04</key>
-    <string>i_l.liga.cv04.glif</string>
-    <key>i_l.liga.cv04.cv33</key>
-    <string>i_l.liga.cv04.cv33.glif</string>
-    <key>i_l.liga.cv04.cv33.cv39</key>
-    <string>i_l.liga.cv04.cv33.cv39.glif</string>
-    <key>i_l.liga.cv04.cv39</key>
-    <string>i_l.liga.cv04.cv39.glif</string>
     <key>i_l.liga.cv33</key>
     <string>i_l.liga.cv33.glif</string>
     <key>i_l.liga.cv33.cv35</key>
@@ -2490,22 +2562,22 @@
     <string>i_l.liga.cv33.cv35.cv39.glif</string>
     <key>i_l.liga.cv33.cv39</key>
     <string>i_l.liga.cv33.cv39.glif</string>
+    <key>i_l.liga.cv33.cv39.cv46</key>
+    <string>i_l.liga.cv33.cv39.cv46.glif</string>
+    <key>i_l.liga.cv33.cv46</key>
+    <string>i_l.liga.cv33.cv46.glif</string>
     <key>i_l.liga.cv35</key>
     <string>i_l.liga.cv35.glif</string>
     <key>i_l.liga.cv39</key>
     <string>i_l.liga.cv39.glif</string>
+    <key>i_l.liga.cv39.cv46</key>
+    <string>i_l.liga.cv39.cv46.glif</string>
+    <key>i_l.liga.cv46</key>
+    <string>i_l.liga.cv46.glif</string>
     <key>i_l.liga.ss06</key>
     <string>i_l.liga.ss06.glif</string>
     <key>i_l_l.liga</key>
     <string>i_l_l.liga.glif</string>
-    <key>i_l_l.liga.cv04</key>
-    <string>i_l_l.liga.cv04.glif</string>
-    <key>i_l_l.liga.cv04.cv33</key>
-    <string>i_l_l.liga.cv04.cv33.glif</string>
-    <key>i_l_l.liga.cv04.cv33.cv39</key>
-    <string>i_l_l.liga.cv04.cv33.cv39.glif</string>
-    <key>i_l_l.liga.cv04.cv39</key>
-    <string>i_l_l.liga.cv04.cv39.glif</string>
     <key>i_l_l.liga.cv33</key>
     <string>i_l_l.liga.cv33.glif</string>
     <key>i_l_l.liga.cv33.cv35</key>
@@ -2514,8 +2586,12 @@
     <string>i_l_l.liga.cv33.cv35.cv39.glif</string>
     <key>i_l_l.liga.cv33.cv39</key>
     <string>i_l_l.liga.cv33.cv39.glif</string>
+    <key>i_l_l.liga.cv33.cv39.cv46</key>
+    <string>i_l_l.liga.cv33.cv39.cv46.glif</string>
     <key>i_l_l.liga.cv33.cv39.ss06</key>
     <string>i_l_l.liga.cv33.cv39.ss06.glif</string>
+    <key>i_l_l.liga.cv33.cv46</key>
+    <string>i_l_l.liga.cv33.cv46.glif</string>
     <key>i_l_l.liga.cv33.ss06</key>
     <string>i_l_l.liga.cv33.ss06.glif</string>
     <key>i_l_l.liga.cv35</key>
@@ -2524,8 +2600,12 @@
     <string>i_l_l.liga.cv35.cv39.glif</string>
     <key>i_l_l.liga.cv39</key>
     <string>i_l_l.liga.cv39.glif</string>
+    <key>i_l_l.liga.cv39.cv46</key>
+    <string>i_l_l.liga.cv39.cv46.glif</string>
     <key>i_l_l.liga.cv39.ss06</key>
     <string>i_l_l.liga.cv39.ss06.glif</string>
+    <key>i_l_l.liga.cv46</key>
+    <string>i_l_l.liga.cv46.glif</string>
     <key>i_l_l.liga.ss06</key>
     <string>i_l_l.liga.ss06.glif</string>
     <key>ia-cy</key>
@@ -2750,24 +2830,24 @@
     <string>knightwhite.glif</string>
     <key>l</key>
     <string>l.glif</string>
-    <key>l.cv04</key>
-    <string>l.cv04.glif</string>
     <key>l.cv35</key>
     <string>l.cv35.glif</string>
+    <key>l.cv46</key>
+    <string>l.cv46.glif</string>
     <key>l_l.liga</key>
     <string>l_l.liga.glif</string>
-    <key>l_l.liga.cv04</key>
-    <string>l_l.liga.cv04.glif</string>
     <key>l_l.liga.cv35</key>
     <string>l_l.liga.cv35.glif</string>
+    <key>l_l.liga.cv46</key>
+    <string>l_l.liga.cv46.glif</string>
     <key>l_l.liga.ss06</key>
     <string>l_l.liga.ss06.glif</string>
     <key>lacute</key>
     <string>lacute.glif</string>
-    <key>lacute.cv04</key>
-    <string>lacute.cv04.glif</string>
     <key>lacute.cv35</key>
     <string>lacute.cv35.glif</string>
+    <key>lacute.cv46</key>
+    <string>lacute.cv46.glif</string>
     <key>lambda</key>
     <string>lambda.glif</string>
     <key>lambdastroke</key>
@@ -2780,22 +2860,22 @@
     <string>lazysinverted.glif</string>
     <key>lcaron</key>
     <string>lcaron.glif</string>
-    <key>lcaron.cv04</key>
-    <string>lcaron.cv04.glif</string>
     <key>lcaron.cv35</key>
     <string>lcaron.cv35.glif</string>
+    <key>lcaron.cv46</key>
+    <string>lcaron.cv46.glif</string>
     <key>lcommaaccent</key>
     <string>lcommaaccent.glif</string>
-    <key>lcommaaccent.cv04</key>
-    <string>lcommaaccent.cv04.glif</string>
     <key>lcommaaccent.cv35</key>
     <string>lcommaaccent.cv35.glif</string>
+    <key>lcommaaccent.cv46</key>
+    <string>lcommaaccent.cv46.glif</string>
     <key>ldot</key>
     <string>ldot.glif</string>
-    <key>ldot.cv04</key>
-    <string>ldot.cv04.glif</string>
     <key>ldot.cv35</key>
     <string>ldot.cv35.glif</string>
+    <key>ldot.cv46</key>
+    <string>ldot.cv46.glif</string>
     <key>leftArrow</key>
     <string>leftA_rrow.glif</string>
     <key>leftBarbUpRightBarbDownHarpoon</key>
@@ -2818,6 +2898,10 @@
     <string>leftH_ookA_rrow.glif</string>
     <key>leftLongArrow</key>
     <string>leftL_ongA_rrow.glif</string>
+    <key>leftLongDoubleArrow</key>
+    <string>leftL_ongD_oubleA_rrow.glif</string>
+    <key>leftLongFromBarArrow</key>
+    <string>leftL_ongF_romB_arA_rrow.glif</string>
     <key>leftMultimap</key>
     <string>leftM_ultimap.glif</string>
     <key>leftOneEighthBlock</key>
@@ -2830,6 +2914,8 @@
     <string>leftR_ightD_oubleA_rrow.glif</string>
     <key>leftRightLongArrow</key>
     <string>leftR_ightL_ongA_rrow.glif</string>
+    <key>leftRightLongDoubleArrow</key>
+    <string>leftR_ightL_ongD_oubleA_rrow.glif</string>
     <key>leftRightWaveArrow</key>
     <string>leftR_ightW_aveA_rrow.glif</string>
     <key>leftSevenEighthsBlock</key>
@@ -2840,6 +2926,8 @@
     <string>leftT_hreeE_ighthsB_lock.glif</string>
     <key>leftThreeQuartersBlock</key>
     <string>leftT_hreeQ_uartersB_lock.glif</string>
+    <key>leftTripleDashArrow</key>
+    <string>leftT_ripleD_ashA_rrow.glif</string>
     <key>leftTwoheadedArrow</key>
     <string>leftT_woheadedA_rrow.glif</string>
     <key>leftWhitePointer</key>
@@ -2854,12 +2942,22 @@
     <string>leftarrowoverrightarrow.glif</string>
     <key>leftdoubleanglebracket-math</key>
     <string>leftdoubleanglebracket-math.glif</string>
+    <key>leftharpoonoverrightharpoon</key>
+    <string>leftharpoonoverrightharpoon.glif</string>
     <key>leftsshapedbagdelimiter</key>
     <string>leftsshapedbagdelimiter.glif</string>
+    <key>leftwhitecurlybracket</key>
+    <string>leftwhitecurlybracket.glif</string>
     <key>leftwhitesquarebracket-math</key>
     <string>leftwhitesquarebracket-math.glif</string>
     <key>less</key>
     <string>less.glif</string>
+    <key>lessThanClosedByCurve</key>
+    <string>lessT_hanC_losedB_yC_urve.glif</string>
+    <key>lessThanOrApproximate</key>
+    <string>lessT_hanO_rA_pproximate.glif</string>
+    <key>lessThanWithCircleInside</key>
+    <string>lessT_hanW_ithC_ircleI_nside.glif</string>
     <key>less_asciitilde.liga</key>
     <string>less_asciitilde.liga.glif</string>
     <key>less_asciitilde_asciitilde.liga</key>
@@ -3000,10 +3098,10 @@
     <string>lessoverequal.glif</string>
     <key>linferior</key>
     <string>linferior.glif</string>
-    <key>linferior.cv04</key>
-    <string>linferior.cv04.glif</string>
     <key>linferior.cv35</key>
     <string>linferior.cv35.glif</string>
+    <key>linferior.cv46</key>
+    <string>linferior.cv46.glif</string>
     <key>liraTurkish</key>
     <string>liraT_urkish.glif</string>
     <key>literSign</key>
@@ -3052,10 +3150,12 @@
     <string>lowtildemod.glif</string>
     <key>lozenge</key>
     <string>lozenge.glif</string>
+    <key>lozengesquare</key>
+    <string>lozengesquare.glif</string>
     <key>lslash</key>
     <string>lslash.glif</string>
-    <key>lslash.cv04</key>
-    <string>lslash.cv04.glif</string>
+    <key>lslash.cv46</key>
+    <string>lslash.cv46.glif</string>
     <key>lslash.decorator</key>
     <string>lslash.decorator.glif</string>
     <key>m</key>
@@ -3120,10 +3220,16 @@
     <string>n.superior.glif</string>
     <key>nAryCircledDotOperator</key>
     <string>nA_ryC_ircledD_otO_perator.glif</string>
+    <key>nAryCircledPlusOperator</key>
+    <string>nA_ryC_ircledP_lusO_perator.glif</string>
+    <key>nAryCircledTimesOperator</key>
+    <string>nA_ryC_ircledT_imesO_perator.glif</string>
     <key>nArySquareIntersectionOperator</key>
     <string>nA_ryS_quareI_ntersectionO_perator.glif</string>
     <key>nArySquareUnionOperator</key>
     <string>nA_ryS_quareU_nionO_perator.glif</string>
+    <key>nAryWhiteVerticalBar</key>
+    <string>nA_ryW_hiteV_erticalB_ar.glif</string>
     <key>nacute</key>
     <string>nacute.glif</string>
     <key>naira</key>
@@ -3308,6 +3414,8 @@
     <string>ogonekcomb.case.glif</string>
     <key>ograve</key>
     <string>ograve.glif</string>
+    <key>ohminverted</key>
+    <string>ohminverted.glif</string>
     <key>ohookabove</key>
     <string>ohookabove.glif</string>
     <key>ohorn</key>
@@ -3342,30 +3450,30 @@
     <string>omicrontonos.glif</string>
     <key>one</key>
     <string>one.glif</string>
-    <key>one.cv04</key>
-    <string>one.cv04.glif</string>
+    <key>one.cv46</key>
+    <string>one.cv46.glif</string>
     <key>one.dnom</key>
     <string>one.dnom.glif</string>
-    <key>one.dnom.cv04</key>
-    <string>one.dnom.cv04.glif</string>
+    <key>one.dnom.cv46</key>
+    <string>one.dnom.cv46.glif</string>
     <key>one.numr</key>
     <string>one.numr.glif</string>
-    <key>one.numr.cv04</key>
-    <string>one.numr.cv04.glif</string>
+    <key>one.numr.cv46</key>
+    <string>one.numr.cv46.glif</string>
     <key>onedotenleader</key>
     <string>onedotenleader.glif</string>
     <key>onehalf</key>
     <string>onehalf.glif</string>
     <key>oneinferior</key>
     <string>oneinferior.glif</string>
-    <key>oneinferior.cv04</key>
-    <string>oneinferior.cv04.glif</string>
+    <key>oneinferior.cv46</key>
+    <string>oneinferior.cv46.glif</string>
     <key>onequarter</key>
     <string>onequarter.glif</string>
     <key>onesuperior</key>
     <string>onesuperior.glif</string>
-    <key>onesuperior.cv04</key>
-    <string>onesuperior.cv04.glif</string>
+    <key>onesuperior.cv46</key>
+    <string>onesuperior.cv46.glif</string>
     <key>oogonek</key>
     <string>oogonek.glif</string>
     <key>oopen</key>
@@ -3464,6 +3572,8 @@
     <string>pi.glif</string>
     <key>piSymbol</key>
     <string>piS_ymbol.glif</string>
+    <key>pilcrowsignreversed</key>
+    <string>pilcrowsignreversed.glif</string>
     <key>pinferior</key>
     <string>pinferior.glif</string>
     <key>pitchfork</key>
@@ -3620,6 +3730,10 @@
     <string>rho.glif</string>
     <key>rightArrow</key>
     <string>rightA_rrow.glif</string>
+    <key>rightArrowWithTailWithDoubleVerticalStroke</key>
+    <string>rightA_rrowW_ithT_ailW_ithD_oubleV_erticalS_troke.glif</string>
+    <key>rightArrowWithTailWithVerticalStroke</key>
+    <string>rightA_rrowW_ithT_ailW_ithV_erticalS_troke.glif</string>
     <key>rightBlackPointer</key>
     <string>rightB_lackP_ointer.glif</string>
     <key>rightBlackSmallTriangle</key>
@@ -3630,6 +3744,8 @@
     <string>rightB_lock.glif</string>
     <key>rightDoubleArrow</key>
     <string>rightD_oubleA_rrow.glif</string>
+    <key>rightDoubleArrowTail</key>
+    <string>rightD_oubleA_rrowT_ail.glif</string>
     <key>rightDoublePairedArrow</key>
     <string>rightD_oubleP_airedA_rrow.glif</string>
     <key>rightFrombarArrow</key>
@@ -3642,6 +3758,10 @@
     <string>rightH_eavyW_ideH_eadedA_rrow.glif</string>
     <key>rightHookArrow</key>
     <string>rightH_ookA_rrow.glif</string>
+    <key>rightLongDoubleArrow</key>
+    <string>rightL_ongD_oubleA_rrow.glif</string>
+    <key>rightLongFromBarArrow</key>
+    <string>rightL_ongF_romB_arA_rrow.glif</string>
     <key>rightOneEighthBlock</key>
     <string>rightO_neE_ighthB_lock.glif</string>
     <key>rightTabArrow</key>
@@ -3654,8 +3774,14 @@
     <string>rightT_riangleT_hinA_rrow.glif</string>
     <key>rightTripleArrow</key>
     <string>rightT_ripleA_rrow.glif</string>
+    <key>rightTripleDashArrow</key>
+    <string>rightT_ripleD_ashA_rrow.glif</string>
     <key>rightTwoHeadedArrowWithTail</key>
     <string>rightT_woH_eadedA_rrowW_ithT_ail.glif</string>
+    <key>rightTwoHeadedArrowWithTail.1</key>
+    <string>rightT_woH_eadedA_rrowW_ithT_ail.1.glif</string>
+    <key>rightTwoHeadedArrowWithVerticalStroke</key>
+    <string>rightT_woH_eadedA_rrowW_ithV_erticalS_troke.glif</string>
     <key>rightTwoheadedArrow</key>
     <string>rightT_woheadedA_rrow.glif</string>
     <key>rightWaveArrow</key>
@@ -3674,10 +3800,14 @@
     <string>rightarrowoverleftarrow.glif</string>
     <key>rightdoubleanglebracket-math</key>
     <string>rightdoubleanglebracket-math.glif</string>
+    <key>rightharpoonoverleftharpoon</key>
+    <string>rightharpoonoverleftharpoon.glif</string>
     <key>rightlongArrow</key>
     <string>rightlongA_rrow.glif</string>
     <key>rightsshapedbagdelimiter</key>
     <string>rightsshapedbagdelimiter.glif</string>
+    <key>rightwhitecurlybracket</key>
+    <string>rightwhitecurlybracket.glif</string>
     <key>rightwhitesquarebracket-math</key>
     <string>rightwhitesquarebracket-math.glif</string>
     <key>ring</key>
@@ -3710,6 +3840,8 @@
     <string>s.glif</string>
     <key>sacute</key>
     <string>sacute.glif</string>
+    <key>san</key>
+    <string>san.glif</string>
     <key>scaron</key>
     <string>scaron.glif</string>
     <key>scedilla</key>
@@ -3794,10 +3926,18 @@
     <string>shcha-cy.glif</string>
     <key>shha-cy</key>
     <string>shha-cy.glif</string>
+    <key>sho</key>
+    <string>sho.glif</string>
     <key>sigma</key>
     <string>sigma.glif</string>
     <key>sigmafinal</key>
     <string>sigmafinal.glif</string>
+    <key>sigmalunatedottedreversedsymbol</key>
+    <string>sigmalunatedottedreversedsymbol.glif</string>
+    <key>sigmalunatedottedsymbol</key>
+    <string>sigmalunatedottedsymbol.glif</string>
+    <key>sigmalunatereversedsymbol</key>
+    <string>sigmalunatereversedsymbol.glif</string>
     <key>sigmalunatesymbol</key>
     <string>sigmalunatesymbol.glif</string>
     <key>similar</key>
@@ -3836,6 +3976,8 @@
     <string>slashlongcomb.glif</string>
     <key>slashshortcomb</key>
     <string>slashshortcomb.glif</string>
+    <key>smile</key>
+    <string>smile.glif</string>
     <key>snowflake</key>
     <string>snowflake.glif</string>
     <key>snowflaketight</key>
@@ -3866,6 +4008,8 @@
     <string>squarecup.glif</string>
     <key>squareddotoperator</key>
     <string>squareddotoperator.glif</string>
+    <key>squarediagonalcrosshatchfill</key>
+    <string>squarediagonalcrosshatchfill.glif</string>
     <key>squaredminus</key>
     <string>squaredminus.glif</string>
     <key>squaredplus</key>
@@ -3888,6 +4032,8 @@
     <string>squareoriginalorequal.glif</string>
     <key>squareoriginalornotequal</key>
     <string>squareoriginalornotequal.glif</string>
+    <key>starblack</key>
+    <string>starblack.glif</string>
     <key>starcentreopenpointedcircledeight</key>
     <string>starcentreopenpointedcircledeight.glif</string>
     <key>starequals</key>
@@ -3906,6 +4052,8 @@
     <string>starpointedblacktwelve.glif</string>
     <key>starpointedpinwheeleight</key>
     <string>starpointedpinwheeleight.glif</string>
+    <key>starwhite</key>
+    <string>starwhite.glif</string>
     <key>sterling</key>
     <string>sterling.glif</string>
     <key>strictlyequivalent</key>
@@ -3936,10 +4084,10 @@
     <string>t.glif</string>
     <key>t_l.liga</key>
     <string>t_l.liga.glif</string>
-    <key>t_l.liga.cv04</key>
-    <string>t_l.liga.cv04.glif</string>
     <key>t_l.liga.cv35</key>
     <string>t_l.liga.cv35.glif</string>
+    <key>t_l.liga.cv46</key>
+    <string>t_l.liga.cv46.glif</string>
     <key>t_l.liga.ss06</key>
     <string>t_l.liga.ss06.glif</string>
     <key>t_t.liga</key>
@@ -4060,6 +4208,10 @@
     <string>triangularbullet.glif</string>
     <key>tripleNestedGreaterThan</key>
     <string>tripleN_estedG_reaterT_han.glif</string>
+    <key>tripleNestedLessThan</key>
+    <string>tripleN_estedL_essT_han.glif</string>
+    <key>tripleVerticalBarBinaryRelation</key>
+    <string>tripleV_erticalB_arB_inaryR_elation.glif</string>
     <key>triplearrowleft</key>
     <string>triplearrowleft.glif</string>
     <key>tripleprime</key>
@@ -4098,18 +4250,18 @@
     <string>u.cv45.glif</string>
     <key>u_l.liga</key>
     <string>u_l.liga.glif</string>
-    <key>u_l.liga.cv04</key>
-    <string>u_l.liga.cv04.glif</string>
     <key>u_l.liga.cv35</key>
     <string>u_l.liga.cv35.glif</string>
+    <key>u_l.liga.cv46</key>
+    <string>u_l.liga.cv46.glif</string>
     <key>u_l.liga.ss06</key>
     <string>u_l.liga.ss06.glif</string>
     <key>u_l_l.liga</key>
     <string>u_l_l.liga.glif</string>
-    <key>u_l_l.liga.cv04</key>
-    <string>u_l_l.liga.cv04.glif</string>
     <key>u_l_l.liga.cv35</key>
     <string>u_l_l.liga.cv35.glif</string>
+    <key>u_l_l.liga.cv46</key>
+    <string>u_l_l.liga.cv46.glif</string>
     <key>u_l_l.liga.ss06</key>
     <string>u_l_l.liga.ss06.glif</string>
     <key>uacute</key>
@@ -4200,6 +4352,12 @@
     <string>underscore_underscore.liga.ss04.glif</string>
     <key>undertie</key>
     <string>undertie.glif</string>
+    <key>uni2135</key>
+    <string>uni2135.glif</string>
+    <key>uni261B</key>
+    <string>uni261B_.glif</string>
+    <key>uni2710</key>
+    <string>uni2710.glif</string>
     <key>uni2801</key>
     <string>uni2801.glif</string>
     <key>uni2802</key>
@@ -4776,8 +4934,6 @@
     <string>upB_lackS_mallT_riangle.glif</string>
     <key>upBlackTriangle</key>
     <string>upB_lackT_riangle.glif</string>
-    <key>upDoubleArrow</key>
-    <string>upD_oubleA_rrow.glif</string>
     <key>upDownArrow</key>
     <string>upD_ownA_rrow.glif</string>
     <key>upFrombarArrow</key>
@@ -4854,10 +5010,20 @@
     <string>ve-cy.glif</string>
     <key>verticalBisectingLineWhiteSquare</key>
     <string>verticalB_isectingL_ineW_hiteS_quare.glif</string>
+    <key>verticalbarheavy</key>
+    <string>verticalbarheavy.glif</string>
+    <key>verticalbarlight</key>
+    <string>verticalbarlight.glif</string>
+    <key>verticalbarmedium</key>
+    <string>verticalbarmedium.glif</string>
     <key>verticallinelowmod</key>
     <string>verticallinelowmod.glif</string>
     <key>verticallinemod</key>
     <string>verticallinemod.glif</string>
+    <key>verticalsdbltrokearrowright</key>
+    <string>verticalsdbltrokearrowright.glif</string>
+    <key>verticalstrokearrowright</key>
+    <string>verticalstrokearrowright.glif</string>
     <key>verymuchgreater</key>
     <string>verymuchgreater.glif</string>
     <key>verymuchless</key>
@@ -4876,6 +5042,8 @@
     <string>wdieresis.glif</string>
     <key>weeCarrier-canadian</key>
     <string>weeC_arrier-canadian.glif</string>
+    <key>weierstrass</key>
+    <string>weierstrass.glif</string>
     <key>westsyriaccross</key>
     <string>westsyriaccross.glif</string>
     <key>wgrave</key>
@@ -4904,16 +5072,16 @@
     <string>x.cv36.glif</string>
     <key>x_l.liga</key>
     <string>x_l.liga.glif</string>
-    <key>x_l.liga.cv04</key>
-    <string>x_l.liga.cv04.glif</string>
-    <key>x_l.liga.cv04.cv36</key>
-    <string>x_l.liga.cv04.cv36.glif</string>
     <key>x_l.liga.cv35</key>
     <string>x_l.liga.cv35.glif</string>
     <key>x_l.liga.cv35.cv36</key>
     <string>x_l.liga.cv35.cv36.glif</string>
     <key>x_l.liga.cv36</key>
     <string>x_l.liga.cv36.glif</string>
+    <key>x_l.liga.cv36.cv46</key>
+    <string>x_l.liga.cv36.cv46.glif</string>
+    <key>x_l.liga.cv46</key>
+    <string>x_l.liga.cv46.glif</string>
     <key>x_l.liga.ss06</key>
     <string>x_l.liga.ss06.glif</string>
     <key>xcircle</key>
@@ -4972,6 +5140,8 @@
     <string>ymacron.glif</string>
     <key>ymacron.cv37</key>
     <string>ymacron.cv37.glif</string>
+    <key>yot</key>
+    <string>yot.glif</string>
     <key>ytilde</key>
     <string>ytilde.glif</string>
     <key>ytilde.cv37</key>
@@ -4980,6 +5150,18 @@
     <string>z.glif</string>
     <key>z.cv43</key>
     <string>z.cv43.glif</string>
+    <key>zNotationDomainAntirestriction</key>
+    <string>zN_otationD_omainA_ntirestriction.glif</string>
+    <key>zNotationRangeAntirestriction</key>
+    <string>zN_otationR_angeA_ntirestriction.glif</string>
+    <key>zNotationRelationalComposition</key>
+    <string>zN_otationR_elationalC_omposition.glif</string>
+    <key>zNotationSchemaComposition</key>
+    <string>zN_otationS_chemaC_omposition.glif</string>
+    <key>zNotationSchemaProjection</key>
+    <string>zN_otationS_chemaP_rojection.glif</string>
+    <key>zNotationTypeColon</key>
+    <string>zN_otationT_ypeC_olon.glif</string>
     <key>zacute</key>
     <string>zacute.glif</string>
     <key>zacute.cv43</key>
@@ -5034,8 +5216,12 @@
     <string>zhedieresis-cy.glif</string>
     <key>znotationbagmembership</key>
     <string>znotationbagmembership.glif</string>
+    <key>znotationleftbindingbracket</key>
+    <string>znotationleftbindingbracket.glif</string>
     <key>znotationleftimagebracket</key>
     <string>znotationleftimagebracket.glif</string>
+    <key>znotationrightbindingbracket</key>
+    <string>znotationrightbindingbracket.glif</string>
     <key>znotationrightimagebracket</key>
     <string>znotationrightimagebracket.glif</string>
   </dict>

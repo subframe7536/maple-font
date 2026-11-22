@@ -62,7 +62,8 @@ def _feature_source(
             enable_tag=not config.remove_tag_liga,
             remove_italic_calt=config.feature_freeze["cv35"]
             .upper()
-            .startswith("ENABLE"),
+            .startswith("ENABLE")
+            and not config.feature_freeze["cv46"].upper().startswith("ENABLE"),
         ),
         None,
     )

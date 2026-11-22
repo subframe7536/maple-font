@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="Yot" format="2">
+  <advance width="600"/>
+  <unicode hex="037F"/>
+  <anchor x="220" y="0" name="bottom"/>
+  <anchor x="502" y="730" name="top"/>
+  <outline>
+    <component base="J"/>
+  </outline>
+  <lib>
+    <dict>
+      <key>com.schriftgestaltung.Glyphs.ComponentInfo</key>
+      <array>
+        <dict>
+          <key>alignment</key>
+          <integer>-1</integer>
+          <key>index</key>
+          <integer>0</integer>
+          <key>name</key>
+          <string>J</string>
+        </dict>
+      </array>
+    </dict>
+  </lib>
+</glyph>

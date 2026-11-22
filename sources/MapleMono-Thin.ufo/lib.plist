@@ -651,22 +651,22 @@
       <string>idieresis-cy</string>
       <string>odieresis-cy</string>
       <string>obarred-cy</string>
-      <string>Iebrevecyr</string>
-      <string>iebrevecyr</string>
-      <string>Schwadieresiscyr</string>
-      <string>schwadieresiscyr</string>
-      <string>Imacroncyr</string>
-      <string>imacroncyr</string>
-      <string>Obardieresiscyr</string>
-      <string>obardieresiscyr</string>
-      <string>Ereverseddieresiscyr</string>
-      <string>ereverseddieresiscyr</string>
-      <string>Umacroncyr</string>
-      <string>umacroncyr</string>
-      <string>Udieresiscyr</string>
-      <string>udieresiscyr</string>
-      <string>Uacutedblcyr</string>
-      <string>uacutedblcyr</string>
+      <string>Iebreve-cy</string>
+      <string>iebreve-cy</string>
+      <string>Schwadieresis-cy</string>
+      <string>schwadieresis-cy</string>
+      <string>Imacron-cy</string>
+      <string>imacron-cy</string>
+      <string>Obardieresis-cy</string>
+      <string>obardieresis-cy</string>
+      <string>Ereverseddieresis-cy</string>
+      <string>ereverseddieresis-cy</string>
+      <string>Umacron-cy</string>
+      <string>umacron-cy</string>
+      <string>Udieresis-cy</string>
+      <string>udieresis-cy</string>
+      <string>Uacutedbl-cy</string>
+      <string>uacutedbl-cy</string>
       <string>ustraight-cy</string>
       <string>ustraightstroke-cy</string>
       <string>chedieresis-cy</string>
@@ -954,17 +954,12 @@
       <string>xcircle</string>
       <string>Icircle</string>
       <string>house</string>
-      <string>dentistrytopverticalright</string>
-      <string>dentistrybottomverticalright</string>
-      <string>dentistrytopverticalleft</string>
-      <string>dentistrybottomverticalleft</string>
       <string>lowringmod</string>
       <string>lowtildemod</string>
       <string>warningSign</string>
       <string>highVoltageSign</string>
       <string>at</string>
       <string>ampersand</string>
-      <string>paragraph</string>
       <string>section</string>
       <string>copyright</string>
       <string>copyleftsymbol</string>
@@ -1004,7 +999,6 @@
       <string>yen</string>
       <string>leftBarbUpRightBarbDownHarpoon</string>
       <string>leftMultimap</string>
-      <string>nAryCircledDotOperator</string>
       <string>nArySquareIntersectionOperator</string>
       <string>nArySquareUnionOperator</string>
       <string>plus</string>
@@ -1022,7 +1016,6 @@
       <string>micro</string>
       <string>plussmall</string>
       <string>plussuperior</string>
-      <string>rightTwoHeadedArrowWithTail</string>
       <string>summationdoubleStruck</string>
       <string>upArrow</string>
       <string>northEastArrow</string>
@@ -1056,8 +1049,6 @@
       <string>rightarrowoverleftarrow</string>
       <string>leftarrowoverrightarrow</string>
       <string>rightDoublePairedArrow</string>
-      <string>upDoubleArrow</string>
-      <string>downDoubleArrow</string>
       <string>leftDoubleArrow</string>
       <string>rightDoubleArrow</string>
       <string>leftRightDoubleArrow</string>
@@ -2002,6 +1993,29 @@
       <string>upsilontonos.cv12</string>
       <string>upsilondieresis.cv12</string>
       <string>upsilondieresistonos.cv12</string>
+      <string>Y.cv13</string>
+      <string>Yacute.cv13</string>
+      <string>Ycircumflex.cv13</string>
+      <string>Ydieresis.cv13</string>
+      <string>Ydotbelow.cv13</string>
+      <string>Ygrave.cv13</string>
+      <string>Yhookabove.cv13</string>
+      <string>Ymacron.cv13</string>
+      <string>Ytilde.cv13</string>
+      <string>y.cv13</string>
+      <string>yacute.cv13</string>
+      <string>ycircumflex.cv13</string>
+      <string>ydieresis.cv13</string>
+      <string>ydotbelow.cv13</string>
+      <string>ygrave.cv13</string>
+      <string>yhookabove.cv13</string>
+      <string>ymacron.cv13</string>
+      <string>ytilde.cv13</string>
+      <string>u-cy.cv13</string>
+      <string>ushort-cy.cv13</string>
+      <string>umacron-cy.cv13</string>
+      <string>udieresis-cy.cv13</string>
+      <string>uacutedbl-cy.cv13</string>
       <string>comma.cv61</string>
       <string>semicolon.cv61</string>
       <string>semicolon_semicolon.liga.cv61</string>
@@ -2149,6 +2163,7 @@
       <string>Q.bg.cv01</string>
       <string>J.bg.cv07</string>
       <string>Z.bg.cv10</string>
+      <string>Y.bg.cv13</string>
       <string>universal</string>
       <string>complement</string>
       <string>partialdiff</string>
@@ -2467,7 +2482,6 @@
       <string>ballotX</string>
       <string>checkheavy</string>
       <string>ballotxheavy</string>
-      <string>starblack</string>
       <string>arrowdownzigzag</string>
       <string>arrowclockwiseopencircle</string>
       <string>arrowanticlockwiseopencircle</string>
@@ -2539,6 +2553,107 @@
       <string>greaterThanWithCircleInside</string>
       <string>doubleSucceeds</string>
       <string>tripleNestedGreaterThan</string>
+      <string>carriagereturn</string>
+      <string>starwhite</string>
+      <string>starblack</string>
+      <string>weierstrass</string>
+      <string>epsilonlunatesymbol</string>
+      <string>epsilonreversedlunatesymbol</string>
+      <string>Thetasymbol</string>
+      <string>yot</string>
+      <string>San</string>
+      <string>san</string>
+      <string>Sigmareversedlunatesymbol</string>
+      <string>Sigmalunatesymboldotted</string>
+      <string>Reverseddottedsigmalunatesymbol</string>
+      <string>charactertie</string>
+      <string>paragraph</string>
+      <string>pilcrowsignreversed</string>
+      <string>horizontalbar</string>
+      <string>ceilingleft</string>
+      <string>ceilingright</string>
+      <string>floorleft</string>
+      <string>floorright</string>
+      <string>dentistrytopverticalright</string>
+      <string>dentistrybottomverticalright</string>
+      <string>dentistrytopverticalleft</string>
+      <string>dentistrybottomverticalleft</string>
+      <string>leftwhitecurlybracket</string>
+      <string>rightwhitecurlybracket</string>
+      <string>znotationleftbindingbracket</string>
+      <string>znotationrightbindingbracket</string>
+      <string>uni261B</string>
+      <string>uni2710</string>
+      <string>verticalbarlight</string>
+      <string>verticalbarmedium</string>
+      <string>verticalbarheavy</string>
+      <string>frown</string>
+      <string>smile</string>
+      <string>lozengesquare</string>
+      <string>ohminverted</string>
+      <string>uni2135</string>
+      <string>amalgamationOrCoproduct</string>
+      <string>bigSolidus</string>
+      <string>bigReverseSolidus</string>
+      <string>tripleNestedLessThan</string>
+      <string>doublePrecedes</string>
+      <string>lessThanClosedByCurve</string>
+      <string>lessThanWithCircleInside</string>
+      <string>doubleNestedLessThan</string>
+      <string>doubleNestedGreaterThan</string>
+      <string>doubleSolidusOperator</string>
+      <string>nAryWhiteVerticalBar</string>
+      <string>dottedSquare</string>
+      <string>tripleVerticalBarBinaryRelation</string>
+      <string>zNotationDomainAntirestriction</string>
+      <string>zNotationRangeAntirestriction</string>
+      <string>lessThanOrApproximate</string>
+      <string>greaterThanOrApproximate</string>
+      <string>nAryCircledPlusOperator</string>
+      <string>nAryCircledTimesOperator</string>
+      <string>nAryCircledDotOperator</string>
+      <string>zNotationRelationalComposition</string>
+      <string>zNotationSchemaComposition</string>
+      <string>zNotationSchemaProjection</string>
+      <string>leftTripleDashArrow</string>
+      <string>rightTripleDashArrow</string>
+      <string>rightTwoHeadedArrowWithTail</string>
+      <string>rightArrowWithTailWithVerticalStroke</string>
+      <string>rightArrowWithTailWithDoubleVerticalStroke</string>
+      <string>rightDoubleArrowTail</string>
+      <string>zNotationTypeColon</string>
+      <string>rightTwoHeadedArrowWithVerticalStroke</string>
+      <string>rightLongFromBarArrow</string>
+      <string>leftLongFromBarArrow</string>
+      <string>leftLongDoubleArrow</string>
+      <string>rightLongDoubleArrow</string>
+      <string>leftRightLongDoubleArrow</string>
+      <string>arrowrightsquatblack</string>
+      <string>diamondminusxblackwhite</string>
+      <string>squarediagonalcrosshatchfill</string>
+      <string>harpoonupbarbleft</string>
+      <string>harpoonleftbarbup</string>
+      <string>harpoonleftbarbdown</string>
+      <string>harpoonrightbarbup</string>
+      <string>harpoonrightbarbdown</string>
+      <string>harpoondownbarbright</string>
+      <string>harpoondownbarbleft</string>
+      <string>rightharpoonoverleftharpoon</string>
+      <string>leftharpoonoverrightharpoon</string>
+      <string>dblarrowupdown</string>
+      <string>arrowdblup</string>
+      <string>arrowdbldown</string>
+      <string>dblarrowNE</string>
+      <string>dblarrowNW</string>
+      <string>dblarrowSE</string>
+      <string>dblarrowSW</string>
+      <string>verticalstrokearrowright</string>
+      <string>verticalsdbltrokearrowright</string>
+      <string>sho</string>
+      <string>Yot</string>
+      <string>sigmalunatereversedsymbol</string>
+      <string>sigmalunatedottedsymbol</string>
+      <string>sigmalunatedottedreversedsymbol</string>
     </array>
     <key>public.postscriptNames</key>
     <dict>
@@ -2638,7 +2753,7 @@
       <string>uni018E</string>
       <key>Ereversed-cy</key>
       <string>uni042D</string>
-      <key>Ereverseddieresiscyr</key>
+      <key>Ereverseddieresis-cy</key>
       <string>uni04EC</string>
       <key>Es-cy</key>
       <string>uni0421</string>
@@ -2692,7 +2807,7 @@
       <string>uni1ECA</string>
       <key>Ie-cy</key>
       <string>uni0415</string>
-      <key>Iebrevecyr</key>
+      <key>Iebreve-cy</key>
       <string>uni04D6</string>
       <key>Iegravecyr</key>
       <string>uni0400</string>
@@ -2704,7 +2819,7 @@
       <string>uni0418</string>
       <key>Iishort-cy</key>
       <string>uni0419</string>
-      <key>Imacroncyr</key>
+      <key>Imacron-cy</key>
       <string>uni04E2</string>
       <key>Io-cy</key>
       <string>uni0401</string>
@@ -2742,7 +2857,7 @@
       <string>uni040A</string>
       <key>O-cy</key>
       <string>uni041E</string>
-      <key>Obardieresiscyr</key>
+      <key>Obardieresis-cy</key>
       <string>uni04EA</string>
       <key>Obarred-cy</key>
       <string>uni04E8</string>
@@ -2792,11 +2907,15 @@
       <string>uni041F</string>
       <key>Rcommaaccent</key>
       <string>uni0156</string>
+      <key>Reverseddottedsigmalunatesymbol</key>
+      <string>uni03FF</string>
+      <key>San</key>
+      <string>uni03FA</string>
       <key>Schwa</key>
       <string>uni018F</string>
       <key>Schwa-cy</key>
       <string>uni04D8</string>
-      <key>Schwadieresiscyr</key>
+      <key>Schwadieresis-cy</key>
       <string>uni04DA</string>
       <key>Scommaaccent</key>
       <string>uni0218</string>
@@ -2808,6 +2927,10 @@
       <string>uni04BA</string>
       <key>Sigmalunatesymbol</key>
       <string>uni03F9</string>
+      <key>Sigmalunatesymboldotted</key>
+      <string>uni03FE</string>
+      <key>Sigmareversedlunatesymbol</key>
+      <string>uni03FD</string>
       <key>Softsign-cy</key>
       <string>uni042C</string>
       <key>Tcedilla</key>
@@ -2816,17 +2939,19 @@
       <string>uni021A</string>
       <key>Te-cy</key>
       <string>uni0422</string>
+      <key>Thetasymbol</key>
+      <string>uni03F4</string>
       <key>Tse-cy</key>
       <string>uni0426</string>
       <key>Tshe-cy</key>
       <string>uni040B</string>
       <key>U-cy</key>
       <string>uni0423</string>
-      <key>Uacutedblcyr</key>
+      <key>Uacutedbl-cy</key>
       <string>uni04F2</string>
       <key>Ucaron</key>
       <string>uni01D3</string>
-      <key>Udieresiscyr</key>
+      <key>Udieresis-cy</key>
       <string>uni04F0</string>
       <key>Udotbelow</key>
       <string>uni1EE4</string>
@@ -2842,7 +2967,7 @@
       <string>uni1EEC</string>
       <key>Uhorntilde</key>
       <string>uni1EEE</string>
-      <key>Umacroncyr</key>
+      <key>Umacron-cy</key>
       <string>uni04EE</string>
       <key>Upsilonafrican</key>
       <string>uni01B1</string>
@@ -2858,16 +2983,26 @@
       <string>uni0245</string>
       <key>Ydotbelow</key>
       <string>uni1EF4</string>
+      <key>Ydotbelow.cv13</key>
+      <string>uni1EF4.cv13</string>
       <key>Yeru-cy</key>
       <string>uni042B</string>
       <key>Yhookabove</key>
       <string>uni1EF6</string>
+      <key>Yhookabove.cv13</key>
+      <string>uni1EF6.cv13</string>
       <key>Yi-cy</key>
       <string>uni0407</string>
       <key>Ymacron</key>
       <string>uni0232</string>
+      <key>Ymacron.cv13</key>
+      <string>uni0232.cv13</string>
+      <key>Yot</key>
+      <string>uni037F</string>
       <key>Ytilde</key>
       <string>uni1EF8</string>
+      <key>Ytilde.cv13</key>
+      <string>uni1EF8.cv13</string>
       <key>ZEROWIDTHSPACE</key>
       <string>uni200B</string>
       <key>Ze-cy</key>
@@ -3004,6 +3139,10 @@
       <string>uni2235</string>
       <key>between</key>
       <string>uni226C</string>
+      <key>bigReverseSolidus</key>
+      <string>uni29F9</string>
+      <key>bigSolidus</key>
+      <string>uni29F8</string>
       <key>bitcoin</key>
       <string>uni20BF</string>
       <key>bowtie-math</key>
@@ -3306,6 +3445,8 @@
       <string>uni0327</string>
       <key>cedillacomb.case</key>
       <string>uni0327.case</string>
+      <key>charactertie</key>
+      <string>uni2040</string>
       <key>che-cy</key>
       <string>uni0447</string>
       <key>checkbox</key>
@@ -3414,14 +3555,6 @@
       <string>uni2109</string>
       <key>deltaequal</key>
       <string>uni225C</string>
-      <key>dentistrybottomverticalleft</key>
-      <string>uni23CC</string>
-      <key>dentistrybottomverticalright</key>
-      <string>uni23BF</string>
-      <key>dentistrytopverticalleft</key>
-      <string>uni23CB</string>
-      <key>dentistrytopverticalright</key>
-      <string>uni23BE</string>
       <key>diamondoperator</key>
       <string>uni22C4</string>
       <key>dieresisbelowcomb.case</key>
@@ -3470,8 +3603,6 @@
       <string>uni02BA</string>
       <key>downArrow</key>
       <string>arrowdown</string>
-      <key>downDoubleArrow</key>
-      <string>arrowdbldown</string>
       <key>downFrombarArrow</key>
       <string>uni21A7</string>
       <key>dtail</key>
@@ -3546,6 +3677,10 @@
       <string>uni025B</string>
       <key>eopenreversed</key>
       <string>uni025C</string>
+      <key>epsilonlunatesymbol</key>
+      <string>uni03F5</string>
+      <key>epsilonreversedlunatesymbol</key>
+      <string>uni03F6</string>
       <key>equal.inferior</key>
       <string>uni208C</string>
       <key>equal.superior</key>
@@ -3574,7 +3709,7 @@
       <string>uni044D</string>
       <key>ereversed-ipa</key>
       <string>uni0258</string>
-      <key>ereverseddieresiscyr</key>
+      <key>ereverseddieresis-cy</key>
       <string>uni04ED</string>
       <key>es-cy</key>
       <string>uni0441</string>
@@ -3610,6 +3745,8 @@
       <string>uni2074</string>
       <key>fourthroot-math</key>
       <string>uni221C</string>
+      <key>frown</key>
+      <string>uni2322</string>
       <key>fullBlock</key>
       <string>block</string>
       <key>gacute</key>
@@ -3688,6 +3825,8 @@
       <string>uni2095</string>
       <key>homotic</key>
       <string>uni223B</string>
+      <key>horizontalbar</key>
+      <string>uni2015</string>
       <key>horncomb</key>
       <string>uni031B</string>
       <key>horncomb.case</key>
@@ -3736,7 +3875,7 @@
       <string>dotlessi.cv06</string>
       <key>ie-cy</key>
       <string>uni0435</string>
-      <key>iebrevecyr</key>
+      <key>iebreve-cy</key>
       <string>uni04D7</string>
       <key>iegravecyr</key>
       <string>uni0450</string>
@@ -3756,7 +3895,7 @@
       <string>uni0439</string>
       <key>iishort-cy.loclBGR</key>
       <string>uni0439.loclBGR</string>
-      <key>imacroncyr</key>
+      <key>imacron-cy</key>
       <string>uni04E3</string>
       <key>imageorapproximatelyequal</key>
       <string>uni2253</string>
@@ -3816,8 +3955,6 @@
       <string>uni294A</string>
       <key>leftBlock</key>
       <string>lfblock</string>
-      <key>leftDoubleArrow</key>
-      <string>arrowdblleft</string>
       <key>leftFiveEighthsBlock</key>
       <string>uni258B</string>
       <key>leftHookArrow</key>
@@ -3832,8 +3969,6 @@
       <string>uni258E</string>
       <key>leftRightArrow</key>
       <string>arrowboth</string>
-      <key>leftRightDoubleArrow</key>
-      <string>arrowdblboth</string>
       <key>leftRightLongArrow</key>
       <string>uni27F7</string>
       <key>leftRightWaveArrow</key>
@@ -3856,6 +3991,8 @@
       <string>uni27EA</string>
       <key>leftsshapedbagdelimiter</key>
       <string>uni27C5</string>
+      <key>leftwhitecurlybracket</key>
+      <string>uni2983</string>
       <key>leftwhitesquarebracket-math</key>
       <string>uni27E6</string>
       <key>lessbutnotequal</key>
@@ -3944,8 +4081,6 @@
       <string>uni2715</string>
       <key>n.superior</key>
       <string>uni207F</string>
-      <key>nAryCircledDotOperator</key>
-      <string>uni2A00</string>
       <key>nArySquareIntersectionOperator</key>
       <string>uni2A05</string>
       <key>nArySquareUnionOperator</key>
@@ -4038,7 +4173,7 @@
       <string>uni2116</string>
       <key>o-cy</key>
       <string>uni043E</string>
-      <key>obardieresiscyr</key>
+      <key>obardieresis-cy</key>
       <string>uni04EB</string>
       <key>obarred-cy</key>
       <string>uni04E9</string>
@@ -4062,6 +4197,8 @@
       <string>uni0328</string>
       <key>ogonekcomb.case</key>
       <string>uni0328.case</string>
+      <key>ohminverted</key>
+      <string>uni2127</string>
       <key>ohookabove</key>
       <string>uni1ECF</string>
       <key>ohornacute</key>
@@ -4120,6 +4257,8 @@
       <string>uni03D5</string>
       <key>piSymbol</key>
       <string>uni03D6</string>
+      <key>pilcrowsignreversed</key>
+      <string>uni204B</string>
       <key>pinferior</key>
       <string>uni209A</string>
       <key>pitchfork</key>
@@ -4166,8 +4305,6 @@
       <string>arrowright</string>
       <key>rightBlock</key>
       <string>rtblock</string>
-      <key>rightDoubleArrow</key>
-      <string>arrowdblright</string>
       <key>rightDoublePairedArrow</key>
       <string>uni21C9</string>
       <key>rightFrombarArrow</key>
@@ -4188,10 +4325,6 @@
       <string>uni279E</string>
       <key>rightTriangleThinArrow</key>
       <string>uni279D</string>
-      <key>rightTripleArrow</key>
-      <string>uni21DB</string>
-      <key>rightTwoHeadedArrowWithTail</key>
-      <string>uni2916</string>
       <key>rightTwoheadedArrow</key>
       <string>uni21A0</string>
       <key>rightWaveArrow</key>
@@ -4208,6 +4341,8 @@
       <string>uni27F6</string>
       <key>rightsshapedbagdelimiter</key>
       <string>uni27C6</string>
+      <key>rightwhitecurlybracket</key>
+      <string>uni2984</string>
       <key>rightwhitesquarebracket-math</key>
       <string>uni27E7</string>
       <key>ringbelowcomb</key>
@@ -4228,11 +4363,13 @@
       <string>uni20BD</string>
       <key>rupeeIndian</key>
       <string>uni20B9</string>
+      <key>san</key>
+      <string>uni03FB</string>
       <key>schwa</key>
       <string>uni0259</string>
       <key>schwa-cy</key>
       <string>uni04D9</string>
-      <key>schwadieresiscyr</key>
+      <key>schwadieresis-cy</key>
       <string>uni04DB</string>
       <key>schwainferior</key>
       <string>uni2094</string>
@@ -4274,8 +4411,16 @@
       <string>uni0449.loclBGR</string>
       <key>shha-cy</key>
       <string>uni04BB</string>
+      <key>sho</key>
+      <string>uni03F8</string>
       <key>sigmafinal</key>
       <string>uni03C2</string>
+      <key>sigmalunatedottedreversedsymbol</key>
+      <string>uni037D</string>
+      <key>sigmalunatedottedsymbol</key>
+      <string>uni037C</string>
+      <key>sigmalunatereversedsymbol</key>
+      <string>uni037B</string>
       <key>sigmalunatesymbol</key>
       <string>uni03F2</string>
       <key>sinewave</key>
@@ -4290,6 +4435,8 @@
       <string>uni0338</string>
       <key>slashshortcomb</key>
       <string>uni0337</string>
+      <key>smile</key>
+      <string>uni2323</string>
       <key>softsign-cy</key>
       <string>uni044C</string>
       <key>softsign-cy.loclBGR</key>
@@ -4378,8 +4525,6 @@
       <string>uni22BF</string>
       <key>triangularbullet</key>
       <string>uni2023</string>
-      <key>triplearrowleft</key>
-      <string>uni21DA</string>
       <key>tripleprime</key>
       <string>uni2034</string>
       <key>true</key>
@@ -4402,14 +4547,20 @@
       <string>uni00B2</string>
       <key>u-cy</key>
       <string>uni0443</string>
-      <key>uacutedblcyr</key>
+      <key>u-cy.cv13</key>
+      <string>uni0443.cv13</string>
+      <key>uacutedbl-cy</key>
       <string>uni04F3</string>
+      <key>uacutedbl-cy.cv13</key>
+      <string>uacutedblcy.cv13</string>
       <key>ucaron</key>
       <string>uni01D4</string>
       <key>ucaron.cv12</key>
       <string>uni01D4.cv12</string>
-      <key>udieresiscyr</key>
+      <key>udieresis-cy</key>
       <string>uni04F1</string>
+      <key>udieresis-cy.cv13</key>
+      <string>uni04F1.cv13</string>
       <key>udotbelow</key>
       <string>uni1EE5</string>
       <key>udotbelow.cv12</key>
@@ -4438,8 +4589,10 @@
       <string>uni1EEF</string>
       <key>uhorntilde.cv12</key>
       <string>uni1EEF.cv12</string>
-      <key>umacroncyr</key>
+      <key>umacron-cy</key>
       <string>uni04EF</string>
+      <key>umacron-cy.cv13</key>
+      <string>uni04EF.cv13</string>
       <key>undertie</key>
       <string>uni203F</string>
       <key>unionarray</key>
@@ -4448,10 +4601,6 @@
       <string>uni22D3</string>
       <key>upArrow</key>
       <string>arrowup</string>
-      <key>upBarbRightharpoon</key>
-      <string>uni21BE</string>
-      <key>upDoubleArrow</key>
-      <string>arrowdblup</string>
       <key>upDownArrow</key>
       <string>arrowupdn</string>
       <key>upFrombarArrow</key>
@@ -4482,6 +4631,8 @@
       <string>uni028A</string>
       <key>ushort-cy</key>
       <string>uni045E</string>
+      <key>ushort-cy.cv13</key>
+      <string>uni045E.cv13</string>
       <key>ustraight-cy</key>
       <string>uni04AF</string>
       <key>ustraightstroke-cy</key>
@@ -4520,10 +4671,14 @@
       <string>uni22BB</string>
       <key>ydotbelow</key>
       <string>uni1EF5</string>
+      <key>ydotbelow.cv13</key>
+      <string>uni1EF5.cv13</string>
       <key>yeru-cy</key>
       <string>uni044B</string>
       <key>yhookabove</key>
       <string>uni1EF7</string>
+      <key>yhookabove.cv13</key>
+      <string>uni1EF7.cv13</string>
       <key>yi-cy</key>
       <string>uni0457</string>
       <key>yi-cy.cv03</key>
@@ -4532,8 +4687,14 @@
       <string>uni0457.cv06</string>
       <key>ymacron</key>
       <string>uni0233</string>
+      <key>ymacron.cv13</key>
+      <string>uni0233.cv13</string>
+      <key>yot</key>
+      <string>uni03F3</string>
       <key>ytilde</key>
       <string>uni1EF9</string>
+      <key>ytilde.cv13</key>
+      <string>uni1EF9.cv13</string>
       <key>ze-cy</key>
       <string>uni0437</string>
       <key>ze-cy.loclBGR</key>
@@ -4562,8 +4723,12 @@
       <string>uni04DD</string>
       <key>znotationbagmembership</key>
       <string>uni22FF</string>
+      <key>znotationleftbindingbracket</key>
+      <string>uni2989</string>
       <key>znotationleftimagebracket</key>
       <string>uni2987</string>
+      <key>znotationrightbindingbracket</key>
+      <string>uni298A</string>
       <key>znotationrightimagebracket</key>
       <string>uni2988</string>
     </dict>

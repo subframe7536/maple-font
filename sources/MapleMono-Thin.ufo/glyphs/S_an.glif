@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="San" format="2">
+  <advance width="600"/>
+  <unicode hex="03FA"/>
+  <anchor x="300" y="730" name="top"/>
+  <anchor x="300" y="0" name="bottom"/>
+  <outline>
+    <component base="M"/>
+  </outline>
+  <lib>
+    <dict>
+      <key>com.schriftgestaltung.Glyphs.ComponentInfo</key>
+      <array>
+        <dict>
+          <key>alignment</key>
+          <integer>-1</integer>
+          <key>index</key>
+          <integer>0</integer>
+          <key>name</key>
+          <string>M</string>
+        </dict>
+      </array>
+    </dict>
+  </lib>
+</glyph>

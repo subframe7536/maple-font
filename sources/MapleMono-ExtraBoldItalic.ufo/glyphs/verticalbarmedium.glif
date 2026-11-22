@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="verticalbarmedium" format="2">
+  <advance width="600"/>
+  <unicode hex="2759"/>
+  <outline>
+    <contour>
+      <point x="424" y="730" type="line"/>
+      <point x="295" y="0" type="line"/>
+      <point x="145" y="0" type="line"/>
+      <point x="274" y="730" type="line"/>
+    </contour>
+  </outline>
+</glyph>

@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="starblack" format="2">
+  <advance width="600"/>
+  <unicode hex="2605"/>
+  <outline>
+    <contour>
+      <point x="375" y="423" type="line"/>
+      <point x="633" y="423" type="line"/>
+      <point x="398" y="271" type="line"/>
+      <point x="434" y="24" type="line"/>
+      <point x="251" y="176" type="line"/>
+      <point x="14" y="24" type="line"/>
+      <point x="138" y="271" type="line"/>
+      <point x="-43" y="423" type="line"/>
+      <point x="215" y="423" type="line"/>
+      <point x="338" y="669" type="line"/>
+    </contour>
+  </outline>
+</glyph>

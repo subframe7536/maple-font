@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="diamondminusxblackwhite" format="2">
+  <advance width="600"/>
+  <unicode hex="2756"/>
+  <outline>
+    <contour>
+      <point x="25" y="250" type="line"/>
+      <point x="149" y="374" type="line"/>
+      <point x="274" y="250" type="line"/>
+      <point x="149" y="124" type="line"/>
+    </contour>
+    <contour>
+      <point x="325" y="250" type="line"/>
+      <point x="451" y="373" type="line"/>
+      <point x="575" y="250" type="line"/>
+      <point x="451" y="124" type="line"/>
+    </contour>
+    <contour>
+      <point x="176" y="399" type="line"/>
+      <point x="300" y="524" type="line"/>
+      <point x="426" y="399" type="line"/>
+      <point x="300" y="274" type="line"/>
+    </contour>
+    <contour>
+      <point x="176" y="98" type="line"/>
+      <point x="300" y="223" type="line"/>
+      <point x="426" y="98" type="line"/>
+      <point x="300" y="-27" type="line"/>
+    </contour>
+  </outline>
+</glyph>

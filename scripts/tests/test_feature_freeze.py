@@ -3,6 +3,7 @@ from __future__ import annotations
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from fontTools.designspaceLib import DesignSpaceDocument, SourceDescriptor
 from fontTools.feaLib.builder import addOpenTypeFeaturesFromString
@@ -12,6 +13,7 @@ from ufoLib2.objects import Anchor
 from scripts.config.base import ResolvedConfig, normalize_feature_freeze
 from scripts.feature.apply import (
     FeatureSubstitution,
+    _feature_source,
     apply_standard_zero,
     apply_ufo_substitutions,
     prepare_feature_source,
@@ -46,6 +48,25 @@ class FeatureFreezeConfigTest(unittest.TestCase):
         config.feature.liga = False
 
         self.assertEqual(config.freeze_config_str, "-calt;+cv01;-cv02;")
+
+    def test_remove_italic_calt_only_when_cv35_enabled_without_cv46(self) -> None:
+        cases = [
+            ({"cv35": "enable"}, True),
+            ({"cv35": "enable", "cv46": "enable"}, False),
+            ({}, False),
+        ]
+        for freeze, expected in cases:
+            with self.subTest(feature_freeze=freeze):
+                config = ResolvedConfig()
+                config.feature_freeze.update(freeze)
+                with patch(
+                    "scripts.feature.apply.generate_fea_string", return_value=""
+                ) as mock_gen:
+                    _feature_source(config, is_italic=True, is_cn=False, fea_path="")
+                self.assertEqual(
+                    mock_gen.call_args.kwargs["remove_italic_calt"],
+                    expected,
+                )
 
 
 class FeatureApplicationTest(unittest.TestCase):

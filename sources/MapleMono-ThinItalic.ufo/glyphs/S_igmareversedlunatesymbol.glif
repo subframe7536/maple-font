@@ -1,0 +1,47 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="Sigmareversedlunatesymbol" format="2">
+  <advance width="600"/>
+  <unicode hex="03FD"/>
+  <anchor x="298" y="730" name="top"/>
+  <anchor x="170" y="0" name="bottom"/>
+  <outline>
+    <contour>
+      <point x="513" y="367" type="curve" smooth="yes"/>
+      <point x="550" y="569"/>
+      <point x="499" y="740"/>
+      <point x="297" y="740" type="curve" smooth="yes"/>
+      <point x="203" y="740"/>
+      <point x="138" y="703"/>
+      <point x="115" y="669" type="curve" smooth="yes"/>
+      <point x="104" y="653"/>
+      <point x="100" y="634"/>
+      <point x="113" y="627" type="curve" smooth="yes"/>
+      <point x="122" y="622"/>
+      <point x="137" y="625"/>
+      <point x="147" y="639" type="curve" smooth="yes"/>
+      <point x="163" y="662"/>
+      <point x="215" y="690"/>
+      <point x="266" y="690" type="curve" smooth="yes"/>
+      <point x="453" y="690"/>
+      <point x="491" y="522"/>
+      <point x="463" y="366" type="curve" smooth="yes"/>
+      <point x="438" y="220"/>
+      <point x="347" y="40"/>
+      <point x="168" y="40" type="curve" smooth="yes"/>
+      <point x="135" y="40"/>
+      <point x="75" y="46"/>
+      <point x="51" y="67" type="curve" smooth="yes"/>
+      <point x="36" y="81"/>
+      <point x="18" y="78"/>
+      <point x="8" y="68" type="curve" smooth="yes"/>
+      <point x="0" y="59"/>
+      <point x="-5" y="43"/>
+      <point x="4" y="36" type="curve"/>
+      <point x="43" y="-3"/>
+      <point x="102" y="-10"/>
+      <point x="159" y="-10" type="curve" smooth="yes"/>
+      <point x="368" y="-10"/>
+      <point x="478" y="168"/>
+    </contour>
+  </outline>
+</glyph>

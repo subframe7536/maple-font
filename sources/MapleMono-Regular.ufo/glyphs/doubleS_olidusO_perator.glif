@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="doubleSolidusOperator" format="2">
+  <advance width="600"/>
+  <unicode hex="2AFD"/>
+  <outline>
+    <contour>
+      <point x="6" y="-71" type="curve" smooth="yes"/>
+      <point x="328" y="800" type="line" smooth="yes"/>
+      <point x="335" y="820"/>
+      <point x="350" y="830"/>
+      <point x="376" y="830" type="curve" smooth="yes"/>
+      <point x="403" y="830"/>
+      <point x="418" y="820"/>
+      <point x="418" y="799" type="curve" smooth="yes"/>
+      <point x="418" y="791"/>
+      <point x="416" y="782"/>
+      <point x="412" y="771" type="curve" smooth="yes"/>
+      <point x="90" y="-100" type="line" smooth="yes"/>
+      <point x="83" y="-120"/>
+      <point x="68" y="-130"/>
+      <point x="42" y="-130" type="curve" smooth="yes"/>
+      <point x="15" y="-130"/>
+      <point x="0" y="-120"/>
+      <point x="0" y="-99" type="curve" smooth="yes"/>
+      <point x="0" y="-91"/>
+      <point x="2" y="-82"/>
+    </contour>
+    <contour>
+      <point x="188" y="-71" type="curve" smooth="yes"/>
+      <point x="510" y="800" type="line" smooth="yes"/>
+      <point x="517" y="820"/>
+      <point x="532" y="830"/>
+      <point x="558" y="830" type="curve" smooth="yes"/>
+      <point x="585" y="830"/>
+      <point x="600" y="820"/>
+      <point x="600" y="799" type="curve" smooth="yes"/>
+      <point x="600" y="791"/>
+      <point x="598" y="782"/>
+      <point x="594" y="771" type="curve" smooth="yes"/>
+      <point x="272" y="-100" type="line" smooth="yes"/>
+      <point x="265" y="-120"/>
+      <point x="250" y="-130"/>
+      <point x="224" y="-130" type="curve" smooth="yes"/>
+      <point x="197" y="-130"/>
+      <point x="182" y="-120"/>
+      <point x="182" y="-99" type="curve" smooth="yes"/>
+      <point x="182" y="-91"/>
+      <point x="184" y="-82"/>
+    </contour>
+  </outline>
+</glyph>

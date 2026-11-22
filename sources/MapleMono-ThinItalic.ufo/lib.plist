@@ -947,17 +947,12 @@
       <string>xcircle</string>
       <string>Icircle</string>
       <string>house</string>
-      <string>dentistrytopverticalright</string>
-      <string>dentistrybottomverticalright</string>
-      <string>dentistrytopverticalleft</string>
-      <string>dentistrybottomverticalleft</string>
       <string>lowringmod</string>
       <string>lowtildemod</string>
       <string>warningSign</string>
       <string>highVoltageSign</string>
       <string>at</string>
       <string>ampersand</string>
-      <string>paragraph</string>
       <string>section</string>
       <string>copyright</string>
       <string>copyleftsymbol</string>
@@ -997,7 +992,6 @@
       <string>yen</string>
       <string>leftBarbUpRightBarbDownHarpoon</string>
       <string>leftMultimap</string>
-      <string>nAryCircledDotOperator</string>
       <string>nArySquareIntersectionOperator</string>
       <string>nArySquareUnionOperator</string>
       <string>plus</string>
@@ -1049,8 +1043,6 @@
       <string>rightarrowoverleftarrow</string>
       <string>leftarrowoverrightarrow</string>
       <string>rightDoublePairedArrow</string>
-      <string>upDoubleArrow</string>
-      <string>downDoubleArrow</string>
       <string>leftDoubleArrow</string>
       <string>rightDoubleArrow</string>
       <string>leftRightDoubleArrow</string>
@@ -1884,31 +1876,6 @@
       <string>greater_hyphen.end.seq.cv01</string>
       <string>less_equal.sta.seq.cv01</string>
       <string>greater_equal.end.seq.cv01</string>
-      <string>l.cv04</string>
-      <string>lacute.cv04</string>
-      <string>lcaron.cv04</string>
-      <string>lcommaaccent.cv04</string>
-      <string>ldot.cv04</string>
-      <string>lslash.cv04</string>
-      <string>linferior.cv04</string>
-      <string>C_l.liga.cv04</string>
-      <string>a_l.liga.cv04</string>
-      <string>c_l.liga.cv04</string>
-      <string>e_l.liga.cv04</string>
-      <string>i_l.liga.cv04</string>
-      <string>l_l.liga.cv04</string>
-      <string>t_l.liga.cv04</string>
-      <string>u_l.liga.cv04</string>
-      <string>x_l.liga.cv04</string>
-      <string>a_l_l.liga.cv04</string>
-      <string>e_l_l.liga.cv04</string>
-      <string>i_l_l.liga.cv04</string>
-      <string>u_l_l.liga.cv04</string>
-      <string>one.cv04</string>
-      <string>one.dnom.cv04</string>
-      <string>one.numr.cv04</string>
-      <string>oneinferior.cv04</string>
-      <string>onesuperior.cv04</string>
       <string>a.cv31</string>
       <string>aacute.cv31</string>
       <string>abreve.cv31</string>
@@ -1937,8 +1904,6 @@
       <string>ainferior.cv31</string>
       <string>a_l.liga.cv31</string>
       <string>a_l_l.liga.cv31</string>
-      <string>a_l.liga.cv04.cv31</string>
-      <string>a_l_l.liga.cv04.cv31</string>
       <string>f.cv32</string>
       <string>f_f.liga.cv32</string>
       <string>idotless.cv33</string>
@@ -1961,8 +1926,6 @@
       <string>yi-cy.cv33</string>
       <string>i_l.liga.cv33</string>
       <string>i_l_l.liga.cv33</string>
-      <string>i_l.liga.cv04.cv33</string>
-      <string>i_l_l.liga.cv04.cv33</string>
       <string>i.superior.cv33</string>
       <string>j.cv33</string>
       <string>jdotless.cv33</string>
@@ -2001,7 +1964,6 @@
       <string>hastroke-cy.cv36</string>
       <string>xinferior.cv36</string>
       <string>x_l.liga.cv36</string>
-      <string>x_l.liga.cv04.cv36</string>
       <string>x_l.liga.cv35.cv36</string>
       <string>y.cv37</string>
       <string>yacute.cv37</string>
@@ -2043,14 +2005,10 @@
       <string>i-cy.cv39</string>
       <string>yi-cy.cv39</string>
       <string>i_l.liga.cv39</string>
-      <string>i_l.liga.cv04.cv39</string>
       <string>i_l.liga.cv33.cv39</string>
-      <string>i_l.liga.cv04.cv33.cv39</string>
       <string>i_l.liga.cv33.cv35.cv39</string>
       <string>i_l_l.liga.cv39</string>
-      <string>i_l_l.liga.cv04.cv39</string>
       <string>i_l_l.liga.cv33.cv39</string>
-      <string>i_l_l.liga.cv04.cv33.cv39</string>
       <string>i_l_l.liga.cv35.cv39</string>
       <string>i_l_l.liga.cv33.cv35.cv39</string>
       <string>i.superior.cv39</string>
@@ -2099,6 +2057,40 @@
       <string>upsilontonos.cv45</string>
       <string>upsilondieresis.cv45</string>
       <string>upsilondieresistonos.cv45</string>
+      <string>l.cv46</string>
+      <string>lacute.cv46</string>
+      <string>lcaron.cv46</string>
+      <string>lcommaaccent.cv46</string>
+      <string>ldot.cv46</string>
+      <string>lslash.cv46</string>
+      <string>linferior.cv46</string>
+      <string>C_l.liga.cv46</string>
+      <string>a_l.liga.cv46</string>
+      <string>c_l.liga.cv46</string>
+      <string>e_l.liga.cv46</string>
+      <string>i_l.liga.cv46</string>
+      <string>l_l.liga.cv46</string>
+      <string>t_l.liga.cv46</string>
+      <string>u_l.liga.cv46</string>
+      <string>x_l.liga.cv46</string>
+      <string>a_l_l.liga.cv46</string>
+      <string>e_l_l.liga.cv46</string>
+      <string>i_l_l.liga.cv46</string>
+      <string>u_l_l.liga.cv46</string>
+      <string>one.cv46</string>
+      <string>one.dnom.cv46</string>
+      <string>one.numr.cv46</string>
+      <string>oneinferior.cv46</string>
+      <string>onesuperior.cv46</string>
+      <string>a_l.liga.cv31.cv46</string>
+      <string>a_l_l.liga.cv31.cv46</string>
+      <string>i_l.liga.cv33.cv46</string>
+      <string>i_l_l.liga.cv33.cv46</string>
+      <string>x_l.liga.cv36.cv46</string>
+      <string>i_l.liga.cv39.cv46</string>
+      <string>i_l.liga.cv33.cv39.cv46</string>
+      <string>i_l_l.liga.cv39.cv46</string>
+      <string>i_l_l.liga.cv33.cv39.cv46</string>
       <string>comma.cv61</string>
       <string>semicolon.cv61</string>
       <string>semicolon_semicolon.liga.cv61</string>
@@ -2647,6 +2639,107 @@
       <string>greaterThanWithCircleInside</string>
       <string>doubleSucceeds</string>
       <string>tripleNestedGreaterThan</string>
+      <string>carriagereturn</string>
+      <string>starwhite</string>
+      <string>starblack</string>
+      <string>weierstrass</string>
+      <string>epsilonlunatesymbol</string>
+      <string>epsilonreversedlunatesymbol</string>
+      <string>Thetasymbol</string>
+      <string>yot</string>
+      <string>San</string>
+      <string>san</string>
+      <string>Sigmareversedlunatesymbol</string>
+      <string>Sigmalunatesymboldotted</string>
+      <string>Reverseddottedsigmalunatesymbol</string>
+      <string>charactertie</string>
+      <string>pilcrowsignreversed</string>
+      <string>paragraph</string>
+      <string>horizontalbar</string>
+      <string>ceilingleft</string>
+      <string>ceilingright</string>
+      <string>floorleft</string>
+      <string>floorright</string>
+      <string>dentistrytopverticalright</string>
+      <string>dentistrybottomverticalright</string>
+      <string>dentistrytopverticalleft</string>
+      <string>dentistrybottomverticalleft</string>
+      <string>leftwhitecurlybracket</string>
+      <string>rightwhitecurlybracket</string>
+      <string>znotationleftbindingbracket</string>
+      <string>znotationrightbindingbracket</string>
+      <string>uni261B</string>
+      <string>uni2710</string>
+      <string>verticalbarlight</string>
+      <string>verticalbarmedium</string>
+      <string>verticalbarheavy</string>
+      <string>frown</string>
+      <string>smile</string>
+      <string>lozengesquare</string>
+      <string>ohminverted</string>
+      <string>uni2135</string>
+      <string>amalgamationOrCoproduct</string>
+      <string>bigSolidus</string>
+      <string>bigReverseSolidus</string>
+      <string>tripleNestedLessThan</string>
+      <string>doublePrecedes</string>
+      <string>lessThanClosedByCurve</string>
+      <string>lessThanWithCircleInside</string>
+      <string>doubleNestedLessThan</string>
+      <string>doubleNestedGreaterThan</string>
+      <string>doubleSolidusOperator</string>
+      <string>nAryWhiteVerticalBar</string>
+      <string>dottedSquare</string>
+      <string>tripleVerticalBarBinaryRelation</string>
+      <string>zNotationDomainAntirestriction</string>
+      <string>zNotationRangeAntirestriction</string>
+      <string>lessThanOrApproximate</string>
+      <string>greaterThanOrApproximate</string>
+      <string>nAryCircledPlusOperator</string>
+      <string>nAryCircledTimesOperator</string>
+      <string>nAryCircledDotOperator</string>
+      <string>zNotationRelationalComposition</string>
+      <string>zNotationSchemaComposition</string>
+      <string>zNotationSchemaProjection</string>
+      <string>leftTripleDashArrow</string>
+      <string>rightTripleDashArrow</string>
+      <string>rightTwoHeadedArrowWithTail.1</string>
+      <string>rightArrowWithTailWithVerticalStroke</string>
+      <string>rightArrowWithTailWithDoubleVerticalStroke</string>
+      <string>rightDoubleArrowTail</string>
+      <string>zNotationTypeColon</string>
+      <string>rightTwoHeadedArrowWithVerticalStroke</string>
+      <string>rightLongFromBarArrow</string>
+      <string>leftLongFromBarArrow</string>
+      <string>leftLongDoubleArrow</string>
+      <string>rightLongDoubleArrow</string>
+      <string>leftRightLongDoubleArrow</string>
+      <string>arrowrightsquatblack</string>
+      <string>diamondminusxblackwhite</string>
+      <string>squarediagonalcrosshatchfill</string>
+      <string>harpoonupbarbleft</string>
+      <string>harpoonleftbarbup</string>
+      <string>harpoonleftbarbdown</string>
+      <string>harpoonrightbarbup</string>
+      <string>harpoonrightbarbdown</string>
+      <string>harpoondownbarbright</string>
+      <string>harpoondownbarbleft</string>
+      <string>rightharpoonoverleftharpoon</string>
+      <string>leftharpoonoverrightharpoon</string>
+      <string>dblarrowupdown</string>
+      <string>arrowdblup</string>
+      <string>arrowdbldown</string>
+      <string>dblarrowNE</string>
+      <string>dblarrowNW</string>
+      <string>dblarrowSE</string>
+      <string>dblarrowSW</string>
+      <string>verticalstrokearrowright</string>
+      <string>verticalsdbltrokearrowright</string>
+      <string>sho</string>
+      <string>Yot</string>
+      <string>sigmalunatereversedsymbol</string>
+      <string>sigmalunatedottedsymbol</string>
+      <string>sigmalunatedottedreversedsymbol</string>
     </array>
     <key>public.postscriptNames</key>
     <dict>
@@ -2900,6 +2993,10 @@
       <string>uni041F</string>
       <key>Rcommaaccent</key>
       <string>uni0156</string>
+      <key>Reverseddottedsigmalunatesymbol</key>
+      <string>uni03FF</string>
+      <key>San</key>
+      <string>uni03FA</string>
       <key>Schwa</key>
       <string>uni018F</string>
       <key>Schwa-cy</key>
@@ -2916,6 +3013,10 @@
       <string>uni04BA</string>
       <key>Sigmalunatesymbol</key>
       <string>uni03F9</string>
+      <key>Sigmalunatesymboldotted</key>
+      <string>uni03FE</string>
+      <key>Sigmareversedlunatesymbol</key>
+      <string>uni03FD</string>
       <key>Softsign-cy</key>
       <string>uni042C</string>
       <key>Tcedilla</key>
@@ -2924,6 +3025,8 @@
       <string>uni021A</string>
       <key>Te-cy</key>
       <string>uni0422</string>
+      <key>Thetasymbol</key>
+      <string>uni03F4</string>
       <key>Tse-cy</key>
       <string>uni0426</string>
       <key>Tshe-cy</key>
@@ -2974,6 +3077,8 @@
       <string>uni0407</string>
       <key>Ymacron</key>
       <string>uni0232</string>
+      <key>Yot</key>
+      <string>uni037F</string>
       <key>Ytilde</key>
       <string>uni1EF8</string>
       <key>ZEROWIDTHSPACE</key>
@@ -3112,6 +3217,10 @@
       <string>uni2235</string>
       <key>between</key>
       <string>uni226C</string>
+      <key>bigReverseSolidus</key>
+      <string>uni29F9</string>
+      <key>bigSolidus</key>
+      <string>uni29F8</string>
       <key>bitcoin</key>
       <string>uni20BF</string>
       <key>bowtie-math</key>
@@ -3414,6 +3523,8 @@
       <string>uni0327</string>
       <key>cedillacomb.case</key>
       <string>uni0327.case</string>
+      <key>charactertie</key>
+      <string>uni2040</string>
       <key>che-cy</key>
       <string>uni0447</string>
       <key>checkbox</key>
@@ -3524,14 +3635,6 @@
       <string>uni2109</string>
       <key>deltaequal</key>
       <string>uni225C</string>
-      <key>dentistrybottomverticalleft</key>
-      <string>uni23CC</string>
-      <key>dentistrybottomverticalright</key>
-      <string>uni23BF</string>
-      <key>dentistrytopverticalleft</key>
-      <string>uni23CB</string>
-      <key>dentistrytopverticalright</key>
-      <string>uni23BE</string>
       <key>diamondoperator</key>
       <string>uni22C4</string>
       <key>dieresisbelowcomb.case</key>
@@ -3580,8 +3683,6 @@
       <string>uni02BA</string>
       <key>downArrow</key>
       <string>arrowdown</string>
-      <key>downDoubleArrow</key>
-      <string>arrowdbldown</string>
       <key>downFrombarArrow</key>
       <string>uni21A7</string>
       <key>dtail</key>
@@ -3654,6 +3755,10 @@
       <string>uni025B</string>
       <key>eopenreversed</key>
       <string>uni025C</string>
+      <key>epsilonlunatesymbol</key>
+      <string>uni03F5</string>
+      <key>epsilonreversedlunatesymbol</key>
+      <string>uni03F6</string>
       <key>equal.inferior</key>
       <string>uni208C</string>
       <key>equal.superior</key>
@@ -3718,6 +3823,8 @@
       <string>uni2074</string>
       <key>fourthroot-math</key>
       <string>uni221C</string>
+      <key>frown</key>
+      <string>uni2322</string>
       <key>fullBlock</key>
       <string>block</string>
       <key>gacute</key>
@@ -3802,6 +3909,8 @@
       <string>uni2095</string>
       <key>homotic</key>
       <string>uni223B</string>
+      <key>horizontalbar</key>
+      <string>uni2015</string>
       <key>horncomb</key>
       <string>uni031B</string>
       <key>horncomb.case</key>
@@ -3928,18 +4037,16 @@
       <string>uni223E</string>
       <key>lcommaaccent</key>
       <string>uni013C</string>
-      <key>lcommaaccent.cv04</key>
-      <string>uni013C.cv04</string>
       <key>lcommaaccent.cv35</key>
       <string>uni013C.cv35</string>
+      <key>lcommaaccent.cv46</key>
+      <string>uni013C.cv46</string>
       <key>leftArrow</key>
       <string>arrowleft</string>
       <key>leftBarbUpRightBarbDownHarpoon</key>
       <string>uni294A</string>
       <key>leftBlock</key>
       <string>lfblock</string>
-      <key>leftDoubleArrow</key>
-      <string>arrowdblleft</string>
       <key>leftFiveEighthsBlock</key>
       <string>uni258B</string>
       <key>leftHookArrow</key>
@@ -3954,8 +4061,6 @@
       <string>uni258E</string>
       <key>leftRightArrow</key>
       <string>arrowboth</string>
-      <key>leftRightDoubleArrow</key>
-      <string>arrowdblboth</string>
       <key>leftRightLongArrow</key>
       <string>uni27F7</string>
       <key>leftRightWaveArrow</key>
@@ -3978,6 +4083,8 @@
       <string>uni27EA</string>
       <key>leftsshapedbagdelimiter</key>
       <string>uni27C5</string>
+      <key>leftwhitecurlybracket</key>
+      <string>uni2983</string>
       <key>leftwhitesquarebracket-math</key>
       <string>uni27E6</string>
       <key>lessbutnotequal</key>
@@ -3996,10 +4103,10 @@
       <string>uni2266</string>
       <key>linferior</key>
       <string>uni2097</string>
-      <key>linferior.cv04</key>
-      <string>uni2097.cv04</string>
       <key>linferior.cv35</key>
       <string>uni2097.cv35</string>
+      <key>linferior.cv46</key>
+      <string>uni2097.cv46</string>
       <key>liraTurkish</key>
       <string>uni20BA</string>
       <key>literSign</key>
@@ -4068,8 +4175,6 @@
       <string>uni2715</string>
       <key>n.superior</key>
       <string>uni207F</string>
-      <key>nAryCircledDotOperator</key>
-      <string>uni2A00</string>
       <key>nArySquareIntersectionOperator</key>
       <string>uni2A05</string>
       <key>nArySquareUnionOperator</key>
@@ -4186,6 +4291,8 @@
       <string>uni0328</string>
       <key>ogonekcomb.case</key>
       <string>uni0328.case</string>
+      <key>ohminverted</key>
+      <string>uni2127</string>
       <key>ohookabove</key>
       <string>uni1ECF</string>
       <key>ohornacute</key>
@@ -4206,12 +4313,12 @@
       <string>uni1F41</string>
       <key>oneinferior</key>
       <string>uni2081</string>
-      <key>oneinferior.cv04</key>
-      <string>uni2081.cv04</string>
+      <key>oneinferior.cv46</key>
+      <string>uni2081.cv46</string>
       <key>onesuperior</key>
       <string>uni00B9</string>
-      <key>onesuperior.cv04</key>
-      <string>uni00B9.cv04</string>
+      <key>onesuperior.cv46</key>
+      <string>uni00B9.cv46</string>
       <key>oogonek</key>
       <string>uni01EB</string>
       <key>oopen</key>
@@ -4244,6 +4351,8 @@
       <string>uni03D5</string>
       <key>piSymbol</key>
       <string>uni03D6</string>
+      <key>pilcrowsignreversed</key>
+      <string>uni204B</string>
       <key>pinferior</key>
       <string>uni209A</string>
       <key>pitchfork</key>
@@ -4290,8 +4399,6 @@
       <string>arrowright</string>
       <key>rightBlock</key>
       <string>rtblock</string>
-      <key>rightDoubleArrow</key>
-      <string>arrowdblright</string>
       <key>rightDoublePairedArrow</key>
       <string>uni21C9</string>
       <key>rightFrombarArrow</key>
@@ -4312,8 +4419,6 @@
       <string>uni279E</string>
       <key>rightTriangleThinArrow</key>
       <string>uni279D</string>
-      <key>rightTripleArrow</key>
-      <string>uni21DB</string>
       <key>rightTwoHeadedArrowWithTail</key>
       <string>uni2916</string>
       <key>rightTwoheadedArrow</key>
@@ -4332,6 +4437,8 @@
       <string>uni27F6</string>
       <key>rightsshapedbagdelimiter</key>
       <string>uni27C6</string>
+      <key>rightwhitecurlybracket</key>
+      <string>uni2984</string>
       <key>rightwhitesquarebracket-math</key>
       <string>uni27E7</string>
       <key>ringbelowcomb</key>
@@ -4352,6 +4459,8 @@
       <string>uni20BD</string>
       <key>rupeeIndian</key>
       <string>uni20B9</string>
+      <key>san</key>
+      <string>uni03FB</string>
       <key>schwa</key>
       <string>uni0259</string>
       <key>schwa-cy</key>
@@ -4394,8 +4503,16 @@
       <string>uni0449</string>
       <key>shha-cy</key>
       <string>uni04BB</string>
+      <key>sho</key>
+      <string>uni03F8</string>
       <key>sigmafinal</key>
       <string>uni03C2</string>
+      <key>sigmalunatedottedreversedsymbol</key>
+      <string>uni037D</string>
+      <key>sigmalunatedottedsymbol</key>
+      <string>uni037C</string>
+      <key>sigmalunatereversedsymbol</key>
+      <string>uni037B</string>
       <key>sigmalunatesymbol</key>
       <string>uni03F2</string>
       <key>sinewave</key>
@@ -4410,6 +4527,8 @@
       <string>uni0338</string>
       <key>slashshortcomb</key>
       <string>uni0337</string>
+      <key>smile</key>
+      <string>uni2323</string>
       <key>softsign-cy</key>
       <string>uni044C</string>
       <key>southEastArrow</key>
@@ -4498,8 +4617,6 @@
       <string>uni22BF</string>
       <key>triangularbullet</key>
       <string>uni2023</string>
-      <key>triplearrowleft</key>
-      <string>uni21DA</string>
       <key>tripleprime</key>
       <string>uni2034</string>
       <key>true</key>
@@ -4576,8 +4693,6 @@
       <string>arrowup</string>
       <key>upBarbRightharpoon</key>
       <string>uni21BE</string>
-      <key>upDoubleArrow</key>
-      <string>arrowdblup</string>
       <key>upDownArrow</key>
       <string>arrowupdn</string>
       <key>upFrombarArrow</key>
@@ -4666,6 +4781,8 @@
       <string>uni0233</string>
       <key>ymacron.cv37</key>
       <string>uni0233.cv37</string>
+      <key>yot</key>
+      <string>uni03F3</string>
       <key>ytilde</key>
       <string>uni1EF9</string>
       <key>ytilde.cv37</key>
@@ -4698,8 +4815,12 @@
       <string>uni04DD</string>
       <key>znotationbagmembership</key>
       <string>uni22FF</string>
+      <key>znotationleftbindingbracket</key>
+      <string>uni2989</string>
       <key>znotationleftimagebracket</key>
       <string>uni2987</string>
+      <key>znotationrightbindingbracket</key>
+      <string>uni298A</string>
       <key>znotationrightimagebracket</key>
       <string>uni2988</string>
     </dict>

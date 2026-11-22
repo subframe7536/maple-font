@@ -117,7 +117,38 @@ GLYPHS_U = [
     "upsilondieresistonos",
 ]
 
-GLYPHS_Z_z = [
+GLYPHS_Y = [
+    "y",
+    "yacute",
+    "ycircumflex",
+    "ydieresis",
+    "ydotbelow",
+    "ygrave",
+    "yhookabove",
+    "ymacron",
+    "ytilde",
+    "u-cy",
+    "ushort-cy",
+    "umacron-cy",
+    "udieresis-cy",
+    "uacutedbl-cy",
+]
+
+GLYPHS_Y_ALL = [
+    "Y",
+    "Yacute",
+    "Ycircumflex",
+    "Ydieresis",
+    "Ydotbelow",
+    "Ygrave",
+    "Yhookabove",
+    "Ymacron",
+    "Ytilde",
+    *GLYPHS_Y,
+    "Y.bg",
+]
+
+GLYPHS_Z_ALL = [
     "Z",
     "Zacute",
     "Zcaron",
@@ -126,4 +157,5 @@ GLYPHS_Z_z = [
     "zacute",
     "zcaron",
     "zdotaccent",
+    "Z.bg",
 ]

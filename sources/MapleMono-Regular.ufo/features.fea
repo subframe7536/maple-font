@@ -29,7 +29,7 @@
 @V = [V v];
 @W = [W w];
 @X = [X x];
-@Y = [Y y];
+@Y = [Y y y.cv13];
 @Z = [Z z];
 @Var = [underscore underscore_underscore.liga @A @B @C @D @E @F @G @H @I @J @K @L @M @N @O @P @Q @R @S @T @U @V @W @X @Y @Z @Digit];
 @HexLetter = [@A @B @C @D @E @F];
@@ -64,8 +64,8 @@ feature aalt {
 
 feature ccmp {
 
-  @CombiningTopAccents = [acutecomb brevecomb caroncomb circumflexcomb commaturnedabovecomb dblgravecomb dieresiscomb dotaccentcomb gravecomb hookabovecomb hungarumlautcomb macroncomb ringcomb tildecomb];
-  @CombiningNonTopAccents = [cedillacomb dotbelowcomb ogonekcomb ringbelowcomb horncomb slashlongcomb slashshortcomb strokelongcomb];
+  @CombiningTopAccents = [acutecomb brevecomb caroncomb circumflexcomb commaturnedabovecomb dblgravecomb dieresiscomb dotaccentcomb gravecomb hookabovecomb hungarumlautcomb macroncomb overlinecomb ringcomb tildecomb];
+  @CombiningNonTopAccents = [cedillacomb commaaccentcomb dotbelowcomb ogonekcomb ringbelowcomb horncomb slashlongcomb slashshortcomb strokelongcomb];
   @Markscomb = [dieresiscomb dotaccentcomb gravecomb acutecomb hungarumlautcomb circumflexcomb caroncomb brevecomb ringcomb tildecomb macroncomb hookabovecomb dblgravecomb commaturnedabovecomb horncomb dotbelowcomb commaaccentcomb cedillacomb ogonekcomb dieresis dotaccent acute hungarumlaut circumflex caron breve ring tilde macron tonos brevecomb_acutecomb brevecomb_gravecomb brevecomb_hookabovecomb brevecomb_tildecomb circumflexcomb_acutecomb circumflexcomb_gravecomb circumflexcomb_hookabovecomb circumflexcomb_tildecomb];
   @MarkscombCase = [dieresiscomb.case dotaccentcomb.case gravecomb.case acutecomb.case hungarumlautcomb.case circumflexcomb.case caroncomb.case brevecomb.case ringcomb.case tildecomb.case macroncomb.case hookabovecomb.case dblgravecomb.case commaturnedabovecomb.case horncomb.case dotbelowcomb.case commaaccentcomb.case cedillacomb.case ogonekcomb.case dieresis.case dotaccent.case acute.case hungarumlaut.case circumflex.case caron.case breve.case ring.case tilde.case macron.case tonos.case brevecomb_acutecomb.case brevecomb_gravecomb.case brevecomb_hookabovecomb.case brevecomb_tildecomb.case circumflexcomb_acutecomb.case circumflexcomb_gravecomb.case circumflexcomb_hookabovecomb.case circumflexcomb_tildecomb.case];
 
@@ -98,6 +98,8 @@ feature ccmp {
     sub circumflexcomb.case tildecomb.case by circumflexcomb_tildecomb.case;
   } ccmp_latn;
   script latn;
+  lookup ccmp_other;
+  script cyrl;
   lookup ccmp_other;
 
 } ccmp;
@@ -1970,7 +1972,7 @@ feature cv04 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV04: Alternative l with left bottom bar, like consolas, will be overrided by cv35 in italic style";
+      name "CV04: Alternative l with left bottom bar, like consolas";
     };
   };
 
@@ -2118,6 +2120,7 @@ feature cv10 {
   sub zacute by zacute.cv10;
   sub zcaron by zcaron.cv10;
   sub zdotaccent by zdotaccent.cv10;
+  sub Z.bg by Z.bg.cv10;
 
 } cv10;
 
@@ -2166,6 +2169,41 @@ feature cv12 {
   sub upsilondieresistonos by upsilondieresistonos.cv12;
 
 } cv12;
+
+feature cv13 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV13: Alternative y in rounded style, no effect in italic style";
+    };
+  };
+
+  sub Y by Y.cv13;
+  sub Yacute by Yacute.cv13;
+  sub Ycircumflex by Ycircumflex.cv13;
+  sub Ydieresis by Ydieresis.cv13;
+  sub Ydotbelow by Ydotbelow.cv13;
+  sub Ygrave by Ygrave.cv13;
+  sub Yhookabove by Yhookabove.cv13;
+  sub Ymacron by Ymacron.cv13;
+  sub Ytilde by Ytilde.cv13;
+  sub y by y.cv13;
+  sub yacute by yacute.cv13;
+  sub ycircumflex by ycircumflex.cv13;
+  sub ydieresis by ydieresis.cv13;
+  sub ydotbelow by ydotbelow.cv13;
+  sub ygrave by ygrave.cv13;
+  sub yhookabove by yhookabove.cv13;
+  sub ymacron by ymacron.cv13;
+  sub ytilde by ytilde.cv13;
+  sub u-cy by u-cy.cv13;
+  sub ushort-cy by ushort-cy.cv13;
+  sub umacron-cy by umacron-cy.cv13;
+  sub udieresis-cy by udieresis-cy.cv13;
+  sub uacutedbl-cy by uacutedbl-cy.cv13;
+  sub Y.bg by Y.bg.cv13;
+
+} cv13;
 
 feature cv31 {
 
@@ -2362,6 +2400,19 @@ feature cv45 {
 
 } cv45;
 
+feature cv46 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV46: [Italic Only] Alternative italic l with left bottom bar, like consolas";
+    };
+  };
+
+  # Placeholder
+  sub EMquad by space;
+
+} cv46;
+
 feature cv61 {
 
   cvParameters {
@@ -2496,6 +2547,19 @@ feature cv68 {
   sub equal_equal_equal.liga by equal_equal_equal.liga.cv68;
 
 } cv68;
+
+feature cv69 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV69: Normalize @";
+    };
+  };
+
+  sub at by at.cv01;
+  sub asciitilde_at.liga by asciitilde_at.liga.cv01;
+
+} cv69;
 
 feature ss01 {
 

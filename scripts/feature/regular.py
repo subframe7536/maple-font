@@ -1,5 +1,5 @@
 import scripts.feature.ast as ast
-from scripts.feature.base.clazz import base_class_list, cls_digit
+from scripts.feature.base.clazz import cls_digit, get_base_class_list
 from scripts.feature.calt._infinite_utils import InfiniteOptions
 from scripts.feature.cv import (
     cv01,
@@ -14,6 +14,7 @@ from scripts.feature.cv import (
     cv10,
     cv11,
     cv12,
+    cv13,
     cv31,
     cv32,
     cv33,
@@ -29,6 +30,7 @@ from scripts.feature.cv import (
     cv43,
     cv44,
     cv45,
+    cv46,
     cv61,
     cv62,
     cv63,
@@ -37,6 +39,7 @@ from scripts.feature.cv import (
     cv66,
     cv67,
     cv68,
+    cv69,
 )
 from scripts.feature.ss import (
     ss01,
@@ -78,7 +81,7 @@ cls_u = ast.Clazz("U", ["U", "u"])
 cls_v = ast.Clazz("V", ["V", "v"])
 cls_w = ast.Clazz("W", ["W", "w"])
 cls_x = ast.Clazz("X", ["X", "x"])
-cls_y = ast.Clazz("Y", ["Y", "y"])
+cls_y = ast.Clazz("Y", ["Y", "y", "y.cv13"])
 cls_z = ast.Clazz("Z", ["Z", "z"])
 
 cls_letters_list = [
@@ -114,7 +117,7 @@ cls_var = ast.Clazz("Var", ["_", "__", *cls_letters_list, cls_digit])
 cls_hex_letter = ast.Clazz("HexLetter", [cls_a, cls_b, cls_c, cls_d, cls_e, cls_f])
 
 class_list_regular = [
-    *base_class_list,
+    *get_base_class_list(False),
     *cls_letters_list,
     cls_var,
     cls_hex_letter,
@@ -141,6 +144,7 @@ def cv_list_regular(
             cv10.cv10_feat_regular,
             cv11.cv11_feat_regular,
             cv12.cv12_feat_regular,
+            cv13.cv13_feat_regular,
             ast.clone_empty(cv31.cv31_feat_italic, italic_prefix),
             ast.clone_empty(cv32.cv32_feat_italic, italic_prefix),
             ast.clone_empty(cv33.cv33_feat_italic, italic_prefix),
@@ -156,6 +160,7 @@ def cv_list_regular(
             ast.clone_empty(cv43.cv43_feat_italic, italic_prefix),
             ast.clone_empty(cv44.cv44_feat_italic, italic_prefix),
             ast.clone_empty(cv45.cv45_feat_italic, italic_prefix),
+            ast.clone_empty(cv46.cv46_feat_italic, italic_prefix),
             cv61.cv61_feat,
             cv62.cv62_feat,
             cv63.cv63_feat,
@@ -164,6 +169,7 @@ def cv_list_regular(
             cv66.cv66_feat,
             cv67.cv67_feat,
             cv68.cv68_feat,
+            cv69.cv69_feat,
         ],
         full,
     )
