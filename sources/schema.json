@@ -266,7 +266,7 @@
           "$ref": "#/definitions/freeze_options"
         },
         "cv04": {
-          "description": "[v7.0] Alternative 'l' with left bottom bar, like consolas, will be overrided by 'cv35' in italic style",
+          "description": "[v7.0] Alternative 'l' with left bottom bar, like consolas",
           "$ref": "#/definitions/freeze_options"
         },
         "cv05": {
@@ -363,6 +363,10 @@
         },
         "cv45": {
           "description": "[v8.0] Alternative italic 'u' without tail",
+          "$ref": "#/definitions/freeze_options"
+        },
+        "cv46": {
+          "description": "[v8.0] Alternative italic 'l' with left bottom bar, like consolas",
           "$ref": "#/definitions/freeze_options"
         },
         "cv61": {

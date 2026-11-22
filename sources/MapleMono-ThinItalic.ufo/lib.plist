@@ -1876,31 +1876,6 @@
       <string>greater_hyphen.end.seq.cv01</string>
       <string>less_equal.sta.seq.cv01</string>
       <string>greater_equal.end.seq.cv01</string>
-      <string>l.cv04</string>
-      <string>lacute.cv04</string>
-      <string>lcaron.cv04</string>
-      <string>lcommaaccent.cv04</string>
-      <string>ldot.cv04</string>
-      <string>lslash.cv04</string>
-      <string>linferior.cv04</string>
-      <string>C_l.liga.cv04</string>
-      <string>a_l.liga.cv04</string>
-      <string>c_l.liga.cv04</string>
-      <string>e_l.liga.cv04</string>
-      <string>i_l.liga.cv04</string>
-      <string>l_l.liga.cv04</string>
-      <string>t_l.liga.cv04</string>
-      <string>u_l.liga.cv04</string>
-      <string>x_l.liga.cv04</string>
-      <string>a_l_l.liga.cv04</string>
-      <string>e_l_l.liga.cv04</string>
-      <string>i_l_l.liga.cv04</string>
-      <string>u_l_l.liga.cv04</string>
-      <string>one.cv04</string>
-      <string>one.dnom.cv04</string>
-      <string>one.numr.cv04</string>
-      <string>oneinferior.cv04</string>
-      <string>onesuperior.cv04</string>
       <string>a.cv31</string>
       <string>aacute.cv31</string>
       <string>abreve.cv31</string>
@@ -1929,8 +1904,6 @@
       <string>ainferior.cv31</string>
       <string>a_l.liga.cv31</string>
       <string>a_l_l.liga.cv31</string>
-      <string>a_l.liga.cv04.cv31</string>
-      <string>a_l_l.liga.cv04.cv31</string>
       <string>f.cv32</string>
       <string>f_f.liga.cv32</string>
       <string>idotless.cv33</string>
@@ -1953,8 +1926,6 @@
       <string>yi-cy.cv33</string>
       <string>i_l.liga.cv33</string>
       <string>i_l_l.liga.cv33</string>
-      <string>i_l.liga.cv04.cv33</string>
-      <string>i_l_l.liga.cv04.cv33</string>
       <string>i.superior.cv33</string>
       <string>j.cv33</string>
       <string>jdotless.cv33</string>
@@ -1993,7 +1964,6 @@
       <string>hastroke-cy.cv36</string>
       <string>xinferior.cv36</string>
       <string>x_l.liga.cv36</string>
-      <string>x_l.liga.cv04.cv36</string>
       <string>x_l.liga.cv35.cv36</string>
       <string>y.cv37</string>
       <string>yacute.cv37</string>
@@ -2035,14 +2005,10 @@
       <string>i-cy.cv39</string>
       <string>yi-cy.cv39</string>
       <string>i_l.liga.cv39</string>
-      <string>i_l.liga.cv04.cv39</string>
       <string>i_l.liga.cv33.cv39</string>
-      <string>i_l.liga.cv04.cv33.cv39</string>
       <string>i_l.liga.cv33.cv35.cv39</string>
       <string>i_l_l.liga.cv39</string>
-      <string>i_l_l.liga.cv04.cv39</string>
       <string>i_l_l.liga.cv33.cv39</string>
-      <string>i_l_l.liga.cv04.cv33.cv39</string>
       <string>i_l_l.liga.cv35.cv39</string>
       <string>i_l_l.liga.cv33.cv35.cv39</string>
       <string>i.superior.cv39</string>
@@ -2091,6 +2057,40 @@
       <string>upsilontonos.cv45</string>
       <string>upsilondieresis.cv45</string>
       <string>upsilondieresistonos.cv45</string>
+      <string>l.cv46</string>
+      <string>lacute.cv46</string>
+      <string>lcaron.cv46</string>
+      <string>lcommaaccent.cv46</string>
+      <string>ldot.cv46</string>
+      <string>lslash.cv46</string>
+      <string>linferior.cv46</string>
+      <string>C_l.liga.cv46</string>
+      <string>a_l.liga.cv46</string>
+      <string>c_l.liga.cv46</string>
+      <string>e_l.liga.cv46</string>
+      <string>i_l.liga.cv46</string>
+      <string>l_l.liga.cv46</string>
+      <string>t_l.liga.cv46</string>
+      <string>u_l.liga.cv46</string>
+      <string>x_l.liga.cv46</string>
+      <string>a_l_l.liga.cv46</string>
+      <string>e_l_l.liga.cv46</string>
+      <string>i_l_l.liga.cv46</string>
+      <string>u_l_l.liga.cv46</string>
+      <string>one.cv46</string>
+      <string>one.dnom.cv46</string>
+      <string>one.numr.cv46</string>
+      <string>oneinferior.cv46</string>
+      <string>onesuperior.cv46</string>
+      <string>a_l.liga.cv31.cv46</string>
+      <string>a_l_l.liga.cv31.cv46</string>
+      <string>i_l.liga.cv33.cv46</string>
+      <string>i_l_l.liga.cv33.cv46</string>
+      <string>x_l.liga.cv36.cv46</string>
+      <string>i_l.liga.cv39.cv46</string>
+      <string>i_l.liga.cv33.cv39.cv46</string>
+      <string>i_l_l.liga.cv39.cv46</string>
+      <string>i_l_l.liga.cv33.cv39.cv46</string>
       <string>comma.cv61</string>
       <string>semicolon.cv61</string>
       <string>semicolon_semicolon.liga.cv61</string>
@@ -4032,10 +4032,10 @@
       <string>uni223E</string>
       <key>lcommaaccent</key>
       <string>uni013C</string>
-      <key>lcommaaccent.cv04</key>
-      <string>uni013C.cv04</string>
       <key>lcommaaccent.cv35</key>
       <string>uni013C.cv35</string>
+      <key>lcommaaccent.cv46</key>
+      <string>uni013C.cv46</string>
       <key>leftArrow</key>
       <string>arrowleft</string>
       <key>leftBarbUpRightBarbDownHarpoon</key>
@@ -4098,10 +4098,10 @@
       <string>uni2266</string>
       <key>linferior</key>
       <string>uni2097</string>
-      <key>linferior.cv04</key>
-      <string>uni2097.cv04</string>
       <key>linferior.cv35</key>
       <string>uni2097.cv35</string>
+      <key>linferior.cv46</key>
+      <string>uni2097.cv46</string>
       <key>liraTurkish</key>
       <string>uni20BA</string>
       <key>literSign</key>
@@ -4308,12 +4308,12 @@
       <string>uni1F41</string>
       <key>oneinferior</key>
       <string>uni2081</string>
-      <key>oneinferior.cv04</key>
-      <string>uni2081.cv04</string>
+      <key>oneinferior.cv46</key>
+      <string>uni2081.cv46</string>
       <key>onesuperior</key>
       <string>uni00B9</string>
-      <key>onesuperior.cv04</key>
-      <string>uni00B9.cv04</string>
+      <key>onesuperior.cv46</key>
+      <string>uni00B9.cv46</string>
       <key>oogonek</key>
       <string>uni01EB</string>
       <key>oopen</key>

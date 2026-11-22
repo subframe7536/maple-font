@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<glyph name="linferior.cv46" format="2">
+  <advance width="600"/>
+  <outline>
+    <contour>
+      <point x="130.063" y="32.813" type="curve" smooth="yes"/>
+      <point x="328.138" y="32.813" type="line" smooth="yes"/>
+      <point x="359.863" y="32.813"/>
+      <point x="371.975" y="18.563"/>
+      <point x="366.388" y="-13.162" type="curve" smooth="yes"/>
+      <point x="360.8" y="-44.887"/>
+      <point x="342.5" y="-60"/>
+      <point x="310.775" y="-60" type="curve" smooth="yes"/>
+      <point x="114.425" y="-60" type="line" smooth="yes"/>
+      <point x="82.7" y="-60"/>
+      <point x="69.725" y="-44.887"/>
+      <point x="75.312" y="-13.162" type="curve" smooth="yes"/>
+      <point x="80.9" y="18.563"/>
+      <point x="98.338" y="32.813"/>
+    </contour>
+    <contour>
+      <point x="271.625" y="-14.437" type="line"/>
+      <point x="165.875" y="-14.437" type="line"/>
+      <point x="212.338" y="247.388" type="line" smooth="yes"/>
+      <point x="217.063" y="272.213"/>
+      <point x="207.013" y="285.188"/>
+      <point x="182.188" y="285.188" type="curve" smooth="yes"/>
+      <point x="175.85" y="285.188" type="line" smooth="yes"/>
+      <point x="145.85" y="285.188"/>
+      <point x="134" y="299.438"/>
+      <point x="138.725" y="329.438" type="curve"/>
+      <point x="145.175" y="362.888"/>
+      <point x="163.213" y="378"/>
+      <point x="196.663" y="378" type="curve" smooth="yes"/>
+      <point x="258.875" y="378" type="line" smooth="yes"/>
+      <point x="313.7" y="378"/>
+      <point x="336.65" y="350.325"/>
+      <point x="326.938" y="295.5" type="curve" smooth="yes"/>
+    </contour>
+  </outline>
+</glyph>

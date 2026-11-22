@@ -1,5 +1,5 @@
 import scripts.feature.ast as ast
-from scripts.feature.base.clazz import base_class_list, cls_digit
+from scripts.feature.base.clazz import cls_digit, get_base_class_list
 from scripts.feature.calt._infinite_utils import InfiniteOptions
 from scripts.feature.cv import (
     cv01,
@@ -30,6 +30,7 @@ from scripts.feature.cv import (
     cv43,
     cv44,
     cv45,
+    cv46,
     cv61,
     cv62,
     cv63,
@@ -88,8 +89,8 @@ a_l = ast.Clazz(
         ast.gly("al", ".cv31"),
         ast.gly("al", ".cv35"),
         ast.gly("al", ".cv31.cv35"),
-        ast.gly("al", ".cv04"),
-        ast.gly("al", ".cv04.cv31"),
+        ast.gly("al", ".cv46"),
+        ast.gly("al", ".cv31.cv46"),
         ast.gly("al", ".ss06"),
     ],
 )
@@ -127,7 +128,7 @@ cls_var = ast.Clazz("Var", ["_", "__", *cls_letters_list, cls_digit])
 cls_hex_letter = ast.Clazz("HexLetter", [cls_a, cls_b, cls_c, cls_d, cls_e, cls_f])
 
 class_list_italic = [
-    *base_class_list,
+    *get_base_class_list(True),
     *cls_letters_list,
     a_l,
     cls_var,
@@ -147,7 +148,7 @@ def cv_list_italic(
             cv01.cv01_feat(infinite_options),
             ast.clone_empty(cv02.cv02_feat_regular, regular_prefix),
             ast.clone_empty(cv03.cv03_feat_regular, regular_prefix),
-            cv04.cv04_feat_italic,
+            ast.clone_empty(cv04.cv04_feat_regular, regular_prefix),
             ast.clone_empty(cv05.cv05_feat_regular, regular_prefix),
             ast.clone_empty(cv06.cv06_feat_regular, regular_prefix),
             ast.clone_empty(cv07.cv07_feat_regular, regular_prefix),
@@ -172,6 +173,7 @@ def cv_list_italic(
             cv43.cv43_feat_italic,
             cv44.cv44_feat_italic,
             cv45.cv45_feat_italic,
+            cv46.cv46_feat_italic,
             cv61.cv61_feat,
             cv62.cv62_feat,
             cv63.cv63_feat,

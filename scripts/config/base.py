@@ -90,6 +90,7 @@ def default_feature_freeze() -> dict[str, str]:
         "cv43": "ignore",
         "cv44": "ignore",
         "cv45": "ignore",
+        "cv46": "ignore",
         "cv61": "ignore",
         "cv62": "ignore",
         "cv63": "ignore",

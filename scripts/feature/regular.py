@@ -1,5 +1,5 @@
 import scripts.feature.ast as ast
-from scripts.feature.base.clazz import base_class_list, cls_digit
+from scripts.feature.base.clazz import cls_digit, get_base_class_list
 from scripts.feature.calt._infinite_utils import InfiniteOptions
 from scripts.feature.cv import (
     cv01,
@@ -30,6 +30,7 @@ from scripts.feature.cv import (
     cv43,
     cv44,
     cv45,
+    cv46,
     cv61,
     cv62,
     cv63,
@@ -115,7 +116,7 @@ cls_var = ast.Clazz("Var", ["_", "__", *cls_letters_list, cls_digit])
 cls_hex_letter = ast.Clazz("HexLetter", [cls_a, cls_b, cls_c, cls_d, cls_e, cls_f])
 
 class_list_regular = [
-    *base_class_list,
+    *get_base_class_list(False),
     *cls_letters_list,
     cls_var,
     cls_hex_letter,
@@ -158,6 +159,7 @@ def cv_list_regular(
             ast.clone_empty(cv43.cv43_feat_italic, italic_prefix),
             ast.clone_empty(cv44.cv44_feat_italic, italic_prefix),
             ast.clone_empty(cv45.cv45_feat_italic, italic_prefix),
+            ast.clone_empty(cv46.cv46_feat_italic, italic_prefix),
             cv61.cv61_feat,
             cv62.cv62_feat,
             cv63.cv63_feat,

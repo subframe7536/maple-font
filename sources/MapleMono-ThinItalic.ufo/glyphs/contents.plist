@@ -80,10 +80,10 @@
     <string>C_R_.glif</string>
     <key>C_l.liga</key>
     <string>C__l.liga.glif</string>
-    <key>C_l.liga.cv04</key>
-    <string>C__l.liga.cv04.glif</string>
     <key>C_l.liga.cv35</key>
     <string>C__l.liga.cv35.glif</string>
+    <key>C_l.liga.cv46</key>
+    <string>C__l.liga.cv46.glif</string>
     <key>C_l.liga.ss06</key>
     <string>C__l.liga.ss06.glif</string>
     <key>Cacute</key>
@@ -768,32 +768,32 @@
     <string>a.cv31.glif</string>
     <key>a_l.liga</key>
     <string>a_l.liga.glif</string>
-    <key>a_l.liga.cv04</key>
-    <string>a_l.liga.cv04.glif</string>
-    <key>a_l.liga.cv04.cv31</key>
-    <string>a_l.liga.cv04.cv31.glif</string>
     <key>a_l.liga.cv31</key>
     <string>a_l.liga.cv31.glif</string>
     <key>a_l.liga.cv31.cv35</key>
     <string>a_l.liga.cv31.cv35.glif</string>
+    <key>a_l.liga.cv31.cv46</key>
+    <string>a_l.liga.cv31.cv46.glif</string>
     <key>a_l.liga.cv35</key>
     <string>a_l.liga.cv35.glif</string>
+    <key>a_l.liga.cv46</key>
+    <string>a_l.liga.cv46.glif</string>
     <key>a_l.liga.ss06</key>
     <string>a_l.liga.ss06.glif</string>
     <key>a_l_l.liga</key>
     <string>a_l_l.liga.glif</string>
-    <key>a_l_l.liga.cv04</key>
-    <string>a_l_l.liga.cv04.glif</string>
-    <key>a_l_l.liga.cv04.cv31</key>
-    <string>a_l_l.liga.cv04.cv31.glif</string>
     <key>a_l_l.liga.cv31</key>
     <string>a_l_l.liga.cv31.glif</string>
     <key>a_l_l.liga.cv31.cv35</key>
     <string>a_l_l.liga.cv31.cv35.glif</string>
+    <key>a_l_l.liga.cv31.cv46</key>
+    <string>a_l_l.liga.cv31.cv46.glif</string>
     <key>a_l_l.liga.cv31.ss06</key>
     <string>a_l_l.liga.cv31.ss06.glif</string>
     <key>a_l_l.liga.cv35</key>
     <string>a_l_l.liga.cv35.glif</string>
+    <key>a_l_l.liga.cv46</key>
+    <string>a_l_l.liga.cv46.glif</string>
     <key>a_l_l.liga.ss06</key>
     <string>a_l_l.liga.ss06.glif</string>
     <key>aacute</key>
@@ -1546,10 +1546,10 @@
     <string>c.glif</string>
     <key>c_l.liga</key>
     <string>c_l.liga.glif</string>
-    <key>c_l.liga.cv04</key>
-    <string>c_l.liga.cv04.glif</string>
     <key>c_l.liga.cv35</key>
     <string>c_l.liga.cv35.glif</string>
+    <key>c_l.liga.cv46</key>
+    <string>c_l.liga.cv46.glif</string>
     <key>c_l.liga.ss06</key>
     <string>c_l.liga.ss06.glif</string>
     <key>cacute</key>
@@ -1938,18 +1938,18 @@
     <string>e.orig.glif</string>
     <key>e_l.liga</key>
     <string>e_l.liga.glif</string>
-    <key>e_l.liga.cv04</key>
-    <string>e_l.liga.cv04.glif</string>
     <key>e_l.liga.cv35</key>
     <string>e_l.liga.cv35.glif</string>
+    <key>e_l.liga.cv46</key>
+    <string>e_l.liga.cv46.glif</string>
     <key>e_l.liga.ss06</key>
     <string>e_l.liga.ss06.glif</string>
     <key>e_l_l.liga</key>
     <string>e_l_l.liga.glif</string>
-    <key>e_l_l.liga.cv04</key>
-    <string>e_l_l.liga.cv04.glif</string>
     <key>e_l_l.liga.cv35</key>
     <string>e_l_l.liga.cv35.glif</string>
+    <key>e_l_l.liga.cv46</key>
+    <string>e_l_l.liga.cv46.glif</string>
     <key>e_l_l.liga.ss06</key>
     <string>e_l_l.liga.ss06.glif</string>
     <key>eacute</key>
@@ -2552,14 +2552,6 @@
     <string>i.superior.cv39.glif</string>
     <key>i_l.liga</key>
     <string>i_l.liga.glif</string>
-    <key>i_l.liga.cv04</key>
-    <string>i_l.liga.cv04.glif</string>
-    <key>i_l.liga.cv04.cv33</key>
-    <string>i_l.liga.cv04.cv33.glif</string>
-    <key>i_l.liga.cv04.cv33.cv39</key>
-    <string>i_l.liga.cv04.cv33.cv39.glif</string>
-    <key>i_l.liga.cv04.cv39</key>
-    <string>i_l.liga.cv04.cv39.glif</string>
     <key>i_l.liga.cv33</key>
     <string>i_l.liga.cv33.glif</string>
     <key>i_l.liga.cv33.cv35</key>
@@ -2568,22 +2560,22 @@
     <string>i_l.liga.cv33.cv35.cv39.glif</string>
     <key>i_l.liga.cv33.cv39</key>
     <string>i_l.liga.cv33.cv39.glif</string>
+    <key>i_l.liga.cv33.cv39.cv46</key>
+    <string>i_l.liga.cv33.cv39.cv46.glif</string>
+    <key>i_l.liga.cv33.cv46</key>
+    <string>i_l.liga.cv33.cv46.glif</string>
     <key>i_l.liga.cv35</key>
     <string>i_l.liga.cv35.glif</string>
     <key>i_l.liga.cv39</key>
     <string>i_l.liga.cv39.glif</string>
+    <key>i_l.liga.cv39.cv46</key>
+    <string>i_l.liga.cv39.cv46.glif</string>
+    <key>i_l.liga.cv46</key>
+    <string>i_l.liga.cv46.glif</string>
     <key>i_l.liga.ss06</key>
     <string>i_l.liga.ss06.glif</string>
     <key>i_l_l.liga</key>
     <string>i_l_l.liga.glif</string>
-    <key>i_l_l.liga.cv04</key>
-    <string>i_l_l.liga.cv04.glif</string>
-    <key>i_l_l.liga.cv04.cv33</key>
-    <string>i_l_l.liga.cv04.cv33.glif</string>
-    <key>i_l_l.liga.cv04.cv33.cv39</key>
-    <string>i_l_l.liga.cv04.cv33.cv39.glif</string>
-    <key>i_l_l.liga.cv04.cv39</key>
-    <string>i_l_l.liga.cv04.cv39.glif</string>
     <key>i_l_l.liga.cv33</key>
     <string>i_l_l.liga.cv33.glif</string>
     <key>i_l_l.liga.cv33.cv35</key>
@@ -2592,8 +2584,12 @@
     <string>i_l_l.liga.cv33.cv35.cv39.glif</string>
     <key>i_l_l.liga.cv33.cv39</key>
     <string>i_l_l.liga.cv33.cv39.glif</string>
+    <key>i_l_l.liga.cv33.cv39.cv46</key>
+    <string>i_l_l.liga.cv33.cv39.cv46.glif</string>
     <key>i_l_l.liga.cv33.cv39.ss06</key>
     <string>i_l_l.liga.cv33.cv39.ss06.glif</string>
+    <key>i_l_l.liga.cv33.cv46</key>
+    <string>i_l_l.liga.cv33.cv46.glif</string>
     <key>i_l_l.liga.cv33.ss06</key>
     <string>i_l_l.liga.cv33.ss06.glif</string>
     <key>i_l_l.liga.cv35</key>
@@ -2602,8 +2598,12 @@
     <string>i_l_l.liga.cv35.cv39.glif</string>
     <key>i_l_l.liga.cv39</key>
     <string>i_l_l.liga.cv39.glif</string>
+    <key>i_l_l.liga.cv39.cv46</key>
+    <string>i_l_l.liga.cv39.cv46.glif</string>
     <key>i_l_l.liga.cv39.ss06</key>
     <string>i_l_l.liga.cv39.ss06.glif</string>
+    <key>i_l_l.liga.cv46</key>
+    <string>i_l_l.liga.cv46.glif</string>
     <key>i_l_l.liga.ss06</key>
     <string>i_l_l.liga.ss06.glif</string>
     <key>ia-cy</key>
@@ -2828,24 +2828,24 @@
     <string>knightwhite.glif</string>
     <key>l</key>
     <string>l.glif</string>
-    <key>l.cv04</key>
-    <string>l.cv04.glif</string>
     <key>l.cv35</key>
     <string>l.cv35.glif</string>
+    <key>l.cv46</key>
+    <string>l.cv46.glif</string>
     <key>l_l.liga</key>
     <string>l_l.liga.glif</string>
-    <key>l_l.liga.cv04</key>
-    <string>l_l.liga.cv04.glif</string>
     <key>l_l.liga.cv35</key>
     <string>l_l.liga.cv35.glif</string>
+    <key>l_l.liga.cv46</key>
+    <string>l_l.liga.cv46.glif</string>
     <key>l_l.liga.ss06</key>
     <string>l_l.liga.ss06.glif</string>
     <key>lacute</key>
     <string>lacute.glif</string>
-    <key>lacute.cv04</key>
-    <string>lacute.cv04.glif</string>
     <key>lacute.cv35</key>
     <string>lacute.cv35.glif</string>
+    <key>lacute.cv46</key>
+    <string>lacute.cv46.glif</string>
     <key>lambda</key>
     <string>lambda.glif</string>
     <key>lambdastroke</key>
@@ -2858,22 +2858,22 @@
     <string>lazysinverted.glif</string>
     <key>lcaron</key>
     <string>lcaron.glif</string>
-    <key>lcaron.cv04</key>
-    <string>lcaron.cv04.glif</string>
     <key>lcaron.cv35</key>
     <string>lcaron.cv35.glif</string>
+    <key>lcaron.cv46</key>
+    <string>lcaron.cv46.glif</string>
     <key>lcommaaccent</key>
     <string>lcommaaccent.glif</string>
-    <key>lcommaaccent.cv04</key>
-    <string>lcommaaccent.cv04.glif</string>
     <key>lcommaaccent.cv35</key>
     <string>lcommaaccent.cv35.glif</string>
+    <key>lcommaaccent.cv46</key>
+    <string>lcommaaccent.cv46.glif</string>
     <key>ldot</key>
     <string>ldot.glif</string>
-    <key>ldot.cv04</key>
-    <string>ldot.cv04.glif</string>
     <key>ldot.cv35</key>
     <string>ldot.cv35.glif</string>
+    <key>ldot.cv46</key>
+    <string>ldot.cv46.glif</string>
     <key>leftArrow</key>
     <string>leftA_rrow.glif</string>
     <key>leftBarbUpRightBarbDownHarpoon</key>
@@ -3096,10 +3096,10 @@
     <string>lessoverequal.glif</string>
     <key>linferior</key>
     <string>linferior.glif</string>
-    <key>linferior.cv04</key>
-    <string>linferior.cv04.glif</string>
     <key>linferior.cv35</key>
     <string>linferior.cv35.glif</string>
+    <key>linferior.cv46</key>
+    <string>linferior.cv46.glif</string>
     <key>liraTurkish</key>
     <string>liraT_urkish.glif</string>
     <key>literSign</key>
@@ -3152,8 +3152,8 @@
     <string>lozengesquare.glif</string>
     <key>lslash</key>
     <string>lslash.glif</string>
-    <key>lslash.cv04</key>
-    <string>lslash.cv04.glif</string>
+    <key>lslash.cv46</key>
+    <string>lslash.cv46.glif</string>
     <key>lslash.decorator</key>
     <string>lslash.decorator.glif</string>
     <key>m</key>
@@ -3448,30 +3448,30 @@
     <string>omicrontonos.glif</string>
     <key>one</key>
     <string>one.glif</string>
-    <key>one.cv04</key>
-    <string>one.cv04.glif</string>
+    <key>one.cv46</key>
+    <string>one.cv46.glif</string>
     <key>one.dnom</key>
     <string>one.dnom.glif</string>
-    <key>one.dnom.cv04</key>
-    <string>one.dnom.cv04.glif</string>
+    <key>one.dnom.cv46</key>
+    <string>one.dnom.cv46.glif</string>
     <key>one.numr</key>
     <string>one.numr.glif</string>
-    <key>one.numr.cv04</key>
-    <string>one.numr.cv04.glif</string>
+    <key>one.numr.cv46</key>
+    <string>one.numr.cv46.glif</string>
     <key>onedotenleader</key>
     <string>onedotenleader.glif</string>
     <key>onehalf</key>
     <string>onehalf.glif</string>
     <key>oneinferior</key>
     <string>oneinferior.glif</string>
-    <key>oneinferior.cv04</key>
-    <string>oneinferior.cv04.glif</string>
+    <key>oneinferior.cv46</key>
+    <string>oneinferior.cv46.glif</string>
     <key>onequarter</key>
     <string>onequarter.glif</string>
     <key>onesuperior</key>
     <string>onesuperior.glif</string>
-    <key>onesuperior.cv04</key>
-    <string>onesuperior.cv04.glif</string>
+    <key>onesuperior.cv46</key>
+    <string>onesuperior.cv46.glif</string>
     <key>oogonek</key>
     <string>oogonek.glif</string>
     <key>oopen</key>
@@ -4074,10 +4074,10 @@
     <string>t.glif</string>
     <key>t_l.liga</key>
     <string>t_l.liga.glif</string>
-    <key>t_l.liga.cv04</key>
-    <string>t_l.liga.cv04.glif</string>
     <key>t_l.liga.cv35</key>
     <string>t_l.liga.cv35.glif</string>
+    <key>t_l.liga.cv46</key>
+    <string>t_l.liga.cv46.glif</string>
     <key>t_l.liga.ss06</key>
     <string>t_l.liga.ss06.glif</string>
     <key>t_t.liga</key>
@@ -4240,18 +4240,18 @@
     <string>u.cv45.glif</string>
     <key>u_l.liga</key>
     <string>u_l.liga.glif</string>
-    <key>u_l.liga.cv04</key>
-    <string>u_l.liga.cv04.glif</string>
     <key>u_l.liga.cv35</key>
     <string>u_l.liga.cv35.glif</string>
+    <key>u_l.liga.cv46</key>
+    <string>u_l.liga.cv46.glif</string>
     <key>u_l.liga.ss06</key>
     <string>u_l.liga.ss06.glif</string>
     <key>u_l_l.liga</key>
     <string>u_l_l.liga.glif</string>
-    <key>u_l_l.liga.cv04</key>
-    <string>u_l_l.liga.cv04.glif</string>
     <key>u_l_l.liga.cv35</key>
     <string>u_l_l.liga.cv35.glif</string>
+    <key>u_l_l.liga.cv46</key>
+    <string>u_l_l.liga.cv46.glif</string>
     <key>u_l_l.liga.ss06</key>
     <string>u_l_l.liga.ss06.glif</string>
     <key>uacute</key>
@@ -5066,16 +5066,16 @@
     <string>x.cv36.glif</string>
     <key>x_l.liga</key>
     <string>x_l.liga.glif</string>
-    <key>x_l.liga.cv04</key>
-    <string>x_l.liga.cv04.glif</string>
-    <key>x_l.liga.cv04.cv36</key>
-    <string>x_l.liga.cv04.cv36.glif</string>
     <key>x_l.liga.cv35</key>
     <string>x_l.liga.cv35.glif</string>
     <key>x_l.liga.cv35.cv36</key>
     <string>x_l.liga.cv35.cv36.glif</string>
     <key>x_l.liga.cv36</key>
     <string>x_l.liga.cv36.glif</string>
+    <key>x_l.liga.cv36.cv46</key>
+    <string>x_l.liga.cv36.cv46.glif</string>
+    <key>x_l.liga.cv46</key>
+    <string>x_l.liga.cv46.glif</string>
     <key>x_l.liga.ss06</key>
     <string>x_l.liga.ss06.glif</string>
     <key>xcircle</key>

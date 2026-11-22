@@ -1972,7 +1972,7 @@ feature cv04 {
 
   cvParameters {
     FeatUILabelNameID {
-      name "CV04: Alternative l with left bottom bar, like consolas, will be overrided by cv35 in italic style";
+      name "CV04: Alternative l with left bottom bar, like consolas";
     };
   };
 
@@ -2399,6 +2399,19 @@ feature cv45 {
   sub EMquad by space;
 
 } cv45;
+
+feature cv46 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV46: [Italic Only] Alternative italic l with left bottom bar, like consolas";
+    };
+  };
+
+  # Placeholder
+  sub EMquad by space;
+
+} cv46;
 
 feature cv61 {
 

@@ -24,8 +24,18 @@ def cv39_subst():
             target_suffix=".cv39",
         ),
         ast.subst_map(
-            gen("", ".cv04", ".cv33", ".cv04.cv33", ".cv33.cv35"),
+            gen("", ".cv33", ".cv33.cv35"),
             target_suffix=".cv39",
+        ),
+        ast.subst_map(
+            gen(""),
+            source_suffix=".cv46",
+            target_suffix=".cv39.cv46",
+        ),
+        ast.subst_map(
+            gen(""),
+            source_suffix=".cv33.cv46",
+            target_suffix=".cv33.cv39.cv46",
         ),
     ]
 

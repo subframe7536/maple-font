@@ -2,6 +2,7 @@ import scripts.feature.ast as ast
 
 cls_zero = ast.Clazz("Zero", ["zero", "zero.zero"])
 cls_one = ast.Clazz("One", ["one", "one.cv04"])
+cls_one_italic = ast.Clazz("One", ["one", "one.cv46"])
 cls_digit = ast.Clazz(
     "Digit",
     [
@@ -305,12 +306,13 @@ cls_uppercase = ast.Clazz(
 )
 
 
-base_class_list = [
-    cls_zero,
-    cls_one,
-    cls_digit,
-    cls_comma,
-    cls_question,
-    cls_uppercase,
-    cls_space,
-]
+def get_base_class_list(is_italic: bool) -> list[ast.Clazz]:
+    return [
+        cls_zero,
+        cls_one_italic if is_italic else cls_one,
+        cls_digit,
+        cls_comma,
+        cls_question,
+        cls_uppercase,
+        cls_space,
+    ]

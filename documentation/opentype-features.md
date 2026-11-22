@@ -88,7 +88,7 @@ For more details, please check out `.fea` files in [features](../sources/feature
 - [v7.0] cv01: Normalize special symbols (`@ $ & % Q => ->`)
 - [v7.0] cv02: Alternative `a` with top arm, no effect in italic style
 - [v7.0] cv03: Alternative `i` without left bottom bar
-- [v7.0] cv04: Alternative `l` with left bottom bar, like consolas, will be overrided by `cv35` in italic style
+- [v7.0] cv04: Alternative `l` with left bottom bar, like consolas
 - [v7.1] cv05: Alternative `g` in double story style, no effect in italic style
 - [v7.1] cv06: Alternative `i` without bottom bar, no effect in italic style
 - [v7.1] cv07: Alternative `J` without top bar, no effect in italic style
@@ -127,6 +127,7 @@ For more details, please check out `.fea` files in [features](../sources/feature
 - [v7.5] cv43: Alternative italic _`Z`_ and _`z`_ with middle bar
 - [v7.7] cv44: Alternative Italic _`f`_ with bottom bar
 - [v8.0] cv45: Alternative italic _`u`_ without tail
+- [v8.0] cv46: Alternative italic _`l`_ with left bottom bar, like consolas
 <!-- CV-IT -->
 
 #### CN Only
