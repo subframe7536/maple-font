@@ -35,6 +35,7 @@ NORMAL_ENABLED_FEATURES: tuple[str, ...] = (
     "cv36",
     "cv61",
     "cv62",
+    "cv69",
     "ss05",
     "ss06",
     "ss07",

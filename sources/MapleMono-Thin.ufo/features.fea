@@ -2548,6 +2548,19 @@ feature cv68 {
 
 } cv68;
 
+feature cv69 {
+
+  cvParameters {
+    FeatUILabelNameID {
+      name "CV69: Normalize @";
+    };
+  };
+
+  sub at by at.cv01;
+  sub asciitilde_at.liga by asciitilde_at.liga.cv01;
+
+} cv69;
+
 feature ss01 {
 
   featureNames {
