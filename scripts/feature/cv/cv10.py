@@ -1,12 +1,12 @@
 import scripts.feature.ast as ast
-from scripts.feature.cv._common import GLYPHS_Z_z
+from scripts.feature.cv._common import GLYPHS_Z_ALL
 
 
 # https://github.com/subframe7536/maple-font/issues/549
 def cv10_subst():
     return [
         ast.subst_map(
-            GLYPHS_Z_z,
+            GLYPHS_Z_ALL,
             target_suffix=".cv10",
         ),
     ]

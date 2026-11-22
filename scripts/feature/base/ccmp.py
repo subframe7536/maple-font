@@ -16,6 +16,7 @@ comb_top_acc = ast.Clazz(
         "hookabovecomb",
         "hungarumlautcomb",
         "macroncomb",
+        "overlinecomb",
         "ringcomb",
         "tildecomb",
     ],
@@ -25,6 +26,7 @@ comb_non_top_acc = ast.Clazz(
     "CombiningNonTopAccents",
     [
         "cedillacomb",
+        "commaaccentcomb",
         "dotbelowcomb",
         "ogonekcomb",
         "ringbelowcomb",
@@ -180,6 +182,8 @@ __ccmp = [
     ccmp_other,
     ccmp_latn,
     ast.script("latn"),
+    ccmp_other.use(),
+    ast.script("cyrl"),
     ccmp_other.use(),
 ]
 

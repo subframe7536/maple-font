@@ -39,6 +39,22 @@
 - [x] validate u+229e and other math symbols
 - [x] U+21B5 #771
 - [ ] more mathmatical glyphs #852
+  - [ ] high-usage symbols (first):
+    - [ ] long arrows: U+27F9, U+27F8, U+27FA, U+27FC, U+290F, U+290E (single 600-unit cell, same as U+27F6)
+    - [ ] floor / ceiling: U+230A, U+230B, U+2308, U+2309
+    - [ ] harpoons: U+21C0, U+21BD, U+21CC
+    - [ ] diagonal double arrows: U+21D6, U+21D7, U+21D8, U+21D9
+    - [ ] circled operators: U+2A02
+    - [ ] Isabelle markup: U+2759, U+2015, U+2710, U+25A9, U+27A7, U+2B1A
+    - [ ] others: U+2322, U+291C, U+2AA2, U+03F5, U+2311
+  - [ ] remaining BMP symbols (selection):
+    - [ ] arrows: U+21C1, U+21BC, U+21C3, U+21C2, U+21BF, U+21D5
+    - [ ] brackets: U+2983, U+2984, U+2989, U+298A
+    - [ ] operators and relations: U+2A85, U+2A86, U+2A04, U+2323, U+2A1D, U+2AF4, U+2AFD, U+2AFF, U+2A01, U+2A3F, U+2135, U+2127, U+2118
+    - [ ] Z notation: U+2A3E, U+2914, U+2915, U+2900, U+21F8, U+21FB, U+2A64, U+2A65, U+2981, U+2A1F, U+2A21, U+2982, U+29F9, U+2040
+    - [ ] document markup: U+2756, U+204B
+    - [ ] icons: U+261B
+  - not planned: math letters (script / Fraktur / double-struck / sans-serif) and anything in U+1xxxx
 - [x] u+2605 , u+2606 #849
 
 ### CN
@@ -98,8 +114,9 @@ The following items are based on `uv run fontbakery check-googlefonts fonts/vari
 At baseline, each check failed for both the regular and italic variable fonts; the
 checkboxes below reflect the latest revalidation.
 
+~~`family/win_ascent_and_descent` — set `OS/2.usWinAscent` to at least 1120 and `OS/2.usWinDescent` to at least 400 after confirming the intended line-spacing behavior.~~
+
 - [x] `case_mapping` — add the missing case-swapping counterparts for U+01D5/U+01D7/U+01D9/U+01DB, U+0186, U+A7AE, U+01A9, U+01B1, U+0245, U+01B7, U+03F2, U+1F41, and U+1F64.
-- [ ] `family/win_ascent_and_descent` — set `OS/2.usWinAscent` to at least 1120 and `OS/2.usWinDescent` to at least 400 after confirming the intended line-spacing behavior.
 - [x] `legacy_accents` — remove the GDEF mark class assignment from `dieresis`, `macron`, `acute`, `cedilla`, `circumflex`, `caron`, `breve`, `dotaccent`, `ring`, `ogonek`, `tilde`, and `hungarumlaut`.
 - [x] `googlefonts/glyphsets/shape_languages` — add the mandatory missing Cyrillic characters required by `GF_Phonetics_SinoExt`, including Bashkir, Chuvash, Azerbaijani Cyrillic, Kabardian/Adyghe/Dargwa/Lezghian/Ingush, Chechen, Avaric, Mari, and Sakha.
 - [ ] `dotted_circle` — add dotted-circle attachment anchors for `acutecomb`, `dotbelowcomb`, `gravecomb`, `hookabovecomb`, `tildecomb`, U+0302, U+0304, U+0305, U+0306, U+0307, U+0308, U+030A, U+030B, U+030C, U+030F, U+0312, U+031B, U+0325, U+0326, U+0327, U+0328, U+0336, U+0337, and U+0338.

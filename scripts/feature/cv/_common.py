@@ -145,9 +145,10 @@ GLYPHS_Y_ALL = [
     "Ymacron",
     "Ytilde",
     *GLYPHS_Y,
+    "Y.bg",
 ]
 
-GLYPHS_Z_z = [
+GLYPHS_Z_ALL = [
     "Z",
     "Zacute",
     "Zcaron",
@@ -156,4 +157,5 @@ GLYPHS_Z_z = [
     "zacute",
     "zcaron",
     "zdotaccent",
+    "Z.bg",
 ]
