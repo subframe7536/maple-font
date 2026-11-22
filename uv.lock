@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.10"
 resolution-markers = [
     "python_full_version >= '3.13' and implementation_name == 'cpython'",
@@ -1443,7 +1443,7 @@ wheels = [
 
 [[package]]
 name = "maple-font"
-version = "8.0b3"
+version = "8.0b4"
 source = { virtual = "." }
 dependencies = [
     { name = "fontmake" },
