@@ -65,6 +65,15 @@
           ],
           "description": "Scale factor for CJK glyphs with <factor> or [<width_factor>,<height_factor>]",
           "default": 1.0
+        },
+        "scale_punctuation_factor": {
+          "type": [
+            "number",
+            "array",
+            "null"
+          ],
+          "description": "Scale factor for fullwidth punctuation glyphs with <factor> or [<width_factor>,<height_factor>]. When null, uses cjk.scale_factor.",
+          "default": null
         }
       }
     },

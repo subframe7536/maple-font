@@ -11,8 +11,9 @@ usage: build.py [-h] [-v] [-d] [--debug] [-n] [--standard-zero]
                 [--format FORMATS] [--least-styles] [--cache] [--archive]
                 [--nf | --no-nf] [--nf-mono] [--nf-propo] [--nf-variable]
                 [--font-patcher] [--cjk CJK] [--cjk-variable] [--cjk-narrow]
-                [--cjk-scale-factor CJK_SCALE_FACTOR] [--cjk-both]
-                [--cjk-hinted | --no-cjk-hinted] [--cn | --no-cn]
+                [--cjk-scale-factor CJK_SCALE_FACTOR]
+                [--cjk-scale-punctuation-factor CJK_SCALE_PUNCTUATION_FACTOR]
+                [--cjk-both] [--cjk-hinted | --no-cjk-hinted] [--cn | --no-cn]
                 [--cn-narrow] [--cn-scale-factor CN_SCALE_FACTOR] [--cn-both]
 
 Builder and optimizer for Maple Mono
@@ -82,6 +83,10 @@ CJK Options:
   --cjk-scale-factor CJK_SCALE_FACTOR
                         Scale factor for selected CJK locales. Format:
                         <factor> or <width_factor>,<height_factor>.
+  --cjk-scale-punctuation-factor CJK_SCALE_PUNCTUATION_FACTOR
+                        Scale factor for fullwidth punctuation glyphs in
+                        selected CJK locales. Format: <factor> or
+                        <width_factor>,<height_factor>.
   --cjk-both            When Nerd Font is enabled, build both NF CJK and non-
                         NF CJK outputs.
   --cjk-hinted          Auto-hint final static CJK fonts.

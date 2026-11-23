@@ -98,6 +98,7 @@ def _apply_custom_cjk_scale_or_narrow(
     font_config: ResolvedConfig,
     target_width: int | None,
     scale_factor: tuple[float, float] | None,
+    scale_punctuation_factor: tuple[float, float] | None,
     special_scale_names: list[str],
 ) -> bool:
     match_width = 2 * font_config.glyph_width
@@ -117,6 +118,12 @@ def _apply_custom_cjk_scale_or_narrow(
             scale_factor[0],
             scale_factor[1],
         )
+    if scale_punctuation_factor is not None:
+        logger.debug(
+            "Scale CJK punctuation glyphs: width_factor=%s, height_factor=%s",
+            scale_punctuation_factor[0],
+            scale_punctuation_factor[1],
+        )
 
     change_glyph_width_or_scale(
         font=font,
@@ -124,6 +131,7 @@ def _apply_custom_cjk_scale_or_narrow(
         target_width=target_width,
         scale_factor=resolved_scale,
         special_names=special_scale_names,
+        scale_punctuation_factor=scale_punctuation_factor,
     )
     return bool(target_width and is_slim)
 
@@ -139,6 +147,11 @@ def apply_cjk_width_transform(
         if common_options.scale_factor != (1.0, 1.0)
         else None
     )
+    scale_punctuation_factor = common_options.scale_punctuation_factor
+    has_custom_punctuation_scale = (
+        scale_punctuation_factor is not None
+        and scale_punctuation_factor != (scale_factor or (1.0, 1.0))
+    )
     special_scale_names = [
         "ellipsis.full",
         "quoteleft.full",
@@ -148,12 +161,13 @@ def apply_cjk_width_transform(
     ]
 
     skip_verify = font_config.get_nf_variant().suffix == "Propo"
-    if target_width or scale_factor:
+    if target_width or scale_factor or has_custom_punctuation_scale:
         custom_proportional = _apply_custom_cjk_scale_or_narrow(
             font=font,
             font_config=font_config,
             target_width=target_width,
             scale_factor=scale_factor,
+            scale_punctuation_factor=scale_punctuation_factor,
             special_scale_names=special_scale_names,
         )
         skip_verify = skip_verify or custom_proportional

@@ -226,6 +226,11 @@ def _add_cjk_arguments(parser: argparse.ArgumentParser) -> None:
         help="Scale factor for selected CJK locales. Format: <factor> or <width_factor>,<height_factor>.",
     )
     cjk_group.add_argument(
+        "--cjk-scale-punctuation-factor",
+        type=parse_scale_factor,
+        help="Scale factor for fullwidth punctuation glyphs in selected CJK locales. Format: <factor> or <width_factor>,<height_factor>.",
+    )
+    cjk_group.add_argument(
         "--cjk-both",
         action="store_true",
         help="When Nerd Font is enabled, build both NF CJK and non-NF CJK outputs.",

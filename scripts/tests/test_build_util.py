@@ -106,6 +106,169 @@ class PostprocessCJKStaticFontTest(unittest.TestCase):
         # Composite lsb is refreshed from recalculated bounds.
         self.assertEqual(hmtx["box.component"][1], 5)
 
+    def _build_punctuation_test_font(self, path: Path):
+        from fontTools.fontBuilder import FontBuilder
+        from fontTools.pens.ttGlyphPen import TTGlyphPen
+
+        from scripts.font_ops.fonttools import load_font
+
+        def rect(x_min: int, y_min: int, width: int, height: int):
+            pen = TTGlyphPen(None)
+            pen.moveTo((x_min, y_min))
+            pen.lineTo((x_min + width, y_min))
+            pen.lineTo((x_min + width, y_min + height))
+            pen.lineTo((x_min, y_min + height))
+            pen.closePath()
+            return pen.glyph()
+
+        glyph_order = [
+            ".notdef",
+            "uni4E00",
+            "uni3001",
+            "uni3001.tw",
+            "uniFF0C",
+            "uniFF10",
+            "ellipsis.full",
+        ]
+        glyphs = {
+            ".notdef": TTGlyphPen(None).glyph(),
+            "uni4E00": rect(100, 100, 800, 800),
+            "uni3001": rect(100, 100, 200, 200),
+            "uni3001.tw": rect(500, 400, 200, 200),
+            "uniFF0C": rect(100, 100, 200, 200),
+            "uniFF10": rect(200, 100, 600, 700),
+            "ellipsis.full": rect(100, 400, 1000, 100),
+        }
+        metrics = {
+            ".notdef": (600, 0),
+            "uni4E00": (1200, 100),
+            "uni3001": (1200, 100),
+            "uni3001.tw": (1200, 500),
+            "uniFF0C": (1200, 100),
+            "uniFF10": (1200, 200),
+            "ellipsis.full": (1200, 100),
+        }
+        cmap = {
+            0x4E00: "uni4E00",  # CJK Unified Ideograph
+            0x3001: "uni3001",  # Ideographic Comma (CJK punctuation)
+            0xFF0C: "uniFF0C",  # Fullwidth Comma (Fullwidth ASCII punctuation)
+            0xFF10: "uniFF10",  # Fullwidth Digit Zero (not punctuation)
+        }
+
+        builder = FontBuilder(1000, isTTF=True)
+        builder.setupGlyphOrder(glyph_order)
+        builder.setupCharacterMap(cmap)
+        builder.setupGlyf(glyphs)
+        builder.setupHorizontalMetrics(metrics)
+        builder.setupHorizontalHeader(ascent=800, descent=-200)
+        builder.setupNameTable(
+            {
+                "familyName": "Punctuation Fixture",
+                "styleName": "Regular",
+                "uniqueFontIdentifier": "Punctuation Fixture Regular",
+                "fullName": "Punctuation Fixture Regular",
+                "psName": "PunctuationFixture-Regular",
+            }
+        )
+        builder.setupOS2(
+            sTypoAscender=800,
+            sTypoDescender=-200,
+            usWinAscent=800,
+            usWinDescent=200,
+        )
+        builder.setupPost()
+        builder.setupMaxp()
+        builder.setupHead(created=2082844800, modified=2082844800)
+        builder.font.recalcTimestamp = False
+        builder.save(path)
+        return load_font(path)
+
+    def test_scale_punctuation_factor_none_inherits_scale_factor(self) -> None:
+        font_config = BuildConfigResolver().load_defaults()
+        with tempfile.TemporaryDirectory() as tmp:
+            font = self._build_punctuation_test_font(Path(tmp) / "fixture.ttf")
+
+        apply_cjk_width_transform(
+            font,
+            font_config,
+            CJKCommonBuildOptions(
+                scale_factor=(1.2, 1.2),
+                scale_punctuation_factor=None,
+            ),
+        )
+
+        # Both CJK ideograph and punctuation scale by 1.2 when punctuation factor is None.
+        self.assertEqual(
+            font["glyf"]["uni4E00"].yMax - font["glyf"]["uni4E00"].yMin, 960
+        )
+        self.assertEqual(
+            font["glyf"]["uni3001"].yMax - font["glyf"]["uni3001"].yMin, 240
+        )
+        self.assertEqual(
+            font["glyf"]["uniFF0C"].yMax - font["glyf"]["uniFF0C"].yMin, 240
+        )
+
+    def test_scale_punctuation_factor_separates_cjk_and_punctuation(self) -> None:
+        font_config = BuildConfigResolver().load_defaults()
+        with tempfile.TemporaryDirectory() as tmp:
+            font = self._build_punctuation_test_font(Path(tmp) / "fixture.ttf")
+
+        apply_cjk_width_transform(
+            font,
+            font_config,
+            CJKCommonBuildOptions(
+                scale_factor=(1.2, 1.2),
+                scale_punctuation_factor=(1.0, 1.0),
+            ),
+        )
+
+        # CJK ideograph and fullwidth digit scale by 1.2.
+        self.assertEqual(
+            font["glyf"]["uni4E00"].yMax - font["glyf"]["uni4E00"].yMin, 960
+        )
+        self.assertEqual(
+            font["glyf"]["uniFF10"].yMax - font["glyf"]["uniFF10"].yMin, 840
+        )
+        # Fullwidth punctuation and .tw variant stay at 1.0.
+        self.assertEqual(
+            font["glyf"]["uni3001"].yMax - font["glyf"]["uni3001"].yMin, 200
+        )
+        self.assertEqual(
+            font["glyf"]["uni3001.tw"].yMax - font["glyf"]["uni3001.tw"].yMin, 200
+        )
+        self.assertEqual(
+            font["glyf"]["uniFF0C"].yMax - font["glyf"]["uniFF0C"].yMin, 200
+        )
+        # special_names continues to use _change_special_cjk_glyph (y-height unchanged).
+        self.assertEqual(
+            font["glyf"]["ellipsis.full"].yMax - font["glyf"]["ellipsis.full"].yMin,
+            100,
+        )
+
+    def test_scale_punctuation_factor_alone_triggers_transform(self) -> None:
+        font_config = BuildConfigResolver().load_defaults()
+        with tempfile.TemporaryDirectory() as tmp:
+            font = self._build_punctuation_test_font(Path(tmp) / "fixture.ttf")
+
+        apply_cjk_width_transform(
+            font,
+            font_config,
+            CJKCommonBuildOptions(
+                scale_factor=(1.0, 1.0),
+                scale_punctuation_factor=(0.9, 0.9),
+            ),
+        )
+
+        self.assertEqual(
+            font["glyf"]["uni4E00"].yMax - font["glyf"]["uni4E00"].yMin, 800
+        )
+        self.assertEqual(
+            font["glyf"]["uni3001"].yMax - font["glyf"]["uni3001"].yMin, 180
+        )
+        self.assertEqual(
+            font["glyf"]["uniFF0C"].yMax - font["glyf"]["uniFF0C"].yMin, 180
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -300,10 +300,16 @@ class CJKCommonBuildOptions:
     narrow: bool = False
     use_hinted: bool = False
     scale_factor: tuple[float, float] = (1.0, 1.0)
+    scale_punctuation_factor: tuple[float, float] | None = None
 
     def to_dict(self) -> dict[str, Any]:
         data = asdict(self)
         data["scale_factor"] = list(self.scale_factor)
+        data["scale_punctuation_factor"] = (
+            list(self.scale_punctuation_factor)
+            if self.scale_punctuation_factor is not None
+            else None
+        )
         return data
 
 

@@ -453,6 +453,13 @@ class BuildConfigResolver:
                 setattr(options, key, _require_bool(raw_cjk[key], f"cjk.{key}"))
         if "scale_factor" in raw_cjk:
             options.scale_factor = parse_scale_factor(raw_cjk["scale_factor"])
+        if "scale_punctuation_factor" in raw_cjk:
+            raw_punctuation_scale = raw_cjk["scale_punctuation_factor"]
+            options.scale_punctuation_factor = (
+                None
+                if raw_punctuation_scale is None
+                else parse_scale_factor(raw_punctuation_scale)
+            )
         return options
 
     def _build_cjk_entries(
@@ -517,6 +524,10 @@ class BuildConfigResolver:
             config.cjk.common_options.narrow = True
         if args.cjk_scale_factor is not None:
             config.cjk.common_options.scale_factor = args.cjk_scale_factor
+        if args.cjk_scale_punctuation_factor is not None:
+            config.cjk.common_options.scale_punctuation_factor = (
+                args.cjk_scale_punctuation_factor
+            )
         if args.cjk_hinted is not None:
             config.cjk.common_options.use_hinted = bool(args.cjk_hinted)
 
