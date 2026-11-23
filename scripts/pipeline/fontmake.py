@@ -101,15 +101,16 @@ def postprocess_static_font(
     logger.debug("Postprocess static font: source=%s", source_path.name)
     font = load_font(source_path)
     is_ttf = source_path.suffix.lower() == ".ttf"
-    fix_italic_metadata(font)
-    set_monospace_metadata(font)
-    strip_name_whitespace(font)
 
     style_compact = source_path.stem.split("-")[-1]
     style_with_prefix_space, style_in_2, style_in_17, is_skip_subfamily, _ = (
         parse_style_name(style_name_compact=style_compact)
     )
     postscript_name = f"{font_config.family_name_compact}-{style_compact}"
+
+    fix_italic_metadata(font, is_bold=style_in_2 in {"Bold", "Bold Italic"})
+    set_monospace_metadata(font)
+    strip_name_whitespace(font)
 
     update_font_names(
         font=font,

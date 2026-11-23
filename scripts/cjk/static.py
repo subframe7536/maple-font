@@ -10,9 +10,10 @@ from scripts.font_ops.glyph_transform import (
     change_glyph_width_or_scale,
     smart_change_width,
 )
-from scripts.font_ops.metadata import set_meta_table
+from scripts.font_ops.metadata import set_meta_table, sync_ribbi_style_metadata
 from scripts.font_ops.metrics import adjust_line_height, verify_glyph_width
 from scripts.font_ops.names import (
+    is_ribbi_bold,
     parse_style_name,
     update_font_names,
 )
@@ -224,6 +225,11 @@ def postprocess_cjk_extended_static_font(
         locale_suffix or entry.locale_name,
         style_compact,
         entry.common_options.narrow,
+    )
+    sync_ribbi_style_metadata(
+        font,
+        is_bold=is_ribbi_bold(style_compact),
+        is_italic=style_compact.endswith("Italic"),
     )
     skip_verify = apply_cjk_width_transform(font, font_config, entry.common_options)
     if entry.is_builtin and entry.common_options.fix_meta_table and entry.preset_spec:
