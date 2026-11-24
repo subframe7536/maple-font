@@ -19,7 +19,35 @@ MAC_BOLD_BIT = 0
 MAC_ITALIC_BIT = 1
 
 
-def fix_italic_metadata(font: TTFont, min_slant: float = 2.0) -> float:
+def sync_ribbi_style_metadata(
+    font: TTFont,
+    *,
+    is_bold: bool,
+    is_italic: bool,
+    clear_oblique: bool = True,
+) -> None:
+    """Synchronize OS/2.fsSelection and head.macStyle RIBBI style bits."""
+    if "OS/2" in font:
+        os2 = font.table("OS/2")
+        os2.fsSelection = _set_bit(os2.fsSelection, ITALIC_BIT, is_italic)
+        os2.fsSelection = _set_bit(os2.fsSelection, BOLD_BIT, is_bold)
+        os2.fsSelection = _set_bit(
+            os2.fsSelection, REGULAR_BIT, not is_italic and not is_bold
+        )
+        if clear_oblique and os2.version >= 4:
+            os2.fsSelection = _set_bit(os2.fsSelection, OBLIQUE_BIT, False)
+    if "head" in font:
+        head = font.table("head")
+        head.macStyle = _set_bit(head.macStyle, MAC_BOLD_BIT, is_bold)
+        head.macStyle = _set_bit(head.macStyle, MAC_ITALIC_BIT, is_italic)
+
+
+def fix_italic_metadata(
+    font: TTFont,
+    min_slant: float = 2.0,
+    *,
+    is_bold: bool = False,
+) -> float:
     """Recalculate the italic angle and synchronize related font metadata."""
     glyph_set = font.getGlyphSet()
     glyph_name = next((name for name in ("H", "uni0048") if name in glyph_set), None)
@@ -32,21 +60,12 @@ def fix_italic_metadata(font: TTFont, min_slant: float = 2.0) -> float:
     if abs(italic_angle) < abs(min_slant):
         italic_angle = 0.0
 
-    os2 = font.table("OS/2")
     head = font.table("head")
     hhea = font.table("hhea")
     post = font.table("post")
 
     is_italic = italic_angle != 0
-    os2.fsSelection = _set_bit(os2.fsSelection, ITALIC_BIT, is_italic)
-    os2.fsSelection = _set_bit(
-        os2.fsSelection,
-        REGULAR_BIT,
-        not is_italic and not bool(os2.fsSelection & (1 << BOLD_BIT)),
-    )
-    if os2.version >= 4:
-        os2.fsSelection = _set_bit(os2.fsSelection, OBLIQUE_BIT, False)
-    head.macStyle = _set_bit(head.macStyle, MAC_ITALIC_BIT, is_italic)
+    sync_ribbi_style_metadata(font, is_bold=is_bold, is_italic=is_italic)
 
     post.italicAngle = italic_angle
     if is_italic:

@@ -95,6 +95,12 @@ def parse_style_name(style_name_compact: str):
     )
 
 
+def is_ribbi_bold(style_name_compact: str) -> bool:
+    """Return whether a compact style name maps to a RIBBI Bold face."""
+    _, style_in_2, _, _, _ = parse_style_name(style_name_compact.replace(" ", ""))
+    return style_in_2 in {"Bold", "Bold Italic"}
+
+
 def update_font_names(
     font: TTFont,
     font_config: FontNameConfig,

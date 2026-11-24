@@ -13,6 +13,7 @@ from scripts.cjk.variable import (
 from scripts.font_ops.fonttools import TTFont, load_font, save_font_atomic
 from scripts.font_ops.glyph_transform import smart_change_width
 from scripts.font_ops.merge import merge_ttfonts
+from scripts.font_ops.metadata import sync_ribbi_style_metadata
 from scripts.font_ops.metrics import adjust_line_height, verify_glyph_width
 from scripts.font_ops.names import parse_style_name, update_font_names
 from scripts.font_ops.nerd_font import parse_codes_from_json
@@ -218,8 +219,13 @@ def build_nf(
             legacy_style,
             preferred_style,
             skip_subfamily,
-            _,
+            is_italic,
         ) = parse_style_name(style_name_compact=style_compact)
+        sync_ribbi_style_metadata(
+            font,
+            is_bold=legacy_style in {"Bold", "Bold Italic"},
+            is_italic=is_italic,
+        )
         symbol = font_config.get_nf_variant().symbol
         postscript_name = f"{font_config.family_name_compact}-{symbol}-{style_compact}"
         update_font_names(

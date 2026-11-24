@@ -12,6 +12,7 @@ from fontTools.varLib.instancer import otRound
 
 from scripts.font_ops.fonttools import TTFont, load_font
 from scripts.font_ops.merge import merge_cmap_entries
+from scripts.font_ops.metadata import BOLD_BIT, sync_ribbi_style_metadata
 from scripts.utils.logging import logger
 
 if TYPE_CHECKING:
@@ -182,15 +183,26 @@ def merge_masters_into_vf(
     return glyphs_to_add, added_codepoints
 
 
-def update_italic_metadata(font: TTFont, italic_angle_deg: float) -> None:
+def update_italic_metadata(
+    font: TTFont,
+    italic_angle_deg: float,
+    *,
+    is_bold: bool | None = None,
+) -> None:
     """Update font metadata for italic style."""
     if "post" in font:
         font.table("post").italicAngle = -italic_angle_deg
-    if "OS/2" in font:
-        os2 = font.table("OS/2")
-        os2.fsSelection = (os2.fsSelection & ~0x40) | 0x01
-    if "head" in font:
-        font.table("head").macStyle |= 0x02
+    effective_bold = (
+        bool(font.table("OS/2").fsSelection & (1 << BOLD_BIT))
+        if is_bold is None and "OS/2" in font
+        else bool(is_bold)
+    )
+    sync_ribbi_style_metadata(
+        font,
+        is_bold=effective_bold,
+        is_italic=True,
+        clear_oblique=False,
+    )
     if "hhea" in font:
         hhea = font.table("hhea")
         hhea.caretSlopeRise = 1000
