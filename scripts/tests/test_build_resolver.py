@@ -604,6 +604,55 @@ class BuildConfigResolverJsonTest(unittest.TestCase):
 
             self.assertIn("infinite_arrow", str(error.exception))
 
+    def test_cjk_scale_punctuation_factor_defaults_to_none_and_matches_schema(
+        self,
+    ) -> None:
+        font_config = self._resolve_with_config({})
+        schema = json.loads(Path("sources/schema.json").read_text(encoding="utf-8"))
+        prop = schema["definitions"]["cjk_common_config"]["properties"][
+            "scale_punctuation_factor"
+        ]
+
+        self.assertIsNone(font_config.cjk.common_options.scale_punctuation_factor)
+        self.assertIsNone(font_config.cjk.to_dict()["scale_punctuation_factor"])
+        self.assertEqual(prop["type"], ["number", "array", "null"])
+        self.assertIsNone(prop["default"])
+
+    def test_cjk_scale_punctuation_factor_resolves_from_config_and_cli(self) -> None:
+        from_config = self._resolve_with_config(
+            {
+                "cjk": {
+                    "scale_factor": 1.15,
+                    "scale_punctuation_factor": [1.0, 0.95],
+                }
+            }
+        )
+        self.assertEqual(from_config.cjk.common_options.scale_factor, (1.15, 1.15))
+        self.assertEqual(
+            from_config.cjk.common_options.scale_punctuation_factor, (1.0, 0.95)
+        )
+        self.assertEqual(
+            from_config.cjk.to_dict()["scale_punctuation_factor"], [1.0, 0.95]
+        )
+
+        overridden = self._resolve_with_config(
+            {
+                "cjk": {
+                    "scale_factor": 1.15,
+                    "scale_punctuation_factor": [1.0, 0.95],
+                }
+            },
+            ["--cjk-scale-punctuation-factor", "1.0"],
+        )
+        self.assertEqual(
+            overridden.cjk.common_options.scale_punctuation_factor, (1.0, 1.0)
+        )
+
+        explicit_null = self._resolve_with_config(
+            {"cjk": {"scale_factor": 1.15, "scale_punctuation_factor": None}}
+        )
+        self.assertIsNone(explicit_null.cjk.common_options.scale_punctuation_factor)
+
 
 class BuildConfigResolverCJKEntryTest(unittest.TestCase):
     def _resolve_with_config(

@@ -97,19 +97,20 @@ def apply_cjk_metrics(
 def _apply_custom_cjk_scale_or_narrow(
     font: TTFont,
     font_config: ResolvedConfig,
-    target_width: int | None,
+    target_width: int,
+    cjk_narrow: bool,
     scale_factor: tuple[float, float] | None,
+    scale_punctuation_factor: tuple[float, float] | None,
     special_scale_names: list[str],
 ) -> bool:
     match_width = 2 * font_config.glyph_width
-    is_slim = font_config.get_width_name() != "SL"
-    if target_width and is_slim:
+    is_not_slim = font_config.get_width_name() != "SL"
+    mark_proportional = cjk_narrow and is_not_slim
+    if mark_proportional:
         font.table("hhea").advanceWidthMax = target_width
         logger.warning(
             "Changed CJK glyph width; mark font as proportional and skip width checks"
         )
-    elif target_width is None:
-        target_width = match_width
 
     resolved_scale = scale_factor or (1.0, 1.0)
     if scale_factor:
@@ -118,6 +119,12 @@ def _apply_custom_cjk_scale_or_narrow(
             scale_factor[0],
             scale_factor[1],
         )
+    if scale_punctuation_factor is not None:
+        logger.debug(
+            "Scale CJK punctuation glyphs: width_factor=%s, height_factor=%s",
+            scale_punctuation_factor[0],
+            scale_punctuation_factor[1],
+        )
 
     change_glyph_width_or_scale(
         font=font,
@@ -125,8 +132,9 @@ def _apply_custom_cjk_scale_or_narrow(
         target_width=target_width,
         scale_factor=resolved_scale,
         special_names=special_scale_names,
+        scale_punctuation_factor=scale_punctuation_factor,
     )
-    return bool(target_width and is_slim)
+    return mark_proportional
 
 
 def apply_cjk_width_transform(
@@ -134,11 +142,23 @@ def apply_cjk_width_transform(
     font_config: ResolvedConfig,
     common_options: CJKCommonBuildOptions,
 ) -> bool:
-    target_width = font_config.glyph_width_cn_narrow if common_options.narrow else None
+    width_name = font_config.get_width_name()
+    target_width = (
+        font_config.glyph_width_cn_narrow
+        if common_options.narrow
+        else 2 * font_config.get_target_width()
+        if width_name
+        else 2 * font_config.glyph_width
+    )
     scale_factor: tuple[float, float] | None = (
         common_options.scale_factor
         if common_options.scale_factor != (1.0, 1.0)
         else None
+    )
+    scale_punctuation_factor = common_options.scale_punctuation_factor
+    has_custom_punctuation_scale = (
+        scale_punctuation_factor is not None
+        and scale_punctuation_factor != (scale_factor or (1.0, 1.0))
     )
     special_scale_names = [
         "ellipsis.full",
@@ -149,23 +169,22 @@ def apply_cjk_width_transform(
     ]
 
     skip_verify = font_config.get_nf_variant().suffix == "Propo"
-    if target_width or scale_factor:
+    if (
+        common_options.narrow
+        or width_name
+        or scale_factor
+        or has_custom_punctuation_scale
+    ):
         custom_proportional = _apply_custom_cjk_scale_or_narrow(
             font=font,
             font_config=font_config,
             target_width=target_width,
+            cjk_narrow=common_options.narrow,
             scale_factor=scale_factor,
+            scale_punctuation_factor=scale_punctuation_factor,
             special_scale_names=special_scale_names,
         )
         skip_verify = skip_verify or custom_proportional
-    elif font_config.get_width_name():
-        change_glyph_width_or_scale(
-            font=font,
-            match_width=2 * font_config.glyph_width,
-            target_width=2 * font_config.get_target_width(),
-            scale_factor=(1.0, 1.0),
-            special_names=special_scale_names,
-        )
 
     if font_config.get_width_name():
         previous_advance_width_max = font.table("hhea").advanceWidthMax

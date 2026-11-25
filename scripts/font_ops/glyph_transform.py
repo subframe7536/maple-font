@@ -5,8 +5,12 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any
 
 from fontTools.misc.transform import Transform
+from fontTools.pens.recordingPen import DecomposingRecordingPen
+from fontTools.pens.ttGlyphPen import TTGlyphPen
 from fontTools.ttLib.tables._g_l_y_f import Glyph, GlyphCoordinates
 from ufo2ft.filters import BaseFilter
+
+from scripts.utils.logging import logger
 
 if TYPE_CHECKING:
     from collections.abc import Iterable, Mapping
@@ -17,6 +21,36 @@ if TYPE_CHECKING:
 
 # Type aliases
 Coordinate = tuple[float, float]
+
+_FULLWIDTH_PUNCTUATION_RANGES: tuple[tuple[int, int], ...] = (
+    (0x3000, 0x303F),  # CJK Symbols and Punctuation
+    (0xFF01, 0xFF0F),  # Fullwidth ASCII Punctuation (! to /)
+    (0xFF1A, 0xFF20),  # Fullwidth ASCII Punctuation (: to @)
+    (0xFF3B, 0xFF40),  # Fullwidth ASCII Punctuation ([ to `)
+    (0xFF5B, 0xFF60),  # Fullwidth ASCII Punctuation ({ to ｠)
+    (0x2014, 0x2014),  # Em Dash (when fullwidth via cv98 freeze)
+    (0x2018, 0x2019),  # Single Quotes (when fullwidth via cv96 freeze)
+    (0x201C, 0x201D),  # Double Quotes (when fullwidth via cv96 freeze)
+    (0x2026, 0x2026),  # Horizontal Ellipsis (when fullwidth via cv97 freeze)
+)
+
+_FALLBACK_FULLWIDTH_PUNCTUATION_GLYPHS: frozenset[str] = frozenset(
+    {
+        "ellipsis.full",
+        "emdash.full",
+        "quotedblleft.full",
+        "quotedblright.full",
+        "quoteleft.full",
+        "quoteright.full",
+        "uni3001.tw",
+        "uni3002.tw",
+        "uniFF01.tw",
+        "uniFF0C.tw",
+        "uniFF1A.tw",
+        "uniFF1B.tw",
+        "uniFF1F.tw",
+    }
+)
 
 
 @dataclass(frozen=True)
@@ -394,12 +428,143 @@ def scale_ufo_width(
             glyph.width = target_width
 
 
+def _is_fullwidth_punctuation_codepoint(codepoint: int) -> bool:
+    return any(
+        start <= codepoint <= end for start, end in _FULLWIDTH_PUNCTUATION_RANGES
+    )
+
+
+def _collect_fullwidth_punctuation_glyphs(font: TTFont) -> set[str]:
+    cmap_punctuation_glyphs: set[str] = set()
+    if "cmap" in font:
+        best_cmap = font.getBestCmap() or {}
+        for codepoint, glyph_name in best_cmap.items():
+            if _is_fullwidth_punctuation_codepoint(codepoint):
+                cmap_punctuation_glyphs.add(glyph_name)
+
+    punctuation_glyphs = set(cmap_punctuation_glyphs)
+    punctuation_glyphs.update(_FALLBACK_FULLWIDTH_PUNCTUATION_GLYPHS)
+    for glyph_name in font.getGlyphOrder():
+        if "." in glyph_name and not glyph_name.startswith("."):
+            base_name = glyph_name.split(".", 1)[0]
+            if base_name in cmap_punctuation_glyphs:
+                punctuation_glyphs.add(glyph_name)
+    return punctuation_glyphs
+
+
+def _effective_cjk_glyph_scale(
+    glyph_name: str,
+    hmtx: Any,
+    match_width: int,
+    scale_factor: tuple[float, float],
+    punctuation_factor: tuple[float, float],
+    punctuation_glyphs: set[str],
+    special_names: set[str],
+    special_factor: tuple[float, float],
+) -> tuple[float, float]:
+    if glyph_name in special_names:
+        return special_factor
+    if glyph_name not in hmtx.metrics:
+        return (1.0, 1.0)
+    width, _ = hmtx.metrics[glyph_name]
+    if width not in (0, match_width):
+        return (1.0, 1.0)
+    return punctuation_factor if glyph_name in punctuation_glyphs else scale_factor
+
+
+def _has_mismatched_component_scale(
+    glyph_name: str,
+    target_scale: tuple[float, float],
+    glyf: Any,
+    hmtx: Any,
+    match_width: int,
+    scale_factor: tuple[float, float],
+    punctuation_factor: tuple[float, float],
+    punctuation_glyphs: set[str],
+    special_names: set[str],
+    special_factor: tuple[float, float],
+) -> bool:
+    stack = [comp.glyphName for comp in glyf[glyph_name].components]
+    visited: set[str] = {glyph_name}
+    while stack:
+        base_name = stack.pop()
+        if base_name in visited or base_name not in glyf:
+            continue
+        visited.add(base_name)
+        base_scale = _effective_cjk_glyph_scale(
+            glyph_name=base_name,
+            hmtx=hmtx,
+            match_width=match_width,
+            scale_factor=scale_factor,
+            punctuation_factor=punctuation_factor,
+            punctuation_glyphs=punctuation_glyphs,
+            special_names=special_names,
+            special_factor=special_factor,
+        )
+        if base_scale != target_scale:
+            return True
+        base_glyph = glyf[base_name]
+        if base_glyph.isComposite():
+            stack.extend(comp.glyphName for comp in base_glyph.components)
+    return False
+
+
+def _decompose_mismatched_cjk_composites(
+    font: TTFont,
+    glyf: Any,
+    hmtx: Any,
+    match_width: int,
+    scale_factor: tuple[float, float],
+    punctuation_factor: tuple[float, float],
+    punctuation_glyphs: set[str],
+    special_names: set[str],
+    special_factor: tuple[float, float],
+) -> None:
+    glyph_set: Any = font.getGlyphSet()
+    decomposed_glyphs: dict[str, Glyph] = {}
+    for glyph_name in font.getGlyphOrder():
+        if glyph_name in special_names or glyph_name not in glyf:
+            continue
+        glyph = glyf[glyph_name]
+        if not glyph.isComposite():
+            continue
+        width, _ = hmtx[glyph_name]
+        if width not in (0, match_width):
+            continue
+        target_scale = (
+            punctuation_factor if glyph_name in punctuation_glyphs else scale_factor
+        )
+        if not _has_mismatched_component_scale(
+            glyph_name=glyph_name,
+            target_scale=target_scale,
+            glyf=glyf,
+            hmtx=hmtx,
+            match_width=match_width,
+            scale_factor=scale_factor,
+            punctuation_factor=punctuation_factor,
+            punctuation_glyphs=punctuation_glyphs,
+            special_names=special_names,
+            special_factor=special_factor,
+        ):
+            continue
+        recording_pen = DecomposingRecordingPen(glyph_set)
+        glyph_set[glyph_name].draw(recording_pen)
+        tt_pen = TTGlyphPen(None)
+        recording_pen.replay(tt_pen)
+        decomposed_glyphs[glyph_name] = tt_pen.glyph()
+
+    for glyph_name, decomposed in decomposed_glyphs.items():
+        decomposed.recalcBounds(glyf)
+        glyf[glyph_name] = decomposed
+
+
 def change_glyph_width_or_scale(
     font: TTFont,
     match_width: int,
     target_width: int,
     scale_factor: tuple[float, float],
     special_names: list[str] | None = None,
+    scale_punctuation_factor: tuple[float, float] | None = None,
 ):
     """
     Adjusts the width or scales the glyphs in a font based on the specified parameters.
@@ -418,6 +583,9 @@ def change_glyph_width_or_scale(
             width and height (scale_w, scale_h).
         special_names (list[str], optional): A list of glyph names that require special
             handling instead of trim whitespace only. Defaults to an empty list.
+        scale_punctuation_factor (tuple[float, float] | None, optional): A tuple
+            containing the scaling factors for fullwidth punctuation glyphs
+            (scale_w, scale_h). Defaults to None (use `scale_factor`).
 
     Notes:
         - Glyphs with a width that does not match `match_width` are skipped.
@@ -426,11 +594,37 @@ def change_glyph_width_or_scale(
           bounding box values are recalculated.
     """
     special_names = special_names or []
+    resolved_punctuation_factor = (
+        scale_punctuation_factor
+        if scale_punctuation_factor is not None
+        else scale_factor
+    )
+    use_separate_punctuation_scale = resolved_punctuation_factor != scale_factor
+    punctuation_glyphs = (
+        _collect_fullwidth_punctuation_glyphs(font)
+        if use_separate_punctuation_scale
+        else set()
+    )
+
     font["hhea"].advanceWidthMax = target_width
     glyf: Any = font["glyf"]
     hmtx: Any = font["hmtx"]
     factor = target_width / match_width
+    if use_separate_punctuation_scale:
+        _decompose_mismatched_cjk_composites(
+            font=font,
+            glyf=glyf,
+            hmtx=hmtx,
+            match_width=match_width,
+            scale_factor=scale_factor,
+            punctuation_factor=resolved_punctuation_factor,
+            punctuation_glyphs=punctuation_glyphs,
+            special_names=set(special_names),
+            special_factor=(factor, 1.0),
+        )
     composites: list[str] = []
+    cjk_count = 0
+    punctuation_count = 0
     for glyph_name in font.getGlyphOrder():
         if glyph_name in special_names:
             _change_special_cjk_glyph(
@@ -440,10 +634,16 @@ def change_glyph_width_or_scale(
                 composites.append(glyph_name)
             continue
 
+        is_punctuation = glyph_name in punctuation_glyphs
+        active_scale_factor = (
+            resolved_punctuation_factor if is_punctuation else scale_factor
+        )
         glyph = glyf[glyph_name]
         width, lsb = hmtx[glyph_name]
         if width == 0:
-            _scale_zero_width_cjk_glyph(glyph, glyf, hmtx, glyph_name, scale_factor)
+            _scale_zero_width_cjk_glyph(
+                glyph, glyf, hmtx, glyph_name, active_scale_factor
+            )
             continue
         if width != match_width:
             continue
@@ -452,9 +652,21 @@ def change_glyph_width_or_scale(
         if glyph.numberOfContours == 0:
             hmtx[glyph_name] = (target_width, lsb)
             continue
-        _scale_simple_cjk_glyph(glyph, hmtx, glyph_name, scale_factor, target_width)
+        _scale_simple_cjk_glyph(
+            glyph, hmtx, glyph_name, active_scale_factor, target_width
+        )
+        if is_punctuation:
+            punctuation_count += 1
+        else:
+            cjk_count += 1
 
     _recalculate_cjk_composite_metrics(glyf, hmtx, composites)
+    if use_separate_punctuation_scale and (cjk_count > 0 or punctuation_count > 0):
+        logger.debug(
+            "Scaled %d CJK glyphs and %d fullwidth punctuation glyphs",
+            cjk_count,
+            punctuation_count,
+        )
 
 
 def _change_special_cjk_glyph(

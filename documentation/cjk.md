@@ -43,6 +43,8 @@ See [#249](https://github.com/subframe7536/maple-font/issues/249#issuecomment-28
 
 Use `"cjk.scale_factor"` in `config.json` or `--cjk-scale-factor` on the command line to scale the glyphs of the selected CJK locales. The format is `<factor>` or `<width_factor>,<height_factor>` (`[<width_factor>, <height_factor>]` in `config.json`), for example `1.1` or `1.2,1.1`.
 
+To scale fullwidth punctuation glyphs separately from other CJK glyphs, use `"cjk.scale_punctuation_factor"` or `--cjk-scale-punctuation-factor` with the same format. When set to `null` (default), fullwidth punctuation glyphs inherit `cjk.scale_factor`. For example, pass `--cjk-scale-factor 1.15 --cjk-scale-punctuation-factor 1.0` to enlarge CJK characters while keeping fullwidth punctuation at `1.0`.
+
 ## Centered Full-Width Punctuation
 
 Maple Mono supports the `cpct` feature to center full-width punctuation, which is common in Traditional Chinese; you can also enable `cv99` to force this behavior. See [#150](https://github.com/subframe7536/maple-font/issues/150) for details.
