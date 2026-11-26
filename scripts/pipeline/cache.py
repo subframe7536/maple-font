@@ -375,6 +375,7 @@ class StageCacheTracker:
             inputs = {
                 "ttfautohint_param": self.font_config.ttfautohint_param,
                 "use_hinted": self.font_config.use_hinted,
+                "fallback_scaling_default": True,
             }
         elif stage == "woff2":
             dependencies["ttf"] = self.stage_cache_identity("ttf")
@@ -430,6 +431,9 @@ class StageCacheTracker:
                     "cjk_format": self.plan.cjk_mode,
                     "ttfautohint_param": self.font_config.ttfautohint_param,
                 }
+                if self.plan.cjk_mode == "static" and self.font_config.use_hinted:
+                    # Older hinted static outputs lost their base hints during subsetting.
+                    inputs["preserve_static_base_hints"] = True
             else:
                 inputs = {"record": record}
         else:

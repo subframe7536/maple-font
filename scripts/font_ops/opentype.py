@@ -121,7 +121,8 @@ def _find_or_add_name_id(font: TTFont, value: str) -> int:
     return name_id
 
 
-def remove_target_glyph(font: TTFont, glyph_name_suffix: str):
+def remove_target_glyph(font: TTFont, glyph_name_suffix: str) -> None:
+    """Subset out glyphs with the given suffix without stripping retained hints."""
     from scripts.font_ops.subset import SubsetConfig, subset_to_glyphs
 
     keep_glyphs = [
@@ -133,7 +134,7 @@ def remove_target_glyph(font: TTFont, glyph_name_suffix: str):
     subset_to_glyphs(
         font,
         keep_glyphs,
-        options=SubsetConfig(hinting=False, notdef_outline=True),
+        options=SubsetConfig(hinting=True, notdef_outline=True),
     )
 
 

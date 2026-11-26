@@ -107,6 +107,9 @@ class GaspTable(Protocol):
 
 class MaxpTable(Protocol):
     maxZones: int
+    maxFunctionDefs: int
+    maxSizeOfInstructions: int
+    maxStackElements: int
 
 
 class MetaTable(Protocol):

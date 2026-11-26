@@ -57,6 +57,8 @@ def build_mono_autohint(
         "reference_file": str(reference_path),
         "out_file": str(output_path),
         "windows_compatibility": True,
+        # Avoid referencing Windows blue zones that are absent from the fallback style's CVT.
+        "fallback_scaling": True,
     }
     options.update(get_ttfautohint_options(font_config.ttfautohint_param))
     ttfautohint(**options)

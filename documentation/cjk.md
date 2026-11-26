@@ -29,7 +29,7 @@ If a download fails, configure a [GitHub mirror](./build.md#github-mirror), or d
 
 When Nerd Font is enabled (the default), CJK builds produce NF-CJK outputs. `--cjk-both` builds both NF CJK and non-NF CJK outputs. Set `"cjk.with_nerd_font": false` to exclude CJK entries from the Nerd Font profile.
 
-Final static CJK fonts are not auto-hinted by default. Pass `--cjk-hinted` (or set `"cjk.use_hinted": true`) to auto-hint them.
+Static CJK merges preserve the hints already present in the selected base font. This does not generate hints for newly merged CJK glyphs. Pass `--cjk-hinted` (or set `"cjk.use_hinted": true`) to auto-hint the final static fonts after merging or instantiation; this separate step is off by default.
 
 ## Narrow CJK Spacing
 
