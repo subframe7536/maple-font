@@ -67,7 +67,7 @@ The normal pipeline creates one shared executor for preparation, compilation, po
 
 ### Derived stages in `base_fonts.py`
 
-AutoHint consumes published static TTFs and writes `fonts/TTF-AutoHint/`. WOFF2 conversion consumes `fonts/TTF/` and writes `fonts/Woff2/`. Each has an independent stage identity and can be reused without recompiling unrelated base formats.
+AutoHint consumes published static TTFs and writes `fonts/TTF-AutoHint/`. It keeps Windows compatibility enabled and defaults to `fallback_scaling: true`, so unclassified glyphs such as Powerline separators do not get invalid references to unallocated blue-zone control values. Explicit `ttfautohint_param` options still take precedence. WOFF2 conversion consumes `fonts/TTF/` and writes `fonts/Woff2/`. Each has an independent stage identity and can be reused without recompiling unrelated base formats.
 
 ### CJK stages
 

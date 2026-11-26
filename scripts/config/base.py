@@ -301,9 +301,12 @@ class CJKCommonBuildOptions:
     use_hinted: bool = False
     scale_factor: tuple[float, float] = (1.0, 1.0)
     scale_punctuation_factor: tuple[float, float] | None = None
+    variable_autohint: bool = False
 
     def to_dict(self) -> dict[str, Any]:
         data = asdict(self)
+        if not self.variable_autohint:
+            data.pop("variable_autohint")
         data["scale_factor"] = list(self.scale_factor)
         data["scale_punctuation_factor"] = (
             list(self.scale_punctuation_factor)

@@ -29,7 +29,9 @@ If a download fails, configure a [GitHub mirror](./build.md#github-mirror), or d
 
 When Nerd Font is enabled (the default), CJK builds produce NF-CJK outputs. `--cjk-both` builds both NF CJK and non-NF CJK outputs. Set `"cjk.with_nerd_font": false` to exclude CJK entries from the Nerd Font profile.
 
-Final static CJK fonts are not auto-hinted by default. Pass `--cjk-hinted` (or set `"cjk.use_hinted": true`) to auto-hint them.
+Static CJK merges preserve the hints already present in the selected base font. This does not generate hints for newly merged CJK glyphs. Pass `--cjk-hinted` (or set `"cjk.use_hinted": true`) to auto-hint the final static fonts after merging or instantiation; this separate step is off by default.
+
+For variable output, add `--cjk-vf-autohint` (or set `"cjk.variable_autohint": true`). This separate opt-in requires `--cjk-variable` and a selected locale. It aligns long horizontal Han edges with a vertical shift of at most 1/8 pixel at 9–20 ppem. The shift is calculated from the current variable outline at rendering time; the algorithm does not adjust stem widths, glyph advances, Latin glyphs, or Nerd Font icons. It needs no external hinter. `--no-cjk-vf-autohint` overrides the JSON option. See the [backend experiments and verification](./vf-autohint-backends.md) for scope and limitations.
 
 ## Narrow CJK Spacing
 

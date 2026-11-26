@@ -714,6 +714,32 @@ class BuildConfigResolverCJKEntryTest(unittest.TestCase):
 
         self.assertEqual(font_config.cjk_output_format, "variable")
 
+    def test_cjk_vf_autohint_config_and_cli_override(self) -> None:
+        source = {"cjk": {"variable": True, "variable_autohint": True}}
+        enabled = self._resolve_with_config(source, ["--cjk", "cn"])
+        disabled = self._resolve_with_config(
+            source, ["--cjk", "cn", "--no-cjk-vf-autohint"]
+        )
+        default = self._resolve_with_config({}, ["--cjk", "cn", "--cjk-variable"])
+        self.assertTrue(enabled.cjk.entries[0].common_options.variable_autohint)
+        self.assertFalse(disabled.cjk.common_options.variable_autohint)
+        self.assertFalse(default.cjk.common_options.variable_autohint)
+        self.assertNotIn("variable_autohint", default.cjk.common_options.to_dict())
+
+    def test_rejects_invalid_cjk_vf_autohint(self) -> None:
+        with self.assertRaisesRegex(
+            ValueError, "cjk.variable_autohint must be a boolean"
+        ):
+            self._resolve_with_config({"cjk": {"variable_autohint": "yes"}})
+        for args in (["--cjk", "cn"], ["--cjk-variable"]):
+            with (
+                self.subTest(args=args),
+                self.assertRaisesRegex(
+                    ValueError, "requires a selected CJK locale and variable output"
+                ),
+            ):
+                self._resolve_with_config({}, [*args, "--cjk-vf-autohint"])
+
     def test_rejects_non_boolean_cjk_variable(self) -> None:
         with self.assertRaisesRegex(ValueError, "cjk.variable must be a boolean"):
             self._resolve_with_config(
