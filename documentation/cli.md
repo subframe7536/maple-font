@@ -13,7 +13,8 @@ usage: build.py [-h] [-v] [-d] [--debug] [-n] [--standard-zero]
                 [--font-patcher] [--cjk CJK] [--cjk-variable] [--cjk-narrow]
                 [--cjk-scale-factor CJK_SCALE_FACTOR]
                 [--cjk-scale-punctuation-factor CJK_SCALE_PUNCTUATION_FACTOR]
-                [--cjk-both] [--cjk-hinted | --no-cjk-hinted] [--cn | --no-cn]
+                [--cjk-both] [--cjk-hinted | --no-cjk-hinted]
+                [--cjk-vf-autohint | --no-cjk-vf-autohint] [--cn | --no-cn]
                 [--cn-narrow] [--cn-scale-factor CN_SCALE_FACTOR] [--cn-both]
 
 Builder and optimizer for Maple Mono
@@ -91,6 +92,9 @@ CJK Options:
                         NF CJK outputs.
   --cjk-hinted          Auto-hint final static CJK fonts.
   --no-cjk-hinted       Do not auto-hint final static CJK fonts (default).
+  --cjk-vf-autohint, --no-cjk-vf-autohint
+                        Apply bounded Y-axis hinting to Han outlines in merged
+                        CJK variable fonts (off by default).
 
 Deprecated CN Options:
   --cn                  Deprecated alias for `--cjk cn`.

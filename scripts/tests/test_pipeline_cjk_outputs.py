@@ -15,6 +15,7 @@ from scripts.pipeline.cache import (
 )
 from scripts.pipeline.cjk_outputs import (
     CJKStaticMergeJob,
+    _merge_cjk_variable_font,
     cjk_static_base_profiles,
     merge_cached_cjk_static_font_job,
 )
@@ -26,9 +27,41 @@ from scripts.tests.pipeline_fixtures import (
     make_runtime_context,
     write_test_font,
 )
+from scripts.utils.errors import BuildDependencyError
 
 
 class PipelineCJKOutputsTest(unittest.TestCase):
+    def test_vf_autohint_failure_does_not_publish_font(self) -> None:
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            core, extra = root / "core.ttf", root / "cjk.ttf"
+            core.touch()
+            extra.touch()
+            entry = make_custom_entry("CN")
+            entry.common_options.variable_autohint = True
+            with (
+                patch("scripts.pipeline.cjk_outputs.load_font"),
+                patch(
+                    "scripts.pipeline.cjk_outputs.merge_vf",
+                    return_value=(MagicMock(), [], 0),
+                ),
+                patch("scripts.pipeline.cjk_outputs._postprocess_cjk_variable_font"),
+                patch(
+                    "scripts.pipeline.cjk_outputs._update_cjk_variable_names",
+                    return_value="MapleMono-CN",
+                ),
+                patch(
+                    "scripts.pipeline.cjk_outputs.autohint_variable_han",
+                    side_effect=BuildDependencyError("invalid hint output"),
+                ),
+                patch("scripts.pipeline.cjk_outputs.save_font_atomic") as publish,
+                self.assertRaisesRegex(BuildDependencyError, "invalid hint output"),
+            ):
+                _merge_cjk_variable_font(
+                    entry, make_font_config(), core, extra, root, False, "CN", None
+                )
+            publish.assert_not_called()
+
     def test_cached_static_merge_removes_extra_overlaps(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:
             entry = make_custom_entry("JP")

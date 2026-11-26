@@ -35,6 +35,7 @@ from scripts.font_ops.hinting import autohint_static_fonts
 from scripts.font_ops.merge import merge_ttfonts
 from scripts.font_ops.names import update_font_names
 from scripts.font_ops.opentype import add_weight_axis_values_to_stat
+from scripts.font_ops.variable_hinting import autohint_variable_han
 from scripts.pipeline.artifacts import (
     merged_variable_name,
     static_output_dir,
@@ -234,6 +235,9 @@ def _merge_cjk_variable_font(
             len(cjk_added_glyphs),
             cjk_added_codepoints,
         )
+        if entry.common_options.variable_autohint:
+            hinted = autohint_variable_han(merged_font)
+            logger.info("Auto-hinted %d Han glyphs in %s", hinted, output_path.name)
         save_font_atomic(merged_font, output_path)
         logger.info("Saved merged variable font to %s", output_path)
         return output_path

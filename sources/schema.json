@@ -58,6 +58,11 @@
           "description": "Whether to run AutoHint on final merged CJK static fonts after instantiation or merge",
           "default": false
         },
+        "variable_autohint": {
+          "type": "boolean",
+          "description": "Apply bounded Y-axis Han hinting to merged CJK TrueType variable fonts",
+          "default": false
+        },
         "scale_factor": {
           "type": [
             "number",

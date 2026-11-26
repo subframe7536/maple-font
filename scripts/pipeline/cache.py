@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING, Any, Literal
 
 from scripts.cjk.config import serialize_cjk_build_config
+from scripts.font_ops.variable_hinting import VARIABLE_HINTING_REVISION
 from scripts.pipeline.artifacts import base_cache_identity
 from scripts.pipeline.nerd_fonts import should_use_font_patcher
 from scripts.utils.files import write_json
@@ -434,6 +435,11 @@ class StageCacheTracker:
                 if self.plan.cjk_mode == "static" and self.font_config.use_hinted:
                     # Older hinted static outputs lost their base hints during subsetting.
                     inputs["preserve_static_base_hints"] = True
+                if (
+                    self.plan.cjk_mode == "variable"
+                    and entry.common_options.variable_autohint
+                ):
+                    inputs["variable_hinting_revision"] = VARIABLE_HINTING_REVISION
             else:
                 inputs = {"record": record}
         else:

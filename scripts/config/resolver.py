@@ -448,6 +448,7 @@ class BuildConfigResolver:
             "clean_cache",
             "narrow",
             "use_hinted",
+            "variable_autohint",
         ):
             if key in raw_cjk:
                 setattr(options, key, _require_bool(raw_cjk[key], f"cjk.{key}"))
@@ -530,6 +531,8 @@ class BuildConfigResolver:
             )
         if args.cjk_hinted is not None:
             config.cjk.common_options.use_hinted = bool(args.cjk_hinted)
+        if args.cjk_vf_autohint is not None:
+            config.cjk.common_options.variable_autohint = args.cjk_vf_autohint
 
         apply_deprecated_cli_overrides(config, args, enabled_locales)
 
@@ -539,6 +542,13 @@ class BuildConfigResolver:
             config.cjk.locales,
             config.cjk.common_options,
         )
+
+        if config.cjk.common_options.variable_autohint and (
+            not config.cjk.entries or config.cjk_output_format != "variable"
+        ):
+            raise ValueError(
+                "CJK VF AutoHint requires a selected CJK locale and variable output"
+            )
 
         if (
             config.nerd_font.enable

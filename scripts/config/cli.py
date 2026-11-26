@@ -250,6 +250,12 @@ def _add_cjk_arguments(parser: argparse.ArgumentParser) -> None:
         action="store_false",
         help="Do not auto-hint final static CJK fonts (default).",
     )
+    cjk_group.add_argument(
+        "--cjk-vf-autohint",
+        action=argparse.BooleanOptionalAction,
+        default=None,
+        help="Apply bounded Y-axis hinting to Han outlines in merged CJK variable fonts (off by default).",
+    )
 
 
 def _add_deprecated_cn_arguments(parser: argparse.ArgumentParser) -> None:
