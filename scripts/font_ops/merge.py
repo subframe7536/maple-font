@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING, cast
 
+from fontTools.fontBuilder import buildCmapSubTable
+
 from scripts.font_ops.fonttools import TTFont, load_font, remove_overlaps
 from scripts.utils.logging import logger
 
@@ -26,17 +28,25 @@ def merge_cmap_entries(
     extra_font: TTFont,
     glyph_names: Iterable[str],
 ) -> set[int]:
-    """Merge new Unicode mappings supported by each base cmap subtable."""
+    """Merge new Unicode mappings, adding a full cmap when needed."""
     allowed_glyphs = set(glyph_names)
-    base_codepoints = set(base_font["cmap"].getBestCmap() or {})
+    base_cmap = base_font["cmap"].getBestCmap() or {}
     entries = {
         codepoint: glyph_name
         for codepoint, glyph_name in (extra_font["cmap"].getBestCmap() or {}).items()
-        if glyph_name in allowed_glyphs and codepoint not in base_codepoints
+        if glyph_name in allowed_glyphs and codepoint not in base_cmap
     }
 
+    tables = base_font["cmap"].tables
+    if any(codepoint > 0xFFFF for codepoint in entries) and not any(
+        table.isUnicode() and _supports_codepoint(table.format, 0x10000)
+        for table in tables
+    ):
+        # The new full-repertoire subtable takes precedence over the old BMP cmap.
+        tables.append(buildCmapSubTable(base_cmap.copy(), 12, 3, 10))
+
     merged_codepoints: set[int] = set()
-    for table in base_font["cmap"].tables:
+    for table in tables:
         if not table.isUnicode():
             continue
         supported_entries = {
