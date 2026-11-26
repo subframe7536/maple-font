@@ -19,6 +19,7 @@ def build_test_font(
     path: Path,
     *,
     glyph_order: list[str] | None = None,
+    cmap: dict[int, str] | None = None,
     box_width: int = 300,
     cjk_width: int = 420,
     component_target: Literal["box", "cjk"] = "box",
@@ -43,7 +44,11 @@ def build_test_font(
     builder = FontBuilder(1000, isTTF=True)
     builder.setupGlyphOrder(order)
     builder.setupCharacterMap(
-        {codepoint: name for codepoint, name in CMAP.items() if name in order}
+        {
+            codepoint: name
+            for codepoint, name in (CMAP if cmap is None else cmap).items()
+            if name in order
+        }
     )
     builder.setupGlyf({name: glyphs[name] for name in order})
     builder.setupHorizontalMetrics({name: metrics[name] for name in order})

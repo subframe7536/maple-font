@@ -8,6 +8,7 @@ from fontTools.ttLib import newTable
 
 from scripts.cjk.variable import (
     get_unicode_cmap,
+    merge_masters_into_vf,
     merge_vf,
     rebuild_weight_masters_with_regular_default,
     skew_glyphs,
@@ -84,6 +85,50 @@ class CJKVariableOperationsTest(unittest.TestCase):
                     ],
                     original_variations[glyph_name],
                 )
+
+    def test_supplementary_ideographs_survive_both_variable_merges(self) -> None:
+        extension_b = 0x20021
+        compat_supplement = 0x2F800
+        feature_cmap = {0x41: "box"}
+        core_cmap = {0x41: "box.component", 0xE000: "box"}
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            with (
+                build_test_font(
+                    root / "feature.ttf",
+                    glyph_order=GLYPH_ORDER[:3],
+                    cmap=feature_cmap,
+                    variable=True,
+                ) as feature,
+                build_test_font(
+                    root / "source-master.ttf",
+                    cmap={extension_b: "cjk", compat_supplement: "cjk"},
+                ) as master,
+                build_test_font(
+                    root / "core.ttf",
+                    glyph_order=GLYPH_ORDER[:3],
+                    cmap=core_cmap,
+                    variable=True,
+                ) as core,
+            ):
+                self.assertTrue(
+                    all(table.format != 12 for table in feature["cmap"].tables)
+                )
+                mappings = {extension_b: "cjk", compat_supplement: "cjk"}
+
+                added, count = merge_masters_into_vf(feature, master, master, master)
+                self.assertEqual((added, count), (["cjk"], len(mappings)))
+                with roundtrip_font(feature, root / "cn-base.ttf") as cn_base:
+                    self.assertEqual(cn_base.getBestCmap(), feature_cmap | mappings)
+                    merged, _, count = merge_vf(core, cn_base)
+                    self.assertEqual(count, len(mappings))
+                    with roundtrip_font(merged, root / "final.ttf") as final:
+                        self.assertEqual(final.getBestCmap(), core_cmap | mappings)
+                        for table in final["cmap"].tables:
+                            if table.format == 4:
+                                self.assertEqual(table.cmap, core_cmap)
+                            if table.format == 12:
+                                self.assertEqual(table.cmap, core_cmap | mappings)
 
     def test_merge_preserves_font_data_and_invalidates_metric_variations(self) -> None:
         with tempfile.TemporaryDirectory() as tmp:

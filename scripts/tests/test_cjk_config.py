@@ -19,6 +19,8 @@ from scripts.cjk.config import (
     serialize_cjk_build_config,
 )
 from scripts.cjk.presets import build_preset_config, get_preset
+from scripts.cjk.source import get_allowed_codepoints
+from scripts.tests.cjk_font_fixtures import build_test_font
 
 
 def custom_config_data() -> dict[str, Any]:
@@ -36,6 +38,35 @@ def custom_config_data() -> dict[str, Any]:
 
 
 class CJKConfigSurfaceTest(unittest.TestCase):
+    def test_cn_selects_mapped_unified_and_compatibility_ideographs_only(self) -> None:
+        ideographs = {
+            0x3400,
+            0x4E00,
+            0xF900,
+            0x20021,
+            0x2A700,
+            0x2B740,
+            0x2B820,
+            0x2CEB0,
+            0x2EBF0,
+            0x2F800,
+            0x30000,
+            0x31350,
+            0x323B0,
+        }
+        unrelated = {0x41, 0xE000, 0x1F600, 0x2F000, 0xF0000}
+        with (
+            tempfile.TemporaryDirectory() as tmp,
+            build_test_font(
+                Path(tmp) / "source.ttf",
+                cmap=dict.fromkeys(ideographs | unrelated, "cjk"),
+            ) as source,
+        ):
+            config = build_preset_config("cn")
+
+            self.assertEqual(get_allowed_codepoints(source, config), ideographs)
+            self.assertTrue(config.unicode.exclude_feature_codepoints)
+
     def test_freeze_feature_round_trips(self) -> None:
         data = custom_config_data()
         data["freeze_feature"] = "cv99"
