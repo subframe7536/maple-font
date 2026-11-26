@@ -138,11 +138,16 @@ def update_font_names(
             variable=variable,
         )
 
+    variable_postscript_prefix = spec.postscript_name.removesuffix(
+        f"-{spec.style_name}"
+    )
+    is_italic = spec.style_name.endswith("Italic")
+
     if spec.variable:
         ensure_variable_instance_names(
             font,
-            postscript_prefix=spec.postscript_name.removesuffix(f"-{spec.style_name}"),
-            italic=spec.style_name.endswith("Italic"),
+            postscript_prefix=variable_postscript_prefix,
+            italic=is_italic,
         )
     font["name"].removeNames(platformID=1)
     if len(spec.family_name) > 31:
@@ -176,6 +181,12 @@ def update_font_names(
     if spec.variable:
         set_font_name(font, spec.preferred_family_name or spec.family_name, 16)
         set_font_name(font, spec.preferred_style_name or spec.style_name, 17)
+        variations_postscript_prefix = (
+            f"{variable_postscript_prefix}-Italic"
+            if is_italic
+            else variable_postscript_prefix
+        )
+        set_font_name(font, variations_postscript_prefix, 25)
     elif (
         not spec.is_skip_subfamily
         and spec.preferred_family_name
