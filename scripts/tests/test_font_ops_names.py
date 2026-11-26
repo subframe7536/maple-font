@@ -223,6 +223,67 @@ class FontNameTest(unittest.TestCase):
             "Bold",
         )
 
+    def test_variable_sets_distinct_name_id_25_for_upright_and_italic(self) -> None:
+        config = make_font_config()
+
+        upright_with_suffix = make_font()
+        update_font_names(
+            font=upright_with_suffix,
+            font_config=config,
+            family_name="Maple Mono",
+            style_name="Regular",
+            full_name="Maple Mono Regular",
+            postscript_name="MapleMono-Regular",
+            is_skip_subfamily=True,
+            variable=True,
+        )
+        self.assertEqual(get_unicode_name(upright_with_suffix, 25), "MapleMono")
+
+        upright_cjk = make_font()
+        update_font_names(
+            font=upright_cjk,
+            font_config=config,
+            family_name="Maple Mono Normal NF JP",
+            style_name="Regular",
+            full_name="Maple Mono Normal NF JP Regular",
+            postscript_name="MapleMonoNormal-NF-JP",
+            is_skip_subfamily=True,
+            variable=True,
+        )
+        self.assertEqual(get_unicode_name(upright_cjk, 25), "MapleMonoNormal-NF-JP")
+
+        italic_cjk = make_font()
+        update_font_names(
+            font=italic_cjk,
+            font_config=config,
+            family_name="Maple Mono Normal NF JP",
+            style_name="Italic",
+            full_name="Maple Mono Normal NF JP Italic",
+            postscript_name="MapleMonoNormal-NF-JP-Italic",
+            is_skip_subfamily=True,
+            variable=True,
+        )
+        self.assertEqual(
+            get_unicode_name(italic_cjk, 25), "MapleMonoNormal-NF-JP-Italic"
+        )
+
+        static_font = make_font()
+        update_font_names(
+            font=static_font,
+            font_config=config,
+            family_name="Maple Mono Normal NF JP",
+            style_name="Regular",
+            full_name="Maple Mono Normal NF JP Regular",
+            postscript_name="MapleMonoNormal-NF-JP-Regular",
+            is_skip_subfamily=True,
+            variable=False,
+        )
+        self.assertIsNone(
+            static_font["name"].getName(
+                nameID=25, platformID=3, platEncID=1, langID=0x409
+            )
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

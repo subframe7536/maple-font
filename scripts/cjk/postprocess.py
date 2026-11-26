@@ -90,7 +90,12 @@ def update_variable_font_names(
         preferred_family_name=family_name,
         preferred_style_name=subfamily,
     )
-    set_font_name(font, config.naming.postscript_prefix, 25)
+    variations_postscript_prefix = (
+        f"{config.naming.postscript_prefix}-Italic"
+        if subfamily.endswith("Italic")
+        else config.naming.postscript_prefix
+    )
+    set_font_name(font, variations_postscript_prefix, 25)
 
 
 def move_fvar_instances_from_reserved_name_ids(font: TTFont) -> None:
